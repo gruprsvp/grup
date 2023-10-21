@@ -1,0 +1,10 @@
+{
+  "@@locale": "en",
+  "appName": "Parousia",
+  "newGroup": "New group",
+  "settings": "Settings",
+  "changeTheme": "Theme",
+  "themeSystem": "System",
+  "themeLight": "Light",
+  "themeDark": "Dark"
+}
