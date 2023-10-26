@@ -37,10 +37,11 @@ dependencies:
   # Routing
   go_router: ^12.0.0
 
-  # Bloc
-  flutter_bloc: ^8.1.3
-  hydrated_bloc: ^9.1.2
-  path_provider: ^2.1.1
+  # Redux
+  redux: ^5.0.0
+  flutter_redux: ^0.10.0
+  redux_persist: ^0.9.0
+  redux_persist_flutter: ^0.9.0
 
   # Supabase
   supabase_flutter: ^1.10.22

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:parousia/widgets/widgets.dart';
+import 'package:parousia/containers/containers.dart';
 
 /// A screen that allows the user to configure app settings.
 class SettingsScreen extends StatelessWidget {

@@ -1,9 +1,15 @@
+import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_redux/flutter_redux.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
-import 'package:parousia/blocs/blocs.dart';
 import 'package:parousia/screens/screens.dart';
+import 'package:parousia/selectors/selectors.dart';
+import 'package:parousia/state/state.dart';
+import 'package:redux/redux.dart';
+
+part 'app.freezed.dart';
 
 final _routerConfig = GoRouter(
   routes: [
@@ -21,20 +27,22 @@ final _routerConfig = GoRouter(
 /// The app entry-point
 class ParApp extends StatelessWidget {
   /// Creates a [ParApp].
-  const ParApp({super.key});
+  const ParApp({super.key, required this.store});
+
+  final Store<RootState> store;
 
   @override
   Widget build(BuildContext context) {
-    return MultiBlocProvider(
-      providers: [
-        BlocProvider(create: (_) => ThemeCubit()),
-      ],
-      child: BlocBuilder<ThemeCubit, ThemeMode>(
-        builder: (context, themeMode) => MaterialApp.router(
+    return StoreProvider(
+      store: store,
+      child: StoreConnector<RootState, _ViewModel>(
+        distinct: true,
+        converter: _ViewModel.fromStore,
+        builder: (context, vm) => MaterialApp.router(
           title: 'Parousia',
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           supportedLocales: AppLocalizations.supportedLocales,
-          themeMode: themeMode,
+          themeMode: vm.themeMode,
           darkTheme: ThemeData.dark(useMaterial3: true),
           theme: ThemeData(
             // TODO(borgoat): dynamic color scheme using dynamic_color package
@@ -45,5 +53,16 @@ class ParApp extends StatelessWidget {
         ),
       ),
     );
+  }
+}
+
+@freezed
+sealed class _ViewModel with _$ViewModel {
+  const factory _ViewModel({
+    required ThemeMode themeMode,
+  }) = __ViewModel;
+
+  factory _ViewModel.fromStore(Store<RootState> store) {
+    return _ViewModel(themeMode: themeModeSelector(store.state));
   }
 }
