@@ -40,6 +40,7 @@ dependencies:
   # Redux
   redux: ^5.0.0
   flutter_redux: ^0.10.0
+  redux_epics: ^0.15.1
   redux_persist: ^0.9.0
   redux_persist_flutter: ^0.9.0
 

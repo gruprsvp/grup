@@ -613,6 +613,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
+  redux_epics:
+    dependency: "direct main"
+    description:
+      name: redux_epics
+      sha256: b2340bc52df7039416fda9c2eeaf85634d18f8e4784761af3a4e13dfb20f2602
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.15.1"
   redux_persist:
     dependency: "direct main"
     description:
