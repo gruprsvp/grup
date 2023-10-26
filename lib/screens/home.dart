@@ -30,7 +30,7 @@ class HomeScreen extends StatelessWidget {
           ListTile(
             title: Text(AppLocalizations.of(context)!.newGroup),
             leading: const Icon(Icons.group_add),
-            onTap: () {},
+            onTap: () => context.push('/groups/new'),
           ),
           ListTile(
             title: Text(AppLocalizations.of(context)!.settings),

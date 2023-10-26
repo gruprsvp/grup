@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:go_router/go_router.dart';
-import 'package:parousia/screens/screens.dart';
+import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/selectors/selectors.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
@@ -12,16 +12,7 @@ import 'package:redux/redux.dart';
 part 'app.freezed.dart';
 
 final _routerConfig = GoRouter(
-  routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const HomeScreen(),
-    ),
-    GoRoute(
-      path: '/settings',
-      builder: (context, state) => const SettingsScreen(),
-    ),
-  ],
+  routes: $appRoutes,
 );
 
 /// The app entry-point
