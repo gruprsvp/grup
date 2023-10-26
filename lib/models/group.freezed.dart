@@ -21,9 +21,9 @@ Group _$GroupFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Group {
   int get id => throw _privateConstructorUsedError;
+  String get displayName => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
-  String get displayName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -36,7 +36,7 @@ abstract class $GroupCopyWith<$Res> {
       _$GroupCopyWithImpl<$Res, Group>;
   @useResult
   $Res call(
-      {int id, DateTime? createdAt, DateTime? updatedAt, String displayName});
+      {int id, String displayName, DateTime? createdAt, DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -53,15 +53,19 @@ class _$GroupCopyWithImpl<$Res, $Val extends Group>
   @override
   $Res call({
     Object? id = null,
+    Object? displayName = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? displayName = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      displayName: null == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
+              as String,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -70,10 +74,6 @@ class _$GroupCopyWithImpl<$Res, $Val extends Group>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      displayName: null == displayName
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
-              as String,
     ) as $Val);
   }
 }
@@ -86,7 +86,7 @@ abstract class _$$GroupImplCopyWith<$Res> implements $GroupCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id, DateTime? createdAt, DateTime? updatedAt, String displayName});
+      {int id, String displayName, DateTime? createdAt, DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -101,15 +101,19 @@ class __$$GroupImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? displayName = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? displayName = null,
   }) {
     return _then(_$GroupImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
+      displayName: null == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
+              as String,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -118,10 +122,6 @@ class __$$GroupImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      displayName: null == displayName
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -132,9 +132,9 @@ class __$$GroupImplCopyWithImpl<$Res>
 class _$GroupImpl with DiagnosticableTreeMixin implements _Group {
   const _$GroupImpl(
       {required this.id,
+      required this.displayName,
       this.createdAt,
-      this.updatedAt,
-      required this.displayName});
+      this.updatedAt});
 
   factory _$GroupImpl.fromJson(Map<String, dynamic> json) =>
       _$$GroupImplFromJson(json);
@@ -142,15 +142,15 @@ class _$GroupImpl with DiagnosticableTreeMixin implements _Group {
   @override
   final int id;
   @override
+  final String displayName;
+  @override
   final DateTime? createdAt;
   @override
   final DateTime? updatedAt;
-  @override
-  final String displayName;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Group(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, displayName: $displayName)';
+    return 'Group(id: $id, displayName: $displayName, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -159,9 +159,9 @@ class _$GroupImpl with DiagnosticableTreeMixin implements _Group {
     properties
       ..add(DiagnosticsProperty('type', 'Group'))
       ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('displayName', displayName))
       ..add(DiagnosticsProperty('createdAt', createdAt))
-      ..add(DiagnosticsProperty('updatedAt', updatedAt))
-      ..add(DiagnosticsProperty('displayName', displayName));
+      ..add(DiagnosticsProperty('updatedAt', updatedAt));
   }
 
   @override
@@ -170,18 +170,18 @@ class _$GroupImpl with DiagnosticableTreeMixin implements _Group {
         (other.runtimeType == runtimeType &&
             other is _$GroupImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.displayName, displayName) ||
+                other.displayName == displayName) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            (identical(other.displayName, displayName) ||
-                other.displayName == displayName));
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, createdAt, updatedAt, displayName);
+      Object.hash(runtimeType, id, displayName, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -200,20 +200,20 @@ class _$GroupImpl with DiagnosticableTreeMixin implements _Group {
 abstract class _Group implements Group {
   const factory _Group(
       {required final int id,
+      required final String displayName,
       final DateTime? createdAt,
-      final DateTime? updatedAt,
-      required final String displayName}) = _$GroupImpl;
+      final DateTime? updatedAt}) = _$GroupImpl;
 
   factory _Group.fromJson(Map<String, dynamic> json) = _$GroupImpl.fromJson;
 
   @override
   int get id;
   @override
+  String get displayName;
+  @override
   DateTime? get createdAt;
   @override
   DateTime? get updatedAt;
-  @override
-  String get displayName;
   @override
   @JsonKey(ignore: true)
   _$$GroupImplCopyWith<_$GroupImpl> get copyWith =>

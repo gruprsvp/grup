@@ -20,7 +20,9 @@ void main() {
     storage = MockStorage();
     when(
       () => storage.write(any(), any<dynamic>()),
-    ).thenAnswer((_) async {});
+    ).thenAnswer((_) async {
+      return null;
+    });
     HydratedBloc.storage = storage;
   });
 

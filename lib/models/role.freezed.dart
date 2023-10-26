@@ -21,14 +21,14 @@ Role _$RoleFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Role {
   int get id => throw _privateConstructorUsedError;
-  DateTime? get createdAt => throw _privateConstructorUsedError;
-  DateTime? get updatedAt => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   bool get canManageGroup => throw _privateConstructorUsedError;
   bool get canManageMembers => throw _privateConstructorUsedError;
   bool get canManageInvites => throw _privateConstructorUsedError;
   bool get canManageSchedules => throw _privateConstructorUsedError;
   bool get canManageReplies => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -42,14 +42,14 @@ abstract class $RoleCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      DateTime? createdAt,
-      DateTime? updatedAt,
       String displayName,
       bool canManageGroup,
       bool canManageMembers,
       bool canManageInvites,
       bool canManageSchedules,
-      bool canManageReplies});
+      bool canManageReplies,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -66,28 +66,20 @@ class _$RoleCopyWithImpl<$Res, $Val extends Role>
   @override
   $Res call({
     Object? id = null,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
     Object? displayName = null,
     Object? canManageGroup = null,
     Object? canManageMembers = null,
     Object? canManageInvites = null,
     Object? canManageSchedules = null,
     Object? canManageReplies = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       displayName: null == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
@@ -112,6 +104,14 @@ class _$RoleCopyWithImpl<$Res, $Val extends Role>
           ? _value.canManageReplies
           : canManageReplies // ignore: cast_nullable_to_non_nullable
               as bool,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -125,14 +125,14 @@ abstract class _$$RoleImplCopyWith<$Res> implements $RoleCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      DateTime? createdAt,
-      DateTime? updatedAt,
       String displayName,
       bool canManageGroup,
       bool canManageMembers,
       bool canManageInvites,
       bool canManageSchedules,
-      bool canManageReplies});
+      bool canManageReplies,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -146,28 +146,20 @@ class __$$RoleImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
     Object? displayName = null,
     Object? canManageGroup = null,
     Object? canManageMembers = null,
     Object? canManageInvites = null,
     Object? canManageSchedules = null,
     Object? canManageReplies = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_$RoleImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as int,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       displayName: null == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
@@ -192,6 +184,14 @@ class __$$RoleImplCopyWithImpl<$Res>
           ? _value.canManageReplies
           : canManageReplies // ignore: cast_nullable_to_non_nullable
               as bool,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -202,24 +202,20 @@ class __$$RoleImplCopyWithImpl<$Res>
 class _$RoleImpl with DiagnosticableTreeMixin implements _Role {
   const _$RoleImpl(
       {required this.id,
-      this.createdAt,
-      this.updatedAt,
       required this.displayName,
       required this.canManageGroup,
       required this.canManageMembers,
       required this.canManageInvites,
       required this.canManageSchedules,
-      required this.canManageReplies});
+      required this.canManageReplies,
+      this.createdAt,
+      this.updatedAt});
 
   factory _$RoleImpl.fromJson(Map<String, dynamic> json) =>
       _$$RoleImplFromJson(json);
 
   @override
   final int id;
-  @override
-  final DateTime? createdAt;
-  @override
-  final DateTime? updatedAt;
   @override
   final String displayName;
   @override
@@ -232,10 +228,14 @@ class _$RoleImpl with DiagnosticableTreeMixin implements _Role {
   final bool canManageSchedules;
   @override
   final bool canManageReplies;
+  @override
+  final DateTime? createdAt;
+  @override
+  final DateTime? updatedAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Role(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, displayName: $displayName, canManageGroup: $canManageGroup, canManageMembers: $canManageMembers, canManageInvites: $canManageInvites, canManageSchedules: $canManageSchedules, canManageReplies: $canManageReplies)';
+    return 'Role(id: $id, displayName: $displayName, canManageGroup: $canManageGroup, canManageMembers: $canManageMembers, canManageInvites: $canManageInvites, canManageSchedules: $canManageSchedules, canManageReplies: $canManageReplies, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -244,14 +244,14 @@ class _$RoleImpl with DiagnosticableTreeMixin implements _Role {
     properties
       ..add(DiagnosticsProperty('type', 'Role'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('createdAt', createdAt))
-      ..add(DiagnosticsProperty('updatedAt', updatedAt))
       ..add(DiagnosticsProperty('displayName', displayName))
       ..add(DiagnosticsProperty('canManageGroup', canManageGroup))
       ..add(DiagnosticsProperty('canManageMembers', canManageMembers))
       ..add(DiagnosticsProperty('canManageInvites', canManageInvites))
       ..add(DiagnosticsProperty('canManageSchedules', canManageSchedules))
-      ..add(DiagnosticsProperty('canManageReplies', canManageReplies));
+      ..add(DiagnosticsProperty('canManageReplies', canManageReplies))
+      ..add(DiagnosticsProperty('createdAt', createdAt))
+      ..add(DiagnosticsProperty('updatedAt', updatedAt));
   }
 
   @override
@@ -260,10 +260,6 @@ class _$RoleImpl with DiagnosticableTreeMixin implements _Role {
         (other.runtimeType == runtimeType &&
             other is _$RoleImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
             (identical(other.displayName, displayName) ||
                 other.displayName == displayName) &&
             (identical(other.canManageGroup, canManageGroup) ||
@@ -275,7 +271,11 @@ class _$RoleImpl with DiagnosticableTreeMixin implements _Role {
             (identical(other.canManageSchedules, canManageSchedules) ||
                 other.canManageSchedules == canManageSchedules) &&
             (identical(other.canManageReplies, canManageReplies) ||
-                other.canManageReplies == canManageReplies));
+                other.canManageReplies == canManageReplies) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(ignore: true)
@@ -283,14 +283,14 @@ class _$RoleImpl with DiagnosticableTreeMixin implements _Role {
   int get hashCode => Object.hash(
       runtimeType,
       id,
-      createdAt,
-      updatedAt,
       displayName,
       canManageGroup,
       canManageMembers,
       canManageInvites,
       canManageSchedules,
-      canManageReplies);
+      canManageReplies,
+      createdAt,
+      updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -309,23 +309,19 @@ class _$RoleImpl with DiagnosticableTreeMixin implements _Role {
 abstract class _Role implements Role {
   const factory _Role(
       {required final int id,
-      final DateTime? createdAt,
-      final DateTime? updatedAt,
       required final String displayName,
       required final bool canManageGroup,
       required final bool canManageMembers,
       required final bool canManageInvites,
       required final bool canManageSchedules,
-      required final bool canManageReplies}) = _$RoleImpl;
+      required final bool canManageReplies,
+      final DateTime? createdAt,
+      final DateTime? updatedAt}) = _$RoleImpl;
 
   factory _Role.fromJson(Map<String, dynamic> json) = _$RoleImpl.fromJson;
 
   @override
   int get id;
-  @override
-  DateTime? get createdAt;
-  @override
-  DateTime? get updatedAt;
   @override
   String get displayName;
   @override
@@ -338,6 +334,10 @@ abstract class _Role implements Role {
   bool get canManageSchedules;
   @override
   bool get canManageReplies;
+  @override
+  DateTime? get createdAt;
+  @override
+  DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)
   _$$RoleImplCopyWith<_$RoleImpl> get copyWith =>

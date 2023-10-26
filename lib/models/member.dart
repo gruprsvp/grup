@@ -9,12 +9,12 @@ sealed class Member with _$Member {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Member({
     required String id,
+    required int groupId,
+    required int roleId,
+    int? profileId,
+    String? displayNameOverride,
     DateTime? createdAt,
     DateTime? updatedAt,
-    required int groupId,
-    int? profileId,
-    required int roleId,
-    String? displayNameOverride,
   }) = _Member;
 
   factory Member.fromJson(Map<String, dynamic> json) => _$MemberFromJson(json);

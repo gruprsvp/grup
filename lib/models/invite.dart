@@ -10,11 +10,11 @@ sealed class Invite with _$Invite {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Invite({
     required String id,
-    DateTime? createdAt,
-    DateTime? updatedAt,
     required int memberId,
     required InviteMethods method,
     required String value,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) = _Invite;
 
   factory Invite.fromJson(Map<String, dynamic> json) => _$InviteFromJson(json);

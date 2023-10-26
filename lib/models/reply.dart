@@ -10,12 +10,12 @@ sealed class Reply with _$Reply {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Reply({
     required String id,
-    DateTime? createdAt,
-    DateTime? updatedAt,
     required int memberId,
     required int scheduleId,
     required DateTime eventDate,
     required ReplyOptions selectedOption,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) = _Reply;
 
   factory Reply.fromJson(Map<String, dynamic> json) => _$ReplyFromJson(json);

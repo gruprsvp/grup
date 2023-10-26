@@ -1,4 +1,3 @@
-import 'package:parousia/models/models.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 class GroupsRepository {

@@ -21,9 +21,9 @@ Profile _$ProfileFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Profile {
   String get id => throw _privateConstructorUsedError;
+  String get displayName => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
-  String get displayName => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -37,9 +37,9 @@ abstract class $ProfileCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
+      String displayName,
       DateTime? createdAt,
-      DateTime? updatedAt,
-      String displayName});
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -56,14 +56,18 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
   @override
   $Res call({
     Object? id = null,
+    Object? displayName = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? displayName = null,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      displayName: null == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -73,10 +77,6 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      displayName: null == displayName
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
-              as String,
     ) as $Val);
   }
 }
@@ -90,9 +90,9 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
+      String displayName,
       DateTime? createdAt,
-      DateTime? updatedAt,
-      String displayName});
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -107,14 +107,18 @@ class __$$ProfileImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? displayName = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? displayName = null,
   }) {
     return _then(_$ProfileImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      displayName: null == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
               as String,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -124,10 +128,6 @@ class __$$ProfileImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      displayName: null == displayName
-          ? _value.displayName
-          : displayName // ignore: cast_nullable_to_non_nullable
-              as String,
     ));
   }
 }
@@ -138,9 +138,9 @@ class __$$ProfileImplCopyWithImpl<$Res>
 class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   const _$ProfileImpl(
       {required this.id,
+      required this.displayName,
       this.createdAt,
-      this.updatedAt,
-      required this.displayName});
+      this.updatedAt});
 
   factory _$ProfileImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileImplFromJson(json);
@@ -148,15 +148,15 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   @override
   final String id;
   @override
+  final String displayName;
+  @override
   final DateTime? createdAt;
   @override
   final DateTime? updatedAt;
-  @override
-  final String displayName;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Profile(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, displayName: $displayName)';
+    return 'Profile(id: $id, displayName: $displayName, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -165,9 +165,9 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
     properties
       ..add(DiagnosticsProperty('type', 'Profile'))
       ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('displayName', displayName))
       ..add(DiagnosticsProperty('createdAt', createdAt))
-      ..add(DiagnosticsProperty('updatedAt', updatedAt))
-      ..add(DiagnosticsProperty('displayName', displayName));
+      ..add(DiagnosticsProperty('updatedAt', updatedAt));
   }
 
   @override
@@ -176,18 +176,18 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
         (other.runtimeType == runtimeType &&
             other is _$ProfileImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.displayName, displayName) ||
+                other.displayName == displayName) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            (identical(other.displayName, displayName) ||
-                other.displayName == displayName));
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, createdAt, updatedAt, displayName);
+      Object.hash(runtimeType, id, displayName, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -206,20 +206,20 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
 abstract class _Profile implements Profile {
   const factory _Profile(
       {required final String id,
+      required final String displayName,
       final DateTime? createdAt,
-      final DateTime? updatedAt,
-      required final String displayName}) = _$ProfileImpl;
+      final DateTime? updatedAt}) = _$ProfileImpl;
 
   factory _Profile.fromJson(Map<String, dynamic> json) = _$ProfileImpl.fromJson;
 
   @override
   String get id;
   @override
+  String get displayName;
+  @override
   DateTime? get createdAt;
   @override
   DateTime? get updatedAt;
-  @override
-  String get displayName;
   @override
   @JsonKey(ignore: true)
   _$$ProfileImplCopyWith<_$ProfileImpl> get copyWith =>

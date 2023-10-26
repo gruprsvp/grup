@@ -21,12 +21,12 @@ Member _$MemberFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Member {
   String get id => throw _privateConstructorUsedError;
+  int get groupId => throw _privateConstructorUsedError;
+  int get roleId => throw _privateConstructorUsedError;
+  int? get profileId => throw _privateConstructorUsedError;
+  String? get displayNameOverride => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
-  int get groupId => throw _privateConstructorUsedError;
-  int? get profileId => throw _privateConstructorUsedError;
-  int get roleId => throw _privateConstructorUsedError;
-  String? get displayNameOverride => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,12 +40,12 @@ abstract class $MemberCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      DateTime? createdAt,
-      DateTime? updatedAt,
       int groupId,
-      int? profileId,
       int roleId,
-      String? displayNameOverride});
+      int? profileId,
+      String? displayNameOverride,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -62,18 +62,34 @@ class _$MemberCopyWithImpl<$Res, $Val extends Member>
   @override
   $Res call({
     Object? id = null,
+    Object? groupId = null,
+    Object? roleId = null,
+    Object? profileId = freezed,
+    Object? displayNameOverride = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? groupId = null,
-    Object? profileId = freezed,
-    Object? roleId = null,
-    Object? displayNameOverride = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      groupId: null == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as int,
+      roleId: null == roleId
+          ? _value.roleId
+          : roleId // ignore: cast_nullable_to_non_nullable
+              as int,
+      profileId: freezed == profileId
+          ? _value.profileId
+          : profileId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      displayNameOverride: freezed == displayNameOverride
+          ? _value.displayNameOverride
+          : displayNameOverride // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -82,22 +98,6 @@ class _$MemberCopyWithImpl<$Res, $Val extends Member>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      groupId: null == groupId
-          ? _value.groupId
-          : groupId // ignore: cast_nullable_to_non_nullable
-              as int,
-      profileId: freezed == profileId
-          ? _value.profileId
-          : profileId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      roleId: null == roleId
-          ? _value.roleId
-          : roleId // ignore: cast_nullable_to_non_nullable
-              as int,
-      displayNameOverride: freezed == displayNameOverride
-          ? _value.displayNameOverride
-          : displayNameOverride // ignore: cast_nullable_to_non_nullable
-              as String?,
     ) as $Val);
   }
 }
@@ -111,12 +111,12 @@ abstract class _$$MemberImplCopyWith<$Res> implements $MemberCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      DateTime? createdAt,
-      DateTime? updatedAt,
       int groupId,
-      int? profileId,
       int roleId,
-      String? displayNameOverride});
+      int? profileId,
+      String? displayNameOverride,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -131,18 +131,34 @@ class __$$MemberImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
+    Object? groupId = null,
+    Object? roleId = null,
+    Object? profileId = freezed,
+    Object? displayNameOverride = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
-    Object? groupId = null,
-    Object? profileId = freezed,
-    Object? roleId = null,
-    Object? displayNameOverride = freezed,
   }) {
     return _then(_$MemberImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
+      groupId: null == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
+              as int,
+      roleId: null == roleId
+          ? _value.roleId
+          : roleId // ignore: cast_nullable_to_non_nullable
+              as int,
+      profileId: freezed == profileId
+          ? _value.profileId
+          : profileId // ignore: cast_nullable_to_non_nullable
+              as int?,
+      displayNameOverride: freezed == displayNameOverride
+          ? _value.displayNameOverride
+          : displayNameOverride // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -151,22 +167,6 @@ class __$$MemberImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
-      groupId: null == groupId
-          ? _value.groupId
-          : groupId // ignore: cast_nullable_to_non_nullable
-              as int,
-      profileId: freezed == profileId
-          ? _value.profileId
-          : profileId // ignore: cast_nullable_to_non_nullable
-              as int?,
-      roleId: null == roleId
-          ? _value.roleId
-          : roleId // ignore: cast_nullable_to_non_nullable
-              as int,
-      displayNameOverride: freezed == displayNameOverride
-          ? _value.displayNameOverride
-          : displayNameOverride // ignore: cast_nullable_to_non_nullable
-              as String?,
     ));
   }
 }
@@ -177,12 +177,12 @@ class __$$MemberImplCopyWithImpl<$Res>
 class _$MemberImpl with DiagnosticableTreeMixin implements _Member {
   const _$MemberImpl(
       {required this.id,
-      this.createdAt,
-      this.updatedAt,
       required this.groupId,
-      this.profileId,
       required this.roleId,
-      this.displayNameOverride});
+      this.profileId,
+      this.displayNameOverride,
+      this.createdAt,
+      this.updatedAt});
 
   factory _$MemberImpl.fromJson(Map<String, dynamic> json) =>
       _$$MemberImplFromJson(json);
@@ -190,21 +190,21 @@ class _$MemberImpl with DiagnosticableTreeMixin implements _Member {
   @override
   final String id;
   @override
-  final DateTime? createdAt;
-  @override
-  final DateTime? updatedAt;
-  @override
   final int groupId;
-  @override
-  final int? profileId;
   @override
   final int roleId;
   @override
+  final int? profileId;
+  @override
   final String? displayNameOverride;
+  @override
+  final DateTime? createdAt;
+  @override
+  final DateTime? updatedAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Member(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, groupId: $groupId, profileId: $profileId, roleId: $roleId, displayNameOverride: $displayNameOverride)';
+    return 'Member(id: $id, groupId: $groupId, roleId: $roleId, profileId: $profileId, displayNameOverride: $displayNameOverride, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -213,12 +213,12 @@ class _$MemberImpl with DiagnosticableTreeMixin implements _Member {
     properties
       ..add(DiagnosticsProperty('type', 'Member'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('createdAt', createdAt))
-      ..add(DiagnosticsProperty('updatedAt', updatedAt))
       ..add(DiagnosticsProperty('groupId', groupId))
-      ..add(DiagnosticsProperty('profileId', profileId))
       ..add(DiagnosticsProperty('roleId', roleId))
-      ..add(DiagnosticsProperty('displayNameOverride', displayNameOverride));
+      ..add(DiagnosticsProperty('profileId', profileId))
+      ..add(DiagnosticsProperty('displayNameOverride', displayNameOverride))
+      ..add(DiagnosticsProperty('createdAt', createdAt))
+      ..add(DiagnosticsProperty('updatedAt', updatedAt));
   }
 
   @override
@@ -227,22 +227,22 @@ class _$MemberImpl with DiagnosticableTreeMixin implements _Member {
         (other.runtimeType == runtimeType &&
             other is _$MemberImpl &&
             (identical(other.id, id) || other.id == id) &&
+            (identical(other.groupId, groupId) || other.groupId == groupId) &&
+            (identical(other.roleId, roleId) || other.roleId == roleId) &&
+            (identical(other.profileId, profileId) ||
+                other.profileId == profileId) &&
+            (identical(other.displayNameOverride, displayNameOverride) ||
+                other.displayNameOverride == displayNameOverride) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
-            (identical(other.groupId, groupId) || other.groupId == groupId) &&
-            (identical(other.profileId, profileId) ||
-                other.profileId == profileId) &&
-            (identical(other.roleId, roleId) || other.roleId == roleId) &&
-            (identical(other.displayNameOverride, displayNameOverride) ||
-                other.displayNameOverride == displayNameOverride));
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, createdAt, updatedAt,
-      groupId, profileId, roleId, displayNameOverride);
+  int get hashCode => Object.hash(runtimeType, id, groupId, roleId, profileId,
+      displayNameOverride, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -261,29 +261,29 @@ class _$MemberImpl with DiagnosticableTreeMixin implements _Member {
 abstract class _Member implements Member {
   const factory _Member(
       {required final String id,
-      final DateTime? createdAt,
-      final DateTime? updatedAt,
       required final int groupId,
-      final int? profileId,
       required final int roleId,
-      final String? displayNameOverride}) = _$MemberImpl;
+      final int? profileId,
+      final String? displayNameOverride,
+      final DateTime? createdAt,
+      final DateTime? updatedAt}) = _$MemberImpl;
 
   factory _Member.fromJson(Map<String, dynamic> json) = _$MemberImpl.fromJson;
 
   @override
   String get id;
   @override
-  DateTime? get createdAt;
-  @override
-  DateTime? get updatedAt;
-  @override
   int get groupId;
-  @override
-  int? get profileId;
   @override
   int get roleId;
   @override
+  int? get profileId;
+  @override
   String? get displayNameOverride;
+  @override
+  DateTime? get createdAt;
+  @override
+  DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)
   _$$MemberImplCopyWith<_$MemberImpl> get copyWith =>

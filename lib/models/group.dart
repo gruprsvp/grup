@@ -9,9 +9,9 @@ sealed class Group with _$Group {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Group({
     required int id,
+    required String displayName,
     DateTime? createdAt,
     DateTime? updatedAt,
-    required String displayName,
   }) = _Group;
 
   factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);

@@ -11,12 +11,12 @@ sealed class DefaultReply with _$DefaultReply {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory DefaultReply({
     required String id,
-    DateTime? createdAt,
-    DateTime? updatedAt,
     required int memberId,
     required int scheduleId,
     required ReplyOptions selectedOption,
     required RecurrenceRule recurrenceRule,
+    DateTime? createdAt,
+    DateTime? updatedAt,
   }) = _DefaultReply;
 
   factory DefaultReply.fromJson(Map<String, dynamic> json) =>

@@ -9,9 +9,9 @@ sealed class Profile with _$Profile {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Profile({
     required String id,
+    required String displayName,
     DateTime? createdAt,
     DateTime? updatedAt,
-    required String displayName,
   }) = _Profile;
 
   factory Profile.fromJson(Map<String, dynamic> json) =>

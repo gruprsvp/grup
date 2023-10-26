@@ -21,12 +21,12 @@ Reply _$ReplyFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Reply {
   String get id => throw _privateConstructorUsedError;
-  DateTime? get createdAt => throw _privateConstructorUsedError;
-  DateTime? get updatedAt => throw _privateConstructorUsedError;
   int get memberId => throw _privateConstructorUsedError;
   int get scheduleId => throw _privateConstructorUsedError;
   DateTime get eventDate => throw _privateConstructorUsedError;
   ReplyOptions get selectedOption => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,12 +40,12 @@ abstract class $ReplyCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      DateTime? createdAt,
-      DateTime? updatedAt,
       int memberId,
       int scheduleId,
       DateTime eventDate,
-      ReplyOptions selectedOption});
+      ReplyOptions selectedOption,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -62,26 +62,18 @@ class _$ReplyCopyWithImpl<$Res, $Val extends Reply>
   @override
   $Res call({
     Object? id = null,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
     Object? memberId = null,
     Object? scheduleId = null,
     Object? eventDate = null,
     Object? selectedOption = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
@@ -98,6 +90,14 @@ class _$ReplyCopyWithImpl<$Res, $Val extends Reply>
           ? _value.selectedOption
           : selectedOption // ignore: cast_nullable_to_non_nullable
               as ReplyOptions,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -111,12 +111,12 @@ abstract class _$$ReplyImplCopyWith<$Res> implements $ReplyCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      DateTime? createdAt,
-      DateTime? updatedAt,
       int memberId,
       int scheduleId,
       DateTime eventDate,
-      ReplyOptions selectedOption});
+      ReplyOptions selectedOption,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -131,26 +131,18 @@ class __$$ReplyImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
     Object? memberId = null,
     Object? scheduleId = null,
     Object? eventDate = null,
     Object? selectedOption = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_$ReplyImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
@@ -167,6 +159,14 @@ class __$$ReplyImplCopyWithImpl<$Res>
           ? _value.selectedOption
           : selectedOption // ignore: cast_nullable_to_non_nullable
               as ReplyOptions,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -177,22 +177,18 @@ class __$$ReplyImplCopyWithImpl<$Res>
 class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
   const _$ReplyImpl(
       {required this.id,
-      this.createdAt,
-      this.updatedAt,
       required this.memberId,
       required this.scheduleId,
       required this.eventDate,
-      required this.selectedOption});
+      required this.selectedOption,
+      this.createdAt,
+      this.updatedAt});
 
   factory _$ReplyImpl.fromJson(Map<String, dynamic> json) =>
       _$$ReplyImplFromJson(json);
 
   @override
   final String id;
-  @override
-  final DateTime? createdAt;
-  @override
-  final DateTime? updatedAt;
   @override
   final int memberId;
   @override
@@ -201,10 +197,14 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
   final DateTime eventDate;
   @override
   final ReplyOptions selectedOption;
+  @override
+  final DateTime? createdAt;
+  @override
+  final DateTime? updatedAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Reply(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, memberId: $memberId, scheduleId: $scheduleId, eventDate: $eventDate, selectedOption: $selectedOption)';
+    return 'Reply(id: $id, memberId: $memberId, scheduleId: $scheduleId, eventDate: $eventDate, selectedOption: $selectedOption, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -213,12 +213,12 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
     properties
       ..add(DiagnosticsProperty('type', 'Reply'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('createdAt', createdAt))
-      ..add(DiagnosticsProperty('updatedAt', updatedAt))
       ..add(DiagnosticsProperty('memberId', memberId))
       ..add(DiagnosticsProperty('scheduleId', scheduleId))
       ..add(DiagnosticsProperty('eventDate', eventDate))
-      ..add(DiagnosticsProperty('selectedOption', selectedOption));
+      ..add(DiagnosticsProperty('selectedOption', selectedOption))
+      ..add(DiagnosticsProperty('createdAt', createdAt))
+      ..add(DiagnosticsProperty('updatedAt', updatedAt));
   }
 
   @override
@@ -227,10 +227,6 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
         (other.runtimeType == runtimeType &&
             other is _$ReplyImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
             (identical(other.memberId, memberId) ||
                 other.memberId == memberId) &&
             (identical(other.scheduleId, scheduleId) ||
@@ -238,13 +234,17 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
             (identical(other.eventDate, eventDate) ||
                 other.eventDate == eventDate) &&
             (identical(other.selectedOption, selectedOption) ||
-                other.selectedOption == selectedOption));
+                other.selectedOption == selectedOption) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, createdAt, updatedAt,
-      memberId, scheduleId, eventDate, selectedOption);
+  int get hashCode => Object.hash(runtimeType, id, memberId, scheduleId,
+      eventDate, selectedOption, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -263,21 +263,17 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
 abstract class _Reply implements Reply {
   const factory _Reply(
       {required final String id,
-      final DateTime? createdAt,
-      final DateTime? updatedAt,
       required final int memberId,
       required final int scheduleId,
       required final DateTime eventDate,
-      required final ReplyOptions selectedOption}) = _$ReplyImpl;
+      required final ReplyOptions selectedOption,
+      final DateTime? createdAt,
+      final DateTime? updatedAt}) = _$ReplyImpl;
 
   factory _Reply.fromJson(Map<String, dynamic> json) = _$ReplyImpl.fromJson;
 
   @override
   String get id;
-  @override
-  DateTime? get createdAt;
-  @override
-  DateTime? get updatedAt;
   @override
   int get memberId;
   @override
@@ -286,6 +282,10 @@ abstract class _Reply implements Reply {
   DateTime get eventDate;
   @override
   ReplyOptions get selectedOption;
+  @override
+  DateTime? get createdAt;
+  @override
+  DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)
   _$$ReplyImplCopyWith<_$ReplyImpl> get copyWith =>

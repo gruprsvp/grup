@@ -21,11 +21,11 @@ Invite _$InviteFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Invite {
   String get id => throw _privateConstructorUsedError;
-  DateTime? get createdAt => throw _privateConstructorUsedError;
-  DateTime? get updatedAt => throw _privateConstructorUsedError;
   int get memberId => throw _privateConstructorUsedError;
   InviteMethods get method => throw _privateConstructorUsedError;
   String get value => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -39,11 +39,11 @@ abstract class $InviteCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      DateTime? createdAt,
-      DateTime? updatedAt,
       int memberId,
       InviteMethods method,
-      String value});
+      String value,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -60,25 +60,17 @@ class _$InviteCopyWithImpl<$Res, $Val extends Invite>
   @override
   $Res call({
     Object? id = null,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
     Object? memberId = null,
     Object? method = null,
     Object? value = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
@@ -91,6 +83,14 @@ class _$InviteCopyWithImpl<$Res, $Val extends Invite>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -104,11 +104,11 @@ abstract class _$$InviteImplCopyWith<$Res> implements $InviteCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      DateTime? createdAt,
-      DateTime? updatedAt,
       int memberId,
       InviteMethods method,
-      String value});
+      String value,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -123,25 +123,17 @@ class __$$InviteImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
     Object? memberId = null,
     Object? method = null,
     Object? value = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_$InviteImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
@@ -154,6 +146,14 @@ class __$$InviteImplCopyWithImpl<$Res>
           ? _value.value
           : value // ignore: cast_nullable_to_non_nullable
               as String,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -164,11 +164,11 @@ class __$$InviteImplCopyWithImpl<$Res>
 class _$InviteImpl with DiagnosticableTreeMixin implements _Invite {
   const _$InviteImpl(
       {required this.id,
-      this.createdAt,
-      this.updatedAt,
       required this.memberId,
       required this.method,
-      required this.value});
+      required this.value,
+      this.createdAt,
+      this.updatedAt});
 
   factory _$InviteImpl.fromJson(Map<String, dynamic> json) =>
       _$$InviteImplFromJson(json);
@@ -176,19 +176,19 @@ class _$InviteImpl with DiagnosticableTreeMixin implements _Invite {
   @override
   final String id;
   @override
-  final DateTime? createdAt;
-  @override
-  final DateTime? updatedAt;
-  @override
   final int memberId;
   @override
   final InviteMethods method;
   @override
   final String value;
+  @override
+  final DateTime? createdAt;
+  @override
+  final DateTime? updatedAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Invite(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, memberId: $memberId, method: $method, value: $value)';
+    return 'Invite(id: $id, memberId: $memberId, method: $method, value: $value, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -197,11 +197,11 @@ class _$InviteImpl with DiagnosticableTreeMixin implements _Invite {
     properties
       ..add(DiagnosticsProperty('type', 'Invite'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('createdAt', createdAt))
-      ..add(DiagnosticsProperty('updatedAt', updatedAt))
       ..add(DiagnosticsProperty('memberId', memberId))
       ..add(DiagnosticsProperty('method', method))
-      ..add(DiagnosticsProperty('value', value));
+      ..add(DiagnosticsProperty('value', value))
+      ..add(DiagnosticsProperty('createdAt', createdAt))
+      ..add(DiagnosticsProperty('updatedAt', updatedAt));
   }
 
   @override
@@ -210,20 +210,20 @@ class _$InviteImpl with DiagnosticableTreeMixin implements _Invite {
         (other.runtimeType == runtimeType &&
             other is _$InviteImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
             (identical(other.memberId, memberId) ||
                 other.memberId == memberId) &&
             (identical(other.method, method) || other.method == method) &&
-            (identical(other.value, value) || other.value == value));
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, createdAt, updatedAt, memberId, method, value);
+      runtimeType, id, memberId, method, value, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -242,26 +242,26 @@ class _$InviteImpl with DiagnosticableTreeMixin implements _Invite {
 abstract class _Invite implements Invite {
   const factory _Invite(
       {required final String id,
-      final DateTime? createdAt,
-      final DateTime? updatedAt,
       required final int memberId,
       required final InviteMethods method,
-      required final String value}) = _$InviteImpl;
+      required final String value,
+      final DateTime? createdAt,
+      final DateTime? updatedAt}) = _$InviteImpl;
 
   factory _Invite.fromJson(Map<String, dynamic> json) = _$InviteImpl.fromJson;
 
   @override
   String get id;
   @override
-  DateTime? get createdAt;
-  @override
-  DateTime? get updatedAt;
-  @override
   int get memberId;
   @override
   InviteMethods get method;
   @override
   String get value;
+  @override
+  DateTime? get createdAt;
+  @override
+  DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)
   _$$InviteImplCopyWith<_$InviteImpl> get copyWith =>

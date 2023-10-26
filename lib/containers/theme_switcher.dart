@@ -16,6 +16,7 @@ class ThemeSwitcher extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<RootState, _ViewModel>(
+      distinct: true,
       converter: _ViewModel.fromStore,
       builder: (context, vm) {
         final (icon, subtitle) = switch (vm.themeMode) {

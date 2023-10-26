@@ -21,11 +21,11 @@ Schedule _$ScheduleFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Schedule {
   String get id => throw _privateConstructorUsedError;
-  DateTime? get createdAt => throw _privateConstructorUsedError;
-  DateTime? get updatedAt => throw _privateConstructorUsedError;
   int get groupId => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   RecurrenceRule get recurrenceRule => throw _privateConstructorUsedError;
+  DateTime? get createdAt => throw _privateConstructorUsedError;
+  DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -40,11 +40,11 @@ abstract class $ScheduleCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      DateTime? createdAt,
-      DateTime? updatedAt,
       int groupId,
       String displayName,
-      RecurrenceRule recurrenceRule});
+      RecurrenceRule recurrenceRule,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -61,25 +61,17 @@ class _$ScheduleCopyWithImpl<$Res, $Val extends Schedule>
   @override
   $Res call({
     Object? id = null,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
     Object? groupId = null,
     Object? displayName = null,
     Object? recurrenceRule = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       groupId: null == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
@@ -92,6 +84,14 @@ class _$ScheduleCopyWithImpl<$Res, $Val extends Schedule>
           ? _value.recurrenceRule
           : recurrenceRule // ignore: cast_nullable_to_non_nullable
               as RecurrenceRule,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ) as $Val);
   }
 }
@@ -106,11 +106,11 @@ abstract class _$$ScheduleImplCopyWith<$Res>
   @useResult
   $Res call(
       {String id,
-      DateTime? createdAt,
-      DateTime? updatedAt,
       int groupId,
       String displayName,
-      RecurrenceRule recurrenceRule});
+      RecurrenceRule recurrenceRule,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -125,25 +125,17 @@ class __$$ScheduleImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
     Object? groupId = null,
     Object? displayName = null,
     Object? recurrenceRule = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
   }) {
     return _then(_$ScheduleImpl(
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
       groupId: null == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
@@ -156,6 +148,14 @@ class __$$ScheduleImplCopyWithImpl<$Res>
           ? _value.recurrenceRule
           : recurrenceRule // ignore: cast_nullable_to_non_nullable
               as RecurrenceRule,
+      createdAt: freezed == createdAt
+          ? _value.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _value.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
     ));
   }
 }
@@ -166,11 +166,11 @@ class __$$ScheduleImplCopyWithImpl<$Res>
 class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
   const _$ScheduleImpl(
       {required this.id,
-      this.createdAt,
-      this.updatedAt,
       required this.groupId,
       required this.displayName,
-      required this.recurrenceRule});
+      required this.recurrenceRule,
+      this.createdAt,
+      this.updatedAt});
 
   factory _$ScheduleImpl.fromJson(Map<String, dynamic> json) =>
       _$$ScheduleImplFromJson(json);
@@ -178,19 +178,19 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
   @override
   final String id;
   @override
-  final DateTime? createdAt;
-  @override
-  final DateTime? updatedAt;
-  @override
   final int groupId;
   @override
   final String displayName;
   @override
   final RecurrenceRule recurrenceRule;
+  @override
+  final DateTime? createdAt;
+  @override
+  final DateTime? updatedAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Schedule(id: $id, createdAt: $createdAt, updatedAt: $updatedAt, groupId: $groupId, displayName: $displayName, recurrenceRule: $recurrenceRule)';
+    return 'Schedule(id: $id, groupId: $groupId, displayName: $displayName, recurrenceRule: $recurrenceRule, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -199,11 +199,11 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
     properties
       ..add(DiagnosticsProperty('type', 'Schedule'))
       ..add(DiagnosticsProperty('id', id))
-      ..add(DiagnosticsProperty('createdAt', createdAt))
-      ..add(DiagnosticsProperty('updatedAt', updatedAt))
       ..add(DiagnosticsProperty('groupId', groupId))
       ..add(DiagnosticsProperty('displayName', displayName))
-      ..add(DiagnosticsProperty('recurrenceRule', recurrenceRule));
+      ..add(DiagnosticsProperty('recurrenceRule', recurrenceRule))
+      ..add(DiagnosticsProperty('createdAt', createdAt))
+      ..add(DiagnosticsProperty('updatedAt', updatedAt));
   }
 
   @override
@@ -212,21 +212,21 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
         (other.runtimeType == runtimeType &&
             other is _$ScheduleImpl &&
             (identical(other.id, id) || other.id == id) &&
-            (identical(other.createdAt, createdAt) ||
-                other.createdAt == createdAt) &&
-            (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt) &&
             (identical(other.groupId, groupId) || other.groupId == groupId) &&
             (identical(other.displayName, displayName) ||
                 other.displayName == displayName) &&
             (identical(other.recurrenceRule, recurrenceRule) ||
-                other.recurrenceRule == recurrenceRule));
+                other.recurrenceRule == recurrenceRule) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, createdAt, updatedAt,
-      groupId, displayName, recurrenceRule);
+  int get hashCode => Object.hash(runtimeType, id, groupId, displayName,
+      recurrenceRule, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -245,11 +245,11 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
 abstract class _Schedule implements Schedule {
   const factory _Schedule(
       {required final String id,
-      final DateTime? createdAt,
-      final DateTime? updatedAt,
       required final int groupId,
       required final String displayName,
-      required final RecurrenceRule recurrenceRule}) = _$ScheduleImpl;
+      required final RecurrenceRule recurrenceRule,
+      final DateTime? createdAt,
+      final DateTime? updatedAt}) = _$ScheduleImpl;
 
   factory _Schedule.fromJson(Map<String, dynamic> json) =
       _$ScheduleImpl.fromJson;
@@ -257,15 +257,15 @@ abstract class _Schedule implements Schedule {
   @override
   String get id;
   @override
-  DateTime? get createdAt;
-  @override
-  DateTime? get updatedAt;
-  @override
   int get groupId;
   @override
   String get displayName;
   @override
   RecurrenceRule get recurrenceRule;
+  @override
+  DateTime? get createdAt;
+  @override
+  DateTime? get updatedAt;
   @override
   @JsonKey(ignore: true)
   _$$ScheduleImplCopyWith<_$ScheduleImpl> get copyWith =>

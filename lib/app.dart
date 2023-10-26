@@ -27,7 +27,7 @@ final _routerConfig = GoRouter(
 /// The app entry-point
 class ParApp extends StatelessWidget {
   /// Creates a [ParApp].
-  const ParApp({super.key, required this.store});
+  const ParApp({required this.store, super.key});
 
   final Store<RootState> store;
 

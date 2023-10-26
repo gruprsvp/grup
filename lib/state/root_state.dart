@@ -11,7 +11,7 @@ sealed class RootState with _$RootState {
     @Default(ThemeMode.system) ThemeMode themeMode,
   }) = _RootState;
 
-  factory RootState.initialState() => RootState();
+  factory RootState.initialState() => const RootState();
 
   factory RootState.fromJson(Map<String, dynamic> json) =>
       _$RootStateFromJson(json);
