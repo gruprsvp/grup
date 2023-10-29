@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:parousia/app.dart';
-import 'package:parousia/data/groups.dart';
 import 'package:parousia/epics/epics.dart';
 import 'package:parousia/reducers/reducers.dart';
 import 'package:parousia/repositories/repositories.dart';
@@ -13,6 +12,7 @@ import 'package:redux_persist_flutter/redux_persist_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'actions/actions.dart';
+import 'router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,11 +39,14 @@ Future<void> main() async {
   await supabasePromise;
 
   final supabase = Supabase.instance.client;
-  final dataProviderGroups = DataProviderGroups(supabase: supabase);
-  final groupsRepository = GroupsRepository(groups: dataProviderGroups);
+  final groupsRepository = GroupsRepository(supabase: supabase);
+  final profilesRepository = ProfilesRepository(supabase: supabase);
 
   final epics = combineEpics<RootState>([
+    createRouterEpics(router),
     createLoadGroupsEpic(groupsRepository),
+    createLoadOwnProfileEpic(profilesRepository),
+    createNavigateToProfilePageEpic(),
   ]);
 
   final store = Store<RootState>(
@@ -56,8 +59,8 @@ Future<void> main() async {
   );
 
   // Propagate auth state changes to the store
-  supabase.auth.onAuthStateChange.listen(
-      (authState) => store.dispatch(AuthStateChangedAction(authState.event)));
+  supabase.auth.onAuthStateChange
+      .listen((authState) => store.dispatch(AuthStateChangedAction(authState)));
 
   runApp(
     ParApp(store: store),

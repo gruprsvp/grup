@@ -9,7 +9,7 @@ part of 'profile.dart';
 _$ProfileImpl _$$ProfileImplFromJson(Map<String, dynamic> json) =>
     _$ProfileImpl(
       id: json['id'] as String,
-      displayName: json['display_name'] as String,
+      displayName: json['display_name'] as String?,
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),

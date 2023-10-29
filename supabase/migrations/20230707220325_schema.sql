@@ -41,7 +41,7 @@ create table profiles
     created_at   timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at   timestamp with time zone default timezone('utc'::text, now()) not null,
 
-    display_name text                                                          not null
+    display_name text -- not null
 );
 comment on table profiles is 'User profiles that apply across multiple groups.';
 comment on column profiles.display_name is 'The user name, as seen by other users.';
@@ -171,6 +171,10 @@ begin
                      and group_id = check_group_id);
 end;
 $$ language plpgsql;
+
+create policy "Users can read their own profile"
+    on profiles
+    for select using (id = auth.uid());
 
 -- create policy "Only group members can read group data"
 --     on groups

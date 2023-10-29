@@ -21,7 +21,7 @@ Profile _$ProfileFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$Profile {
   String get id => throw _privateConstructorUsedError;
-  String get displayName => throw _privateConstructorUsedError;
+  String? get displayName => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
@@ -37,7 +37,7 @@ abstract class $ProfileCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String displayName,
+      String? displayName,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
@@ -56,7 +56,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
   @override
   $Res call({
     Object? id = null,
-    Object? displayName = null,
+    Object? displayName = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -65,10 +65,10 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      displayName: null == displayName
+      displayName: freezed == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -90,7 +90,7 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   @useResult
   $Res call(
       {String id,
-      String displayName,
+      String? displayName,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
@@ -107,7 +107,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? id = null,
-    Object? displayName = null,
+    Object? displayName = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -116,10 +116,10 @@ class __$$ProfileImplCopyWithImpl<$Res>
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
               as String,
-      displayName: null == displayName
+      displayName: freezed == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
-              as String,
+              as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -137,10 +137,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   const _$ProfileImpl(
-      {required this.id,
-      required this.displayName,
-      this.createdAt,
-      this.updatedAt});
+      {required this.id, this.displayName, this.createdAt, this.updatedAt});
 
   factory _$ProfileImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileImplFromJson(json);
@@ -148,7 +145,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   @override
   final String id;
   @override
-  final String displayName;
+  final String? displayName;
   @override
   final DateTime? createdAt;
   @override
@@ -206,7 +203,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
 abstract class _Profile implements Profile {
   const factory _Profile(
       {required final String id,
-      required final String displayName,
+      final String? displayName,
       final DateTime? createdAt,
       final DateTime? updatedAt}) = _$ProfileImpl;
 
@@ -215,7 +212,7 @@ abstract class _Profile implements Profile {
   @override
   String get id;
   @override
-  String get displayName;
+  String? get displayName;
   @override
   DateTime? get createdAt;
   @override

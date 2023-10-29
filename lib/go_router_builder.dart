@@ -16,6 +16,9 @@ part 'go_router_builder.g.dart';
     TypedGoRoute<SettingsRoute>(
       path: 'settings',
     ),
+    TypedGoRoute<ProfileRoute>(
+      path: 'profile',
+    ),
   ],
 )
 @immutable
@@ -28,6 +31,13 @@ class HomeScreenRoute extends GoRouteData with AuthenticationGuard {
 class AuthRoute extends GoRouteData {
   @override
   Widget build(BuildContext context, GoRouterState state) => const AuthScreen();
+}
+
+@immutable
+class ProfileRoute extends GoRouteData with AuthenticationGuard {
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const ProfileScreen();
 }
 
 @immutable

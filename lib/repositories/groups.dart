@@ -1,9 +1,10 @@
-import 'package:parousia/data/tables.dart';
 import 'package:parousia/models/models.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supabase/supabase.dart';
 
-class DataProviderGroups {
-  DataProviderGroups({required this.supabase});
+import 'tables.dart';
+
+class GroupsRepository {
+  GroupsRepository({required this.supabase});
 
   final SupabaseClient supabase;
 

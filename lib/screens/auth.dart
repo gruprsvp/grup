@@ -11,6 +11,7 @@ class AuthScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.appName),
+        // TODO(borgoat): this shouldn't be needed: fix the navigation stack instead
         automaticallyImplyLeading: false,
       ),
       body: Padding(

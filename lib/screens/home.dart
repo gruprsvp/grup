@@ -4,9 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-/// The home screen of the app.
 class HomeScreen extends StatelessWidget {
-  /// Creates a [HomeScreen].
   const HomeScreen({super.key});
 
   @override
@@ -16,9 +14,17 @@ class HomeScreen extends StatelessWidget {
         title: Text(AppLocalizations.of(context)!.appName),
       ),
       body: Center(
-        child: Text(
-          AppLocalizations.of(context)!.appName,
-          style: const TextStyle(fontSize: 24),
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            children: [
+              Image.asset('assets/images/wolf.png', height: 320),
+              Text(
+                AppLocalizations.of(context)!.onboardingMessage,
+                style: Theme.of(context).textTheme.bodyLarge,
+              ),
+            ],
+          ),
         ),
       ),
       drawer: NavigationDrawer(

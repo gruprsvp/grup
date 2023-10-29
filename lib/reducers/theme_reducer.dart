@@ -3,7 +3,7 @@ import 'package:parousia/actions/actions.dart';
 import 'package:redux/redux.dart';
 
 final themeReducer = combineReducers<ThemeMode>([
-  TypedReducer<ThemeMode, NextThemeAction>(_nextTheme).call,
+  TypedReducer<ThemeMode, NextThemeAction>(_nextTheme),
 ]);
 
 ThemeMode _nextTheme(ThemeMode themeMode, NextThemeAction action) {

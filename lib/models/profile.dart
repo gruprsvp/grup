@@ -9,7 +9,7 @@ sealed class Profile with _$Profile {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Profile({
     required String id,
-    required String displayName,
+    String? displayName,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _Profile;

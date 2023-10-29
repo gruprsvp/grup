@@ -3,21 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:go_router/go_router.dart';
-import 'package:parousia/go_router_builder.dart';
+import 'package:parousia/router.dart';
 import 'package:parousia/selectors/selectors.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
 
 part 'app.freezed.dart';
 
-final _routerConfig = GoRouter(
-  routes: $appRoutes,
-);
-
-/// The app entry-point
 class ParApp extends StatelessWidget {
-  /// Creates a [ParApp].
   const ParApp({required this.store, super.key});
 
   final Store<RootState> store;
@@ -40,7 +33,7 @@ class ParApp extends StatelessWidget {
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
             useMaterial3: true,
           ),
-          routerConfig: _routerConfig,
+          routerConfig: router,
         ),
       ),
     );
