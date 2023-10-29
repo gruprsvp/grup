@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:parousia/go_router_builder.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// The home screen of the app.
 class HomeScreen extends StatelessWidget {
@@ -35,7 +37,16 @@ class HomeScreen extends StatelessWidget {
           ListTile(
             title: Text(AppLocalizations.of(context)!.settings),
             leading: const Icon(Icons.settings),
-            onTap: () => context.push('/settings'),
+            onTap: () => SettingsRoute().go(context),
+          ),
+          ListTile(
+            title: Text(AppLocalizations.of(context)!.signOut),
+            leading: const Icon(Icons.logout),
+            onTap: () {
+              // TODO(borgoat): show confirmation dialog and use Redux
+              Supabase.instance.client.auth.signOut();
+              AuthRoute().replace(context);
+            },
           ),
         ],
       ),

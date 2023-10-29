@@ -7,8 +7,7 @@
 
 # The following line activates a set of recommended lints for Flutter apps,
 # packages, and plugins designed to encourage good coding practices.
-# https://github.com/VeryGoodOpenSource/very_good_analysis
-include: package:very_good_analysis/analysis_options.yaml
+include: package:flutter_lints/flutter.yaml
 
 # > If you plan on using Freezed in combination with json_serializable,
 # > recent versions of json_serializable and meta may require you

@@ -150,6 +150,8 @@ alter table profiles
     enable row level security;
 alter table groups
     enable row level security;
+alter table invites
+    enable row level security;
 alter table members
     enable row level security;
 alter table schedules

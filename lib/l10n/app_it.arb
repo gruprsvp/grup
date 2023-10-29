@@ -1,10 +1,12 @@
 {
   "@@locale": "it",
   "appName": "Parousia",
+  "changeTheme": "Tema",
   "newGroup": "Nuovo gruppo",
   "settings": "Impostazioni",
-  "changeTheme": "Cambia tema",
-  "themeSystem": "Sistema",
+  "signOut": "Esci",
+  "signOutConfirmation": "Sei sicuro di voler uscire?",
+  "themeDark": "Scuro",
   "themeLight": "Chiaro",
-  "themeDark": "Scuro"
+  "themeSystem": "Sistema"
 }

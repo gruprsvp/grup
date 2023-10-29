@@ -1,12 +1,18 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:parousia/app.dart';
+import 'package:parousia/data/groups.dart';
+import 'package:parousia/epics/epics.dart';
 import 'package:parousia/reducers/reducers.dart';
+import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
+import 'package:redux_epics/redux_epics.dart';
 import 'package:redux_persist/redux_persist.dart';
 import 'package:redux_persist_flutter/redux_persist_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'actions/actions.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,15 +38,28 @@ Future<void> main() async {
   final localPersistedState = await persistor.load();
   await supabasePromise;
 
+  final supabase = Supabase.instance.client;
+  final dataProviderGroups = DataProviderGroups(supabase: supabase);
+  final groupsRepository = GroupsRepository(groups: dataProviderGroups);
+
+  final epics = combineEpics<RootState>([
+    createLoadGroupsEpic(groupsRepository),
+  ]);
+
+  final store = Store<RootState>(
+    rootReducer,
+    initialState: localPersistedState ?? RootState.initialState(),
+    middleware: [
+      persistor.createMiddleware(),
+      EpicMiddleware<RootState>(epics),
+    ],
+  );
+
+  // Propagate auth state changes to the store
+  supabase.auth.onAuthStateChange.listen(
+      (authState) => store.dispatch(AuthStateChangedAction(authState.event)));
+
   runApp(
-    ParApp(
-      store: Store<RootState>(
-        rootReducer,
-        initialState: localPersistedState ?? RootState.initialState(),
-        middleware: [
-          persistor.createMiddleware(),
-        ],
-      ),
-    ),
+    ParApp(store: store),
   );
 }
