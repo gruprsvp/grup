@@ -54,7 +54,7 @@ Future<void> main() async {
     initialState: localPersistedState ?? RootState.initialState(),
     middleware: [
       persistor.createMiddleware(),
-      EpicMiddleware<RootState>(epics),
+      EpicMiddleware<RootState>(epics).call,
     ],
   );
 

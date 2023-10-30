@@ -13,13 +13,13 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           children: [
             CircleAvatar(
+              backgroundImage: const AssetImage('assets/images/wolf.png'),
+              radius: 64,
               child: Icon(
                 Icons.camera_alt_rounded,
                 size: 32,
                 color: Colors.white.withOpacity(0.8),
               ),
-              backgroundImage: const AssetImage('assets/images/wolf.png'),
-              radius: 64,
             ),
             TextFormField(
               decoration: InputDecoration(
