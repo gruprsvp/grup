@@ -21,15 +21,32 @@ class ProfileScreen extends StatelessWidget {
                 color: Colors.white.withOpacity(0.8),
               ),
             ),
-            TextFormField(
-              decoration: InputDecoration(
-                labelText: AppLocalizations.of(context)!.enterYourName,
-              ),
-            ),
+            const NameWidget()
             // TODO(borgoat): options to link additional auth providers
           ],
         ),
       ),
+    );
+  }
+}
+
+class NameWidget extends StatefulWidget {
+  const NameWidget({super.key});
+
+  @override
+  _NameWidgetState createState() => _NameWidgetState();
+}
+
+class _NameWidgetState extends State<NameWidget> {
+  final _controller = TextEditingController();
+
+  @override
+  Widget build(BuildContext context) {
+    return TextFormField(
+      decoration: InputDecoration(
+        labelText: AppLocalizations.of(context)!.enterYourName,
+      ),
+      controller: _controller,
     );
   }
 }

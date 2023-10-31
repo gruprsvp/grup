@@ -14,8 +14,12 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'actions/actions.dart';
 import 'router.dart';
 
+final supabase = Supabase.instance.client;
+
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  final storePromise = _initStore();
 
   // TODO(borgoat): move this to a config file to support different environments
   final supabasePromise = Supabase.initialize(
@@ -25,8 +29,21 @@ Future<void> main() async {
     debug: kDebugMode,
   );
 
+  await supabasePromise;
+
+  final store = await storePromise;
+
+  // Propagate auth state changes to the store
+  supabase.auth.onAuthStateChange
+      .listen((authState) => store.dispatch(AuthStateChangedAction(authState)));
+
+  runApp(
+    ParApp(store: store),
+  );
+}
+
+Future<Store<RootState>> _initStore() async {
   final persistor = Persistor<RootState>(
-    debug: kDebugMode,
     storage: FlutterStorage(),
     serializer: JsonSerializer<RootState>(
       (json) => json != null
@@ -36,9 +53,7 @@ Future<void> main() async {
   );
 
   final localPersistedState = await persistor.load();
-  await supabasePromise;
 
-  final supabase = Supabase.instance.client;
   final groupsRepository = GroupsRepository(supabase: supabase);
   final profilesRepository = ProfilesRepository(supabase: supabase);
 
@@ -49,20 +64,35 @@ Future<void> main() async {
     createNavigateToProfilePageEpic(),
   ]);
 
-  final store = Store<RootState>(
+  final initialState = localPersistedState ?? RootState.initialState();
+  final middleware = [
+    persistor.createMiddleware(),
+    EpicMiddleware<RootState>(epics).call,
+  ];
+
+  // if (!kDebugMode) {
+  return Store<RootState>(
     rootReducer,
-    initialState: localPersistedState ?? RootState.initialState(),
-    middleware: [
-      persistor.createMiddleware(),
-      EpicMiddleware<RootState>(epics).call,
-    ],
+    initialState: initialState,
+    middleware: middleware,
   );
-
-  // Propagate auth state changes to the store
-  supabase.auth.onAuthStateChange
-      .listen((authState) => store.dispatch(AuthStateChangedAction(authState)));
-
-  runApp(
-    ParApp(store: store),
-  );
+  // }
+  // const host = String.fromEnvironment(
+  //   'REMOTE_DEVTOOLS_HOST',
+  //   defaultValue: '10.0.2.2:8000',
+  //   // Android emulator host as default
+  //   // https://developer.android.com/studio/run/emulator-networking.html
+  // );
+  // final remoteDevtools = RemoteDevToolsMiddleware(host);
+  // final store = DevToolsStore<RootState>(
+  //   rootReducer,
+  //   initialState: initialState,
+  //   middleware: [
+  //     ...middleware,
+  //     remoteDevtools.call,
+  //   ],
+  // );
+  // remoteDevtools.store = store;
+  // await remoteDevtools.connect();
+  // return store;
 }

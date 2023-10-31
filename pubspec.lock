@@ -621,6 +621,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
+  redux_dev_tools:
+    dependency: "direct main"
+    description:
+      name: redux_dev_tools
+      sha256: "98d248a7699494efe6b8d64f61e01c2bafb9edb1c56b89fa083573008061a4a8"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.7.0"
   redux_entity:
     dependency: "direct main"
     description:
@@ -653,6 +661,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.0"
+  redux_remote_devtools:
+    dependency: "direct main"
+    description:
+      name: redux_remote_devtools
+      sha256: "22326855d604b41eefe8161ba10fb4f989cc6028731a916c963f3703ddad10bc"
+      url: "https://pub.dev"
+    source: hosted
+    version: "3.0.0"
   retry:
     dependency: transitive
     description:
@@ -794,6 +810,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
+  socketcluster_client:
+    dependency: transitive
+    description:
+      name: socketcluster_client
+      sha256: "180d72c9237ff282bc9c980856fefd83bf256b96e6d42fb789e229f4fd5a6eca"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.3.0"
   source_gen:
     dependency: transitive
     description:

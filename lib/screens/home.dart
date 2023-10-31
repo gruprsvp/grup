@@ -17,12 +17,13 @@ class HomeScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              Image.asset('assets/images/wolf.png', height: 320),
               Text(
                 AppLocalizations.of(context)!.onboardingMessage,
                 style: Theme.of(context).textTheme.bodyLarge,
               ),
+              Image.asset('assets/images/wolf.png', height: 320),
             ],
           ),
         ),
