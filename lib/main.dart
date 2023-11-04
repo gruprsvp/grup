@@ -45,8 +45,12 @@ Future<void> main() async {
 }
 
 Future<Store<RootState>> _initStore() async {
+  const storageLocation = kIsWeb
+      ? FlutterSaveLocation.sharedPreferences
+      : FlutterSaveLocation.documentFile;
+
   final persistor = Persistor<RootState>(
-    storage: FlutterStorage(),
+    storage: FlutterStorage(location: storageLocation),
     serializer: JsonSerializer<RootState>(
       (json) => json != null
           ? RootState.fromJson(json as Map<String, dynamic>)

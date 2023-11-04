@@ -1,4 +1,5 @@
 import 'package:image_picker/image_picker.dart';
+import 'package:mime/mime.dart';
 import 'package:supabase/supabase.dart';
 
 import 'const.dart';
@@ -10,7 +11,8 @@ class StorageRepository {
   final SupabaseClient supabase;
 
   Future<String> uploadPublicXFile(String key, XFile file) async {
-    final ext = file.path.split('.').last;
+    final ext =
+        file.mimeType != null ? extensionFromMime(file.mimeType!) : 'jpg';
     final path = '${supabase.auth.currentUser!.id}/$key.$ext';
     final bytes = await file.readAsBytes();
 

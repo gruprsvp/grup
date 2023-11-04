@@ -74,7 +74,9 @@ dependencies:
   # Recurrence rules
   rrule: ^0.2.14
 
+  # Utilities
   uuid: ^4.1.0
+  mime: ^1.0.4
 
 dev_dependencies:
   flutter_test:

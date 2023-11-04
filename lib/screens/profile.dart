@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
@@ -43,7 +44,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   ImageProvider? _profilePicture() {
     if (_tempImageFile != null) {
-      return FileImage(File(_tempImageFile!.path));
+      if (kIsWeb) {
+        return NetworkImage(_tempImageFile!.path);
+      } else {
+        return FileImage(File(_tempImageFile!.path));
+      }
     } else if (widget.profile?.picture != null) {
       return NetworkImage(widget.profile!.picture!);
     }
