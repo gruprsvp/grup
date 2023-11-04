@@ -38,7 +38,7 @@ sealed class _ViewModel with _$ViewModel {
     return _ViewModel(
       profile: store.state.profiles.entities[store.state.auth.user?.id],
       onSave: (name, image) =>
-          store.dispatch(UpdateProfileAction(name: name, image: image)),
+          store.dispatch(SaveProfileAction(name: name, image: image)),
     );
   }
 }

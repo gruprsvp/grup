@@ -39,6 +39,8 @@ Future<void> main() async {
   supabase.auth.onAuthStateChange
       .listen((authState) => store.dispatch(AuthStateChangedAction(authState)));
 
+  store.dispatch(AppStartedAction());
+
   runApp(
     ParApp(store: store),
   );

@@ -1,3 +1,4 @@
+export 'app.dart';
 export 'auth.dart';
 export 'groups.dart';
 export 'profiles.dart';

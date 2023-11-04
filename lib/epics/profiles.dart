@@ -25,8 +25,9 @@ Epic<RootState> createRetrieveOneProfileEpic(ProfilesRepository profiles) {
       .asyncMap(
         (action) => profiles
             .getProfileById(action.id)
-            .then<dynamic>((profile) => OwnProfileLoadedAction(profile))
-            .catchError((error) => OwnProfileLoadErrorAction(error as Object)),
+            .then<dynamic>((profile) => SuccessRetrieveOne<Profile>(profile))
+            .catchError((error) =>
+                FailRetrieveOne<Profile>(id: action.id, error: error)),
       );
 }
 
@@ -34,15 +35,17 @@ Epic<RootState> createRetrieveOneProfileEpic(ProfilesRepository profiles) {
 Stream<dynamic> navigateToProfilePageEpic(
         Stream<dynamic> actions, EpicStore<RootState> store) =>
     actions
-        .whereType<OwnProfileLoadedAction>()
-        .where((action) => action.profile.displayName == null)
+        .whereType<SuccessRetrieveOne<Profile>>()
+        .where((action) =>
+            action.entity.id == store.state.auth.user?.id &&
+            action.entity.displayName == null)
         .map((action) => NavigatePushAction(ProfileRoute().location));
 
 /// When the user requests to update their profile
 Epic<RootState> createUpdateProfileEpic(
     ProfilesRepository profiles, StorageRepository storage) {
   return (Stream<dynamic> actions, EpicStore<RootState> store) =>
-      actions.whereType<UpdateProfileAction>().asyncMap(
+      actions.whereType<SaveProfileAction>().asyncMap(
         (action) async {
           final displayName = action.name;
           final image = action.image;
