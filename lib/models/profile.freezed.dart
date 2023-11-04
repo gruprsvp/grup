@@ -22,6 +22,7 @@ Profile _$ProfileFromJson(Map<String, dynamic> json) {
 mixin _$Profile {
   String get id => throw _privateConstructorUsedError;
   String? get displayName => throw _privateConstructorUsedError;
+  String? get picture => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
@@ -38,6 +39,7 @@ abstract class $ProfileCopyWith<$Res> {
   $Res call(
       {String id,
       String? displayName,
+      String? picture,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
@@ -57,6 +59,7 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
   $Res call({
     Object? id = null,
     Object? displayName = freezed,
+    Object? picture = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -68,6 +71,10 @@ class _$ProfileCopyWithImpl<$Res, $Val extends Profile>
       displayName: freezed == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      picture: freezed == picture
+          ? _value.picture
+          : picture // ignore: cast_nullable_to_non_nullable
               as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -91,6 +98,7 @@ abstract class _$$ProfileImplCopyWith<$Res> implements $ProfileCopyWith<$Res> {
   $Res call(
       {String id,
       String? displayName,
+      String? picture,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
@@ -108,6 +116,7 @@ class __$$ProfileImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? displayName = freezed,
+    Object? picture = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -119,6 +128,10 @@ class __$$ProfileImplCopyWithImpl<$Res>
       displayName: freezed == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
+              as String?,
+      picture: freezed == picture
+          ? _value.picture
+          : picture // ignore: cast_nullable_to_non_nullable
               as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
@@ -137,7 +150,11 @@ class __$$ProfileImplCopyWithImpl<$Res>
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   const _$ProfileImpl(
-      {required this.id, this.displayName, this.createdAt, this.updatedAt});
+      {required this.id,
+      this.displayName,
+      this.picture,
+      this.createdAt,
+      this.updatedAt});
 
   factory _$ProfileImpl.fromJson(Map<String, dynamic> json) =>
       _$$ProfileImplFromJson(json);
@@ -147,13 +164,15 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   @override
   final String? displayName;
   @override
+  final String? picture;
+  @override
   final DateTime? createdAt;
   @override
   final DateTime? updatedAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Profile(id: $id, displayName: $displayName, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Profile(id: $id, displayName: $displayName, picture: $picture, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -163,6 +182,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
       ..add(DiagnosticsProperty('type', 'Profile'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('displayName', displayName))
+      ..add(DiagnosticsProperty('picture', picture))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('updatedAt', updatedAt));
   }
@@ -175,6 +195,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.displayName, displayName) ||
                 other.displayName == displayName) &&
+            (identical(other.picture, picture) || other.picture == picture) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -184,7 +205,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   @JsonKey(ignore: true)
   @override
   int get hashCode =>
-      Object.hash(runtimeType, id, displayName, createdAt, updatedAt);
+      Object.hash(runtimeType, id, displayName, picture, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -204,6 +225,7 @@ abstract class _Profile implements Profile {
   const factory _Profile(
       {required final String id,
       final String? displayName,
+      final String? picture,
       final DateTime? createdAt,
       final DateTime? updatedAt}) = _$ProfileImpl;
 
@@ -213,6 +235,8 @@ abstract class _Profile implements Profile {
   String get id;
   @override
   String? get displayName;
+  @override
+  String? get picture;
   @override
   DateTime? get createdAt;
   @override

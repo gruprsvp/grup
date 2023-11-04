@@ -20,6 +20,14 @@ RootState _$RootStateFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$RootState {
+  RemoteEntityState<Profile> get profiles => throw _privateConstructorUsedError;
+  RemoteEntityState<Group> get groups => throw _privateConstructorUsedError;
+  RemoteEntityState<Schedule> get schedules =>
+      throw _privateConstructorUsedError;
+  RemoteEntityState<DefaultReply> get defaultReplies =>
+      throw _privateConstructorUsedError;
+  RemoteEntityState<Reply> get replies => throw _privateConstructorUsedError;
+  AuthState get auth => throw _privateConstructorUsedError;
   ThemeMode get themeMode => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -33,7 +41,16 @@ abstract class $RootStateCopyWith<$Res> {
   factory $RootStateCopyWith(RootState value, $Res Function(RootState) then) =
       _$RootStateCopyWithImpl<$Res, RootState>;
   @useResult
-  $Res call({ThemeMode themeMode});
+  $Res call(
+      {RemoteEntityState<Profile> profiles,
+      RemoteEntityState<Group> groups,
+      RemoteEntityState<Schedule> schedules,
+      RemoteEntityState<DefaultReply> defaultReplies,
+      RemoteEntityState<Reply> replies,
+      AuthState auth,
+      ThemeMode themeMode});
+
+  $AuthStateCopyWith<$Res> get auth;
 }
 
 /// @nodoc
@@ -49,14 +66,52 @@ class _$RootStateCopyWithImpl<$Res, $Val extends RootState>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? profiles = null,
+    Object? groups = null,
+    Object? schedules = null,
+    Object? defaultReplies = null,
+    Object? replies = null,
+    Object? auth = null,
     Object? themeMode = null,
   }) {
     return _then(_value.copyWith(
+      profiles: null == profiles
+          ? _value.profiles
+          : profiles // ignore: cast_nullable_to_non_nullable
+              as RemoteEntityState<Profile>,
+      groups: null == groups
+          ? _value.groups
+          : groups // ignore: cast_nullable_to_non_nullable
+              as RemoteEntityState<Group>,
+      schedules: null == schedules
+          ? _value.schedules
+          : schedules // ignore: cast_nullable_to_non_nullable
+              as RemoteEntityState<Schedule>,
+      defaultReplies: null == defaultReplies
+          ? _value.defaultReplies
+          : defaultReplies // ignore: cast_nullable_to_non_nullable
+              as RemoteEntityState<DefaultReply>,
+      replies: null == replies
+          ? _value.replies
+          : replies // ignore: cast_nullable_to_non_nullable
+              as RemoteEntityState<Reply>,
+      auth: null == auth
+          ? _value.auth
+          : auth // ignore: cast_nullable_to_non_nullable
+              as AuthState,
       themeMode: null == themeMode
           ? _value.themeMode
           : themeMode // ignore: cast_nullable_to_non_nullable
               as ThemeMode,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $AuthStateCopyWith<$Res> get auth {
+    return $AuthStateCopyWith<$Res>(_value.auth, (value) {
+      return _then(_value.copyWith(auth: value) as $Val);
+    });
   }
 }
 
@@ -68,7 +123,17 @@ abstract class _$$RootStateImplCopyWith<$Res>
       __$$RootStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ThemeMode themeMode});
+  $Res call(
+      {RemoteEntityState<Profile> profiles,
+      RemoteEntityState<Group> groups,
+      RemoteEntityState<Schedule> schedules,
+      RemoteEntityState<DefaultReply> defaultReplies,
+      RemoteEntityState<Reply> replies,
+      AuthState auth,
+      ThemeMode themeMode});
+
+  @override
+  $AuthStateCopyWith<$Res> get auth;
 }
 
 /// @nodoc
@@ -82,9 +147,39 @@ class __$$RootStateImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? profiles = null,
+    Object? groups = null,
+    Object? schedules = null,
+    Object? defaultReplies = null,
+    Object? replies = null,
+    Object? auth = null,
     Object? themeMode = null,
   }) {
     return _then(_$RootStateImpl(
+      profiles: null == profiles
+          ? _value.profiles
+          : profiles // ignore: cast_nullable_to_non_nullable
+              as RemoteEntityState<Profile>,
+      groups: null == groups
+          ? _value.groups
+          : groups // ignore: cast_nullable_to_non_nullable
+              as RemoteEntityState<Group>,
+      schedules: null == schedules
+          ? _value.schedules
+          : schedules // ignore: cast_nullable_to_non_nullable
+              as RemoteEntityState<Schedule>,
+      defaultReplies: null == defaultReplies
+          ? _value.defaultReplies
+          : defaultReplies // ignore: cast_nullable_to_non_nullable
+              as RemoteEntityState<DefaultReply>,
+      replies: null == replies
+          ? _value.replies
+          : replies // ignore: cast_nullable_to_non_nullable
+              as RemoteEntityState<Reply>,
+      auth: null == auth
+          ? _value.auth
+          : auth // ignore: cast_nullable_to_non_nullable
+              as AuthState,
       themeMode: null == themeMode
           ? _value.themeMode
           : themeMode // ignore: cast_nullable_to_non_nullable
@@ -96,18 +191,43 @@ class __$$RootStateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
-  const _$RootStateImpl({this.themeMode = ThemeMode.system});
+  const _$RootStateImpl(
+      {this.profiles = const RemoteEntityState<Profile>(),
+      this.groups = const RemoteEntityState<Group>(),
+      this.schedules = const RemoteEntityState<Schedule>(),
+      this.defaultReplies = const RemoteEntityState<DefaultReply>(),
+      this.replies = const RemoteEntityState<Reply>(),
+      this.auth = const AuthState(status: AuthStatus.initial),
+      this.themeMode = ThemeMode.system});
 
   factory _$RootStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$RootStateImplFromJson(json);
 
   @override
   @JsonKey()
+  final RemoteEntityState<Profile> profiles;
+  @override
+  @JsonKey()
+  final RemoteEntityState<Group> groups;
+  @override
+  @JsonKey()
+  final RemoteEntityState<Schedule> schedules;
+  @override
+  @JsonKey()
+  final RemoteEntityState<DefaultReply> defaultReplies;
+  @override
+  @JsonKey()
+  final RemoteEntityState<Reply> replies;
+  @override
+  @JsonKey()
+  final AuthState auth;
+  @override
+  @JsonKey()
   final ThemeMode themeMode;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RootState(themeMode: $themeMode)';
+    return 'RootState(profiles: $profiles, groups: $groups, schedules: $schedules, defaultReplies: $defaultReplies, replies: $replies, auth: $auth, themeMode: $themeMode)';
   }
 
   @override
@@ -115,6 +235,12 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'RootState'))
+      ..add(DiagnosticsProperty('profiles', profiles))
+      ..add(DiagnosticsProperty('groups', groups))
+      ..add(DiagnosticsProperty('schedules', schedules))
+      ..add(DiagnosticsProperty('defaultReplies', defaultReplies))
+      ..add(DiagnosticsProperty('replies', replies))
+      ..add(DiagnosticsProperty('auth', auth))
       ..add(DiagnosticsProperty('themeMode', themeMode));
   }
 
@@ -123,13 +249,23 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$RootStateImpl &&
+            (identical(other.profiles, profiles) ||
+                other.profiles == profiles) &&
+            (identical(other.groups, groups) || other.groups == groups) &&
+            (identical(other.schedules, schedules) ||
+                other.schedules == schedules) &&
+            (identical(other.defaultReplies, defaultReplies) ||
+                other.defaultReplies == defaultReplies) &&
+            (identical(other.replies, replies) || other.replies == replies) &&
+            (identical(other.auth, auth) || other.auth == auth) &&
             (identical(other.themeMode, themeMode) ||
                 other.themeMode == themeMode));
   }
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, themeMode);
+  int get hashCode => Object.hash(runtimeType, profiles, groups, schedules,
+      defaultReplies, replies, auth, themeMode);
 
   @JsonKey(ignore: true)
   @override
@@ -146,11 +282,30 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
 }
 
 abstract class _RootState implements RootState {
-  const factory _RootState({final ThemeMode themeMode}) = _$RootStateImpl;
+  const factory _RootState(
+      {final RemoteEntityState<Profile> profiles,
+      final RemoteEntityState<Group> groups,
+      final RemoteEntityState<Schedule> schedules,
+      final RemoteEntityState<DefaultReply> defaultReplies,
+      final RemoteEntityState<Reply> replies,
+      final AuthState auth,
+      final ThemeMode themeMode}) = _$RootStateImpl;
 
   factory _RootState.fromJson(Map<String, dynamic> json) =
       _$RootStateImpl.fromJson;
 
+  @override
+  RemoteEntityState<Profile> get profiles;
+  @override
+  RemoteEntityState<Group> get groups;
+  @override
+  RemoteEntityState<Schedule> get schedules;
+  @override
+  RemoteEntityState<DefaultReply> get defaultReplies;
+  @override
+  RemoteEntityState<Reply> get replies;
+  @override
+  AuthState get auth;
   @override
   ThemeMode get themeMode;
   @override

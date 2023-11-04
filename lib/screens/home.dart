@@ -1,17 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:go_router/go_router.dart';
 import 'package:parousia/go_router_builder.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:parousia/models/models.dart';
+import 'package:parousia/presentation/presentation.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({super.key});
+  final Profile? profile;
+
+  const HomeScreen({super.key, this.profile});
+
+  ImageProvider? _profilePicture() {
+    if (profile?.picture != null) {
+      return NetworkImage(profile!.picture!);
+    }
+    return null;
+  }
 
   @override
   Widget build(BuildContext context) {
+    final theme = Theme.of(context);
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.appName),
+        title: Text(l10n.appName),
+        actions: [
+          ProfilePicture(
+            onPressed: () => ProfileRoute().push(context),
+            image: _profilePicture(),
+            name: profile?.displayName,
+          ),
+        ],
       ),
       body: Center(
         child: Padding(
@@ -20,42 +39,13 @@ class HomeScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Text(
-                AppLocalizations.of(context)!.onboardingMessage,
-                style: Theme.of(context).textTheme.bodyLarge,
+                l10n.onboardingMessage,
+                style: theme.textTheme.bodyLarge,
               ),
               Image.asset('assets/images/wolf.png', height: 320),
             ],
           ),
         ),
-      ),
-      drawer: NavigationDrawer(
-        children: [
-          UserAccountsDrawerHeader(
-            currentAccountPicture: const CircleAvatar(child: Text('JD')),
-            accountName: const Text('John Doe'),
-            accountEmail: const Text('john.doe@example.com'),
-            onDetailsPressed: () {},
-          ),
-          ListTile(
-            title: Text(AppLocalizations.of(context)!.newGroup),
-            leading: const Icon(Icons.group_add),
-            onTap: () => context.push('/groups/new'),
-          ),
-          ListTile(
-            title: Text(AppLocalizations.of(context)!.settings),
-            leading: const Icon(Icons.settings),
-            onTap: () => SettingsRoute().go(context),
-          ),
-          ListTile(
-            title: Text(AppLocalizations.of(context)!.signOut),
-            leading: const Icon(Icons.logout),
-            onTap: () {
-              // TODO(borgoat): show confirmation dialog and use Redux
-              Supabase.instance.client.auth.signOut();
-              AuthRoute().replace(context);
-            },
-          ),
-        ],
       ),
     );
   }

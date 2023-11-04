@@ -8,7 +8,7 @@ drop table if exists profiles;
 drop table if exists roles;
 drop type if exists invite_methods;
 drop type if exists reply_options;
-drop domain if exists rfc5545;
+drop domain if exists rfc7265;
 
 create type reply_options as enum ('yes', 'no');
 comment on type reply_options is 'Valid replies that users may select.';
@@ -17,8 +17,8 @@ create type invite_methods as enum ('email', 'phone', 'code');
 comment on type invite_methods is 'The available strategies to invite a new user';
 
 -- TODO handle validation, optional extensions
-create domain rfc5545 as jsonb;
-comment on domain rfc5545 is 'An alias for RFC7265 jCal (JSON) recurrence rule definitions.';
+create domain rfc7265 as jsonb;
+comment on domain rfc7265 is 'An alias for RFC7265 jCal (JSON) recurrence rule definitions.';
 
 create table roles
 (
@@ -41,10 +41,12 @@ create table profiles
     created_at   timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at   timestamp with time zone default timezone('utc'::text, now()) not null,
 
-    display_name text -- not null
+    display_name text,
+    picture      text
 );
 comment on table profiles is 'User profiles that apply across multiple groups.';
 comment on column profiles.display_name is 'The user name, as seen by other users.';
+comment on column profiles.picture is 'A URL to the user profile picture.';
 
 create table groups
 (
@@ -105,7 +107,7 @@ create table schedules
     group_id        bigint                                                        not null references groups on delete cascade,
 
     display_name    text                                                          not null,
-    recurrence_rule rfc5545                                                       not null
+    recurrence_rule rfc7265                                                       not null
 );
 comment on table schedules is 'Schedules are a series of events within a group.';
 comment on column schedules.display_name is 'A name for the schedule';
@@ -121,7 +123,7 @@ create table default_replies
     schedule_id     bigint                                                        not null references schedules on delete cascade,
 
     selected_option reply_options                                                 not null,
-    recurrence_rule rfc5545                                                       not null
+    recurrence_rule rfc7265                                                       not null
 );
 comment on table default_replies is 'The default replies for each member, per schedule.';
 comment on column default_replies.recurrence_rule is 'Must be equal or a subset of the corresponding schedule rule.';
@@ -143,6 +145,50 @@ create table replies
 comment on table replies is 'Override the default replies set per schedule/profile.';
 comment on column replies.member_id is 'The member (either with a related profile or not) that overrides their default reply.';
 comment on column replies.event_date is 'Defines the actual occurrence for the override reply.';
+
+create extension if not exists moddatetime schema extensions;
+
+create trigger handle_roles_updated_at
+    before update
+    on roles
+    for each row
+execute procedure moddatetime(updated_at);
+create trigger handle_profiles_updated_at
+    before update
+    on profiles
+    for each row
+execute procedure moddatetime(updated_at);
+create trigger handle_groups_updated_at
+    before update
+    on groups
+    for each row
+execute procedure moddatetime(updated_at);
+create trigger handle_invites_updated_at
+    before update
+    on invites
+    for each row
+execute procedure moddatetime(updated_at);
+create trigger handle_members_updated_at
+    before update
+    on members
+    for each row
+execute procedure moddatetime(updated_at);
+create trigger handle_schedules_updated_at
+    before update
+    on schedules
+    for each row
+execute procedure moddatetime(updated_at);
+create trigger handle_default_replies_updated_at
+    before update
+    on default_replies
+    for each row
+execute procedure moddatetime(updated_at);
+create trigger handle_replies_updated_at
+    before update
+    on replies
+    for each row
+execute procedure moddatetime(updated_at);
+
 
 alter table roles
     enable row level security;
@@ -175,6 +221,12 @@ $$ language plpgsql;
 create policy "Users can read their own profile"
     on profiles
     for select using (id = auth.uid());
+
+create policy "Users can write their own profile"
+    on profiles
+    for update
+    using (id = auth.uid())
+    with check (id = auth.uid());
 
 -- create policy "Only group members can read group data"
 --     on groups

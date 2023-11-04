@@ -2,8 +2,11 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:parousia/containers/home_page.dart';
 import 'package:parousia/screens/screens.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+
+import 'containers/profile_page.dart';
 
 part 'go_router_builder.g.dart';
 
@@ -24,7 +27,7 @@ part 'go_router_builder.g.dart';
 @immutable
 class HomeScreenRoute extends GoRouteData with AuthenticationGuard {
   @override
-  Widget build(BuildContext context, GoRouterState state) => const HomeScreen();
+  Widget build(BuildContext context, GoRouterState state) => const HomePage();
 }
 
 @immutable
@@ -37,7 +40,7 @@ class AuthRoute extends GoRouteData {
 class ProfileRoute extends GoRouteData with AuthenticationGuard {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const ProfileScreen();
+      const ProfilePage();
 }
 
 @immutable

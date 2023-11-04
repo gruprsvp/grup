@@ -9,3 +9,9 @@ enum Tables {
   default_replies,
   replies,
 }
+
+/// Enum with all bucket IDs in Supabase.
+enum Buckets {
+  public,
+  private,
+}

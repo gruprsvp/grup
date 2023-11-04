@@ -1,24 +1,12 @@
 import 'package:parousia/models/models.dart';
 import 'package:supabase/supabase.dart';
 
-import 'tables.dart';
+import 'const.dart';
 
 class ProfilesRepository {
   const ProfilesRepository({required this.supabase});
 
   final SupabaseClient supabase;
-
-  Future<Profile> getOwnProfile() async {
-    if (supabase.auth.currentUser == null) {
-      throw Exception('User is not logged in');
-    }
-
-    return _table()
-        .select<PostgrestMap>()
-        .eq('id', supabase.auth.currentUser?.id)
-        .single()
-        .withConverter(Profile.fromJson);
-  }
 
   Future<Profile> getProfileById(String id) async {
     return _table()
@@ -26,6 +14,17 @@ class ProfilesRepository {
         .eq('id', id)
         .single()
         .withConverter(Profile.fromJson);
+  }
+
+  Future<void> updateProfile({
+    required String id,
+    String? displayName,
+    String? pictureUrl,
+  }) async {
+    return _table().update({
+      if (displayName != null) 'display_name': displayName,
+      if (pictureUrl != null) 'picture': pictureUrl,
+    }).eq('id', id);
   }
 
   PostgrestQueryBuilder<void> _table() =>

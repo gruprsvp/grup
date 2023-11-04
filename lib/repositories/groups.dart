@@ -1,7 +1,7 @@
 import 'package:parousia/models/models.dart';
 import 'package:supabase/supabase.dart';
 
-import 'tables.dart';
+import 'const.dart';
 
 class GroupsRepository {
   GroupsRepository({required this.supabase});
@@ -11,7 +11,7 @@ class GroupsRepository {
   Future<Iterable<Group>> getUserGroups() async {
     return _table()
         .select<PostgrestList>('*, members!inner(*)')
-        .eq('members.profile_id', 'auth.uid()')
+        .eq('members.profile_id', supabase.auth.currentUser!.id)
         .withConverter((data) => data.map(Group.fromJson));
   }
 

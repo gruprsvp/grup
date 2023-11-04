@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:parousia/app.dart';
@@ -52,16 +54,27 @@ Future<Store<RootState>> _initStore() async {
     ),
   );
 
-  final localPersistedState = await persistor.load();
+  RootState? localPersistedState;
+  try {
+    localPersistedState = await persistor.load();
+  } catch (e) {
+    log('failed to load persisted state: $e');
+  }
 
   final groupsRepository = GroupsRepository(supabase: supabase);
   final profilesRepository = ProfilesRepository(supabase: supabase);
+  final storageRepository = StorageRepository(supabase: supabase);
 
+  // TODO(borgoat): use different layers of epics
   final epics = combineEpics<RootState>([
     createRouterEpics(router),
-    createLoadGroupsEpic(groupsRepository),
-    createLoadOwnProfileEpic(profilesRepository),
-    createNavigateToProfilePageEpic(),
+    navigateToProfilePageEpic,
+    loadGroupsOnSignInEpic,
+    loadOwnProfileOnSignInEpic,
+    createRetrieveAllGroupsEpic(groupsRepository),
+    createRetrieveOneProfileEpic(profilesRepository),
+    createUpdateProfileEpic(profilesRepository, storageRepository),
+    createUpdateOneProfileEpic(profilesRepository),
   ]);
 
   final initialState = localPersistedState ?? RootState.initialState();
