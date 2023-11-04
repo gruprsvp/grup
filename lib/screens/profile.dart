@@ -50,7 +50,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return null;
   }
 
-  Future<void> _changeImage() async {
+  _changeImage() async {
     final source = await showDialog<ImageSource>(
       context: context,
       builder: (context) {
