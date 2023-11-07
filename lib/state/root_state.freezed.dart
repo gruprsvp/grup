@@ -29,6 +29,7 @@ mixin _$RootState {
   RemoteEntityState<Reply> get replies => throw _privateConstructorUsedError;
   AuthState get auth => throw _privateConstructorUsedError;
   ThemeMode get themeMode => throw _privateConstructorUsedError;
+  LocaleState get locale => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -48,9 +49,11 @@ abstract class $RootStateCopyWith<$Res> {
       RemoteEntityState<DefaultReply> defaultReplies,
       RemoteEntityState<Reply> replies,
       AuthState auth,
-      ThemeMode themeMode});
+      ThemeMode themeMode,
+      LocaleState locale});
 
   $AuthStateCopyWith<$Res> get auth;
+  $LocaleStateCopyWith<$Res> get locale;
 }
 
 /// @nodoc
@@ -73,6 +76,7 @@ class _$RootStateCopyWithImpl<$Res, $Val extends RootState>
     Object? replies = null,
     Object? auth = null,
     Object? themeMode = null,
+    Object? locale = null,
   }) {
     return _then(_value.copyWith(
       profiles: null == profiles
@@ -103,6 +107,10 @@ class _$RootStateCopyWithImpl<$Res, $Val extends RootState>
           ? _value.themeMode
           : themeMode // ignore: cast_nullable_to_non_nullable
               as ThemeMode,
+      locale: null == locale
+          ? _value.locale
+          : locale // ignore: cast_nullable_to_non_nullable
+              as LocaleState,
     ) as $Val);
   }
 
@@ -111,6 +119,14 @@ class _$RootStateCopyWithImpl<$Res, $Val extends RootState>
   $AuthStateCopyWith<$Res> get auth {
     return $AuthStateCopyWith<$Res>(_value.auth, (value) {
       return _then(_value.copyWith(auth: value) as $Val);
+    });
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $LocaleStateCopyWith<$Res> get locale {
+    return $LocaleStateCopyWith<$Res>(_value.locale, (value) {
+      return _then(_value.copyWith(locale: value) as $Val);
     });
   }
 }
@@ -130,10 +146,13 @@ abstract class _$$RootStateImplCopyWith<$Res>
       RemoteEntityState<DefaultReply> defaultReplies,
       RemoteEntityState<Reply> replies,
       AuthState auth,
-      ThemeMode themeMode});
+      ThemeMode themeMode,
+      LocaleState locale});
 
   @override
   $AuthStateCopyWith<$Res> get auth;
+  @override
+  $LocaleStateCopyWith<$Res> get locale;
 }
 
 /// @nodoc
@@ -154,6 +173,7 @@ class __$$RootStateImplCopyWithImpl<$Res>
     Object? replies = null,
     Object? auth = null,
     Object? themeMode = null,
+    Object? locale = null,
   }) {
     return _then(_$RootStateImpl(
       profiles: null == profiles
@@ -184,6 +204,10 @@ class __$$RootStateImplCopyWithImpl<$Res>
           ? _value.themeMode
           : themeMode // ignore: cast_nullable_to_non_nullable
               as ThemeMode,
+      locale: null == locale
+          ? _value.locale
+          : locale // ignore: cast_nullable_to_non_nullable
+              as LocaleState,
     ));
   }
 }
@@ -198,7 +222,8 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
       this.defaultReplies = const RemoteEntityState<DefaultReply>(),
       this.replies = const RemoteEntityState<Reply>(),
       this.auth = const AuthState(status: AuthStatus.initial),
-      this.themeMode = ThemeMode.system});
+      this.themeMode = ThemeMode.system,
+      this.locale = const LocaleState(languageCode: 'und')});
 
   factory _$RootStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$RootStateImplFromJson(json);
@@ -224,10 +249,13 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
   @override
   @JsonKey()
   final ThemeMode themeMode;
+  @override
+  @JsonKey()
+  final LocaleState locale;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RootState(profiles: $profiles, groups: $groups, schedules: $schedules, defaultReplies: $defaultReplies, replies: $replies, auth: $auth, themeMode: $themeMode)';
+    return 'RootState(profiles: $profiles, groups: $groups, schedules: $schedules, defaultReplies: $defaultReplies, replies: $replies, auth: $auth, themeMode: $themeMode, locale: $locale)';
   }
 
   @override
@@ -241,7 +269,8 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
       ..add(DiagnosticsProperty('defaultReplies', defaultReplies))
       ..add(DiagnosticsProperty('replies', replies))
       ..add(DiagnosticsProperty('auth', auth))
-      ..add(DiagnosticsProperty('themeMode', themeMode));
+      ..add(DiagnosticsProperty('themeMode', themeMode))
+      ..add(DiagnosticsProperty('locale', locale));
   }
 
   @override
@@ -259,13 +288,14 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
             (identical(other.replies, replies) || other.replies == replies) &&
             (identical(other.auth, auth) || other.auth == auth) &&
             (identical(other.themeMode, themeMode) ||
-                other.themeMode == themeMode));
+                other.themeMode == themeMode) &&
+            (identical(other.locale, locale) || other.locale == locale));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, profiles, groups, schedules,
-      defaultReplies, replies, auth, themeMode);
+      defaultReplies, replies, auth, themeMode, locale);
 
   @JsonKey(ignore: true)
   @override
@@ -289,7 +319,8 @@ abstract class _RootState implements RootState {
       final RemoteEntityState<DefaultReply> defaultReplies,
       final RemoteEntityState<Reply> replies,
       final AuthState auth,
-      final ThemeMode themeMode}) = _$RootStateImpl;
+      final ThemeMode themeMode,
+      final LocaleState locale}) = _$RootStateImpl;
 
   factory _RootState.fromJson(Map<String, dynamic> json) =
       _$RootStateImpl.fromJson;
@@ -308,6 +339,8 @@ abstract class _RootState implements RootState {
   AuthState get auth;
   @override
   ThemeMode get themeMode;
+  @override
+  LocaleState get locale;
   @override
   @JsonKey(ignore: true)
   _$$RootStateImplCopyWith<_$RootStateImpl> get copyWith =>

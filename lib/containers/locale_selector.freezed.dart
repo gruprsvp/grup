@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'app.dart';
+part of 'locale_selector.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -16,8 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ViewModel {
-  ThemeMode get themeMode => throw _privateConstructorUsedError;
-  Locale? get locale => throw _privateConstructorUsedError;
+  Locale get locale => throw _privateConstructorUsedError;
+  void Function(Locale) get changeLocale => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   _$ViewModelCopyWith<_ViewModel> get copyWith =>
@@ -30,7 +30,7 @@ abstract class _$ViewModelCopyWith<$Res> {
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call({ThemeMode themeMode, Locale? locale});
+  $Res call({Locale locale, void Function(Locale) changeLocale});
 }
 
 /// @nodoc
@@ -46,18 +46,18 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? themeMode = null,
-    Object? locale = freezed,
+    Object? locale = null,
+    Object? changeLocale = null,
   }) {
     return _then(_value.copyWith(
-      themeMode: null == themeMode
-          ? _value.themeMode
-          : themeMode // ignore: cast_nullable_to_non_nullable
-              as ThemeMode,
-      locale: freezed == locale
+      locale: null == locale
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
-              as Locale?,
+              as Locale,
+      changeLocale: null == changeLocale
+          ? _value.changeLocale
+          : changeLocale // ignore: cast_nullable_to_non_nullable
+              as void Function(Locale),
     ) as $Val);
   }
 }
@@ -70,7 +70,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ThemeMode themeMode, Locale? locale});
+  $Res call({Locale locale, void Function(Locale) changeLocale});
 }
 
 /// @nodoc
@@ -84,18 +84,18 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? themeMode = null,
-    Object? locale = freezed,
+    Object? locale = null,
+    Object? changeLocale = null,
   }) {
     return _then(_$_ViewModelImpl(
-      themeMode: null == themeMode
-          ? _value.themeMode
-          : themeMode // ignore: cast_nullable_to_non_nullable
-              as ThemeMode,
-      locale: freezed == locale
+      locale: null == locale
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
-              as Locale?,
+              as Locale,
+      changeLocale: null == changeLocale
+          ? _value.changeLocale
+          : changeLocale // ignore: cast_nullable_to_non_nullable
+              as void Function(Locale),
     ));
   }
 }
@@ -103,16 +103,16 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
-  const _$_ViewModelImpl({required this.themeMode, this.locale});
+  const _$_ViewModelImpl({required this.locale, required this.changeLocale});
 
   @override
-  final ThemeMode themeMode;
+  final Locale locale;
   @override
-  final Locale? locale;
+  final void Function(Locale) changeLocale;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(themeMode: $themeMode, locale: $locale)';
+    return '_ViewModel(locale: $locale, changeLocale: $changeLocale)';
   }
 
   @override
@@ -120,8 +120,8 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', '_ViewModel'))
-      ..add(DiagnosticsProperty('themeMode', themeMode))
-      ..add(DiagnosticsProperty('locale', locale));
+      ..add(DiagnosticsProperty('locale', locale))
+      ..add(DiagnosticsProperty('changeLocale', changeLocale));
   }
 
   @override
@@ -129,13 +129,13 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ViewModelImpl &&
-            (identical(other.themeMode, themeMode) ||
-                other.themeMode == themeMode) &&
-            (identical(other.locale, locale) || other.locale == locale));
+            (identical(other.locale, locale) || other.locale == locale) &&
+            (identical(other.changeLocale, changeLocale) ||
+                other.changeLocale == changeLocale));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, themeMode, locale);
+  int get hashCode => Object.hash(runtimeType, locale, changeLocale);
 
   @JsonKey(ignore: true)
   @override
@@ -146,13 +146,13 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 
 abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
-      {required final ThemeMode themeMode,
-      final Locale? locale}) = _$_ViewModelImpl;
+      {required final Locale locale,
+      required final void Function(Locale) changeLocale}) = _$_ViewModelImpl;
 
   @override
-  ThemeMode get themeMode;
+  Locale get locale;
   @override
-  Locale? get locale;
+  void Function(Locale) get changeLocale;
   @override
   @JsonKey(ignore: true)
   _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>

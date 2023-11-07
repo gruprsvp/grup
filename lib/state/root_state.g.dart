@@ -38,6 +38,9 @@ _$RootStateImpl _$$RootStateImplFromJson(Map<String, dynamic> json) =>
           : AuthState.fromJson(json['auth'] as Map<String, dynamic>),
       themeMode: $enumDecodeNullable(_$ThemeModeEnumMap, json['themeMode']) ??
           ThemeMode.system,
+      locale: json['locale'] == null
+          ? const LocaleState(languageCode: 'und')
+          : LocaleState.fromJson(json['locale'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$$RootStateImplToJson(_$RootStateImpl instance) =>
@@ -49,6 +52,7 @@ Map<String, dynamic> _$$RootStateImplToJson(_$RootStateImpl instance) =>
       'replies': instance.replies,
       'auth': instance.auth,
       'themeMode': _$ThemeModeEnumMap[instance.themeMode]!,
+      'locale': instance.locale,
     };
 
 const _$ThemeModeEnumMap = {

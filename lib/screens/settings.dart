@@ -47,15 +47,21 @@ class SettingsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.settings),
+        title: Text(l10n.settings),
       ),
       body: ListView(
         children: [
+          ListTile(
+            title: Text(l10n.language),
+            leading: const Icon(Icons.translate),
+            onTap: () => LocaleRoute().push(context),
+          ),
           const ThemeSwitcher(),
           ListTile(
-            title: Text(AppLocalizations.of(context)!.signOut),
+            title: Text(l10n.signOut),
             leading: const Icon(Icons.logout),
             onTap: () => _confirmSignOut(context),
           ),

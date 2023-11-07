@@ -28,6 +28,7 @@ class ParApp extends StatelessWidget {
           supportedLocales: AppLocalizations.supportedLocales,
           themeMode: vm.themeMode,
           darkTheme: ThemeData.dark(useMaterial3: true),
+          locale: vm.locale,
           theme: ThemeData(
             // TODO(borgoat): dynamic color scheme using dynamic_color package
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
@@ -44,9 +45,13 @@ class ParApp extends StatelessWidget {
 sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required ThemeMode themeMode,
+    Locale? locale,
   }) = __ViewModel;
 
   factory _ViewModel.fromStore(Store<RootState> store) {
-    return _ViewModel(themeMode: themeModeSelector(store.state));
+    return _ViewModel(
+      themeMode: themeModeSelector(store.state),
+      locale: localeSelector(store.state),
+    );
   }
 }

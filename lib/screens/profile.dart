@@ -101,6 +101,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       preferredCameraDevice: CameraDevice.front,
       maxWidth: 512,
       maxHeight: 512,
+      requestFullMetadata: false,
     );
     if (imageFile == null) {
       return;

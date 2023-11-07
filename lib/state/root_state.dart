@@ -5,6 +5,7 @@ import 'package:parousia/models/models.dart';
 import 'package:redux_entity/redux_entity.dart';
 
 import 'auth_state.dart';
+import 'locale_state.dart';
 
 part 'root_state.freezed.dart';
 part 'root_state.g.dart';
@@ -21,6 +22,7 @@ sealed class RootState with _$RootState {
     @Default(RemoteEntityState<Reply>()) RemoteEntityState<Reply> replies,
     @Default(AuthState(status: AuthStatus.initial)) AuthState auth,
     @Default(ThemeMode.system) ThemeMode themeMode,
+    @Default(LocaleState(languageCode: 'und')) LocaleState locale,
   }) = _RootState;
 
   factory RootState.initialState() => const RootState();

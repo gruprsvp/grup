@@ -2,11 +2,10 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:parousia/containers/containers.dart';
 import 'package:parousia/containers/home_page.dart';
 import 'package:parousia/screens/screens.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
-import 'containers/profile_page.dart';
 
 part 'go_router_builder.g.dart';
 
@@ -18,9 +17,17 @@ part 'go_router_builder.g.dart';
     ),
     TypedGoRoute<SettingsRoute>(
       path: 'settings',
+      routes: [
+        TypedGoRoute<LocaleRoute>(
+          path: 'locale',
+        ),
+      ],
     ),
     TypedGoRoute<ProfileRoute>(
       path: 'profile',
+    ),
+    TypedGoRoute<NewGroupRoute>(
+      path: 'new-group',
     ),
   ],
 )
@@ -37,6 +44,20 @@ class AuthRoute extends GoRouteData {
 }
 
 @immutable
+class SettingsRoute extends GoRouteData with AuthenticationGuard {
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const SettingsScreen();
+}
+
+@immutable
+class LocaleRoute extends GoRouteData with AuthenticationGuard {
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const LocaleSelector();
+}
+
+@immutable
 class ProfileRoute extends GoRouteData with AuthenticationGuard {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
@@ -44,10 +65,10 @@ class ProfileRoute extends GoRouteData with AuthenticationGuard {
 }
 
 @immutable
-class SettingsRoute extends GoRouteData with AuthenticationGuard {
+class NewGroupRoute extends GoRouteData with AuthenticationGuard {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const SettingsScreen();
+      const NewGroupScreen();
 }
 
 // Check if a user exists in the Supabase client

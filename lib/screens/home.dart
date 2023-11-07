@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.all(16.0),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text(
                 l10n.onboardingMessage,
@@ -46,6 +46,11 @@ class HomeScreen extends StatelessWidget {
             ],
           ),
         ),
+      ),
+      floatingActionButton: FloatingActionButton.extended(
+        onPressed: () => NewGroupRoute().push(context),
+        label: Text(l10n.createOrJoinGroup),
+        icon: const Icon(Icons.group_add_outlined),
       ),
     );
   }

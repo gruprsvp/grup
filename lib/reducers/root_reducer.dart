@@ -1,6 +1,7 @@
 import 'package:parousia/state/state.dart';
 
 import 'auth.dart';
+import 'locale.dart';
 import 'remote_entities.dart';
 import 'theme.dart';
 
@@ -14,5 +15,6 @@ RootState rootReducer(RootState state, dynamic action) {
     replies: repliesReducer(state.replies, action),
     auth: authReducer(state.auth, action),
     themeMode: themeReducer(state.themeMode, action),
+    locale: localeReducer(state.locale, action),
   );
 }
