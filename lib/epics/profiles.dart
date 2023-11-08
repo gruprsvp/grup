@@ -9,8 +9,17 @@ import 'package:rxdart/rxdart.dart';
 import 'package:supabase/supabase.dart';
 import 'package:uuid/uuid.dart';
 
+createProfileEpics(ProfilesRepository profiles, StorageRepository storage) =>
+    combineEpics<RootState>([
+      _createRetrieveOneProfileEpic(profiles),
+      _createUpdateProfileEpic(profiles, storage),
+      _createUpdateOneProfileEpic(profiles),
+      _loadOwnProfileOnSignInEpic,
+      _navigateToProfilePageEpic,
+    ]);
+
 /// Once the user signs in, request to load own profile
-Stream<dynamic> loadOwnProfileOnSignInEpic(
+Stream<dynamic> _loadOwnProfileOnSignInEpic(
         Stream<dynamic> actions, EpicStore<RootState> store) =>
     actions
         .whereType<AuthStateChangedAction>()
@@ -19,7 +28,7 @@ Stream<dynamic> loadOwnProfileOnSignInEpic(
             event.authState.session!.user.id.toString()));
 
 /// Fetch 1 user profile from the database
-Epic<RootState> createRetrieveOneProfileEpic(ProfilesRepository profiles) {
+Epic<RootState> _createRetrieveOneProfileEpic(ProfilesRepository profiles) {
   return (Stream<dynamic> actions, EpicStore<RootState> store) => actions
       .whereType<RequestRetrieveOne<Profile>>()
       .asyncMap(
@@ -32,7 +41,7 @@ Epic<RootState> createRetrieveOneProfileEpic(ProfilesRepository profiles) {
 }
 
 /// Redirect to the profile page when the user profile is loaded and has no name
-Stream<dynamic> navigateToProfilePageEpic(
+Stream<dynamic> _navigateToProfilePageEpic(
         Stream<dynamic> actions, EpicStore<RootState> store) =>
     actions
         .whereType<SuccessRetrieveOne<Profile>>()
@@ -42,7 +51,7 @@ Stream<dynamic> navigateToProfilePageEpic(
         .map((action) => NavigatePushAction(ProfileRoute().location));
 
 /// When the user requests to update their profile
-Epic<RootState> createUpdateProfileEpic(
+Epic<RootState> _createUpdateProfileEpic(
     ProfilesRepository profiles, StorageRepository storage) {
   return (Stream<dynamic> actions, EpicStore<RootState> store) =>
       actions.whereType<SaveProfileAction>().asyncMap(
@@ -69,7 +78,7 @@ Epic<RootState> createUpdateProfileEpic(
       );
 }
 
-Epic<RootState> createUpdateOneProfileEpic(ProfilesRepository profiles) {
+Epic<RootState> _createUpdateOneProfileEpic(ProfilesRepository profiles) {
   return (Stream<dynamic> actions, EpicStore<RootState> store) => actions
       .whereType<UpdateOne<Profile>>()
       .asyncMap((action) => profiles

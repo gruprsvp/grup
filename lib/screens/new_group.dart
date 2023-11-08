@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parousia/containers/containers.dart';
 
 class NewGroupScreen extends StatelessWidget {
-  const NewGroupScreen({super.key});
+  const NewGroupScreen({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +30,7 @@ class NewGroupScreen extends StatelessWidget {
         body: TabBarView(
           children: [
             Center(child: Text(l10n.join)),
-            Center(child: Text(l10n.create)),
+            const CreateGroup(),
           ],
         ),
       ),

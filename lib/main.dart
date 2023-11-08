@@ -74,13 +74,8 @@ Future<Store<RootState>> _initStore() async {
   // TODO(borgoat): use different layers of epics
   final epics = combineEpics<RootState>([
     createRouterEpics(router),
-    navigateToProfilePageEpic,
-    loadGroupsOnSignInEpic,
-    loadOwnProfileOnSignInEpic,
-    createRetrieveAllGroupsEpic(groupsRepository),
-    createRetrieveOneProfileEpic(profilesRepository),
-    createUpdateProfileEpic(profilesRepository, storageRepository),
-    createUpdateOneProfileEpic(profilesRepository),
+    createGroupsEpics(groupsRepository),
+    createProfileEpics(profilesRepository, storageRepository),
   ]);
 
   final initialState = localPersistedState ?? RootState.initialState();

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'profile_page.dart';
+part of 'create_group.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -16,8 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ViewModel {
-  Profile? get profile => throw _privateConstructorUsedError;
-  OnProfileSaveCallback get onSave => throw _privateConstructorUsedError;
+  bool get creatingGroup => throw _privateConstructorUsedError;
+  OnCreateGroupCallback get onSave => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   _$ViewModelCopyWith<_ViewModel> get copyWith =>
@@ -30,9 +30,7 @@ abstract class _$ViewModelCopyWith<$Res> {
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call({Profile? profile, OnProfileSaveCallback onSave});
-
-  $ProfileCopyWith<$Res>? get profile;
+  $Res call({bool creatingGroup, OnCreateGroupCallback onSave});
 }
 
 /// @nodoc
@@ -48,31 +46,19 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? profile = freezed,
+    Object? creatingGroup = null,
     Object? onSave = null,
   }) {
     return _then(_value.copyWith(
-      profile: freezed == profile
-          ? _value.profile
-          : profile // ignore: cast_nullable_to_non_nullable
-              as Profile?,
+      creatingGroup: null == creatingGroup
+          ? _value.creatingGroup
+          : creatingGroup // ignore: cast_nullable_to_non_nullable
+              as bool,
       onSave: null == onSave
           ? _value.onSave
           : onSave // ignore: cast_nullable_to_non_nullable
-              as OnProfileSaveCallback,
+              as OnCreateGroupCallback,
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ProfileCopyWith<$Res>? get profile {
-    if (_value.profile == null) {
-      return null;
-    }
-
-    return $ProfileCopyWith<$Res>(_value.profile!, (value) {
-      return _then(_value.copyWith(profile: value) as $Val);
-    });
   }
 }
 
@@ -84,10 +70,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Profile? profile, OnProfileSaveCallback onSave});
-
-  @override
-  $ProfileCopyWith<$Res>? get profile;
+  $Res call({bool creatingGroup, OnCreateGroupCallback onSave});
 }
 
 /// @nodoc
@@ -101,18 +84,18 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? profile = freezed,
+    Object? creatingGroup = null,
     Object? onSave = null,
   }) {
     return _then(_$_ViewModelImpl(
-      profile: freezed == profile
-          ? _value.profile
-          : profile // ignore: cast_nullable_to_non_nullable
-              as Profile?,
+      creatingGroup: null == creatingGroup
+          ? _value.creatingGroup
+          : creatingGroup // ignore: cast_nullable_to_non_nullable
+              as bool,
       onSave: null == onSave
           ? _value.onSave
           : onSave // ignore: cast_nullable_to_non_nullable
-              as OnProfileSaveCallback,
+              as OnCreateGroupCallback,
     ));
   }
 }
@@ -120,16 +103,16 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
-  const _$_ViewModelImpl({this.profile, required this.onSave});
+  const _$_ViewModelImpl({required this.creatingGroup, required this.onSave});
 
   @override
-  final Profile? profile;
+  final bool creatingGroup;
   @override
-  final OnProfileSaveCallback onSave;
+  final OnCreateGroupCallback onSave;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(profile: $profile, onSave: $onSave)';
+    return '_ViewModel(creatingGroup: $creatingGroup, onSave: $onSave)';
   }
 
   @override
@@ -137,7 +120,7 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', '_ViewModel'))
-      ..add(DiagnosticsProperty('profile', profile))
+      ..add(DiagnosticsProperty('creatingGroup', creatingGroup))
       ..add(DiagnosticsProperty('onSave', onSave));
   }
 
@@ -146,12 +129,13 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ViewModelImpl &&
-            (identical(other.profile, profile) || other.profile == profile) &&
+            (identical(other.creatingGroup, creatingGroup) ||
+                other.creatingGroup == creatingGroup) &&
             (identical(other.onSave, onSave) || other.onSave == onSave));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, profile, onSave);
+  int get hashCode => Object.hash(runtimeType, creatingGroup, onSave);
 
   @JsonKey(ignore: true)
   @override
@@ -162,13 +146,13 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 
 abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
-      {final Profile? profile,
-      required final OnProfileSaveCallback onSave}) = _$_ViewModelImpl;
+      {required final bool creatingGroup,
+      required final OnCreateGroupCallback onSave}) = _$_ViewModelImpl;
 
   @override
-  Profile? get profile;
+  bool get creatingGroup;
   @override
-  OnProfileSaveCallback get onSave;
+  OnCreateGroupCallback get onSave;
   @override
   @JsonKey(ignore: true)
   _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>

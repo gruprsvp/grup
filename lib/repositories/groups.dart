@@ -24,9 +24,11 @@ class GroupsRepository {
   }
 
   // TODO type
-  Future<dynamic> createGroup(String displayName) async {
+  Future<Group> createGroup(String displayName) async {
     return supabase
-        .rpc('create_group', params: {'display_name': displayName}).single();
+        .rpc('create_group', params: {'display_name': displayName})
+        .single()
+        .withConverter((data) => Group.fromJson(data));
   }
 
   PostgrestQueryBuilder<void> _table() =>

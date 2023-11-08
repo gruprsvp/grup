@@ -31,7 +31,7 @@ sealed class _ViewModel with _$ViewModel {
 
   const factory _ViewModel({
     Profile? profile,
-    required OnSaveCallback onSave,
+    required OnProfileSaveCallback onSave,
   }) = __ViewModel;
 
   static _ViewModel fromStore(Store<RootState> store) {
