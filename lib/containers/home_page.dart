@@ -17,6 +17,7 @@ class HomePage extends StatelessWidget {
     return StoreConnector(
       builder: (context, vm) => HomeScreen(
         profile: vm.profile,
+        groups: vm.groups,
       ),
       converter: _ViewModel.fromStore,
     );
@@ -27,11 +28,13 @@ class HomePage extends StatelessWidget {
 sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     Profile? profile,
+    Iterable<Group>? groups,
   }) = __ViewModel;
 
   static _ViewModel fromStore(Store<RootState> store) {
     return _ViewModel(
       profile: store.state.profiles.entities[store.state.auth.user?.id],
+      groups: store.state.groups.entities.values,
     );
   }
 }

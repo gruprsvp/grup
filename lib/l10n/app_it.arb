@@ -9,6 +9,7 @@
   "create": "Crea",
   "createNewGroup": "Crea nuovo gruppo",
   "createOrJoinGroup": "Crea o entra in un gruppo",
+  "enterGroupDescription": "Puoi inserire una descrizione per il gruppo",
   "enterGroupName": "Inserisci il nome del gruppo",
   "enterGroupNamePlease": "È richiesto un nome per il gruppo",
   "enterYourName": "Inserisci il tuo nome",

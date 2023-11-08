@@ -1,3 +1,4 @@
+import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -22,19 +23,51 @@ class ParApp extends StatelessWidget {
       child: StoreConnector<RootState, _ViewModel>(
         distinct: true,
         converter: _ViewModel.fromStore,
-        builder: (context, vm) => MaterialApp.router(
-          title: 'Parousia',
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
-          supportedLocales: AppLocalizations.supportedLocales,
-          themeMode: vm.themeMode,
-          darkTheme: ThemeData.dark(useMaterial3: true),
-          locale: vm.locale,
-          theme: ThemeData(
-            // TODO(borgoat): dynamic color scheme using dynamic_color package
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepOrange),
-            useMaterial3: true,
-          ),
-          routerConfig: router,
+        builder: (context, vm) => DynamicColorBuilder(
+          builder: (lightDynamic, darkDynamic) {
+            // TODO Take something from state
+            const overrideColour = null;
+            const defaultColour = Colors.orange;
+
+            ColorScheme lightColorScheme;
+            ColorScheme darkColorScheme;
+
+            if (lightDynamic != null && darkDynamic != null) {
+              lightColorScheme = lightDynamic.harmonized().copyWith(
+                    secondary: overrideColour,
+                  );
+              darkColorScheme = darkDynamic.harmonized().copyWith(
+                    secondary: overrideColour,
+                  );
+            } else {
+              // Otherwise, use fallback schemes.
+              lightColorScheme = ColorScheme.fromSeed(
+                seedColor: overrideColour ?? defaultColour,
+              );
+              darkColorScheme = ColorScheme.fromSeed(
+                seedColor: overrideColour ?? defaultColour,
+                brightness: Brightness.dark,
+              );
+            }
+
+            return MaterialApp.router(
+              title: 'Parousia',
+              localizationsDelegates: AppLocalizations.localizationsDelegates,
+              supportedLocales: AppLocalizations.supportedLocales,
+              themeMode: vm.themeMode,
+              locale: vm.locale,
+              darkTheme: ThemeData(
+                colorScheme: darkColorScheme,
+                useMaterial3: true,
+              ),
+              theme: ThemeData(
+                // TODO(borgoat): dynamic color scheme using dynamic_color package
+                colorScheme: lightColorScheme,
+                useMaterial3: true,
+              ),
+              routerConfig: router,
+            );
+          },
         ),
       ),
     );

@@ -6,8 +6,13 @@ import 'package:parousia/presentation/presentation.dart';
 
 class HomeScreen extends StatelessWidget {
   final Profile? profile;
+  final Iterable<Group>? groups;
 
-  const HomeScreen({super.key, this.profile});
+  const HomeScreen({
+    super.key,
+    this.profile,
+    this.groups,
+  });
 
   ImageProvider? _profilePicture() {
     if (profile?.picture != null) {
@@ -21,6 +26,8 @@ class HomeScreen extends StatelessWidget {
     final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
 
+    final nothingToShow = groups == null || groups!.isEmpty;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(l10n.appName),
@@ -32,21 +39,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                l10n.onboardingMessage,
-                style: theme.textTheme.bodyLarge,
-              ),
-              Image.asset('assets/images/wolf.png', height: 320),
-            ],
-          ),
-        ),
-      ),
+      body: nothingToShow ? const HomeEmptyState() : GroupsList(groups: groups),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => NewGroupRoute().push(context),
         label: Text(l10n.createOrJoinGroup),

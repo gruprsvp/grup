@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ViewModel {
   Profile? get profile => throw _privateConstructorUsedError;
+  Iterable<Group>? get groups => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   _$ViewModelCopyWith<_ViewModel> get copyWith =>
@@ -29,7 +30,7 @@ abstract class _$ViewModelCopyWith<$Res> {
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call({Profile? profile});
+  $Res call({Profile? profile, Iterable<Group>? groups});
 
   $ProfileCopyWith<$Res>? get profile;
 }
@@ -48,12 +49,17 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   @override
   $Res call({
     Object? profile = freezed,
+    Object? groups = freezed,
   }) {
     return _then(_value.copyWith(
       profile: freezed == profile
           ? _value.profile
           : profile // ignore: cast_nullable_to_non_nullable
               as Profile?,
+      groups: freezed == groups
+          ? _value.groups
+          : groups // ignore: cast_nullable_to_non_nullable
+              as Iterable<Group>?,
     ) as $Val);
   }
 
@@ -78,7 +84,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Profile? profile});
+  $Res call({Profile? profile, Iterable<Group>? groups});
 
   @override
   $ProfileCopyWith<$Res>? get profile;
@@ -96,12 +102,17 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? profile = freezed,
+    Object? groups = freezed,
   }) {
     return _then(_$_ViewModelImpl(
       profile: freezed == profile
           ? _value.profile
           : profile // ignore: cast_nullable_to_non_nullable
               as Profile?,
+      groups: freezed == groups
+          ? _value.groups
+          : groups // ignore: cast_nullable_to_non_nullable
+              as Iterable<Group>?,
     ));
   }
 }
@@ -109,14 +120,16 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
-  const _$_ViewModelImpl({this.profile});
+  const _$_ViewModelImpl({this.profile, this.groups});
 
   @override
   final Profile? profile;
+  @override
+  final Iterable<Group>? groups;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(profile: $profile)';
+    return '_ViewModel(profile: $profile, groups: $groups)';
   }
 
   @override
@@ -124,7 +137,8 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', '_ViewModel'))
-      ..add(DiagnosticsProperty('profile', profile));
+      ..add(DiagnosticsProperty('profile', profile))
+      ..add(DiagnosticsProperty('groups', groups));
   }
 
   @override
@@ -132,11 +146,13 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ViewModelImpl &&
-            (identical(other.profile, profile) || other.profile == profile));
+            (identical(other.profile, profile) || other.profile == profile) &&
+            const DeepCollectionEquality().equals(other.groups, groups));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, profile);
+  int get hashCode => Object.hash(
+      runtimeType, profile, const DeepCollectionEquality().hash(groups));
 
   @JsonKey(ignore: true)
   @override
@@ -146,10 +162,14 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 }
 
 abstract class __ViewModel implements _ViewModel {
-  const factory __ViewModel({final Profile? profile}) = _$_ViewModelImpl;
+  const factory __ViewModel(
+      {final Profile? profile,
+      final Iterable<Group>? groups}) = _$_ViewModelImpl;
 
   @override
   Profile? get profile;
+  @override
+  Iterable<Group>? get groups;
   @override
   @JsonKey(ignore: true)
   _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>
