@@ -246,12 +246,6 @@ create policy "groups_select"
     to authenticated
     using (is_user_member_of_group(id));
 
--- create policy "members_select"
---     on members
---     for select
---     to authenticated
---     using (is_user_member_of_group(group_id));
-
 create policy "groups_update"
     on groups
     for update
@@ -267,10 +261,12 @@ create policy "groups_update"
                           and group_id = groups.id
                           and role_id = 1));
 
--- create policy "Only group members can read member data"
---     on members
---     for select using (is_user_member_of_group(group_id));
---
+create policy "members_select"
+    on members
+    for select
+    to authenticated
+    using (is_user_member_of_group(group_id));
+
 -- create policy "Only group members can read schedule data"
 --     on schedules
 --     for select using (is_user_member_of_group(group_id));

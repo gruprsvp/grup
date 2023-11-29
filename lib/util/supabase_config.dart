@@ -24,8 +24,11 @@ class SupabaseConfig with _$SupabaseConfig {
   factory SupabaseConfig.fromJson(Map<String, dynamic> json) =>
       _$SupabaseConfigFromJson(json);
 
+  factory SupabaseConfig.fromString(String jsonString) =>
+      SupabaseConfig.fromJson(jsonDecode(jsonString));
+
   factory SupabaseConfig.fromFile(File file) =>
-      SupabaseConfig.fromJson(jsonDecode(file.readAsStringSync()));
+      SupabaseConfig.fromString(file.readAsStringSync());
 
   factory SupabaseConfig.fromPath(String path) =>
       SupabaseConfig.fromFile(File(path));

@@ -7,7 +7,8 @@ import 'package:parousia/util/util.dart';
 import 'package:supabase/supabase.dart';
 import 'package:test/test.dart';
 
-final SupabaseConfig config = SupabaseConfig.fromPath('supabase_local.json');
+final SupabaseConfig config =
+    SupabaseConfig.fromPath('supabase_localhost.json');
 
 SupabaseClient supabaseAnonClient() =>
     SupabaseClient(config.apiUrl, config.anonKey);
@@ -41,13 +42,19 @@ Future<void> runWithTemporaryUser(RunWithUserCallback callback) async {
   await supabaseAdmin.auth.admin.deleteUser(user.user!.id);
 }
 
+Group fakeGroup() => Group(
+      displayName: faker.conference.name(),
+      description: faker.lorem.sentences(3).join(' '),
+      picture: faker.image.image(height: 128, width: 128),
+      id: 0,
+    );
+
 void main() {
-  group('repositories', () {
+  group('profiles', () {
     test(
         'users should be able to sign up and delete their profile',
         () => runWithTemporaryUser(
-              (supabase, user) => expect(user.user, isNotNull),
-            ));
+            (supabase, user) => expect(user.user, isNotNull)));
 
     test(
       'users should be able to get and update their profile',
@@ -78,7 +85,9 @@ void main() {
         expect(updatedProfile.picture, equals(pictureUrl));
       }),
     );
+  });
 
+  group('groups', () {
     test(
       'users should be able to create groups',
       () => runWithTemporaryUser(
@@ -108,6 +117,38 @@ void main() {
           });
         },
       ),
+    );
+
+    test(
+      'users should be able to see all the groups they created',
+      () => runWithTemporaryUser((supabase, user) async {
+        final groupsRepository = GroupsRepository(supabase: supabase);
+        const groupsCount = 5;
+        final createdGroups = List.generate(groupsCount, (_) => fakeGroup());
+
+        await Future.wait(
+            createdGroups.map((g) => groupsRepository.createGroup(g)));
+
+        final userGroups = await groupsRepository.getUserGroups();
+
+        expect(userGroups, hasLength(groupsCount));
+        // ? How to match just user-configured properties?
+        // expect(userGroups, unorderedEquals(createdGroups));
+      }),
+    );
+
+    test(
+      'users can edit their groups',
+      () => runWithTemporaryUser((supabase, user) async {
+        final groupsRepository = GroupsRepository(supabase: supabase);
+        final group = await groupsRepository.createGroup(fakeGroup());
+
+        const newName = 'A new group name';
+        final updatedGroup = await groupsRepository
+            .updateGroup(group.copyWith(displayName: newName));
+
+        expect(updatedGroup.displayName, equals(newName));
+      }),
     );
   });
 }

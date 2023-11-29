@@ -53,7 +53,7 @@ class _ViewModel with _$ViewModel {
       onSave: ({required displayName, description, picture}) => store.dispatch(
         RequestUpdateOne<Group>(
           Group(
-            id: 0,
+            id: int.parse(groupId),
             displayName: displayName,
             description: description,
             picture: picture,
