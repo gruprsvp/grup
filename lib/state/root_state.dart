@@ -23,9 +23,10 @@ sealed class RootState with _$RootState {
     @Default(AuthState(status: AuthStatus.initial)) AuthState auth,
     @Default(ThemeMode.system) ThemeMode themeMode,
     @Default(LocaleState(languageCode: 'und')) LocaleState locale,
+    required DateTime selectedDate,
   }) = _RootState;
 
-  factory RootState.initialState() => const RootState();
+  factory RootState.initialState() => RootState(selectedDate: DateTime.now());
 
   factory RootState.fromJson(Map<String, dynamic> json) =>
       _$RootStateFromJson(json);

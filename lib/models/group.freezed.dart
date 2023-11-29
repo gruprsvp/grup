@@ -22,6 +22,8 @@ Group _$GroupFromJson(Map<String, dynamic> json) {
 mixin _$Group {
   int get id => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  String? get picture => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
@@ -36,7 +38,12 @@ abstract class $GroupCopyWith<$Res> {
       _$GroupCopyWithImpl<$Res, Group>;
   @useResult
   $Res call(
-      {int id, String displayName, DateTime? createdAt, DateTime? updatedAt});
+      {int id,
+      String displayName,
+      String? description,
+      String? picture,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -54,6 +61,8 @@ class _$GroupCopyWithImpl<$Res, $Val extends Group>
   $Res call({
     Object? id = null,
     Object? displayName = null,
+    Object? description = freezed,
+    Object? picture = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -66,6 +75,14 @@ class _$GroupCopyWithImpl<$Res, $Val extends Group>
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
               as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      picture: freezed == picture
+          ? _value.picture
+          : picture // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -86,7 +103,12 @@ abstract class _$$GroupImplCopyWith<$Res> implements $GroupCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id, String displayName, DateTime? createdAt, DateTime? updatedAt});
+      {int id,
+      String displayName,
+      String? description,
+      String? picture,
+      DateTime? createdAt,
+      DateTime? updatedAt});
 }
 
 /// @nodoc
@@ -102,6 +124,8 @@ class __$$GroupImplCopyWithImpl<$Res>
   $Res call({
     Object? id = null,
     Object? displayName = null,
+    Object? description = freezed,
+    Object? picture = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -114,6 +138,14 @@ class __$$GroupImplCopyWithImpl<$Res>
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
               as String,
+      description: freezed == description
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      picture: freezed == picture
+          ? _value.picture
+          : picture // ignore: cast_nullable_to_non_nullable
+              as String?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -133,6 +165,8 @@ class _$GroupImpl with DiagnosticableTreeMixin implements _Group {
   const _$GroupImpl(
       {required this.id,
       required this.displayName,
+      this.description,
+      this.picture,
       this.createdAt,
       this.updatedAt});
 
@@ -144,13 +178,17 @@ class _$GroupImpl with DiagnosticableTreeMixin implements _Group {
   @override
   final String displayName;
   @override
+  final String? description;
+  @override
+  final String? picture;
+  @override
   final DateTime? createdAt;
   @override
   final DateTime? updatedAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Group(id: $id, displayName: $displayName, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Group(id: $id, displayName: $displayName, description: $description, picture: $picture, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -160,6 +198,8 @@ class _$GroupImpl with DiagnosticableTreeMixin implements _Group {
       ..add(DiagnosticsProperty('type', 'Group'))
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('displayName', displayName))
+      ..add(DiagnosticsProperty('description', description))
+      ..add(DiagnosticsProperty('picture', picture))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('updatedAt', updatedAt));
   }
@@ -172,6 +212,9 @@ class _$GroupImpl with DiagnosticableTreeMixin implements _Group {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.displayName, displayName) ||
                 other.displayName == displayName) &&
+            (identical(other.description, description) ||
+                other.description == description) &&
+            (identical(other.picture, picture) || other.picture == picture) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -180,8 +223,8 @@ class _$GroupImpl with DiagnosticableTreeMixin implements _Group {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, id, displayName, createdAt, updatedAt);
+  int get hashCode => Object.hash(
+      runtimeType, id, displayName, description, picture, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -201,6 +244,8 @@ abstract class _Group implements Group {
   const factory _Group(
       {required final int id,
       required final String displayName,
+      final String? description,
+      final String? picture,
       final DateTime? createdAt,
       final DateTime? updatedAt}) = _$GroupImpl;
 
@@ -210,6 +255,10 @@ abstract class _Group implements Group {
   int get id;
   @override
   String get displayName;
+  @override
+  String? get description;
+  @override
+  String? get picture;
   @override
   DateTime? get createdAt;
   @override

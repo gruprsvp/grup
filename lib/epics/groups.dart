@@ -10,6 +10,7 @@ import 'package:supabase/supabase.dart';
 createGroupsEpics(GroupsRepository groups) => combineEpics<RootState>([
       _createRetrieveAllGroupsEpic(groups),
       _createCreateOneGroupEpic(groups),
+      _createUpdateOneGroupEpic(groups),
       _loadGroupsOnSignInEpic,
     ]);
 
@@ -37,9 +38,20 @@ Epic<RootState> _createCreateOneGroupEpic(GroupsRepository groups) {
   return (Stream<dynamic> actions, EpicStore<RootState> store) =>
       actions.whereType<RequestCreateOne<Group>>().asyncMap(
             (action) => groups
-                .createGroup(action.entity.displayName)
+                .createGroup(action.entity)
                 .then<dynamic>((group) => SuccessCreateOne<Group>(group))
                 .catchError((error) =>
                     FailCreateOne<Group>(entity: action.entity, error: error)),
+          );
+}
+
+Epic<RootState> _createUpdateOneGroupEpic(GroupsRepository groups) {
+  return (Stream<dynamic> actions, EpicStore<RootState> store) =>
+      actions.whereType<RequestUpdateOne<Group>>().asyncMap(
+            (action) => groups
+                .updateGroup(action.entity)
+                .then<dynamic>((group) => SuccessUpdateOne<Group>(group))
+                .catchError((error) =>
+                    FailUpdateOne<Group>(entity: action.entity, error: error)),
           );
 }

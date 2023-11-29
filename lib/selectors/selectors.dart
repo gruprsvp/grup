@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parousia/state/state.dart';
+import 'package:parousia/util/util.dart';
 
 /// Provide the current theme mode.
 ThemeMode themeModeSelector(RootState state) => state.themeMode;
@@ -14,3 +15,7 @@ Locale localeSelector(RootState state) {
     countryCode: locale.countryCode,
   );
 }
+
+/// Provide the begin and end of day for the selected date.
+DateTimeRange selectedDateRangeSelector(RootState state) =>
+    state.selectedDate.getDayRange();

@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'create_group.dart';
+part of 'group_details.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -16,8 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ViewModel {
-  bool get creatingGroup => throw _privateConstructorUsedError;
-  OnGroupSaveCallback get onSave => throw _privateConstructorUsedError;
+  bool get loading => throw _privateConstructorUsedError;
+  Group? get group => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   _$ViewModelCopyWith<_ViewModel> get copyWith =>
@@ -30,7 +30,9 @@ abstract class _$ViewModelCopyWith<$Res> {
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call({bool creatingGroup, OnGroupSaveCallback onSave});
+  $Res call({bool loading, Group? group});
+
+  $GroupCopyWith<$Res>? get group;
 }
 
 /// @nodoc
@@ -46,19 +48,31 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? creatingGroup = null,
-    Object? onSave = null,
+    Object? loading = null,
+    Object? group = freezed,
   }) {
     return _then(_value.copyWith(
-      creatingGroup: null == creatingGroup
-          ? _value.creatingGroup
-          : creatingGroup // ignore: cast_nullable_to_non_nullable
+      loading: null == loading
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
               as bool,
-      onSave: null == onSave
-          ? _value.onSave
-          : onSave // ignore: cast_nullable_to_non_nullable
-              as OnGroupSaveCallback,
+      group: freezed == group
+          ? _value.group
+          : group // ignore: cast_nullable_to_non_nullable
+              as Group?,
     ) as $Val);
+  }
+
+  @override
+  @pragma('vm:prefer-inline')
+  $GroupCopyWith<$Res>? get group {
+    if (_value.group == null) {
+      return null;
+    }
+
+    return $GroupCopyWith<$Res>(_value.group!, (value) {
+      return _then(_value.copyWith(group: value) as $Val);
+    });
   }
 }
 
@@ -70,7 +84,10 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool creatingGroup, OnGroupSaveCallback onSave});
+  $Res call({bool loading, Group? group});
+
+  @override
+  $GroupCopyWith<$Res>? get group;
 }
 
 /// @nodoc
@@ -84,18 +101,18 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? creatingGroup = null,
-    Object? onSave = null,
+    Object? loading = null,
+    Object? group = freezed,
   }) {
     return _then(_$_ViewModelImpl(
-      creatingGroup: null == creatingGroup
-          ? _value.creatingGroup
-          : creatingGroup // ignore: cast_nullable_to_non_nullable
+      loading: null == loading
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
               as bool,
-      onSave: null == onSave
-          ? _value.onSave
-          : onSave // ignore: cast_nullable_to_non_nullable
-              as OnGroupSaveCallback,
+      group: freezed == group
+          ? _value.group
+          : group // ignore: cast_nullable_to_non_nullable
+              as Group?,
     ));
   }
 }
@@ -103,16 +120,16 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
-  const _$_ViewModelImpl({required this.creatingGroup, required this.onSave});
+  const _$_ViewModelImpl({required this.loading, this.group});
 
   @override
-  final bool creatingGroup;
+  final bool loading;
   @override
-  final OnGroupSaveCallback onSave;
+  final Group? group;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(creatingGroup: $creatingGroup, onSave: $onSave)';
+    return '_ViewModel(loading: $loading, group: $group)';
   }
 
   @override
@@ -120,8 +137,8 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', '_ViewModel'))
-      ..add(DiagnosticsProperty('creatingGroup', creatingGroup))
-      ..add(DiagnosticsProperty('onSave', onSave));
+      ..add(DiagnosticsProperty('loading', loading))
+      ..add(DiagnosticsProperty('group', group));
   }
 
   @override
@@ -129,13 +146,12 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ViewModelImpl &&
-            (identical(other.creatingGroup, creatingGroup) ||
-                other.creatingGroup == creatingGroup) &&
-            (identical(other.onSave, onSave) || other.onSave == onSave));
+            (identical(other.loading, loading) || other.loading == loading) &&
+            (identical(other.group, group) || other.group == group));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, creatingGroup, onSave);
+  int get hashCode => Object.hash(runtimeType, loading, group);
 
   @JsonKey(ignore: true)
   @override
@@ -145,14 +161,13 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 }
 
 abstract class __ViewModel implements _ViewModel {
-  const factory __ViewModel(
-      {required final bool creatingGroup,
-      required final OnGroupSaveCallback onSave}) = _$_ViewModelImpl;
+  const factory __ViewModel({required final bool loading, final Group? group}) =
+      _$_ViewModelImpl;
 
   @override
-  bool get creatingGroup;
+  bool get loading;
   @override
-  OnGroupSaveCallback get onSave;
+  Group? get group;
   @override
   @JsonKey(ignore: true)
   _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>

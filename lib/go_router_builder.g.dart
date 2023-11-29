@@ -36,6 +36,16 @@ RouteBase get $homeScreenRoute => GoRouteData.$route(
           path: 'new-group',
           factory: $NewGroupRouteExtension._fromState,
         ),
+        GoRouteData.$route(
+          path: 'groups/:groupId',
+          factory: $GroupDetailsRouteExtension._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'edit',
+              factory: $GroupEditRouteExtension._fromState,
+            ),
+          ],
+        ),
       ],
     );
 
@@ -129,6 +139,44 @@ extension $NewGroupRouteExtension on NewGroupRoute {
 
   String get location => GoRouteData.$location(
         '/new-group',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $GroupDetailsRouteExtension on GroupDetailsRoute {
+  static GroupDetailsRoute _fromState(GoRouterState state) => GroupDetailsRoute(
+        groupId: state.pathParameters['groupId']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/groups/${Uri.encodeComponent(groupId)}',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $GroupEditRouteExtension on GroupEditRoute {
+  static GroupEditRoute _fromState(GoRouterState state) => GroupEditRoute(
+        groupId: state.pathParameters['groupId']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/groups/${Uri.encodeComponent(groupId)}/edit',
       );
 
   void go(BuildContext context) => context.go(location);

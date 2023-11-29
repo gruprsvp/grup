@@ -1,38 +1,47 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parousia/models/group.dart';
 
-typedef OnCreateGroupCallback = void Function(String displayName);
+typedef OnGroupSaveCallback = void Function({
+  required String displayName,
+  String? description,
+  String? picture,
+});
 
-class CreateGroupForm extends StatefulWidget {
-  final bool creationInProgress;
-  final OnCreateGroupCallback onCreateGroup;
+class GroupForm extends StatefulWidget {
+  final bool loading;
+  final OnGroupSaveCallback onSave;
+  final Group? group;
 
-  const CreateGroupForm({
+  const GroupForm({
     super.key,
-    required this.creationInProgress,
-    required this.onCreateGroup,
+    required this.loading,
+    required this.onSave,
+    this.group,
   });
 
   @override
-  createState() => _CreateGroupFormState();
+  createState() => _GroupFormState();
 }
 
-class _CreateGroupFormState extends State<CreateGroupForm> {
+class _GroupFormState extends State<GroupForm> {
   final _formKey = GlobalKey<FormState>();
-  final _nameFocusNode = FocusNode();
 
   late TextEditingController _nameController;
+  late TextEditingController _descriptionController;
 
   @override
   void initState() {
     super.initState();
-    _nameController = TextEditingController();
+    _nameController = TextEditingController(text: widget.group?.displayName);
+    _descriptionController =
+        TextEditingController(text: widget.group?.description);
   }
 
   @override
   void dispose() {
-    _nameFocusNode.dispose();
+    _descriptionController.dispose();
     _nameController.dispose();
     super.dispose();
   }
@@ -41,7 +50,6 @@ class _CreateGroupFormState extends State<CreateGroupForm> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    // TODO: implement build
     return Form(
       key: _formKey,
       child: Padding(
@@ -50,8 +58,7 @@ class _CreateGroupFormState extends State<CreateGroupForm> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             TextFormField(
-              enabled: !widget.creationInProgress,
-              focusNode: _nameFocusNode,
+              enabled: !widget.loading,
               controller: _nameController,
               decoration: InputDecoration(
                 labelText: l10n.enterGroupName,
@@ -67,10 +74,13 @@ class _CreateGroupFormState extends State<CreateGroupForm> {
               },
             ),
             TextFormField(
+              enabled: !widget.loading,
+              controller: _descriptionController,
               minLines: 2,
               maxLines: 5,
               maxLength: 256,
               maxLengthEnforcement: MaxLengthEnforcement.enforced,
+              autocorrect: true,
               decoration: InputDecoration(
                 suffixIcon: const Icon(Icons.description_outlined),
                 hintText: l10n.enterGroupDescription,
@@ -78,16 +88,25 @@ class _CreateGroupFormState extends State<CreateGroupForm> {
               ),
             ),
             FilledButton(
-              onPressed: widget.creationInProgress
+              onPressed: widget.loading
                   ? null
                   : () {
                       if (_formKey.currentState!.validate()) {
+                        final displayName = _nameController.text.trim();
+                        final description = _descriptionController.text.trim();
+                        final picture = null; // TODO
+
                         _formKey.currentState!.save();
-                        _nameFocusNode.unfocus();
-                        widget.onCreateGroup(_nameController.text.trim());
+                        widget.onSave(
+                          displayName: displayName,
+                          description:
+                              description.isNotEmpty ? description : null,
+                          picture: picture,
+                        );
                       }
                     },
-              child: Text(l10n.createNewGroup),
+              child:
+                  Text(widget.group != null ? l10n.save : l10n.createNewGroup),
             ),
           ],
         ),

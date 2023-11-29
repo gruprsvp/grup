@@ -12,23 +12,21 @@ part 'go_router_builder.g.dart';
 @TypedGoRoute<HomeScreenRoute>(
   path: '/',
   routes: [
-    TypedGoRoute<AuthRoute>(
-      path: 'auth',
-    ),
+    TypedGoRoute<AuthRoute>(path: 'auth'),
     TypedGoRoute<SettingsRoute>(
       path: 'settings',
       routes: [
-        TypedGoRoute<LocaleRoute>(
-          path: 'locale',
-        ),
+        TypedGoRoute<LocaleRoute>(path: 'locale'),
       ],
     ),
-    TypedGoRoute<ProfileRoute>(
-      path: 'profile',
-    ),
-    TypedGoRoute<NewGroupRoute>(
-      path: 'new-group',
-    ),
+    TypedGoRoute<ProfileRoute>(path: 'profile'),
+    TypedGoRoute<NewGroupRoute>(path: 'new-group'),
+    TypedGoRoute<GroupDetailsRoute>(
+      path: 'groups/:groupId',
+      routes: [
+        TypedGoRoute<GroupEditRoute>(path: 'edit'),
+      ],
+    )
   ],
 )
 @immutable
@@ -69,6 +67,28 @@ class NewGroupRoute extends GoRouteData with AuthenticationGuard {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const NewGroupScreen();
+}
+
+@immutable
+class GroupDetailsRoute extends GoRouteData with AuthenticationGuard {
+  final String groupId;
+
+  const GroupDetailsRoute({required this.groupId});
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      GroupDetails(groupId: groupId);
+}
+
+@immutable
+class GroupEditRoute extends GoRouteData with AuthenticationGuard {
+  final String groupId;
+
+  const GroupEditRoute({required this.groupId});
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      EditGroup(groupId: groupId);
 }
 
 // Check if a user exists in the Supabase client

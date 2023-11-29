@@ -10,6 +10,8 @@ sealed class Group with _$Group {
   const factory Group({
     required int id,
     required String displayName,
+    String? description,
+    String? picture,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _Group;

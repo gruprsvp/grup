@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 
 class GroupsList extends StatelessWidget {
@@ -14,7 +15,9 @@ class GroupsList extends StatelessWidget {
         return ListTile(
           // TODO avatar and description
           title: Text(group.displayName),
-          onTap: () => print('TODO: open group ${group.id}'),
+          subtitle: group.description != null ? Text(group.description!) : null,
+          onTap: () =>
+              GroupDetailsRoute(groupId: group.id.toString()).push(context),
         );
       },
       itemCount: groups?.length ?? 0,

@@ -3,6 +3,7 @@ import 'package:parousia/state/state.dart';
 import 'auth.dart';
 import 'locale.dart';
 import 'remote_entities.dart';
+import 'selected_date.dart';
 import 'theme.dart';
 
 /// The root reducer combines all the reducers for the app into one.
@@ -16,5 +17,6 @@ RootState rootReducer(RootState state, dynamic action) {
     auth: authReducer(state.auth, action),
     themeMode: themeReducer(state.themeMode, action),
     locale: localeReducer(state.locale, action),
+    selectedDate: selectedDateReducer(state.selectedDate, action),
   );
 }

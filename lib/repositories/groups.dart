@@ -10,8 +10,7 @@ class GroupsRepository {
 
   Future<Iterable<Group>> getUserGroups() async {
     return _table()
-        .select<PostgrestList>('*, members!inner(*)')
-        .eq('members.profile_id', supabase.auth.currentUser!.id)
+        .select<PostgrestList>('*')
         .withConverter((data) => data.map(Group.fromJson));
   }
 
@@ -23,12 +22,28 @@ class GroupsRepository {
         .withConverter(Group.fromJson);
   }
 
-  // TODO type
-  Future<Group> createGroup(String displayName) async {
+  Future<Group> createGroup(Group group) async {
     return supabase
-        .rpc('create_group', params: {'display_name': displayName})
+        .rpc('create_group', params: {
+          'display_name': group.displayName,
+          'description': group.description,
+          'picture': group.picture,
+        })
         .single()
         .withConverter((data) => Group.fromJson(data));
+  }
+
+  Future<Group> updateGroup(Group group) async {
+    return _table()
+        .update({
+          'display_name': group.displayName,
+          'description': group.description,
+          'picture': group.picture,
+        })
+        .eq('id', group.id)
+        .select<PostgrestMap>()
+        .single()
+        .withConverter(Group.fromJson);
   }
 
   PostgrestQueryBuilder<void> _table() =>

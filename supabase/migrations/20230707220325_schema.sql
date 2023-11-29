@@ -54,10 +54,14 @@ create table groups
     created_at   timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at   timestamp with time zone default timezone('utc'::text, now()) not null,
 
-    display_name text                                                          not null
+    display_name text                                                          not null,
+    description  text,
+    picture      text
 );
 comment on table groups is 'Group of users that share roles, schedules, replies.';
 comment on column groups.display_name is 'The group name.';
+comment on column groups.description is 'A description of the group.';
+comment on column groups.picture is 'A URL to the group picture.';
 
 create table members
 (
@@ -67,7 +71,7 @@ create table members
 
     group_id              bigint                                                        not null references groups,
     role_id               bigint                                                        not null references roles,
-    profile_id            uuid references profiles,
+    profile_id            uuid references profiles on delete cascade,
 
     -- TODO a group should be able to insert a profile with default replies before it even exists...
     --      therefore, we need a way to "invite" new members, so that when users sign up,
@@ -208,30 +212,61 @@ alter table replies
     enable row level security;
 
 create or replace function is_user_member_of_group(check_group_id bigint)
-    returns boolean as
+    returns boolean
+    security definer set search_path = public
+    language plpgsql stable
+as
 $$
 begin
     return exists (select 1
                    from members
                    where profile_id = auth.uid()
-                     and group_id = check_group_id);
+                     and group_id = is_user_member_of_group.check_group_id);
 end;
-$$ language plpgsql;
+$$;
 
-create policy "Users can read their own profile"
+create policy "profiles_select"
     on profiles
-    for select using (id = auth.uid());
+    for select
+    to authenticated
+    using ((select auth.uid()) = id);
+comment on policy "profiles_select" on profiles is 'Users can see their own profile';
 
-create policy "Users can write their own profile"
+create policy "profiles_update"
     on profiles
     for update
-    using (id = auth.uid())
-    with check (id = auth.uid());
+    to authenticated
+    using ((select auth.uid()) = id)
+    with check ((select auth.uid()) = id);
+comment on policy "profiles_update" on profiles is 'Users can update their own profile';
 
--- create policy "Only group members can read group data"
---     on groups
---     for select using (is_user_member_of_group(id));
---
+create policy "groups_select"
+    on groups
+    for select
+    to authenticated
+    using (is_user_member_of_group(id));
+
+-- create policy "members_select"
+--     on members
+--     for select
+--     to authenticated
+--     using (is_user_member_of_group(group_id));
+
+create policy "groups_update"
+    on groups
+    for update
+    to authenticated
+    using (exists (select 1
+                   from members
+                   where profile_id = auth.uid()
+                     and group_id = groups.id
+                     and role_id = 1))
+    with check (exists (select 1
+                        from members
+                        where profile_id = auth.uid()
+                          and group_id = groups.id
+                          and role_id = 1));
+
 -- create policy "Only group members can read member data"
 --     on members
 --     for select using (is_user_member_of_group(group_id));

@@ -41,6 +41,7 @@ _$RootStateImpl _$$RootStateImplFromJson(Map<String, dynamic> json) =>
       locale: json['locale'] == null
           ? const LocaleState(languageCode: 'und')
           : LocaleState.fromJson(json['locale'] as Map<String, dynamic>),
+      selectedDate: DateTime.parse(json['selectedDate'] as String),
     );
 
 Map<String, dynamic> _$$RootStateImplToJson(_$RootStateImpl instance) =>
@@ -53,6 +54,7 @@ Map<String, dynamic> _$$RootStateImplToJson(_$RootStateImpl instance) =>
       'auth': instance.auth,
       'themeMode': _$ThemeModeEnumMap[instance.themeMode]!,
       'locale': instance.locale,
+      'selectedDate': instance.selectedDate.toIso8601String(),
     };
 
 const _$ThemeModeEnumMap = {
