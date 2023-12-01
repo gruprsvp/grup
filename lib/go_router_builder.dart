@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parousia/containers/containers.dart';
@@ -24,7 +22,7 @@ part 'go_router_builder.g.dart';
     TypedGoRoute<GroupDetailsRoute>(
       path: 'groups/:groupId',
       routes: [
-        TypedGoRoute<GroupEditRoute>(path: 'edit'),
+        TypedGoRoute<GroupManageRoute>(path: 'manage'),
       ],
     )
   ],
@@ -81,14 +79,14 @@ class GroupDetailsRoute extends GoRouteData with AuthenticationGuard {
 }
 
 @immutable
-class GroupEditRoute extends GoRouteData with AuthenticationGuard {
+class GroupManageRoute extends GoRouteData with AuthenticationGuard {
   final String groupId;
 
-  const GroupEditRoute({required this.groupId});
+  const GroupManageRoute({required this.groupId});
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      EditGroup(groupId: groupId);
+      ManageGroup(groupId: groupId);
 }
 
 // Check if a user exists in the Supabase client

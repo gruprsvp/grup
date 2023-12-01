@@ -41,8 +41,8 @@ RouteBase get $homeScreenRoute => GoRouteData.$route(
           factory: $GroupDetailsRouteExtension._fromState,
           routes: [
             GoRouteData.$route(
-              path: 'edit',
-              factory: $GroupEditRouteExtension._fromState,
+              path: 'manage',
+              factory: $GroupManageRouteExtension._fromState,
             ),
           ],
         ),
@@ -170,13 +170,13 @@ extension $GroupDetailsRouteExtension on GroupDetailsRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $GroupEditRouteExtension on GroupEditRoute {
-  static GroupEditRoute _fromState(GoRouterState state) => GroupEditRoute(
+extension $GroupManageRouteExtension on GroupManageRoute {
+  static GroupManageRoute _fromState(GoRouterState state) => GroupManageRoute(
         groupId: state.pathParameters['groupId']!,
       );
 
   String get location => GoRouteData.$location(
-        '/groups/${Uri.encodeComponent(groupId)}/edit',
+        '/groups/${Uri.encodeComponent(groupId)}/manage',
       );
 
   void go(BuildContext context) => context.go(location);

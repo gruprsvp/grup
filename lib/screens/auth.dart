@@ -19,7 +19,7 @@ class AuthScreen extends StatelessWidget {
         child: Center(
           child: SupaEmailAuth(
             onSignInComplete: (response) => HomeScreenRoute().go(context),
-            onSignUpComplete: (response) => ProfileRoute().go(context),
+            onSignUpComplete: (response) => HomeScreenRoute().go(context),
           ),
         ),
       ),

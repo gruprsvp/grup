@@ -15,7 +15,9 @@ class GroupsList extends StatelessWidget {
         return ListTile(
           // TODO avatar and description
           title: Text(group.displayName),
-          subtitle: group.description != null ? Text(group.description!) : null,
+          subtitle: group.description != null
+              ? Text(group.description!.split('\n').first)
+              : null,
           onTap: () =>
               GroupDetailsRoute(groupId: group.id.toString()).push(context),
         );

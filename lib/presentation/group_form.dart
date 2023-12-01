@@ -54,8 +54,8 @@ class _GroupFormState extends State<GroupForm> {
       key: _formKey,
       child: Padding(
         padding: const EdgeInsets.all(16),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceAround,
+        child: ListView(
+          shrinkWrap: true,
           children: [
             TextFormField(
               enabled: !widget.loading,

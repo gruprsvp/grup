@@ -27,7 +27,7 @@ Future<void> main() async {
 
   // TODO(borgoat): support more configuration files
   final supabaseConfigFile =
-      await rootBundle.loadString('supabase_local_instance.json');
+      await rootBundle.loadString('supabase/config/local_network.json');
   final supabaseConfig = SupabaseConfig.fromString(supabaseConfigFile);
 
   // TODO(borgoat): move this to a config file to support different environments

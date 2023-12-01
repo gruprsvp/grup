@@ -57,7 +57,7 @@ begin
         return new;
     end if;
 
-    select id, group_id
+    select id, group_id, member_id
     into invite_id, group_id
     from invites
     where method = 'email'

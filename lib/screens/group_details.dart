@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 
@@ -14,13 +15,15 @@ class GroupDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(group?.displayName ?? 'Loading...'),
+        title: Text(group?.displayName ?? l10n.loading),
         actions: [
           IconButton(
             onPressed: () =>
-                GroupEditRoute(groupId: group!.id.toString()).go(context),
+                GroupManageRoute(groupId: group!.id.toString()).go(context),
             icon: const Icon(Icons.edit),
           )
         ],
@@ -29,7 +32,7 @@ class GroupDetailsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
-            Text(group?.description ?? 'Loading...'),
+            Text(group?.description ?? l10n.loading),
           ],
         ),
       ),
