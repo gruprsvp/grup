@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:parousia/models/reply_options.dart';
 import 'package:rrule/rrule.dart';
+
+import 'enum.dart';
 
 part 'default_reply.freezed.dart';
 part 'default_reply.g.dart';

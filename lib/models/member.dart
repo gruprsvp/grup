@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:freezed_annotation/freezed_annotation.dart';
 
+import 'enum.dart';
+
 part 'member.freezed.dart';
 part 'member.g.dart';
 
@@ -8,10 +10,10 @@ part 'member.g.dart';
 sealed class Member with _$Member {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Member({
-    required String id,
+    required int id,
     required int groupId,
-    required int roleId,
-    int? profileId,
+    required GroupRoles role,
+    String? profileId,
     String? displayNameOverride,
     DateTime? createdAt,
     DateTime? updatedAt,

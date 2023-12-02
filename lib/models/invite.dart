@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:parousia/models/invite_methods.dart';
+
+import 'enum.dart';
 
 part 'invite.freezed.dart';
 part 'invite.g.dart';

@@ -12,7 +12,7 @@ begin
     insert into groups (display_name, description, picture)
     values (create_group.display_name, create_group.description, create_group.picture)
     returning * into new_group;
-    insert into members (group_id, profile_id, role_id) values (new_group.id, auth.uid(), 1);
+    insert into members (group_id, profile_id, role) values (new_group.id, auth.uid(), 'admin');
 
     return next new_group;
 end;

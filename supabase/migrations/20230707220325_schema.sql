@@ -5,7 +5,6 @@ drop table if exists invites;
 drop table if exists members;
 drop table if exists groups;
 drop table if exists profiles;
-drop table if exists roles;
 drop type if exists invite_methods;
 drop type if exists reply_options;
 drop domain if exists rfc7265;
@@ -16,24 +15,12 @@ comment on type reply_options is 'Valid replies that users may select.';
 create type invite_methods as enum ('email', 'phone', 'code');
 comment on type invite_methods is 'The available strategies to invite a new user';
 
+create type group_roles as enum ('admin', 'member'); -- TODO owner, read-only, guest ?
+comment on type group_roles is 'The valid roles for group members.';
+
 -- TODO handle validation, optional extensions
 create domain rfc7265 as jsonb;
 comment on domain rfc7265 is 'An alias for RFC7265 jCal (JSON) recurrence rule definitions.';
-
-create table roles
-(
-    id                   bigint generated always as identity primary key,
-    created_at           timestamp with time zone default timezone('utc'::text, now()) not null,
-    updated_at           timestamp with time zone default timezone('utc'::text, now()) not null,
-
-    display_name         text                                                          not null,
-    can_manage_group     boolean                                                       not null,
-    can_manage_members   boolean                                                       not null,
-    can_manage_invites   boolean                                                       not null,
-    can_manage_schedules boolean                                                       not null,
-    can_manage_replies   boolean                                                       not null
-);
-comment on table roles is 'Roles define the permissions for each group member.';
 
 create table profiles
 (
@@ -69,8 +56,8 @@ create table members
     created_at            timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at            timestamp with time zone default timezone('utc'::text, now()) not null,
 
+    role                  group_roles                                                   not null default 'member'::group_roles,
     group_id              bigint                                                        not null references groups,
-    role_id               bigint                                                        not null references roles,
     profile_id            uuid references profiles on delete cascade,
 
     -- TODO a group should be able to insert a profile with default replies before it even exists...
@@ -152,11 +139,6 @@ comment on column replies.event_date is 'Defines the actual occurrence for the o
 
 create extension if not exists moddatetime schema extensions;
 
-create trigger handle_roles_updated_at
-    before update
-    on roles
-    for each row
-execute procedure moddatetime(updated_at);
 create trigger handle_profiles_updated_at
     before update
     on profiles
@@ -194,8 +176,6 @@ create trigger handle_replies_updated_at
 execute procedure moddatetime(updated_at);
 
 
-alter table roles
-    enable row level security;
 alter table profiles
     enable row level security;
 alter table groups
@@ -254,18 +234,31 @@ create policy "groups_update"
                    from members
                    where profile_id = auth.uid()
                      and group_id = groups.id
-                     and role_id = 1))
+                     and role = 'admin'))
     with check (exists (select 1
                         from members
                         where profile_id = auth.uid()
                           and group_id = groups.id
-                          and role_id = 1));
+                          and role = 'admin'));
+comment on policy "groups_update" on groups is 'Admin users can update groups';
 
 create policy "members_select"
     on members
     for select
     to authenticated
     using (is_user_member_of_group(group_id));
+comment on policy "members_select" on members is 'Users can see members of groups they are members of';
+
+create policy "members_insert"
+    on members
+    for insert
+    to authenticated
+    with check (exists (select 1
+                        from members
+                        where profile_id = auth.uid()
+                          and group_id = members.group_id
+                          and role = 'admin'));
+comment on policy "members_insert" on members is 'Admin users can add other users to join a group';
 
 -- create policy "Only group members can read schedule data"
 --     on schedules

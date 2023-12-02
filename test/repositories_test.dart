@@ -8,7 +8,7 @@ import 'package:supabase/supabase.dart';
 import 'package:test/test.dart';
 
 final SupabaseConfig config =
-    SupabaseConfig.fromPath('supabase_localhost.json');
+    SupabaseConfig.fromPath('supabase/config/localhost.json');
 
 SupabaseClient supabaseAnonClient() =>
     SupabaseClient(config.apiUrl, config.anonKey);
@@ -89,7 +89,7 @@ void main() {
 
   group('groups', () {
     test(
-      'users should be able to create groups',
+      'all users should be able to create groups',
       () => runWithTemporaryUser(
         (supabase, user) async {
           final groupsRepository = GroupsRepository(supabase: supabase);
@@ -108,8 +108,7 @@ void main() {
             final secondUserGroupsRepository =
                 GroupsRepository(supabase: supabase);
             try {
-              final group =
-                  await secondUserGroupsRepository.getGroupById(newGroup.id);
+              await secondUserGroupsRepository.getGroupById(newGroup.id);
               fail("Should not be able to get group without being a member");
             } catch (e) {
               expect(e, isA<PostgrestException>());
@@ -120,7 +119,7 @@ void main() {
     );
 
     test(
-      'users should be able to see all the groups they created',
+      'admins should be able to see all the groups they created',
       () => runWithTemporaryUser((supabase, user) async {
         final groupsRepository = GroupsRepository(supabase: supabase);
         const groupsCount = 5;
@@ -138,7 +137,7 @@ void main() {
     );
 
     test(
-      'users can edit their groups',
+      'admins can edit their groups',
       () => runWithTemporaryUser((supabase, user) async {
         final groupsRepository = GroupsRepository(supabase: supabase);
         final group = await groupsRepository.createGroup(fakeGroup());
@@ -148,6 +147,32 @@ void main() {
             .updateGroup(group.copyWith(displayName: newName));
 
         expect(updatedGroup.displayName, equals(newName));
+      }),
+    );
+  });
+
+  group('members', () {
+    test(
+      'admins can add guests to groups',
+      () => runWithTemporaryUser((supabase, user) async {
+        final groupsRepository = GroupsRepository(supabase: supabase);
+        final membersRepository = MembersRepository(supabase: supabase);
+        final group = await groupsRepository.createGroup(fakeGroup());
+
+        await membersRepository.addMemberToGroup(group.id,
+            displayName: 'A guest');
+      }),
+    );
+
+    test(
+      'admins can add other users to groups',
+      () => runWithTemporaryUser((supabase, user) async {
+        final groupsRepository = GroupsRepository(supabase: supabase);
+        final membersRepository = MembersRepository(supabase: supabase);
+        final group = await groupsRepository.createGroup(fakeGroup());
+
+        await runWithTemporaryUser((_, user2) => membersRepository
+            .addMemberToGroup(group.id, profileId: user2.user!.id));
       }),
     );
   });
