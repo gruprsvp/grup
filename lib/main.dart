@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:parousia/actions/actions.dart';
 import 'package:parousia/app.dart';
 import 'package:parousia/epics/epics.dart';
 import 'package:parousia/reducers/reducers.dart';
@@ -15,7 +16,6 @@ import 'package:redux_persist/redux_persist.dart';
 import 'package:redux_persist_flutter/redux_persist_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-import 'actions/actions.dart';
 import 'router.dart';
 
 final supabase = Supabase.instance.client;
@@ -30,7 +30,6 @@ Future<void> main() async {
       await rootBundle.loadString('supabase/config/local_network.json');
   final supabaseConfig = SupabaseConfig.fromString(supabaseConfigFile);
 
-  // TODO(borgoat): move this to a config file to support different environments
   final supabasePromise = Supabase.initialize(
     anonKey: supabaseConfig.anonKey,
     url: supabaseConfig.apiUrl,

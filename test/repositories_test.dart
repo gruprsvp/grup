@@ -223,7 +223,11 @@ void main() {
             final userGroups = await groupsRepository2.getUserGroups();
 
             expect(userGroups, hasLength(1));
-            expect(userGroups.first.id, equals(group.id));
+
+            final group2 = userGroups.first;
+            expect(group2.id, equals(group.id));
+            // TODO check that there are 2 members
+            // TODO check user is member of group and display name override is reset
           },
           email: invitedUserEmail,
         );
@@ -258,6 +262,34 @@ void main() {
           },
           phone: invitedUserPhone,
         );
+      }),
+    );
+
+    test(
+      'a user may be invited via code',
+      () => runWithTemporaryUser((supabase, user) async {
+        final groupsRepository = GroupsRepository(supabase: supabase);
+        final membersRepository = MembersRepository(supabase: supabase);
+        final invitesRepository = InvitesRepository(supabase: supabase);
+        final group = await groupsRepository.createGroup(fakeGroup());
+
+        final member = await membersRepository.addMemberToGroup(group.id,
+            displayName: 'Member invited with code');
+        await invitesRepository.inviteMember(
+            member.id, InviteMethods.code, 'CODE');
+
+        await runWithTemporaryUser((supabase2, user2) async {
+          final groupsRepository2 = GroupsRepository(supabase: supabase2);
+          final invitesRepository2 = InvitesRepository(supabase: supabase2);
+
+          final userGroups1 = await groupsRepository2.getUserGroups();
+          expect(userGroups1, hasLength(0));
+
+          await invitesRepository2.consumeInviteCode('CODE');
+
+          final userGroups2 = await groupsRepository2.getUserGroups();
+          expect(userGroups2, hasLength(1));
+        });
       }),
     );
   });

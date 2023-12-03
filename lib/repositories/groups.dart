@@ -11,7 +11,8 @@ class GroupsRepository {
   Future<Iterable<Group>> getUserGroups() async {
     return _table()
         .select<PostgrestList>('*, members!inner(*)')
-        .eq('members.profile_id', supabase.auth.currentUser!.id)
+        // TODO(borgoat): should filter by profile_id but return all members
+        // .eq('members.profile_id', supabase.auth.currentUser!.id)
         .withConverter((data) => data.map(Group.fromJson));
   }
 

@@ -24,6 +24,10 @@ class InvitesRepository {
         .withConverter((data) => Invite.fromJson(data));
   }
 
+  Future<void> consumeInviteCode(String code) async {
+    return supabase.rpc('consume_invite_code', params: {'code': code});
+  }
+
   PostgrestQueryBuilder<void> _table() =>
       supabase.rest.from(Tables.invites.name);
 }
