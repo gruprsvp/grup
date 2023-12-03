@@ -274,13 +274,89 @@ create policy "invites_all"
                                     where id = invites.member_id), '{admin}'::group_roles[]));
 comment on policy "invites_all" on invites is 'Admins can add and manage invites for new group members';
 
--- create policy "Only group members can read schedule data"
---     on schedules
---     for select using (is_member_of_group(group_id));
---
--- create policy "Only group members can read default reply data"
---     on default_replies
---     for select using (is_member_of_group(
---         (select group_id
---          from schedules
---          where id = schedule_id)));
+create policy "schedules_select"
+    on schedules
+    for select
+    to authenticated
+    using (is_member_of_group(group_id));
+comment on policy "schedules_select" on schedules is 'Users can see schedules of groups they are members of';
+
+create policy "schedules_all"
+    on schedules
+    for all
+    to authenticated
+    using (is_member_of_group(schedules.group_id, '{admin}'::group_roles[]))
+    with check (is_member_of_group(schedules.group_id, '{admin}'::group_roles[]));
+comment on policy "schedules_all" on schedules is 'Admins can manage schedules';
+
+create policy "default_replies_select"
+    on default_replies
+    for select
+    to authenticated
+    using (is_member_of_group(
+        (select group_id
+         from schedules
+         where id = schedule_id)));
+comment on policy "default_replies_select" on default_replies is 'Users can see default replies of schedules of groups they are members of';
+
+create policy "default_replies_all"
+    on default_replies
+    for all
+    to authenticated
+    using (is_member_of_group(
+        (select group_id
+         from schedules
+         where id = default_replies.schedule_id), '{admin}'::group_roles[]))
+    with check (is_member_of_group(
+        (select group_id
+         from schedules
+         where id = default_replies.schedule_id), '{admin}'::group_roles[]));
+comment on policy "default_replies_all" on default_replies is 'Admins can manage all default replies';
+
+create policy "default_replies_all_self"
+    on default_replies
+    for all
+    to authenticated
+    using ((select auth.uid()) = (select profile_id
+                                  from members
+                                  where id = member_id))
+    with check ((select auth.uid()) = (select profile_id
+                                       from members
+                                       where id = member_id));
+comment on policy "default_replies_all_self" on default_replies is 'Users can manage their own default replies';
+
+create policy "replies_select"
+    on replies
+    for select
+    to authenticated
+    using (is_member_of_group(
+        (select group_id
+         from schedules
+         where id = schedule_id)));
+comment on policy "replies_select" on replies is 'Users can see replies of schedules of groups they are members of';
+
+create policy "replies_all"
+    on replies
+    for all
+    to authenticated
+    using (is_member_of_group(
+        (select group_id
+         from schedules
+         where id = replies.schedule_id), '{admin}'::group_roles[]))
+    with check (is_member_of_group(
+        (select group_id
+         from schedules
+         where id = replies.schedule_id), '{admin}'::group_roles[]));
+comment on policy "replies_all" on replies is 'Admins can manage all replies';
+
+create policy "replies_all_self"
+    on replies
+    for all
+    to authenticated
+    using ((select auth.uid()) = (select profile_id
+                                  from members
+                                  where id = member_id))
+    with check ((select auth.uid()) = (select profile_id
+                                       from members
+                                       where id = member_id));
+comment on policy "replies_all_self" on replies is 'Users can manage their own replies';

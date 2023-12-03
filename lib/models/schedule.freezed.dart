@@ -20,7 +20,7 @@ Schedule _$ScheduleFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Schedule {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   int get groupId => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   RecurrenceRule get recurrenceRule => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $ScheduleCopyWith<$Res> {
       _$ScheduleCopyWithImpl<$Res, Schedule>;
   @useResult
   $Res call(
-      {String id,
+      {int id,
       int groupId,
       String displayName,
       RecurrenceRule recurrenceRule,
@@ -71,7 +71,7 @@ class _$ScheduleCopyWithImpl<$Res, $Val extends Schedule>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       groupId: null == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
@@ -105,7 +105,7 @@ abstract class _$$ScheduleImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
+      {int id,
       int groupId,
       String displayName,
       RecurrenceRule recurrenceRule,
@@ -135,7 +135,7 @@ class __$$ScheduleImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       groupId: null == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
@@ -176,7 +176,7 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
       _$$ScheduleImplFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final int groupId;
   @override
@@ -244,7 +244,7 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
 
 abstract class _Schedule implements Schedule {
   const factory _Schedule(
-      {required final String id,
+      {required final int id,
       required final int groupId,
       required final String displayName,
       required final RecurrenceRule recurrenceRule,
@@ -255,7 +255,7 @@ abstract class _Schedule implements Schedule {
       _$ScheduleImpl.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   int get groupId;
   @override

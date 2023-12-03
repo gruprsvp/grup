@@ -4,6 +4,7 @@ import 'package:faker/faker.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/util/util.dart';
+import 'package:rrule/rrule.dart';
 import 'package:supabase/supabase.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 import 'package:test/test.dart';
@@ -257,6 +258,31 @@ void main() {
           },
           phone: invitedUserPhone,
         );
+      }),
+    );
+  });
+
+  group('schedules', () {
+    test(
+      'admins can create schedules',
+      () => runWithTemporaryUser((supabase, user) async {
+        final groupsRepository = GroupsRepository(supabase: supabase);
+        final schedulesRepository = SchedulesRepository(supabase: supabase);
+        final group = await groupsRepository.createGroup(fakeGroup());
+
+        final schedule = await schedulesRepository.createSchedule(
+          Schedule(
+            id: 0,
+            groupId: group.id,
+            displayName: 'A schedule',
+            recurrenceRule: RecurrenceRule(
+              frequency: Frequency.daily,
+              interval: 1,
+            ),
+          ),
+        );
+
+        expect(schedule, isNotNull);
       }),
     );
   });

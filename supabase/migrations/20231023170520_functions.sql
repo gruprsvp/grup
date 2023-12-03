@@ -9,6 +9,8 @@ $$
 declare
     new_group record;
 begin
+    -- TODO(borgoat): check subscription status
+
     insert into groups (display_name, description, picture)
     values (create_group.display_name, create_group.description, create_group.picture)
     returning * into new_group;

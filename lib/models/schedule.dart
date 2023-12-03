@@ -9,7 +9,7 @@ part 'schedule.g.dart';
 sealed class Schedule with _$Schedule {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Schedule({
-    required String id,
+    required int id,
     required int groupId,
     required String displayName,
     required RecurrenceRule recurrenceRule,

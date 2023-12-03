@@ -8,7 +8,7 @@ part of 'default_reply.dart';
 
 _$DefaultReplyImpl _$$DefaultReplyImplFromJson(Map<String, dynamic> json) =>
     _$DefaultReplyImpl(
-      id: json['id'] as String,
+      id: json['id'] as int,
       memberId: json['member_id'] as int,
       scheduleId: json['schedule_id'] as int,
       selectedOption:

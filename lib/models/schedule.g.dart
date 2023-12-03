@@ -8,7 +8,7 @@ part of 'schedule.dart';
 
 _$ScheduleImpl _$$ScheduleImplFromJson(Map<String, dynamic> json) =>
     _$ScheduleImpl(
-      id: json['id'] as String,
+      id: json['id'] as int,
       groupId: json['group_id'] as int,
       displayName: json['display_name'] as String,
       recurrenceRule: RecurrenceRule.fromJson(

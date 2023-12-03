@@ -7,7 +7,7 @@ part of 'reply.dart';
 // **************************************************************************
 
 _$ReplyImpl _$$ReplyImplFromJson(Map<String, dynamic> json) => _$ReplyImpl(
-      id: json['id'] as String,
+      id: json['id'] as int,
       memberId: json['member_id'] as int,
       scheduleId: json['schedule_id'] as int,
       eventDate: DateTime.parse(json['event_date'] as String),

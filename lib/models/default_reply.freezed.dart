@@ -20,7 +20,7 @@ DefaultReply _$DefaultReplyFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DefaultReply {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   int get memberId => throw _privateConstructorUsedError;
   int get scheduleId => throw _privateConstructorUsedError;
   ReplyOptions get selectedOption => throw _privateConstructorUsedError;
@@ -41,7 +41,7 @@ abstract class $DefaultReplyCopyWith<$Res> {
       _$DefaultReplyCopyWithImpl<$Res, DefaultReply>;
   @useResult
   $Res call(
-      {String id,
+      {int id,
       int memberId,
       int scheduleId,
       ReplyOptions selectedOption,
@@ -75,7 +75,7 @@ class _$DefaultReplyCopyWithImpl<$Res, $Val extends DefaultReply>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
@@ -113,7 +113,7 @@ abstract class _$$DefaultReplyImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String id,
+      {int id,
       int memberId,
       int scheduleId,
       ReplyOptions selectedOption,
@@ -145,7 +145,7 @@ class __$$DefaultReplyImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
@@ -191,7 +191,7 @@ class _$DefaultReplyImpl with DiagnosticableTreeMixin implements _DefaultReply {
       _$$DefaultReplyImplFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final int memberId;
   @override
@@ -265,7 +265,7 @@ class _$DefaultReplyImpl with DiagnosticableTreeMixin implements _DefaultReply {
 
 abstract class _DefaultReply implements DefaultReply {
   const factory _DefaultReply(
-      {required final String id,
+      {required final int id,
       required final int memberId,
       required final int scheduleId,
       required final ReplyOptions selectedOption,
@@ -277,7 +277,7 @@ abstract class _DefaultReply implements DefaultReply {
       _$DefaultReplyImpl.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   int get memberId;
   @override

@@ -20,7 +20,7 @@ Reply _$ReplyFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Reply {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   int get memberId => throw _privateConstructorUsedError;
   int get scheduleId => throw _privateConstructorUsedError;
   DateTime get eventDate => throw _privateConstructorUsedError;
@@ -39,7 +39,7 @@ abstract class $ReplyCopyWith<$Res> {
       _$ReplyCopyWithImpl<$Res, Reply>;
   @useResult
   $Res call(
-      {String id,
+      {int id,
       int memberId,
       int scheduleId,
       DateTime eventDate,
@@ -73,7 +73,7 @@ class _$ReplyCopyWithImpl<$Res, $Val extends Reply>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
@@ -110,7 +110,7 @@ abstract class _$$ReplyImplCopyWith<$Res> implements $ReplyCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
+      {int id,
       int memberId,
       int scheduleId,
       DateTime eventDate,
@@ -142,7 +142,7 @@ class __$$ReplyImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
@@ -188,7 +188,7 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
       _$$ReplyImplFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final int memberId;
   @override
@@ -262,7 +262,7 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
 
 abstract class _Reply implements Reply {
   const factory _Reply(
-      {required final String id,
+      {required final int id,
       required final int memberId,
       required final int scheduleId,
       required final DateTime eventDate,
@@ -273,7 +273,7 @@ abstract class _Reply implements Reply {
   factory _Reply.fromJson(Map<String, dynamic> json) = _$ReplyImpl.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   int get memberId;
   @override
