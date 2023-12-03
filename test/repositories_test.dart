@@ -5,6 +5,7 @@ import 'package:parousia/models/models.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/util/util.dart';
 import 'package:supabase/supabase.dart';
+import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 import 'package:test/test.dart';
 
 final SupabaseConfig config =
@@ -22,31 +23,38 @@ final supabaseAdmin = supabaseAdminClient();
 
 /// Create a new fake user in Supabase.
 /// This replaces the current authenticated user in the provided [supabase].
-Future<AuthResponse> signUpWithNewUser(SupabaseClient supabase) =>
-    supabase.auth.signUp(password: 'password', email: faker.internet.email());
+Future<AuthResponse> signUpWithNewUser(SupabaseClient supabase,
+        {String? email, String? phone}) =>
+    supabase.auth.signUp(
+      password: 'password',
+      email: phone == null ? email ?? faker.internet.email() : null,
+      phone: phone,
+    );
 
 typedef RunWithUserCallback<T> = FutureOr<T> Function(
     SupabaseClient supabase, AuthResponse user);
 
 /// Run a callback with a new fake user, and keep it for future reference.
-Future<(AuthResponse, T)> runWithUser<T>(
-    RunWithUserCallback<T> callback) async {
+Future<(AuthResponse, T)> runWithUser<T>(RunWithUserCallback<T> callback,
+    {String? email, String? phone}) async {
   final supabase = supabaseAnonClient();
-  final user = await signUpWithNewUser(supabase);
+  final user = await signUpWithNewUser(supabase, email: email, phone: phone);
   final result = await callback(supabase, user);
   return (user, result);
 }
 
 /// Run a closure with a temporary user created just for this and then deleted.
-Future<T> runWithTemporaryUser<T>(RunWithUserCallback<T> callback) async {
-  final (user, result) = await runWithUser(callback);
+Future<T> runWithTemporaryUser<T>(RunWithUserCallback<T> callback,
+    {String? email, String? phone}) async {
+  final (user, result) =
+      await runWithUser(callback, email: email, phone: phone);
   await supabaseAdmin.auth.admin.deleteUser(user.user!.id);
   return result;
 }
 
 Group fakeGroup() => Group(
-      displayName: faker.conference.name(),
-      description: faker.lorem.sentences(3).join(' '),
+      displayName: faker.company.name(),
+      description: faker.lorem.sentence(),
       picture: faker.image.image(height: 128, width: 128),
       id: 0,
     );
@@ -193,7 +201,7 @@ void main() {
 
   group('invites', () {
     test(
-      'admins can invite new members to groups',
+      'an invited user becomes a member on sign up',
       () => runWithTemporaryUser((supabase, user) async {
         final groupsRepository = GroupsRepository(supabase: supabase);
         final membersRepository = MembersRepository(supabase: supabase);
@@ -201,12 +209,54 @@ void main() {
         final group = await groupsRepository.createGroup(fakeGroup());
 
         final member = await membersRepository.addMemberToGroup(group.id,
-            displayName: 'Invited member');
+            displayName: 'Member invited with email');
 
-        final invite = await invitesRepository.inviteMember(
-            member.id, InviteMethods.email, faker.internet.email());
+        final invitedUserEmail = faker.internet.email();
 
-        expect(invite, isNotNull);
+        await invitesRepository.inviteMember(
+            member.id, InviteMethods.email, invitedUserEmail);
+
+        await runWithTemporaryUser(
+          (supabase2, user2) async {
+            final groupsRepository2 = GroupsRepository(supabase: supabase2);
+            final userGroups = await groupsRepository2.getUserGroups();
+
+            expect(userGroups, hasLength(1));
+            expect(userGroups.first.id, equals(group.id));
+          },
+          email: invitedUserEmail,
+        );
+      }),
+    );
+
+    test(
+      'an user invited via phone becomes a member on sign up',
+      () => runWithTemporaryUser((supabase, user) async {
+        final groupsRepository = GroupsRepository(supabase: supabase);
+        final membersRepository = MembersRepository(supabase: supabase);
+        final invitesRepository = InvitesRepository(supabase: supabase);
+        final group = await groupsRepository.createGroup(fakeGroup());
+
+        final member = await membersRepository.addMemberToGroup(group.id,
+            displayName: 'Member invited with phone');
+
+        // TODO convert numbers to E.164 format
+        final invitedUserPhone =
+            "+1${faker.randomGenerator.integer(999999999)}";
+
+        await invitesRepository.inviteMember(
+            member.id, InviteMethods.phone, invitedUserPhone);
+
+        await runWithTemporaryUser(
+          (supabase2, user2) async {
+            final groupsRepository2 = GroupsRepository(supabase: supabase2);
+            final userGroups = await groupsRepository2.getUserGroups();
+
+            expect(userGroups, hasLength(1));
+            expect(userGroups.first.id, equals(group.id));
+          },
+          phone: invitedUserPhone,
+        );
       }),
     );
   });

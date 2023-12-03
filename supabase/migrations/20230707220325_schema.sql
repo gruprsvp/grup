@@ -56,7 +56,6 @@ create table members
     created_at            timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at            timestamp with time zone default timezone('utc'::text, now()) not null,
 
-    role                  group_roles                                                   not null default 'member'::group_roles,
     group_id              bigint                                                        not null references groups,
     profile_id            uuid references profiles on delete cascade,
 
@@ -64,6 +63,7 @@ create table members
     --      therefore, we need a way to "invite" new members, so that when users sign up,
     --      they become owners of their own member_ids, and can override replies
 
+    role                  group_roles                                                   not null default 'member'::group_roles,
     display_name_override text,
 
     unique (group_id, profile_id),
