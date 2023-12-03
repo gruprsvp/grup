@@ -25,21 +25,23 @@ final supabaseAdmin = supabaseAdminClient();
 Future<AuthResponse> signUpWithNewUser(SupabaseClient supabase) =>
     supabase.auth.signUp(password: 'password', email: faker.internet.email());
 
-typedef RunWithUserCallback = FutureOr Function(
+typedef RunWithUserCallback<T> = FutureOr<T> Function(
     SupabaseClient supabase, AuthResponse user);
 
 /// Run a callback with a new fake user, and keep it for future reference.
-Future<AuthResponse> runWithUser(RunWithUserCallback callback) async {
+Future<(AuthResponse, T)> runWithUser<T>(
+    RunWithUserCallback<T> callback) async {
   final supabase = supabaseAnonClient();
   final user = await signUpWithNewUser(supabase);
-  await callback(supabase, user);
-  return user;
+  final result = await callback(supabase, user);
+  return (user, result);
 }
 
 /// Run a closure with a temporary user created just for this and then deleted.
-Future<void> runWithTemporaryUser(RunWithUserCallback callback) async {
-  final user = await runWithUser(callback);
+Future<T> runWithTemporaryUser<T>(RunWithUserCallback<T> callback) async {
+  final (user, result) = await runWithUser(callback);
   await supabaseAdmin.auth.admin.deleteUser(user.user!.id);
+  return result;
 }
 
 Group fakeGroup() => Group(
@@ -94,12 +96,7 @@ void main() {
         (supabase, user) async {
           final groupsRepository = GroupsRepository(supabase: supabase);
 
-          final newGroup = await groupsRepository.createGroup(Group(
-            displayName: faker.conference.name(),
-            description: faker.lorem.sentences(3).join(' '),
-            picture: faker.image.image(height: 128, width: 128),
-            id: 0,
-          ));
+          final newGroup = await groupsRepository.createGroup(fakeGroup());
 
           expect(newGroup, isNotNull);
 
@@ -173,6 +170,43 @@ void main() {
 
         await runWithTemporaryUser((_, user2) => membersRepository
             .addMemberToGroup(group.id, profileId: user2.user!.id));
+      }),
+    );
+
+    test(
+      'admins can manage group members',
+      () => runWithTemporaryUser((supabase, user) async {
+        final groupsRepository = GroupsRepository(supabase: supabase);
+        final membersRepository = MembersRepository(supabase: supabase);
+        final group = await groupsRepository.createGroup(fakeGroup());
+
+        final guest = await membersRepository.addMemberToGroup(group.id,
+            displayName: 'A guest');
+
+        final updatedGuest = await membersRepository.updateMember(
+            memberId: guest.id, displayNameOverride: 'A guest with a name');
+
+        await membersRepository.removeMember(updatedGuest.id);
+      }),
+    );
+  });
+
+  group('invites', () {
+    test(
+      'admins can invite new members to groups',
+      () => runWithTemporaryUser((supabase, user) async {
+        final groupsRepository = GroupsRepository(supabase: supabase);
+        final membersRepository = MembersRepository(supabase: supabase);
+        final invitesRepository = InvitesRepository(supabase: supabase);
+        final group = await groupsRepository.createGroup(fakeGroup());
+
+        final member = await membersRepository.addMemberToGroup(group.id,
+            displayName: 'Invited member');
+
+        final invite = await invitesRepository.inviteMember(
+            member.id, InviteMethods.email, faker.internet.email());
+
+        expect(invite, isNotNull);
       }),
     );
   });

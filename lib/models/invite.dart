@@ -10,7 +10,7 @@ part 'invite.g.dart';
 sealed class Invite with _$Invite {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Invite({
-    required String id,
+    required int id,
     required int memberId,
     required InviteMethods method,
     required String value,

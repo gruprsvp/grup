@@ -86,8 +86,17 @@ create table invites
 
     method     invite_methods                                                not null,
     value      text                                                          not null
+
 );
 comment on table invites is 'Invites define a mapping for new users, to become members of groups.';
+
+create unique index if_code_invite_unique
+    on invites (value)
+    where method = 'code'::invite_methods;
+comment on index if_code_invite_unique is 'When is a code invite, the value must be unique.';
+
+create index invites_method_values on invites (method, value);
+comment on index invites_method_values is 'Index for invites, to find by method and value.';
 
 create table schedules
 (
@@ -191,7 +200,9 @@ alter table default_replies
 alter table replies
     enable row level security;
 
-create or replace function is_user_member_of_group(check_group_id bigint)
+create or replace function is_member_of_group(
+    check_group_id bigint,
+    with_role group_roles[] default '{admin, member}'::group_roles[])
     returns boolean
     security definer set search_path = public
     language plpgsql stable
@@ -201,9 +212,11 @@ begin
     return exists (select 1
                    from members
                    where profile_id = auth.uid()
-                     and group_id = is_user_member_of_group.check_group_id);
+                     and group_id = is_member_of_group.check_group_id
+                     and role = any (is_member_of_group.with_role));
 end;
 $$;
+comment on function is_member_of_group(bigint, group_roles[]) is 'Check if the current user is a member of a group, with a specific role.';
 
 create policy "profiles_select"
     on profiles
@@ -224,49 +237,50 @@ create policy "groups_select"
     on groups
     for select
     to authenticated
-    using (is_user_member_of_group(id));
+    using (is_member_of_group(id));
 
 create policy "groups_update"
     on groups
     for update
     to authenticated
-    using (exists (select 1
-                   from members
-                   where profile_id = auth.uid()
-                     and group_id = groups.id
-                     and role = 'admin'))
-    with check (exists (select 1
-                        from members
-                        where profile_id = auth.uid()
-                          and group_id = groups.id
-                          and role = 'admin'));
-comment on policy "groups_update" on groups is 'Admin users can update groups';
+    using (is_member_of_group(id, '{admin}'::group_roles[]))
+    with check (is_member_of_group(id, '{admin}'::group_roles[]));
+comment on policy "groups_update" on groups is 'Admins can update groups';
 
 create policy "members_select"
     on members
     for select
     to authenticated
-    using (is_user_member_of_group(group_id));
+    using (is_member_of_group(group_id));
 comment on policy "members_select" on members is 'Users can see members of groups they are members of';
 
-create policy "members_insert"
+create policy "members_all"
     on members
-    for insert
+    for all
     to authenticated
-    with check (exists (select 1
-                        from members
-                        where profile_id = auth.uid()
-                          and group_id = members.group_id
-                          and role = 'admin'));
-comment on policy "members_insert" on members is 'Admin users can add other users to join a group';
+    using (is_member_of_group(members.group_id, '{admin}'::group_roles[]))
+    with check (is_member_of_group(members.group_id, '{admin}'::group_roles[]));
+comment on policy "members_all" on members is 'Admins can manage group members';
+
+create policy "invites_all"
+    on invites
+    for all
+    to authenticated
+    using (is_member_of_group((select group_id
+                               from members
+                               where id = invites.member_id), '{admin}'::group_roles[]))
+    with check (is_member_of_group((select group_id
+                                    from members
+                                    where id = invites.member_id), '{admin}'::group_roles[]));
+comment on policy "invites_all" on invites is 'Admins can add and manage invites for new group members';
 
 -- create policy "Only group members can read schedule data"
 --     on schedules
---     for select using (is_user_member_of_group(group_id));
+--     for select using (is_member_of_group(group_id));
 --
 -- create policy "Only group members can read default reply data"
 --     on default_replies
---     for select using (is_user_member_of_group(
+--     for select using (is_member_of_group(
 --         (select group_id
 --          from schedules
 --          where id = schedule_id)));

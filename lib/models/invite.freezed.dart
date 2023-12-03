@@ -20,7 +20,7 @@ Invite _$InviteFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Invite {
-  String get id => throw _privateConstructorUsedError;
+  int get id => throw _privateConstructorUsedError;
   int get memberId => throw _privateConstructorUsedError;
   InviteMethods get method => throw _privateConstructorUsedError;
   String get value => throw _privateConstructorUsedError;
@@ -38,7 +38,7 @@ abstract class $InviteCopyWith<$Res> {
       _$InviteCopyWithImpl<$Res, Invite>;
   @useResult
   $Res call(
-      {String id,
+      {int id,
       int memberId,
       InviteMethods method,
       String value,
@@ -70,7 +70,7 @@ class _$InviteCopyWithImpl<$Res, $Val extends Invite>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
@@ -103,7 +103,7 @@ abstract class _$$InviteImplCopyWith<$Res> implements $InviteCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {String id,
+      {int id,
       int memberId,
       InviteMethods method,
       String value,
@@ -133,7 +133,7 @@ class __$$InviteImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String,
+              as int,
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
@@ -174,7 +174,7 @@ class _$InviteImpl with DiagnosticableTreeMixin implements _Invite {
       _$$InviteImplFromJson(json);
 
   @override
-  final String id;
+  final int id;
   @override
   final int memberId;
   @override
@@ -241,7 +241,7 @@ class _$InviteImpl with DiagnosticableTreeMixin implements _Invite {
 
 abstract class _Invite implements Invite {
   const factory _Invite(
-      {required final String id,
+      {required final int id,
       required final int memberId,
       required final InviteMethods method,
       required final String value,
@@ -251,7 +251,7 @@ abstract class _Invite implements Invite {
   factory _Invite.fromJson(Map<String, dynamic> json) = _$InviteImpl.fromJson;
 
   @override
-  String get id;
+  int get id;
   @override
   int get memberId;
   @override
