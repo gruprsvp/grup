@@ -3,20 +3,14 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parousia/models/group.dart';
 
-typedef OnGroupSaveCallback = void Function({
-  required String displayName,
-  String? description,
-  String? picture,
-});
+typedef OnGroupSaveCallback = void Function(Group);
 
 class GroupForm extends StatefulWidget {
-  final bool loading;
   final OnGroupSaveCallback onSave;
   final Group? group;
 
   const GroupForm({
     super.key,
-    required this.loading,
     required this.onSave,
     this.group,
   });
@@ -58,7 +52,6 @@ class _GroupFormState extends State<GroupForm> {
           shrinkWrap: true,
           children: [
             TextFormField(
-              enabled: !widget.loading,
               controller: _nameController,
               decoration: InputDecoration(
                 labelText: l10n.enterGroupName,
@@ -74,7 +67,6 @@ class _GroupFormState extends State<GroupForm> {
               },
             ),
             TextFormField(
-              enabled: !widget.loading,
               controller: _descriptionController,
               minLines: 2,
               maxLines: 5,
@@ -88,23 +80,21 @@ class _GroupFormState extends State<GroupForm> {
               ),
             ),
             FilledButton(
-              onPressed: widget.loading
-                  ? null
-                  : () {
-                      if (_formKey.currentState!.validate()) {
-                        final displayName = _nameController.text.trim();
-                        final description = _descriptionController.text.trim();
-                        final picture = null; // TODO
+              onPressed: () {
+                if (_formKey.currentState!.validate()) {
+                  final displayName = _nameController.text.trim();
+                  final description = _descriptionController.text.trim();
+                  final picture = null; // TODO
 
-                        _formKey.currentState!.save();
-                        widget.onSave(
-                          displayName: displayName,
-                          description:
-                              description.isNotEmpty ? description : null,
-                          picture: picture,
-                        );
-                      }
-                    },
+                  _formKey.currentState!.save();
+                  widget.onSave(Group(
+                    id: widget.group?.id ?? 0,
+                    displayName: displayName,
+                    description: description.isNotEmpty ? description : null,
+                    picture: picture,
+                  ));
+                }
+              },
               child:
                   Text(widget.group != null ? l10n.save : l10n.createNewGroup),
             ),

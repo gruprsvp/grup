@@ -72,7 +72,6 @@ Future<Store<RootState>> _initStore() async {
   final profilesRepository = ProfilesRepository(supabase: supabase);
   final storageRepository = StorageRepository(supabase: supabase);
 
-  // TODO(borgoat): use different layers of epics
   final epics = combineEpics<RootState>([
     createRouterEpics(router),
     createGroupsEpics(groupsRepository),

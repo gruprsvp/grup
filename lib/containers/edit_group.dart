@@ -24,7 +24,6 @@ class EditGroup extends StatelessWidget {
       distinct: true,
       converter: (store) => _ViewModel.fromStore(store, groupId),
       builder: (context, vm) => GroupForm(
-        loading: vm.loading,
         onSave: vm.onSave,
         group: vm.group,
       ),
@@ -49,15 +48,8 @@ class _ViewModel with _$ViewModel {
           store.state.groups.loadingAll ||
           (store.state.groups.loadingIds[groupId] ?? false),
       // TODO unique action per source
-      onSave: ({required displayName, description, picture}) => store.dispatch(
-        RequestUpdateOne<Group>(
-          Group(
-            id: int.parse(groupId),
-            displayName: displayName,
-            description: description,
-            picture: picture,
-          ),
-        ),
+      onSave: (group) => store.dispatch(
+        RequestUpdateOne<Group>(group),
       ),
     );
   }

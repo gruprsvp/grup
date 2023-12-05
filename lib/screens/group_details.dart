@@ -32,7 +32,7 @@ class GroupDetailsScreen extends StatelessWidget {
         padding: const EdgeInsets.all(16),
         child: ListView(
           children: [
-            Text(group?.description ?? l10n.loading),
+            ...(group?.description != null ? [Text(group!.description!)] : []),
           ],
         ),
       ),

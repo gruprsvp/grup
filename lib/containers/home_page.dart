@@ -6,6 +6,7 @@ import 'package:parousia/models/models.dart';
 import 'package:parousia/screens/screens.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
+import 'package:redux_entity/redux_entity.dart';
 
 part 'home_page.freezed.dart';
 
@@ -18,6 +19,8 @@ class HomePage extends StatelessWidget {
       builder: (context, vm) => HomeScreen(
         profile: vm.profile,
         groups: vm.groups,
+        loading: vm.loading,
+        onNewGroup: vm.onNewGroup,
       ),
       converter: _ViewModel.fromStore,
     );
@@ -27,14 +30,25 @@ class HomePage extends StatelessWidget {
 @freezed
 sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
+    required bool loading,
     Profile? profile,
     Iterable<Group>? groups,
+    NewGroupReturnCallback? onNewGroup,
   }) = __ViewModel;
 
   static _ViewModel fromStore(Store<RootState> store) {
     return _ViewModel(
+      loading: store.state.groups.loadingAll || store.state.groups.creating,
       profile: store.state.profiles.entities[store.state.auth.user?.id],
       groups: store.state.groups.entities.values,
+      onNewGroup: (value) => store.dispatch(
+        switch (value) {
+          NewGroupReturnNew(group: final group) =>
+            RequestCreateOne<Group>(group),
+          // TODO: Handle this case.
+          NewGroupReturnJoin() => null,
+        },
+      ),
     );
   }
 }

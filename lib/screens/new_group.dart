@@ -1,6 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:parousia/containers/containers.dart';
+import 'package:go_router/go_router.dart';
+import 'package:parousia/models/models.dart';
+import 'package:parousia/presentation/presentation.dart';
+
+sealed class NewGroupReturn {}
+
+class NewGroupReturnNew extends NewGroupReturn {
+  final Group group;
+
+  NewGroupReturnNew(this.group);
+}
+
+class NewGroupReturnJoin extends NewGroupReturn {
+  final String code;
+
+  NewGroupReturnJoin(this.code);
+}
 
 class NewGroupScreen extends StatelessWidget {
   const NewGroupScreen({super.key});
@@ -28,7 +44,9 @@ class NewGroupScreen extends StatelessWidget {
         body: TabBarView(
           children: [
             Center(child: Text(l10n.join)),
-            const CreateGroup(),
+            GroupForm(
+                onSave: (group) =>
+                    context.pop<NewGroupReturn>(NewGroupReturnNew(group))),
           ],
         ),
       ),
