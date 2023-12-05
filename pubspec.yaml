@@ -74,10 +74,14 @@ dependencies:
   # Recurrence rules
   rrule: ^0.2.14
 
+  # To invite contacts
+  flutter_contacts: ^1.1.7+1
+
   # Utilities
   uuid: ^4.1.0
   mime: ^1.0.4
   dynamic_color: ^1.6.8
+
 
 dev_dependencies:
   flutter_test:
