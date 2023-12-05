@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parousia/containers/containers.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/presentation/presentation.dart';
 
 class GroupManageScreen extends StatelessWidget {
   final Group? group;
@@ -39,7 +40,7 @@ class GroupManageScreen extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            Center(child: Text('Members')),
+            GroupMembers(),
             Center(child: Text('Events')),
             group != null
                 ? EditGroup(groupId: group!.id.toString())

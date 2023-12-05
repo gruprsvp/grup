@@ -64,12 +64,9 @@ Future<Store<RootState>> _initStore() async {
     ),
   );
 
-  RootState? localPersistedState;
-  try {
-    localPersistedState = await persistor.load();
-  } catch (e) {
+  RootState? localPersistedState = await persistor.load().catchError((e) {
     log('failed to load persisted state: $e');
-  }
+  });
 
   final groupsRepository = GroupsRepository(supabase: supabase);
   final profilesRepository = ProfilesRepository(supabase: supabase);
