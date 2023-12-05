@@ -5,4 +5,5 @@ export 'home.dart';
 export 'locale.dart';
 export 'new_group.dart';
 export 'profile.dart';
+export 'select_contacts.dart';
 export 'settings.dart';

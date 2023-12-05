@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parousia/util/util.dart';
 
 class ProfilePicture extends StatelessWidget {
   const ProfilePicture({
@@ -14,16 +15,10 @@ class ProfilePicture extends StatelessWidget {
   final String? name;
   final double? radius;
 
-  String? _nameInitials() => name
-      ?.split(' ')
-      .map((e) => e.isNotEmpty ? e[0] : '')
-      .join('')
-      .toUpperCase();
-
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    final nameInitials = _nameInitials();
+    final nameInitials = getNameInitials(name);
     final padding = radius != null ? radius! / 8.0 : 1.0;
 
     return OutlinedButton(

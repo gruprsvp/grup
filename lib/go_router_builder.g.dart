@@ -46,6 +46,10 @@ RouteBase get $homeScreenRoute => GoRouteData.$route(
             ),
           ],
         ),
+        GoRouteData.$route(
+          path: 'select-contacts',
+          factory: $SelectContactsRouteExtension._fromState,
+        ),
       ],
     );
 
@@ -177,6 +181,24 @@ extension $GroupManageRouteExtension on GroupManageRoute {
 
   String get location => GoRouteData.$location(
         '/groups/${Uri.encodeComponent(groupId)}/manage',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $SelectContactsRouteExtension on SelectContactsRoute {
+  static SelectContactsRoute _fromState(GoRouterState state) =>
+      SelectContactsRoute();
+
+  String get location => GoRouteData.$location(
+        '/select-contacts',
       );
 
   void go(BuildContext context) => context.go(location);

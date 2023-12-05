@@ -56,7 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   _changeImage() async {
-    final source = await showDialog<ImageSource>(
+    final source = await showAdaptiveDialog<ImageSource>(
       context: context,
       builder: (context) {
         final l10n = AppLocalizations.of(context)!;
