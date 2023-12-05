@@ -12,6 +12,13 @@ class SelectContactsScreen extends StatefulWidget {
 
 class _SelectContactsScreenState extends State<SelectContactsScreen> {
   final Set<int> selected = {};
+  late final Future<List<Contact>> contacts;
+
+  @override
+  initState() {
+    super.initState();
+    contacts = _getContacts();
+  }
 
   Future<List<Contact>> _getContacts() async {
     final permissionGranted =
@@ -29,7 +36,6 @@ class _SelectContactsScreenState extends State<SelectContactsScreen> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final contacts = _getContacts();
 
     return Scaffold(
       appBar: AppBar(
@@ -49,6 +55,8 @@ class _SelectContactsScreenState extends State<SelectContactsScreen> {
                         // TODO: how can we avoid this?
                         return;
                       }
+
+                      // TODO maybe add a confirmation dialog?
                       Navigator.pop(context, selectedContacts);
                     }
                   : null,
@@ -68,7 +76,7 @@ class _SelectContactsScreenState extends State<SelectContactsScreen> {
                 final contact = contacts[index];
                 bool hasPicture = contact.photoOrThumbnail != null;
 
-                return CheckboxListTile(
+                return CheckboxListTile.adaptive(
                   secondary: CircleAvatar(
                     backgroundColor: getColorFromHashCode(contact.displayName),
                     backgroundImage: hasPicture
@@ -80,15 +88,8 @@ class _SelectContactsScreenState extends State<SelectContactsScreen> {
                   ),
                   title: Text(contact.displayName ?? ''),
                   value: selected.contains(index),
-                  onChanged: (value) {
-                    setState(() {
-                      if (value!) {
-                        selected.add(index);
-                      } else {
-                        selected.remove(index);
-                      }
-                    });
-                  },
+                  onChanged: (value) => setState(() =>
+                      value! ? selected.add(index) : selected.remove(index)),
                 );
               },
             );

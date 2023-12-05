@@ -44,11 +44,12 @@ class GroupMembers extends StatelessWidget {
   }
 
   Future<List<ContactInvite>?> _inviteManually() async {
+    // TODO implement
     return [];
   }
 
   Future<List<ContactInvite>?> _inviteNew(BuildContext context) async {
-    final _InviteSource source = await showAdaptiveDialog(
+    final _InviteSource? source = await showAdaptiveDialog(
       context: context,
       builder: (context) {
         final l10n = AppLocalizations.of(context)!;
@@ -60,7 +61,7 @@ class GroupMembers extends StatelessWidget {
               child: Row(
                 children: [
                   const Icon(Icons.contacts_outlined),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 16),
                   Text(l10n.inviteFromContacts),
                 ],
               ),
@@ -70,7 +71,7 @@ class GroupMembers extends StatelessWidget {
               child: Row(
                 children: [
                   const Icon(Icons.person_add_alt_1_outlined),
-                  const SizedBox(width: 8),
+                  const SizedBox(width: 16),
                   Text(l10n.inviteManual),
                 ],
               ),
@@ -88,6 +89,7 @@ class GroupMembers extends StatelessWidget {
     return switch (source) {
       _InviteSource.contacts => _inviteFromContacts(context),
       _InviteSource.manually => _inviteManually(),
+      null => null,
     };
   }
 
