@@ -45,5 +45,7 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
+	<key>NSContactsUsageDescription</key>
+  <string>$(CFBundleDisplayName) can invite users from your contacts</string>
 </dict>
 </plist>
