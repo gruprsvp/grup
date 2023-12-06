@@ -161,6 +161,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
+  country_pickers:
+    dependency: transitive
+    description:
+      name: country_pickers
+      sha256: a71df4a061b25f07b202a881c43a057edc842a30b3410d511382103c68afebc2
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.0"
   coverage:
     dependency: transitive
     description:
@@ -307,6 +315,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_form_builder:
+    dependency: "direct main"
+    description:
+      name: flutter_form_builder
+      sha256: "8973beed34b6d951d36bf688b52e9e3040b47b763c35c320bd6f4c2f6b13f3a2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.1.1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -354,6 +370,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "10.6.0"
+  form_builder_phone_field:
+    dependency: "direct main"
+    description:
+      name: form_builder_phone_field
+      sha256: b959f560ad94f4ecbc48830d5485b187aa02d87a02a97cdb874bc6ddd87d0dcb
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
+  form_builder_validators:
+    dependency: "direct main"
+    description:
+      name: form_builder_validators
+      sha256: "19aa5282b7cede82d0025ab031a98d0554b84aa2ba40f12013471a3b3e22bf02"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.1.0"
   freezed:
     dependency: "direct dev"
     description:
@@ -708,6 +740,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.1"
+  phone_number:
+    dependency: transitive
+    description:
+      name: phone_number
+      sha256: "509033faaed1e95f778b9dd6679a458d4e2641c579d40bee0db1cb674de8efac"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.1"
   platform:
     dependency: transitive
     description:

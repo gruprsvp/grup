@@ -77,6 +77,11 @@ dependencies:
   # To invite contacts
   flutter_contacts: ^1.1.7+1
 
+  # Form builders and validators
+  flutter_form_builder: ^9.1.1
+  form_builder_phone_field: ^2.0.1
+  form_builder_validators: ^9.1.0
+
   # Utilities
   uuid: ^4.1.0
   mime: ^1.0.4
