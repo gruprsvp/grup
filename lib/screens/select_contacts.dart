@@ -55,7 +55,6 @@ class _SelectContactsScreenState extends State<SelectContactsScreen> {
                         // TODO: how can we avoid this?
                         return;
                       }
-
                       // TODO maybe add a confirmation dialog?
                       Navigator.pop(context, selectedContacts);
                     }
