@@ -16,8 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ViewModel {
-  Locale get locale => throw _privateConstructorUsedError;
-  void Function(Locale) get changeLocale => throw _privateConstructorUsedError;
+  Locale? get locale => throw _privateConstructorUsedError;
+  void Function(Locale?) get changeLocale => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   _$ViewModelCopyWith<_ViewModel> get copyWith =>
@@ -30,7 +30,7 @@ abstract class _$ViewModelCopyWith<$Res> {
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call({Locale locale, void Function(Locale) changeLocale});
+  $Res call({Locale? locale, void Function(Locale?) changeLocale});
 }
 
 /// @nodoc
@@ -46,18 +46,18 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? locale = null,
+    Object? locale = freezed,
     Object? changeLocale = null,
   }) {
     return _then(_value.copyWith(
-      locale: null == locale
+      locale: freezed == locale
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
-              as Locale,
+              as Locale?,
       changeLocale: null == changeLocale
           ? _value.changeLocale
           : changeLocale // ignore: cast_nullable_to_non_nullable
-              as void Function(Locale),
+              as void Function(Locale?),
     ) as $Val);
   }
 }
@@ -70,7 +70,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Locale locale, void Function(Locale) changeLocale});
+  $Res call({Locale? locale, void Function(Locale?) changeLocale});
 }
 
 /// @nodoc
@@ -84,18 +84,18 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? locale = null,
+    Object? locale = freezed,
     Object? changeLocale = null,
   }) {
     return _then(_$_ViewModelImpl(
-      locale: null == locale
+      locale: freezed == locale
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
-              as Locale,
+              as Locale?,
       changeLocale: null == changeLocale
           ? _value.changeLocale
           : changeLocale // ignore: cast_nullable_to_non_nullable
-              as void Function(Locale),
+              as void Function(Locale?),
     ));
   }
 }
@@ -103,12 +103,12 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
-  const _$_ViewModelImpl({required this.locale, required this.changeLocale});
+  const _$_ViewModelImpl({this.locale, required this.changeLocale});
 
   @override
-  final Locale locale;
+  final Locale? locale;
   @override
-  final void Function(Locale) changeLocale;
+  final void Function(Locale?) changeLocale;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -146,13 +146,13 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 
 abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
-      {required final Locale locale,
-      required final void Function(Locale) changeLocale}) = _$_ViewModelImpl;
+      {final Locale? locale,
+      required final void Function(Locale?) changeLocale}) = _$_ViewModelImpl;
 
   @override
-  Locale get locale;
+  Locale? get locale;
   @override
-  void Function(Locale) get changeLocale;
+  void Function(Locale?) get changeLocale;
   @override
   @JsonKey(ignore: true)
   _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>

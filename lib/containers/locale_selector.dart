@@ -29,14 +29,14 @@ class LocaleSelector extends StatelessWidget {
 @freezed
 sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
-    required Locale locale,
-    required void Function(Locale) changeLocale,
+    Locale? locale,
+    required void Function(Locale?) changeLocale,
   }) = __ViewModel;
 
   factory _ViewModel.fromStore(Store<RootState> store) {
     return _ViewModel(
       locale: localeSelector(store.state),
-      changeLocale: (Locale locale) =>
+      changeLocale: (Locale? locale) =>
           store.dispatch(ChangeLocaleAction(locale)),
     );
   }

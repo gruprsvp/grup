@@ -6,8 +6,12 @@ import 'package:parousia/util/util.dart';
 ThemeMode themeModeSelector(RootState state) => state.themeMode;
 
 /// Provide the user-configured locale.
-Locale localeSelector(RootState state) {
+Locale? localeSelector(RootState state) {
   final locale = state.locale;
+
+  if (locale == null) {
+    return null;
+  }
 
   return Locale.fromSubtags(
     languageCode: locale.languageCode,

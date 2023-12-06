@@ -29,8 +29,8 @@ mixin _$RootState {
   RemoteEntityState<Reply> get replies => throw _privateConstructorUsedError;
   AuthState get auth => throw _privateConstructorUsedError;
   ThemeMode get themeMode => throw _privateConstructorUsedError;
-  LocaleState get locale => throw _privateConstructorUsedError;
   DateTime get selectedDate => throw _privateConstructorUsedError;
+  LocaleState? get locale => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -51,11 +51,11 @@ abstract class $RootStateCopyWith<$Res> {
       RemoteEntityState<Reply> replies,
       AuthState auth,
       ThemeMode themeMode,
-      LocaleState locale,
-      DateTime selectedDate});
+      DateTime selectedDate,
+      LocaleState? locale});
 
   $AuthStateCopyWith<$Res> get auth;
-  $LocaleStateCopyWith<$Res> get locale;
+  $LocaleStateCopyWith<$Res>? get locale;
 }
 
 /// @nodoc
@@ -78,8 +78,8 @@ class _$RootStateCopyWithImpl<$Res, $Val extends RootState>
     Object? replies = null,
     Object? auth = null,
     Object? themeMode = null,
-    Object? locale = null,
     Object? selectedDate = null,
+    Object? locale = freezed,
   }) {
     return _then(_value.copyWith(
       profiles: null == profiles
@@ -110,14 +110,14 @@ class _$RootStateCopyWithImpl<$Res, $Val extends RootState>
           ? _value.themeMode
           : themeMode // ignore: cast_nullable_to_non_nullable
               as ThemeMode,
-      locale: null == locale
-          ? _value.locale
-          : locale // ignore: cast_nullable_to_non_nullable
-              as LocaleState,
       selectedDate: null == selectedDate
           ? _value.selectedDate
           : selectedDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      locale: freezed == locale
+          ? _value.locale
+          : locale // ignore: cast_nullable_to_non_nullable
+              as LocaleState?,
     ) as $Val);
   }
 
@@ -131,8 +131,12 @@ class _$RootStateCopyWithImpl<$Res, $Val extends RootState>
 
   @override
   @pragma('vm:prefer-inline')
-  $LocaleStateCopyWith<$Res> get locale {
-    return $LocaleStateCopyWith<$Res>(_value.locale, (value) {
+  $LocaleStateCopyWith<$Res>? get locale {
+    if (_value.locale == null) {
+      return null;
+    }
+
+    return $LocaleStateCopyWith<$Res>(_value.locale!, (value) {
       return _then(_value.copyWith(locale: value) as $Val);
     });
   }
@@ -154,13 +158,13 @@ abstract class _$$RootStateImplCopyWith<$Res>
       RemoteEntityState<Reply> replies,
       AuthState auth,
       ThemeMode themeMode,
-      LocaleState locale,
-      DateTime selectedDate});
+      DateTime selectedDate,
+      LocaleState? locale});
 
   @override
   $AuthStateCopyWith<$Res> get auth;
   @override
-  $LocaleStateCopyWith<$Res> get locale;
+  $LocaleStateCopyWith<$Res>? get locale;
 }
 
 /// @nodoc
@@ -181,8 +185,8 @@ class __$$RootStateImplCopyWithImpl<$Res>
     Object? replies = null,
     Object? auth = null,
     Object? themeMode = null,
-    Object? locale = null,
     Object? selectedDate = null,
+    Object? locale = freezed,
   }) {
     return _then(_$RootStateImpl(
       profiles: null == profiles
@@ -213,14 +217,14 @@ class __$$RootStateImplCopyWithImpl<$Res>
           ? _value.themeMode
           : themeMode // ignore: cast_nullable_to_non_nullable
               as ThemeMode,
-      locale: null == locale
-          ? _value.locale
-          : locale // ignore: cast_nullable_to_non_nullable
-              as LocaleState,
       selectedDate: null == selectedDate
           ? _value.selectedDate
           : selectedDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      locale: freezed == locale
+          ? _value.locale
+          : locale // ignore: cast_nullable_to_non_nullable
+              as LocaleState?,
     ));
   }
 }
@@ -236,8 +240,8 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
       this.replies = const RemoteEntityState<Reply>(),
       this.auth = const AuthState(status: AuthStatus.initial),
       this.themeMode = ThemeMode.system,
-      this.locale = const LocaleState(languageCode: 'und'),
-      required this.selectedDate});
+      required this.selectedDate,
+      this.locale});
 
   factory _$RootStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$RootStateImplFromJson(json);
@@ -264,14 +268,13 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
   @JsonKey()
   final ThemeMode themeMode;
   @override
-  @JsonKey()
-  final LocaleState locale;
-  @override
   final DateTime selectedDate;
+  @override
+  final LocaleState? locale;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RootState(profiles: $profiles, groups: $groups, schedules: $schedules, defaultReplies: $defaultReplies, replies: $replies, auth: $auth, themeMode: $themeMode, locale: $locale, selectedDate: $selectedDate)';
+    return 'RootState(profiles: $profiles, groups: $groups, schedules: $schedules, defaultReplies: $defaultReplies, replies: $replies, auth: $auth, themeMode: $themeMode, selectedDate: $selectedDate, locale: $locale)';
   }
 
   @override
@@ -286,8 +289,8 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
       ..add(DiagnosticsProperty('replies', replies))
       ..add(DiagnosticsProperty('auth', auth))
       ..add(DiagnosticsProperty('themeMode', themeMode))
-      ..add(DiagnosticsProperty('locale', locale))
-      ..add(DiagnosticsProperty('selectedDate', selectedDate));
+      ..add(DiagnosticsProperty('selectedDate', selectedDate))
+      ..add(DiagnosticsProperty('locale', locale));
   }
 
   @override
@@ -306,15 +309,15 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
             (identical(other.auth, auth) || other.auth == auth) &&
             (identical(other.themeMode, themeMode) ||
                 other.themeMode == themeMode) &&
-            (identical(other.locale, locale) || other.locale == locale) &&
             (identical(other.selectedDate, selectedDate) ||
-                other.selectedDate == selectedDate));
+                other.selectedDate == selectedDate) &&
+            (identical(other.locale, locale) || other.locale == locale));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, profiles, groups, schedules,
-      defaultReplies, replies, auth, themeMode, locale, selectedDate);
+      defaultReplies, replies, auth, themeMode, selectedDate, locale);
 
   @JsonKey(ignore: true)
   @override
@@ -339,8 +342,8 @@ abstract class _RootState implements RootState {
       final RemoteEntityState<Reply> replies,
       final AuthState auth,
       final ThemeMode themeMode,
-      final LocaleState locale,
-      required final DateTime selectedDate}) = _$RootStateImpl;
+      required final DateTime selectedDate,
+      final LocaleState? locale}) = _$RootStateImpl;
 
   factory _RootState.fromJson(Map<String, dynamic> json) =
       _$RootStateImpl.fromJson;
@@ -360,9 +363,9 @@ abstract class _RootState implements RootState {
   @override
   ThemeMode get themeMode;
   @override
-  LocaleState get locale;
-  @override
   DateTime get selectedDate;
+  @override
+  LocaleState? get locale;
   @override
   @JsonKey(ignore: true)
   _$$RootStateImplCopyWith<_$RootStateImpl> get copyWith =>

@@ -22,8 +22,8 @@ sealed class RootState with _$RootState {
     @Default(RemoteEntityState<Reply>()) RemoteEntityState<Reply> replies,
     @Default(AuthState(status: AuthStatus.initial)) AuthState auth,
     @Default(ThemeMode.system) ThemeMode themeMode,
-    @Default(LocaleState(languageCode: 'und')) LocaleState locale,
     required DateTime selectedDate,
+    LocaleState? locale,
   }) = _RootState;
 
   factory RootState.initialState() => RootState(selectedDate: DateTime.now());

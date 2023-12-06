@@ -2,19 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LocaleScreen extends StatelessWidget {
-  final Locale selectedLocale;
-  final void Function(Locale) changeLocale;
+  final Locale? selectedLocale;
+  final void Function(Locale?) changeLocale;
 
   // TODO replace with something more robust
   // https://pub.dev/packages/flutter_localized_locales
   static const localeNames = {
+    'de': 'Deutsch',
     'en': 'English',
+    'es': 'Español',
+    'fr': 'Français',
     'it': 'Italiano',
   };
 
   const LocaleScreen({
     super.key,
-    required this.selectedLocale,
+    this.selectedLocale,
     required this.changeLocale,
   });
 
@@ -37,11 +40,11 @@ class LocaleScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          RadioListTile<Locale>.adaptive(
+          RadioListTile.adaptive(
             title: Text(l10n.systemLanguage),
             groupValue: selectedLocale,
-            value: const Locale('und'),
-            onChanged: (l) => changeLocale(l!),
+            value: null,
+            onChanged: (l) => changeLocale(null),
           ),
           ...radioButtons,
         ],
