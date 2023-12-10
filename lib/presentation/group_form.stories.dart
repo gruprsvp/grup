@@ -8,9 +8,7 @@ import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
   name: 'with data',
 )
 Widget withDataUseCase(BuildContext context) {
-  return Material(
-    child: GroupForm(onSave: (_) {}, group: Fake.group()),
-  );
+  return GroupForm(onSave: (_) {}, group: Fake.group());
 }
 
 @widgetbook.UseCase(
@@ -18,7 +16,5 @@ Widget withDataUseCase(BuildContext context) {
   name: 'empty',
 )
 Widget emptyUseCase(BuildContext context) {
-  return Material(
-    child: GroupForm(onSave: (_) {}),
-  );
+  return GroupForm(onSave: (_) {});
 }

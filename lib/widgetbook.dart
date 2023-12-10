@@ -18,12 +18,21 @@ class WidgetbookApp extends StatelessWidget {
     return Widgetbook.material(
       directories: directories,
       addons: [
+        AccessibilityAddon(),
+        AlignmentAddon(),
         DeviceFrameAddon(devices: Devices.all),
         LocalizationAddon(
           locales: AppLocalizations.supportedLocales,
           localizationsDelegates: AppLocalizations.localizationsDelegates,
           initialLocale: const Locale('en'),
         ),
+        MaterialThemeAddon(
+          themes: [
+            WidgetbookTheme(name: 'Light', data: ThemeData.light()),
+            WidgetbookTheme(name: 'Dark', data: ThemeData.dark()),
+          ],
+        ),
+        InspectorAddon(),
       ],
     );
   }
