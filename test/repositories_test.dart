@@ -53,13 +53,6 @@ Future<T> runWithTemporaryUser<T>(RunWithUserCallback<T> callback,
   return result;
 }
 
-Group fakeGroup() => Group(
-      displayName: faker.company.name(),
-      description: faker.lorem.sentence(),
-      picture: faker.image.image(height: 128, width: 128),
-      id: 0,
-    );
-
 void main() {
   group('profiles', () {
     test(
@@ -105,7 +98,7 @@ void main() {
         (supabase, user) async {
           final groupsRepository = GroupsRepository(supabase: supabase);
 
-          final newGroup = await groupsRepository.createGroup(fakeGroup());
+          final newGroup = await groupsRepository.createGroup(Fake.group());
 
           expect(newGroup, isNotNull);
 
@@ -129,7 +122,7 @@ void main() {
       () => runWithTemporaryUser((supabase, user) async {
         final groupsRepository = GroupsRepository(supabase: supabase);
         const groupsCount = 5;
-        final createdGroups = List.generate(groupsCount, (_) => fakeGroup());
+        final createdGroups = List.generate(groupsCount, (_) => Fake.group());
 
         await Future.wait(
             createdGroups.map((g) => groupsRepository.createGroup(g)));
@@ -146,7 +139,7 @@ void main() {
       'admins can edit their groups',
       () => runWithTemporaryUser((supabase, user) async {
         final groupsRepository = GroupsRepository(supabase: supabase);
-        final group = await groupsRepository.createGroup(fakeGroup());
+        final group = await groupsRepository.createGroup(Fake.group());
 
         const newName = 'A new group name';
         final updatedGroup = await groupsRepository
@@ -163,7 +156,7 @@ void main() {
       () => runWithTemporaryUser((supabase, user) async {
         final groupsRepository = GroupsRepository(supabase: supabase);
         final membersRepository = MembersRepository(supabase: supabase);
-        final group = await groupsRepository.createGroup(fakeGroup());
+        final group = await groupsRepository.createGroup(Fake.group());
 
         await membersRepository.addMemberToGroup(group.id,
             displayName: 'A guest');
@@ -175,7 +168,7 @@ void main() {
       () => runWithTemporaryUser((supabase, user) async {
         final groupsRepository = GroupsRepository(supabase: supabase);
         final membersRepository = MembersRepository(supabase: supabase);
-        final group = await groupsRepository.createGroup(fakeGroup());
+        final group = await groupsRepository.createGroup(Fake.group());
 
         await runWithTemporaryUser((_, user2) => membersRepository
             .addMemberToGroup(group.id, profileId: user2.user!.id));
@@ -187,7 +180,7 @@ void main() {
       () => runWithTemporaryUser((supabase, user) async {
         final groupsRepository = GroupsRepository(supabase: supabase);
         final membersRepository = MembersRepository(supabase: supabase);
-        final group = await groupsRepository.createGroup(fakeGroup());
+        final group = await groupsRepository.createGroup(Fake.group());
 
         final guest = await membersRepository.addMemberToGroup(group.id,
             displayName: 'A guest');
@@ -207,7 +200,7 @@ void main() {
         final groupsRepository = GroupsRepository(supabase: supabase);
         final membersRepository = MembersRepository(supabase: supabase);
         final invitesRepository = InvitesRepository(supabase: supabase);
-        final group = await groupsRepository.createGroup(fakeGroup());
+        final group = await groupsRepository.createGroup(Fake.group());
 
         final member = await membersRepository.addMemberToGroup(group.id,
             displayName: 'Member invited with email');
@@ -240,7 +233,7 @@ void main() {
         final groupsRepository = GroupsRepository(supabase: supabase);
         final membersRepository = MembersRepository(supabase: supabase);
         final invitesRepository = InvitesRepository(supabase: supabase);
-        final group = await groupsRepository.createGroup(fakeGroup());
+        final group = await groupsRepository.createGroup(Fake.group());
 
         final member = await membersRepository.addMemberToGroup(group.id,
             displayName: 'Member invited with phone');
@@ -271,7 +264,7 @@ void main() {
         final groupsRepository = GroupsRepository(supabase: supabase);
         final membersRepository = MembersRepository(supabase: supabase);
         final invitesRepository = InvitesRepository(supabase: supabase);
-        final group = await groupsRepository.createGroup(fakeGroup());
+        final group = await groupsRepository.createGroup(Fake.group());
 
         final member = await membersRepository.addMemberToGroup(group.id,
             displayName: 'Member invited with code');
@@ -300,7 +293,7 @@ void main() {
       () => runWithTemporaryUser((supabase, user) async {
         final groupsRepository = GroupsRepository(supabase: supabase);
         final schedulesRepository = SchedulesRepository(supabase: supabase);
-        final group = await groupsRepository.createGroup(fakeGroup());
+        final group = await groupsRepository.createGroup(Fake.group());
 
         final schedule = await schedulesRepository.createSchedule(
           Schedule(

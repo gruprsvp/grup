@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -18,6 +19,11 @@ class WidgetbookApp extends StatelessWidget {
       directories: directories,
       addons: [
         DeviceFrameAddon(devices: Devices.all),
+        LocalizationAddon(
+          locales: AppLocalizations.supportedLocales,
+          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          initialLocale: const Locale('en'),
+        ),
       ],
     );
   }
