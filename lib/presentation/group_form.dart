@@ -46,40 +46,49 @@ class _GroupFormState extends State<GroupForm> {
 
     return Form(
       key: _formKey,
-      child: Padding(
-        padding: const EdgeInsets.all(16),
-        child: ListView(
-          shrinkWrap: true,
-          children: [
-            TextFormField(
-              controller: _nameController,
-              decoration: InputDecoration(
-                labelText: l10n.enterGroupName,
-                suffixIcon: const Icon(Icons.mood),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Expanded(
+            child: SingleChildScrollView(
+              padding: const EdgeInsets.all(16),
+              child: Column(
+                children: [
+                  TextFormField(
+                    controller: _nameController,
+                    decoration: InputDecoration(
+                      labelText: l10n.enterGroupName,
+                      suffixIcon: const Icon(Icons.mood),
+                    ),
+                    maxLength: 32,
+                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return l10n.enterGroupNamePlease;
+                      }
+                      return null;
+                    },
+                  ),
+                  TextFormField(
+                    controller: _descriptionController,
+                    minLines: 2,
+                    maxLines: 5,
+                    maxLength: 256,
+                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                    autocorrect: true,
+                    decoration: InputDecoration(
+                      suffixIcon: const Icon(Icons.description_outlined),
+                      hintText: l10n.enterGroupDescription,
+                      border: const OutlineInputBorder(),
+                    ),
+                  ),
+                ],
               ),
-              maxLength: 32,
-              maxLengthEnforcement: MaxLengthEnforcement.enforced,
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return l10n.enterGroupNamePlease;
-                }
-                return null;
-              },
             ),
-            TextFormField(
-              controller: _descriptionController,
-              minLines: 2,
-              maxLines: 5,
-              maxLength: 256,
-              maxLengthEnforcement: MaxLengthEnforcement.enforced,
-              autocorrect: true,
-              decoration: InputDecoration(
-                suffixIcon: const Icon(Icons.description_outlined),
-                hintText: l10n.enterGroupDescription,
-                border: const OutlineInputBorder(),
-              ),
-            ),
-            FilledButton(
+          ),
+          Padding(
+            padding: const EdgeInsets.all(16),
+            child: FilledButton(
               onPressed: () {
                 if (_formKey.currentState!.validate()) {
                   final displayName = _nameController.text.trim();
@@ -98,8 +107,8 @@ class _GroupFormState extends State<GroupForm> {
               child:
                   Text(widget.group != null ? l10n.save : l10n.createNewGroup),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

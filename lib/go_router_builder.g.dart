@@ -44,6 +44,10 @@ RouteBase get $homeScreenRoute => GoRouteData.$route(
               path: 'manage',
               factory: $GroupManageRouteExtension._fromState,
             ),
+            GoRouteData.$route(
+              path: 'schedule',
+              factory: $GroupScheduleRouteExtension._fromState,
+            ),
           ],
         ),
         GoRouteData.$route(
@@ -181,6 +185,26 @@ extension $GroupManageRouteExtension on GroupManageRoute {
 
   String get location => GoRouteData.$location(
         '/groups/${Uri.encodeComponent(groupId)}/manage',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $GroupScheduleRouteExtension on GroupScheduleRoute {
+  static GroupScheduleRoute _fromState(GoRouterState state) =>
+      GroupScheduleRoute(
+        groupId: state.pathParameters['groupId']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/groups/${Uri.encodeComponent(groupId)}/schedule',
       );
 
   void go(BuildContext context) => context.go(location);

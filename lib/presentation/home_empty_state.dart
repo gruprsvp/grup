@@ -18,7 +18,7 @@ class HomeEmptyState extends StatelessWidget {
             l10n.onboardingMessage,
             style: theme.textTheme.bodyLarge,
           ),
-          Image.asset('assets/images/wolf.png', height: 320),
+          Image.asset('assets/images/wolf.webp', height: 320),
         ],
       ),
     );

@@ -103,7 +103,7 @@ class GroupMembers extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Image.asset('assets/images/seeyoulateralligator.png'),
+          Image.asset('assets/images/seeyoulateralligator.webp'),
           FilledButton(
               onPressed: () => _inviteNew(context),
               child: Text(l10n.inviteMembersCTA)),

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parousia/containers/containers.dart';
 import 'package:parousia/containers/home_page.dart';
+import 'package:parousia/screens/schedule_screen.dart';
 import 'package:parousia/screens/screens.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -23,6 +24,7 @@ part 'go_router_builder.g.dart';
       path: 'groups/:groupId',
       routes: [
         TypedGoRoute<GroupManageRoute>(path: 'manage'),
+        TypedGoRoute<GroupScheduleRoute>(path: 'schedule'),
       ],
     ),
     TypedGoRoute<SelectContactsRoute>(path: 'select-contacts'),
@@ -88,6 +90,17 @@ class GroupManageRoute extends GoRouteData with AuthenticationGuard {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       ManageGroup(groupId: groupId);
+}
+
+@immutable
+class GroupScheduleRoute extends GoRouteData with AuthenticationGuard {
+  final String groupId;
+
+  const GroupScheduleRoute({required this.groupId});
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const ScheduleScreen();
 }
 
 @immutable
