@@ -3,16 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:parousia/models/models.dart';
-import 'package:parousia/screens/screens.dart';
+import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
 
-part 'group_details.freezed.dart';
+part 'manage_group.freezed.dart';
 
-class GroupDetails extends StatelessWidget {
+class ManageGroup extends StatelessWidget {
   final String groupId;
 
-  const GroupDetails({
+  const ManageGroup({
     super.key,
     required this.groupId,
   });
@@ -22,7 +22,7 @@ class GroupDetails extends StatelessWidget {
     return StoreConnector<RootState, _ViewModel>(
       distinct: true,
       converter: (store) => _ViewModel.fromStore(store, groupId),
-      builder: (context, vm) => GroupDetailsScreen(
+      builder: (context, vm) => GroupManageScreen(
         loading: vm.loading,
         group: vm.group,
       ),
@@ -38,10 +38,13 @@ class _ViewModel with _$ViewModel {
   }) = __ViewModel;
 
   static _ViewModel fromStore(Store<RootState> store, String groupId) {
+    final group = store.state.groups.entities[groupId];
+
     return _ViewModel(
-      loading: store.state.groups.loadingAll ||
+      group: group,
+      loading: store.state.groups.creating ||
+          store.state.groups.loadingAll ||
           (store.state.groups.loadingIds[groupId] ?? false),
-      group: store.state.groups.entities[groupId],
     );
   }
 }

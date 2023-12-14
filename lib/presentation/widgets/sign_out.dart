@@ -3,6 +3,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
+/// A ListTile that signs the user out when tapped,
+/// with an adaptive confirmation dialog.
 class SignOutTile extends StatelessWidget {
   const SignOutTile({super.key});
 

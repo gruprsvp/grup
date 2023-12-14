@@ -15,10 +15,8 @@ class GroupEvents extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Image.asset('assets/images/hare.webp'),
+          Expanded(child: Image.asset('assets/images/hare.webp')),
           FilledButton(
             onPressed: () =>
                 GroupScheduleRoute(groupId: group.id.toString()).push(context),

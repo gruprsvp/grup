@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:parousia/containers/containers.dart';
-import 'package:parousia/containers/home_page.dart';
-import 'package:parousia/screens/schedule_screen.dart';
-import 'package:parousia/screens/screens.dart';
+import 'package:parousia/presentation/presentation.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 part 'go_router_builder.g.dart';

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:parousia/containers/containers.dart';
 import 'package:parousia/models/models.dart';
-import 'package:parousia/presentation/group_events.dart';
 import 'package:parousia/presentation/presentation.dart';
 
 class GroupManageScreen extends StatelessWidget {

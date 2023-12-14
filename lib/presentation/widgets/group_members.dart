@@ -100,10 +100,9 @@ class GroupMembers extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          Image.asset('assets/images/seeyoulateralligator.webp'),
+          Expanded(
+              child: Image.asset('assets/images/seeyoulateralligator.webp')),
           FilledButton(
               onPressed: () => _inviteNew(context),
               child: Text(l10n.inviteMembersCTA)),

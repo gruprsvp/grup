@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:parousia/presentation/group_form.dart';
 import 'package:parousia/util/util.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
+
+import 'group_form.dart';
 
 @widgetbook.UseCase(
   type: GroupForm,
