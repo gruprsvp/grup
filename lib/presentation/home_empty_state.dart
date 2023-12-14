@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
+/// A widget to display when the user just joined and has no groups.
 class HomeEmptyState extends StatelessWidget {
   const HomeEmptyState({super.key});
 

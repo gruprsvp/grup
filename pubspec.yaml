@@ -100,6 +100,9 @@ dev_dependencies:
   integration_test:
     sdk: flutter
 
+  # To manage app flavours
+  flutter_flavorizr: ^2.2.1
+
   # For code generation
   build_runner: ^2.4.7
   freezed: ^2.4.5

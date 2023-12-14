@@ -13,12 +13,12 @@ class SupabaseConfig with _$SupabaseConfig {
   const factory SupabaseConfig({
     required String anonKey,
     required String apiUrl,
-    required String dbUrl,
-    required String graphqlUrl,
-    required String inbucketUrl,
-    required String jwtSecret,
-    required String serviceRoleKey,
-    required String studioUrl,
+    String? dbUrl,
+    String? graphqlUrl,
+    String? inbucketUrl,
+    String? jwtSecret,
+    String? serviceRoleKey,
+    String? studioUrl,
   }) = _SupabaseConfig;
 
   factory SupabaseConfig.fromJson(Map<String, dynamic> json) =>
