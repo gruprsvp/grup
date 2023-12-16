@@ -22,7 +22,7 @@ class SettingsScreen extends StatelessWidget {
             leading: const Icon(Icons.translate),
             onTap: () => LocaleRoute().push(context),
           ),
-          const ThemeSwitcher(),
+          const ThemeSwitcherContainer(),
           const SignOutTile(),
         ],
       ),

@@ -19,22 +19,16 @@ RouteBase get $homeScreenRoute => GoRouteData.$route(
           factory: $AuthRouteExtension._fromState,
         ),
         GoRouteData.$route(
-          path: 'settings',
-          factory: $SettingsRouteExtension._fromState,
-          routes: [
-            GoRouteData.$route(
-              path: 'locale',
-              factory: $LocaleRouteExtension._fromState,
-            ),
-          ],
-        ),
-        GoRouteData.$route(
           path: 'profile',
           factory: $ProfileRouteExtension._fromState,
         ),
         GoRouteData.$route(
-          path: 'new-group',
-          factory: $NewGroupRouteExtension._fromState,
+          path: 'select-contacts',
+          factory: $SelectContactsRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'group-create',
+          factory: $GroupCreateRouteExtension._fromState,
         ),
         GoRouteData.$route(
           path: 'groups/:groupId',
@@ -51,8 +45,14 @@ RouteBase get $homeScreenRoute => GoRouteData.$route(
           ],
         ),
         GoRouteData.$route(
-          path: 'select-contacts',
-          factory: $SelectContactsRouteExtension._fromState,
+          path: 'settings',
+          factory: $SettingsRouteExtension._fromState,
+          routes: [
+            GoRouteData.$route(
+              path: 'locale',
+              factory: $LocaleRouteExtension._fromState,
+            ),
+          ],
         ),
       ],
     );
@@ -91,40 +91,6 @@ extension $AuthRouteExtension on AuthRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $SettingsRouteExtension on SettingsRoute {
-  static SettingsRoute _fromState(GoRouterState state) => SettingsRoute();
-
-  String get location => GoRouteData.$location(
-        '/settings',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
-extension $LocaleRouteExtension on LocaleRoute {
-  static LocaleRoute _fromState(GoRouterState state) => LocaleRoute();
-
-  String get location => GoRouteData.$location(
-        '/settings/locale',
-      );
-
-  void go(BuildContext context) => context.go(location);
-
-  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
-
-  void pushReplacement(BuildContext context) =>
-      context.pushReplacement(location);
-
-  void replace(BuildContext context) => context.replace(location);
-}
-
 extension $ProfileRouteExtension on ProfileRoute {
   static ProfileRoute _fromState(GoRouterState state) => ProfileRoute();
 
@@ -142,11 +108,29 @@ extension $ProfileRouteExtension on ProfileRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $NewGroupRouteExtension on NewGroupRoute {
-  static NewGroupRoute _fromState(GoRouterState state) => NewGroupRoute();
+extension $SelectContactsRouteExtension on SelectContactsRoute {
+  static SelectContactsRoute _fromState(GoRouterState state) =>
+      SelectContactsRoute();
 
   String get location => GoRouteData.$location(
-        '/new-group',
+        '/select-contacts',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $GroupCreateRouteExtension on GroupCreateRoute {
+  static GroupCreateRoute _fromState(GoRouterState state) => GroupCreateRoute();
+
+  String get location => GoRouteData.$location(
+        '/group-create',
       );
 
   void go(BuildContext context) => context.go(location);
@@ -217,12 +201,28 @@ extension $GroupScheduleRouteExtension on GroupScheduleRoute {
   void replace(BuildContext context) => context.replace(location);
 }
 
-extension $SelectContactsRouteExtension on SelectContactsRoute {
-  static SelectContactsRoute _fromState(GoRouterState state) =>
-      SelectContactsRoute();
+extension $SettingsRouteExtension on SettingsRoute {
+  static SettingsRoute _fromState(GoRouterState state) => SettingsRoute();
 
   String get location => GoRouteData.$location(
-        '/select-contacts',
+        '/settings',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LocaleRouteExtension on LocaleRoute {
+  static LocaleRoute _fromState(GoRouterState state) => LocaleRoute();
+
+  String get location => GoRouteData.$location(
+        '/settings/locale',
       );
 
   void go(BuildContext context) => context.go(location);

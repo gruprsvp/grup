@@ -16,7 +16,7 @@ SupabaseClient supabaseAnonClient() =>
     SupabaseClient(config.apiUrl, config.anonKey);
 
 SupabaseClient supabaseAdminClient() =>
-    SupabaseClient(config.apiUrl, config.serviceRoleKey);
+    SupabaseClient(config.apiUrl, config.serviceRoleKey!);
 
 /// Singleton instance of a Supabase client with admin rights
 /// (it's not very useful to have many as there's no auth user)

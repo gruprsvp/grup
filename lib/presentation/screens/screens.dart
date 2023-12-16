@@ -1,9 +1,9 @@
 export 'auth.dart';
+export 'group_create.dart';
 export 'group_details.dart';
 export 'group_manage.dart';
 export 'home.dart';
 export 'locale.dart';
-export 'new_group.dart';
 export 'profile.dart';
 export 'schedule.dart';
 export 'select_contacts.dart';

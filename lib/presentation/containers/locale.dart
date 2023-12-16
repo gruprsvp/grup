@@ -8,10 +8,10 @@ import 'package:parousia/selectors/selectors.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
 
-part 'locale_selector.freezed.dart';
+part 'locale.freezed.dart';
 
-class LocaleSelector extends StatelessWidget {
-  const LocaleSelector({super.key});
+class LocaleContainer extends StatelessWidget {
+  const LocaleContainer({super.key});
 
   @override
   Widget build(BuildContext context) {

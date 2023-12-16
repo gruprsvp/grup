@@ -4,20 +4,20 @@ import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 
-typedef NewGroupReturnCallback = void Function(NewGroupReturn);
+typedef GroupCreateResultCallback = void Function(GroupCreateResult);
 
 class HomeScreen extends StatelessWidget {
   final Profile? profile;
   final Iterable<Group>? groups;
   final bool loading;
-  final NewGroupReturnCallback? onNewGroup;
+  final GroupCreateResultCallback? onGroupCreate;
 
   const HomeScreen({
     super.key,
     this.loading = false,
     this.profile,
     this.groups,
-    this.onNewGroup,
+    this.onGroupCreate,
   });
 
   ImageProvider? _profilePicture() {
@@ -52,9 +52,9 @@ class HomeScreen extends StatelessWidget {
       ),
       body: nothingToShow ? const HomeEmptyState() : GroupsList(groups: groups),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => NewGroupRoute()
-            .push<NewGroupReturn>(context)
-            .then((value) => value != null ? onNewGroup?.call(value) : null),
+        onPressed: () => GroupCreateRoute()
+            .push<GroupCreateResult>(context)
+            .then((value) => value != null ? onGroupCreate?.call(value) : null),
         label: Text(l10n.createOrJoinGroup),
         icon: const Icon(Icons.group_add_outlined),
       ),

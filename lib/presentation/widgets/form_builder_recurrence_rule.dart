@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:parousia/util/common_rrules.dart';
+import 'package:parousia/util/util.dart';
 import 'package:rrule/rrule.dart';
 
-class RecurrenceRulePicker extends FormBuilderFieldDecoration<RecurrenceRule> {
+class FormBuilderRecurrenceRule
+    extends FormBuilderFieldDecoration<RecurrenceRule> {
   /// To localize the recurrence rule picker, supply a [RruleL10n] implementation
   final RruleL10n rruleL10n;
 
@@ -50,7 +51,7 @@ class RecurrenceRulePicker extends FormBuilderFieldDecoration<RecurrenceRule> {
   final double cursorWidth;
   final TextCapitalization textCapitalization;
 
-  RecurrenceRulePicker({
+  FormBuilderRecurrenceRule({
     super.key,
     required super.name,
     required this.rruleL10n,
@@ -132,12 +133,12 @@ class RecurrenceRulePicker extends FormBuilderFieldDecoration<RecurrenceRule> {
         });
 
   @override
-  FormBuilderFieldDecorationState<RecurrenceRulePicker, RecurrenceRule>
+  FormBuilderFieldDecorationState<FormBuilderRecurrenceRule, RecurrenceRule>
       createState() => _RecurrenceRulePickerState();
 }
 
 class _RecurrenceRulePickerState extends FormBuilderFieldDecorationState<
-    RecurrenceRulePicker, RecurrenceRule> {
+    FormBuilderRecurrenceRule, RecurrenceRule> {
   late TextEditingController _textFieldController;
 
   @override

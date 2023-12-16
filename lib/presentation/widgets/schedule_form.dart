@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:parousia/models/models.dart';
 import 'package:rrule/rrule.dart';
 
-import 'recurrence_rule_picker.dart';
+import 'form_builder_recurrence_rule.dart';
 
 class ScheduleForm extends StatefulWidget {
   final Schedule? schedule;
@@ -54,7 +54,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
           FutureBuilder(
             future: RruleL10nEn.create(),
             builder: (context, snapshot) => snapshot.hasData
-                ? RecurrenceRulePicker(
+                ? FormBuilderRecurrenceRule(
                     name: 'recurrenceRule',
                     decoration: InputDecoration(
                       labelText: l10n.recurrenceRule,

@@ -1,47 +1,25 @@
 import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:parousia/actions/actions.dart';
+import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/selectors/selectors.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
 
 part 'theme_switcher.freezed.dart';
 
-class ThemeSwitcher extends StatelessWidget {
-  const ThemeSwitcher({super.key});
+class ThemeSwitcherContainer extends StatelessWidget {
+  const ThemeSwitcherContainer({super.key});
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<RootState, _ViewModel>(
-      distinct: true,
-      converter: _ViewModel.fromStore,
-      builder: (context, vm) {
-        final (icon, subtitle) = switch (vm.themeMode) {
-          ThemeMode.system => (
-              Icons.brightness_auto,
-              AppLocalizations.of(context)!.themeSystem,
-            ),
-          ThemeMode.light => (
-              Icons.sunny,
-              AppLocalizations.of(context)!.themeLight,
-            ),
-          ThemeMode.dark => (
-              Icons.dark_mode,
-              AppLocalizations.of(context)!.themeDark,
-            ),
-        };
-
-        return ListTile(
-          title: Text(AppLocalizations.of(context)!.changeTheme),
-          subtitle: Text(subtitle),
-          leading: Icon(icon),
-          onTap: vm.nextTheme,
-        );
-      },
-    );
+        distinct: true,
+        converter: _ViewModel.fromStore,
+        builder: (context, vm) =>
+            ThemeSwitcherTile(themeMode: vm.themeMode, onTap: vm.nextTheme));
   }
 }
 

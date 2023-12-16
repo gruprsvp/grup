@@ -9,28 +9,30 @@ part 'go_router_builder.g.dart';
   path: '/',
   routes: [
     TypedGoRoute<AuthRoute>(path: 'auth'),
+    TypedGoRoute<ProfileRoute>(path: 'profile'),
+    TypedGoRoute<SelectContactsRoute>(path: 'select-contacts'),
+    TypedGoRoute<GroupCreateRoute>(path: 'group-create'),
+    TypedGoRoute<GroupDetailsRoute>(
+      path: 'groups/:groupId',
+      routes: [
+        TypedGoRoute<GroupManageRoute>(path: 'manage'),
+        // TODO Should be at root level?
+        TypedGoRoute<GroupScheduleRoute>(path: 'schedule'),
+      ],
+    ),
     TypedGoRoute<SettingsRoute>(
       path: 'settings',
       routes: [
         TypedGoRoute<LocaleRoute>(path: 'locale'),
       ],
     ),
-    TypedGoRoute<ProfileRoute>(path: 'profile'),
-    TypedGoRoute<NewGroupRoute>(path: 'new-group'),
-    TypedGoRoute<GroupDetailsRoute>(
-      path: 'groups/:groupId',
-      routes: [
-        TypedGoRoute<GroupManageRoute>(path: 'manage'),
-        TypedGoRoute<GroupScheduleRoute>(path: 'schedule'),
-      ],
-    ),
-    TypedGoRoute<SelectContactsRoute>(path: 'select-contacts'),
   ],
 )
 @immutable
 class HomeScreenRoute extends GoRouteData with AuthenticationGuard {
   @override
-  Widget build(BuildContext context, GoRouterState state) => const HomePage();
+  Widget build(BuildContext context, GoRouterState state) =>
+      const HomeContainer();
 }
 
 @immutable
@@ -50,21 +52,21 @@ class SettingsRoute extends GoRouteData with AuthenticationGuard {
 class LocaleRoute extends GoRouteData with AuthenticationGuard {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const LocaleSelector();
+      const LocaleContainer();
 }
 
 @immutable
 class ProfileRoute extends GoRouteData with AuthenticationGuard {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const ProfilePage();
+      const ProfileContainer();
 }
 
 @immutable
-class NewGroupRoute extends GoRouteData with AuthenticationGuard {
+class GroupCreateRoute extends GoRouteData with AuthenticationGuard {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const NewGroupScreen();
+      const GroupCreateScreen();
 }
 
 @immutable
@@ -75,18 +77,20 @@ class GroupDetailsRoute extends GoRouteData with AuthenticationGuard {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      GroupDetails(groupId: groupId);
+      GroupDetailsContainer(groupId: groupId);
 }
 
 @immutable
 class GroupManageRoute extends GoRouteData with AuthenticationGuard {
+  // TODO Should be for admins only
+
   final String groupId;
 
   const GroupManageRoute({required this.groupId});
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      ManageGroup(groupId: groupId);
+      GroupManageContainer(groupId: groupId);
 }
 
 @immutable

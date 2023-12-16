@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'edit_group.dart';
+part of 'locale.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -16,9 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ViewModel {
-  bool get loading => throw _privateConstructorUsedError;
-  OnGroupSaveCallback get onSave => throw _privateConstructorUsedError;
-  Group? get group => throw _privateConstructorUsedError;
+  Locale? get locale => throw _privateConstructorUsedError;
+  void Function(Locale?) get changeLocale => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   _$ViewModelCopyWith<_ViewModel> get copyWith =>
@@ -31,9 +30,7 @@ abstract class _$ViewModelCopyWith<$Res> {
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call({bool loading, OnGroupSaveCallback onSave, Group? group});
-
-  $GroupCopyWith<$Res>? get group;
+  $Res call({Locale? locale, void Function(Locale?) changeLocale});
 }
 
 /// @nodoc
@@ -49,36 +46,19 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? loading = null,
-    Object? onSave = null,
-    Object? group = freezed,
+    Object? locale = freezed,
+    Object? changeLocale = null,
   }) {
     return _then(_value.copyWith(
-      loading: null == loading
-          ? _value.loading
-          : loading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      onSave: null == onSave
-          ? _value.onSave
-          : onSave // ignore: cast_nullable_to_non_nullable
-              as OnGroupSaveCallback,
-      group: freezed == group
-          ? _value.group
-          : group // ignore: cast_nullable_to_non_nullable
-              as Group?,
+      locale: freezed == locale
+          ? _value.locale
+          : locale // ignore: cast_nullable_to_non_nullable
+              as Locale?,
+      changeLocale: null == changeLocale
+          ? _value.changeLocale
+          : changeLocale // ignore: cast_nullable_to_non_nullable
+              as void Function(Locale?),
     ) as $Val);
-  }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $GroupCopyWith<$Res>? get group {
-    if (_value.group == null) {
-      return null;
-    }
-
-    return $GroupCopyWith<$Res>(_value.group!, (value) {
-      return _then(_value.copyWith(group: value) as $Val);
-    });
   }
 }
 
@@ -90,10 +70,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool loading, OnGroupSaveCallback onSave, Group? group});
-
-  @override
-  $GroupCopyWith<$Res>? get group;
+  $Res call({Locale? locale, void Function(Locale?) changeLocale});
 }
 
 /// @nodoc
@@ -107,23 +84,18 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? loading = null,
-    Object? onSave = null,
-    Object? group = freezed,
+    Object? locale = freezed,
+    Object? changeLocale = null,
   }) {
     return _then(_$_ViewModelImpl(
-      loading: null == loading
-          ? _value.loading
-          : loading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      onSave: null == onSave
-          ? _value.onSave
-          : onSave // ignore: cast_nullable_to_non_nullable
-              as OnGroupSaveCallback,
-      group: freezed == group
-          ? _value.group
-          : group // ignore: cast_nullable_to_non_nullable
-              as Group?,
+      locale: freezed == locale
+          ? _value.locale
+          : locale // ignore: cast_nullable_to_non_nullable
+              as Locale?,
+      changeLocale: null == changeLocale
+          ? _value.changeLocale
+          : changeLocale // ignore: cast_nullable_to_non_nullable
+              as void Function(Locale?),
     ));
   }
 }
@@ -131,19 +103,16 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
-  const _$_ViewModelImpl(
-      {required this.loading, required this.onSave, this.group});
+  const _$_ViewModelImpl({this.locale, required this.changeLocale});
 
   @override
-  final bool loading;
+  final Locale? locale;
   @override
-  final OnGroupSaveCallback onSave;
-  @override
-  final Group? group;
+  final void Function(Locale?) changeLocale;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(loading: $loading, onSave: $onSave, group: $group)';
+    return '_ViewModel(locale: $locale, changeLocale: $changeLocale)';
   }
 
   @override
@@ -151,9 +120,8 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', '_ViewModel'))
-      ..add(DiagnosticsProperty('loading', loading))
-      ..add(DiagnosticsProperty('onSave', onSave))
-      ..add(DiagnosticsProperty('group', group));
+      ..add(DiagnosticsProperty('locale', locale))
+      ..add(DiagnosticsProperty('changeLocale', changeLocale));
   }
 
   @override
@@ -161,13 +129,13 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ViewModelImpl &&
-            (identical(other.loading, loading) || other.loading == loading) &&
-            (identical(other.onSave, onSave) || other.onSave == onSave) &&
-            (identical(other.group, group) || other.group == group));
+            (identical(other.locale, locale) || other.locale == locale) &&
+            (identical(other.changeLocale, changeLocale) ||
+                other.changeLocale == changeLocale));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, loading, onSave, group);
+  int get hashCode => Object.hash(runtimeType, locale, changeLocale);
 
   @JsonKey(ignore: true)
   @override
@@ -178,16 +146,13 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 
 abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
-      {required final bool loading,
-      required final OnGroupSaveCallback onSave,
-      final Group? group}) = _$_ViewModelImpl;
+      {final Locale? locale,
+      required final void Function(Locale?) changeLocale}) = _$_ViewModelImpl;
 
   @override
-  bool get loading;
+  Locale? get locale;
   @override
-  OnGroupSaveCallback get onSave;
-  @override
-  Group? get group;
+  void Function(Locale?) get changeLocale;
   @override
   @JsonKey(ignore: true)
   _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>

@@ -4,22 +4,22 @@ import 'package:go_router/go_router.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 
-sealed class NewGroupReturn {}
+sealed class GroupCreateResult {}
 
-class NewGroupReturnNew extends NewGroupReturn {
+class GroupCreateResultNew extends GroupCreateResult {
   final Group group;
 
-  NewGroupReturnNew(this.group);
+  GroupCreateResultNew(this.group);
 }
 
-class NewGroupReturnJoin extends NewGroupReturn {
+class GroupCreateResultJoin extends GroupCreateResult {
   final String code;
 
-  NewGroupReturnJoin(this.code);
+  GroupCreateResultJoin(this.code);
 }
 
-class NewGroupScreen extends StatelessWidget {
-  const NewGroupScreen({super.key});
+class GroupCreateScreen extends StatelessWidget {
+  const GroupCreateScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -45,8 +45,8 @@ class NewGroupScreen extends StatelessWidget {
           children: [
             Center(child: Text(l10n.join)),
             GroupForm(
-                onSave: (group) =>
-                    context.pop<NewGroupReturn>(NewGroupReturnNew(group))),
+                onSave: (group) => context
+                    .pop<GroupCreateResult>(GroupCreateResultNew(group))),
           ],
         ),
       ),

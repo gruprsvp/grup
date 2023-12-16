@@ -44,7 +44,7 @@ class GroupManageScreen extends StatelessWidget {
                 ? GroupEvents(group: group!)
                 : Center(child: Text(l10n.loading)),
             group != null
-                ? EditGroup(groupId: group!.id.toString())
+                ? GroupFormContainer(groupId: group!.id.toString())
                 : Center(child: Text(l10n.loading)),
           ],
         ),

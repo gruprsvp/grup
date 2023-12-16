@@ -6,13 +6,14 @@ import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
+import 'package:redux_entity/redux_entity.dart';
 
-part 'manage_group.freezed.dart';
+part 'group_form.freezed.dart';
 
-class ManageGroup extends StatelessWidget {
+class GroupFormContainer extends StatelessWidget {
   final String groupId;
 
-  const ManageGroup({
+  const GroupFormContainer({
     super.key,
     required this.groupId,
   });
@@ -22,8 +23,8 @@ class ManageGroup extends StatelessWidget {
     return StoreConnector<RootState, _ViewModel>(
       distinct: true,
       converter: (store) => _ViewModel.fromStore(store, groupId),
-      builder: (context, vm) => GroupManageScreen(
-        loading: vm.loading,
+      builder: (context, vm) => GroupForm(
+        onSave: vm.onSave,
         group: vm.group,
       ),
     );
@@ -34,6 +35,7 @@ class ManageGroup extends StatelessWidget {
 class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required bool loading,
+    required OnGroupSaveCallback onSave,
     Group? group,
   }) = __ViewModel;
 
@@ -45,6 +47,10 @@ class _ViewModel with _$ViewModel {
       loading: store.state.groups.creating ||
           store.state.groups.loadingAll ||
           (store.state.groups.loadingIds[groupId] ?? false),
+      // TODO unique action per source
+      onSave: (group) => store.dispatch(
+        RequestUpdateOne<Group>(group),
+      ),
     );
   }
 }

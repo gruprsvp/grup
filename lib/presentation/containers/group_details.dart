@@ -9,10 +9,10 @@ import 'package:redux/redux.dart';
 
 part 'group_details.freezed.dart';
 
-class GroupDetails extends StatelessWidget {
+class GroupDetailsContainer extends StatelessWidget {
   final String groupId;
 
-  const GroupDetails({
+  const GroupDetailsContainer({
     super.key,
     required this.groupId,
   });

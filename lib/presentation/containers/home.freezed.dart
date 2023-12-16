@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'home_page.dart';
+part of 'home.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -19,7 +19,8 @@ mixin _$ViewModel {
   bool get loading => throw _privateConstructorUsedError;
   Profile? get profile => throw _privateConstructorUsedError;
   Iterable<Group>? get groups => throw _privateConstructorUsedError;
-  NewGroupReturnCallback? get onNewGroup => throw _privateConstructorUsedError;
+  GroupCreateResultCallback? get onGroupCreate =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   _$ViewModelCopyWith<_ViewModel> get copyWith =>
@@ -36,7 +37,7 @@ abstract class _$ViewModelCopyWith<$Res> {
       {bool loading,
       Profile? profile,
       Iterable<Group>? groups,
-      NewGroupReturnCallback? onNewGroup});
+      GroupCreateResultCallback? onGroupCreate});
 
   $ProfileCopyWith<$Res>? get profile;
 }
@@ -57,7 +58,7 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
     Object? loading = null,
     Object? profile = freezed,
     Object? groups = freezed,
-    Object? onNewGroup = freezed,
+    Object? onGroupCreate = freezed,
   }) {
     return _then(_value.copyWith(
       loading: null == loading
@@ -72,10 +73,10 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
           ? _value.groups
           : groups // ignore: cast_nullable_to_non_nullable
               as Iterable<Group>?,
-      onNewGroup: freezed == onNewGroup
-          ? _value.onNewGroup
-          : onNewGroup // ignore: cast_nullable_to_non_nullable
-              as NewGroupReturnCallback?,
+      onGroupCreate: freezed == onGroupCreate
+          ? _value.onGroupCreate
+          : onGroupCreate // ignore: cast_nullable_to_non_nullable
+              as GroupCreateResultCallback?,
     ) as $Val);
   }
 
@@ -104,7 +105,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       {bool loading,
       Profile? profile,
       Iterable<Group>? groups,
-      NewGroupReturnCallback? onNewGroup});
+      GroupCreateResultCallback? onGroupCreate});
 
   @override
   $ProfileCopyWith<$Res>? get profile;
@@ -124,7 +125,7 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     Object? loading = null,
     Object? profile = freezed,
     Object? groups = freezed,
-    Object? onNewGroup = freezed,
+    Object? onGroupCreate = freezed,
   }) {
     return _then(_$_ViewModelImpl(
       loading: null == loading
@@ -139,10 +140,10 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
           ? _value.groups
           : groups // ignore: cast_nullable_to_non_nullable
               as Iterable<Group>?,
-      onNewGroup: freezed == onNewGroup
-          ? _value.onNewGroup
-          : onNewGroup // ignore: cast_nullable_to_non_nullable
-              as NewGroupReturnCallback?,
+      onGroupCreate: freezed == onGroupCreate
+          ? _value.onGroupCreate
+          : onGroupCreate // ignore: cast_nullable_to_non_nullable
+              as GroupCreateResultCallback?,
     ));
   }
 }
@@ -151,7 +152,7 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   const _$_ViewModelImpl(
-      {required this.loading, this.profile, this.groups, this.onNewGroup});
+      {required this.loading, this.profile, this.groups, this.onGroupCreate});
 
   @override
   final bool loading;
@@ -160,11 +161,11 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   @override
   final Iterable<Group>? groups;
   @override
-  final NewGroupReturnCallback? onNewGroup;
+  final GroupCreateResultCallback? onGroupCreate;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(loading: $loading, profile: $profile, groups: $groups, onNewGroup: $onNewGroup)';
+    return '_ViewModel(loading: $loading, profile: $profile, groups: $groups, onGroupCreate: $onGroupCreate)';
   }
 
   @override
@@ -175,7 +176,7 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
       ..add(DiagnosticsProperty('loading', loading))
       ..add(DiagnosticsProperty('profile', profile))
       ..add(DiagnosticsProperty('groups', groups))
-      ..add(DiagnosticsProperty('onNewGroup', onNewGroup));
+      ..add(DiagnosticsProperty('onGroupCreate', onGroupCreate));
   }
 
   @override
@@ -186,13 +187,13 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
             (identical(other.loading, loading) || other.loading == loading) &&
             (identical(other.profile, profile) || other.profile == profile) &&
             const DeepCollectionEquality().equals(other.groups, groups) &&
-            (identical(other.onNewGroup, onNewGroup) ||
-                other.onNewGroup == onNewGroup));
+            (identical(other.onGroupCreate, onGroupCreate) ||
+                other.onGroupCreate == onGroupCreate));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, loading, profile,
-      const DeepCollectionEquality().hash(groups), onNewGroup);
+      const DeepCollectionEquality().hash(groups), onGroupCreate);
 
   @JsonKey(ignore: true)
   @override
@@ -206,7 +207,7 @@ abstract class __ViewModel implements _ViewModel {
       {required final bool loading,
       final Profile? profile,
       final Iterable<Group>? groups,
-      final NewGroupReturnCallback? onNewGroup}) = _$_ViewModelImpl;
+      final GroupCreateResultCallback? onGroupCreate}) = _$_ViewModelImpl;
 
   @override
   bool get loading;
@@ -215,7 +216,7 @@ abstract class __ViewModel implements _ViewModel {
   @override
   Iterable<Group>? get groups;
   @override
-  NewGroupReturnCallback? get onNewGroup;
+  GroupCreateResultCallback? get onGroupCreate;
   @override
   @JsonKey(ignore: true)
   _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>

@@ -9,9 +9,7 @@ ThemeMode themeModeSelector(RootState state) => state.themeMode;
 Locale? localeSelector(RootState state) {
   final locale = state.locale;
 
-  if (locale == null) {
-    return null;
-  }
+  if (locale == null) return null;
 
   return Locale.fromSubtags(
     languageCode: locale.languageCode,
