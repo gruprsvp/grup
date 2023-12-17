@@ -34,12 +34,24 @@ class GroupEvents extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    // TODO events list
+    final topWidget = schedules?.isNotEmpty ?? false
+        ? ListView.builder(
+            itemCount: schedules?.length,
+            itemBuilder: (context, index) {
+              final schedule = schedules!.elementAt(index);
+              return ListTile(
+                  title: Text(schedule.displayName),
+                  subtitle: Text(schedule.recurrenceRule.toString()),
+                  onTap: () {});
+            },
+          )
+        : Image.asset('assets/images/hare.webp');
+
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Column(
         children: [
-          Expanded(child: Image.asset('assets/images/hare.webp')),
+          Expanded(child: topWidget),
           FilledButton(
             onPressed: () => _createNewEvent(context),
             child: Text(l10n.createNewEvent),

@@ -1,3 +1,4 @@
+import 'package:parousia/actions/actions.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/state/state.dart';
@@ -6,10 +7,24 @@ import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 
 createSchedulesEpics(SchedulesRepository schedules) => combineEpics<RootState>([
+      _createRetrieveGroupSchedulesEpic(schedules),
       _createCreateOneScheduleEpic(schedules),
     ]);
 
-// TODO load schedules when selecting a group
+/// Fetch all schedules for a group
+Epic<RootState> _createRetrieveGroupSchedulesEpic(
+    SchedulesRepository schedules) {
+  return (Stream<dynamic> actions, EpicStore<RootState> store) =>
+      actions.whereType<GroupDetailsOpenAction>().asyncMap(
+            (action) => schedules
+                .getGroupSchedules(int.parse(action.groupId))
+                .then<dynamic>((schedules) =>
+                    SuccessRetrieveAll(schedules.toList(growable: false)))
+                // TODO It seems this is not implemented in redux_entity
+                // SuccessRetrieveMany<Schedule>(schedules.toList()))
+                .catchError((error) => FailRetrieveMany<Schedule>([], error)),
+          );
+}
 
 Epic<RootState> _createCreateOneScheduleEpic(SchedulesRepository schedules) {
   return (Stream<dynamic> actions, EpicStore<RootState> store) => actions

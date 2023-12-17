@@ -25,6 +25,7 @@ class GroupEventsContainer extends StatelessWidget {
       converter: (store) => _ViewModel.fromStore(store, groupId),
       builder: (context, vm) => GroupEvents(
         group: vm.group,
+        schedules: vm.schedules,
         onCreate: vm.onScheduleCreate,
       ),
     );
@@ -46,6 +47,7 @@ class _ViewModel with _$ViewModel {
     return _ViewModel(
       group: group,
       schedules: store.state.schedules.entities.values
+          // TODO Should have a better data model to represent relationships
           .where((schedule) => schedule.groupId == group?.id)
           .toList(),
       loading: store.state.groups.creating ||

@@ -1,16 +1,9 @@
 import 'package:flutter/foundation.dart';
-import 'package:parousia/models/models.dart';
 
+/// Dispatched when a group is selected and the group details screen should be opened.
 @immutable
-class GroupsLoadedAction {
-  const GroupsLoadedAction(this.groups);
+class GroupDetailsOpenAction {
+  const GroupDetailsOpenAction(this.groupId);
 
-  final List<Group> groups;
-}
-
-@immutable
-class GroupsLoadErrorAction {
-  const GroupsLoadErrorAction(this.error);
-
-  final Object error;
+  final String groupId;
 }

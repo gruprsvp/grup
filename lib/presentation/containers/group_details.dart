@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:parousia/actions/actions.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/state/state.dart';
@@ -22,6 +23,7 @@ class GroupDetailsContainer extends StatelessWidget {
     return StoreConnector<RootState, _ViewModel>(
       distinct: true,
       converter: (store) => _ViewModel.fromStore(store, groupId),
+      onInit: (store) => store.dispatch(GroupDetailsOpenAction(groupId)),
       builder: (context, vm) => GroupDetailsScreen(
         loading: vm.loading,
         group: vm.group,
