@@ -5,6 +5,6 @@ export 'group_manage.dart';
 export 'home.dart';
 export 'locale.dart';
 export 'profile.dart';
-export 'schedule.dart';
+export 'schedule_create.dart';
 export 'select_contacts.dart';
 export 'settings.dart';

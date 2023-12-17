@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/presentation/containers/group_events.dart';
 import 'package:parousia/presentation/presentation.dart';
 
 class GroupManageScreen extends StatelessWidget {
@@ -41,7 +42,7 @@ class GroupManageScreen extends StatelessWidget {
           children: [
             const GroupMembers(),
             group != null
-                ? GroupEvents(group: group!)
+                ? GroupEventsContainer(groupId: group!.id.toString())
                 : Center(child: Text(l10n.loading)),
             group != null
                 ? GroupFormContainer(groupId: group!.id.toString())

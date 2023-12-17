@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
 import 'package:parousia/models/models.dart';
 import 'package:rrule/rrule.dart';
@@ -9,10 +10,12 @@ import 'form_builder_recurrence_rule.dart';
 
 class ScheduleForm extends StatefulWidget {
   final Schedule? schedule;
+  final Function(Schedule)? onChanged;
 
   const ScheduleForm({
     super.key,
     this.schedule,
+    this.onChanged,
   });
 
   @override
@@ -28,27 +31,45 @@ class _ScheduleFormState extends State<ScheduleForm> {
 
     return FormBuilder(
       key: _formKey,
-      onChanged: () {},
+      onChanged: () {
+        if (_formKey.currentState?.validate() ?? false) {
+          final displayName =
+              _formKey.currentState?.fields['displayName']?.value as String;
+          final startDate =
+              _formKey.currentState?.fields['startDate']?.value as DateTime;
+          final recurrenceRule = _formKey
+              .currentState?.fields['recurrenceRule']?.value as RecurrenceRule;
+
+          widget.onChanged?.call(Schedule(
+            id: 0,
+            groupId: 0,
+            displayName: displayName,
+            startDate: startDate,
+            recurrenceRule: recurrenceRule,
+          ));
+        }
+      },
       child: Column(
         children: [
           FormBuilderTextField(
-            name: 'name',
+            name: 'displayName',
             autocorrect: true,
+            validator: FormBuilderValidators.required(),
             decoration: InputDecoration(
               labelText: l10n.eventName,
             ),
           ),
           FormBuilderDateTimePicker(
-            name: 'datetime',
+            name: 'startDate',
             inputType: InputType.both,
             decoration: InputDecoration(
               labelText: l10n.eventDatetime,
             ),
-            initialTime: TimeOfDay(hour: 8, minute: 0),
+            validator: FormBuilderValidators.required(),
             format: DateFormat.yMMMMEEEEd().add_Hm(),
             initialDate: DateTime.now(),
             firstDate: DateTime.now(),
-            lastDate: DateTime.now().add(const Duration(days: 365)),
+            lastDate: DateTime(9999),
           ),
           // TODO: Move this outside
           FutureBuilder(
@@ -58,8 +79,8 @@ class _ScheduleFormState extends State<ScheduleForm> {
                     name: 'recurrenceRule',
                     decoration: InputDecoration(
                       labelText: l10n.recurrenceRule,
-                      suffixIcon: const Icon(Icons.event_repeat),
                     ),
+                    validator: FormBuilderValidators.required(),
                     rruleL10n: snapshot.data as RruleL10n,
                   )
                 : const CircularProgressIndicator(),

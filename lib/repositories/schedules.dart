@@ -13,11 +13,19 @@ class SchedulesRepository {
         .insert({
           'group_id': schedule.groupId,
           'display_name': schedule.displayName,
+          'start_date': schedule.startDate.toIso8601String(),
           'recurrence_rule': schedule.recurrenceRule,
         })
         .select()
         .single()
         .withConverter((data) => Schedule.fromJson(data));
+  }
+
+  Future<Iterable<Schedule>> getGroupSchedules(int groupId) async {
+    return _table()
+        .select<PostgrestList>()
+        .eq('group_id', groupId)
+        .withConverter((data) => data.map((s) => Schedule.fromJson(s)));
   }
 
   PostgrestQueryBuilder<void> _table() =>

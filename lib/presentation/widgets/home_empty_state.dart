@@ -13,13 +13,12 @@ class HomeEmptyState extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Text(
             l10n.onboardingMessage,
             style: theme.textTheme.bodyLarge,
           ),
-          Image.asset('assets/images/wolf.webp', height: 320),
+          Expanded(child: Image.asset('assets/images/wolf.webp')),
         ],
       ),
     );

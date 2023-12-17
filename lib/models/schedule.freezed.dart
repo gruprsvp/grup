@@ -23,6 +23,7 @@ mixin _$Schedule {
   int get id => throw _privateConstructorUsedError;
   int get groupId => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
+  DateTime get startDate => throw _privateConstructorUsedError;
   RecurrenceRule get recurrenceRule => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
@@ -42,6 +43,7 @@ abstract class $ScheduleCopyWith<$Res> {
       {int id,
       int groupId,
       String displayName,
+      DateTime startDate,
       RecurrenceRule recurrenceRule,
       DateTime? createdAt,
       DateTime? updatedAt});
@@ -63,6 +65,7 @@ class _$ScheduleCopyWithImpl<$Res, $Val extends Schedule>
     Object? id = null,
     Object? groupId = null,
     Object? displayName = null,
+    Object? startDate = null,
     Object? recurrenceRule = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -80,6 +83,10 @@ class _$ScheduleCopyWithImpl<$Res, $Val extends Schedule>
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
               as String,
+      startDate: null == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       recurrenceRule: null == recurrenceRule
           ? _value.recurrenceRule
           : recurrenceRule // ignore: cast_nullable_to_non_nullable
@@ -108,6 +115,7 @@ abstract class _$$ScheduleImplCopyWith<$Res>
       {int id,
       int groupId,
       String displayName,
+      DateTime startDate,
       RecurrenceRule recurrenceRule,
       DateTime? createdAt,
       DateTime? updatedAt});
@@ -127,6 +135,7 @@ class __$$ScheduleImplCopyWithImpl<$Res>
     Object? id = null,
     Object? groupId = null,
     Object? displayName = null,
+    Object? startDate = null,
     Object? recurrenceRule = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -144,6 +153,10 @@ class __$$ScheduleImplCopyWithImpl<$Res>
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
               as String,
+      startDate: null == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       recurrenceRule: null == recurrenceRule
           ? _value.recurrenceRule
           : recurrenceRule // ignore: cast_nullable_to_non_nullable
@@ -168,6 +181,7 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
       {required this.id,
       required this.groupId,
       required this.displayName,
+      required this.startDate,
       required this.recurrenceRule,
       this.createdAt,
       this.updatedAt});
@@ -182,6 +196,8 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
   @override
   final String displayName;
   @override
+  final DateTime startDate;
+  @override
   final RecurrenceRule recurrenceRule;
   @override
   final DateTime? createdAt;
@@ -190,7 +206,7 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Schedule(id: $id, groupId: $groupId, displayName: $displayName, recurrenceRule: $recurrenceRule, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Schedule(id: $id, groupId: $groupId, displayName: $displayName, startDate: $startDate, recurrenceRule: $recurrenceRule, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -201,6 +217,7 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('groupId', groupId))
       ..add(DiagnosticsProperty('displayName', displayName))
+      ..add(DiagnosticsProperty('startDate', startDate))
       ..add(DiagnosticsProperty('recurrenceRule', recurrenceRule))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('updatedAt', updatedAt));
@@ -215,6 +232,8 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
             (identical(other.groupId, groupId) || other.groupId == groupId) &&
             (identical(other.displayName, displayName) ||
                 other.displayName == displayName) &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
             (identical(other.recurrenceRule, recurrenceRule) ||
                 other.recurrenceRule == recurrenceRule) &&
             (identical(other.createdAt, createdAt) ||
@@ -226,7 +245,7 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(runtimeType, id, groupId, displayName,
-      recurrenceRule, createdAt, updatedAt);
+      startDate, recurrenceRule, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -247,6 +266,7 @@ abstract class _Schedule implements Schedule {
       {required final int id,
       required final int groupId,
       required final String displayName,
+      required final DateTime startDate,
       required final RecurrenceRule recurrenceRule,
       final DateTime? createdAt,
       final DateTime? updatedAt}) = _$ScheduleImpl;
@@ -260,6 +280,8 @@ abstract class _Schedule implements Schedule {
   int get groupId;
   @override
   String get displayName;
+  @override
+  DateTime get startDate;
   @override
   RecurrenceRule get recurrenceRule;
   @override

@@ -300,6 +300,7 @@ void main() {
             id: 0,
             groupId: group.id,
             displayName: 'A schedule',
+            startDate: DateTime.now(),
             recurrenceRule: RecurrenceRule(
               frequency: Frequency.daily,
               interval: 1,
@@ -308,6 +309,43 @@ void main() {
         );
 
         expect(schedule, isNotNull);
+      }),
+    );
+
+    test(
+      'group members can get all schedules for a group',
+      () => runWithTemporaryUser((supabase, user) async {
+        final groupsRepository = GroupsRepository(supabase: supabase);
+        final membersRepository = MembersRepository(supabase: supabase);
+        final schedulesRepository = SchedulesRepository(supabase: supabase);
+        final group = await groupsRepository.createGroup(Fake.group());
+
+        final recurrenceRules = [
+          CommonRecurrenceRules.daily,
+          CommonRecurrenceRules.weekly,
+          CommonRecurrenceRules.monthly
+        ];
+
+        await Future.wait(recurrenceRules
+            .map((r) => Schedule(
+                id: 0,
+                groupId: group.id,
+                displayName: r.toString(),
+                startDate: DateTime.now(),
+                recurrenceRule: r))
+            .map((s) => schedulesRepository.createSchedule(s)));
+
+        final schedules = await schedulesRepository.getGroupSchedules(group.id);
+        expect(schedules, hasLength(recurrenceRules.length));
+
+        await runWithTemporaryUser((supabase2, user2) async {
+          await membersRepository.addMemberToGroup(group.id,
+              profileId: user2.user!.id);
+          final schedulesRepository2 = SchedulesRepository(supabase: supabase2);
+          final schedules2 =
+              await schedulesRepository2.getGroupSchedules(group.id);
+          expect(schedules2, equals(schedules));
+        });
       }),
     );
   });

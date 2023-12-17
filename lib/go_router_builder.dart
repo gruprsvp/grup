@@ -17,7 +17,7 @@ part 'go_router_builder.g.dart';
       routes: [
         TypedGoRoute<GroupManageRoute>(path: 'manage'),
         // TODO Should be at root level?
-        TypedGoRoute<GroupScheduleRoute>(path: 'schedule'),
+        TypedGoRoute<GroupScheduleCreateRoute>(path: 'schedule'),
       ],
     ),
     TypedGoRoute<SettingsRoute>(
@@ -82,7 +82,8 @@ class GroupDetailsRoute extends GoRouteData with AuthenticationGuard {
 
 @immutable
 class GroupManageRoute extends GoRouteData with AuthenticationGuard {
-  // TODO Should be for admins only
+  // TODO Should be for admins only, can this be checked here?
+  //      Or should it be checked in the container?
 
   final String groupId;
 
@@ -94,14 +95,15 @@ class GroupManageRoute extends GoRouteData with AuthenticationGuard {
 }
 
 @immutable
-class GroupScheduleRoute extends GoRouteData with AuthenticationGuard {
+class GroupScheduleCreateRoute extends GoRouteData with AuthenticationGuard {
+  // TODO Does it actually need the group ID here?
   final String groupId;
 
-  const GroupScheduleRoute({required this.groupId});
+  const GroupScheduleCreateRoute({required this.groupId});
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const ScheduleScreen();
+      const ScheduleCreateScreen();
 }
 
 @immutable

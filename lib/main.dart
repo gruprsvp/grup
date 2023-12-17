@@ -27,7 +27,9 @@ Future<void> main() async {
 
   // TODO(borgoat): support more configuration files
   final supabaseConfigFile =
-      await rootBundle.loadString('supabase/config/supabase_dev.json');
+      await rootBundle.loadString('supabase/config/localhost.json');
+  // await rootBundle.loadString('supabase/config/supabase_dev.json');
+
   final supabaseConfig = SupabaseConfig.fromString(supabaseConfigFile);
 
   final supabasePromise = Supabase.initialize(
@@ -70,12 +72,14 @@ Future<Store<RootState>> _initStore() async {
 
   final groupsRepository = GroupsRepository(supabase: supabase);
   final profilesRepository = ProfilesRepository(supabase: supabase);
+  final schedulesRepository = SchedulesRepository(supabase: supabase);
   final storageRepository = StorageRepository(supabase: supabase);
 
   final epics = combineEpics<RootState>([
     createRouterEpics(router),
     createGroupsEpics(groupsRepository),
     createProfileEpics(profilesRepository, storageRepository),
+    createSchedulesEpics(schedulesRepository),
   ]);
 
   final initialState = localPersistedState ?? RootState.initialState();

@@ -107,10 +107,13 @@ create table schedules
     group_id        bigint                                                        not null references groups on delete cascade,
 
     display_name    text                                                          not null,
+    start_date      timestamp with time zone                                      not null,
     recurrence_rule rfc7265                                                       not null
+    -- TODO duration, end_date, timezone, etc
 );
 comment on table schedules is 'Schedules are a series of events within a group.';
 comment on column schedules.display_name is 'A name for the schedule';
+comment on column schedules.start_date is 'The first occurrence of the schedule.';
 comment on column schedules.recurrence_rule is 'The rrule that defines when events are scheduled.';
 
 create table default_replies

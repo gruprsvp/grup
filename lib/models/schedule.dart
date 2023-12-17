@@ -12,6 +12,7 @@ sealed class Schedule with _$Schedule {
     required int id,
     required int groupId,
     required String displayName,
+    required DateTime startDate,
     required RecurrenceRule recurrenceRule,
     DateTime? createdAt,
     DateTime? updatedAt,
