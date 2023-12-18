@@ -1,16 +1,14 @@
-import 'dart:math';
-
 import 'package:parousia/models/models.dart';
 import 'package:parousia/reducers/remote_entities.dart';
+import 'package:parousia/util/util.dart';
 import 'package:redux_entity/redux_entity.dart';
 import 'package:test/test.dart';
-import 'package:uuid/uuid.dart';
 
 import 'remote_entity_reducer_tester.dart';
 
 void main() {
   group(profilesReducer, () {
-    generator() => Profile(id: const Uuid().v4(), displayName: 'profile');
+    generator() => Fake.profile();
 
     final tester = RemoteEntityReducerTester<
         RemoteEntityReducer<RemoteEntityState<Profile>, Profile>,
@@ -22,7 +20,7 @@ void main() {
   });
 
   group(groupsReducer, () {
-    generator() => Group(id: Random().nextInt(256), displayName: 'group');
+    generator() => Fake.group();
 
     final tester = RemoteEntityReducerTester<
         RemoteEntityReducer<RemoteEntityState<Group>, Group>,
@@ -31,6 +29,18 @@ void main() {
 
     return tester.testAll(
         groupsReducer, generator, const RemoteEntityState<Group>());
+  });
+
+  group(schedulesReducer, () {
+    generator() => Fake.schedule();
+
+    final tester = RemoteEntityReducerTester<
+        RemoteEntityReducer<RemoteEntityState<Schedule>, Schedule>,
+        RemoteEntityState<Schedule>,
+        Schedule>();
+
+    return tester.testAll(
+        schedulesReducer, generator, const RemoteEntityState<Schedule>());
   });
 
   // TODO tests for nested entities

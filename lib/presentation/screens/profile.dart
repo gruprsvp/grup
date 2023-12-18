@@ -56,6 +56,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     return null;
   }
 
+  // TODO: move to a widget and make it reusable
   _changeImage() async {
     final source = await showAdaptiveDialog<ImageSource>(
       context: context,

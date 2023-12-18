@@ -26,6 +26,7 @@ mixin _$Group {
   String? get picture => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
+  List<Member>? get members => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -43,7 +44,8 @@ abstract class $GroupCopyWith<$Res> {
       String? description,
       String? picture,
       DateTime? createdAt,
-      DateTime? updatedAt});
+      DateTime? updatedAt,
+      List<Member>? members});
 }
 
 /// @nodoc
@@ -65,6 +67,7 @@ class _$GroupCopyWithImpl<$Res, $Val extends Group>
     Object? picture = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? members = freezed,
   }) {
     return _then(_value.copyWith(
       id: null == id
@@ -91,6 +94,10 @@ class _$GroupCopyWithImpl<$Res, $Val extends Group>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      members: freezed == members
+          ? _value.members
+          : members // ignore: cast_nullable_to_non_nullable
+              as List<Member>?,
     ) as $Val);
   }
 }
@@ -108,7 +115,8 @@ abstract class _$$GroupImplCopyWith<$Res> implements $GroupCopyWith<$Res> {
       String? description,
       String? picture,
       DateTime? createdAt,
-      DateTime? updatedAt});
+      DateTime? updatedAt,
+      List<Member>? members});
 }
 
 /// @nodoc
@@ -128,6 +136,7 @@ class __$$GroupImplCopyWithImpl<$Res>
     Object? picture = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
+    Object? members = freezed,
   }) {
     return _then(_$GroupImpl(
       id: null == id
@@ -154,6 +163,10 @@ class __$$GroupImplCopyWithImpl<$Res>
           ? _value.updatedAt
           : updatedAt // ignore: cast_nullable_to_non_nullable
               as DateTime?,
+      members: freezed == members
+          ? _value._members
+          : members // ignore: cast_nullable_to_non_nullable
+              as List<Member>?,
     ));
   }
 }
@@ -168,7 +181,9 @@ class _$GroupImpl with DiagnosticableTreeMixin implements _Group {
       this.description,
       this.picture,
       this.createdAt,
-      this.updatedAt});
+      this.updatedAt,
+      final List<Member>? members})
+      : _members = members;
 
   factory _$GroupImpl.fromJson(Map<String, dynamic> json) =>
       _$$GroupImplFromJson(json);
@@ -185,10 +200,19 @@ class _$GroupImpl with DiagnosticableTreeMixin implements _Group {
   final DateTime? createdAt;
   @override
   final DateTime? updatedAt;
+  final List<Member>? _members;
+  @override
+  List<Member>? get members {
+    final value = _members;
+    if (value == null) return null;
+    if (_members is EqualUnmodifiableListView) return _members;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(value);
+  }
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Group(id: $id, displayName: $displayName, description: $description, picture: $picture, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Group(id: $id, displayName: $displayName, description: $description, picture: $picture, createdAt: $createdAt, updatedAt: $updatedAt, members: $members)';
   }
 
   @override
@@ -201,7 +225,8 @@ class _$GroupImpl with DiagnosticableTreeMixin implements _Group {
       ..add(DiagnosticsProperty('description', description))
       ..add(DiagnosticsProperty('picture', picture))
       ..add(DiagnosticsProperty('createdAt', createdAt))
-      ..add(DiagnosticsProperty('updatedAt', updatedAt));
+      ..add(DiagnosticsProperty('updatedAt', updatedAt))
+      ..add(DiagnosticsProperty('members', members));
   }
 
   @override
@@ -218,13 +243,21 @@ class _$GroupImpl with DiagnosticableTreeMixin implements _Group {
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
-                other.updatedAt == updatedAt));
+                other.updatedAt == updatedAt) &&
+            const DeepCollectionEquality().equals(other._members, _members));
   }
 
   @JsonKey(ignore: true)
   @override
   int get hashCode => Object.hash(
-      runtimeType, id, displayName, description, picture, createdAt, updatedAt);
+      runtimeType,
+      id,
+      displayName,
+      description,
+      picture,
+      createdAt,
+      updatedAt,
+      const DeepCollectionEquality().hash(_members));
 
   @JsonKey(ignore: true)
   @override
@@ -247,7 +280,8 @@ abstract class _Group implements Group {
       final String? description,
       final String? picture,
       final DateTime? createdAt,
-      final DateTime? updatedAt}) = _$GroupImpl;
+      final DateTime? updatedAt,
+      final List<Member>? members}) = _$GroupImpl;
 
   factory _Group.fromJson(Map<String, dynamic> json) = _$GroupImpl.fromJson;
 
@@ -263,6 +297,8 @@ abstract class _Group implements Group {
   DateTime? get createdAt;
   @override
   DateTime? get updatedAt;
+  @override
+  List<Member>? get members;
   @override
   @JsonKey(ignore: true)
   _$$GroupImplCopyWith<_$GroupImpl> get copyWith =>

@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:parousia/models/models.dart';
 
 part 'group.freezed.dart';
 part 'group.g.dart';
@@ -14,6 +15,7 @@ sealed class Group with _$Group {
     String? picture,
     DateTime? createdAt,
     DateTime? updatedAt,
+    List<Member>? members,
   }) = _Group;
 
   factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);

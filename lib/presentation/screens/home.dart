@@ -33,6 +33,8 @@ class HomeScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     final nothingToShow = groups == null || groups!.isEmpty;
+    final innerBody =
+        nothingToShow ? const HomeEmptyState() : GroupsList(groups: groups);
 
     return Scaffold(
       appBar: AppBar(
@@ -50,7 +52,10 @@ class HomeScreen extends StatelessWidget {
           ),
         ],
       ),
-      body: nothingToShow ? const HomeEmptyState() : GroupsList(groups: groups),
+      body: RefreshIndicator(
+        onRefresh: () => Future.delayed(Duration(seconds: 5)), // TODO
+        child: innerBody,
+      ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => GroupCreateRoute()
             .push<GroupCreateResult>(context)
