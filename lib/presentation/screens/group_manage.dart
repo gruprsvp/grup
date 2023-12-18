@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/containers/group_events.dart';
 import 'package:parousia/presentation/presentation.dart';
@@ -26,15 +27,15 @@ class GroupManageScreen extends StatelessWidget {
           bottom: TabBar(tabs: [
             Tab(
               text: l10n.members,
-              icon: const Icon(Icons.people),
+              icon: const FaIcon(FontAwesomeIcons.peopleGroup),
             ),
             Tab(
               text: l10n.events,
-              icon: const Icon(Icons.event),
+              icon: const FaIcon(FontAwesomeIcons.calendarDay),
             ),
             Tab(
               text: l10n.details,
-              icon: const Icon(Icons.badge_outlined),
+              icon: const FaIcon(FontAwesomeIcons.quoteRight),
             ),
           ]),
         ),

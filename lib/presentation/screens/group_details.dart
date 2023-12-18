@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 
@@ -24,7 +25,7 @@ class GroupDetailsScreen extends StatelessWidget {
           IconButton(
             onPressed: () =>
                 GroupManageRoute(groupId: group!.id.toString()).go(context),
-            icon: const Icon(Icons.edit),
+            icon: const FaIcon(FontAwesomeIcons.solidPenToSquare),
           )
         ],
       ),
