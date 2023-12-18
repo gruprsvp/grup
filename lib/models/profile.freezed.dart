@@ -188,7 +188,7 @@ class _$ProfileImpl with DiagnosticableTreeMixin implements _Profile {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ProfileImpl &&

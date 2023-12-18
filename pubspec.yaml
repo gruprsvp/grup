@@ -1,5 +1,5 @@
 name: parousia
-description: A new Flutter project.
+description: The calendar app for humans.
 # The following line prevents the package from being accidentally published to
 # pub.dev using `flutter pub publish`. This is preferred for private packages.
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
@@ -86,6 +86,7 @@ dependencies:
   uuid: ^4.1.0
   mime: ^1.0.4
   dynamic_color: ^1.6.8
+  font_awesome_flutter: ^10.6.0
 
   # Widgetbook
   widgetbook_annotation: ^3.1.0

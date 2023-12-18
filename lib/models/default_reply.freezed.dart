@@ -225,7 +225,7 @@ class _$DefaultReplyImpl with DiagnosticableTreeMixin implements _DefaultReply {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DefaultReplyImpl &&

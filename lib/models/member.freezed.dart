@@ -222,7 +222,7 @@ class _$MemberImpl with DiagnosticableTreeMixin implements _Member {
   }
 
   @override
-  bool operator ==(dynamic other) {
+  bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$MemberImpl &&

@@ -10,7 +10,6 @@ Epic<RootState> createRouterEpics(GoRouter router) => combineEpics<RootState>([
       // TODO(borgoat): create epics and actions for other router events
     ]);
 
-// Convert to object oriented epic
 Epic<RootState> _createRouterPushEpic(GoRouter router) {
   return (Stream<dynamic> actions, EpicStore<RootState> store) => actions
       .whereType<NavigatePushAction>()
