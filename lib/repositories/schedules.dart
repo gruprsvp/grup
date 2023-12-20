@@ -25,7 +25,7 @@ class SchedulesRepository {
     return _table()
         .select<PostgrestList>()
         .eq('group_id', groupId)
-        .withConverter((data) => data.map((s) => Schedule.fromJson(s)));
+        .withConverter((data) => data.map(Schedule.fromJson));
   }
 
   PostgrestQueryBuilder<void> _table() =>

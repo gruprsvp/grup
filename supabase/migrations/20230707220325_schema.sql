@@ -145,9 +145,11 @@ create table replies
 
     unique (member_id, schedule_id, event_date)
 );
+create index replies_event_date on replies (event_date);
 comment on table replies is 'Override the default replies set per schedule/profile.';
 comment on column replies.member_id is 'The member (either with a related profile or not) that overrides their default reply.';
 comment on column replies.event_date is 'Defines the actual occurrence for the override reply.';
+comment on index replies_event_date is 'Index for replies, to find by event_date.';
 
 create extension if not exists moddatetime schema extensions;
 

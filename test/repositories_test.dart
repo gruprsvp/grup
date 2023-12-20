@@ -349,4 +349,55 @@ void main() {
       }),
     );
   });
+
+  group('replies', () {
+    test(
+      'users can create replies and get them per day',
+      () => runWithTemporaryUser((supabase, user) async {
+        final groupsRepository = GroupsRepository(supabase: supabase);
+        final membersRepository = MembersRepository(supabase: supabase);
+        final schedulesRepository = SchedulesRepository(supabase: supabase);
+        final repliesRepository = RepliesRepository(supabase: supabase);
+        final group = await groupsRepository.createGroup(Fake.group());
+
+        final member = await membersRepository.addMemberToGroup(group.id,
+            displayName: 'Member invited with code');
+
+        final startDate = DateTime.now().toUtc();
+        final recurrenceRule = RecurrenceRule(
+          frequency: Frequency.daily,
+          interval: 1,
+        );
+
+        final schedule = await schedulesRepository.createSchedule(
+          Schedule(
+            id: 0,
+            groupId: group.id,
+            displayName: 'A schedule',
+            startDate: startDate,
+            recurrenceRule: recurrenceRule,
+          ),
+        );
+
+        await Future.wait(
+          recurrenceRule.getInstances(start: startDate).take(5).map(
+                (s) => repliesRepository.createReply(
+                  Reply(
+                    id: 0,
+                    scheduleId: schedule.id,
+                    memberId: member.id,
+                    eventDate: s,
+                    selectedOption: ReplyOptions.yes,
+                  ),
+                ),
+              ),
+        );
+
+        final replies = await repliesRepository.getRepliesForDay(
+          startDate.add(const Duration(days: 1)),
+        );
+        expect(replies, hasLength(1));
+      }),
+    );
+  });
 }
