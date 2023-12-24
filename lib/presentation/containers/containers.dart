@@ -1,7 +1,9 @@
+export 'date_fab.dart';
 export 'group_details.dart';
 export 'group_form.dart';
 export 'group_manage.dart';
 export 'home.dart';
 export 'locale.dart';
 export 'profile.dart';
+export 'schedules_list.dart';
 export 'theme_switcher.dart';

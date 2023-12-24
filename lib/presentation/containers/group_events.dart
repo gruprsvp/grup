@@ -38,7 +38,7 @@ class _ViewModel with _$ViewModel {
     required bool loading,
     Group? group,
     Iterable<Schedule>? schedules,
-    OnScheduleCreateCallback? onScheduleCreate,
+    ValueSetter<Schedule>? onScheduleCreate,
   }) = __ViewModel;
 
   static _ViewModel fromStore(Store<RootState> store, String groupId) {

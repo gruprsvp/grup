@@ -350,6 +350,52 @@ void main() {
     );
   });
 
+  group('default replies', () {
+    test(
+      'user can create default replies and get them',
+      () => runWithTemporaryUser((supabase, user) async {
+        final groupsRepository = GroupsRepository(supabase: supabase);
+        final membersRepository = MembersRepository(supabase: supabase);
+        final schedulesRepository = SchedulesRepository(supabase: supabase);
+        final defaultRepliesRepository =
+            DefaultRepliesRepository(supabase: supabase);
+
+        final group = await groupsRepository.createGroup(Fake.group());
+        final member = await membersRepository.addMemberToGroup(group.id,
+            displayName: 'Member invited with code');
+
+        final startDate = DateTime.now().toUtc();
+        final recurrenceRule = RecurrenceRule(
+          frequency: Frequency.daily,
+          interval: 1,
+        );
+
+        final schedule = await schedulesRepository.createSchedule(
+          Schedule(
+            id: 0,
+            groupId: group.id,
+            displayName: 'A schedule',
+            startDate: startDate,
+            recurrenceRule: recurrenceRule,
+          ),
+        );
+
+        final defaultReply = await defaultRepliesRepository.createDefaultReply(
+          DefaultReply(
+            id: 0,
+            scheduleId: schedule.id,
+            memberId: member.id,
+            selectedOption: ReplyOptions.yes,
+            recurrenceRule: recurrenceRule,
+          ),
+        );
+
+        final list = await defaultRepliesRepository.getDefaultReplies(group.id);
+        expect(list, hasLength(1));
+      }),
+    );
+  });
+
   group('replies', () {
     test(
       'users can create replies and get them per day',
@@ -394,6 +440,7 @@ void main() {
         );
 
         final replies = await repliesRepository.getRepliesForDay(
+          group.id,
           startDate.add(const Duration(days: 1)),
         );
         expect(replies, hasLength(1));

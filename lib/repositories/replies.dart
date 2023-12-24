@@ -1,4 +1,3 @@
-import 'package:intl/intl.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/util/util.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -9,16 +8,18 @@ class RepliesRepository {
   RepliesRepository({required this.supabase});
 
   final SupabaseClient supabase;
-  final DateFormat _dateFormat = DateFormat('yyyy-MM-dd');
 
-  Future<Iterable<Reply>> getRepliesForDay(DateTime day) async {
-    final dayRange = day.toUtc().getDayRange();
-    final start = _dateFormat.format(dayRange.start);
-    final end = _dateFormat.format(dayRange.end);
+  Future<Iterable<Reply>> getRepliesForDay(int groupId, DateTime day) async {
+    return getRepliesForDateRange(groupId, day.toUtc().getDayRange());
+  }
+
+  Future<Iterable<Reply>> getRepliesForDateRange(
+      int groupId, DateTimeRange dateRange) async {
     return _table()
-        .select<PostgrestList>()
-        .gte('event_date', dayRange.start)
-        .lt('event_date', dayRange.end)
+        .select<PostgrestList>('*,members!inner(*)')
+        .eq('members.group_id', groupId)
+        .gte('event_date', dateRange.start)
+        .lt('event_date', dateRange.end)
         .withConverter((data) => data.map(Reply.fromJson));
   }
 

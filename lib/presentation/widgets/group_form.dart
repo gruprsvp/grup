@@ -3,10 +3,8 @@ import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parousia/models/group.dart';
 
-typedef OnGroupSaveCallback = void Function(Group);
-
 class GroupForm extends StatefulWidget {
-  final OnGroupSaveCallback onSave;
+  final ValueSetter<Group> onSave;
   final Group? group;
 
   const GroupForm({

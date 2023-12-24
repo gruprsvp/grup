@@ -10,7 +10,7 @@ class ProfilePicture extends StatelessWidget {
     this.radius,
   });
 
-  final void Function()? onPressed;
+  final VoidCallback? onPressed;
   final ImageProvider? image;
   final String? name;
   final double? radius;

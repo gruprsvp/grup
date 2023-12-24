@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:parousia/models/models.dart';
 import 'package:parousia/state/state.dart';
 import 'package:parousia/util/util.dart';
 import 'package:rrule/rrule.dart';
@@ -30,3 +31,42 @@ Future<RruleL10n> rruleL10nSelector(RootState state) {
 /// Provide the begin and end of day for the selected date.
 DateTimeRange selectedDateRangeSelector(RootState state) =>
     state.selectedDate.getDayRange();
+
+// TODO This shit should be tested
+Iterable<ScheduleInstance>? selectSchedulesAndReplies(
+    RootState state, int selectedGroupId) {
+  final range = state.selectedDate.getDayRange();
+  final group = state.groups.entities[selectedGroupId.toString()];
+
+  if (group == null) return null;
+
+  final schedules = state.schedules.entities.values.where(
+      (s) => s.groupId == selectedGroupId && s.startDate.isBefore(range.start));
+  final scheduleIds = schedules.map((s) => s.id);
+  final defaultReplies = state.defaultReplies.entities.values
+      .where((r) => scheduleIds.contains(r.scheduleId));
+  final replies = state.replies.entities.values.where(
+      (r) => scheduleIds.contains(r.scheduleId) && range.contains(r.eventDate));
+
+  return schedules.expand((s) {
+    final instances = s.recurrenceRule
+        .getInstances(
+            start: s.startDate,
+            after: range.start,
+            before: range.end,
+            includeAfter: true,
+            includeBefore: true)
+        .map((eventDate) {
+      final repliesForEvent = replies
+          .where((r) => r.scheduleId == s.id && r.eventDate == eventDate);
+
+      return ScheduleInstance(
+        scheduleId: s.id,
+        displayName: s.displayName,
+        eventDate: eventDate,
+      );
+    });
+
+    return instances;
+  });
+}

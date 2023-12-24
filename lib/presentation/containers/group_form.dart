@@ -35,7 +35,7 @@ class GroupFormContainer extends StatelessWidget {
 class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required bool loading,
-    required OnGroupSaveCallback onSave,
+    required ValueSetter<Group> onSave,
     Group? group,
   }) = __ViewModel;
 

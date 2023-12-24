@@ -3,7 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class LocaleScreen extends StatelessWidget {
   final Locale? selectedLocale;
-  final void Function(Locale?) changeLocale;
+  final ValueChanged<Locale?> onLocaleChanged;
 
   // TODO replace with something more robust
   // https://pub.dev/packages/flutter_localized_locales
@@ -18,7 +18,7 @@ class LocaleScreen extends StatelessWidget {
   const LocaleScreen({
     super.key,
     this.selectedLocale,
-    required this.changeLocale,
+    required this.onLocaleChanged,
   });
 
   @override
@@ -30,7 +30,7 @@ class LocaleScreen extends StatelessWidget {
         title: Text(localeNames[l.languageCode] ?? l.languageCode),
         groupValue: selectedLocale,
         value: l,
-        onChanged: (l) => changeLocale(l!),
+        onChanged: (l) => onLocaleChanged(l!),
       ),
     );
 
@@ -44,7 +44,7 @@ class LocaleScreen extends StatelessWidget {
             title: Text(l10n.systemLanguage),
             groupValue: selectedLocale,
             value: null,
-            onChanged: (l) => changeLocale(null),
+            onChanged: (l) => onLocaleChanged(null),
           ),
           ...radioButtons,
         ],

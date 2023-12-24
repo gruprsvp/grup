@@ -4,13 +4,11 @@ import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 
-typedef GroupCreateResultCallback = void Function(GroupCreateResult);
-
 class HomeScreen extends StatelessWidget {
   final Profile? profile;
   final Iterable<Group>? groups;
   final bool loading;
-  final GroupCreateResultCallback? onGroupCreate;
+  final ValueSetter<GroupCreateResult>? onGroupCreate;
 
   const HomeScreen({
     super.key,

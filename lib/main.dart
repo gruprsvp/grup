@@ -74,12 +74,16 @@ Future<Store<RootState>> _initStore() async {
   final profilesRepository = ProfilesRepository(supabase: supabase);
   final schedulesRepository = SchedulesRepository(supabase: supabase);
   final storageRepository = StorageRepository(supabase: supabase);
+  final defaultRepliesRepository = DefaultRepliesRepository(supabase: supabase);
+  final repliesRepository = RepliesRepository(supabase: supabase);
 
   final epics = combineEpics<RootState>([
     createRouterEpics(router),
     createGroupsEpics(groupsRepository),
     createProfileEpics(profilesRepository, storageRepository),
     createSchedulesEpics(schedulesRepository),
+    createDefaultRepliesEpics(defaultRepliesRepository),
+    createRepliesEpics(repliesRepository),
   ]);
 
   final initialState = localPersistedState ?? RootState.initialState();

@@ -6,3 +6,4 @@ export 'member.dart';
 export 'profile.dart';
 export 'reply.dart';
 export 'schedule.dart';
+export 'schedule_instance.dart';

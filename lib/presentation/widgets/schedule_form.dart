@@ -32,7 +32,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
     return FormBuilder(
       key: _formKey,
       onChanged: () {
-        if (_formKey.currentState?.validate() ?? false) {
+        if (_formKey.currentState?.validate(focusOnInvalid: false) ?? false) {
           final displayName =
               _formKey.currentState?.fields['displayName']?.value as String;
           final startDate =

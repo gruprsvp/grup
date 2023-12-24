@@ -16,6 +16,7 @@ class HomeContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector(
+      distinct: true,
       builder: (context, vm) => HomeScreen(
         profile: vm.profile,
         groups: vm.groups,
@@ -33,7 +34,7 @@ sealed class _ViewModel with _$ViewModel {
     required bool loading,
     Profile? profile,
     Iterable<Group>? groups,
-    GroupCreateResultCallback? onGroupCreate,
+    ValueSetter<GroupCreateResult>? onGroupCreate,
   }) = __ViewModel;
 
   static _ViewModel fromStore(Store<RootState> store) {

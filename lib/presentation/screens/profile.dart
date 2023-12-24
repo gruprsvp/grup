@@ -9,7 +9,7 @@ import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 
-typedef OnProfileSaveCallback = void Function(String? name, XFile? image);
+typedef OnProfileSaveCallback = ValueSetter<(String? name, XFile? image)>;
 
 class ProfileScreen extends StatefulWidget {
   final Profile? profile;
@@ -179,7 +179,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   });
                   _formKey.currentState!.save();
                   _nameFocusNode.unfocus();
-                  widget.onSave(_nameController.text.trim(), _tempImageFile);
+                  widget.onSave((_nameController.text.trim(), _tempImageFile));
                 }
               },
               label: Text(l10n.save),

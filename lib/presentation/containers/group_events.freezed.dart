@@ -19,7 +19,7 @@ mixin _$ViewModel {
   bool get loading => throw _privateConstructorUsedError;
   Group? get group => throw _privateConstructorUsedError;
   Iterable<Schedule>? get schedules => throw _privateConstructorUsedError;
-  OnScheduleCreateCallback? get onScheduleCreate =>
+  ValueSetter<Schedule>? get onScheduleCreate =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -37,7 +37,7 @@ abstract class _$ViewModelCopyWith<$Res> {
       {bool loading,
       Group? group,
       Iterable<Schedule>? schedules,
-      OnScheduleCreateCallback? onScheduleCreate});
+      ValueSetter<Schedule>? onScheduleCreate});
 
   $GroupCopyWith<$Res>? get group;
 }
@@ -76,7 +76,7 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
       onScheduleCreate: freezed == onScheduleCreate
           ? _value.onScheduleCreate
           : onScheduleCreate // ignore: cast_nullable_to_non_nullable
-              as OnScheduleCreateCallback?,
+              as ValueSetter<Schedule>?,
     ) as $Val);
   }
 
@@ -105,7 +105,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       {bool loading,
       Group? group,
       Iterable<Schedule>? schedules,
-      OnScheduleCreateCallback? onScheduleCreate});
+      ValueSetter<Schedule>? onScheduleCreate});
 
   @override
   $GroupCopyWith<$Res>? get group;
@@ -143,7 +143,7 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
       onScheduleCreate: freezed == onScheduleCreate
           ? _value.onScheduleCreate
           : onScheduleCreate // ignore: cast_nullable_to_non_nullable
-              as OnScheduleCreateCallback?,
+              as ValueSetter<Schedule>?,
     ));
   }
 }
@@ -164,7 +164,7 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   @override
   final Iterable<Schedule>? schedules;
   @override
-  final OnScheduleCreateCallback? onScheduleCreate;
+  final ValueSetter<Schedule>? onScheduleCreate;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -210,7 +210,7 @@ abstract class __ViewModel implements _ViewModel {
       {required final bool loading,
       final Group? group,
       final Iterable<Schedule>? schedules,
-      final OnScheduleCreateCallback? onScheduleCreate}) = _$_ViewModelImpl;
+      final ValueSetter<Schedule>? onScheduleCreate}) = _$_ViewModelImpl;
 
   @override
   bool get loading;
@@ -219,7 +219,7 @@ abstract class __ViewModel implements _ViewModel {
   @override
   Iterable<Schedule>? get schedules;
   @override
-  OnScheduleCreateCallback? get onScheduleCreate;
+  ValueSetter<Schedule>? get onScheduleCreate;
   @override
   @JsonKey(ignore: true)
   _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>

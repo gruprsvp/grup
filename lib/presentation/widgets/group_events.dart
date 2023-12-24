@@ -3,12 +3,10 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 
-typedef OnScheduleCreateCallback = void Function(Schedule schedule);
-
 class GroupEvents extends StatelessWidget {
   final Group? group; // TODO is this needed?
   final Iterable<Schedule>? schedules;
-  final OnScheduleCreateCallback? onCreate;
+  final ValueSetter<Schedule>? onCreate;
 
   const GroupEvents({
     super.key,

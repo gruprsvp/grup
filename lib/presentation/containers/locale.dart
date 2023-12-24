@@ -20,7 +20,7 @@ class LocaleContainer extends StatelessWidget {
       converter: _ViewModel.fromStore,
       builder: (context, vm) => LocaleScreen(
         selectedLocale: vm.locale,
-        changeLocale: vm.changeLocale,
+        onLocaleChanged: vm.changeLocale,
       ),
     );
   }
@@ -30,7 +30,7 @@ class LocaleContainer extends StatelessWidget {
 sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     Locale? locale,
-    required void Function(Locale?) changeLocale,
+    required ValueChanged<Locale?> changeLocale,
   }) = __ViewModel;
 
   factory _ViewModel.fromStore(Store<RootState> store) {

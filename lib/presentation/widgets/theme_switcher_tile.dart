@@ -4,7 +4,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 /// A ListTile that shows the current theme mode and allows the user to change it.
 class ThemeSwitcherTile extends StatelessWidget {
   final ThemeMode themeMode;
-  final void Function() onTap;
+  final VoidCallback onTap;
 
   const ThemeSwitcherTile({
     super.key,

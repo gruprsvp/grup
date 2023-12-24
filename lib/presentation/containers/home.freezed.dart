@@ -19,7 +19,7 @@ mixin _$ViewModel {
   bool get loading => throw _privateConstructorUsedError;
   Profile? get profile => throw _privateConstructorUsedError;
   Iterable<Group>? get groups => throw _privateConstructorUsedError;
-  GroupCreateResultCallback? get onGroupCreate =>
+  ValueSetter<GroupCreateResult>? get onGroupCreate =>
       throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -37,7 +37,7 @@ abstract class _$ViewModelCopyWith<$Res> {
       {bool loading,
       Profile? profile,
       Iterable<Group>? groups,
-      GroupCreateResultCallback? onGroupCreate});
+      ValueSetter<GroupCreateResult>? onGroupCreate});
 
   $ProfileCopyWith<$Res>? get profile;
 }
@@ -76,7 +76,7 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
       onGroupCreate: freezed == onGroupCreate
           ? _value.onGroupCreate
           : onGroupCreate // ignore: cast_nullable_to_non_nullable
-              as GroupCreateResultCallback?,
+              as ValueSetter<GroupCreateResult>?,
     ) as $Val);
   }
 
@@ -105,7 +105,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       {bool loading,
       Profile? profile,
       Iterable<Group>? groups,
-      GroupCreateResultCallback? onGroupCreate});
+      ValueSetter<GroupCreateResult>? onGroupCreate});
 
   @override
   $ProfileCopyWith<$Res>? get profile;
@@ -143,7 +143,7 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
       onGroupCreate: freezed == onGroupCreate
           ? _value.onGroupCreate
           : onGroupCreate // ignore: cast_nullable_to_non_nullable
-              as GroupCreateResultCallback?,
+              as ValueSetter<GroupCreateResult>?,
     ));
   }
 }
@@ -161,7 +161,7 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   @override
   final Iterable<Group>? groups;
   @override
-  final GroupCreateResultCallback? onGroupCreate;
+  final ValueSetter<GroupCreateResult>? onGroupCreate;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -207,7 +207,7 @@ abstract class __ViewModel implements _ViewModel {
       {required final bool loading,
       final Profile? profile,
       final Iterable<Group>? groups,
-      final GroupCreateResultCallback? onGroupCreate}) = _$_ViewModelImpl;
+      final ValueSetter<GroupCreateResult>? onGroupCreate}) = _$_ViewModelImpl;
 
   @override
   bool get loading;
@@ -216,7 +216,7 @@ abstract class __ViewModel implements _ViewModel {
   @override
   Iterable<Group>? get groups;
   @override
-  GroupCreateResultCallback? get onGroupCreate;
+  ValueSetter<GroupCreateResult>? get onGroupCreate;
   @override
   @JsonKey(ignore: true)
   _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>

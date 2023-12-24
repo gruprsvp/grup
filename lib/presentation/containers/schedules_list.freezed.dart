@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'theme_switcher.dart';
+part of 'schedules_list.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -16,8 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ViewModel {
-  ThemeMode get themeMode => throw _privateConstructorUsedError;
-  VoidCallback get nextTheme => throw _privateConstructorUsedError;
+  Iterable<ScheduleInstance>? get schedules =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   _$ViewModelCopyWith<_ViewModel> get copyWith =>
@@ -30,7 +30,7 @@ abstract class _$ViewModelCopyWith<$Res> {
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call({ThemeMode themeMode, VoidCallback nextTheme});
+  $Res call({Iterable<ScheduleInstance>? schedules});
 }
 
 /// @nodoc
@@ -46,18 +46,13 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? themeMode = null,
-    Object? nextTheme = null,
+    Object? schedules = freezed,
   }) {
     return _then(_value.copyWith(
-      themeMode: null == themeMode
-          ? _value.themeMode
-          : themeMode // ignore: cast_nullable_to_non_nullable
-              as ThemeMode,
-      nextTheme: null == nextTheme
-          ? _value.nextTheme
-          : nextTheme // ignore: cast_nullable_to_non_nullable
-              as VoidCallback,
+      schedules: freezed == schedules
+          ? _value.schedules
+          : schedules // ignore: cast_nullable_to_non_nullable
+              as Iterable<ScheduleInstance>?,
     ) as $Val);
   }
 }
@@ -70,7 +65,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ThemeMode themeMode, VoidCallback nextTheme});
+  $Res call({Iterable<ScheduleInstance>? schedules});
 }
 
 /// @nodoc
@@ -84,18 +79,13 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? themeMode = null,
-    Object? nextTheme = null,
+    Object? schedules = freezed,
   }) {
     return _then(_$_ViewModelImpl(
-      themeMode: null == themeMode
-          ? _value.themeMode
-          : themeMode // ignore: cast_nullable_to_non_nullable
-              as ThemeMode,
-      nextTheme: null == nextTheme
-          ? _value.nextTheme
-          : nextTheme // ignore: cast_nullable_to_non_nullable
-              as VoidCallback,
+      schedules: freezed == schedules
+          ? _value.schedules
+          : schedules // ignore: cast_nullable_to_non_nullable
+              as Iterable<ScheduleInstance>?,
     ));
   }
 }
@@ -103,16 +93,14 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
-  const _$_ViewModelImpl({required this.themeMode, required this.nextTheme});
+  const _$_ViewModelImpl({this.schedules});
 
   @override
-  final ThemeMode themeMode;
-  @override
-  final VoidCallback nextTheme;
+  final Iterable<ScheduleInstance>? schedules;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(themeMode: $themeMode, nextTheme: $nextTheme)';
+    return '_ViewModel(schedules: $schedules)';
   }
 
   @override
@@ -120,8 +108,7 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', '_ViewModel'))
-      ..add(DiagnosticsProperty('themeMode', themeMode))
-      ..add(DiagnosticsProperty('nextTheme', nextTheme));
+      ..add(DiagnosticsProperty('schedules', schedules));
   }
 
   @override
@@ -129,14 +116,12 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ViewModelImpl &&
-            (identical(other.themeMode, themeMode) ||
-                other.themeMode == themeMode) &&
-            (identical(other.nextTheme, nextTheme) ||
-                other.nextTheme == nextTheme));
+            const DeepCollectionEquality().equals(other.schedules, schedules));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, themeMode, nextTheme);
+  int get hashCode =>
+      Object.hash(runtimeType, const DeepCollectionEquality().hash(schedules));
 
   @JsonKey(ignore: true)
   @override
@@ -146,14 +131,11 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 }
 
 abstract class __ViewModel implements _ViewModel {
-  const factory __ViewModel(
-      {required final ThemeMode themeMode,
-      required final VoidCallback nextTheme}) = _$_ViewModelImpl;
+  const factory __ViewModel({final Iterable<ScheduleInstance>? schedules}) =
+      _$_ViewModelImpl;
 
   @override
-  ThemeMode get themeMode;
-  @override
-  VoidCallback get nextTheme;
+  Iterable<ScheduleInstance>? get schedules;
   @override
   @JsonKey(ignore: true)
   _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>

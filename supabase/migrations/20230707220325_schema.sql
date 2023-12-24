@@ -126,7 +126,9 @@ create table default_replies
     schedule_id     bigint                                                        not null references schedules on delete cascade,
 
     selected_option reply_options                                                 not null,
-    recurrence_rule rfc7265                                                       not null
+    recurrence_rule rfc7265                                                       not null,
+
+    unique (member_id, schedule_id)
 );
 comment on table default_replies is 'The default replies for each member, per schedule.';
 comment on column default_replies.recurrence_rule is 'Must be equal or a subset of the corresponding schedule rule.';

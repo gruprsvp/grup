@@ -36,9 +36,10 @@ sealed class _ViewModel with _$ViewModel {
 
   static _ViewModel fromStore(Store<RootState> store) {
     return _ViewModel(
-      profile: store.state.profiles.entities[store.state.auth.user?.id],
-      onSave: (name, image) =>
-          store.dispatch(SaveProfileAction(name: name, image: image)),
-    );
+        profile: store.state.profiles.entities[store.state.auth.user?.id],
+        onSave: (result) {
+          final (name, image) = result;
+          store.dispatch(SaveProfileAction(name: name, image: image));
+        });
   }
 }

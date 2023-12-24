@@ -3,6 +3,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/presentation/presentation.dart';
 
 class GroupDetailsScreen extends StatelessWidget {
   final bool loading;
@@ -25,18 +26,19 @@ class GroupDetailsScreen extends StatelessWidget {
           IconButton(
             onPressed: () =>
                 GroupManageRoute(groupId: group!.id.toString()).go(context),
-            icon: const FaIcon(FontAwesomeIcons.solidPenToSquare),
+            icon: const FaIcon(FontAwesomeIcons.penToSquare),
           )
         ],
       ),
-      body: Padding(
-        padding: const EdgeInsets.all(16),
-        child: ListView(
-          children: [
-            ...(group?.description != null ? [Text(group!.description!)] : []),
-          ],
-        ),
+      body: Column(
+        children: [
+          ...(group?.description != null ? [Text(group!.description!)] : []),
+          Expanded(
+            child: SchedulesListContainer(groupId: group!.id),
+          )
+        ],
       ),
+      floatingActionButton: const DateFabContainer(),
     );
   }
 }
