@@ -34,7 +34,7 @@ class MembersRepository {
           'display_name_override': displayNameOverride,
         })
         .eq('id', memberId)
-        .select<PostgrestMap>()
+        .select()
         .single()
         .withConverter(Member.fromJson);
   }

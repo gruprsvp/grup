@@ -10,7 +10,7 @@ class DefaultRepliesRepository {
 
   Future<Iterable<DefaultReply>> getDefaultReplies(int groupId) async {
     return _table()
-        .select<PostgrestList>('*,members!inner(*)')
+        .select('*,members!inner(*)')
         .eq('members.group_id', groupId)
         .withConverter((data) => data.map(DefaultReply.fromJson));
   }
@@ -23,8 +23,8 @@ class DefaultRepliesRepository {
           'selected_option': reply.selectedOption.name,
           'recurrence_rule': reply.recurrenceRule,
         })
-        .single()
         .select()
+        .single()
         .withConverter((data) => DefaultReply.fromJson(data));
   }
 

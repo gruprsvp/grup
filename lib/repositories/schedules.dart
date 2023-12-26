@@ -23,7 +23,7 @@ class SchedulesRepository {
 
   Future<Iterable<Schedule>> getGroupSchedules(int groupId) async {
     return _table()
-        .select<PostgrestList>()
+        .select()
         .eq('group_id', groupId)
         .withConverter((data) => data.map(Schedule.fromJson));
   }

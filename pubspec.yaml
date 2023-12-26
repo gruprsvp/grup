@@ -37,7 +37,7 @@ dependencies:
   intl: ^0.18.1
 
   # Routing
-  go_router: ^12.0.0
+  go_router: ^13.0.0
 
   # Redux
   rxdart: ^0.27.7
@@ -56,9 +56,9 @@ dependencies:
       ref: fix-json-deserializer
 
   # Supabase
-  supabase: ^1.11.10
-  supabase_flutter: ^1.10.22
-  supabase_auth_ui: ^0.2.1
+  supabase: ^2.0.2
+  supabase_flutter: ^2.0.2
+  supabase_auth_ui: ^0.3.0
 
   # Image picker to let users upload their profile picture
   image_picker: ^1.0.4

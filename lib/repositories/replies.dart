@@ -16,7 +16,7 @@ class RepliesRepository {
   Future<Iterable<Reply>> getRepliesForDateRange(
       int groupId, DateTimeRange dateRange) async {
     return _table()
-        .select<PostgrestList>('*,members!inner(*)')
+        .select('*,members!inner(*)')
         .eq('members.group_id', groupId)
         .gte('event_date', dateRange.start)
         .lt('event_date', dateRange.end)
@@ -31,8 +31,8 @@ class RepliesRepository {
           'event_date': reply.eventDate.toIso8601String(),
           'selected_option': reply.selectedOption.name,
         })
-        .single()
         .select()
+        .single()
         .withConverter((data) => Reply.fromJson(data));
   }
 

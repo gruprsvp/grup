@@ -10,7 +10,7 @@ class GroupsRepository {
 
   Future<Iterable<Group>> getUserGroups() async {
     return _table()
-        .select<PostgrestList>('*, members!inner(*)')
+        .select('*, members!inner(*)')
         // TODO(borgoat): should filter by profile_id but return all members
         // .eq('members.profile_id', supabase.auth.currentUser!.id)
         .withConverter((data) => data.map(Group.fromJson));
@@ -18,7 +18,7 @@ class GroupsRepository {
 
   Future<Group> getGroupById(int id) async {
     return _table()
-        .select<PostgrestMap>()
+        .select()
         .eq('id', id)
         .single()
         .withConverter(Group.fromJson);
@@ -43,7 +43,7 @@ class GroupsRepository {
           'picture': group.picture,
         })
         .eq('id', group.id)
-        .select<PostgrestMap>()
+        .select()
         .single()
         .withConverter(Group.fromJson);
   }

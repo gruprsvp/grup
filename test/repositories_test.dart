@@ -12,11 +12,14 @@ import 'package:test/test.dart';
 final SupabaseConfig config =
     SupabaseConfig.fromPath('supabase/config/localhost.json');
 
+const authOptions = AuthClientOptions(authFlowType: AuthFlowType.implicit);
+
 SupabaseClient supabaseAnonClient() =>
-    SupabaseClient(config.apiUrl, config.anonKey);
+    SupabaseClient(config.apiUrl, config.anonKey, authOptions: authOptions);
 
 SupabaseClient supabaseAdminClient() =>
-    SupabaseClient(config.apiUrl, config.serviceRoleKey!);
+    SupabaseClient(config.apiUrl, config.serviceRoleKey!,
+        authOptions: authOptions);
 
 /// Singleton instance of a Supabase client with admin rights
 /// (it's not very useful to have many as there's no auth user)

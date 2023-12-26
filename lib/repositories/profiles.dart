@@ -10,7 +10,7 @@ class ProfilesRepository {
 
   Future<Profile> getProfileById(String id) async {
     return _table()
-        .select<PostgrestMap>()
+        .select()
         .eq('id', id)
         .single()
         .withConverter(Profile.fromJson);
