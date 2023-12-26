@@ -32,6 +32,7 @@
   "loading": "Cargando...",
   "members": "Miembros",
   "newGroup": "Nuevo grupo",
+  "no": "No",
   "onboardingMessage": "¿Te sientes como un lobo solitario? ¡No hay problema! Puedes crear un nuevo grupo o unirte a un grupo existente utilizando un código de invitación.",
   "profile": "Perfil",
   "recurrenceRule": "Recurrencia",
@@ -43,5 +44,6 @@
   "systemLanguage": "Idioma del sistema",
   "themeDark": "Oscuro",
   "themeLight": "Claro",
-  "themeSystem": "Sistema"
+  "themeSystem": "Sistema",
+  "yes": "Sí"
 }

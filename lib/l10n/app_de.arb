@@ -32,6 +32,7 @@
   "loading": "Laden...",
   "members": "Mitglieder",
   "newGroup": "Neue Gruppe",
+  "no": "Nein",
   "onboardingMessage": "Fühlen Sie sich wie ein einsamer Wolf? Kein Problem! Sie können entweder eine neue Gruppe erstellen oder einer bestehenden Gruppe beitreten, indem Sie einen Einladungscode verwenden.",
   "profile": "Profil",
   "recurrenceRule": "Wiederholung",
@@ -43,5 +44,6 @@
   "systemLanguage": "Systemsprache",
   "themeDark": "Dunkel",
   "themeLight": "Hell",
-  "themeSystem": "System"
+  "themeSystem": "System",
+  "yes": "Ja"
 }

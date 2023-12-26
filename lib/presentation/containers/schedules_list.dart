@@ -19,9 +19,7 @@ class SchedulesListContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<RootState, _ViewModel>(
       distinct: true,
-      builder: (context, vm) => SchedulesList(
-        schedules: vm.schedules,
-      ),
+      builder: (context, vm) => SchedulesList(schedules: vm.schedules),
       converter: (store) => _ViewModel.fromStore(store, groupId),
     );
   }

@@ -64,6 +64,9 @@ Iterable<ScheduleInstance>? selectSchedulesAndReplies(
         scheduleId: s.id,
         displayName: s.displayName,
         eventDate: eventDate,
+        // TODO
+        yesCount: 0,
+        myReply: ReplyOptions.yes,
       );
     });
 

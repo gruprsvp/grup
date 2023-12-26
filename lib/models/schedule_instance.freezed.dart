@@ -19,6 +19,7 @@ mixin _$ScheduleInstance {
   int get scheduleId => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   DateTime get eventDate => throw _privateConstructorUsedError;
+  int get yesCount => throw _privateConstructorUsedError;
   ReplyOptions? get myReply => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
@@ -36,6 +37,7 @@ abstract class $ScheduleInstanceCopyWith<$Res> {
       {int scheduleId,
       String displayName,
       DateTime eventDate,
+      int yesCount,
       ReplyOptions? myReply});
 }
 
@@ -55,6 +57,7 @@ class _$ScheduleInstanceCopyWithImpl<$Res, $Val extends ScheduleInstance>
     Object? scheduleId = null,
     Object? displayName = null,
     Object? eventDate = null,
+    Object? yesCount = null,
     Object? myReply = freezed,
   }) {
     return _then(_value.copyWith(
@@ -70,6 +73,10 @@ class _$ScheduleInstanceCopyWithImpl<$Res, $Val extends ScheduleInstance>
           ? _value.eventDate
           : eventDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      yesCount: null == yesCount
+          ? _value.yesCount
+          : yesCount // ignore: cast_nullable_to_non_nullable
+              as int,
       myReply: freezed == myReply
           ? _value.myReply
           : myReply // ignore: cast_nullable_to_non_nullable
@@ -90,6 +97,7 @@ abstract class _$$ScheduleInstanceImplCopyWith<$Res>
       {int scheduleId,
       String displayName,
       DateTime eventDate,
+      int yesCount,
       ReplyOptions? myReply});
 }
 
@@ -107,6 +115,7 @@ class __$$ScheduleInstanceImplCopyWithImpl<$Res>
     Object? scheduleId = null,
     Object? displayName = null,
     Object? eventDate = null,
+    Object? yesCount = null,
     Object? myReply = freezed,
   }) {
     return _then(_$ScheduleInstanceImpl(
@@ -122,6 +131,10 @@ class __$$ScheduleInstanceImplCopyWithImpl<$Res>
           ? _value.eventDate
           : eventDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      yesCount: null == yesCount
+          ? _value.yesCount
+          : yesCount // ignore: cast_nullable_to_non_nullable
+              as int,
       myReply: freezed == myReply
           ? _value.myReply
           : myReply // ignore: cast_nullable_to_non_nullable
@@ -139,6 +152,7 @@ class _$ScheduleInstanceImpl
       {required this.scheduleId,
       required this.displayName,
       required this.eventDate,
+      required this.yesCount,
       this.myReply});
 
   @override
@@ -148,11 +162,13 @@ class _$ScheduleInstanceImpl
   @override
   final DateTime eventDate;
   @override
+  final int yesCount;
+  @override
   final ReplyOptions? myReply;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ScheduleInstance(scheduleId: $scheduleId, displayName: $displayName, eventDate: $eventDate, myReply: $myReply)';
+    return 'ScheduleInstance(scheduleId: $scheduleId, displayName: $displayName, eventDate: $eventDate, yesCount: $yesCount, myReply: $myReply)';
   }
 
   @override
@@ -163,6 +179,7 @@ class _$ScheduleInstanceImpl
       ..add(DiagnosticsProperty('scheduleId', scheduleId))
       ..add(DiagnosticsProperty('displayName', displayName))
       ..add(DiagnosticsProperty('eventDate', eventDate))
+      ..add(DiagnosticsProperty('yesCount', yesCount))
       ..add(DiagnosticsProperty('myReply', myReply));
   }
 
@@ -177,12 +194,14 @@ class _$ScheduleInstanceImpl
                 other.displayName == displayName) &&
             (identical(other.eventDate, eventDate) ||
                 other.eventDate == eventDate) &&
+            (identical(other.yesCount, yesCount) ||
+                other.yesCount == yesCount) &&
             (identical(other.myReply, myReply) || other.myReply == myReply));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, scheduleId, displayName, eventDate, myReply);
+  int get hashCode => Object.hash(
+      runtimeType, scheduleId, displayName, eventDate, yesCount, myReply);
 
   @JsonKey(ignore: true)
   @override
@@ -197,6 +216,7 @@ abstract class _ScheduleInstance implements ScheduleInstance {
       {required final int scheduleId,
       required final String displayName,
       required final DateTime eventDate,
+      required final int yesCount,
       final ReplyOptions? myReply}) = _$ScheduleInstanceImpl;
 
   @override
@@ -205,6 +225,8 @@ abstract class _ScheduleInstance implements ScheduleInstance {
   String get displayName;
   @override
   DateTime get eventDate;
+  @override
+  int get yesCount;
   @override
   ReplyOptions? get myReply;
   @override

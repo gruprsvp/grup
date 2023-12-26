@@ -32,6 +32,7 @@
   "loading": "Chargement...",
   "members": "Membres",
   "newGroup": "Nouveau groupe",
+  "no": "Non",
   "onboardingMessage": "Vous sentez-vous comme un loup solitaire? Pas de problème! Vous pouvez soit créer un nouveau groupe, soit rejoindre un groupe existant en utilisant un code d'invitation.",
   "profile": "Profil",
   "recurrenceRule": "Récurrence",
@@ -43,5 +44,6 @@
   "systemLanguage": "Langue du système",
   "themeDark": "Sombre",
   "themeLight": "Clair",
-  "themeSystem": "Système"
+  "themeSystem": "Système",
+  "yes": "Oui"
 }

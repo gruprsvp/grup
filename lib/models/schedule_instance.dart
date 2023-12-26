@@ -10,6 +10,7 @@ sealed class ScheduleInstance with _$ScheduleInstance {
     required int scheduleId,
     required String displayName,
     required DateTime eventDate,
+    required int yesCount,
     ReplyOptions? myReply,
   }) = _ScheduleInstance;
 }

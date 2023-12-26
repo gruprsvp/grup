@@ -32,6 +32,7 @@
   "loading": "Loading...",
   "members": "Members",
   "newGroup": "New group",
+  "no": "No",
   "onboardingMessage": "Feeling like a lone wolf? No problem! You can either create a new group, or join an existing one using an invite code.",
   "profile": "Profile",
   "recurrenceRule": "Recurrence",
@@ -43,5 +44,6 @@
   "systemLanguage": "System language",
   "themeDark": "Dark",
   "themeLight": "Light",
-  "themeSystem": "System"
+  "themeSystem": "System",
+  "yes": "Yes"
 }
