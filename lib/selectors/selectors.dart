@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/selectors/schedules.dart';
 import 'package:parousia/state/state.dart';
 import 'package:parousia/util/util.dart';
 import 'package:rrule/rrule.dart';
@@ -48,28 +49,10 @@ Iterable<ScheduleInstance>? selectSchedulesAndReplies(
   final replies = state.replies.entities.values.where(
       (r) => scheduleIds.contains(r.scheduleId) && range.contains(r.eventDate));
 
-  return schedules.expand((s) {
-    final instances = s.recurrenceRule
-        .getInstances(
-            start: s.startDate,
-            after: range.start,
-            before: range.end,
-            includeAfter: true,
-            includeBefore: true)
-        .map((eventDate) {
-      final repliesForEvent = replies
-          .where((r) => r.scheduleId == s.id && r.eventDate == eventDate);
-
-      return ScheduleInstance(
-        scheduleId: s.id,
-        displayName: s.displayName,
-        eventDate: eventDate,
-        // TODO
-        yesCount: 0,
-        myReply: ReplyOptions.yes,
-      );
-    });
-
-    return instances;
-  });
+  return schedules.expand((schedule) => getScheduleInstances(
+      schedule: schedule,
+      defaultReplies: defaultReplies,
+      replies: replies,
+      startDate: range.start,
+      endDate: range.end));
 }

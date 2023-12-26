@@ -395,6 +395,9 @@ void main() {
 
         final list = await defaultRepliesRepository.getDefaultReplies(group.id);
         expect(list, hasLength(1));
+
+        final schedules = await schedulesRepository.getGroupSchedules(group.id);
+        expect(schedules.single.defaultReplies?.single, equals(defaultReply));
       }),
     );
   });

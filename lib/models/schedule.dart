@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:parousia/models/models.dart';
 import 'package:rrule/rrule.dart';
 
 part 'schedule.freezed.dart';
@@ -14,6 +15,8 @@ sealed class Schedule with _$Schedule {
     required String displayName,
     required DateTime startDate,
     required RecurrenceRule recurrenceRule,
+    Iterable<Reply>? replies,
+    Iterable<DefaultReply>? defaultReplies,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _Schedule;

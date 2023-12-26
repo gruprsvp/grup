@@ -18,11 +18,7 @@ PODS:
   - shared_preferences_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - sign_in_with_apple (0.0.1):
-    - Flutter
   - url_launcher_ios (0.0.1):
-    - Flutter
-  - webview_flutter_wkwebview (0.0.1):
     - Flutter
 
 DEPENDENCIES:
@@ -35,9 +31,7 @@ DEPENDENCIES:
   - phone_number (from `.symlinks/plugins/phone_number/ios`)
   - PhoneNumberKit/PhoneNumberKitCore (from `https://github.com/marmelroy/PhoneNumberKit`, tag `3.5.10`)
   - shared_preferences_foundation (from `.symlinks/plugins/shared_preferences_foundation/darwin`)
-  - sign_in_with_apple (from `.symlinks/plugins/sign_in_with_apple/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
-  - webview_flutter_wkwebview (from `.symlinks/plugins/webview_flutter_wkwebview/ios`)
 
 EXTERNAL SOURCES:
   app_links:
@@ -59,12 +53,8 @@ EXTERNAL SOURCES:
     :tag: 3.5.10
   shared_preferences_foundation:
     :path: ".symlinks/plugins/shared_preferences_foundation/darwin"
-  sign_in_with_apple:
-    :path: ".symlinks/plugins/sign_in_with_apple/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
-  webview_flutter_wkwebview:
-    :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
 CHECKOUT OPTIONS:
   PhoneNumberKit:
@@ -81,9 +71,7 @@ SPEC CHECKSUMS:
   phone_number: 3f4cef3301f0df6a8cc76d66d48968d63a2cf8ea
   PhoneNumberKit: 0e34a6e8a50e4624e96a4710bc4a7211464a934e
   shared_preferences_foundation: 5b919d13b803cadd15ed2dc053125c68730e5126
-  sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
   url_launcher_ios: bf5ce03e0e2088bad9cc378ea97fa0ed5b49673b
-  webview_flutter_wkwebview: 2e2d318f21a5e036e2c3f26171342e95908bd60a
 
 PODFILE CHECKSUM: 575a3f92adf4549e5fc8b1303f81c5c46c1afbc9
 
