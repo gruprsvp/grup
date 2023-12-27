@@ -8,7 +8,6 @@ part of 'default_reply.dart';
 
 _$DefaultReplyImpl _$$DefaultReplyImplFromJson(Map<String, dynamic> json) =>
     _$DefaultReplyImpl(
-      id: json['id'] as int,
       memberId: json['member_id'] as int,
       scheduleId: json['schedule_id'] as int,
       selectedOption:
@@ -25,7 +24,6 @@ _$DefaultReplyImpl _$$DefaultReplyImplFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$$DefaultReplyImplToJson(_$DefaultReplyImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'member_id': instance.memberId,
       'schedule_id': instance.scheduleId,
       'selected_option': _$ReplyOptionsEnumMap[instance.selectedOption]!,

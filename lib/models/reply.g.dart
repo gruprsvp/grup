@@ -7,7 +7,6 @@ part of 'reply.dart';
 // **************************************************************************
 
 _$ReplyImpl _$$ReplyImplFromJson(Map<String, dynamic> json) => _$ReplyImpl(
-      id: json['id'] as int,
       memberId: json['member_id'] as int,
       scheduleId: json['schedule_id'] as int,
       eventDate: DateTime.parse(json['event_date'] as String),
@@ -23,7 +22,6 @@ _$ReplyImpl _$$ReplyImplFromJson(Map<String, dynamic> json) => _$ReplyImpl(
 
 Map<String, dynamic> _$$ReplyImplToJson(_$ReplyImpl instance) =>
     <String, dynamic>{
-      'id': instance.id,
       'member_id': instance.memberId,
       'schedule_id': instance.scheduleId,
       'event_date': instance.eventDate.toIso8601String(),

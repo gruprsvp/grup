@@ -12,5 +12,6 @@ sealed class ScheduleInstance with _$ScheduleInstance {
     required DateTime eventDate,
     required int yesCount,
     ReplyOptions? myReply,
+    int? targetMemberId,
   }) = _ScheduleInstance;
 }

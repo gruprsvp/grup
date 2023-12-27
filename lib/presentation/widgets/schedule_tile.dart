@@ -6,7 +6,7 @@ import 'package:parousia/models/models.dart';
 class ScheduleTile extends StatelessWidget {
   final timeFormat = DateFormat.jm();
   final ScheduleInstance schedule;
-  final ValueChanged<ReplyOptions>? onReplyChanged;
+  final ValueChanged<ReplyOptions?>? onReplyChanged;
   final ValueChanged<ScheduleInstance>? onScheduleTapped;
 
   ScheduleTile({
@@ -32,7 +32,8 @@ class ScheduleTile extends StatelessWidget {
             ButtonSegment(value: ReplyOptions.no, label: Text(l10n.no)),
           ],
           selected: schedule.myReply != null ? {schedule.myReply!} : {},
-          onSelectionChanged: (value) => onReplyChanged?.call(value.first),
+          onSelectionChanged: (value) =>
+              onReplyChanged?.call(value.firstOrNull),
           emptySelectionAllowed: true,
           style: const ButtonStyle(
             visualDensity: VisualDensity.comfortable,

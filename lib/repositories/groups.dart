@@ -18,7 +18,7 @@ class GroupsRepository {
 
   Future<Group> getGroupById(int id) async {
     return _table()
-        .select()
+        .select('*, members!inner(*)')
         .eq('id', id)
         .single()
         .withConverter(Group.fromJson);
@@ -43,7 +43,7 @@ class GroupsRepository {
           'picture': group.picture,
         })
         .eq('id', group.id)
-        .select()
+        .select('*, members!inner(*)')
         .single()
         .withConverter(Group.fromJson);
   }

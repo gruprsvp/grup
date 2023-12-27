@@ -15,9 +15,11 @@ final schedulesReducer =
 
 final defaultRepliesReducer =
     RemoteEntityReducer<RemoteEntityState<DefaultReply>, DefaultReply>(
-  selectId: (defaultReply) => defaultReply.id.toString(),
+  selectId: (defaultReply) =>
+      "${defaultReply.memberId}-${defaultReply.scheduleId}",
 );
 
 final repliesReducer = RemoteEntityReducer<RemoteEntityState<Reply>, Reply>(
-  selectId: (reply) => reply.id.toString(),
+  selectId: (reply) =>
+      "${reply.memberId}-${reply.scheduleId}-${reply.eventDate}",
 );

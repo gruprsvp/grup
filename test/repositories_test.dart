@@ -385,7 +385,6 @@ void main() {
 
         final defaultReply = await defaultRepliesRepository.createDefaultReply(
           DefaultReply(
-            id: 0,
             scheduleId: schedule.id,
             memberId: member.id,
             selectedOption: ReplyOptions.yes,
@@ -435,7 +434,6 @@ void main() {
           recurrenceRule.getInstances(start: startDate).take(5).map(
                 (s) => repliesRepository.createReply(
                   Reply(
-                    id: 0,
                     scheduleId: schedule.id,
                     memberId: member.id,
                     eventDate: s,

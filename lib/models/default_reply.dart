@@ -11,7 +11,6 @@ part 'default_reply.g.dart';
 sealed class DefaultReply with _$DefaultReply {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory DefaultReply({
-    required int id,
     required int memberId,
     required int scheduleId,
     required ReplyOptions selectedOption,

@@ -18,6 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ViewModel {
   Iterable<ScheduleInstance>? get schedules =>
       throw _privateConstructorUsedError;
+  OnReplyChangedCallback? get onReplyChanged =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   _$ViewModelCopyWith<_ViewModel> get copyWith =>
@@ -30,7 +32,9 @@ abstract class _$ViewModelCopyWith<$Res> {
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call({Iterable<ScheduleInstance>? schedules});
+  $Res call(
+      {Iterable<ScheduleInstance>? schedules,
+      OnReplyChangedCallback? onReplyChanged});
 }
 
 /// @nodoc
@@ -47,12 +51,17 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   @override
   $Res call({
     Object? schedules = freezed,
+    Object? onReplyChanged = freezed,
   }) {
     return _then(_value.copyWith(
       schedules: freezed == schedules
           ? _value.schedules
           : schedules // ignore: cast_nullable_to_non_nullable
               as Iterable<ScheduleInstance>?,
+      onReplyChanged: freezed == onReplyChanged
+          ? _value.onReplyChanged
+          : onReplyChanged // ignore: cast_nullable_to_non_nullable
+              as OnReplyChangedCallback?,
     ) as $Val);
   }
 }
@@ -65,7 +74,9 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Iterable<ScheduleInstance>? schedules});
+  $Res call(
+      {Iterable<ScheduleInstance>? schedules,
+      OnReplyChangedCallback? onReplyChanged});
 }
 
 /// @nodoc
@@ -80,12 +91,17 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? schedules = freezed,
+    Object? onReplyChanged = freezed,
   }) {
     return _then(_$_ViewModelImpl(
       schedules: freezed == schedules
           ? _value.schedules
           : schedules // ignore: cast_nullable_to_non_nullable
               as Iterable<ScheduleInstance>?,
+      onReplyChanged: freezed == onReplyChanged
+          ? _value.onReplyChanged
+          : onReplyChanged // ignore: cast_nullable_to_non_nullable
+              as OnReplyChangedCallback?,
     ));
   }
 }
@@ -93,14 +109,16 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
-  const _$_ViewModelImpl({this.schedules});
+  const _$_ViewModelImpl({this.schedules, this.onReplyChanged});
 
   @override
   final Iterable<ScheduleInstance>? schedules;
+  @override
+  final OnReplyChangedCallback? onReplyChanged;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(schedules: $schedules)';
+    return '_ViewModel(schedules: $schedules, onReplyChanged: $onReplyChanged)';
   }
 
   @override
@@ -108,7 +126,8 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', '_ViewModel'))
-      ..add(DiagnosticsProperty('schedules', schedules));
+      ..add(DiagnosticsProperty('schedules', schedules))
+      ..add(DiagnosticsProperty('onReplyChanged', onReplyChanged));
   }
 
   @override
@@ -116,12 +135,14 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ViewModelImpl &&
-            const DeepCollectionEquality().equals(other.schedules, schedules));
+            const DeepCollectionEquality().equals(other.schedules, schedules) &&
+            (identical(other.onReplyChanged, onReplyChanged) ||
+                other.onReplyChanged == onReplyChanged));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, const DeepCollectionEquality().hash(schedules));
+  int get hashCode => Object.hash(runtimeType,
+      const DeepCollectionEquality().hash(schedules), onReplyChanged);
 
   @JsonKey(ignore: true)
   @override
@@ -131,11 +152,14 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 }
 
 abstract class __ViewModel implements _ViewModel {
-  const factory __ViewModel({final Iterable<ScheduleInstance>? schedules}) =
-      _$_ViewModelImpl;
+  const factory __ViewModel(
+      {final Iterable<ScheduleInstance>? schedules,
+      final OnReplyChangedCallback? onReplyChanged}) = _$_ViewModelImpl;
 
   @override
   Iterable<ScheduleInstance>? get schedules;
+  @override
+  OnReplyChangedCallback? get onReplyChanged;
   @override
   @JsonKey(ignore: true)
   _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>

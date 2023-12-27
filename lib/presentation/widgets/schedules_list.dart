@@ -2,10 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 
+typedef OnReplyChangedCallback = void Function(ScheduleInstance, ReplyOptions?);
+
 class SchedulesList extends StatelessWidget {
   final Iterable<ScheduleInstance>? schedules;
+  final OnReplyChangedCallback? onReplyChanged;
 
-  const SchedulesList({super.key, this.schedules});
+  const SchedulesList({super.key, this.schedules, this.onReplyChanged});
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +18,14 @@ class SchedulesList extends StatelessWidget {
 
     return ListView.builder(
       itemCount: schedules!.length,
-      itemBuilder: (context, index) =>
-          ScheduleTile(schedule: schedules!.elementAt(index)),
+      itemBuilder: (context, index) => ScheduleTile(
+        schedule: schedules!.elementAt(index),
+        onReplyChanged: (reply) =>
+            onReplyChanged?.call(schedules!.elementAt(index), reply),
+        onScheduleTapped: (schedule) {
+          // TODO route
+        },
+      ),
     );
   }
 }

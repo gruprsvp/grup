@@ -17,7 +17,7 @@ class DefaultRepliesRepository {
 
   Future<DefaultReply> createDefaultReply(DefaultReply reply) async {
     return _table()
-        .insert({
+        .upsert({
           'schedule_id': reply.scheduleId,
           'member_id': reply.memberId,
           'selected_option': reply.selectedOption.name,

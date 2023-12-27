@@ -25,7 +25,7 @@ class RepliesRepository {
 
   Future<Reply> createReply(Reply reply) async {
     return _table()
-        .insert({
+        .upsert({
           'schedule_id': reply.scheduleId,
           'member_id': reply.memberId,
           'event_date': reply.eventDate.toIso8601String(),
@@ -34,6 +34,18 @@ class RepliesRepository {
         .select()
         .single()
         .withConverter((data) => Reply.fromJson(data));
+  }
+
+  Future<void> deleteReply({
+    required int memberId,
+    required int scheduleId,
+    required DateTime eventDate,
+  }) async {
+    return _table()
+        .delete()
+        .eq('member_id', memberId)
+        .eq('schedule_id', scheduleId)
+        .eq('event_date', eventDate.toIso8601String());
   }
 
   PostgrestQueryBuilder<void> _table() =>

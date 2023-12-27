@@ -20,7 +20,6 @@ DefaultReply _$DefaultReplyFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DefaultReply {
-  int get id => throw _privateConstructorUsedError;
   int get memberId => throw _privateConstructorUsedError;
   int get scheduleId => throw _privateConstructorUsedError;
   ReplyOptions get selectedOption => throw _privateConstructorUsedError;
@@ -41,8 +40,7 @@ abstract class $DefaultReplyCopyWith<$Res> {
       _$DefaultReplyCopyWithImpl<$Res, DefaultReply>;
   @useResult
   $Res call(
-      {int id,
-      int memberId,
+      {int memberId,
       int scheduleId,
       ReplyOptions selectedOption,
       RecurrenceRule recurrenceRule,
@@ -63,7 +61,6 @@ class _$DefaultReplyCopyWithImpl<$Res, $Val extends DefaultReply>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? memberId = null,
     Object? scheduleId = null,
     Object? selectedOption = null,
@@ -72,10 +69,6 @@ class _$DefaultReplyCopyWithImpl<$Res, $Val extends DefaultReply>
     Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
@@ -113,8 +106,7 @@ abstract class _$$DefaultReplyImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
-      int memberId,
+      {int memberId,
       int scheduleId,
       ReplyOptions selectedOption,
       RecurrenceRule recurrenceRule,
@@ -133,7 +125,6 @@ class __$$DefaultReplyImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? memberId = null,
     Object? scheduleId = null,
     Object? selectedOption = null,
@@ -142,10 +133,6 @@ class __$$DefaultReplyImplCopyWithImpl<$Res>
     Object? updatedAt = freezed,
   }) {
     return _then(_$DefaultReplyImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
@@ -179,8 +166,7 @@ class __$$DefaultReplyImplCopyWithImpl<$Res>
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _$DefaultReplyImpl with DiagnosticableTreeMixin implements _DefaultReply {
   const _$DefaultReplyImpl(
-      {required this.id,
-      required this.memberId,
+      {required this.memberId,
       required this.scheduleId,
       required this.selectedOption,
       required this.recurrenceRule,
@@ -190,8 +176,6 @@ class _$DefaultReplyImpl with DiagnosticableTreeMixin implements _DefaultReply {
   factory _$DefaultReplyImpl.fromJson(Map<String, dynamic> json) =>
       _$$DefaultReplyImplFromJson(json);
 
-  @override
-  final int id;
   @override
   final int memberId;
   @override
@@ -207,7 +191,7 @@ class _$DefaultReplyImpl with DiagnosticableTreeMixin implements _DefaultReply {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DefaultReply(id: $id, memberId: $memberId, scheduleId: $scheduleId, selectedOption: $selectedOption, recurrenceRule: $recurrenceRule, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'DefaultReply(memberId: $memberId, scheduleId: $scheduleId, selectedOption: $selectedOption, recurrenceRule: $recurrenceRule, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -215,7 +199,6 @@ class _$DefaultReplyImpl with DiagnosticableTreeMixin implements _DefaultReply {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'DefaultReply'))
-      ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('memberId', memberId))
       ..add(DiagnosticsProperty('scheduleId', scheduleId))
       ..add(DiagnosticsProperty('selectedOption', selectedOption))
@@ -229,7 +212,6 @@ class _$DefaultReplyImpl with DiagnosticableTreeMixin implements _DefaultReply {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$DefaultReplyImpl &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.memberId, memberId) ||
                 other.memberId == memberId) &&
             (identical(other.scheduleId, scheduleId) ||
@@ -246,7 +228,7 @@ class _$DefaultReplyImpl with DiagnosticableTreeMixin implements _DefaultReply {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, memberId, scheduleId,
+  int get hashCode => Object.hash(runtimeType, memberId, scheduleId,
       selectedOption, recurrenceRule, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
@@ -265,8 +247,7 @@ class _$DefaultReplyImpl with DiagnosticableTreeMixin implements _DefaultReply {
 
 abstract class _DefaultReply implements DefaultReply {
   const factory _DefaultReply(
-      {required final int id,
-      required final int memberId,
+      {required final int memberId,
       required final int scheduleId,
       required final ReplyOptions selectedOption,
       required final RecurrenceRule recurrenceRule,
@@ -276,8 +257,6 @@ abstract class _DefaultReply implements DefaultReply {
   factory _DefaultReply.fromJson(Map<String, dynamic> json) =
       _$DefaultReplyImpl.fromJson;
 
-  @override
-  int get id;
   @override
   int get memberId;
   @override

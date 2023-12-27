@@ -33,8 +33,8 @@ Future<RruleL10n> rruleL10nSelector(RootState state) {
 DateTimeRange selectedDateRangeSelector(RootState state) =>
     state.selectedDate.getDayRange();
 
-// TODO This shit should be tested
-Iterable<ScheduleInstance>? selectSchedulesAndReplies(
+// TODO This shit should be better tested
+Iterable<ScheduleInstance>? selectSchedulesForSelectedDate(
     RootState state, int selectedGroupId) {
   final range = state.selectedDate.getDayRange();
   final group = state.groups.entities[selectedGroupId.toString()];
@@ -49,10 +49,15 @@ Iterable<ScheduleInstance>? selectSchedulesAndReplies(
   final replies = state.replies.entities.values.where(
       (r) => scheduleIds.contains(r.scheduleId) && range.contains(r.eventDate));
 
+  final myselfInGroup = group.members
+      ?.firstWhere((member) => member.profileId == state.auth.user?.id);
+
   return schedules.expand((schedule) => getScheduleInstances(
-      schedule: schedule,
-      defaultReplies: defaultReplies,
-      replies: replies,
-      startDate: range.start,
-      endDate: range.end));
+        schedule: schedule,
+        defaultReplies: defaultReplies,
+        replies: replies,
+        startDate: range.start,
+        endDate: range.end,
+        targetMemberId: myselfInGroup?.id,
+      ));
 }

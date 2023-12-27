@@ -20,7 +20,6 @@ Reply _$ReplyFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Reply {
-  int get id => throw _privateConstructorUsedError;
   int get memberId => throw _privateConstructorUsedError;
   int get scheduleId => throw _privateConstructorUsedError;
   DateTime get eventDate => throw _privateConstructorUsedError;
@@ -39,8 +38,7 @@ abstract class $ReplyCopyWith<$Res> {
       _$ReplyCopyWithImpl<$Res, Reply>;
   @useResult
   $Res call(
-      {int id,
-      int memberId,
+      {int memberId,
       int scheduleId,
       DateTime eventDate,
       ReplyOptions selectedOption,
@@ -61,7 +59,6 @@ class _$ReplyCopyWithImpl<$Res, $Val extends Reply>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? memberId = null,
     Object? scheduleId = null,
     Object? eventDate = null,
@@ -70,10 +67,6 @@ class _$ReplyCopyWithImpl<$Res, $Val extends Reply>
     Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
@@ -110,8 +103,7 @@ abstract class _$$ReplyImplCopyWith<$Res> implements $ReplyCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
-      int memberId,
+      {int memberId,
       int scheduleId,
       DateTime eventDate,
       ReplyOptions selectedOption,
@@ -130,7 +122,6 @@ class __$$ReplyImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? id = null,
     Object? memberId = null,
     Object? scheduleId = null,
     Object? eventDate = null,
@@ -139,10 +130,6 @@ class __$$ReplyImplCopyWithImpl<$Res>
     Object? updatedAt = freezed,
   }) {
     return _then(_$ReplyImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int,
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
@@ -176,8 +163,7 @@ class __$$ReplyImplCopyWithImpl<$Res>
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
   const _$ReplyImpl(
-      {required this.id,
-      required this.memberId,
+      {required this.memberId,
       required this.scheduleId,
       required this.eventDate,
       required this.selectedOption,
@@ -187,8 +173,6 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
   factory _$ReplyImpl.fromJson(Map<String, dynamic> json) =>
       _$$ReplyImplFromJson(json);
 
-  @override
-  final int id;
   @override
   final int memberId;
   @override
@@ -204,7 +188,7 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Reply(id: $id, memberId: $memberId, scheduleId: $scheduleId, eventDate: $eventDate, selectedOption: $selectedOption, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Reply(memberId: $memberId, scheduleId: $scheduleId, eventDate: $eventDate, selectedOption: $selectedOption, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -212,7 +196,6 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Reply'))
-      ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('memberId', memberId))
       ..add(DiagnosticsProperty('scheduleId', scheduleId))
       ..add(DiagnosticsProperty('eventDate', eventDate))
@@ -226,7 +209,6 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ReplyImpl &&
-            (identical(other.id, id) || other.id == id) &&
             (identical(other.memberId, memberId) ||
                 other.memberId == memberId) &&
             (identical(other.scheduleId, scheduleId) ||
@@ -243,8 +225,8 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, memberId, scheduleId,
-      eventDate, selectedOption, createdAt, updatedAt);
+  int get hashCode => Object.hash(runtimeType, memberId, scheduleId, eventDate,
+      selectedOption, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -262,8 +244,7 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
 
 abstract class _Reply implements Reply {
   const factory _Reply(
-      {required final int id,
-      required final int memberId,
+      {required final int memberId,
       required final int scheduleId,
       required final DateTime eventDate,
       required final ReplyOptions selectedOption,
@@ -272,8 +253,6 @@ abstract class _Reply implements Reply {
 
   factory _Reply.fromJson(Map<String, dynamic> json) = _$ReplyImpl.fromJson;
 
-  @override
-  int get id;
   @override
   int get memberId;
   @override

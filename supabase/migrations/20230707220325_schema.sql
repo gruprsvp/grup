@@ -118,7 +118,6 @@ comment on column schedules.recurrence_rule is 'The rrule that defines when even
 
 create table default_replies
 (
-    id              bigint generated always as identity primary key,
     created_at      timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at      timestamp with time zone default timezone('utc'::text, now()) not null,
 
@@ -128,24 +127,23 @@ create table default_replies
     selected_option reply_options                                                 not null,
     recurrence_rule rfc7265                                                       not null,
 
-    unique (member_id, schedule_id)
+    primary key (member_id, schedule_id)
 );
 comment on table default_replies is 'The default replies for each member, per schedule.';
 comment on column default_replies.recurrence_rule is 'Must be equal or a subset of the corresponding schedule rule.';
 
 create table replies
 (
-    id              bigint generated always as identity primary key,
     created_at      timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at      timestamp with time zone default timezone('utc'::text, now()) not null,
 
     member_id       bigint                                                        not null references members on delete cascade,
     schedule_id     bigint                                                        not null references schedules on delete cascade,
-    event_date      timestamp                                                     not null,
+    event_date      timestamp with time zone                                      not null,
 
     selected_option reply_options                                                 not null,
 
-    unique (member_id, schedule_id, event_date)
+    primary key (member_id, schedule_id, event_date)
 );
 create index replies_event_date on replies (event_date);
 comment on table replies is 'Override the default replies set per schedule/profile.';
