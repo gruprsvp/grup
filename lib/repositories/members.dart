@@ -1,12 +1,11 @@
 import 'package:parousia/models/models.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'const.dart';
+import 'supabase.dart';
 
-class MembersRepository {
-  MembersRepository({required this.supabase});
-
-  final SupabaseClient supabase;
+class MembersRepository extends SupabaseRepository with Postgrest {
+  const MembersRepository({required super.supabase})
+      : super(tableName: Tables.members);
 
   Future<Member> addMemberToGroup(int groupId,
       {String? displayName, String? profileId}) async {
@@ -16,7 +15,7 @@ class MembersRepository {
           'Either displayName or profileId must be provided to addMemberToGroup');
     }
 
-    return _table()
+    return table()
         .insert({
           'group_id': groupId,
           'profile_id': profileId,
@@ -29,7 +28,7 @@ class MembersRepository {
 
   Future<Member> updateMember(
       {required int memberId, required String displayNameOverride}) async {
-    return _table()
+    return table()
         .update({
           'display_name_override': displayNameOverride,
         })
@@ -40,9 +39,6 @@ class MembersRepository {
   }
 
   Future<void> removeMember(int memberId) async {
-    return _table().delete().eq('id', memberId);
+    return table().delete().eq('id', memberId);
   }
-
-  PostgrestQueryBuilder<void> _table() =>
-      supabase.rest.from(Tables.members.name);
 }

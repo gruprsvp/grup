@@ -1,15 +1,13 @@
 import 'package:parousia/models/models.dart';
-import 'package:supabase/supabase.dart';
 
 import 'const.dart';
+import 'supabase.dart';
 
-class GroupsRepository {
-  GroupsRepository({required this.supabase});
-
-  final SupabaseClient supabase;
+class GroupsRepository extends SupabaseRepository with Postgrest {
+  GroupsRepository({required super.supabase}) : super(tableName: Tables.groups);
 
   Future<Iterable<Group>> getUserGroups() async {
-    return _table()
+    return table()
         .select('*, members!inner(*)')
         // TODO(borgoat): should filter by profile_id but return all members
         // .eq('members.profile_id', supabase.auth.currentUser!.id)
@@ -17,7 +15,7 @@ class GroupsRepository {
   }
 
   Future<Group> getGroupById(int id) async {
-    return _table()
+    return table()
         .select('*, members!inner(*)')
         .eq('id', id)
         .single()
@@ -36,7 +34,7 @@ class GroupsRepository {
   }
 
   Future<Group> updateGroup(Group group) async {
-    return _table()
+    return table()
         .update({
           'display_name': group.displayName,
           'description': group.description,
@@ -47,7 +45,4 @@ class GroupsRepository {
         .single()
         .withConverter(Group.fromJson);
   }
-
-  PostgrestQueryBuilder<void> _table() =>
-      supabase.rest.from(Tables.groups.name);
 }

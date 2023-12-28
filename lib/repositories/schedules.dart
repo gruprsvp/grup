@@ -1,15 +1,14 @@
 import 'package:parousia/models/models.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'const.dart';
+import 'supabase.dart';
 
-class SchedulesRepository {
-  SchedulesRepository({required this.supabase});
-
-  final SupabaseClient supabase;
+class SchedulesRepository extends SupabaseRepository with Postgrest {
+  const SchedulesRepository({required super.supabase})
+      : super(tableName: Tables.schedules);
 
   Future<Schedule> createSchedule(Schedule schedule) async {
-    return _table()
+    return table()
         .insert({
           'group_id': schedule.groupId,
           'display_name': schedule.displayName,
@@ -22,12 +21,9 @@ class SchedulesRepository {
   }
 
   Future<Iterable<Schedule>> getGroupSchedules(int groupId) async {
-    return _table()
+    return table()
         .select('*,replies(*),default_replies(*)')
         .eq('group_id', groupId)
         .withConverter((data) => data.map(Schedule.fromJson));
   }
-
-  PostgrestQueryBuilder<void> _table() =>
-      supabase.rest.from(Tables.schedules.name);
 }

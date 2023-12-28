@@ -3,12 +3,12 @@ import 'package:mime/mime.dart';
 import 'package:supabase/supabase.dart';
 
 import 'const.dart';
+import 'supabase.dart';
 
 /// Repository for uploading files to Supabase Storage.
-class StorageRepository {
-  const StorageRepository({required this.supabase});
-
-  final SupabaseClient supabase;
+class StorageRepository extends SupabaseRepository with Storage {
+  const StorageRepository({required super.supabase})
+      : super(bucketName: Buckets.public);
 
   Future<String> uploadPublicXFile(String key, XFile file) async {
     final ext =
@@ -16,7 +16,7 @@ class StorageRepository {
     final path = '${supabase.auth.currentUser!.id}/$key.$ext';
     final bytes = await file.readAsBytes();
 
-    final response = await _publicBucket().uploadBinary(
+    final response = await bucket().uploadBinary(
       path,
       bytes,
       fileOptions: FileOptions(
@@ -24,10 +24,6 @@ class StorageRepository {
       ),
     );
 
-    return _publicBucket().getPublicUrl(path);
+    return bucket().getPublicUrl(path);
   }
-
-  _publicBucket() => supabase.storage.from(Buckets.public.name);
-
-  _privateBucket() => supabase.storage.from(Buckets.private.name);
 }

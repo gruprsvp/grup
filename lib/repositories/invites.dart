@@ -1,19 +1,18 @@
 import 'package:parousia/models/models.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'const.dart';
+import 'supabase.dart';
 
-class InvitesRepository {
-  InvitesRepository({required this.supabase});
-
-  final SupabaseClient supabase;
+class InvitesRepository extends SupabaseRepository with Postgrest {
+  const InvitesRepository({required super.supabase})
+      : super(tableName: Tables.invites);
 
   Future<Invite> inviteMember(
     int memberId,
     InviteMethods method,
     String value,
   ) async {
-    return _table()
+    return table()
         .insert({
           'member_id': memberId,
           'method': method.name,
@@ -27,7 +26,4 @@ class InvitesRepository {
   Future<void> consumeInviteCode(String code) async {
     return supabase.rpc('consume_invite_code', params: {'code': code});
   }
-
-  PostgrestQueryBuilder<void> _table() =>
-      supabase.rest.from(Tables.invites.name);
 }

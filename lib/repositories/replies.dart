@@ -1,13 +1,12 @@
 import 'package:parousia/models/models.dart';
 import 'package:parousia/util/util.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'const.dart';
+import 'supabase.dart';
 
-class RepliesRepository {
-  RepliesRepository({required this.supabase});
-
-  final SupabaseClient supabase;
+class RepliesRepository extends SupabaseRepository with Postgrest {
+  const RepliesRepository({required super.supabase})
+      : super(tableName: Tables.replies);
 
   Future<Iterable<Reply>> getRepliesForDay(int groupId, DateTime day) async {
     return getRepliesForDateRange(groupId, day.toUtc().getDayRange());
@@ -15,7 +14,7 @@ class RepliesRepository {
 
   Future<Iterable<Reply>> getRepliesForDateRange(
       int groupId, DateTimeRange dateRange) async {
-    return _table()
+    return table()
         .select('*,members!inner(*)')
         .eq('members.group_id', groupId)
         .gte('event_date', dateRange.start)
@@ -24,7 +23,7 @@ class RepliesRepository {
   }
 
   Future<Reply> createReply(Reply reply) async {
-    return _table()
+    return table()
         .upsert({
           'schedule_id': reply.scheduleId,
           'member_id': reply.memberId,
@@ -41,13 +40,10 @@ class RepliesRepository {
     required int scheduleId,
     required DateTime eventDate,
   }) async {
-    return _table()
+    return table()
         .delete()
         .eq('member_id', memberId)
         .eq('schedule_id', scheduleId)
         .eq('event_date', eventDate.toIso8601String());
   }
-
-  PostgrestQueryBuilder<void> _table() =>
-      supabase.rest.from(Tables.replies.name);
 }
