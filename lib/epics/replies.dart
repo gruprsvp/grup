@@ -21,9 +21,7 @@ Epic<RootState> _createRetrieveGroupRepliesEpic(RepliesRepository replies) {
                 .getRepliesForDateRange(int.parse(action.groupId),
                     store.state.selectedDate.getNdayRange(1))
                 .then<dynamic>((replies) =>
-                    SuccessRetrieveAll(replies.toList(growable: false)))
-                // TODO It seems this is not implemented in redux_entity
-                // SuccessRetrieveMany<Schedule>(schedules.toList()))
+                    SuccessRetrieveMany(replies.toList(growable: false)))
                 .catchError((error) => FailRetrieveMany<Reply>([], error)),
           );
 }

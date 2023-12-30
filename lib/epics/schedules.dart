@@ -19,9 +19,7 @@ Epic<RootState> _createRetrieveGroupSchedulesEpic(
             (action) => schedules
                 .getGroupSchedules(int.parse(action.groupId))
                 .then<dynamic>((schedules) =>
-                    SuccessRetrieveAll(schedules.toList(growable: false)))
-                // TODO It seems this is not implemented in redux_entity
-                // SuccessRetrieveMany<Schedule>(schedules.toList()))
+                    SuccessRetrieveMany(schedules.toList(growable: false)))
                 .catchError((error) => FailRetrieveMany<Schedule>([], error)),
           );
 }

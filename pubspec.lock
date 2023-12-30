@@ -912,8 +912,8 @@ packages:
     dependency: "direct main"
     description:
       path: "."
-      ref: fix-json-deserializer
-      resolved-ref: "23d0336d9c9ac968dcda5c0ad88dd19782504bb8"
+      ref: my-fork
+      resolved-ref: "95b91585f133325e13256ded18c0f5a8ddc90af9"
       url: "https://github.com/borgoat/dart_redux_entity.git"
     source: git
     version: "1.1.2"
