@@ -26,29 +26,24 @@ class ParApp extends StatelessWidget {
         converter: _ViewModel.fromStore,
         builder: (context, vm) => DynamicColorBuilder(
           builder: (lightDynamic, darkDynamic) {
-            // TODO Take something from state
-            const overrideColour = null;
+            final override = vm.overrideColour;
             const defaultColour = Colors.orange;
 
             ColorScheme lightColorScheme;
             ColorScheme darkColorScheme;
 
             if (lightDynamic != null && darkDynamic != null) {
-              lightColorScheme = lightDynamic.harmonized().copyWith(
-                    secondary: overrideColour,
-                  );
-              darkColorScheme = darkDynamic.harmonized().copyWith(
-                    secondary: overrideColour,
-                  );
+              lightColorScheme =
+                  lightDynamic.harmonized().copyWith(secondary: override);
+              darkColorScheme =
+                  darkDynamic.harmonized().copyWith(secondary: override);
             } else {
               // Otherwise, use fallback schemes.
-              lightColorScheme = ColorScheme.fromSeed(
-                seedColor: overrideColour ?? defaultColour,
-              );
+              lightColorScheme =
+                  ColorScheme.fromSeed(seedColor: override ?? defaultColour);
               darkColorScheme = ColorScheme.fromSeed(
-                seedColor: overrideColour ?? defaultColour,
-                brightness: Brightness.dark,
-              );
+                  seedColor: override ?? defaultColour,
+                  brightness: Brightness.dark);
             }
 
             return MaterialApp.router(
@@ -83,12 +78,14 @@ sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required ThemeMode themeMode,
     Locale? locale,
+    Color? overrideColour,
   }) = __ViewModel;
 
   factory _ViewModel.fromStore(Store<RootState> store) {
     return _ViewModel(
       themeMode: themeModeSelector(store.state),
       locale: localeSelector(store.state),
+      overrideColour: null, // TODO Where could this come from?
     );
   }
 }

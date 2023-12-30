@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ViewModel {
   ThemeMode get themeMode => throw _privateConstructorUsedError;
   Locale? get locale => throw _privateConstructorUsedError;
+  Color? get overrideColour => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   _$ViewModelCopyWith<_ViewModel> get copyWith =>
@@ -30,7 +31,7 @@ abstract class _$ViewModelCopyWith<$Res> {
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call({ThemeMode themeMode, Locale? locale});
+  $Res call({ThemeMode themeMode, Locale? locale, Color? overrideColour});
 }
 
 /// @nodoc
@@ -48,6 +49,7 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   $Res call({
     Object? themeMode = null,
     Object? locale = freezed,
+    Object? overrideColour = freezed,
   }) {
     return _then(_value.copyWith(
       themeMode: null == themeMode
@@ -58,6 +60,10 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
               as Locale?,
+      overrideColour: freezed == overrideColour
+          ? _value.overrideColour
+          : overrideColour // ignore: cast_nullable_to_non_nullable
+              as Color?,
     ) as $Val);
   }
 }
@@ -70,7 +76,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({ThemeMode themeMode, Locale? locale});
+  $Res call({ThemeMode themeMode, Locale? locale, Color? overrideColour});
 }
 
 /// @nodoc
@@ -86,6 +92,7 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
   $Res call({
     Object? themeMode = null,
     Object? locale = freezed,
+    Object? overrideColour = freezed,
   }) {
     return _then(_$_ViewModelImpl(
       themeMode: null == themeMode
@@ -96,6 +103,10 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
               as Locale?,
+      overrideColour: freezed == overrideColour
+          ? _value.overrideColour
+          : overrideColour // ignore: cast_nullable_to_non_nullable
+              as Color?,
     ));
   }
 }
@@ -103,16 +114,19 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
-  const _$_ViewModelImpl({required this.themeMode, this.locale});
+  const _$_ViewModelImpl(
+      {required this.themeMode, this.locale, this.overrideColour});
 
   @override
   final ThemeMode themeMode;
   @override
   final Locale? locale;
+  @override
+  final Color? overrideColour;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(themeMode: $themeMode, locale: $locale)';
+    return '_ViewModel(themeMode: $themeMode, locale: $locale, overrideColour: $overrideColour)';
   }
 
   @override
@@ -121,7 +135,8 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     properties
       ..add(DiagnosticsProperty('type', '_ViewModel'))
       ..add(DiagnosticsProperty('themeMode', themeMode))
-      ..add(DiagnosticsProperty('locale', locale));
+      ..add(DiagnosticsProperty('locale', locale))
+      ..add(DiagnosticsProperty('overrideColour', overrideColour));
   }
 
   @override
@@ -131,11 +146,14 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
             other is _$_ViewModelImpl &&
             (identical(other.themeMode, themeMode) ||
                 other.themeMode == themeMode) &&
-            (identical(other.locale, locale) || other.locale == locale));
+            (identical(other.locale, locale) || other.locale == locale) &&
+            (identical(other.overrideColour, overrideColour) ||
+                other.overrideColour == overrideColour));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, themeMode, locale);
+  int get hashCode =>
+      Object.hash(runtimeType, themeMode, locale, overrideColour);
 
   @JsonKey(ignore: true)
   @override
@@ -147,12 +165,15 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
       {required final ThemeMode themeMode,
-      final Locale? locale}) = _$_ViewModelImpl;
+      final Locale? locale,
+      final Color? overrideColour}) = _$_ViewModelImpl;
 
   @override
   ThemeMode get themeMode;
   @override
   Locale? get locale;
+  @override
+  Color? get overrideColour;
   @override
   @JsonKey(ignore: true)
   _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>
