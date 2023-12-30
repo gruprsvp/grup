@@ -56,7 +56,7 @@ create table members
     created_at            timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at            timestamp with time zone default timezone('utc'::text, now()) not null,
 
-    group_id              bigint                                                        not null references groups,
+    group_id              bigint                                                        not null references groups on delete cascade,
     profile_id            uuid references profiles on delete cascade,
 
     -- TODO a group should be able to insert a profile with default replies before it even exists...
@@ -251,6 +251,13 @@ create policy "groups_update"
     using (is_member_of_group(id, '{admin}'::group_roles[]))
     with check (is_member_of_group(id, '{admin}'::group_roles[]));
 comment on policy "groups_update" on groups is 'Admins can update groups';
+
+create policy "groups_delete"
+    on groups
+    for delete
+    to authenticated
+    using (is_member_of_group(id, '{admin}'::group_roles[]));
+comment on policy "groups_delete" on groups is 'Admins can delete groups';
 
 create policy "members_select"
     on members

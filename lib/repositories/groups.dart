@@ -45,4 +45,13 @@ class GroupsRepository extends SupabaseRepository with Postgrest {
         .single()
         .withConverter(Group.fromJson);
   }
+
+  Future<Group> deleteGroup(int id) async {
+    return table()
+        .delete()
+        .eq('id', id)
+        .select()
+        .single()
+        .withConverter(Group.fromJson);
+  }
 }
