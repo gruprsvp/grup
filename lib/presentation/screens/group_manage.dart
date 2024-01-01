@@ -41,7 +41,9 @@ class GroupManageScreen extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            const GroupMembers(),
+            group != null
+                ? GroupMembersContainer(groupId: group!.id.toString())
+                : Center(child: Text(l10n.loading)),
             group != null
                 ? GroupEventsContainer(groupId: group!.id.toString())
                 : Center(child: Text(l10n.loading)),

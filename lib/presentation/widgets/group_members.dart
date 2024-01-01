@@ -14,7 +14,12 @@ class ContactInvite {
 }
 
 class GroupMembers extends StatelessWidget {
-  const GroupMembers({super.key});
+  final Iterable<Member>? members;
+
+  const GroupMembers({
+    super.key,
+    this.members,
+  });
 
   Future<List<ContactInvite>?> _inviteFromContacts(BuildContext context) async {
     if (!(await FlutterContacts.requestPermission(readonly: true))) {
@@ -97,12 +102,26 @@ class GroupMembers extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
+    final topWidget = members?.isNotEmpty ?? false
+        ? ListView.builder(
+            itemCount: members?.length,
+            itemBuilder: (context, index) {
+              final member = members!.elementAt(index);
+              return ListTile(
+                  title: Text(member.displayNameOverride ??
+                      member.profileId ??
+                      member.id.toString()),
+                  subtitle: Text(member.role.name),
+                  onTap: () {});
+            },
+          )
+        : Image.asset('assets/images/seeyoulateralligator.webp');
+
     return Padding(
-      padding: const EdgeInsets.all(16.0),
+      padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Column(
         children: [
-          Expanded(
-              child: Image.asset('assets/images/seeyoulateralligator.webp')),
+          Expanded(child: topWidget),
           FilledButton(
               onPressed: () => _inviteNew(context),
               child: Text(l10n.inviteMembersCTA)),

@@ -54,6 +54,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
           FormBuilderTextField(
             name: 'displayName',
             autocorrect: true,
+            initialValue: widget.schedule?.displayName,
             validator: FormBuilderValidators.required(),
             decoration: InputDecoration(
               labelText: l10n.eventName,
@@ -62,6 +63,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
           FormBuilderDateTimePicker(
             name: 'startDate',
             inputType: InputType.both,
+            initialValue: widget.schedule?.startDate,
             decoration: InputDecoration(
               labelText: l10n.eventDatetime,
             ),
@@ -77,6 +79,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
             builder: (context, snapshot) => snapshot.hasData
                 ? FormBuilderRecurrenceRule(
                     name: 'recurrenceRule',
+                    initialValue: widget.schedule?.recurrenceRule,
                     decoration: InputDecoration(
                       labelText: l10n.recurrenceRule,
                     ),
