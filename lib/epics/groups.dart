@@ -9,9 +9,12 @@ import 'package:supabase/supabase.dart';
 
 createGroupsEpics(GroupsRepository groups) => combineEpics<RootState>([
       _createRetrieveAllGroupsEpic(groups),
+      _createRetrieveOneGroupEpic(groups),
       _createCreateOneGroupEpic(groups),
       _createUpdateOneGroupEpic(groups),
       _loadGroupsOnSignInEpic,
+      _loadGroupsOnAppInitEpic,
+      _loadGroupOnGroupDetailsOpenEpic
     ]);
 
 /// Once the user signs in, request to load all the groups
@@ -22,36 +25,68 @@ Stream<dynamic> _loadGroupsOnSignInEpic(
         .where((action) => action.authState.event == AuthChangeEvent.signedIn)
         .map((event) => const RequestRetrieveAll<Group>());
 
+/// Once the app starts, request to load all the groups, if the user is signed in
+Stream<dynamic> _loadGroupsOnAppInitEpic(
+        Stream<dynamic> actions, EpicStore<RootState> store) =>
+    actions
+        .whereType<AppStartedAction>()
+        .where((_) => store.state.auth.status == AuthStatus.authenticated)
+        .map((event) => const RequestRetrieveAll<Group>());
+
+/// Refresh the group details when the user opens the group details screen
+Stream<dynamic> _loadGroupOnGroupDetailsOpenEpic(
+        Stream<dynamic> actions, EpicStore<RootState> store) =>
+    actions
+        .whereType<GroupDetailsOpenAction>()
+        .map((action) => RequestRetrieveOne<Group>(action.groupId));
+
+// TODO Let user refresh the groups, with an action including a Completer, to handle the refresh indicator.
+//      https://github.com/brianegan/flutter_redux/issues/6
+
 /// Fetch all the groups from the database
 Epic<RootState> _createRetrieveAllGroupsEpic(GroupsRepository groups) {
+  return (Stream<dynamic> actions, EpicStore<RootState> store) => actions
+      .whereType<RequestRetrieveAll<Group>>()
+      .asyncMap(
+        (action) => groups
+            .getUserGroups()
+            .then<dynamic>(
+                (groups) => SuccessRetrieveAll(groups.toList(growable: false)))
+            .catchError((error) => FailRetrieveAll(error)),
+      );
+}
+
+Epic<RootState> _createRetrieveOneGroupEpic(GroupsRepository groups) {
   return (Stream<dynamic> actions, EpicStore<RootState> store) =>
-      actions.whereType<RequestRetrieveAll<Group>>().asyncMap(
+      actions.whereType<RequestRetrieveOne<Group>>().asyncMap(
             (action) => groups
-                .getUserGroups()
-                .then<dynamic>(
-                    (groups) => SuccessRetrieveAll<Group>(groups.toList()))
-                .catchError((error) => FailRetrieveAll<Group>(error)),
+                .getGroupById(int.parse(action.id))
+                .then<dynamic>((group) => SuccessRetrieveOne(group))
+                .catchError(
+                    (error) => FailRetrieveOne(id: action.id, error: error)),
           );
 }
 
 Epic<RootState> _createCreateOneGroupEpic(GroupsRepository groups) {
-  return (Stream<dynamic> actions, EpicStore<RootState> store) =>
-      actions.whereType<RequestCreateOne<Group>>().asyncMap(
-            (action) => groups
-                .createGroup(action.entity)
-                .then<dynamic>((group) => SuccessCreateOne<Group>(group))
-                .catchError((error) =>
-                    FailCreateOne<Group>(entity: action.entity, error: error)),
-          );
+  return (Stream<dynamic> actions, EpicStore<RootState> store) => actions
+      .whereType<RequestCreateOne<Group>>()
+      .asyncMap(
+        (action) => groups
+            .createGroup(action.entity)
+            .then<dynamic>((group) => SuccessCreateOne(group))
+            .catchError(
+                (error) => FailCreateOne(entity: action.entity, error: error)),
+      );
 }
 
 Epic<RootState> _createUpdateOneGroupEpic(GroupsRepository groups) {
-  return (Stream<dynamic> actions, EpicStore<RootState> store) =>
-      actions.whereType<RequestUpdateOne<Group>>().asyncMap(
-            (action) => groups
-                .updateGroup(action.entity)
-                .then<dynamic>((group) => SuccessUpdateOne<Group>(group))
-                .catchError((error) =>
-                    FailUpdateOne<Group>(entity: action.entity, error: error)),
-          );
+  return (Stream<dynamic> actions, EpicStore<RootState> store) => actions
+      .whereType<RequestUpdateOne<Group>>()
+      .asyncMap(
+        (action) => groups
+            .updateGroup(action.entity)
+            .then<dynamic>((group) => SuccessUpdateOne(group))
+            .catchError(
+                (error) => FailUpdateOne(entity: action.entity, error: error)),
+      );
 }

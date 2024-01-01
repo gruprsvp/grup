@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart';
 
-/// Dispatched just before executing runApp
+/// Dispatched as onInit in the app widget
 @immutable
 class AppStartedAction {}
