@@ -2,6 +2,7 @@ export 'date_fab.dart';
 export 'form_builder_recurrence_rule.dart';
 export 'group_events.dart';
 export 'group_form.dart';
+export 'group_join.dart';
 export 'group_members.dart';
 export 'groups_list.dart';
 export 'home_empty_state.dart';

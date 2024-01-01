@@ -49,8 +49,8 @@ sealed class _ViewModel with _$ViewModel {
         switch (value) {
           GroupCreateResultNew(group: final group) =>
             RequestCreateOne<Group>(group),
-          // TODO: Handle this case.
-          GroupCreateResultJoin() => null,
+          GroupCreateResultJoin(code: final code) =>
+            JoinWithInviteCodeAction(code),
         },
       ),
       onRefresh: () async {

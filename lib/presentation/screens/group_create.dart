@@ -43,7 +43,9 @@ class GroupCreateScreen extends StatelessWidget {
         ),
         body: TabBarView(
           children: [
-            Center(child: Text(l10n.join)),
+            GroupJoin(
+                onJoin: (code) => context
+                    .pop<GroupCreateResult>(GroupCreateResultJoin(code))),
             GroupForm(
                 onSave: (group) => context
                     .pop<GroupCreateResult>(GroupCreateResultNew(group))),

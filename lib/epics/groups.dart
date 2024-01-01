@@ -15,6 +15,7 @@ createGroupsEpics(GroupsRepository groups) => combineEpics<RootState>([
       _createUpdateOneGroupEpic(groups),
       _loadGroupsOnSignInEpic,
       _loadGroupsOnAppInitEpic,
+      _loadGroupsOnInviteCodeUseEpic,
       _loadGroupOnGroupDetailsOpenEpic
     ]);
 
@@ -32,6 +33,12 @@ Stream<dynamic> _loadGroupsOnAppInitEpic(
     actions
         .whereType<AppStartedAction>()
         .where((_) => store.state.auth.status == AuthStatus.authenticated)
+        .map((event) => const RequestRetrieveAll<Group>());
+
+Stream<dynamic> _loadGroupsOnInviteCodeUseEpic(
+        Stream<dynamic> actions, EpicStore<RootState> store) =>
+    actions
+        .whereType<SuccessUseInviteCode>()
         .map((event) => const RequestRetrieveAll<Group>());
 
 /// Refresh the group details when the user opens the group details screen

@@ -307,6 +307,8 @@ void main() {
 
             await invitesRepository2.consumeInviteCode('CODE');
 
+            // TODO check that the invite code was deleted by now
+
             final userGroups2 = await groupsRepository2.getUserGroups();
             expect(userGroups2, hasLength(1));
           });

@@ -68,20 +68,22 @@ Future<Store<RootState>> _initStore() async {
     log('failed to load persisted state: $e');
   });
 
+  final defaultRepliesRepository = DefaultRepliesRepository(supabase: supabase);
   final groupsRepository = GroupsRepository(supabase: supabase);
+  final invitesRepository = InvitesRepository(supabase: supabase);
   final profilesRepository = ProfilesRepository(supabase: supabase);
+  final repliesRepository = RepliesRepository(supabase: supabase);
   final schedulesRepository = SchedulesRepository(supabase: supabase);
   final storageRepository = StorageRepository(supabase: supabase);
-  final defaultRepliesRepository = DefaultRepliesRepository(supabase: supabase);
-  final repliesRepository = RepliesRepository(supabase: supabase);
 
   final epics = combineEpics<RootState>([
     createRouterEpics(router),
-    createGroupsEpics(groupsRepository),
-    createProfileEpics(profilesRepository, storageRepository),
-    createSchedulesEpics(schedulesRepository),
     createDefaultRepliesEpics(defaultRepliesRepository),
+    createGroupsEpics(groupsRepository),
+    createInvitesEpics(invitesRepository),
+    createProfileEpics(profilesRepository, storageRepository),
     createRepliesEpics(repliesRepository),
+    createSchedulesEpics(schedulesRepository),
   ]);
 
   final initialState = localPersistedState ?? RootState.initialState();
