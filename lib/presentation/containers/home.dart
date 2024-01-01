@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:parousia/actions/actions.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/state/state.dart';
@@ -22,6 +23,7 @@ class HomeContainer extends StatelessWidget {
         groups: vm.groups,
         loading: vm.loading,
         onGroupCreate: vm.onGroupCreate,
+        onRefresh: vm.onRefresh,
       ),
       converter: _ViewModel.fromStore,
     );
@@ -35,6 +37,7 @@ sealed class _ViewModel with _$ViewModel {
     Profile? profile,
     Iterable<Group>? groups,
     ValueSetter<GroupCreateResult>? onGroupCreate,
+    AsyncCallback? onRefresh,
   }) = __ViewModel;
 
   static _ViewModel fromStore(Store<RootState> store) {
@@ -50,6 +53,11 @@ sealed class _ViewModel with _$ViewModel {
           GroupCreateResultJoin() => null,
         },
       ),
+      onRefresh: () async {
+        final action = GroupRefreshAllAction();
+        store.dispatch(action);
+        await action.completer.future;
+      },
     );
   }
 }

@@ -8,6 +8,7 @@ import 'package:rxdart/rxdart.dart';
 import 'package:supabase/supabase.dart';
 
 createGroupsEpics(GroupsRepository groups) => combineEpics<RootState>([
+      _createRefreshRetrieveAllGroupsEpic(groups),
       _createRetrieveAllGroupsEpic(groups),
       _createRetrieveOneGroupEpic(groups),
       _createCreateOneGroupEpic(groups),
@@ -42,6 +43,18 @@ Stream<dynamic> _loadGroupOnGroupDetailsOpenEpic(
 
 // TODO Let user refresh the groups, with an action including a Completer, to handle the refresh indicator.
 //      https://github.com/brianegan/flutter_redux/issues/6
+Epic<RootState> _createRefreshRetrieveAllGroupsEpic(GroupsRepository groups) {
+  return (Stream<dynamic> actions, EpicStore<RootState> store) => actions
+      .whereType<GroupRefreshAllAction>()
+      .asyncMap(
+        (action) => groups
+            .getUserGroups()
+            .then<dynamic>(
+                (groups) => SuccessRetrieveAll(groups.toList(growable: false)))
+            .catchError((error) => FailRetrieveAll(error))
+            .whenComplete(() => action.completer.complete()),
+      );
+}
 
 /// Fetch all the groups from the database
 Epic<RootState> _createRetrieveAllGroupsEpic(GroupsRepository groups) {

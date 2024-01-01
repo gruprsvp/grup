@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parousia/go_router_builder.dart';
@@ -9,6 +10,7 @@ class HomeScreen extends StatelessWidget {
   final Iterable<Group>? groups;
   final bool loading;
   final ValueSetter<GroupCreateResult>? onGroupCreate;
+  final AsyncCallback? onRefresh;
 
   const HomeScreen({
     super.key,
@@ -16,6 +18,7 @@ class HomeScreen extends StatelessWidget {
     this.profile,
     this.groups,
     this.onGroupCreate,
+    this.onRefresh,
   });
 
   ImageProvider? _profilePicture() {
@@ -51,7 +54,7 @@ class HomeScreen extends StatelessWidget {
         ],
       ),
       body: RefreshIndicator(
-        onRefresh: () => Future.delayed(Duration(seconds: 5)), // TODO
+        onRefresh: () async => onRefresh?.call(),
         child: innerBody,
       ),
       floatingActionButton: FloatingActionButton.extended(
