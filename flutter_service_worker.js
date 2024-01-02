@@ -5,8 +5,8 @@ const CACHE_NAME = 'flutter-app-cache';
 
 const RESOURCES = {"flutter.js": "7d69e653079438abfbb24b82a655b0a4",
 "manifest.json": "624ac4b6ab8752c1a39568595ec00d8c",
-"index.html": "1bfdd9a95722d88725d9a963def7b8ee",
-"/": "1bfdd9a95722d88725d9a963def7b8ee",
+"index.html": "b720e09b5cc24b1971c2baa723774cad",
+"/": "b720e09b5cc24b1971c2baa723774cad",
 "assets/supabase/config/supabase_dev.json": "fed899e3af98213be411078b223ea233",
 "assets/supabase/config/localhost.json": "88fea9c77aae413e4dc36b3b9dac598c",
 "assets/supabase/config/local_network.json": "af22750ebbd2569826a0ca3a2dc519e5",
