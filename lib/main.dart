@@ -18,31 +18,25 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'router.dart';
 
-final supabase = Supabase.instance.client;
-
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  final storePromise = _initStore();
-
   // TODO(borgoat): support more configuration files
   final supabaseConfigFile =
-      await rootBundle.loadString('supabase/config/local_network.json');
-  // await rootBundle.loadString('supabase/config/supabase_dev.json');
+      // await rootBundle.loadString('supabase/config/local_network.json');
+      await rootBundle.loadString('supabase/config/supabase_dev.json');
 
   final supabaseConfig = SupabaseConfig.fromString(supabaseConfigFile);
 
-  final supabasePromise = Supabase.initialize(
+  final supabase = await Supabase.initialize(
     anonKey: supabaseConfig.anonKey,
     url: supabaseConfig.apiUrl,
   );
 
-  await supabasePromise;
-
-  final store = await storePromise;
+  final store = await _initStore(supabase.client);
 
   // Propagate auth state changes to the store
-  supabase.auth.onAuthStateChange
+  supabase.client.auth.onAuthStateChange
       .listen((authState) => store.dispatch(AuthStateChangedAction(authState)));
 
   runApp(
@@ -50,7 +44,7 @@ Future<void> main() async {
   );
 }
 
-Future<Store<RootState>> _initStore() async {
+Future<Store<RootState>> _initStore(SupabaseClient supabase) async {
   const storageLocation = kIsWeb
       ? FlutterSaveLocation.sharedPreferences
       : FlutterSaveLocation.documentFile;
