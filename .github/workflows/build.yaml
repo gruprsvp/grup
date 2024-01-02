@@ -1,0 +1,29 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+jobs:
+  web:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Get Flutter
+        uses: subosito/flutter-action@v2.12.0
+        with:
+          channel: 'stable'
+      - name: Download dependencies
+        run: flutter pub get
+      # - run: flutter test  # TODO Needs supabase - https://supabase.com/docs/guides/cli/github-action/testing
+      - name: Configure git
+        run: |
+          git config --global user.name "GitHub Actions Bot"
+          git config --global user.email "tech+gitbot@parousia.app"
+          git fetch origin gh-pages:gh-pages
+      - name: Compile web and put in gh-pages branch
+        run: dart run peanut
+      - name: Push gh-pages
+        run: git push origin gh-pages

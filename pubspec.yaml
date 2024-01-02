@@ -96,6 +96,9 @@ dev_dependencies:
   integration_test:
     sdk: flutter
 
+  # To deploy to CloudFlare Pages
+  peanut: ^5.0.0
+
   # To manage app flavours
   flutter_flavorizr: ^2.2.1
 

@@ -73,6 +73,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.4.1"
+  build_cli_annotations:
+    dependency: transitive
+    description:
+      name: build_cli_annotations
+      sha256: b59d2769769efd6c9ff6d4c4cede0be115a566afc591705c2040b707534b1172
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.1.0"
   build_config:
     dependency: transitive
     description:
@@ -455,6 +463,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  git:
+    dependency: transitive
+    description:
+      name: git
+      sha256: "1982737427ef1ef2bb69027ea0234469774495e86afe202de81ee46d37364e55"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.2.1"
   glob:
     dependency: transitive
     description:
@@ -804,6 +820,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.2.1"
+  peanut:
+    dependency: "direct dev"
+    description:
+      name: peanut
+      sha256: "7dfafd7dad32f94863fe93d7ed59e0c5fb585fd9f874ff05c534f66995e2b2fb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.0"
   petitparser:
     dependency: transitive
     description:
