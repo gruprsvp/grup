@@ -33201,7 +33201,7 @@ $.an.toString
 q=A.aUr()
 i=B.ak
 s=2
-return A.r($.Qu().aDr("supabase/config/local_network.json"),$async$Qg)
+return A.r($.Qu().aDr("supabase/config/supabase_dev.json"),$async$Qg)
 case 2:p=i.uX(0,b,null)
 o=J.as(p)
 n=A.aT(o.i(p,"ANON_KEY"))
