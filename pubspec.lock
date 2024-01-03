@@ -37,10 +37,10 @@ packages:
     dependency: transitive
     description:
       name: archive
-      sha256: "7b875fd4a20b165a3084bd2d210439b22ebc653f21cea4842729c0c30c82596b"
+      sha256: "22600aa1e926be775fa5fe7e6894e7fb3df9efda8891c73f70fb3262399a432d"
       url: "https://pub.dev"
     source: hosted
-    version: "3.4.9"
+    version: "3.4.10"
   args:
     dependency: transitive
     description:
@@ -499,10 +499,10 @@ packages:
     dependency: transitive
     description:
       name: gotrue
-      sha256: "1e3e58e5a87aca51d3f161e8086c6c539e314d0cce7f252885ab4e0f51d94704"
+      sha256: f6040d446881658b4b2115a17c649e61c3ff3f82ff47d6c785aaa45f9608ae0d
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "2.2.0"
   graphs:
     dependency: transitive
     description:
@@ -880,10 +880,10 @@ packages:
     dependency: transitive
     description:
       name: postgrest
-      sha256: "4ee1d32c00b7e915e757724072ec10f4859bda25f232edafce82071870c75bce"
+      sha256: "748ebffffb60b4eaa270955dcf3742a19a2b315344c41ff1b4a0ebcd322b5181"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.1"
+    version: "2.1.0"
   process:
     dependency: transitive
     description:
@@ -1198,26 +1198,26 @@ packages:
     dependency: "direct main"
     description:
       name: supabase
-      sha256: "4d794826444bde1f84edeec3bec10ef0cdf529bb65aac1c52d42b4acf1555d50"
+      sha256: "13d24f1c7c489219f37bbb53842eafca008f2855fdea5cf731de835aebfc50bc"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.2"
+    version: "2.0.3"
   supabase_auth_ui:
     dependency: "direct main"
     description:
       name: supabase_auth_ui
-      sha256: "1c644b703bbe0ff98539ddff45f25547057f45006d305fc881342c1e48b38789"
+      sha256: "3008453147632031de4ec37fe8507a149a085a11bedc1a4a666480df817343e5"
       url: "https://pub.dev"
     source: hosted
-    version: "0.3.0"
+    version: "0.4.0+1"
   supabase_flutter:
     dependency: "direct main"
     description:
       name: supabase_flutter
-      sha256: "9ac78129afb3f18dca2b04b3d4e510eb46decd81e921d171b9fa6682021cb053"
+      sha256: "57ca6c970042e6cef29056b0dc71bb17fc9d6848188df5ddc69e819cf28c7923"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.2"
+    version: "2.1.0"
   sync_http:
     dependency: transitive
     description:

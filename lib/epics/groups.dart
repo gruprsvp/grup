@@ -48,8 +48,7 @@ Stream<dynamic> _loadGroupOnGroupDetailsOpenEpic(
         .whereType<GroupDetailsOpenAction>()
         .map((action) => RequestRetrieveOne<Group>(action.groupId));
 
-// TODO Let user refresh the groups, with an action including a Completer, to handle the refresh indicator.
-//      https://github.com/brianegan/flutter_redux/issues/6
+/// Let user refresh the groups, with an action including a Completer, to handle the refresh indicator.
 Epic<RootState> _createRefreshRetrieveAllGroupsEpic(GroupsRepository groups) {
   return (Stream<dynamic> actions, EpicStore<RootState> store) => actions
       .whereType<GroupRefreshAllAction>()

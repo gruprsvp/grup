@@ -21,9 +21,7 @@ Epic<RootState> _createRetrieveGroupDefaultRepliesEpic(
         (action) => defaultReplies
             .getDefaultReplies(int.parse(action.groupId))
             .then<dynamic>((defaultReplies) =>
-                SuccessRetrieveAll(defaultReplies.toList(growable: false)))
-            // TODO It seems this is not implemented in redux_entity
-            // SuccessRetrieveMany<Schedule>(schedules.toList()))
+                SuccessRetrieveMany(defaultReplies.toList(growable: false)))
             .catchError((error) => FailRetrieveMany<DefaultReply>([], error)),
       );
 }
