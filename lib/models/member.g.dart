@@ -10,7 +10,9 @@ _$MemberImpl _$$MemberImplFromJson(Map<String, dynamic> json) => _$MemberImpl(
       id: json['id'] as int,
       groupId: json['group_id'] as int,
       role: $enumDecode(_$GroupRolesEnumMap, json['role']),
-      profileId: json['profile_id'] as String?,
+      profiles: json['profiles'] == null
+          ? null
+          : Profile.fromJson(json['profiles'] as Map<String, dynamic>),
       displayNameOverride: json['display_name_override'] as String?,
       createdAt: json['created_at'] == null
           ? null
@@ -25,7 +27,7 @@ Map<String, dynamic> _$$MemberImplToJson(_$MemberImpl instance) =>
       'id': instance.id,
       'group_id': instance.groupId,
       'role': _$GroupRolesEnumMap[instance.role]!,
-      'profile_id': instance.profileId,
+      'profiles': instance.profiles,
       'display_name_override': instance.displayNameOverride,
       'created_at': instance.createdAt?.toIso8601String(),
       'updated_at': instance.updatedAt?.toIso8601String(),

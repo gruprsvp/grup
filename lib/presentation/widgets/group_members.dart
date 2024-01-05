@@ -3,6 +3,7 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/util/util.dart';
 
 enum _InviteSource { contacts, manually }
 
@@ -107,10 +108,21 @@ class GroupMembers extends StatelessWidget {
             itemCount: members?.length,
             itemBuilder: (context, index) {
               final member = members!.elementAt(index);
+              final name = member.displayNameOverride ??
+                  member.profiles?.displayName ??
+                  'Unknown'; // TODO
               return ListTile(
+                  leading: CircleAvatar(
+                    backgroundImage: member.profiles?.picture != null
+                        ? NetworkImage(member.profiles!.picture!)
+                        : null,
+                    child: member.profiles?.picture == null
+                        ? Text(getNameInitials(name)!)
+                        : null,
+                  ),
                   title: Text(member.displayNameOverride ??
-                      member.profileId ??
-                      member.id.toString()),
+                      member.profiles?.displayName ??
+                      'Unknown'),
                   subtitle: Text(member.role.name),
                   onTap: () {});
             },

@@ -9,7 +9,7 @@ DateTime _findSunday(DateTime date) {
 
 void main() {
   group('schedules instances', () {
-    test('something', () {
+    test('basic setup with default replies and overrides', () {
       const testDays = 10;
       final startDate = DateTime.now().getDayStart();
       final endDate = startDate.add(const Duration(days: testDays));
@@ -26,13 +26,11 @@ void main() {
       final weekendRecurrenceRule = CommonRecurrenceRules.weekends;
       final defaultReplies = [
         DefaultReply(
-            id: 128,
             memberId: 32,
             scheduleId: schedule.id,
             selectedOption: ReplyOptions.yes,
             recurrenceRule: dailyRecurrenceRule),
         DefaultReply(
-            id: 129,
             memberId: 33,
             scheduleId: schedule.id,
             selectedOption: ReplyOptions.yes,
@@ -43,16 +41,19 @@ void main() {
       final saturday = sunday.add(const Duration(days: -1));
       final replies = [
         Reply(
-            id: 128,
             memberId: 32,
             scheduleId: schedule.id,
             eventDate: sunday,
             selectedOption: ReplyOptions.no),
         Reply(
-            id: 129,
             memberId: 33,
             scheduleId: schedule.id,
             eventDate: sunday,
+            selectedOption: ReplyOptions.no),
+        Reply(
+            memberId: 32,
+            scheduleId: schedule.id,
+            eventDate: saturday,
             selectedOption: ReplyOptions.no),
       ];
 
@@ -62,11 +63,21 @@ void main() {
         replies: replies,
         startDate: startDate,
         endDate: endDate,
-        targetUserId: 32,
+        targetMemberId: 32,
       );
 
       expect(result, isNotNull);
       expect(result, hasLength(testDays));
+
+      final sundayInstance =
+          result.singleWhere((element) => element.eventDate == sunday);
+      expect(sundayInstance.myReply, ReplyOptions.no);
+      expect(sundayInstance.yesCount, 0);
+
+      final saturdayInstance =
+          result.singleWhere((element) => element.eventDate == saturday);
+      expect(saturdayInstance.myReply, ReplyOptions.no);
+      expect(saturdayInstance.yesCount, 1);
     });
   });
 }

@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import 'enum.dart';
+import 'package:parousia/models/models.dart';
 
 part 'member.freezed.dart';
 part 'member.g.dart';
@@ -13,7 +12,7 @@ sealed class Member with _$Member {
     required int id,
     required int groupId,
     required GroupRoles role,
-    String? profileId,
+    Profile? profiles,
     String? displayNameOverride,
     DateTime? createdAt,
     DateTime? updatedAt,

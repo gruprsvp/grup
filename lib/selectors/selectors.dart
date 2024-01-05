@@ -50,7 +50,9 @@ Iterable<ScheduleInstance>? selectSchedulesForSelectedDate(
       (r) => scheduleIds.contains(r.scheduleId) && range.contains(r.eventDate));
 
   final myselfInGroup = group.members
-      ?.firstWhere((member) => member.profileId == state.auth.user?.id);
+      ?.where((member) =>
+          member.profiles != null && member.profiles?.id == state.auth.user?.id)
+      .firstOrNull;
 
   return schedules.expand((schedule) => getScheduleInstances(
         schedule: schedule,
