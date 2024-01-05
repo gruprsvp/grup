@@ -17,7 +17,11 @@ jobs:
           channel: 'stable'
       - name: Download dependencies
         run: flutter pub get
-      # - run: flutter test  # TODO Needs supabase - https://supabase.com/docs/guides/cli/github-action/testing
+      - name: Setup Supabase
+        uses: supabase/setup-cli@v1
+      - name: Start Supabase local for tests
+        run: supabase start
+      - run: flutter test  # TODO Needs supabase - https://supabase.com/docs/guides/cli/github-action/testing
       - name: Configure git
         run: |
           git config --global user.name "GitHub Actions Bot"
