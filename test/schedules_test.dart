@@ -37,7 +37,8 @@ void main() {
             recurrenceRule: weekendRecurrenceRule),
       ];
 
-      final sunday = _findSunday(startDate);
+      // find next sunday (avoid today, start searching from tomorrow)
+      final sunday = _findSunday(startDate.add(const Duration(days: 1)));
       final saturday = sunday.add(const Duration(days: -1));
       final replies = [
         Reply(

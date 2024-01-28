@@ -17,7 +17,8 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ViewModel {
   bool get loading => throw _privateConstructorUsedError;
-  Iterable<Member>? get members => throw _privateConstructorUsedError;
+  Iterable<(Member, Profile?)>? get members =>
+      throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   _$ViewModelCopyWith<_ViewModel> get copyWith =>
@@ -30,7 +31,7 @@ abstract class _$ViewModelCopyWith<$Res> {
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call({bool loading, Iterable<Member>? members});
+  $Res call({bool loading, Iterable<(Member, Profile?)>? members});
 }
 
 /// @nodoc
@@ -57,7 +58,7 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
       members: freezed == members
           ? _value.members
           : members // ignore: cast_nullable_to_non_nullable
-              as Iterable<Member>?,
+              as Iterable<(Member, Profile?)>?,
     ) as $Val);
   }
 }
@@ -70,7 +71,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool loading, Iterable<Member>? members});
+  $Res call({bool loading, Iterable<(Member, Profile?)>? members});
 }
 
 /// @nodoc
@@ -95,7 +96,7 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
       members: freezed == members
           ? _value.members
           : members // ignore: cast_nullable_to_non_nullable
-              as Iterable<Member>?,
+              as Iterable<(Member, Profile?)>?,
     ));
   }
 }
@@ -108,7 +109,7 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   @override
   final bool loading;
   @override
-  final Iterable<Member>? members;
+  final Iterable<(Member, Profile?)>? members;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -147,12 +148,12 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
       {required final bool loading,
-      final Iterable<Member>? members}) = _$_ViewModelImpl;
+      final Iterable<(Member, Profile?)>? members}) = _$_ViewModelImpl;
 
   @override
   bool get loading;
   @override
-  Iterable<Member>? get members;
+  Iterable<(Member, Profile?)>? get members;
   @override
   @JsonKey(ignore: true)
   _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>

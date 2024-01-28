@@ -15,7 +15,6 @@ sealed class Group with _$Group {
     String? picture,
     DateTime? createdAt,
     DateTime? updatedAt,
-    List<Member>? members,
   }) = _Group;
 
   factory Group.fromJson(Map<String, dynamic> json) => _$GroupFromJson(json);

@@ -8,6 +8,14 @@ final groupsReducer = RemoteEntityReducer<RemoteEntityState<Group>, Group>(
   selectId: (group) => group.id.toString(),
 );
 
+final membersReducer = RemoteEntityReducer<RemoteEntityState<Member>, Member>(
+  selectId: (member) => member.id.toString(),
+);
+
+final invitesReducer = RemoteEntityReducer<RemoteEntityState<Invite>, Invite>(
+  selectId: (invite) => invite.id.toString(),
+);
+
 final schedulesReducer =
     RemoteEntityReducer<RemoteEntityState<Schedule>, Schedule>(
   selectId: (schedule) => schedule.id.toString(),

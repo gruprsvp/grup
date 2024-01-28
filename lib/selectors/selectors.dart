@@ -5,6 +5,10 @@ import 'package:parousia/state/state.dart';
 import 'package:parousia/util/util.dart';
 import 'package:rrule/rrule.dart';
 
+export 'members.dart';
+
+// TODO Move everything to separate files
+
 /// Provide the current theme mode.
 ThemeMode themeModeSelector(RootState state) => state.themeMode;
 
@@ -33,7 +37,7 @@ Future<RruleL10n> rruleL10nSelector(RootState state) {
 DateTimeRange selectedDateRangeSelector(RootState state) =>
     state.selectedDate.getDayRange();
 
-// TODO This shit should be better tested
+// TODO This shit should be better tested, and use reselect for memoization
 Iterable<ScheduleInstance>? selectSchedulesForSelectedDate(
     RootState state, int selectedGroupId) {
   final range = state.selectedDate.getDayRange();
@@ -49,9 +53,11 @@ Iterable<ScheduleInstance>? selectSchedulesForSelectedDate(
   final replies = state.replies.entities.values.where(
       (r) => scheduleIds.contains(r.scheduleId) && range.contains(r.eventDate));
 
-  final myselfInGroup = group.members
-      ?.where((member) =>
-          member.profiles != null && member.profiles?.id == state.auth.user?.id)
+  final myselfInGroup = state.members.entities.values
+      .where((member) =>
+          member.profileId != null &&
+          member.groupId == group.id &&
+          member.profileId == state.auth.user?.id)
       .firstOrNull;
 
   return schedules.expand((schedule) => getScheduleInstances(

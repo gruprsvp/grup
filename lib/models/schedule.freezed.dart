@@ -25,9 +25,6 @@ mixin _$Schedule {
   String get displayName => throw _privateConstructorUsedError;
   DateTime get startDate => throw _privateConstructorUsedError;
   RecurrenceRule get recurrenceRule => throw _privateConstructorUsedError;
-  Iterable<Reply>? get replies => throw _privateConstructorUsedError;
-  Iterable<DefaultReply>? get defaultReplies =>
-      throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
@@ -48,8 +45,6 @@ abstract class $ScheduleCopyWith<$Res> {
       String displayName,
       DateTime startDate,
       RecurrenceRule recurrenceRule,
-      Iterable<Reply>? replies,
-      Iterable<DefaultReply>? defaultReplies,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
@@ -72,8 +67,6 @@ class _$ScheduleCopyWithImpl<$Res, $Val extends Schedule>
     Object? displayName = null,
     Object? startDate = null,
     Object? recurrenceRule = null,
-    Object? replies = freezed,
-    Object? defaultReplies = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -98,14 +91,6 @@ class _$ScheduleCopyWithImpl<$Res, $Val extends Schedule>
           ? _value.recurrenceRule
           : recurrenceRule // ignore: cast_nullable_to_non_nullable
               as RecurrenceRule,
-      replies: freezed == replies
-          ? _value.replies
-          : replies // ignore: cast_nullable_to_non_nullable
-              as Iterable<Reply>?,
-      defaultReplies: freezed == defaultReplies
-          ? _value.defaultReplies
-          : defaultReplies // ignore: cast_nullable_to_non_nullable
-              as Iterable<DefaultReply>?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -132,8 +117,6 @@ abstract class _$$ScheduleImplCopyWith<$Res>
       String displayName,
       DateTime startDate,
       RecurrenceRule recurrenceRule,
-      Iterable<Reply>? replies,
-      Iterable<DefaultReply>? defaultReplies,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
@@ -154,8 +137,6 @@ class __$$ScheduleImplCopyWithImpl<$Res>
     Object? displayName = null,
     Object? startDate = null,
     Object? recurrenceRule = null,
-    Object? replies = freezed,
-    Object? defaultReplies = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -180,14 +161,6 @@ class __$$ScheduleImplCopyWithImpl<$Res>
           ? _value.recurrenceRule
           : recurrenceRule // ignore: cast_nullable_to_non_nullable
               as RecurrenceRule,
-      replies: freezed == replies
-          ? _value.replies
-          : replies // ignore: cast_nullable_to_non_nullable
-              as Iterable<Reply>?,
-      defaultReplies: freezed == defaultReplies
-          ? _value.defaultReplies
-          : defaultReplies // ignore: cast_nullable_to_non_nullable
-              as Iterable<DefaultReply>?,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -210,8 +183,6 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
       required this.displayName,
       required this.startDate,
       required this.recurrenceRule,
-      this.replies,
-      this.defaultReplies,
       this.createdAt,
       this.updatedAt});
 
@@ -229,17 +200,13 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
   @override
   final RecurrenceRule recurrenceRule;
   @override
-  final Iterable<Reply>? replies;
-  @override
-  final Iterable<DefaultReply>? defaultReplies;
-  @override
   final DateTime? createdAt;
   @override
   final DateTime? updatedAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Schedule(id: $id, groupId: $groupId, displayName: $displayName, startDate: $startDate, recurrenceRule: $recurrenceRule, replies: $replies, defaultReplies: $defaultReplies, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Schedule(id: $id, groupId: $groupId, displayName: $displayName, startDate: $startDate, recurrenceRule: $recurrenceRule, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -252,8 +219,6 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
       ..add(DiagnosticsProperty('displayName', displayName))
       ..add(DiagnosticsProperty('startDate', startDate))
       ..add(DiagnosticsProperty('recurrenceRule', recurrenceRule))
-      ..add(DiagnosticsProperty('replies', replies))
-      ..add(DiagnosticsProperty('defaultReplies', defaultReplies))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('updatedAt', updatedAt));
   }
@@ -271,9 +236,6 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
                 other.startDate == startDate) &&
             (identical(other.recurrenceRule, recurrenceRule) ||
                 other.recurrenceRule == recurrenceRule) &&
-            const DeepCollectionEquality().equals(other.replies, replies) &&
-            const DeepCollectionEquality()
-                .equals(other.defaultReplies, defaultReplies) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -282,17 +244,8 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      id,
-      groupId,
-      displayName,
-      startDate,
-      recurrenceRule,
-      const DeepCollectionEquality().hash(replies),
-      const DeepCollectionEquality().hash(defaultReplies),
-      createdAt,
-      updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, groupId, displayName,
+      startDate, recurrenceRule, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
   @override
@@ -315,8 +268,6 @@ abstract class _Schedule implements Schedule {
       required final String displayName,
       required final DateTime startDate,
       required final RecurrenceRule recurrenceRule,
-      final Iterable<Reply>? replies,
-      final Iterable<DefaultReply>? defaultReplies,
       final DateTime? createdAt,
       final DateTime? updatedAt}) = _$ScheduleImpl;
 
@@ -333,10 +284,6 @@ abstract class _Schedule implements Schedule {
   DateTime get startDate;
   @override
   RecurrenceRule get recurrenceRule;
-  @override
-  Iterable<Reply>? get replies;
-  @override
-  Iterable<DefaultReply>? get defaultReplies;
   @override
   DateTime? get createdAt;
   @override

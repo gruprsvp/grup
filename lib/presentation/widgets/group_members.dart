@@ -15,7 +15,7 @@ class ContactInvite {
 }
 
 class GroupMembers extends StatelessWidget {
-  final Iterable<Member>? members;
+  final Iterable<(Member, Profile?)>? members;
 
   const GroupMembers({
     super.key,
@@ -33,10 +33,7 @@ class GroupMembers extends StatelessWidget {
       withProperties: true,
     );
 
-    if (!context.mounted) {
-      // TODO: how can we avoid this?
-      throw Exception('Context not mounted');
-    }
+    if (!context.mounted) return null;
 
     final invited = await SelectContactsRoute().push<List<Contact>>(context);
 
@@ -55,6 +52,8 @@ class GroupMembers extends StatelessWidget {
   }
 
   Future<List<ContactInvite>?> _inviteNew(BuildContext context) async {
+    // TODO check if Contact API is available, if not, go to manual invite directly
+
     final _InviteSource? source = await showAdaptiveDialog(
       context: context,
       builder: (context) {
@@ -87,10 +86,7 @@ class GroupMembers extends StatelessWidget {
       },
     );
 
-    if (!context.mounted) {
-      // TODO: how can we avoid this?
-      throw Exception('Context not mounted');
-    }
+    if (!context.mounted) return null;
 
     return switch (source) {
       _InviteSource.contacts => _inviteFromContacts(context),
@@ -107,21 +103,21 @@ class GroupMembers extends StatelessWidget {
         ? ListView.builder(
             itemCount: members?.length,
             itemBuilder: (context, index) {
-              final member = members!.elementAt(index);
+              final (member, memberProfile) = members!.elementAt(index);
               final name = member.displayNameOverride ??
-                  member.profiles?.displayName ??
+                  memberProfile?.displayName ??
                   'Unknown'; // TODO
               return ListTile(
                   leading: CircleAvatar(
-                    backgroundImage: member.profiles?.picture != null
-                        ? NetworkImage(member.profiles!.picture!)
+                    backgroundImage: memberProfile?.picture != null
+                        ? NetworkImage(memberProfile!.picture!)
                         : null,
-                    child: member.profiles?.picture == null
+                    child: memberProfile?.picture == null
                         ? Text(getNameInitials(name)!)
                         : null,
                   ),
                   title: Text(member.displayNameOverride ??
-                      member.profiles?.displayName ??
+                      memberProfile?.displayName ??
                       'Unknown'),
                   subtitle: Text(member.role.name),
                   onTap: () {});

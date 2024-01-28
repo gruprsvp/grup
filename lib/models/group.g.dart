@@ -17,9 +17,6 @@ _$GroupImpl _$$GroupImplFromJson(Map<String, dynamic> json) => _$GroupImpl(
       updatedAt: json['updated_at'] == null
           ? null
           : DateTime.parse(json['updated_at'] as String),
-      members: (json['members'] as List<dynamic>?)
-          ?.map((e) => Member.fromJson(e as Map<String, dynamic>))
-          .toList(),
     );
 
 Map<String, dynamic> _$$GroupImplToJson(_$GroupImpl instance) =>
@@ -30,5 +27,4 @@ Map<String, dynamic> _$$GroupImplToJson(_$GroupImpl instance) =>
       'picture': instance.picture,
       'created_at': instance.createdAt?.toIso8601String(),
       'updated_at': instance.updatedAt?.toIso8601String(),
-      'members': instance.members,
     };

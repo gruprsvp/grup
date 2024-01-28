@@ -12,7 +12,7 @@ sealed class Member with _$Member {
     required int id,
     required int groupId,
     required GroupRoles role,
-    Profile? profiles,
+    String? profileId,
     String? displayNameOverride,
     DateTime? createdAt,
     DateTime? updatedAt,

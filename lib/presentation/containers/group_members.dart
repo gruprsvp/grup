@@ -4,6 +4,7 @@ import 'package:flutter_redux/flutter_redux.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
+import 'package:parousia/selectors/selectors.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
 
@@ -33,14 +34,14 @@ class GroupMembersContainer extends StatelessWidget {
 class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required bool loading,
-    Iterable<Member>? members,
+    Iterable<(Member, Profile?)>? members,
   }) = __ViewModel;
 
-  static _ViewModel fromStore(Store<RootState> store, String groupId) {
-    return _ViewModel(
+  static _ViewModel fromStore(Store<RootState> store, String groupId) =>
+      _ViewModel(
         loading: store.state.groups.creating ||
             store.state.groups.loadingAll ||
             (store.state.groups.loadingIds[groupId] ?? false),
-        members: store.state.groups.entities[groupId]?.members);
-  }
+        members: groupMembersWithProfilesSelector(store.state, groupId),
+      );
 }

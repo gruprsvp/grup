@@ -23,7 +23,7 @@ mixin _$Member {
   int get id => throw _privateConstructorUsedError;
   int get groupId => throw _privateConstructorUsedError;
   GroupRoles get role => throw _privateConstructorUsedError;
-  Profile? get profiles => throw _privateConstructorUsedError;
+  String? get profileId => throw _privateConstructorUsedError;
   String? get displayNameOverride => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
@@ -42,12 +42,10 @@ abstract class $MemberCopyWith<$Res> {
       {int id,
       int groupId,
       GroupRoles role,
-      Profile? profiles,
+      String? profileId,
       String? displayNameOverride,
       DateTime? createdAt,
       DateTime? updatedAt});
-
-  $ProfileCopyWith<$Res>? get profiles;
 }
 
 /// @nodoc
@@ -66,7 +64,7 @@ class _$MemberCopyWithImpl<$Res, $Val extends Member>
     Object? id = null,
     Object? groupId = null,
     Object? role = null,
-    Object? profiles = freezed,
+    Object? profileId = freezed,
     Object? displayNameOverride = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -84,10 +82,10 @@ class _$MemberCopyWithImpl<$Res, $Val extends Member>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as GroupRoles,
-      profiles: freezed == profiles
-          ? _value.profiles
-          : profiles // ignore: cast_nullable_to_non_nullable
-              as Profile?,
+      profileId: freezed == profileId
+          ? _value.profileId
+          : profileId // ignore: cast_nullable_to_non_nullable
+              as String?,
       displayNameOverride: freezed == displayNameOverride
           ? _value.displayNameOverride
           : displayNameOverride // ignore: cast_nullable_to_non_nullable
@@ -102,18 +100,6 @@ class _$MemberCopyWithImpl<$Res, $Val extends Member>
               as DateTime?,
     ) as $Val);
   }
-
-  @override
-  @pragma('vm:prefer-inline')
-  $ProfileCopyWith<$Res>? get profiles {
-    if (_value.profiles == null) {
-      return null;
-    }
-
-    return $ProfileCopyWith<$Res>(_value.profiles!, (value) {
-      return _then(_value.copyWith(profiles: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -127,13 +113,10 @@ abstract class _$$MemberImplCopyWith<$Res> implements $MemberCopyWith<$Res> {
       {int id,
       int groupId,
       GroupRoles role,
-      Profile? profiles,
+      String? profileId,
       String? displayNameOverride,
       DateTime? createdAt,
       DateTime? updatedAt});
-
-  @override
-  $ProfileCopyWith<$Res>? get profiles;
 }
 
 /// @nodoc
@@ -150,7 +133,7 @@ class __$$MemberImplCopyWithImpl<$Res>
     Object? id = null,
     Object? groupId = null,
     Object? role = null,
-    Object? profiles = freezed,
+    Object? profileId = freezed,
     Object? displayNameOverride = freezed,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -168,10 +151,10 @@ class __$$MemberImplCopyWithImpl<$Res>
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
               as GroupRoles,
-      profiles: freezed == profiles
-          ? _value.profiles
-          : profiles // ignore: cast_nullable_to_non_nullable
-              as Profile?,
+      profileId: freezed == profileId
+          ? _value.profileId
+          : profileId // ignore: cast_nullable_to_non_nullable
+              as String?,
       displayNameOverride: freezed == displayNameOverride
           ? _value.displayNameOverride
           : displayNameOverride // ignore: cast_nullable_to_non_nullable
@@ -196,7 +179,7 @@ class _$MemberImpl with DiagnosticableTreeMixin implements _Member {
       {required this.id,
       required this.groupId,
       required this.role,
-      this.profiles,
+      this.profileId,
       this.displayNameOverride,
       this.createdAt,
       this.updatedAt});
@@ -211,7 +194,7 @@ class _$MemberImpl with DiagnosticableTreeMixin implements _Member {
   @override
   final GroupRoles role;
   @override
-  final Profile? profiles;
+  final String? profileId;
   @override
   final String? displayNameOverride;
   @override
@@ -221,7 +204,7 @@ class _$MemberImpl with DiagnosticableTreeMixin implements _Member {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Member(id: $id, groupId: $groupId, role: $role, profiles: $profiles, displayNameOverride: $displayNameOverride, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Member(id: $id, groupId: $groupId, role: $role, profileId: $profileId, displayNameOverride: $displayNameOverride, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -232,7 +215,7 @@ class _$MemberImpl with DiagnosticableTreeMixin implements _Member {
       ..add(DiagnosticsProperty('id', id))
       ..add(DiagnosticsProperty('groupId', groupId))
       ..add(DiagnosticsProperty('role', role))
-      ..add(DiagnosticsProperty('profiles', profiles))
+      ..add(DiagnosticsProperty('profileId', profileId))
       ..add(DiagnosticsProperty('displayNameOverride', displayNameOverride))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('updatedAt', updatedAt));
@@ -246,8 +229,8 @@ class _$MemberImpl with DiagnosticableTreeMixin implements _Member {
             (identical(other.id, id) || other.id == id) &&
             (identical(other.groupId, groupId) || other.groupId == groupId) &&
             (identical(other.role, role) || other.role == role) &&
-            (identical(other.profiles, profiles) ||
-                other.profiles == profiles) &&
+            (identical(other.profileId, profileId) ||
+                other.profileId == profileId) &&
             (identical(other.displayNameOverride, displayNameOverride) ||
                 other.displayNameOverride == displayNameOverride) &&
             (identical(other.createdAt, createdAt) ||
@@ -258,7 +241,7 @@ class _$MemberImpl with DiagnosticableTreeMixin implements _Member {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, id, groupId, role, profiles,
+  int get hashCode => Object.hash(runtimeType, id, groupId, role, profileId,
       displayNameOverride, createdAt, updatedAt);
 
   @JsonKey(ignore: true)
@@ -280,7 +263,7 @@ abstract class _Member implements Member {
       {required final int id,
       required final int groupId,
       required final GroupRoles role,
-      final Profile? profiles,
+      final String? profileId,
       final String? displayNameOverride,
       final DateTime? createdAt,
       final DateTime? updatedAt}) = _$MemberImpl;
@@ -294,7 +277,7 @@ abstract class _Member implements Member {
   @override
   GroupRoles get role;
   @override
-  Profile? get profiles;
+  String? get profileId;
   @override
   String? get displayNameOverride;
   @override

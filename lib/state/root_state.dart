@@ -15,6 +15,8 @@ sealed class RootState with _$RootState {
   const factory RootState({
     @Default(RemoteEntityState<Profile>()) RemoteEntityState<Profile> profiles,
     @Default(RemoteEntityState<Group>()) RemoteEntityState<Group> groups,
+    @Default(RemoteEntityState<Member>()) RemoteEntityState<Member> members,
+    @Default(RemoteEntityState<Invite>()) RemoteEntityState<Invite> invites,
     @Default(RemoteEntityState<Schedule>())
     RemoteEntityState<Schedule> schedules,
     @Default(RemoteEntityState<DefaultReply>())

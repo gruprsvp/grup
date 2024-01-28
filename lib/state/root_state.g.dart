@@ -18,6 +18,16 @@ _$RootStateImpl _$$RootStateImplFromJson(Map<String, dynamic> json) =>
           : RemoteEntityState<Group>.fromJson(
               json['groups'] as Map<String, dynamic>,
               (value) => Group.fromJson(value as Map<String, dynamic>)),
+      members: json['members'] == null
+          ? const RemoteEntityState<Member>()
+          : RemoteEntityState<Member>.fromJson(
+              json['members'] as Map<String, dynamic>,
+              (value) => Member.fromJson(value as Map<String, dynamic>)),
+      invites: json['invites'] == null
+          ? const RemoteEntityState<Invite>()
+          : RemoteEntityState<Invite>.fromJson(
+              json['invites'] as Map<String, dynamic>,
+              (value) => Invite.fromJson(value as Map<String, dynamic>)),
       schedules: json['schedules'] == null
           ? const RemoteEntityState<Schedule>()
           : RemoteEntityState<Schedule>.fromJson(
@@ -48,6 +58,8 @@ Map<String, dynamic> _$$RootStateImplToJson(_$RootStateImpl instance) =>
     <String, dynamic>{
       'profiles': instance.profiles,
       'groups': instance.groups,
+      'members': instance.members,
+      'invites': instance.invites,
       'schedules': instance.schedules,
       'defaultReplies': instance.defaultReplies,
       'replies': instance.replies,

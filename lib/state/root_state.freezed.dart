@@ -22,6 +22,8 @@ RootState _$RootStateFromJson(Map<String, dynamic> json) {
 mixin _$RootState {
   RemoteEntityState<Profile> get profiles => throw _privateConstructorUsedError;
   RemoteEntityState<Group> get groups => throw _privateConstructorUsedError;
+  RemoteEntityState<Member> get members => throw _privateConstructorUsedError;
+  RemoteEntityState<Invite> get invites => throw _privateConstructorUsedError;
   RemoteEntityState<Schedule> get schedules =>
       throw _privateConstructorUsedError;
   RemoteEntityState<DefaultReply> get defaultReplies =>
@@ -46,6 +48,8 @@ abstract class $RootStateCopyWith<$Res> {
   $Res call(
       {RemoteEntityState<Profile> profiles,
       RemoteEntityState<Group> groups,
+      RemoteEntityState<Member> members,
+      RemoteEntityState<Invite> invites,
       RemoteEntityState<Schedule> schedules,
       RemoteEntityState<DefaultReply> defaultReplies,
       RemoteEntityState<Reply> replies,
@@ -73,6 +77,8 @@ class _$RootStateCopyWithImpl<$Res, $Val extends RootState>
   $Res call({
     Object? profiles = null,
     Object? groups = null,
+    Object? members = null,
+    Object? invites = null,
     Object? schedules = null,
     Object? defaultReplies = null,
     Object? replies = null,
@@ -90,6 +96,14 @@ class _$RootStateCopyWithImpl<$Res, $Val extends RootState>
           ? _value.groups
           : groups // ignore: cast_nullable_to_non_nullable
               as RemoteEntityState<Group>,
+      members: null == members
+          ? _value.members
+          : members // ignore: cast_nullable_to_non_nullable
+              as RemoteEntityState<Member>,
+      invites: null == invites
+          ? _value.invites
+          : invites // ignore: cast_nullable_to_non_nullable
+              as RemoteEntityState<Invite>,
       schedules: null == schedules
           ? _value.schedules
           : schedules // ignore: cast_nullable_to_non_nullable
@@ -153,6 +167,8 @@ abstract class _$$RootStateImplCopyWith<$Res>
   $Res call(
       {RemoteEntityState<Profile> profiles,
       RemoteEntityState<Group> groups,
+      RemoteEntityState<Member> members,
+      RemoteEntityState<Invite> invites,
       RemoteEntityState<Schedule> schedules,
       RemoteEntityState<DefaultReply> defaultReplies,
       RemoteEntityState<Reply> replies,
@@ -180,6 +196,8 @@ class __$$RootStateImplCopyWithImpl<$Res>
   $Res call({
     Object? profiles = null,
     Object? groups = null,
+    Object? members = null,
+    Object? invites = null,
     Object? schedules = null,
     Object? defaultReplies = null,
     Object? replies = null,
@@ -197,6 +215,14 @@ class __$$RootStateImplCopyWithImpl<$Res>
           ? _value.groups
           : groups // ignore: cast_nullable_to_non_nullable
               as RemoteEntityState<Group>,
+      members: null == members
+          ? _value.members
+          : members // ignore: cast_nullable_to_non_nullable
+              as RemoteEntityState<Member>,
+      invites: null == invites
+          ? _value.invites
+          : invites // ignore: cast_nullable_to_non_nullable
+              as RemoteEntityState<Invite>,
       schedules: null == schedules
           ? _value.schedules
           : schedules // ignore: cast_nullable_to_non_nullable
@@ -235,6 +261,8 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
   const _$RootStateImpl(
       {this.profiles = const RemoteEntityState<Profile>(),
       this.groups = const RemoteEntityState<Group>(),
+      this.members = const RemoteEntityState<Member>(),
+      this.invites = const RemoteEntityState<Invite>(),
       this.schedules = const RemoteEntityState<Schedule>(),
       this.defaultReplies = const RemoteEntityState<DefaultReply>(),
       this.replies = const RemoteEntityState<Reply>(),
@@ -252,6 +280,12 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
   @override
   @JsonKey()
   final RemoteEntityState<Group> groups;
+  @override
+  @JsonKey()
+  final RemoteEntityState<Member> members;
+  @override
+  @JsonKey()
+  final RemoteEntityState<Invite> invites;
   @override
   @JsonKey()
   final RemoteEntityState<Schedule> schedules;
@@ -274,7 +308,7 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RootState(profiles: $profiles, groups: $groups, schedules: $schedules, defaultReplies: $defaultReplies, replies: $replies, auth: $auth, themeMode: $themeMode, selectedDate: $selectedDate, locale: $locale)';
+    return 'RootState(profiles: $profiles, groups: $groups, members: $members, invites: $invites, schedules: $schedules, defaultReplies: $defaultReplies, replies: $replies, auth: $auth, themeMode: $themeMode, selectedDate: $selectedDate, locale: $locale)';
   }
 
   @override
@@ -284,6 +318,8 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
       ..add(DiagnosticsProperty('type', 'RootState'))
       ..add(DiagnosticsProperty('profiles', profiles))
       ..add(DiagnosticsProperty('groups', groups))
+      ..add(DiagnosticsProperty('members', members))
+      ..add(DiagnosticsProperty('invites', invites))
       ..add(DiagnosticsProperty('schedules', schedules))
       ..add(DiagnosticsProperty('defaultReplies', defaultReplies))
       ..add(DiagnosticsProperty('replies', replies))
@@ -301,6 +337,8 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
             (identical(other.profiles, profiles) ||
                 other.profiles == profiles) &&
             (identical(other.groups, groups) || other.groups == groups) &&
+            (identical(other.members, members) || other.members == members) &&
+            (identical(other.invites, invites) || other.invites == invites) &&
             (identical(other.schedules, schedules) ||
                 other.schedules == schedules) &&
             (identical(other.defaultReplies, defaultReplies) ||
@@ -316,8 +354,19 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
 
   @JsonKey(ignore: true)
   @override
-  int get hashCode => Object.hash(runtimeType, profiles, groups, schedules,
-      defaultReplies, replies, auth, themeMode, selectedDate, locale);
+  int get hashCode => Object.hash(
+      runtimeType,
+      profiles,
+      groups,
+      members,
+      invites,
+      schedules,
+      defaultReplies,
+      replies,
+      auth,
+      themeMode,
+      selectedDate,
+      locale);
 
   @JsonKey(ignore: true)
   @override
@@ -337,6 +386,8 @@ abstract class _RootState implements RootState {
   const factory _RootState(
       {final RemoteEntityState<Profile> profiles,
       final RemoteEntityState<Group> groups,
+      final RemoteEntityState<Member> members,
+      final RemoteEntityState<Invite> invites,
       final RemoteEntityState<Schedule> schedules,
       final RemoteEntityState<DefaultReply> defaultReplies,
       final RemoteEntityState<Reply> replies,
@@ -352,6 +403,10 @@ abstract class _RootState implements RootState {
   RemoteEntityState<Profile> get profiles;
   @override
   RemoteEntityState<Group> get groups;
+  @override
+  RemoteEntityState<Member> get members;
+  @override
+  RemoteEntityState<Invite> get invites;
   @override
   RemoteEntityState<Schedule> get schedules;
   @override

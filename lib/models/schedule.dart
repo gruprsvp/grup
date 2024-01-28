@@ -15,8 +15,6 @@ sealed class Schedule with _$Schedule {
     required String displayName,
     required DateTime startDate,
     required RecurrenceRule recurrenceRule,
-    Iterable<Reply>? replies,
-    Iterable<DefaultReply>? defaultReplies,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _Schedule;
