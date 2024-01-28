@@ -8,7 +8,6 @@ import 'package:rxdart/rxdart.dart';
 import 'package:supabase/supabase.dart';
 
 createGroupsEpics(GroupsRepository groups) => combineEpics<AppState>([
-      _createRefreshRetrieveAllGroupsEpic(groups),
       _createRetrieveAllGroupsEpic(groups),
       _createRetrieveOneGroupEpic(groups),
       _createCreateOneGroupEpic(groups),
@@ -48,30 +47,27 @@ Stream<dynamic> _loadGroupOnGroupDetailsOpenEpic(
         .whereType<GroupDetailsOpenAction>()
         .map((action) => RequestRetrieveOne<Group>(action.groupId));
 
-/// Let user refresh the groups, with an action including a Completer, to handle the refresh indicator.
-Epic<AppState> _createRefreshRetrieveAllGroupsEpic(GroupsRepository groups) {
-  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
-      .whereType<GroupRefreshAllAction>()
-      .asyncMap(
-        (action) => groups
-            .getUserGroups()
-            .then<dynamic>(
-                (groups) => SuccessRetrieveAll(groups.toList(growable: false)))
-            .catchError((error) => FailRetrieveAll(error))
-            .whenComplete(() => action.completer.complete()),
-      );
-}
-
-/// Fetch all the groups from the database
+/// Load all groups for the current user, together with their members and profiles.
+/// If the action includes a Completer, complete, to handle the refresh indicator.
 Epic<AppState> _createRetrieveAllGroupsEpic(GroupsRepository groups) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
-      .whereType<RequestRetrieveAll<Group>>()
-      .asyncMap(
+      .where((action) =>
+          action is GroupRefreshAllAction ||
+          action is RequestRetrieveAll<Group>)
+      .switchMap(
         (action) => groups
             .getUserGroups()
-            .then<dynamic>(
-                (groups) => SuccessRetrieveAll(groups.toList(growable: false)))
-            .catchError((error) => FailRetrieveAll(error)),
+            .whenComplete(() => action is GroupRefreshAllAction
+                ? action.completer.complete()
+                : null)
+            .asStream() // TODO Would it be easier to dispatch 1 action here, and then rethink reducers?
+            .expand(
+              (userGroups) => [
+                SuccessRetrieveAll(userGroups.groups.toList(growable: false)),
+                SuccessRetrieveMany(userGroups.members.toList(growable: false)),
+                SuccessRetrieveMany(userGroups.profiles.toList(growable: false))
+              ],
+            ),
       );
 }
 

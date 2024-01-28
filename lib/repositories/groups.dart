@@ -6,12 +6,29 @@ import 'supabase.dart';
 class GroupsRepository extends SupabaseRepository with Postgrest {
   GroupsRepository({required super.supabase}) : super(tableName: Tables.groups);
 
-  Future<Iterable<Group>> getUserGroups() async {
+  Future<
+      ({
+        Iterable<Group> groups,
+        Iterable<Member> members,
+        Iterable<Profile> profiles,
+      })> getUserGroups() async {
     return table()
         .select('*, members!inner(*,profiles!inner(*))')
         // TODO(borgoat): should filter by profile_id but return all members
         // .eq('members.profile_id', supabase.auth.currentUser!.id)
-        .withConverter((data) => data.map(Group.fromJson));
+        .withConverter((data) {
+      final groups = <Group>{};
+      final members = <Member>{};
+      final profiles = <Profile>{};
+      for (var value in data) {
+        groups.add(Group.fromJson(value));
+        for (var member in value['members']) {
+          members.add(Member.fromJson(member));
+          profiles.add(Profile.fromJson(member['profiles']));
+        }
+      }
+      return (groups: groups, members: members, profiles: profiles);
+    });
   }
 
   Future<Group> getGroupById(int id) async {
