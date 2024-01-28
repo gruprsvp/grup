@@ -3,7 +3,7 @@ const MANIFEST = 'flutter-app-manifest';
 const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
-const RESOURCES = {"main.dart.js": "ce49a75caaa9cc2392d9134585a44e76",
+const RESOURCES = {"main.dart.js": "d78c92de718c3f33f0ee9a8ce5c65cfe",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "flutter.js": "7d69e653079438abfbb24b82a655b0a4",
 "assets/supabase/config/local_network.json": "af22750ebbd2569826a0ca3a2dc519e5",
@@ -314,8 +314,8 @@ const RESOURCES = {"main.dart.js": "ce49a75caaa9cc2392d9134585a44e76",
 "icons/Icon-maskable-192.png": "c457ef57daa1d16f64b27b786ec2ea3c",
 "icons/Icon-192.png": "ac9a721a12bbc803b44f645561ecb1e1",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
-"index.html": "b29bab294164b24cfa5df1eb530925ed",
-"/": "b29bab294164b24cfa5df1eb530925ed",
+"index.html": "c887a295fe358cf2476293301e42f278",
+"/": "c887a295fe358cf2476293301e42f278",
 "version.json": "df7ea6a712af13f2a376d8306d414d78",
 "manifest.json": "624ac4b6ab8752c1a39568595ec00d8c"};
 // The application shell files that are downloaded before a service worker can
