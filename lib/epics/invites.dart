@@ -4,12 +4,12 @@ import 'package:parousia/state/state.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 
-createInvitesEpics(InvitesRepository invites) => combineEpics<RootState>([
+createInvitesEpics(InvitesRepository invites) => combineEpics<AppState>([
       _createUseInviteCodeEpic(invites),
     ]);
 
-Epic<RootState> _createUseInviteCodeEpic(InvitesRepository invites) {
-  return (Stream<dynamic> actions, EpicStore<RootState> store) =>
+Epic<AppState> _createUseInviteCodeEpic(InvitesRepository invites) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<JoinWithInviteCodeAction>().asyncMap(
             (action) => invites
                 .consumeInviteCode(action.code)

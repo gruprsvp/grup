@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'root_state.dart';
+part of 'app_state.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-RootState _$RootStateFromJson(Map<String, dynamic> json) {
-  return _RootState.fromJson(json);
+AppState _$AppStateFromJson(Map<String, dynamic> json) {
+  return _AppState.fromJson(json);
 }
 
 /// @nodoc
-mixin _$RootState {
+mixin _$AppState {
   RemoteEntityState<Profile> get profiles => throw _privateConstructorUsedError;
   RemoteEntityState<Group> get groups => throw _privateConstructorUsedError;
   RemoteEntityState<Member> get members => throw _privateConstructorUsedError;
@@ -36,14 +36,14 @@ mixin _$RootState {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $RootStateCopyWith<RootState> get copyWith =>
+  $AppStateCopyWith<AppState> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $RootStateCopyWith<$Res> {
-  factory $RootStateCopyWith(RootState value, $Res Function(RootState) then) =
-      _$RootStateCopyWithImpl<$Res, RootState>;
+abstract class $AppStateCopyWith<$Res> {
+  factory $AppStateCopyWith(AppState value, $Res Function(AppState) then) =
+      _$AppStateCopyWithImpl<$Res, AppState>;
   @useResult
   $Res call(
       {RemoteEntityState<Profile> profiles,
@@ -63,9 +63,9 @@ abstract class $RootStateCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$RootStateCopyWithImpl<$Res, $Val extends RootState>
-    implements $RootStateCopyWith<$Res> {
-  _$RootStateCopyWithImpl(this._value, this._then);
+class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
+    implements $AppStateCopyWith<$Res> {
+  _$AppStateCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -157,11 +157,11 @@ class _$RootStateCopyWithImpl<$Res, $Val extends RootState>
 }
 
 /// @nodoc
-abstract class _$$RootStateImplCopyWith<$Res>
-    implements $RootStateCopyWith<$Res> {
-  factory _$$RootStateImplCopyWith(
-          _$RootStateImpl value, $Res Function(_$RootStateImpl) then) =
-      __$$RootStateImplCopyWithImpl<$Res>;
+abstract class _$$AppStateImplCopyWith<$Res>
+    implements $AppStateCopyWith<$Res> {
+  factory _$$AppStateImplCopyWith(
+          _$AppStateImpl value, $Res Function(_$AppStateImpl) then) =
+      __$$AppStateImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -184,11 +184,11 @@ abstract class _$$RootStateImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$RootStateImplCopyWithImpl<$Res>
-    extends _$RootStateCopyWithImpl<$Res, _$RootStateImpl>
-    implements _$$RootStateImplCopyWith<$Res> {
-  __$$RootStateImplCopyWithImpl(
-      _$RootStateImpl _value, $Res Function(_$RootStateImpl) _then)
+class __$$AppStateImplCopyWithImpl<$Res>
+    extends _$AppStateCopyWithImpl<$Res, _$AppStateImpl>
+    implements _$$AppStateImplCopyWith<$Res> {
+  __$$AppStateImplCopyWithImpl(
+      _$AppStateImpl _value, $Res Function(_$AppStateImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -206,7 +206,7 @@ class __$$RootStateImplCopyWithImpl<$Res>
     Object? selectedDate = null,
     Object? locale = freezed,
   }) {
-    return _then(_$RootStateImpl(
+    return _then(_$AppStateImpl(
       profiles: null == profiles
           ? _value.profiles
           : profiles // ignore: cast_nullable_to_non_nullable
@@ -257,8 +257,8 @@ class __$$RootStateImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
-  const _$RootStateImpl(
+class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
+  const _$AppStateImpl(
       {this.profiles = const RemoteEntityState<Profile>(),
       this.groups = const RemoteEntityState<Group>(),
       this.members = const RemoteEntityState<Member>(),
@@ -271,8 +271,8 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
       required this.selectedDate,
       this.locale});
 
-  factory _$RootStateImpl.fromJson(Map<String, dynamic> json) =>
-      _$$RootStateImplFromJson(json);
+  factory _$AppStateImpl.fromJson(Map<String, dynamic> json) =>
+      _$$AppStateImplFromJson(json);
 
   @override
   @JsonKey()
@@ -308,14 +308,14 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'RootState(profiles: $profiles, groups: $groups, members: $members, invites: $invites, schedules: $schedules, defaultReplies: $defaultReplies, replies: $replies, auth: $auth, themeMode: $themeMode, selectedDate: $selectedDate, locale: $locale)';
+    return 'AppState(profiles: $profiles, groups: $groups, members: $members, invites: $invites, schedules: $schedules, defaultReplies: $defaultReplies, replies: $replies, auth: $auth, themeMode: $themeMode, selectedDate: $selectedDate, locale: $locale)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'RootState'))
+      ..add(DiagnosticsProperty('type', 'AppState'))
       ..add(DiagnosticsProperty('profiles', profiles))
       ..add(DiagnosticsProperty('groups', groups))
       ..add(DiagnosticsProperty('members', members))
@@ -333,7 +333,7 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$RootStateImpl &&
+            other is _$AppStateImpl &&
             (identical(other.profiles, profiles) ||
                 other.profiles == profiles) &&
             (identical(other.groups, groups) || other.groups == groups) &&
@@ -371,19 +371,19 @@ class _$RootStateImpl with DiagnosticableTreeMixin implements _RootState {
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$RootStateImplCopyWith<_$RootStateImpl> get copyWith =>
-      __$$RootStateImplCopyWithImpl<_$RootStateImpl>(this, _$identity);
+  _$$AppStateImplCopyWith<_$AppStateImpl> get copyWith =>
+      __$$AppStateImplCopyWithImpl<_$AppStateImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$RootStateImplToJson(
+    return _$$AppStateImplToJson(
       this,
     );
   }
 }
 
-abstract class _RootState implements RootState {
-  const factory _RootState(
+abstract class _AppState implements AppState {
+  const factory _AppState(
       {final RemoteEntityState<Profile> profiles,
       final RemoteEntityState<Group> groups,
       final RemoteEntityState<Member> members,
@@ -394,10 +394,10 @@ abstract class _RootState implements RootState {
       final AuthState auth,
       final ThemeMode themeMode,
       required final DateTime selectedDate,
-      final LocaleState? locale}) = _$RootStateImpl;
+      final LocaleState? locale}) = _$AppStateImpl;
 
-  factory _RootState.fromJson(Map<String, dynamic> json) =
-      _$RootStateImpl.fromJson;
+  factory _AppState.fromJson(Map<String, dynamic> json) =
+      _$AppStateImpl.fromJson;
 
   @override
   RemoteEntityState<Profile> get profiles;
@@ -423,6 +423,6 @@ abstract class _RootState implements RootState {
   LocaleState? get locale;
   @override
   @JsonKey(ignore: true)
-  _$$RootStateImplCopyWith<_$RootStateImpl> get copyWith =>
+  _$$AppStateImplCopyWith<_$AppStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

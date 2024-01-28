@@ -15,7 +15,7 @@ class ThemeSwitcherContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<RootState, _ViewModel>(
+    return StoreConnector<AppState, _ViewModel>(
         distinct: true,
         converter: _ViewModel.fromStore,
         builder: (context, vm) =>
@@ -30,7 +30,7 @@ sealed class _ViewModel with _$ViewModel {
     required VoidCallback nextTheme,
   }) = __ViewModel;
 
-  factory _ViewModel.fromStore(Store<RootState> store) {
+  factory _ViewModel.fromStore(Store<AppState> store) {
     return _ViewModel(
       themeMode: themeModeSelector(store.state),
       nextTheme: () => store.dispatch(NextThemeAction()),

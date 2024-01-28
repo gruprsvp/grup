@@ -15,7 +15,7 @@ class LocaleContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<RootState, _ViewModel>(
+    return StoreConnector<AppState, _ViewModel>(
       distinct: true,
       converter: _ViewModel.fromStore,
       builder: (context, vm) => LocaleScreen(
@@ -33,7 +33,7 @@ sealed class _ViewModel with _$ViewModel {
     required ValueChanged<Locale?> changeLocale,
   }) = __ViewModel;
 
-  factory _ViewModel.fromStore(Store<RootState> store) {
+  factory _ViewModel.fromStore(Store<AppState> store) {
     return _ViewModel(
       locale: localeSelector(store.state),
       changeLocale: (Locale? locale) =>

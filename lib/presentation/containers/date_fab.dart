@@ -31,7 +31,7 @@ class _ViewModel with _$ViewModel {
     required ValueChanged<DateTime> onDateChanged,
   }) = __ViewModel;
 
-  static _ViewModel fromStore(Store<RootState> store) {
+  static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
         selectedDate: store.state.selectedDate,
         onDateChanged: (value) => store.dispatch(SelectDateAction(value)));

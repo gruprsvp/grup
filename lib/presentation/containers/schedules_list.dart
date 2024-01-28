@@ -19,7 +19,7 @@ class SchedulesListContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<RootState, _ViewModel>(
+    return StoreConnector<AppState, _ViewModel>(
       distinct: true,
       builder: (context, vm) => SchedulesList(
         schedules: vm.schedules,
@@ -37,7 +37,7 @@ sealed class _ViewModel with _$ViewModel {
     OnReplyChangedCallback? onReplyChanged,
   }) = __ViewModel;
 
-  static _ViewModel fromStore(Store<RootState> store, int groupId) {
+  static _ViewModel fromStore(Store<AppState> store, int groupId) {
     return _ViewModel(
       schedules: selectSchedulesForSelectedDate(store.state, groupId),
       onReplyChanged: (schedule, reply) {

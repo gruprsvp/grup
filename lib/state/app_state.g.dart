@@ -1,13 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'root_state.dart';
+part of 'app_state.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$RootStateImpl _$$RootStateImplFromJson(Map<String, dynamic> json) =>
-    _$RootStateImpl(
+_$AppStateImpl _$$AppStateImplFromJson(Map<String, dynamic> json) =>
+    _$AppStateImpl(
       profiles: json['profiles'] == null
           ? const RemoteEntityState<Profile>()
           : RemoteEntityState<Profile>.fromJson(
@@ -54,7 +54,7 @@ _$RootStateImpl _$$RootStateImplFromJson(Map<String, dynamic> json) =>
           : LocaleState.fromJson(json['locale'] as Map<String, dynamic>),
     );
 
-Map<String, dynamic> _$$RootStateImplToJson(_$RootStateImpl instance) =>
+Map<String, dynamic> _$$AppStateImplToJson(_$AppStateImpl instance) =>
     <String, dynamic>{
       'profiles': instance.profiles,
       'groups': instance.groups,

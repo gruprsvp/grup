@@ -5,13 +5,13 @@ import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 
 /// All epics that handle the navigation
-Epic<RootState> createRouterEpics(GoRouter router) => combineEpics<RootState>([
+Epic<AppState> createRouterEpics(GoRouter router) => combineEpics<AppState>([
       _createRouterPushEpic(router),
       // TODO(borgoat): create epics and actions for other router events
     ]);
 
-Epic<RootState> _createRouterPushEpic(GoRouter router) {
-  return (Stream<dynamic> actions, EpicStore<RootState> store) => actions
+Epic<AppState> _createRouterPushEpic(GoRouter router) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
       .whereType<NavigatePushAction>()
       .map((action) => router.push(action.location, extra: action.extra));
 }

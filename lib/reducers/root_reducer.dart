@@ -9,14 +9,14 @@ import 'selected_date.dart';
 import 'theme.dart';
 
 /// The root reducer combines all the reducers for the app into one.
-RootState rootReducer(RootState state, dynamic action) {
+AppState rootReducer(AppState state, dynamic action) {
   // TODO: use combineReducers?
   if (action is AuthStateChangedAction &&
       action.authState.event == AuthChangeEvent.signedOut) {
-    return RootState.initialState();
+    return AppState.initialState();
   }
 
-  return RootState(
+  return AppState(
     groups: groupsReducer(state.groups, action),
     profiles: profilesReducer(state.profiles, action),
     schedules: schedulesReducer(state.schedules, action),

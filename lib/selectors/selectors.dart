@@ -10,10 +10,10 @@ export 'members.dart';
 // TODO Move everything to separate files
 
 /// Provide the current theme mode.
-ThemeMode themeModeSelector(RootState state) => state.themeMode;
+ThemeMode themeModeSelector(AppState state) => state.themeMode;
 
 /// Provide the user-configured locale.
-Locale? localeSelector(RootState state) {
+Locale? localeSelector(AppState state) {
   final locale = state.locale;
 
   if (locale == null) return null;
@@ -26,7 +26,7 @@ Locale? localeSelector(RootState state) {
 }
 
 /// Provide the recurrence rule localised text encoder.
-Future<RruleL10n> rruleL10nSelector(RootState state) {
+Future<RruleL10n> rruleL10nSelector(AppState state) {
   // TODO Support more locales
   // final locale = state.locale;
 
@@ -34,12 +34,12 @@ Future<RruleL10n> rruleL10nSelector(RootState state) {
 }
 
 /// Provide the begin and end of day for the selected date.
-DateTimeRange selectedDateRangeSelector(RootState state) =>
+DateTimeRange selectedDateRangeSelector(AppState state) =>
     state.selectedDate.getDayRange();
 
 // TODO This shit should be better tested, and use reselect for memoization
 Iterable<ScheduleInstance>? selectSchedulesForSelectedDate(
-    RootState state, int selectedGroupId) {
+    AppState state, int selectedGroupId) {
   final range = state.selectedDate.getDayRange();
   final group = state.groups.entities[selectedGroupId.toString()];
 

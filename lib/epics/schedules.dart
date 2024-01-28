@@ -6,15 +6,15 @@ import 'package:redux_entity/redux_entity.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 
-createSchedulesEpics(SchedulesRepository schedules) => combineEpics<RootState>([
+createSchedulesEpics(SchedulesRepository schedules) => combineEpics<AppState>([
       _createRetrieveGroupSchedulesEpic(schedules),
       _createCreateOneScheduleEpic(schedules),
     ]);
 
 /// Fetch all schedules for a group
-Epic<RootState> _createRetrieveGroupSchedulesEpic(
+Epic<AppState> _createRetrieveGroupSchedulesEpic(
     SchedulesRepository schedules) {
-  return (Stream<dynamic> actions, EpicStore<RootState> store) =>
+  return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<GroupDetailsOpenAction>().asyncMap(
             (action) => schedules
                 .getGroupSchedules(int.parse(action.groupId))
@@ -24,8 +24,8 @@ Epic<RootState> _createRetrieveGroupSchedulesEpic(
           );
 }
 
-Epic<RootState> _createCreateOneScheduleEpic(SchedulesRepository schedules) {
-  return (Stream<dynamic> actions, EpicStore<RootState> store) => actions
+Epic<AppState> _createCreateOneScheduleEpic(SchedulesRepository schedules) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
       .whereType<RequestCreateOne<Schedule>>()
       .asyncMap(
         (action) => schedules

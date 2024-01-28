@@ -7,15 +7,15 @@ import 'package:redux_entity/redux_entity.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 
-createRepliesEpics(RepliesRepository replies) => combineEpics<RootState>([
+createRepliesEpics(RepliesRepository replies) => combineEpics<AppState>([
       _createRetrieveGroupRepliesEpic(replies),
       _createRequestUpdateOneReplyEpic(replies),
       _createRequestDeleteReplyEpic(replies),
     ]);
 
 /// Fetch replies for a group
-Epic<RootState> _createRetrieveGroupRepliesEpic(RepliesRepository replies) {
-  return (Stream<dynamic> actions, EpicStore<RootState> store) =>
+Epic<AppState> _createRetrieveGroupRepliesEpic(RepliesRepository replies) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<GroupDetailsOpenAction>().asyncMap(
             (action) => replies
                 .getRepliesForDateRange(int.parse(action.groupId),
@@ -26,8 +26,8 @@ Epic<RootState> _createRetrieveGroupRepliesEpic(RepliesRepository replies) {
           );
 }
 
-Epic<RootState> _createRequestUpdateOneReplyEpic(RepliesRepository replies) {
-  return (Stream<dynamic> actions, EpicStore<RootState> store) =>
+Epic<AppState> _createRequestUpdateOneReplyEpic(RepliesRepository replies) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestUpdateOne<Reply>>().asyncMap(
             (action) => replies
                 .createReply(action.entity)
@@ -37,8 +37,8 @@ Epic<RootState> _createRequestUpdateOneReplyEpic(RepliesRepository replies) {
           );
 }
 
-Epic<RootState> _createRequestDeleteReplyEpic(RepliesRepository replies) {
-  return (Stream<dynamic> actions, EpicStore<RootState> store) =>
+Epic<AppState> _createRequestDeleteReplyEpic(RepliesRepository replies) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestDeleteReplyAction>().asyncMap(
             (action) => replies
                 .deleteReply(

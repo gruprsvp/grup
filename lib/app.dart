@@ -16,13 +16,13 @@ part 'app.freezed.dart';
 class ParApp extends StatelessWidget {
   const ParApp({required this.store, super.key});
 
-  final Store<RootState> store;
+  final Store<AppState> store;
 
   @override
   Widget build(BuildContext context) {
     return StoreProvider(
       store: store,
-      child: StoreConnector<RootState, _ViewModel>(
+      child: StoreConnector<AppState, _ViewModel>(
         distinct: true,
         converter: _ViewModel.fromStore,
         onInit: store.dispatch(AppStartedAction()),
@@ -83,7 +83,7 @@ sealed class _ViewModel with _$ViewModel {
     Color? overrideColour,
   }) = __ViewModel;
 
-  factory _ViewModel.fromStore(Store<RootState> store) {
+  factory _ViewModel.fromStore(Store<AppState> store) {
     return _ViewModel(
       themeMode: themeModeSelector(store.state),
       locale: localeSelector(store.state),

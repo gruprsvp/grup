@@ -34,7 +34,7 @@ sealed class _ViewModel with _$ViewModel {
     required OnProfileSaveCallback onSave,
   }) = __ViewModel;
 
-  static _ViewModel fromStore(Store<RootState> store) {
+  static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
         profile: store.state.profiles.entities[store.state.auth.user?.id],
         onSave: (result) {

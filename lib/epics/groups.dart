@@ -7,7 +7,7 @@ import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:supabase/supabase.dart';
 
-createGroupsEpics(GroupsRepository groups) => combineEpics<RootState>([
+createGroupsEpics(GroupsRepository groups) => combineEpics<AppState>([
       _createRefreshRetrieveAllGroupsEpic(groups),
       _createRetrieveAllGroupsEpic(groups),
       _createRetrieveOneGroupEpic(groups),
@@ -21,7 +21,7 @@ createGroupsEpics(GroupsRepository groups) => combineEpics<RootState>([
 
 /// Once the user signs in, request to load all the groups
 Stream<dynamic> _loadGroupsOnSignInEpic(
-        Stream<dynamic> actions, EpicStore<RootState> store) =>
+        Stream<dynamic> actions, EpicStore<AppState> store) =>
     actions
         .whereType<AuthStateChangedAction>()
         .where((action) => action.authState.event == AuthChangeEvent.signedIn)
@@ -29,28 +29,28 @@ Stream<dynamic> _loadGroupsOnSignInEpic(
 
 /// Once the app starts, request to load all the groups, if the user is signed in
 Stream<dynamic> _loadGroupsOnAppInitEpic(
-        Stream<dynamic> actions, EpicStore<RootState> store) =>
+        Stream<dynamic> actions, EpicStore<AppState> store) =>
     actions
         .whereType<AppStartedAction>()
         .where((_) => store.state.auth.status == AuthStatus.authenticated)
         .map((event) => const RequestRetrieveAll<Group>());
 
 Stream<dynamic> _loadGroupsOnInviteCodeUseEpic(
-        Stream<dynamic> actions, EpicStore<RootState> store) =>
+        Stream<dynamic> actions, EpicStore<AppState> store) =>
     actions
         .whereType<SuccessUseInviteCode>()
         .map((event) => const RequestRetrieveAll<Group>());
 
 /// Refresh the group details when the user opens the group details screen
 Stream<dynamic> _loadGroupOnGroupDetailsOpenEpic(
-        Stream<dynamic> actions, EpicStore<RootState> store) =>
+        Stream<dynamic> actions, EpicStore<AppState> store) =>
     actions
         .whereType<GroupDetailsOpenAction>()
         .map((action) => RequestRetrieveOne<Group>(action.groupId));
 
 /// Let user refresh the groups, with an action including a Completer, to handle the refresh indicator.
-Epic<RootState> _createRefreshRetrieveAllGroupsEpic(GroupsRepository groups) {
-  return (Stream<dynamic> actions, EpicStore<RootState> store) => actions
+Epic<AppState> _createRefreshRetrieveAllGroupsEpic(GroupsRepository groups) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
       .whereType<GroupRefreshAllAction>()
       .asyncMap(
         (action) => groups
@@ -63,8 +63,8 @@ Epic<RootState> _createRefreshRetrieveAllGroupsEpic(GroupsRepository groups) {
 }
 
 /// Fetch all the groups from the database
-Epic<RootState> _createRetrieveAllGroupsEpic(GroupsRepository groups) {
-  return (Stream<dynamic> actions, EpicStore<RootState> store) => actions
+Epic<AppState> _createRetrieveAllGroupsEpic(GroupsRepository groups) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
       .whereType<RequestRetrieveAll<Group>>()
       .asyncMap(
         (action) => groups
@@ -75,8 +75,8 @@ Epic<RootState> _createRetrieveAllGroupsEpic(GroupsRepository groups) {
       );
 }
 
-Epic<RootState> _createRetrieveOneGroupEpic(GroupsRepository groups) {
-  return (Stream<dynamic> actions, EpicStore<RootState> store) =>
+Epic<AppState> _createRetrieveOneGroupEpic(GroupsRepository groups) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestRetrieveOne<Group>>().asyncMap(
             (action) => groups
                 .getGroupById(int.parse(action.id))
@@ -86,8 +86,8 @@ Epic<RootState> _createRetrieveOneGroupEpic(GroupsRepository groups) {
           );
 }
 
-Epic<RootState> _createCreateOneGroupEpic(GroupsRepository groups) {
-  return (Stream<dynamic> actions, EpicStore<RootState> store) => actions
+Epic<AppState> _createCreateOneGroupEpic(GroupsRepository groups) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
       .whereType<RequestCreateOne<Group>>()
       .asyncMap(
         (action) => groups
@@ -98,8 +98,8 @@ Epic<RootState> _createCreateOneGroupEpic(GroupsRepository groups) {
       );
 }
 
-Epic<RootState> _createUpdateOneGroupEpic(GroupsRepository groups) {
-  return (Stream<dynamic> actions, EpicStore<RootState> store) => actions
+Epic<AppState> _createUpdateOneGroupEpic(GroupsRepository groups) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
       .whereType<RequestUpdateOne<Group>>()
       .asyncMap(
         (action) => groups

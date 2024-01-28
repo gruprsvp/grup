@@ -44,21 +44,20 @@ Future<void> main() async {
   );
 }
 
-Future<Store<RootState>> _initStore(SupabaseClient supabase) async {
+Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
   const storageLocation = kIsWeb
       ? FlutterSaveLocation.sharedPreferences
       : FlutterSaveLocation.documentFile;
 
-  final persistor = Persistor<RootState>(
+  final persistor = Persistor<AppState>(
     storage: FlutterStorage(location: storageLocation),
-    serializer: JsonSerializer<RootState>(
-      (json) => json != null
-          ? RootState.fromJson(json as Map<String, dynamic>)
-          : null,
+    serializer: JsonSerializer<AppState>(
+      (json) =>
+          json != null ? AppState.fromJson(json as Map<String, dynamic>) : null,
     ),
   );
 
-  RootState? localPersistedState = await persistor.load().catchError((e) {
+  AppState? localPersistedState = await persistor.load().catchError((e) {
     log('failed to load persisted state: $e');
   });
 
@@ -70,7 +69,7 @@ Future<Store<RootState>> _initStore(SupabaseClient supabase) async {
   final schedulesRepository = SchedulesRepository(supabase: supabase);
   final storageRepository = StorageRepository(supabase: supabase);
 
-  final epics = combineEpics<RootState>([
+  final epics = combineEpics<AppState>([
     createRouterEpics(router),
     createDefaultRepliesEpics(defaultRepliesRepository),
     createGroupsEpics(groupsRepository),
@@ -80,14 +79,14 @@ Future<Store<RootState>> _initStore(SupabaseClient supabase) async {
     createSchedulesEpics(schedulesRepository),
   ]);
 
-  final initialState = localPersistedState ?? RootState.initialState();
+  final initialState = localPersistedState ?? AppState.initialState();
   final middleware = [
     persistor.createMiddleware(),
-    EpicMiddleware<RootState>(epics).call,
+    EpicMiddleware<AppState>(epics).call,
   ];
 
   // if (!kDebugMode) {
-  return Store<RootState>(
+  return Store<AppState>(
     rootReducer,
     initialState: initialState,
     middleware: middleware,
@@ -100,7 +99,7 @@ Future<Store<RootState>> _initStore(SupabaseClient supabase) async {
   //   // https://developer.android.com/studio/run/emulator-networking.html
   // );
   // final remoteDevtools = RemoteDevToolsMiddleware(host);
-  // final store = DevToolsStore<RootState>(
+  // final store = DevToolsStore<AppState>(
   //   rootReducer,
   //   initialState: initialState,
   //   middleware: [

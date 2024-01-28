@@ -7,15 +7,15 @@ import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 
 createDefaultRepliesEpics(DefaultRepliesRepository defaultReplies) =>
-    combineEpics<RootState>([
+    combineEpics<AppState>([
       _createRetrieveGroupDefaultRepliesEpic(defaultReplies),
       // _createCreateOneScheduleEpic(schedules),
     ]);
 
 /// Fetch all default replies for a group
-Epic<RootState> _createRetrieveGroupDefaultRepliesEpic(
+Epic<AppState> _createRetrieveGroupDefaultRepliesEpic(
     DefaultRepliesRepository defaultReplies) {
-  return (Stream<dynamic> actions, EpicStore<RootState> store) => actions
+  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
       .whereType<GroupDetailsOpenAction>()
       .asyncMap(
         (action) => defaultReplies

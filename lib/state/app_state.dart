@@ -7,12 +7,12 @@ import 'package:redux_entity/redux_entity.dart';
 import 'auth_state.dart';
 import 'locale_state.dart';
 
-part 'root_state.freezed.dart';
-part 'root_state.g.dart';
+part 'app_state.freezed.dart';
+part 'app_state.g.dart';
 
 @freezed
-sealed class RootState with _$RootState {
-  const factory RootState({
+sealed class AppState with _$AppState {
+  const factory AppState({
     @Default(RemoteEntityState<Profile>()) RemoteEntityState<Profile> profiles,
     @Default(RemoteEntityState<Group>()) RemoteEntityState<Group> groups,
     @Default(RemoteEntityState<Member>()) RemoteEntityState<Member> members,
@@ -26,10 +26,10 @@ sealed class RootState with _$RootState {
     @Default(ThemeMode.system) ThemeMode themeMode,
     required DateTime selectedDate,
     LocaleState? locale,
-  }) = _RootState;
+  }) = _AppState;
 
-  factory RootState.initialState() => RootState(selectedDate: DateTime.now());
+  factory AppState.initialState() => AppState(selectedDate: DateTime.now());
 
-  factory RootState.fromJson(Map<String, dynamic> json) =>
-      _$RootStateFromJson(json);
+  factory AppState.fromJson(Map<String, dynamic> json) =>
+      _$AppStateFromJson(json);
 }

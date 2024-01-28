@@ -20,7 +20,7 @@ class GroupEventsContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return StoreConnector<RootState, _ViewModel>(
+    return StoreConnector<AppState, _ViewModel>(
       distinct: true,
       converter: (store) => _ViewModel.fromStore(store, groupId),
       builder: (context, vm) => GroupEvents(
@@ -41,7 +41,7 @@ class _ViewModel with _$ViewModel {
     ValueSetter<Schedule>? onScheduleCreate,
   }) = __ViewModel;
 
-  static _ViewModel fromStore(Store<RootState> store, String groupId) {
+  static _ViewModel fromStore(Store<AppState> store, String groupId) {
     final group = store.state.groups.entities[groupId];
 
     return _ViewModel(
