@@ -3,37 +3,26 @@ import 'package:parousia/models/models.dart';
 import 'const.dart';
 import 'supabase.dart';
 
+typedef GroupsAndMembers = ({
+  Iterable<Group> groups,
+  Iterable<Member> members,
+  Iterable<Profile> profiles,
+});
+
 class GroupsRepository extends SupabaseRepository with Postgrest {
   GroupsRepository({required super.supabase}) : super(tableName: Tables.groups);
 
-  Future<
-      ({
-        Iterable<Group> groups,
-        Iterable<Member> members,
-        Iterable<Profile> profiles,
-      })> getUserGroups() async {
+  Future<GroupsAndMembers> getUserGroups() async {
     return table()
-        .select('*, members!inner(*,profiles!inner(*))')
+        .select('*,members!inner(*,profiles!inner(*))')
         // TODO(borgoat): should filter by profile_id but return all members
         // .eq('members.profile_id', supabase.auth.currentUser!.id)
-        .withConverter((data) {
-      final groups = <Group>{};
-      final members = <Member>{};
-      final profiles = <Profile>{};
-      for (var value in data) {
-        groups.add(Group.fromJson(value));
-        for (var member in value['members']) {
-          members.add(Member.fromJson(member));
-          profiles.add(Profile.fromJson(member['profiles']));
-        }
-      }
-      return (groups: groups, members: members, profiles: profiles);
-    });
+        .withConverter(_convertGroupsAndMembers);
   }
 
   Future<Group> getGroupById(int id) async {
     return table()
-        .select('*, members!inner(*,profiles!inner(*))')
+        .select('*,members!inner(*,profiles!inner(*))')
         .eq('id', id)
         .single()
         .withConverter(Group.fromJson);
@@ -58,7 +47,7 @@ class GroupsRepository extends SupabaseRepository with Postgrest {
           'picture': group.picture,
         })
         .eq('id', group.id)
-        .select('*, members!inner(*)')
+        .select('*')
         .single()
         .withConverter(Group.fromJson);
   }
@@ -71,4 +60,20 @@ class GroupsRepository extends SupabaseRepository with Postgrest {
         .single()
         .withConverter(Group.fromJson);
   }
+
+  GroupsAndMembers _convertGroupsAndMembers(List<Map<String, dynamic>> data) {
+    final groups = <Group>{};
+    final members = <Member>{};
+    final profiles = <Profile>{};
+    for (var value in data) {
+      groups.add(Group.fromJson(value));
+      for (var member in value['members']) {
+        members.add(Member.fromJson(member));
+        profiles.add(Profile.fromJson(member['profiles']));
+      }
+    }
+    return (groups: groups, members: members, profiles: profiles);
+  }
+
+
 }

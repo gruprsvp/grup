@@ -23,26 +23,17 @@ class GroupMembers extends StatelessWidget {
   });
 
   Future<List<ContactInvite>?> _inviteFromContacts(BuildContext context) async {
-    if (!(await FlutterContacts.requestPermission(readonly: true))) {
-      throw Exception('Contacts permission not granted');
-    }
-
-    final contacts = await FlutterContacts.getContacts(
-      withAccounts: true,
-      withPhoto: true,
-      withProperties: true,
-    );
-
     if (!context.mounted) return null;
 
     final invited = await SelectContactsRoute().push<List<Contact>>(context);
 
     return invited
-        ?.map((c) => ContactInvite(c.displayName, [
-              ...(c.emails ?? []).map((e) => (InviteMethods.email, e.address)),
-              ...(c.phones ?? [])
-                  .map((p) => (InviteMethods.phone, p.normalizedNumber)),
-            ]))
+        ?.map(
+          (c) => ContactInvite(c.displayName, [
+            ...(c.emails).map((e) => (InviteMethods.email, e.address)),
+            ...(c.phones).map((p) => (InviteMethods.phone, p.normalizedNumber)),
+          ]),
+        )
         .toList();
   }
 
