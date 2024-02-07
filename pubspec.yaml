@@ -47,7 +47,6 @@ dependencies:
   redux_persist: ^0.9.0
   redux_persist_flutter: ^0.9.0
   redux_dev_tools: ^0.7.0
-  redux_remote_devtools: ^3.0.0
   redux_entity: ^1.1.2  # overridden below
   reselect: ^0.5.0
 

@@ -45,22 +45,6 @@ Future<void> main() async {
 }
 
 Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
-  const storageLocation = kIsWeb
-      ? FlutterSaveLocation.sharedPreferences
-      : FlutterSaveLocation.documentFile;
-
-  final persistor = Persistor<AppState>(
-    storage: FlutterStorage(location: storageLocation),
-    serializer: JsonSerializer<AppState>(
-      (json) =>
-          json != null ? AppState.fromJson(json as Map<String, dynamic>) : null,
-    ),
-  );
-
-  AppState? localPersistedState = await persistor.load().catchError((e) {
-    log('failed to load persisted state: $e');
-  });
-
   final defaultRepliesRepository = DefaultRepliesRepository(supabase: supabase);
   final groupsRepository = GroupsRepository(supabase: supabase);
   final invitesRepository = InvitesRepository(supabase: supabase);
@@ -79,35 +63,30 @@ Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
     createSchedulesEpics(schedulesRepository),
   ]);
 
+  const storageLocation = kIsWeb
+      ? FlutterSaveLocation.sharedPreferences
+      : FlutterSaveLocation.documentFile;
+
+  final persistor = Persistor<AppState>(
+    storage: FlutterStorage(location: storageLocation),
+    serializer: JsonSerializer<AppState>(
+      (json) =>
+          json != null ? AppState.fromJson(json as Map<String, dynamic>) : null,
+    ),
+  );
+
+  AppState? localPersistedState = await persistor.load().catchError((e) {
+    log('failed to load persisted state: $e');
+  });
   final initialState = localPersistedState ?? AppState.initialState();
   final middleware = [
     persistor.createMiddleware(),
     EpicMiddleware<AppState>(epics).call,
   ];
 
-  // if (!kDebugMode) {
   return Store<AppState>(
     rootReducer,
     initialState: initialState,
     middleware: middleware,
   );
-  // }
-  // const host = String.fromEnvironment(
-  //   'REMOTE_DEVTOOLS_HOST',
-  //   defaultValue: '10.0.2.2:8000',
-  //   // Android emulator host as default
-  //   // https://developer.android.com/studio/run/emulator-networking.html
-  // );
-  // final remoteDevtools = RemoteDevToolsMiddleware(host);
-  // final store = DevToolsStore<AppState>(
-  //   rootReducer,
-  //   initialState: initialState,
-  //   middleware: [
-  //     ...middleware,
-  //     remoteDevtools.call,
-  //   ],
-  // );
-  // remoteDevtools.store = store;
-  // await remoteDevtools.connect();
-  // return store;
 }

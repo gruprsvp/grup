@@ -5,10 +5,10 @@ packages:
     dependency: transitive
     description:
       name: _fe_analyzer_shared
-      sha256: "0f7b1783ddb1e4600580b8c00d0ddae5b06ae7f0382bd4fcce5db4df97b618e1"
+      sha256: "0b2f2bd91ba804e53a61d757b986f89f1f9eaed5b11e4b2f5a2468d86d6c9fc7"
       url: "https://pub.dev"
     source: hosted
-    version: "66.0.0"
+    version: "67.0.0"
   accessibility_tools:
     dependency: transitive
     description:
@@ -21,10 +21,10 @@ packages:
     dependency: transitive
     description:
       name: analyzer
-      sha256: "5e8bdcda061d91da6b034d64d8e4026f355bcb8c3e7a0ac2da1523205a91a737"
+      sha256: "37577842a27e4338429a1cbc32679d508836510b056f1eedf0c8d20e39c1383d"
       url: "https://pub.dev"
     source: hosted
-    version: "6.4.0"
+    version: "6.4.1"
   app_links:
     dependency: transitive
     description:
@@ -117,10 +117,10 @@ packages:
     dependency: transitive
     description:
       name: build_runner_core
-      sha256: c9e32d21dd6626b5c163d48b037ce906bbe428bc23ab77bcd77bb21e593b6185
+      sha256: "4ae8ffe5ac758da294ecf1802f2aff01558d8b1b00616aa7538ea9a8a5d50799"
       url: "https://pub.dev"
     source: hosted
-    version: "7.2.11"
+    version: "7.3.0"
   built_collection:
     dependency: transitive
     description:
@@ -359,10 +359,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_form_builder
-      sha256: e8702c52dc45b43ed42e2b5d9b35f2970096d9cf1a58015cd3a76fad62a8f183
+      sha256: "560eb5e367d81170c6ade1e7ae63ecc5167936ae2cdfaae8a345e91bce19d2f2"
       url: "https://pub.dev"
     source: hosted
-    version: "9.2.0"
+    version: "9.2.1"
   flutter_lints:
     dependency: "direct dev"
     description:
@@ -430,10 +430,10 @@ packages:
     dependency: "direct dev"
     description:
       name: freezed
-      sha256: "6c5031daae12c7072b3a87eff98983076434b4889ef2a44384d0cae3f82372ba"
+      sha256: "57247f692f35f068cae297549a46a9a097100685c6780fe67177503eea5ed4e5"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.6"
+    version: "2.4.7"
   freezed_annotation:
     dependency: "direct main"
     description:
@@ -547,10 +547,10 @@ packages:
     dependency: transitive
     description:
       name: gotrue
-      sha256: "879ac3e981bf5f9b3af156e421688b53823b7af17de7af0d2a37894a8e5f6532"
+      sha256: f40610bacf1074723354b0856a4f586508ffb075b799f72466f34e843133deb9
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.1"
+    version: "2.5.0"
   graphs:
     dependency: transitive
     description:
@@ -611,10 +611,10 @@ packages:
     dependency: transitive
     description:
       name: image
-      sha256: "004a2e90ce080f8627b5a04aecb4cdfac87d2c3f3b520aa291260be5a32c033d"
+      sha256: "49a0d4b0c12402853d3f227fe7c315601b238d126aa4caa5dbb2dcf99421aa4a"
       url: "https://pub.dev"
     source: hosted
-    version: "4.1.4"
+    version: "4.1.6"
   image_picker:
     dependency: "direct main"
     description:
@@ -1045,14 +1045,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.9.0"
-  redux_remote_devtools:
-    dependency: "direct main"
-    description:
-      name: redux_remote_devtools
-      sha256: "22326855d604b41eefe8161ba10fb4f989cc6028731a916c963f3703ddad10bc"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
   reselect:
     dependency: "direct main"
     description:
@@ -1081,10 +1073,10 @@ packages:
     dependency: "direct main"
     description:
       name: rrule
-      sha256: "535fec11dfe8882c89f14bb0a99ae08fb04d8cf1771db1e9ebb9869b1d414dd1"
+      sha256: "74a11d8b62bfe491340ccc2f0d19a0369402a92952180a090bb8ac865d024904"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.14"
+    version: "0.2.16"
   rxdart:
     dependency: "direct main"
     description:
@@ -1210,14 +1202,6 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.99"
-  socketcluster_client:
-    dependency: transitive
-    description:
-      name: socketcluster_client
-      sha256: "180d72c9237ff282bc9c980856fefd83bf256b96e6d42fb789e229f4fd5a6eca"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.3.0"
   source_gen:
     dependency: transitive
     description:
@@ -1278,10 +1262,10 @@ packages:
     dependency: transitive
     description:
       name: storage_client
-      sha256: b49ff2e1e6738c0ef445546d6ec77040829947f0c7ef0b115acb125656127c83
+      sha256: bf5589d5de61a2451edb1b8960a0e673d4bb5c42ecc4dddf7c051a93789ced34
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.0"
+    version: "2.0.1"
   stream_channel:
     dependency: transitive
     description:
@@ -1310,10 +1294,10 @@ packages:
     dependency: "direct main"
     description:
       name: supabase
-      sha256: f299614f6f44ee26ff1bd293869272fab79a7b087320c3b40572792b32ded06c
+      sha256: "4bce9c49f264f4cd44b4ffc895647af2dca0c40125c169045be9f708fd2a2a40"
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.6"
+    version: "2.0.7"
   supabase_auth_ui:
     dependency: "direct main"
     description:
@@ -1326,10 +1310,10 @@ packages:
     dependency: "direct main"
     description:
       name: supabase_flutter
-      sha256: a1af1749389100f6214dd4437a8faf610a00ca40522a5687920b6308f3cc073f
+      sha256: "32597ffe9993bc47bc5a2020421b1940e634ea4293cff80385fa67fb9fff46d6"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.1"
+    version: "2.3.2"
   sync_http:
     dependency: transitive
     description:
