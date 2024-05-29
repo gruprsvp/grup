@@ -25,7 +25,7 @@ class GroupDetailsScreen extends StatelessWidget {
         actions: [
           IconButton(
             onPressed: () =>
-                GroupManageRoute(groupId: group!.id.toString()).go(context),
+                GroupManageRoute(groupId: group!.id.toString()).push(context),
             icon: const FaIcon(FontAwesomeIcons.penToSquare),
           )
         ],
