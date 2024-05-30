@@ -90,7 +90,7 @@ class _GroupFormState extends State<GroupForm> {
                 if (_formKey.currentState!.validate()) {
                   final displayName = _nameController.text.trim();
                   final description = _descriptionController.text.trim();
-                  final picture = null; // TODO
+                  const picture = null; // TODO
 
                   _formKey.currentState!.save();
                   widget.onSave(Group(
