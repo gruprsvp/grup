@@ -80,7 +80,11 @@ Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
   });
   final initialState = localPersistedState ?? AppState.initialState();
   final middleware = [
-    persistor.createMiddleware(),
+    // ! TODO Persistor is often causing issues when it tries to
+    //        persist errors that are currently in the store...
+    //        However at some point it must be enabled again as preferences
+    //        such as theme and language should be persisted.
+    // persistor.createMiddleware(),
     EpicMiddleware<AppState>(epics).call,
   ];
 
