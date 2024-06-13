@@ -19,6 +19,7 @@ AppState rootReducer(AppState state, dynamic action) {
   return AppState(
     groups: groupsReducer(state.groups, action),
     profiles: profilesReducer(state.profiles, action),
+    members: membersReducer(state.members, action),
     schedules: schedulesReducer(state.schedules, action),
     defaultReplies: defaultRepliesReducer(state.defaultReplies, action),
     replies: repliesReducer(state.replies, action),

@@ -23,7 +23,9 @@ Stream<dynamic> _loadGroupsOnSignInEpic(
         Stream<dynamic> actions, EpicStore<AppState> store) =>
     actions
         .whereType<AuthStateChangedAction>()
-        .where((action) => action.authState.event == AuthChangeEvent.signedIn)
+        .where((action) =>
+            action.authState.event == AuthChangeEvent.signedIn ||
+            action.authState.event == AuthChangeEvent.initialSession)
         .map((event) => const RequestRetrieveAll<Group>());
 
 /// Once the app starts, request to load all the groups, if the user is signed in

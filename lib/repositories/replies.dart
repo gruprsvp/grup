@@ -29,7 +29,7 @@ class RepliesRepository extends SupabaseRepository with Postgrest {
           'member_id': reply.memberId,
           'event_date': reply.eventDate.toIso8601String(),
           'selected_option': reply.selectedOption.name,
-        })
+        }, onConflict: 'member_id, schedule_id, event_date')
         .select()
         .single()
         .withConverter((data) => Reply.fromJson(data));

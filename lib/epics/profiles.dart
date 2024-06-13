@@ -23,9 +23,12 @@ Stream<dynamic> _loadOwnProfileOnSignInEpic(
         Stream<dynamic> actions, EpicStore<AppState> store) =>
     actions
         .whereType<AuthStateChangedAction>()
-        .where((action) => action.authState.event == AuthChangeEvent.signedIn)
-        .map((event) => RequestRetrieveOne<Profile>(
-            event.authState.session!.user.id.toString()));
+        .where((action) =>
+            action.authState.event == AuthChangeEvent.signedIn ||
+            action.authState.event == AuthChangeEvent.initialSession)
+        .where((action) => action.authState.session != null)
+        .map((action) => RequestRetrieveOne<Profile>(
+            action.authState.session!.user.id.toString()));
 
 /// Fetch 1 user profile from the database
 Epic<AppState> _createRetrieveOneProfileEpic(ProfilesRepository profiles) {
