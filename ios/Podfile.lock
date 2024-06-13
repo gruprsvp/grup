@@ -1,27 +1,33 @@
 PODS:
   - app_links (0.0.1):
     - Flutter
-  - AppAuth (1.6.2):
-    - AppAuth/Core (= 1.6.2)
-    - AppAuth/ExternalUserAgent (= 1.6.2)
-  - AppAuth/Core (1.6.2)
-  - AppAuth/ExternalUserAgent (1.6.2):
+  - AppAuth (1.7.5):
+    - AppAuth/Core (= 1.7.5)
+    - AppAuth/ExternalUserAgent (= 1.7.5)
+  - AppAuth/Core (1.7.5)
+  - AppAuth/ExternalUserAgent (1.7.5):
     - AppAuth/Core
   - Flutter (1.0.0)
   - flutter_contacts (0.0.1):
     - Flutter
   - google_sign_in_ios (0.0.1):
+    - AppAuth (>= 1.7.4)
     - Flutter
     - FlutterMacOS
-    - GoogleSignIn (~> 7.0)
-  - GoogleSignIn (7.0.0):
-    - AppAuth (~> 1.5)
-    - GTMAppAuth (< 3.0, >= 1.3)
-    - GTMSessionFetcher/Core (< 4.0, >= 1.1)
-  - GTMAppAuth (2.0.0):
-    - AppAuth/Core (~> 1.6)
-    - GTMSessionFetcher/Core (< 4.0, >= 1.5)
-  - GTMSessionFetcher/Core (3.2.0)
+    - GoogleSignIn (~> 7.1)
+    - GTMSessionFetcher (>= 3.4.0)
+  - GoogleSignIn (7.1.0):
+    - AppAuth (< 2.0, >= 1.7.3)
+    - GTMAppAuth (< 5.0, >= 4.1.1)
+    - GTMSessionFetcher/Core (~> 3.3)
+  - GTMAppAuth (4.1.1):
+    - AppAuth/Core (~> 1.7)
+    - GTMSessionFetcher/Core (< 4.0, >= 3.3)
+  - GTMSessionFetcher (3.4.1):
+    - GTMSessionFetcher/Full (= 3.4.1)
+  - GTMSessionFetcher/Core (3.4.1)
+  - GTMSessionFetcher/Full (3.4.1):
+    - GTMSessionFetcher/Core
   - image_picker_ios (0.0.1):
     - Flutter
   - integration_test (0.0.1):
@@ -95,23 +101,23 @@ CHECKOUT OPTIONS:
     :tag: 3.6.6
 
 SPEC CHECKSUMS:
-  app_links: 5ef33d0d295a89d9d16bb81b0e3b0d5f70d6c875
-  AppAuth: 3bb1d1cd9340bd09f5ed189fb00b1cc28e1e8570
+  app_links: e70ca16b4b0f88253b3b3660200d4a10b4ea9795
+  AppAuth: 501c04eda8a8d11f179dbe8637b7a91bb7e5d2fa
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_contacts: edb1c5ce76aa433e20e6cb14c615f4c0b66e0983
-  google_sign_in_ios: 1bfaf6607b44cd1b24c4d4bc39719870440f9ce1
-  GoogleSignIn: b232380cf495a429b8095d3178a8d5855b42e842
-  GTMAppAuth: 99fb010047ba3973b7026e45393f51f27ab965ae
-  GTMSessionFetcher: 41b9ef0b4c08a6db4b7eb51a21ae5183ec99a2c8
-  image_picker_ios: 99dfe1854b4fa34d0364e74a78448a0151025425
-  integration_test: 13825b8a9334a850581300559b8839134b124670
-  path_provider_foundation: 3784922295ac71e43754bd15e0653ccfd36a147c
+  google_sign_in_ios: 07375bfbf2620bc93a602c0e27160d6afc6ead38
+  GoogleSignIn: d4281ab6cf21542b1cfaff85c191f230b399d2db
+  GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
+  GTMSessionFetcher: 8000756fc1c19d2e5697b90311f7832d2e33f6cd
+  image_picker_ios: c560581cceedb403a6ff17f2f816d7fea1421fc1
+  integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
+  path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   phone_number: 567a167933138df1080eb0d8ecb0ea44f1dee1ed
   PhoneNumberKit: 5b1be7ee4955dfeeb855f51eecdd829ab24b3484
-  shared_preferences_foundation: b4c3b4cddf1c21f02770737f147a3f5da9d39695
+  shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
-  url_launcher_ios: bbd758c6e7f9fd7b5b1d4cde34d2b95fcce5e812
+  url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe
 
 PODFILE CHECKSUM: 569636ff5edb32636892b1c748f656de700236ae
 
-COCOAPODS: 1.14.3
+COCOAPODS: 1.15.2
