@@ -31,29 +31,8 @@
 
     <title>Parousia</title>
     <link href="manifest.json" rel="manifest">
-
-    <script>
-        // The value below is injected by flutter build, do not touch.
-        const serviceWorkerVersion = "319755926";
-    </script>
-    <!-- This script adds the flutter initialization JS code -->
-    <script defer src="flutter.js"></script>
 </head>
 <body>
-<script>
-    window.addEventListener('load', function (ev) {
-        // Download main.dart.js
-        _flutter.loader.loadEntrypoint({
-            serviceWorker: {
-                serviceWorkerVersion: serviceWorkerVersion,
-            },
-            onEntrypointLoaded: function (engineInitializer) {
-                engineInitializer.initializeEngine().then(function (appRunner) {
-                    appRunner.runApp();
-                });
-            }
-        });
-    });
-</script>
+<script async src="flutter_bootstrap.js"></script>
 </body>
 </html>
