@@ -2,6 +2,8 @@
 
 A calendar app for humans.
 
+[Test environment](http://parousia-flutter.pages.dev)
+
 ## Getting started
 
 ### Requirements
