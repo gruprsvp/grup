@@ -26,6 +26,8 @@
 	<string>$(FLUTTER_BUILD_NUMBER)</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(CFBundleDisplayName) uses the photo library to set a profile picture</string>
 	<key>NSCameraUsageDescription</key>
 	<string>$(CFBundleDisplayName) uses the camera to take a profile picture</string>
 	<key>NSContactsUsageDescription</key>
