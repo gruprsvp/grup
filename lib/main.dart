@@ -69,9 +69,11 @@ Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
 
   final persistor = Persistor<AppState>(
     storage: FlutterStorage(location: storageLocation),
-    serializer: JsonSerializer<AppState>(
-      (json) =>
-          json != null ? AppState.fromJson(json as Map<String, dynamic>) : null,
+    serializer: JsonSerializer((json) =>
+        json != null ? AppState.fromJson(json as Map<String, dynamic>) : null),
+    transforms: Transforms(
+      onSave: [(state) => AppState.copyWithoutErrors(state)],
+      onLoad: [(state) => AppState.copyWithSelectedDateToday(state)],
     ),
   );
 
@@ -80,11 +82,7 @@ Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
   });
   final initialState = localPersistedState ?? AppState.initialState();
   final middleware = [
-    // ! TODO Persistor is often causing issues when it tries to
-    //        persist errors that are currently in the store...
-    //        However at some point it must be enabled again as preferences
-    //        such as theme and language should be persisted.
-    // persistor.createMiddleware(),
+    persistor.createMiddleware(),
     EpicMiddleware<AppState>(epics).call,
   ];
 

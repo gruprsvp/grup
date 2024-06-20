@@ -30,6 +30,22 @@ sealed class AppState with _$AppState {
 
   factory AppState.initialState() => AppState(selectedDate: DateTime.now());
 
+  /// When loading the state from the database, set today's date
+  factory AppState.copyWithSelectedDateToday(AppState? state) =>
+      state?.copyWith(selectedDate: DateTime.now()) ?? AppState.initialState();
+
+  /// Copy the state without the errors, to avoid persisting them
+  factory AppState.copyWithoutErrors(AppState? state) =>
+      state?.copyWith(
+        profiles: state.profiles.copyWith(error: null),
+        groups: state.groups.copyWith(error: null),
+        members: state.members.copyWith(error: null),
+        schedules: state.schedules.copyWith(error: null),
+        replies: state.replies.copyWith(error: null),
+        invites: state.invites.copyWith(error: null),
+      ) ??
+      AppState.initialState();
+
   factory AppState.fromJson(Map<String, dynamic> json) =>
       _$AppStateFromJson(json);
 }
