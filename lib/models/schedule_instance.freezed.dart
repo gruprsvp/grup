@@ -12,11 +12,12 @@ part of 'schedule_instance.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ScheduleInstance {
   int get scheduleId => throw _privateConstructorUsedError;
+  int get groupId => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   DateTime get eventDate => throw _privateConstructorUsedError;
   int get yesCount => throw _privateConstructorUsedError;
@@ -36,6 +37,7 @@ abstract class $ScheduleInstanceCopyWith<$Res> {
   @useResult
   $Res call(
       {int scheduleId,
+      int groupId,
       String displayName,
       DateTime eventDate,
       int yesCount,
@@ -57,6 +59,7 @@ class _$ScheduleInstanceCopyWithImpl<$Res, $Val extends ScheduleInstance>
   @override
   $Res call({
     Object? scheduleId = null,
+    Object? groupId = null,
     Object? displayName = null,
     Object? eventDate = null,
     Object? yesCount = null,
@@ -67,6 +70,10 @@ class _$ScheduleInstanceCopyWithImpl<$Res, $Val extends ScheduleInstance>
       scheduleId: null == scheduleId
           ? _value.scheduleId
           : scheduleId // ignore: cast_nullable_to_non_nullable
+              as int,
+      groupId: null == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
               as int,
       displayName: null == displayName
           ? _value.displayName
@@ -102,6 +109,7 @@ abstract class _$$ScheduleInstanceImplCopyWith<$Res>
   @useResult
   $Res call(
       {int scheduleId,
+      int groupId,
       String displayName,
       DateTime eventDate,
       int yesCount,
@@ -121,6 +129,7 @@ class __$$ScheduleInstanceImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? scheduleId = null,
+    Object? groupId = null,
     Object? displayName = null,
     Object? eventDate = null,
     Object? yesCount = null,
@@ -131,6 +140,10 @@ class __$$ScheduleInstanceImplCopyWithImpl<$Res>
       scheduleId: null == scheduleId
           ? _value.scheduleId
           : scheduleId // ignore: cast_nullable_to_non_nullable
+              as int,
+      groupId: null == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
               as int,
       displayName: null == displayName
           ? _value.displayName
@@ -163,6 +176,7 @@ class _$ScheduleInstanceImpl
     implements _ScheduleInstance {
   const _$ScheduleInstanceImpl(
       {required this.scheduleId,
+      required this.groupId,
       required this.displayName,
       required this.eventDate,
       required this.yesCount,
@@ -171,6 +185,8 @@ class _$ScheduleInstanceImpl
 
   @override
   final int scheduleId;
+  @override
+  final int groupId;
   @override
   final String displayName;
   @override
@@ -184,7 +200,7 @@ class _$ScheduleInstanceImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ScheduleInstance(scheduleId: $scheduleId, displayName: $displayName, eventDate: $eventDate, yesCount: $yesCount, myReply: $myReply, targetMemberId: $targetMemberId)';
+    return 'ScheduleInstance(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, eventDate: $eventDate, yesCount: $yesCount, myReply: $myReply, targetMemberId: $targetMemberId)';
   }
 
   @override
@@ -193,6 +209,7 @@ class _$ScheduleInstanceImpl
     properties
       ..add(DiagnosticsProperty('type', 'ScheduleInstance'))
       ..add(DiagnosticsProperty('scheduleId', scheduleId))
+      ..add(DiagnosticsProperty('groupId', groupId))
       ..add(DiagnosticsProperty('displayName', displayName))
       ..add(DiagnosticsProperty('eventDate', eventDate))
       ..add(DiagnosticsProperty('yesCount', yesCount))
@@ -207,6 +224,7 @@ class _$ScheduleInstanceImpl
             other is _$ScheduleInstanceImpl &&
             (identical(other.scheduleId, scheduleId) ||
                 other.scheduleId == scheduleId) &&
+            (identical(other.groupId, groupId) || other.groupId == groupId) &&
             (identical(other.displayName, displayName) ||
                 other.displayName == displayName) &&
             (identical(other.eventDate, eventDate) ||
@@ -219,7 +237,7 @@ class _$ScheduleInstanceImpl
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, scheduleId, displayName,
+  int get hashCode => Object.hash(runtimeType, scheduleId, groupId, displayName,
       eventDate, yesCount, myReply, targetMemberId);
 
   @JsonKey(ignore: true)
@@ -233,6 +251,7 @@ class _$ScheduleInstanceImpl
 abstract class _ScheduleInstance implements ScheduleInstance {
   const factory _ScheduleInstance(
       {required final int scheduleId,
+      required final int groupId,
       required final String displayName,
       required final DateTime eventDate,
       required final int yesCount,
@@ -241,6 +260,8 @@ abstract class _ScheduleInstance implements ScheduleInstance {
 
   @override
   int get scheduleId;
+  @override
+  int get groupId;
   @override
   String get displayName;
   @override

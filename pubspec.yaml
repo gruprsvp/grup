@@ -78,6 +78,7 @@ dependencies:
   form_builder_validators: ^10.0.1
 
   # Utilities
+  collection: ^1.18.0
   dynamic_color: ^1.6.8
   font_awesome_flutter: ^10.6.0
   mime: ^1.0.4

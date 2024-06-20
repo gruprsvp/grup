@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'profile.dart';
+part of 'group_schedule_details.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -16,8 +16,8 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ViewModel {
-  Profile? get profile => throw _privateConstructorUsedError;
-  OnProfileSaveCallback get onSave => throw _privateConstructorUsedError;
+  bool get loading => throw _privateConstructorUsedError;
+  ScheduleInstance? get schedule => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
   _$ViewModelCopyWith<_ViewModel> get copyWith =>
@@ -30,9 +30,9 @@ abstract class _$ViewModelCopyWith<$Res> {
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call({Profile? profile, OnProfileSaveCallback onSave});
+  $Res call({bool loading, ScheduleInstance? schedule});
 
-  $ProfileCopyWith<$Res>? get profile;
+  $ScheduleInstanceCopyWith<$Res>? get schedule;
 }
 
 /// @nodoc
@@ -48,30 +48,30 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? profile = freezed,
-    Object? onSave = null,
+    Object? loading = null,
+    Object? schedule = freezed,
   }) {
     return _then(_value.copyWith(
-      profile: freezed == profile
-          ? _value.profile
-          : profile // ignore: cast_nullable_to_non_nullable
-              as Profile?,
-      onSave: null == onSave
-          ? _value.onSave
-          : onSave // ignore: cast_nullable_to_non_nullable
-              as OnProfileSaveCallback,
+      loading: null == loading
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      schedule: freezed == schedule
+          ? _value.schedule
+          : schedule // ignore: cast_nullable_to_non_nullable
+              as ScheduleInstance?,
     ) as $Val);
   }
 
   @override
   @pragma('vm:prefer-inline')
-  $ProfileCopyWith<$Res>? get profile {
-    if (_value.profile == null) {
+  $ScheduleInstanceCopyWith<$Res>? get schedule {
+    if (_value.schedule == null) {
       return null;
     }
 
-    return $ProfileCopyWith<$Res>(_value.profile!, (value) {
-      return _then(_value.copyWith(profile: value) as $Val);
+    return $ScheduleInstanceCopyWith<$Res>(_value.schedule!, (value) {
+      return _then(_value.copyWith(schedule: value) as $Val);
     });
   }
 }
@@ -84,10 +84,10 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({Profile? profile, OnProfileSaveCallback onSave});
+  $Res call({bool loading, ScheduleInstance? schedule});
 
   @override
-  $ProfileCopyWith<$Res>? get profile;
+  $ScheduleInstanceCopyWith<$Res>? get schedule;
 }
 
 /// @nodoc
@@ -101,18 +101,18 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? profile = freezed,
-    Object? onSave = null,
+    Object? loading = null,
+    Object? schedule = freezed,
   }) {
     return _then(_$_ViewModelImpl(
-      profile: freezed == profile
-          ? _value.profile
-          : profile // ignore: cast_nullable_to_non_nullable
-              as Profile?,
-      onSave: null == onSave
-          ? _value.onSave
-          : onSave // ignore: cast_nullable_to_non_nullable
-              as OnProfileSaveCallback,
+      loading: null == loading
+          ? _value.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      schedule: freezed == schedule
+          ? _value.schedule
+          : schedule // ignore: cast_nullable_to_non_nullable
+              as ScheduleInstance?,
     ));
   }
 }
@@ -120,16 +120,16 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
-  const _$_ViewModelImpl({this.profile, required this.onSave});
+  const _$_ViewModelImpl({required this.loading, this.schedule});
 
   @override
-  final Profile? profile;
+  final bool loading;
   @override
-  final OnProfileSaveCallback onSave;
+  final ScheduleInstance? schedule;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(profile: $profile, onSave: $onSave)';
+    return '_ViewModel(loading: $loading, schedule: $schedule)';
   }
 
   @override
@@ -137,8 +137,8 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', '_ViewModel'))
-      ..add(DiagnosticsProperty('profile', profile))
-      ..add(DiagnosticsProperty('onSave', onSave));
+      ..add(DiagnosticsProperty('loading', loading))
+      ..add(DiagnosticsProperty('schedule', schedule));
   }
 
   @override
@@ -146,12 +146,13 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ViewModelImpl &&
-            (identical(other.profile, profile) || other.profile == profile) &&
-            (identical(other.onSave, onSave) || other.onSave == onSave));
+            (identical(other.loading, loading) || other.loading == loading) &&
+            (identical(other.schedule, schedule) ||
+                other.schedule == schedule));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, profile, onSave);
+  int get hashCode => Object.hash(runtimeType, loading, schedule);
 
   @JsonKey(ignore: true)
   @override
@@ -162,13 +163,13 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 
 abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
-      {final Profile? profile,
-      required final OnProfileSaveCallback onSave}) = _$_ViewModelImpl;
+      {required final bool loading,
+      final ScheduleInstance? schedule}) = _$_ViewModelImpl;
 
   @override
-  Profile? get profile;
+  bool get loading;
   @override
-  OnProfileSaveCallback get onSave;
+  ScheduleInstance? get schedule;
   @override
   @JsonKey(ignore: true)
   _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>

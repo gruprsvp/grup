@@ -7,8 +7,8 @@ part of 'member.dart';
 // **************************************************************************
 
 _$MemberImpl _$$MemberImplFromJson(Map<String, dynamic> json) => _$MemberImpl(
-      id: json['id'] as int,
-      groupId: json['group_id'] as int,
+      id: (json['id'] as num).toInt(),
+      groupId: (json['group_id'] as num).toInt(),
       role: $enumDecode(_$GroupRolesEnumMap, json['role']),
       profileId: json['profile_id'] as String?,
       displayNameOverride: json['display_name_override'] as String?,

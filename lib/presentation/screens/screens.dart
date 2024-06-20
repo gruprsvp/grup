@@ -2,6 +2,7 @@ export 'auth.dart';
 export 'group_create.dart';
 export 'group_details.dart';
 export 'group_manage.dart';
+export 'group_schedule_details.dart';
 export 'home.dart';
 export 'locale.dart';
 export 'profile.dart';

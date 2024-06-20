@@ -7,8 +7,8 @@ part of 'reply.dart';
 // **************************************************************************
 
 _$ReplyImpl _$$ReplyImplFromJson(Map<String, dynamic> json) => _$ReplyImpl(
-      memberId: json['member_id'] as int,
-      scheduleId: json['schedule_id'] as int,
+      memberId: (json['member_id'] as num).toInt(),
+      scheduleId: (json['schedule_id'] as num).toInt(),
       eventDate: DateTime.parse(json['event_date'] as String),
       selectedOption:
           $enumDecode(_$ReplyOptionsEnumMap, json['selected_option']),

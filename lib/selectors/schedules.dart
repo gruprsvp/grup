@@ -35,6 +35,7 @@ ScheduleInstance repliesForScheduleInstance({
 
   return ScheduleInstance(
     scheduleId: schedule.id,
+    groupId: schedule.groupId,
     displayName: schedule.displayName,
     eventDate: eventDate,
     yesCount: yesCount,

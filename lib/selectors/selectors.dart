@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/selectors/schedules.dart';
@@ -68,4 +69,13 @@ Iterable<ScheduleInstance>? selectSchedulesForSelectedDate(
         endDate: range.end,
         targetMemberId: myselfInGroup?.id,
       ));
+}
+
+// TODO This should work the other way around, and be memoized
+ScheduleInstance? selectScheduleForDate(
+    AppState state, int selectedGroupId, int selectedScheduleId) {
+  final allScheduleInstances =
+      selectSchedulesForSelectedDate(state, selectedGroupId);
+  return allScheduleInstances
+      ?.firstWhereOrNull((s) => s.scheduleId == selectedScheduleId);
 }

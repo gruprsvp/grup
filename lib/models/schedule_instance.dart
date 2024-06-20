@@ -8,6 +8,7 @@ part 'schedule_instance.freezed.dart';
 sealed class ScheduleInstance with _$ScheduleInstance {
   const factory ScheduleInstance({
     required int scheduleId,
+    required int groupId,
     required String displayName,
     required DateTime eventDate,
     required int yesCount,

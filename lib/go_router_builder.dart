@@ -17,7 +17,8 @@ part 'go_router_builder.g.dart';
       routes: [
         TypedGoRoute<GroupManageRoute>(path: 'manage'),
         // TODO Should be at root level?
-        TypedGoRoute<GroupScheduleCreateRoute>(path: 'schedule'),
+        TypedGoRoute<GroupScheduleCreateRoute>(path: 'schedule-create'),
+        TypedGoRoute<GroupScheduleDetailsRoute>(path: 'schedules/:scheduleId'),
       ],
     ),
     TypedGoRoute<SettingsRoute>(
@@ -104,6 +105,19 @@ class GroupScheduleCreateRoute extends GoRouteData with AuthenticationGuard {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const ScheduleCreateScreen();
+}
+
+@immutable
+class GroupScheduleDetailsRoute extends GoRouteData with AuthenticationGuard {
+  final String groupId;
+  final String scheduleId;
+
+  const GroupScheduleDetailsRoute(
+      {required this.groupId, required this.scheduleId});
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      GroupScheduleDetailsContainer(groupId: groupId, scheduleId: scheduleId);
 }
 
 @immutable

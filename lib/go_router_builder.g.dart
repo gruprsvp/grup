@@ -39,8 +39,12 @@ RouteBase get $homeScreenRoute => GoRouteData.$route(
               factory: $GroupManageRouteExtension._fromState,
             ),
             GoRouteData.$route(
-              path: 'schedule',
+              path: 'schedule-create',
               factory: $GroupScheduleCreateRouteExtension._fromState,
+            ),
+            GoRouteData.$route(
+              path: 'schedules/:scheduleId',
+              factory: $GroupScheduleDetailsRouteExtension._fromState,
             ),
           ],
         ),
@@ -188,7 +192,28 @@ extension $GroupScheduleCreateRouteExtension on GroupScheduleCreateRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/groups/${Uri.encodeComponent(groupId)}/schedule',
+        '/groups/${Uri.encodeComponent(groupId)}/schedule-create',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $GroupScheduleDetailsRouteExtension on GroupScheduleDetailsRoute {
+  static GroupScheduleDetailsRoute _fromState(GoRouterState state) =>
+      GroupScheduleDetailsRoute(
+        groupId: state.pathParameters['groupId']!,
+        scheduleId: state.pathParameters['scheduleId']!,
+      );
+
+  String get location => GoRouteData.$location(
+        '/groups/${Uri.encodeComponent(groupId)}/schedules/${Uri.encodeComponent(scheduleId)}',
       );
 
   void go(BuildContext context) => context.go(location);
