@@ -4,6 +4,7 @@ import 'package:parousia/models/models.dart';
 import 'package:parousia/selectors/schedules.dart';
 import 'package:parousia/state/state.dart';
 import 'package:parousia/util/util.dart';
+import 'package:reselect/reselect.dart';
 import 'package:rrule/rrule.dart';
 
 export 'members.dart';
@@ -34,14 +35,16 @@ Future<RruleL10n> rruleL10nSelector(AppState state) {
   return RruleL10nEn.create();
 }
 
+DateTime selectedDateSelector(AppState state) => state.selectedDate;
+
 /// Provide the begin and end of day for the selected date.
-DateTimeRange selectedDateRangeSelector(AppState state) =>
-    state.selectedDate.getDayRange();
+final selectedDateRangeSelector =
+    createSelector1(selectedDateSelector, (date) => date.getDayRange());
 
 // TODO This shit should be better tested, and use reselect for memoization
 Iterable<ScheduleInstance>? selectSchedulesForSelectedDate(
     AppState state, int selectedGroupId) {
-  final range = state.selectedDate.getDayRange();
+  final range = selectedDateRangeSelector(state);
   final group = state.groups.entities[selectedGroupId.toString()];
 
   if (group == null) return null;
