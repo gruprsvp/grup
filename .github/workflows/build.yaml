@@ -40,3 +40,14 @@ jobs:
           echo "$KEY_PROPERTIES" > android/key.properties
       - name: Compile Android app
         run: flutter build appbundle --build-number ${{ github.run_number }}
+      - name: Upload Android app to Play Store
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          packageName: is.giorgio.app.parousia
+          releaseFiles: build/app/outputs/bundle/release/app-release.aab
+          track: internal
+          status: draft
+          changesNotSentForReview: true
+          mappingFile: build/app/outputs/mapping/release/mapping.txt
+          debugSymbols: build/app/intermediates/merged_native_libs/release/out/lib
