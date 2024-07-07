@@ -33,7 +33,7 @@ class SchedulesListContainer extends StatelessWidget {
 @freezed
 sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
-    Iterable<ScheduleInstance>? schedules,
+    Iterable<ScheduleSummary>? schedules,
     OnReplyChangedCallback? onReplyChanged,
   }) = __ViewModel;
 

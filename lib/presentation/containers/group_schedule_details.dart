@@ -8,6 +8,7 @@ import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/selectors/selectors.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
+import 'package:redux_entity/redux_entity.dart';
 
 part 'group_schedule_details.freezed.dart';
 
@@ -25,29 +26,56 @@ class GroupScheduleDetailsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
       distinct: true,
-      converter: (store) => _ViewModel.fromStore(
-          store, int.parse(groupId), int.parse(scheduleId)),
+      converter: (store) => _ViewModel.fromStore(store, groupId, scheduleId),
       onInit: (store) => store.dispatch(GroupDetailsOpenAction(groupId)),
       builder: (context, vm) => GroupScheduleDetailsScreen(
         loading: vm.loading,
+        group: vm.group,
         schedule: vm.schedule,
+        onReplyChanged: vm.onReplyChanged,
       ),
     );
   }
 }
 
 @freezed
-class _ViewModel with _$ViewModel {
+sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required bool loading,
-    ScheduleInstance? schedule,
+    Group? group,
+    ScheduleSummary? schedule,
+    OnReplyChangedCallback? onReplyChanged,
   }) = __ViewModel;
 
   static _ViewModel fromStore(
-      Store<AppState> store, int groupId, int scheduleId) {
+      Store<AppState> store, String groupId, String scheduleId) {
+    final group = store.state.groups.entities[groupId];
+
+    if (group == null) {
+      return const _ViewModel(loading: true);
+    }
+
     return _ViewModel(
-        loading: store.state.groups.loadingAll ||
-            (store.state.groups.loadingIds[groupId] ?? false),
-        schedule: selectScheduleForDate(store.state, groupId, scheduleId));
+      loading: store.state.groups.loadingAll ||
+          (store.state.groups.loadingIds[groupId] ?? false),
+      group: group,
+      schedule:
+          selectScheduleForDate(store.state, group.id, int.parse(scheduleId)),
+      onReplyChanged: (schedule, reply) {
+        if (reply == null) {
+          store.dispatch(RequestDeleteReplyAction(
+            memberId: schedule.targetMemberId!,
+            scheduleId: schedule.scheduleId,
+            eventDate: schedule.eventDate,
+          ));
+        } else {
+          store.dispatch(RequestUpdateOne(Reply(
+              memberId: schedule.targetMemberId!,
+              scheduleId: schedule.scheduleId,
+              eventDate: schedule.eventDate,
+              selectedOption: reply)));
+        }
+      },
+    );
   }
 }

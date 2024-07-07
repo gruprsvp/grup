@@ -16,7 +16,7 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ViewModel {
-  Iterable<ScheduleInstance>? get schedules =>
+  Iterable<ScheduleSummary>? get schedules =>
       throw _privateConstructorUsedError;
   OnReplyChangedCallback? get onReplyChanged =>
       throw _privateConstructorUsedError;
@@ -33,7 +33,7 @@ abstract class _$ViewModelCopyWith<$Res> {
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
   $Res call(
-      {Iterable<ScheduleInstance>? schedules,
+      {Iterable<ScheduleSummary>? schedules,
       OnReplyChangedCallback? onReplyChanged});
 }
 
@@ -57,7 +57,7 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
       schedules: freezed == schedules
           ? _value.schedules
           : schedules // ignore: cast_nullable_to_non_nullable
-              as Iterable<ScheduleInstance>?,
+              as Iterable<ScheduleSummary>?,
       onReplyChanged: freezed == onReplyChanged
           ? _value.onReplyChanged
           : onReplyChanged // ignore: cast_nullable_to_non_nullable
@@ -75,7 +75,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Iterable<ScheduleInstance>? schedules,
+      {Iterable<ScheduleSummary>? schedules,
       OnReplyChangedCallback? onReplyChanged});
 }
 
@@ -97,7 +97,7 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
       schedules: freezed == schedules
           ? _value.schedules
           : schedules // ignore: cast_nullable_to_non_nullable
-              as Iterable<ScheduleInstance>?,
+              as Iterable<ScheduleSummary>?,
       onReplyChanged: freezed == onReplyChanged
           ? _value.onReplyChanged
           : onReplyChanged // ignore: cast_nullable_to_non_nullable
@@ -112,7 +112,7 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   const _$_ViewModelImpl({this.schedules, this.onReplyChanged});
 
   @override
-  final Iterable<ScheduleInstance>? schedules;
+  final Iterable<ScheduleSummary>? schedules;
   @override
   final OnReplyChangedCallback? onReplyChanged;
 
@@ -153,11 +153,11 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 
 abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
-      {final Iterable<ScheduleInstance>? schedules,
+      {final Iterable<ScheduleSummary>? schedules,
       final OnReplyChangedCallback? onReplyChanged}) = _$_ViewModelImpl;
 
   @override
-  Iterable<ScheduleInstance>? get schedules;
+  Iterable<ScheduleSummary>? get schedules;
   @override
   OnReplyChangedCallback? get onReplyChanged;
   @override

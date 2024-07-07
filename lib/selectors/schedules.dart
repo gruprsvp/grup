@@ -1,6 +1,6 @@
 import 'package:parousia/models/models.dart';
 
-ScheduleInstance repliesForScheduleInstance({
+ScheduleSummary repliesForScheduleInstance({
   required DateTime eventDate,
   required Schedule schedule,
   required DateTime startDate,
@@ -33,18 +33,19 @@ ScheduleInstance repliesForScheduleInstance({
   final myReply = allReplies[targetMemberId];
   final yesCount = allReplies.values.where((e) => e == ReplyOptions.yes).length;
 
-  return ScheduleInstance(
+  return ScheduleSummary(
     scheduleId: schedule.id,
     groupId: schedule.groupId,
     displayName: schedule.displayName,
     eventDate: eventDate,
+    memberReplies: allReplies,
     yesCount: yesCount,
     myReply: myReply,
     targetMemberId: targetMemberId,
   );
 }
 
-Iterable<ScheduleInstance> getScheduleInstances({
+Iterable<ScheduleSummary> getScheduleInstances({
   required Schedule schedule,
   required DateTime startDate,
   required DateTime endDate,

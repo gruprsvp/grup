@@ -25,7 +25,7 @@ class DateFabContainer extends StatelessWidget {
 }
 
 @freezed
-class _ViewModel with _$ViewModel {
+sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required DateTime selectedDate,
     required ValueChanged<DateTime> onDateChanged,
@@ -33,7 +33,8 @@ class _ViewModel with _$ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
-        selectedDate: store.state.selectedDate,
-        onDateChanged: (value) => store.dispatch(SelectDateAction(value)));
+      selectedDate: store.state.selectedDate,
+      onDateChanged: (value) => store.dispatch(SelectDateAction(value)),
+    );
   }
 }

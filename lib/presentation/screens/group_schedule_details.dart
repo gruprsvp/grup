@@ -1,16 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:intl/intl.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 
 class GroupScheduleDetailsScreen extends StatelessWidget {
-  final bool loading;
-  final ScheduleInstance? schedule;
+  final datetimeFormat = DateFormat.yMMMd()..add_jm();
 
-  const GroupScheduleDetailsScreen({
+  final bool loading;
+  final Group? group;
+  final ScheduleSummary? schedule;
+  final OnReplyChangedCallback? onReplyChanged;
+
+  GroupScheduleDetailsScreen({
     super.key,
     required this.loading,
+    this.group,
     this.schedule,
+    this.onReplyChanged,
   });
 
   @override
@@ -19,7 +26,7 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(schedule?.displayName ?? l10n.loading),
+        title: Text(group?.displayName ?? l10n.loading),
         // actions: [
         //   IconButton(
         //     onPressed: () =>
@@ -30,9 +37,19 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
-          Expanded(
-            child: Text(schedule?.myReply?.name ?? l10n.loading),
-          )
+          ListTile(
+            title: Text(schedule?.displayName ?? l10n.loading),
+            subtitle: schedule?.eventDate != null
+                ? Text(datetimeFormat.format(schedule!.eventDate))
+                : Text(l10n.loading),
+          ),
+          ListTile(
+            title: Text(l10n.you),
+            trailing: ReplyButton(
+              myReply: schedule?.myReply,
+              onReplyChanged: (reply) => onReplyChanged?.call(schedule!, reply),
+            ),
+          ),
         ],
       ),
       floatingActionButton: const DateFabContainer(),

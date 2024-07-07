@@ -113,7 +113,7 @@ SPEC CHECKSUMS:
   integration_test: ce0a3ffa1de96d1a89ca0ac26fca7ea18a749ef4
   path_provider_foundation: 2b6b4c569c0fb62ec74538f866245ac84301af46
   phone_number: 567a167933138df1080eb0d8ecb0ea44f1dee1ed
-  PhoneNumberKit: 5b1be7ee4955dfeeb855f51eecdd829ab24b3484
+  PhoneNumberKit: 54a4e3f3c776b3277b084acf00e2da18ff548d58
   shared_preferences_foundation: fcdcbc04712aee1108ac7fda236f363274528f78
   sign_in_with_apple: f3bf75217ea4c2c8b91823f225d70230119b8440
   url_launcher_ios: 5334b05cef931de560670eeae103fd3e431ac3fe

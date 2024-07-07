@@ -42,7 +42,7 @@ final selectedDateRangeSelector =
     createSelector1(selectedDateSelector, (date) => date.getDayRange());
 
 // TODO This shit should be better tested, and use reselect for memoization
-Iterable<ScheduleInstance>? selectSchedulesForSelectedDate(
+Iterable<ScheduleSummary>? selectSchedulesForSelectedDate(
     AppState state, int selectedGroupId) {
   final range = selectedDateRangeSelector(state);
   final group = state.groups.entities[selectedGroupId.toString()];
@@ -75,7 +75,7 @@ Iterable<ScheduleInstance>? selectSchedulesForSelectedDate(
 }
 
 // TODO This should work the other way around, and be memoized
-ScheduleInstance? selectScheduleForDate(
+ScheduleSummary? selectScheduleForDate(
     AppState state, int selectedGroupId, int selectedScheduleId) {
   final allScheduleInstances =
       selectSchedulesForSelectedDate(state, selectedGroupId);

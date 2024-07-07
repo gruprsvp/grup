@@ -33,7 +33,7 @@ class GroupDetailsContainer extends StatelessWidget {
 }
 
 @freezed
-class _ViewModel with _$ViewModel {
+sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required bool loading,
     Group? group,

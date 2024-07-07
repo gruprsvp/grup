@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'schedule_instance.dart';
+part of 'schedule_summary.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -15,40 +15,43 @@ final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
-mixin _$ScheduleInstance {
+mixin _$ScheduleSummary {
   int get scheduleId => throw _privateConstructorUsedError;
   int get groupId => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   DateTime get eventDate => throw _privateConstructorUsedError;
+  Map<int, ReplyOptions> get memberReplies =>
+      throw _privateConstructorUsedError;
   int get yesCount => throw _privateConstructorUsedError;
   ReplyOptions? get myReply => throw _privateConstructorUsedError;
   int? get targetMemberId => throw _privateConstructorUsedError;
 
   @JsonKey(ignore: true)
-  $ScheduleInstanceCopyWith<ScheduleInstance> get copyWith =>
+  $ScheduleSummaryCopyWith<ScheduleSummary> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $ScheduleInstanceCopyWith<$Res> {
-  factory $ScheduleInstanceCopyWith(
-          ScheduleInstance value, $Res Function(ScheduleInstance) then) =
-      _$ScheduleInstanceCopyWithImpl<$Res, ScheduleInstance>;
+abstract class $ScheduleSummaryCopyWith<$Res> {
+  factory $ScheduleSummaryCopyWith(
+          ScheduleSummary value, $Res Function(ScheduleSummary) then) =
+      _$ScheduleSummaryCopyWithImpl<$Res, ScheduleSummary>;
   @useResult
   $Res call(
       {int scheduleId,
       int groupId,
       String displayName,
       DateTime eventDate,
+      Map<int, ReplyOptions> memberReplies,
       int yesCount,
       ReplyOptions? myReply,
       int? targetMemberId});
 }
 
 /// @nodoc
-class _$ScheduleInstanceCopyWithImpl<$Res, $Val extends ScheduleInstance>
-    implements $ScheduleInstanceCopyWith<$Res> {
-  _$ScheduleInstanceCopyWithImpl(this._value, this._then);
+class _$ScheduleSummaryCopyWithImpl<$Res, $Val extends ScheduleSummary>
+    implements $ScheduleSummaryCopyWith<$Res> {
+  _$ScheduleSummaryCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
@@ -62,6 +65,7 @@ class _$ScheduleInstanceCopyWithImpl<$Res, $Val extends ScheduleInstance>
     Object? groupId = null,
     Object? displayName = null,
     Object? eventDate = null,
+    Object? memberReplies = null,
     Object? yesCount = null,
     Object? myReply = freezed,
     Object? targetMemberId = freezed,
@@ -83,6 +87,10 @@ class _$ScheduleInstanceCopyWithImpl<$Res, $Val extends ScheduleInstance>
           ? _value.eventDate
           : eventDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      memberReplies: null == memberReplies
+          ? _value.memberReplies
+          : memberReplies // ignore: cast_nullable_to_non_nullable
+              as Map<int, ReplyOptions>,
       yesCount: null == yesCount
           ? _value.yesCount
           : yesCount // ignore: cast_nullable_to_non_nullable
@@ -100,11 +108,11 @@ class _$ScheduleInstanceCopyWithImpl<$Res, $Val extends ScheduleInstance>
 }
 
 /// @nodoc
-abstract class _$$ScheduleInstanceImplCopyWith<$Res>
-    implements $ScheduleInstanceCopyWith<$Res> {
-  factory _$$ScheduleInstanceImplCopyWith(_$ScheduleInstanceImpl value,
-          $Res Function(_$ScheduleInstanceImpl) then) =
-      __$$ScheduleInstanceImplCopyWithImpl<$Res>;
+abstract class _$$ScheduleSummaryImplCopyWith<$Res>
+    implements $ScheduleSummaryCopyWith<$Res> {
+  factory _$$ScheduleSummaryImplCopyWith(_$ScheduleSummaryImpl value,
+          $Res Function(_$ScheduleSummaryImpl) then) =
+      __$$ScheduleSummaryImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
@@ -112,17 +120,18 @@ abstract class _$$ScheduleInstanceImplCopyWith<$Res>
       int groupId,
       String displayName,
       DateTime eventDate,
+      Map<int, ReplyOptions> memberReplies,
       int yesCount,
       ReplyOptions? myReply,
       int? targetMemberId});
 }
 
 /// @nodoc
-class __$$ScheduleInstanceImplCopyWithImpl<$Res>
-    extends _$ScheduleInstanceCopyWithImpl<$Res, _$ScheduleInstanceImpl>
-    implements _$$ScheduleInstanceImplCopyWith<$Res> {
-  __$$ScheduleInstanceImplCopyWithImpl(_$ScheduleInstanceImpl _value,
-      $Res Function(_$ScheduleInstanceImpl) _then)
+class __$$ScheduleSummaryImplCopyWithImpl<$Res>
+    extends _$ScheduleSummaryCopyWithImpl<$Res, _$ScheduleSummaryImpl>
+    implements _$$ScheduleSummaryImplCopyWith<$Res> {
+  __$$ScheduleSummaryImplCopyWithImpl(
+      _$ScheduleSummaryImpl _value, $Res Function(_$ScheduleSummaryImpl) _then)
       : super(_value, _then);
 
   @pragma('vm:prefer-inline')
@@ -132,11 +141,12 @@ class __$$ScheduleInstanceImplCopyWithImpl<$Res>
     Object? groupId = null,
     Object? displayName = null,
     Object? eventDate = null,
+    Object? memberReplies = null,
     Object? yesCount = null,
     Object? myReply = freezed,
     Object? targetMemberId = freezed,
   }) {
-    return _then(_$ScheduleInstanceImpl(
+    return _then(_$ScheduleSummaryImpl(
       scheduleId: null == scheduleId
           ? _value.scheduleId
           : scheduleId // ignore: cast_nullable_to_non_nullable
@@ -153,6 +163,10 @@ class __$$ScheduleInstanceImplCopyWithImpl<$Res>
           ? _value.eventDate
           : eventDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      memberReplies: null == memberReplies
+          ? _value._memberReplies
+          : memberReplies // ignore: cast_nullable_to_non_nullable
+              as Map<int, ReplyOptions>,
       yesCount: null == yesCount
           ? _value.yesCount
           : yesCount // ignore: cast_nullable_to_non_nullable
@@ -171,17 +185,19 @@ class __$$ScheduleInstanceImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$ScheduleInstanceImpl
+class _$ScheduleSummaryImpl
     with DiagnosticableTreeMixin
-    implements _ScheduleInstance {
-  const _$ScheduleInstanceImpl(
+    implements _ScheduleSummary {
+  const _$ScheduleSummaryImpl(
       {required this.scheduleId,
       required this.groupId,
       required this.displayName,
       required this.eventDate,
+      required final Map<int, ReplyOptions> memberReplies,
       required this.yesCount,
       this.myReply,
-      this.targetMemberId});
+      this.targetMemberId})
+      : _memberReplies = memberReplies;
 
   @override
   final int scheduleId;
@@ -191,6 +207,14 @@ class _$ScheduleInstanceImpl
   final String displayName;
   @override
   final DateTime eventDate;
+  final Map<int, ReplyOptions> _memberReplies;
+  @override
+  Map<int, ReplyOptions> get memberReplies {
+    if (_memberReplies is EqualUnmodifiableMapView) return _memberReplies;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_memberReplies);
+  }
+
   @override
   final int yesCount;
   @override
@@ -200,18 +224,19 @@ class _$ScheduleInstanceImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ScheduleInstance(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, eventDate: $eventDate, yesCount: $yesCount, myReply: $myReply, targetMemberId: $targetMemberId)';
+    return 'ScheduleSummary(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, eventDate: $eventDate, memberReplies: $memberReplies, yesCount: $yesCount, myReply: $myReply, targetMemberId: $targetMemberId)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'ScheduleInstance'))
+      ..add(DiagnosticsProperty('type', 'ScheduleSummary'))
       ..add(DiagnosticsProperty('scheduleId', scheduleId))
       ..add(DiagnosticsProperty('groupId', groupId))
       ..add(DiagnosticsProperty('displayName', displayName))
       ..add(DiagnosticsProperty('eventDate', eventDate))
+      ..add(DiagnosticsProperty('memberReplies', memberReplies))
       ..add(DiagnosticsProperty('yesCount', yesCount))
       ..add(DiagnosticsProperty('myReply', myReply))
       ..add(DiagnosticsProperty('targetMemberId', targetMemberId));
@@ -221,7 +246,7 @@ class _$ScheduleInstanceImpl
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ScheduleInstanceImpl &&
+            other is _$ScheduleSummaryImpl &&
             (identical(other.scheduleId, scheduleId) ||
                 other.scheduleId == scheduleId) &&
             (identical(other.groupId, groupId) || other.groupId == groupId) &&
@@ -229,6 +254,8 @@ class _$ScheduleInstanceImpl
                 other.displayName == displayName) &&
             (identical(other.eventDate, eventDate) ||
                 other.eventDate == eventDate) &&
+            const DeepCollectionEquality()
+                .equals(other._memberReplies, _memberReplies) &&
             (identical(other.yesCount, yesCount) ||
                 other.yesCount == yesCount) &&
             (identical(other.myReply, myReply) || other.myReply == myReply) &&
@@ -237,26 +264,35 @@ class _$ScheduleInstanceImpl
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, scheduleId, groupId, displayName,
-      eventDate, yesCount, myReply, targetMemberId);
+  int get hashCode => Object.hash(
+      runtimeType,
+      scheduleId,
+      groupId,
+      displayName,
+      eventDate,
+      const DeepCollectionEquality().hash(_memberReplies),
+      yesCount,
+      myReply,
+      targetMemberId);
 
   @JsonKey(ignore: true)
   @override
   @pragma('vm:prefer-inline')
-  _$$ScheduleInstanceImplCopyWith<_$ScheduleInstanceImpl> get copyWith =>
-      __$$ScheduleInstanceImplCopyWithImpl<_$ScheduleInstanceImpl>(
+  _$$ScheduleSummaryImplCopyWith<_$ScheduleSummaryImpl> get copyWith =>
+      __$$ScheduleSummaryImplCopyWithImpl<_$ScheduleSummaryImpl>(
           this, _$identity);
 }
 
-abstract class _ScheduleInstance implements ScheduleInstance {
-  const factory _ScheduleInstance(
+abstract class _ScheduleSummary implements ScheduleSummary {
+  const factory _ScheduleSummary(
       {required final int scheduleId,
       required final int groupId,
       required final String displayName,
       required final DateTime eventDate,
+      required final Map<int, ReplyOptions> memberReplies,
       required final int yesCount,
       final ReplyOptions? myReply,
-      final int? targetMemberId}) = _$ScheduleInstanceImpl;
+      final int? targetMemberId}) = _$ScheduleSummaryImpl;
 
   @override
   int get scheduleId;
@@ -267,6 +303,8 @@ abstract class _ScheduleInstance implements ScheduleInstance {
   @override
   DateTime get eventDate;
   @override
+  Map<int, ReplyOptions> get memberReplies;
+  @override
   int get yesCount;
   @override
   ReplyOptions? get myReply;
@@ -274,6 +312,6 @@ abstract class _ScheduleInstance implements ScheduleInstance {
   int? get targetMemberId;
   @override
   @JsonKey(ignore: true)
-  _$$ScheduleInstanceImplCopyWith<_$ScheduleInstanceImpl> get copyWith =>
+  _$$ScheduleSummaryImplCopyWith<_$ScheduleSummaryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

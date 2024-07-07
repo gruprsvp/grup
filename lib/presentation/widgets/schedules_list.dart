@@ -3,10 +3,10 @@ import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 
-typedef OnReplyChangedCallback = void Function(ScheduleInstance, ReplyOptions?);
+typedef OnReplyChangedCallback = void Function(ScheduleSummary, ReplyOptions?);
 
 class SchedulesList extends StatelessWidget {
-  final Iterable<ScheduleInstance>? schedules;
+  final Iterable<ScheduleSummary>? schedules;
   final OnReplyChangedCallback? onReplyChanged;
 
   const SchedulesList({
