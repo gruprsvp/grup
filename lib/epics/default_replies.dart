@@ -9,7 +9,6 @@ import 'package:rxdart/rxdart.dart';
 createDefaultRepliesEpics(DefaultRepliesRepository defaultReplies) =>
     combineEpics<AppState>([
       _createRetrieveGroupDefaultRepliesEpic(defaultReplies),
-      // _createCreateOneScheduleEpic(schedules),
     ]);
 
 /// Fetch all default replies for a group

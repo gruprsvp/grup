@@ -29,7 +29,7 @@ class ParApp extends StatelessWidget {
         builder: (context, vm) => DynamicColorBuilder(
           builder: (lightDynamic, darkDynamic) {
             final override = vm.overrideColour;
-            const defaultColour = Colors.orange;
+            const defaultColour = Colors.lime;
 
             ColorScheme lightColorScheme;
             ColorScheme darkColorScheme;
@@ -59,12 +59,10 @@ class ParApp extends StatelessWidget {
               locale: vm.locale,
               darkTheme: ThemeData(
                 colorScheme: darkColorScheme,
-                useMaterial3: true,
               ),
               theme: ThemeData(
                 // TODO(borgoat): dynamic color scheme using dynamic_color package
                 colorScheme: lightColorScheme,
-                useMaterial3: true,
               ),
               routerConfig: router,
             );

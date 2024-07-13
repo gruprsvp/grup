@@ -23,6 +23,7 @@ class ScheduleTile extends StatelessWidget {
       subtitle: Text(timeFormat.format(schedule.eventDate)),
       trailing: Badge.count(
         count: schedule.yesCount,
+        backgroundColor: Colors.green,
         alignment: Alignment.topLeft,
         child: ReplyButton(
           myReply: schedule.myReply,
