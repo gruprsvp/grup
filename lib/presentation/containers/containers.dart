@@ -1,5 +1,6 @@
 export 'date_fab.dart';
 export 'group_details.dart';
+export 'group_events.dart';
 export 'group_form.dart';
 export 'group_manage.dart';
 export 'group_members.dart';

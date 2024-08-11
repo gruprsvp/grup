@@ -59,21 +59,35 @@ comment on trigger on_auth_user_created on auth.users is 'Creates a profile when
 
 -- TODO(borgoat): add a trigger to manage a phone number/email being added after sign up instead
 
+create or replace function check_invite_code(code text)
+    returns bigint
+    language plpgsql
+    security definer set search_path = public as
+$$
+declare
+    id bigint;
+begin
+    select member_id from invites where method = 'code' and value = check_invite_code.code into strict id;
+    return id;
+end;
+$$;
+comment on function check_invite_code(text) is 'Checks if an invite code is valid and returns the member_id if it is';
+
 create or replace function consume_invite_code(code text)
     returns void
     language plpgsql
     security definer set search_path = public as
 $$
 declare
-    invite record;
+    member_id bigint;
 begin
-    select * from invites where method = 'code' and value = consume_invite_code.code into strict invite;
+    select check_invite_code(code) into strict member_id;
 
-    if invite is null then
+    if member_id is null then
         raise exception 'Invalid invite code';
     end if;
 
-    update members set profile_id = auth.uid(), display_name_override = default where members.id = invite.member_id;
+    update members set profile_id = auth.uid(), display_name_override = default where members.id = member_id;
 end;
 $$;
 comment on function consume_invite_code(text) is 'Adds the current user to a group based on an invite code';
