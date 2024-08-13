@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -31,19 +33,28 @@ class GroupMembers extends StatelessWidget {
         ?.map(
           (c) => ContactInvite(c.displayName, [
             ...(c.emails).map((e) => (InviteMethods.email, e.address)),
-            ...(c.phones).map((p) => (InviteMethods.phone, p.normalizedNumber)),
+            ...(c.phones).map((p) => (InviteMethods.phone, p.number)),
           ]),
         )
         .toList();
   }
 
-  Future<List<ContactInvite>?> _inviteManually() async {
-    // TODO implement
-    return [];
+  Future<List<ContactInvite>?> _inviteManually(BuildContext context) async {
+    if (!context.mounted) return null;
+
+    final invited =
+        await CreateContactsRoute().push<List<ContactInvite>>(context);
+
+    return invited;
   }
 
   Future<List<ContactInvite>?> _inviteNew(BuildContext context) async {
-    // TODO check if Contact API is available, if not, go to manual invite directly
+    // TODO Is there a better way to check for contact API availability?
+    final contactApiAvailable = Platform.isAndroid || Platform.isIOS;
+
+    if (!contactApiAvailable) {
+      return _inviteManually(context);
+    }
 
     final _InviteSource? source = await showAdaptiveDialog(
       context: context,
@@ -81,7 +92,7 @@ class GroupMembers extends StatelessWidget {
 
     return switch (source) {
       _InviteSource.contacts => _inviteFromContacts(context),
-      _InviteSource.manually => _inviteManually(),
+      _InviteSource.manually => _inviteManually(context),
       null => null,
     };
   }

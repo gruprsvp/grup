@@ -23,8 +23,12 @@ RouteBase get $homeScreenRoute => GoRouteData.$route(
           factory: $ProfileRouteExtension._fromState,
         ),
         GoRouteData.$route(
-          path: 'select-contacts',
+          path: 'contacts-select',
           factory: $SelectContactsRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'contacts-create',
+          factory: $CreateContactsRouteExtension._fromState,
         ),
         GoRouteData.$route(
           path: 'group-create',
@@ -117,7 +121,25 @@ extension $SelectContactsRouteExtension on SelectContactsRoute {
       SelectContactsRoute();
 
   String get location => GoRouteData.$location(
-        '/select-contacts',
+        '/contacts-select',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $CreateContactsRouteExtension on CreateContactsRoute {
+  static CreateContactsRoute _fromState(GoRouterState state) =>
+      CreateContactsRoute();
+
+  String get location => GoRouteData.$location(
+        '/contacts-create',
       );
 
   void go(BuildContext context) => context.go(location);

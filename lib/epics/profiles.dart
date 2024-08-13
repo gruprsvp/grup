@@ -63,10 +63,7 @@ Epic<AppState> _createUpdateProfileEpic(
           final image = action.image;
 
           final picture = image != null
-              ? await storage.uploadPublicXFile(
-                  const Uuid().v7(),
-                  image,
-                )
+              ? await storage.uploadPublicXFile(const Uuid().v7(), image)
               : store
                   .state.profiles.entities[store.state.auth.user!.id]?.picture;
 
