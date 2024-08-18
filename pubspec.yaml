@@ -133,6 +133,11 @@ dependency_overrides:
     git:
       url: https://github.com/flutter-form-builder-ecosystem/form_builder_phone_field.git
       ref: main
+  # Waiting for a definitive fix for https://github.com/QuisApp/flutter_contacts/issues/169
+  flutter_contacts:
+    git:
+      url: https://github.com/Tradewind-apps/flutter_contacts
+      ref: pb/fix-incompatible-java-version-target
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
