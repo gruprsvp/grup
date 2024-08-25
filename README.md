@@ -1,4 +1,4 @@
-# Parousia
+# AppFor.it
 
 A calendar app for humans.
 

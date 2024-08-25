@@ -49,7 +49,7 @@ class ParApp extends StatelessWidget {
             }
 
             return MaterialApp.router(
-              title: 'Parousia',
+              title: 'AppFor.it',
               localizationsDelegates: const [
                 ...AppLocalizations.localizationsDelegates,
                 FormBuilderLocalizations.delegate,
