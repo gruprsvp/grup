@@ -70,7 +70,7 @@ dependencies:
   rrule: ^0.2.14
 
   # To invite contacts
-  flutter_contacts: ^1.1.7+1
+  flutter_contacts: ^1.1.9+2
 
   # Form builders and validators
   flutter_form_builder: ^9.1.1
@@ -118,16 +118,16 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
 
 dependency_overrides:
-  # We need
+  # We need these to make it into a release:
   # - https://github.com/careapp-inc/dart_redux_entity/pull/11
   # - https://github.com/careapp-inc/dart_redux_entity/pull/12
   redux_entity:
     git:
-      url: https://github.com/borgoat/dart_redux_entity.git
-      ref: my-fork
+      url: https://github.com/careapp-group/dart_redux_entity.git
+      ref: master
   # Until https://github.com/flutter-form-builder-ecosystem/form_builder_phone_field/pull/63 makes it to a release
   form_builder_phone_field:
     git:
