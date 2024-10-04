@@ -3,6 +3,7 @@ import 'package:parousia/state/state.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'auth.dart';
+import 'groups.dart';
 import 'locale.dart';
 import 'remote_entities.dart';
 import 'selected_date.dart';
@@ -17,7 +18,7 @@ AppState rootReducer(AppState state, dynamic action) {
   }
 
   return AppState(
-    groups: groupsReducer(state.groups, action),
+    groups: combinedGroupsReducer(state.groups, action),
     profiles: profilesReducer(state.profiles, action),
     members: membersReducer(state.members, action),
     schedules: schedulesReducer(state.schedules, action),

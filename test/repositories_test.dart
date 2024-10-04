@@ -293,10 +293,12 @@ void main() {
           final membersRepository = MembersRepository(supabase: supabase);
           final invitesRepository = InvitesRepository(supabase: supabase);
 
+          const testCode = 'C0DE-1234';
+
           final member = await membersRepository.addMemberToGroup(group.id,
               displayName: 'Member invited with code');
           await invitesRepository.inviteMember(
-              member.id, InviteMethods.code, 'CODE');
+              member.id, InviteMethods.code, testCode);
 
           await runWithTemporaryUser((supabase2, user2) async {
             final groupsRepository2 = GroupsRepository(supabase: supabase2);
@@ -305,10 +307,10 @@ void main() {
             final userGroups1 = await groupsRepository2.getUserGroups();
             expect(userGroups1.groups, hasLength(0));
 
-            final memberId = await invitesRepository2.checkInviteCode('CODE');
+            final memberId = await invitesRepository2.checkInviteCode(testCode);
             expect(memberId, member.id);
 
-            await invitesRepository2.consumeInviteCode('CODE');
+            await invitesRepository2.consumeInviteCode(testCode);
 
             // TODO check that the invite code was deleted by now
 

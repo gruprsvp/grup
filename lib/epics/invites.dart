@@ -9,11 +9,10 @@ createInvitesEpics(InvitesRepository invites) => combineEpics<AppState>([
     ]);
 
 Epic<AppState> _createUseInviteCodeEpic(InvitesRepository invites) {
-  return (Stream<dynamic> actions, EpicStore<AppState> store) =>
-      actions.whereType<JoinWithInviteCodeAction>().asyncMap(
-            (action) => invites
-                .consumeInviteCode(action.code)
-                .then<dynamic>((_) => const SuccessUseInviteCode())
-                .catchError((error) => FailUseInviteCode(error)),
-          );
+  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
+      .whereType<JoinWithInviteCodeAction>()
+      .asyncMap((action) => invites
+          .consumeInviteCode(action.code)
+          .then<dynamic>((_) => const SuccessUseInviteCode())
+          .onError((error, stackTrace) => FailUseInviteCode(error)));
 }

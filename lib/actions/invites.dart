@@ -20,5 +20,5 @@ class SuccessUseInviteCode {
 class FailUseInviteCode {
   const FailUseInviteCode(this.error);
 
-  final Object error;
+  final Object? error;
 }
