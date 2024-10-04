@@ -48,7 +48,10 @@ class _CreateContactsScreenState extends State<CreateContactsScreen> {
             ),
           ],
         ),
-        body: SingleChildScrollView(child: ContactForm()));
+        body: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: ContactForm(),
+        ));
   }
 }
 

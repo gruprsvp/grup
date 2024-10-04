@@ -14,14 +14,19 @@ class AuthScreen extends StatelessWidget {
         // TODO(borgoat): this shouldn't be needed: fix the navigation stack instead
         automaticallyImplyLeading: false,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Center(
-          child: SupaEmailAuth(
+        child: Column(children: [
+          SupaEmailAuth(
             onSignInComplete: (response) => HomeScreenRoute().go(context),
             onSignUpComplete: (response) => HomeScreenRoute().go(context),
           ),
-        ),
+          // TODO: Phone auth
+          SupaSocialsAuth(
+            socialProviders: [OAuthProvider.apple, OAuthProvider.google],
+            onSuccess: (session) => HomeScreenRoute().go(context),
+          ),
+        ]),
       ),
     );
   }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parousia/util/util.dart';
 
 class GroupJoin extends StatefulWidget {
   final ValueSetter<String> onJoin;
@@ -54,6 +56,10 @@ class _GroupJoinState extends State<GroupJoin> {
                       suffixIcon: const Icon(Icons.confirmation_num_outlined),
                       hintText: 'ABCD-1234',
                     ),
+                    inputFormatters: [
+                      Base32TextInputFormatter(),
+                      LengthLimitingTextInputFormatter(9),
+                    ],
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return l10n.enterInviteCodePlease;
@@ -67,13 +73,18 @@ class _GroupJoinState extends State<GroupJoin> {
           ),
           Padding(
             padding: const EdgeInsets.all(16),
-            child: ElevatedButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  widget.onJoin(_codeController.text);
-                }
-              },
-              child: Text(l10n.joinGroup),
+            child: ValueListenableBuilder(
+              valueListenable: _codeController,
+              builder: (context, value, child) => FilledButton(
+                onPressed: value.text.length == 9
+                    ? () {
+                        if (_formKey.currentState!.validate()) {
+                          widget.onJoin(_codeController.text);
+                        }
+                      }
+                    : null,
+                child: Text(l10n.joinGroup),
+              ),
             ),
           ),
         ],
