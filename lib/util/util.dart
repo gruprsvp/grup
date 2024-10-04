@@ -1,4 +1,4 @@
-export 'base32_formatter.dart';
+export 'base32.dart';
 export 'colors.dart';
 export 'datetime.dart';
 export 'fakes.dart';

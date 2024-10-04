@@ -8,21 +8,28 @@ class Base32TextInputFormatter implements TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
       TextEditingValue oldValue, TextEditingValue newValue) {
-    final normalised = newValue.text
-        .toUpperCase()
-        .replaceAll(RegExp(r'O'), '0')
-        .replaceAll(RegExp(r'[IL]'), '1')
-        .split('')
-        .where((char) => _crockford.contains(char))
-        .join();
-
-    final formatted = normalised.length > 4
-        ? "${normalised.substring(0, 4)}-${normalised.substring(4)}"
-        : normalised;
+    final normalised = cleanBase32Code(newValue.text);
+    final formatted = formatBase32Code(normalised);
 
     return TextEditingValue(
       text: formatted,
       selection: TextSelection.collapsed(offset: formatted.length),
     );
   }
+}
+
+String cleanBase32Code(String code) {
+  return code
+      .toUpperCase()
+      .replaceAll(RegExp(r'O'), '0')
+      .replaceAll(RegExp(r'[IL]'), '1')
+      .split('')
+      .where((char) => _crockford.contains(char))
+      .join();
+}
+
+String formatBase32Code(String code) {
+  return code.length > 4
+      ? "${code.substring(0, 4)}-${code.substring(4)}"
+      : code;
 }

@@ -293,12 +293,11 @@ void main() {
           final membersRepository = MembersRepository(supabase: supabase);
           final invitesRepository = InvitesRepository(supabase: supabase);
 
-          const testCode = 'C0DE-1234';
-
           final member = await membersRepository.addMemberToGroup(group.id,
               displayName: 'Member invited with code');
-          await invitesRepository.inviteMember(
-              member.id, InviteMethods.code, testCode);
+          final invite =
+              await invitesRepository.inviteWithGeneratedCode(member.id);
+          final testCode = invite.value;
 
           await runWithTemporaryUser((supabase2, user2) async {
             final groupsRepository2 = GroupsRepository(supabase: supabase2);
