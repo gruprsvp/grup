@@ -79,15 +79,16 @@ create or replace function consume_invite_code(code text)
     security definer set search_path = public as
 $$
 declare
-    member_id bigint;
+    new_member_id bigint;
 begin
-    select check_invite_code(code) into strict member_id;
+    select check_invite_code(code) into strict new_member_id;
 
-    if member_id is null then
+    if new_member_id is null then
         raise exception 'Invalid invite code';
     end if;
 
-    update members set profile_id = auth.uid(), display_name_override = default where members.id = member_id;
+    update members set profile_id = auth.uid(), display_name_override = default where members.id = new_member_id;
+    delete from invites where invites.member_id = new_member_id;
 end;
 $$;
 comment on function consume_invite_code(text) is 'Adds the current user to a group based on an invite code';

@@ -311,7 +311,13 @@ void main() {
 
             await invitesRepository2.consumeInviteCode(testCode);
 
-            // TODO check that the invite code was deleted by now
+            // check that the invite code was deleted by now
+            try {
+              await invitesRepository2.checkInviteCode(testCode);
+              fail("Should not be able to use the same invite code twice");
+            } catch (e) {
+              expect(e, isA<PostgrestException>());
+            }
 
             final userGroups2 = await groupsRepository2.getUserGroups();
             expect(userGroups2.groups, hasLength(1));
