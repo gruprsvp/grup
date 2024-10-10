@@ -1,5 +1,4 @@
-import 'dart:io';
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -28,10 +27,13 @@ class GroupMembers extends StatelessWidget {
 
     return invited
         ?.map(
-          (c) => ContactInvite(c.displayName, [
-            ...(c.emails).map((e) => (InviteMethods.email, e.address)),
-            ...(c.phones).map((p) => (InviteMethods.phone, p.number)),
-          ]),
+          (c) => ContactInvite(
+            displayNameOverride: c.displayName,
+            invites: [
+              ...(c.emails).map((e) => (InviteMethods.email, e.address)),
+              ...(c.phones).map((p) => (InviteMethods.phone, p.number)),
+            ],
+          ),
         )
         .toList();
   }
@@ -47,7 +49,7 @@ class GroupMembers extends StatelessWidget {
 
   Future<List<ContactInvite>?> _inviteNew(BuildContext context) async {
     // TODO Is there a better way to check for contact API availability?
-    final contactApiAvailable = Platform.isAndroid || Platform.isIOS;
+    final contactApiAvailable = !kIsWeb;
 
     if (!contactApiAvailable) {
       return _inviteManually(context);

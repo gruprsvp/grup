@@ -1,6 +1,7 @@
 {
   "@@locale": "en",
   "appName": "AppFor.it",
+  "addContact": "Add contact",
   "camera": "Camera",
   "cancel": "Cancel",
   "changeTheme": "Theme",

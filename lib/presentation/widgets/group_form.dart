@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parousia/models/group.dart';
 
@@ -18,7 +19,7 @@ class GroupForm extends StatefulWidget {
 }
 
 class _GroupFormState extends State<GroupForm> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormBuilderState>();
 
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
@@ -42,7 +43,7 @@ class _GroupFormState extends State<GroupForm> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Form(
+    return FormBuilder(
       key: _formKey,
       child: Column(
         children: [
@@ -51,7 +52,8 @@ class _GroupFormState extends State<GroupForm> {
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  TextFormField(
+                  FormBuilderTextField(
+                    name: 'name',
                     controller: _nameController,
                     decoration: InputDecoration(
                       labelText: l10n.enterGroupName,
@@ -66,7 +68,8 @@ class _GroupFormState extends State<GroupForm> {
                       return null;
                     },
                   ),
-                  TextFormField(
+                  FormBuilderTextField(
+                    name: 'description',
                     controller: _descriptionController,
                     minLines: 2,
                     maxLines: 5,

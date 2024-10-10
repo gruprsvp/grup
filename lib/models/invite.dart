@@ -26,5 +26,6 @@ class ContactInvite {
   final String? displayNameOverride;
   final List<(InviteMethods, String)> invites;
 
-  const ContactInvite(this.displayNameOverride, this.invites);
+  const ContactInvite(
+      {required this.displayNameOverride, required this.invites});
 }

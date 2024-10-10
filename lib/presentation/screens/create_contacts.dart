@@ -3,6 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:form_builder_phone_field/form_builder_phone_field.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:go_router/go_router.dart';
 import 'package:parousia/models/models.dart';
 
 class CreateContactsScreen extends StatefulWidget {
@@ -13,7 +14,8 @@ class CreateContactsScreen extends StatefulWidget {
 }
 
 class _CreateContactsScreenState extends State<CreateContactsScreen> {
-  final List<ContactInvite> selectedContacts = [];
+  bool _showSaveButton = false;
+  ContactInvite? _contactInvite;
 
   @override
   initState() {
@@ -25,45 +27,41 @@ class _CreateContactsScreenState extends State<CreateContactsScreen> {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text(l10n.selectContacts),
-          actions: [
-            Badge(
-              label: Text(selectedContacts.length.toString()),
-              isLabelVisible: selectedContacts.length > 1,
-              alignment: Alignment.topLeft,
-              child: IconButton(
-                onPressed: selectedContacts.isNotEmpty
-                    ? () async {
-                        if (!context.mounted) {
-                          // TODO: how can we avoid this?
-                          return;
-                        }
-                        // TODO maybe add a confirmation dialog?
-                        Navigator.pop(context, selectedContacts);
-                      }
-                    : null,
-                icon: const Icon(Icons.group_add),
-              ),
-            ),
-          ],
+      appBar: AppBar(title: Text(l10n.addContact)),
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.all(16),
+        child: ContactForm(
+          onChanged: (contactInvite) {
+            setState(() {
+              _showSaveButton = true;
+            });
+            _contactInvite = contactInvite;
+          },
         ),
-        body: SingleChildScrollView(
-          padding: const EdgeInsets.all(16),
-          child: ContactForm(),
-        ));
+      ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      floatingActionButton: _showSaveButton
+          ? FloatingActionButton.extended(
+              onPressed: () => context.pop([_contactInvite!]),
+              label: Text(l10n.save),
+              icon: const Icon(Icons.check),
+            )
+          : null,
+    );
   }
 }
 
 class ContactForm extends StatefulWidget {
-  const ContactForm({super.key});
+  const ContactForm({super.key, this.onChanged});
+
+  final Function(ContactInvite)? onChanged;
 
   @override
   State<ContactForm> createState() => _ContactFormState();
 }
 
 class _ContactFormState extends State<ContactForm> {
-  final _formKey = GlobalKey<FormState>();
+  final _formKey = GlobalKey<FormBuilderState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
   final _phoneController = TextEditingController();
@@ -74,6 +72,21 @@ class _ContactFormState extends State<ContactForm> {
 
     return FormBuilder(
       key: _formKey,
+      onChanged: () {
+        if (_formKey.currentState?.validate(focusOnInvalid: false) ?? false) {
+          final name = _nameController.text.trim();
+          final email = _emailController.text.trim();
+          final phone = _phoneController.text.trim();
+
+          widget.onChanged?.call(ContactInvite(
+            displayNameOverride: name,
+            invites: [
+              ...(email.isNotEmpty ? [(InviteMethods.email, email)] : []),
+              ...(phone.isNotEmpty ? [(InviteMethods.phone, phone)] : []),
+            ],
+          ));
+        }
+      },
       child: Column(
         children: [
           FormBuilderTextField(
@@ -89,7 +102,7 @@ class _ContactFormState extends State<ContactForm> {
             name: 'email',
             controller: _emailController,
             autocorrect: true,
-            validator: FormBuilderValidators.email(),
+            validator: FormBuilderValidators.email(checkNullOrEmpty: false),
             decoration: InputDecoration(
               labelText: 'Email', // l10n.contactEmail,
             ),
@@ -102,19 +115,6 @@ class _ContactFormState extends State<ContactForm> {
               labelText: 'Phone', // l10n.contactPhone,
             ),
           ),
-          // ElevatedButton(
-          //   onPressed: () {
-          //     if (_formKey.currentState?.validate() ?? false) {
-          //       final contact = ContactInvite(
-          //         name: _nameController.text,
-          //         email: _emailController.text,
-          //         phone: _phoneController.text,
-          //       );
-          //       Navigator.pop(context, contact);
-          //     }
-          //   },
-          //   child: Text(l10n.save),
-          // ),
         ],
       ),
     );
