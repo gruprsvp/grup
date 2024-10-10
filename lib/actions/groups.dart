@@ -13,7 +13,7 @@ class GroupDetailsOpenAction {
 /// Dispatched when requesting to refresh all groups.
 @immutable
 class GroupRefreshAllAction {
-  final Completer completer;
+  final Completer<void> completer;
 
   GroupRefreshAllAction({completer}) : completer = completer ?? Completer();
 }

@@ -19,7 +19,9 @@ mixin _$ViewModel {
   Locale? get locale => throw _privateConstructorUsedError;
   ValueChanged<Locale?> get changeLocale => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of _ViewModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$ViewModelCopyWith<_ViewModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -43,6 +45,8 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of _ViewModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -81,6 +85,8 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
       _$_ViewModelImpl _value, $Res Function(_$_ViewModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of _ViewModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -137,7 +143,9 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   @override
   int get hashCode => Object.hash(runtimeType, locale, changeLocale);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of _ViewModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>
@@ -153,8 +161,11 @@ abstract class __ViewModel implements _ViewModel {
   Locale? get locale;
   @override
   ValueChanged<Locale?> get changeLocale;
+
+  /// Create a copy of _ViewModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

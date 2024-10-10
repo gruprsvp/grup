@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:parousia/actions/actions.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/selectors/selectors.dart';
@@ -24,6 +25,7 @@ class GroupMembersContainer extends StatelessWidget {
       distinct: true,
       builder: (context, vm) => GroupMembers(
         members: vm.members,
+        onInvite: vm.onInvite,
       ),
       converter: (store) => _ViewModel.fromStore(store, groupId),
     );
@@ -34,6 +36,7 @@ class GroupMembersContainer extends StatelessWidget {
 sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required bool loading,
+    required OnInviteCallback onInvite,
     Iterable<(Member, Profile?)>? members,
   }) = __ViewModel;
 
@@ -43,5 +46,9 @@ sealed class _ViewModel with _$ViewModel {
             store.state.groups.loadingAll ||
             (store.state.groups.loadingIds[groupId] ?? false),
         members: groupMembersWithProfilesSelector(store.state, groupId),
+        onInvite: (contacts) => store.dispatch(InviteGroupMembersAction(
+          groupId: int.parse(groupId),
+          contacts: contacts,
+        )),
       );
 }

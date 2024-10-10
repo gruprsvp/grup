@@ -9,19 +9,16 @@ import 'package:parousia/util/util.dart';
 
 enum _InviteSource { contacts, manually }
 
-class ContactInvite {
-  final String? displayNameOverride;
-  final List<(InviteMethods, String)> invites;
-
-  const ContactInvite(this.displayNameOverride, this.invites);
-}
+typedef OnInviteCallback = void Function(List<ContactInvite>);
 
 class GroupMembers extends StatelessWidget {
   final Iterable<(Member, Profile?)>? members;
+  final OnInviteCallback? onInvite;
 
   const GroupMembers({
     super.key,
     this.members,
+    this.onInvite,
   });
 
   Future<List<ContactInvite>?> _inviteFromContacts(BuildContext context) async {
@@ -133,7 +130,12 @@ class GroupMembers extends StatelessWidget {
         children: [
           Expanded(child: topWidget),
           FilledButton(
-              onPressed: () => _inviteNew(context),
+              onPressed: () async {
+                final invites = await _inviteNew(context);
+                if (invites != null) {
+                  onInvite?.call(invites);
+                }
+              },
               child: Text(l10n.inviteMembersCTA)),
         ],
       ),

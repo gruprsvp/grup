@@ -28,8 +28,12 @@ mixin _$Member {
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
+  /// Serializes this Member to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Member
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $MemberCopyWith<Member> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -58,6 +62,8 @@ class _$MemberCopyWithImpl<$Res, $Val extends Member>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Member
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -127,6 +133,8 @@ class __$$MemberImplCopyWithImpl<$Res>
       _$MemberImpl _value, $Res Function(_$MemberImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Member
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -239,12 +247,14 @@ class _$MemberImpl with DiagnosticableTreeMixin implements _Member {
                 other.updatedAt == updatedAt));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, groupId, role, profileId,
       displayNameOverride, createdAt, updatedAt);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Member
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$MemberImplCopyWith<_$MemberImpl> get copyWith =>
@@ -284,8 +294,11 @@ abstract class _Member implements Member {
   DateTime? get createdAt;
   @override
   DateTime? get updatedAt;
+
+  /// Create a copy of Member
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$MemberImplCopyWith<_$MemberImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

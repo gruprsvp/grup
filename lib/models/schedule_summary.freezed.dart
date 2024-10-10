@@ -26,7 +26,9 @@ mixin _$ScheduleSummary {
   ReplyOptions? get myReply => throw _privateConstructorUsedError;
   int? get targetMemberId => throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ScheduleSummary
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $ScheduleSummaryCopyWith<ScheduleSummary> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -58,6 +60,8 @@ class _$ScheduleSummaryCopyWithImpl<$Res, $Val extends ScheduleSummary>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of ScheduleSummary
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -134,6 +138,8 @@ class __$$ScheduleSummaryImplCopyWithImpl<$Res>
       _$ScheduleSummaryImpl _value, $Res Function(_$ScheduleSummaryImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of ScheduleSummary
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -275,7 +281,9 @@ class _$ScheduleSummaryImpl
       myReply,
       targetMemberId);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of ScheduleSummary
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$ScheduleSummaryImplCopyWith<_$ScheduleSummaryImpl> get copyWith =>
@@ -310,8 +318,11 @@ abstract class _ScheduleSummary implements ScheduleSummary {
   ReplyOptions? get myReply;
   @override
   int? get targetMemberId;
+
+  /// Create a copy of ScheduleSummary
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ScheduleSummaryImplCopyWith<_$ScheduleSummaryImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

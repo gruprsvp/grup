@@ -17,10 +17,13 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ViewModel {
   bool get loading => throw _privateConstructorUsedError;
+  OnInviteCallback get onInvite => throw _privateConstructorUsedError;
   Iterable<(Member, Profile?)>? get members =>
       throw _privateConstructorUsedError;
 
-  @JsonKey(ignore: true)
+  /// Create a copy of _ViewModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$ViewModelCopyWith<_ViewModel> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -31,7 +34,10 @@ abstract class _$ViewModelCopyWith<$Res> {
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call({bool loading, Iterable<(Member, Profile?)>? members});
+  $Res call(
+      {bool loading,
+      OnInviteCallback onInvite,
+      Iterable<(Member, Profile?)>? members});
 }
 
 /// @nodoc
@@ -44,10 +50,13 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of _ViewModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? loading = null,
+    Object? onInvite = null,
     Object? members = freezed,
   }) {
     return _then(_value.copyWith(
@@ -55,6 +64,10 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
               as bool,
+      onInvite: null == onInvite
+          ? _value.onInvite
+          : onInvite // ignore: cast_nullable_to_non_nullable
+              as OnInviteCallback,
       members: freezed == members
           ? _value.members
           : members // ignore: cast_nullable_to_non_nullable
@@ -71,7 +84,10 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool loading, Iterable<(Member, Profile?)>? members});
+  $Res call(
+      {bool loading,
+      OnInviteCallback onInvite,
+      Iterable<(Member, Profile?)>? members});
 }
 
 /// @nodoc
@@ -82,10 +98,13 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
       _$_ViewModelImpl _value, $Res Function(_$_ViewModelImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of _ViewModel
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
     Object? loading = null,
+    Object? onInvite = null,
     Object? members = freezed,
   }) {
     return _then(_$_ViewModelImpl(
@@ -93,6 +112,10 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
               as bool,
+      onInvite: null == onInvite
+          ? _value.onInvite
+          : onInvite // ignore: cast_nullable_to_non_nullable
+              as OnInviteCallback,
       members: freezed == members
           ? _value.members
           : members // ignore: cast_nullable_to_non_nullable
@@ -104,16 +127,19 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
-  const _$_ViewModelImpl({required this.loading, this.members});
+  const _$_ViewModelImpl(
+      {required this.loading, required this.onInvite, this.members});
 
   @override
   final bool loading;
+  @override
+  final OnInviteCallback onInvite;
   @override
   final Iterable<(Member, Profile?)>? members;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(loading: $loading, members: $members)';
+    return '_ViewModel(loading: $loading, onInvite: $onInvite, members: $members)';
   }
 
   @override
@@ -122,6 +148,7 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     properties
       ..add(DiagnosticsProperty('type', '_ViewModel'))
       ..add(DiagnosticsProperty('loading', loading))
+      ..add(DiagnosticsProperty('onInvite', onInvite))
       ..add(DiagnosticsProperty('members', members));
   }
 
@@ -131,14 +158,18 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
         (other.runtimeType == runtimeType &&
             other is _$_ViewModelImpl &&
             (identical(other.loading, loading) || other.loading == loading) &&
+            (identical(other.onInvite, onInvite) ||
+                other.onInvite == onInvite) &&
             const DeepCollectionEquality().equals(other.members, members));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, loading, const DeepCollectionEquality().hash(members));
+  int get hashCode => Object.hash(runtimeType, loading, onInvite,
+      const DeepCollectionEquality().hash(members));
 
-  @JsonKey(ignore: true)
+  /// Create a copy of _ViewModel
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>
@@ -148,14 +179,20 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
       {required final bool loading,
+      required final OnInviteCallback onInvite,
       final Iterable<(Member, Profile?)>? members}) = _$_ViewModelImpl;
 
   @override
   bool get loading;
   @override
-  Iterable<(Member, Profile?)>? get members;
+  OnInviteCallback get onInvite;
   @override
-  @JsonKey(ignore: true)
+  Iterable<(Member, Profile?)>? get members;
+
+  /// Create a copy of _ViewModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

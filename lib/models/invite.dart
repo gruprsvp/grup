@@ -20,3 +20,11 @@ sealed class Invite with _$Invite {
 
   factory Invite.fromJson(Map<String, dynamic> json) => _$InviteFromJson(json);
 }
+
+/// A contact to invite to a group.
+class ContactInvite {
+  final String? displayNameOverride;
+  final List<(InviteMethods, String)> invites;
+
+  const ContactInvite(this.displayNameOverride, this.invites);
+}

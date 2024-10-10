@@ -27,8 +27,12 @@ mixin _$Invite {
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
+  /// Serializes this Invite to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of Invite
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $InviteCopyWith<Invite> get copyWith => throw _privateConstructorUsedError;
 }
 
@@ -56,6 +60,8 @@ class _$InviteCopyWithImpl<$Res, $Val extends Invite>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of Invite
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -119,6 +125,8 @@ class __$$InviteImplCopyWithImpl<$Res>
       _$InviteImpl _value, $Res Function(_$InviteImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of Invite
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -220,12 +228,14 @@ class _$InviteImpl with DiagnosticableTreeMixin implements _Invite {
                 other.updatedAt == updatedAt));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType, id, memberId, method, value, createdAt, updatedAt);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of Invite
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$InviteImplCopyWith<_$InviteImpl> get copyWith =>
@@ -262,8 +272,11 @@ abstract class _Invite implements Invite {
   DateTime? get createdAt;
   @override
   DateTime? get updatedAt;
+
+  /// Create a copy of Invite
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$InviteImplCopyWith<_$InviteImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

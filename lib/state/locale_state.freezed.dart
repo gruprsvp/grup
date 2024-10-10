@@ -24,8 +24,12 @@ mixin _$LocaleState {
   String? get scriptCode => throw _privateConstructorUsedError;
   String? get countryCode => throw _privateConstructorUsedError;
 
+  /// Serializes this LocaleState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of LocaleState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $LocaleStateCopyWith<LocaleState> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -49,6 +53,8 @@ class _$LocaleStateCopyWithImpl<$Res, $Val extends LocaleState>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of LocaleState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -92,6 +98,8 @@ class __$$LocaleStateImplCopyWithImpl<$Res>
       _$LocaleStateImpl _value, $Res Function(_$LocaleStateImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of LocaleState
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -160,12 +168,14 @@ class _$LocaleStateImpl with DiagnosticableTreeMixin implements _LocaleState {
                 other.countryCode == countryCode));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode =>
       Object.hash(runtimeType, languageCode, scriptCode, countryCode);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of LocaleState
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$LocaleStateImplCopyWith<_$LocaleStateImpl> get copyWith =>
@@ -194,8 +204,11 @@ abstract class _LocaleState implements LocaleState {
   String? get scriptCode;
   @override
   String? get countryCode;
+
+  /// Create a copy of LocaleState
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$LocaleStateImplCopyWith<_$LocaleStateImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

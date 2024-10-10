@@ -27,7 +27,7 @@ class MembersRepository extends SupabaseRepository with Postgrest {
   }
 
   Future<Member> updateMember(
-      {required int memberId, required String displayNameOverride}) async {
+      {required int memberId, required String? displayNameOverride}) async {
     return table()
         .update({
           'display_name_override': displayNameOverride,

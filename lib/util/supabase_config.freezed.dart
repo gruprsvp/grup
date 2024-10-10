@@ -29,8 +29,12 @@ mixin _$SupabaseConfig {
   String? get serviceRoleKey => throw _privateConstructorUsedError;
   String? get studioUrl => throw _privateConstructorUsedError;
 
+  /// Serializes this SupabaseConfig to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
+
+  /// Create a copy of SupabaseConfig
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   $SupabaseConfigCopyWith<SupabaseConfig> get copyWith =>
       throw _privateConstructorUsedError;
 }
@@ -62,6 +66,8 @@ class _$SupabaseConfigCopyWithImpl<$Res, $Val extends SupabaseConfig>
   // ignore: unused_field
   final $Res Function($Val) _then;
 
+  /// Create a copy of SupabaseConfig
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -138,6 +144,8 @@ class __$$SupabaseConfigImplCopyWithImpl<$Res>
       _$SupabaseConfigImpl _value, $Res Function(_$SupabaseConfigImpl) _then)
       : super(_value, _then);
 
+  /// Create a copy of SupabaseConfig
+  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
@@ -263,12 +271,14 @@ class _$SupabaseConfigImpl
                 other.studioUrl == studioUrl));
   }
 
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, anonKey, apiUrl, dbUrl,
       graphqlUrl, inbucketUrl, jwtSecret, serviceRoleKey, studioUrl);
 
-  @JsonKey(ignore: true)
+  /// Create a copy of SupabaseConfig
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
   _$$SupabaseConfigImplCopyWith<_$SupabaseConfigImpl> get copyWith =>
@@ -313,8 +323,11 @@ abstract class _SupabaseConfig implements SupabaseConfig {
   String? get serviceRoleKey;
   @override
   String? get studioUrl;
+
+  /// Create a copy of SupabaseConfig
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(ignore: true)
+  @JsonKey(includeFromJson: false, includeToJson: false)
   _$$SupabaseConfigImplCopyWith<_$SupabaseConfigImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }
