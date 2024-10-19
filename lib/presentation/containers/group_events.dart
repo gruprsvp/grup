@@ -1,12 +1,13 @@
-import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
+import 'package:parousia/selectors/selectors.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_entity/redux_entity.dart';
+import 'package:rrule/rrule.dart';
 
 part 'group_events.freezed.dart';
 
@@ -27,6 +28,7 @@ class GroupEventsContainer extends StatelessWidget {
         group: vm.group,
         schedules: vm.schedules,
         onCreate: vm.onScheduleCreate,
+        rrulel10n: vm.rrulel10n,
       ),
     );
   }
@@ -39,6 +41,7 @@ sealed class _ViewModel with _$ViewModel {
     Group? group,
     Iterable<Schedule>? schedules,
     ValueSetter<Schedule>? onScheduleCreate,
+    Future<RruleL10n>? rrulel10n,
   }) = __ViewModel;
 
   static _ViewModel fromStore(Store<AppState> store, String groupId) {
@@ -56,6 +59,7 @@ sealed class _ViewModel with _$ViewModel {
       onScheduleCreate: (schedule) => store.dispatch(
         RequestCreateOne<Schedule>(schedule),
       ),
+      rrulel10n: rruleL10nSelector(store.state),
     );
   }
 }

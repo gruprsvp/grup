@@ -67,7 +67,8 @@ Epic<AppState> _createRetrieveAllGroupsEpic(GroupsRepository groups) {
               (userGroups) => [
                 SuccessRetrieveAll(userGroups.groups.toList(growable: false)),
                 SuccessRetrieveAll(userGroups.members.toList(growable: false)),
-                SuccessRetrieveAll(userGroups.profiles.toList(growable: false))
+                // This is many to avoid overwriting the user own profile
+                SuccessRetrieveMany(userGroups.profiles.toList(growable: false))
               ],
             ),
       );

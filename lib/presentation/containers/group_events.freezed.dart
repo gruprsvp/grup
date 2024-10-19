@@ -21,6 +21,7 @@ mixin _$ViewModel {
   Iterable<Schedule>? get schedules => throw _privateConstructorUsedError;
   ValueSetter<Schedule>? get onScheduleCreate =>
       throw _privateConstructorUsedError;
+  Future<RruleL10n>? get rrulel10n => throw _privateConstructorUsedError;
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -39,7 +40,8 @@ abstract class _$ViewModelCopyWith<$Res> {
       {bool loading,
       Group? group,
       Iterable<Schedule>? schedules,
-      ValueSetter<Schedule>? onScheduleCreate});
+      ValueSetter<Schedule>? onScheduleCreate,
+      Future<RruleL10n>? rrulel10n});
 
   $GroupCopyWith<$Res>? get group;
 }
@@ -63,6 +65,7 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
     Object? group = freezed,
     Object? schedules = freezed,
     Object? onScheduleCreate = freezed,
+    Object? rrulel10n = freezed,
   }) {
     return _then(_value.copyWith(
       loading: null == loading
@@ -81,6 +84,10 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
           ? _value.onScheduleCreate
           : onScheduleCreate // ignore: cast_nullable_to_non_nullable
               as ValueSetter<Schedule>?,
+      rrulel10n: freezed == rrulel10n
+          ? _value.rrulel10n
+          : rrulel10n // ignore: cast_nullable_to_non_nullable
+              as Future<RruleL10n>?,
     ) as $Val);
   }
 
@@ -111,7 +118,8 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       {bool loading,
       Group? group,
       Iterable<Schedule>? schedules,
-      ValueSetter<Schedule>? onScheduleCreate});
+      ValueSetter<Schedule>? onScheduleCreate,
+      Future<RruleL10n>? rrulel10n});
 
   @override
   $GroupCopyWith<$Res>? get group;
@@ -134,6 +142,7 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     Object? group = freezed,
     Object? schedules = freezed,
     Object? onScheduleCreate = freezed,
+    Object? rrulel10n = freezed,
   }) {
     return _then(_$_ViewModelImpl(
       loading: null == loading
@@ -152,18 +161,23 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
           ? _value.onScheduleCreate
           : onScheduleCreate // ignore: cast_nullable_to_non_nullable
               as ValueSetter<Schedule>?,
+      rrulel10n: freezed == rrulel10n
+          ? _value.rrulel10n
+          : rrulel10n // ignore: cast_nullable_to_non_nullable
+              as Future<RruleL10n>?,
     ));
   }
 }
 
 /// @nodoc
 
-class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
+class _$_ViewModelImpl implements __ViewModel {
   const _$_ViewModelImpl(
       {required this.loading,
       this.group,
       this.schedules,
-      this.onScheduleCreate});
+      this.onScheduleCreate,
+      this.rrulel10n});
 
   @override
   final bool loading;
@@ -173,21 +187,12 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   final Iterable<Schedule>? schedules;
   @override
   final ValueSetter<Schedule>? onScheduleCreate;
+  @override
+  final Future<RruleL10n>? rrulel10n;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(loading: $loading, group: $group, schedules: $schedules, onScheduleCreate: $onScheduleCreate)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', '_ViewModel'))
-      ..add(DiagnosticsProperty('loading', loading))
-      ..add(DiagnosticsProperty('group', group))
-      ..add(DiagnosticsProperty('schedules', schedules))
-      ..add(DiagnosticsProperty('onScheduleCreate', onScheduleCreate));
+  String toString() {
+    return '_ViewModel(loading: $loading, group: $group, schedules: $schedules, onScheduleCreate: $onScheduleCreate, rrulel10n: $rrulel10n)';
   }
 
   @override
@@ -199,12 +204,19 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
             (identical(other.group, group) || other.group == group) &&
             const DeepCollectionEquality().equals(other.schedules, schedules) &&
             (identical(other.onScheduleCreate, onScheduleCreate) ||
-                other.onScheduleCreate == onScheduleCreate));
+                other.onScheduleCreate == onScheduleCreate) &&
+            (identical(other.rrulel10n, rrulel10n) ||
+                other.rrulel10n == rrulel10n));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, loading, group,
-      const DeepCollectionEquality().hash(schedules), onScheduleCreate);
+  int get hashCode => Object.hash(
+      runtimeType,
+      loading,
+      group,
+      const DeepCollectionEquality().hash(schedules),
+      onScheduleCreate,
+      rrulel10n);
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -220,7 +232,8 @@ abstract class __ViewModel implements _ViewModel {
       {required final bool loading,
       final Group? group,
       final Iterable<Schedule>? schedules,
-      final ValueSetter<Schedule>? onScheduleCreate}) = _$_ViewModelImpl;
+      final ValueSetter<Schedule>? onScheduleCreate,
+      final Future<RruleL10n>? rrulel10n}) = _$_ViewModelImpl;
 
   @override
   bool get loading;
@@ -230,6 +243,8 @@ abstract class __ViewModel implements _ViewModel {
   Iterable<Schedule>? get schedules;
   @override
   ValueSetter<Schedule>? get onScheduleCreate;
+  @override
+  Future<RruleL10n>? get rrulel10n;
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.

@@ -19,7 +19,7 @@ sealed class AuthState with _$AuthState {
 }
 
 /// Converts a [User] object to and from JSON.
-class UserJsonConverter extends JsonConverter<User, Map<String, dynamic>> {
+class UserJsonConverter implements JsonConverter<User, Map<String, dynamic>> {
   const UserJsonConverter();
 
   @override
