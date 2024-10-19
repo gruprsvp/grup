@@ -18,8 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ViewModel {
   bool get loading => throw _privateConstructorUsedError;
   Group? get group => throw _privateConstructorUsedError;
-  ScheduleSummary? get schedule => throw _privateConstructorUsedError;
-  OnReplyChangedCallback? get onReplyChanged =>
+  ScheduleEventDetails? get schedule => throw _privateConstructorUsedError;
+  OnDetailsReplyChangedCallback? get onReplyChanged =>
       throw _privateConstructorUsedError;
 
   /// Create a copy of _ViewModel
@@ -38,11 +38,11 @@ abstract class _$ViewModelCopyWith<$Res> {
   $Res call(
       {bool loading,
       Group? group,
-      ScheduleSummary? schedule,
-      OnReplyChangedCallback? onReplyChanged});
+      ScheduleEventDetails? schedule,
+      OnDetailsReplyChangedCallback? onReplyChanged});
 
   $GroupCopyWith<$Res>? get group;
-  $ScheduleSummaryCopyWith<$Res>? get schedule;
+  $ScheduleEventDetailsCopyWith<$Res>? get schedule;
 }
 
 /// @nodoc
@@ -77,11 +77,11 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
       schedule: freezed == schedule
           ? _value.schedule
           : schedule // ignore: cast_nullable_to_non_nullable
-              as ScheduleSummary?,
+              as ScheduleEventDetails?,
       onReplyChanged: freezed == onReplyChanged
           ? _value.onReplyChanged
           : onReplyChanged // ignore: cast_nullable_to_non_nullable
-              as OnReplyChangedCallback?,
+              as OnDetailsReplyChangedCallback?,
     ) as $Val);
   }
 
@@ -103,12 +103,12 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ScheduleSummaryCopyWith<$Res>? get schedule {
+  $ScheduleEventDetailsCopyWith<$Res>? get schedule {
     if (_value.schedule == null) {
       return null;
     }
 
-    return $ScheduleSummaryCopyWith<$Res>(_value.schedule!, (value) {
+    return $ScheduleEventDetailsCopyWith<$Res>(_value.schedule!, (value) {
       return _then(_value.copyWith(schedule: value) as $Val);
     });
   }
@@ -125,13 +125,13 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
   $Res call(
       {bool loading,
       Group? group,
-      ScheduleSummary? schedule,
-      OnReplyChangedCallback? onReplyChanged});
+      ScheduleEventDetails? schedule,
+      OnDetailsReplyChangedCallback? onReplyChanged});
 
   @override
   $GroupCopyWith<$Res>? get group;
   @override
-  $ScheduleSummaryCopyWith<$Res>? get schedule;
+  $ScheduleEventDetailsCopyWith<$Res>? get schedule;
 }
 
 /// @nodoc
@@ -164,11 +164,11 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
       schedule: freezed == schedule
           ? _value.schedule
           : schedule // ignore: cast_nullable_to_non_nullable
-              as ScheduleSummary?,
+              as ScheduleEventDetails?,
       onReplyChanged: freezed == onReplyChanged
           ? _value.onReplyChanged
           : onReplyChanged // ignore: cast_nullable_to_non_nullable
-              as OnReplyChangedCallback?,
+              as OnDetailsReplyChangedCallback?,
     ));
   }
 }
@@ -184,9 +184,9 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   @override
   final Group? group;
   @override
-  final ScheduleSummary? schedule;
+  final ScheduleEventDetails? schedule;
   @override
-  final OnReplyChangedCallback? onReplyChanged;
+  final OnDetailsReplyChangedCallback? onReplyChanged;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -234,17 +234,17 @@ abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
       {required final bool loading,
       final Group? group,
-      final ScheduleSummary? schedule,
-      final OnReplyChangedCallback? onReplyChanged}) = _$_ViewModelImpl;
+      final ScheduleEventDetails? schedule,
+      final OnDetailsReplyChangedCallback? onReplyChanged}) = _$_ViewModelImpl;
 
   @override
   bool get loading;
   @override
   Group? get group;
   @override
-  ScheduleSummary? get schedule;
+  ScheduleEventDetails? get schedule;
   @override
-  OnReplyChangedCallback? get onReplyChanged;
+  OnDetailsReplyChangedCallback? get onReplyChanged;
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.

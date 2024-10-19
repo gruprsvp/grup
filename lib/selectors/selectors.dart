@@ -75,10 +75,50 @@ Iterable<ScheduleSummary>? selectSchedulesForSelectedDate(
 }
 
 // TODO This should work the other way around, and be memoized
-ScheduleSummary? selectScheduleForDate(
+ScheduleEventDetails? selectScheduleForDate(
     AppState state, int selectedGroupId, int selectedScheduleId) {
   final allScheduleInstances =
       selectSchedulesForSelectedDate(state, selectedGroupId);
-  return allScheduleInstances
+  final scheduleSummary = allScheduleInstances
       ?.firstWhereOrNull((s) => s.scheduleId == selectedScheduleId);
+
+  if (scheduleSummary == null) return null;
+
+  Member getMember(int memberId) {
+    final member = state.members.entities[memberId.toString()]!;
+    final profile = state.profiles.entities[member.profileId.toString()];
+
+    return member.copyWith(
+        displayNameOverride:
+            member.displayNameOverride ?? profile?.displayName);
+  }
+
+  final memberReplies = scheduleSummary.memberReplies.entries
+      .map((e) => (getMember(e.key), e.value))
+      .whereNot((e) =>
+          e.$1.id ==
+          scheduleSummary
+              .targetMemberId) // Remove target user from the list below
+      .toList();
+
+  // TODO This should be a selector and memoized
+  final canEditOthers = state.members.entities.values
+          .where((member) =>
+              member.groupId == selectedGroupId &&
+              member.profileId == state.auth.user?.id)
+          .firstOrNull
+          ?.role ==
+      GroupRoles.admin;
+
+  return ScheduleEventDetails(
+    scheduleId: scheduleSummary.scheduleId,
+    groupId: scheduleSummary.groupId,
+    displayName: scheduleSummary.displayName,
+    eventDate: scheduleSummary.eventDate,
+    memberReplies: memberReplies,
+    yesCount: scheduleSummary.yesCount,
+    myReply: scheduleSummary.myReply,
+    targetMemberId: scheduleSummary.targetMemberId,
+    canEditOthers: canEditOthers,
+  );
 }

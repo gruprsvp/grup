@@ -43,8 +43,8 @@ sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required bool loading,
     Group? group,
-    ScheduleSummary? schedule,
-    OnReplyChangedCallback? onReplyChanged,
+    ScheduleEventDetails? schedule,
+    OnDetailsReplyChangedCallback? onReplyChanged,
   }) = __ViewModel;
 
   static _ViewModel fromStore(
@@ -61,16 +61,16 @@ sealed class _ViewModel with _$ViewModel {
       group: group,
       schedule:
           selectScheduleForDate(store.state, group.id, int.parse(scheduleId)),
-      onReplyChanged: (schedule, reply) {
+      onReplyChanged: (schedule, targetMemberId, reply) {
         if (reply == null) {
           store.dispatch(RequestDeleteReplyAction(
-            memberId: schedule.targetMemberId!,
+            memberId: targetMemberId,
             scheduleId: schedule.scheduleId,
             eventDate: schedule.eventDate,
           ));
         } else {
           store.dispatch(RequestUpdateOne(Reply(
-              memberId: schedule.targetMemberId!,
+              memberId: targetMemberId,
               scheduleId: schedule.scheduleId,
               eventDate: schedule.eventDate,
               selectedOption: reply)));

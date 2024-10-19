@@ -1027,14 +1027,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "5.0.0"
-  redux_dev_tools:
-    dependency: "direct main"
-    description:
-      name: redux_dev_tools
-      sha256: "98d248a7699494efe6b8d64f61e01c2bafb9edb1c56b89fa083573008061a4a8"
-      url: "https://pub.dev"
-    source: hosted
-    version: "0.7.0"
   redux_entity:
     dependency: "direct main"
     description:
@@ -1052,6 +1044,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.15.1"
+  redux_logging:
+    dependency: "direct main"
+    description:
+      name: redux_logging
+      sha256: "544d858862ac6d0d605c4c7f5ee912aa1e0385c45bb14625817cfdfedba6475e"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.5.1"
   redux_persist:
     dependency: "direct main"
     description:
