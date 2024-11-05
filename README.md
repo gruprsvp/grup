@@ -2,7 +2,7 @@
 
 A calendar app for humans.
 
-[Test environment](http://parousia-flutter.pages.dev)
+[Access it here](https://appfor.it)
 
 ## Getting started
 
