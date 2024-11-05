@@ -22,6 +22,20 @@ From the root of the project, run the following command to start the Supabase se
 supabase start
 ```
 
+Export the Supabase URL and API key (this is only needed once):
+
+```sh
+supabase status -o json > supabase/config/localhost.json
+```
+
+And change the app configuration in `lib/main.dart` (`supabaseConfigFile`) to point to it when running locally.
+
+While making changes, run `build_runner` in watch mode for code generation:
+
+```sh
+dart run build_runner watch --delete-conflicting-outputs
+```
+
 Tests can be run with the following command:
 
 ```sh

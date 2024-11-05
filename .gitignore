@@ -45,4 +45,3 @@ app.*.map.json
 
 # Supabase
 supabase/.temp/
-
