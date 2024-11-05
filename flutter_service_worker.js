@@ -301,7 +301,7 @@ const RESOURCES = {"flutter.js": "f393d3c16b631f36852323de8e583132",
 "assets/AssetManifest.json": "72ecfd01f4afb6375330e546f0a25606",
 "assets/supabase/config/supabase_dev.json": "fed899e3af98213be411078b223ea233",
 "assets/supabase/config/local_network.json": "c0c9cf0dea44fe18594a89e08acfbe78",
-"assets/supabase/config/localhost.json": "88fea9c77aae413e4dc36b3b9dac598c",
+"assets/supabase/config/localhost.json": "55b72f7cf8d2239253a7dc92724e32be",
 "assets/AssetManifest.bin.json": "d720384fe65dba2dc2be6b1eb7c06749",
 "index.html": "f9d2595473114e9fd8257c09756b40ea",
 "/": "f9d2595473114e9fd8257c09756b40ea",
@@ -322,7 +322,7 @@ const RESOURCES = {"flutter.js": "f393d3c16b631f36852323de8e583132",
 "icons/Icon-maskable-512.png": "301a7604d45b3e739efc881eb04896ea",
 "favicon.png": "5dcef449791fa27946b3d35ad8803796",
 "version.json": "df7ea6a712af13f2a376d8306d414d78",
-"flutter_bootstrap.js": "54c3046a452b7b8d3788a7a396737c1f"};
+"flutter_bootstrap.js": "3aacadd44111da6a7a1f319c48dab47b"};
 // The application shell files that are downloaded before a service worker can
 // start.
 const CORE = ["main.dart.js",
