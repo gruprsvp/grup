@@ -36,6 +36,7 @@ Stream<dynamic> _loadGroupsOnAppInitEpic(
         .where((_) => store.state.auth.status == AuthStatus.authenticated)
         .map((event) => const RequestRetrieveAll<Group>());
 
+/// Once the user uses an invite code, request to load all the groups
 Stream<dynamic> _loadGroupsOnInviteCodeUseEpic(
         Stream<dynamic> actions, EpicStore<AppState> store) =>
     actions
