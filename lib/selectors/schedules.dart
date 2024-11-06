@@ -53,21 +53,33 @@ Iterable<ScheduleSummary> getScheduleInstances({
   Iterable<Reply>? replies,
   int? targetMemberId,
 }) =>
-    schedule.recurrenceRule
-        .getInstances(
-          start: schedule.startDate,
-          after: startDate,
-          before: endDate,
-          includeAfter: true,
-        )
-        .map(
-          (e) => repliesForScheduleInstance(
-            eventDate: e,
-            schedule: schedule,
-            defaultReplies: defaultReplies,
-            replies: replies,
-            startDate: startDate,
-            endDate: endDate,
-            targetMemberId: targetMemberId,
-          ),
-        );
+    schedule.startDate.isAfter(startDate)
+        ? [
+            repliesForScheduleInstance(
+              eventDate: schedule.startDate,
+              schedule: schedule,
+              defaultReplies: defaultReplies,
+              replies: replies,
+              startDate: startDate,
+              endDate: endDate,
+              targetMemberId: targetMemberId,
+            )
+          ]
+        : schedule.recurrenceRule
+            .getInstances(
+              start: schedule.startDate,
+              after: startDate,
+              before: endDate,
+              includeAfter: true,
+            )
+            .map(
+              (e) => repliesForScheduleInstance(
+                eventDate: e,
+                schedule: schedule,
+                defaultReplies: defaultReplies,
+                replies: replies,
+                startDate: startDate,
+                endDate: endDate,
+                targetMemberId: targetMemberId,
+              ),
+            );
