@@ -42,10 +42,11 @@ class MembersRepository extends SupabaseRepository with Postgrest {
     return table().delete().eq('id', memberId);
   }
 
-  Future<Member> getMemberByGroupId(int groupId) async {
+  Future<Member> getOwnMemberByGroupId(int groupId) async {
     return table()
         .select('*')
         .eq('group_id', groupId)
+        .eq('profile_id', supabase.auth.currentUser!.id)
         .single()
         .withConverter(Member.fromJson);
   }
