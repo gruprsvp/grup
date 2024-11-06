@@ -49,8 +49,11 @@ Iterable<ScheduleSummary>? selectSchedulesForSelectedDate(
 
   if (group == null) return null;
 
-  final schedules = state.schedules.entities.values.where(
-      (s) => s.groupId == selectedGroupId && s.startDate.isBefore(range.start));
+  final schedules = state.schedules.entities.values.where((s) =>
+      s.groupId == selectedGroupId &&
+      (s.startDate.isBefore(range.start) ||
+          (s.startDate.compareTo(range.start) >= 0 &&
+              s.startDate.compareTo(range.end) <= 0)));
   final scheduleIds = schedules.map((s) => s.id);
   final defaultReplies = state.defaultReplies.entities.values
       .where((r) => scheduleIds.contains(r.scheduleId));
