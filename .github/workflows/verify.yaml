@@ -1,0 +1,27 @@
+name: Verify
+
+on:
+  pull_request:
+
+jobs:
+  flutter:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false && startsWith(github.event.pull_request.title, 'Draft') == false
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+
+      - name: Download dependencies
+        run: flutter pub get
+      - name: Setup Supabase
+        uses: supabase/setup-cli@v1
+      - name: Start Supabase local for tests
+        run: supabase start
+      - run: flutter test
+      - name: Compile web
+        run: flutter build web --dart-define=ENV=dev
