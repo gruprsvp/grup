@@ -1,4 +1,5 @@
 export 'date_fab.dart';
+export 'email_phone_auth.dart';
 export 'form_builder_recurrence_rule.dart';
 export 'group_events.dart';
 export 'group_form.dart';
