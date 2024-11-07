@@ -1,0 +1,5 @@
+{
+    "supabaseConfigPath": "supabase/config/localhost.json",
+    "socialAuthWebClientId": "655087059227-32trs4upje1r6itvs3p1c1fs0m98m8ol.apps.googleusercontent.com",
+    "socialAuthIosClientId": "655087059227-o10vdnfsvnkl9ct8isg8db3j74s0rfur.apps.googleusercontent.com"
+}

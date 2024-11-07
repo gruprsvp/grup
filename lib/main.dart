@@ -9,6 +9,7 @@ import 'package:parousia/epics/epics.dart';
 import 'package:parousia/reducers/reducers.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/state/state.dart';
+import 'package:parousia/util/config.dart';
 import 'package:parousia/util/util.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_epics/redux_epics.dart';
@@ -21,10 +22,12 @@ import 'router.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  final configService = ConfigService();
+  await configService.initialize();
+
   // TODO(borgoat): support more configuration files
   final supabaseConfigFile =
-      // await rootBundle.loadString('supabase/config/localhost.json');
-      await rootBundle.loadString('supabase/config/supabase_dev.json');
+      await rootBundle.loadString(configService.config.supabaseConfigPath);
 
   final supabaseConfig = SupabaseConfig.fromString(supabaseConfigFile);
 

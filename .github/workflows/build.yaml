@@ -6,6 +6,7 @@ on:
 jobs:
   flutter:
     runs-on: ubuntu-latest
+    if: github.event.pull_request.draft == false && startsWith(github.event.pull_request.title, 'Draft') == false
     permissions:
       contents: write
     steps:
@@ -28,7 +29,7 @@ jobs:
           git config --global user.email "tech+gitbot@parousia.app"
           git fetch origin gh-pages:gh-pages
       - name: Compile web and put in gh-pages branch
-        run: dart run peanut
+        run: dart run peanut --extra-args "--dart-define=ENV=dev"
       - name: Push gh-pages
         run: git push origin gh-pages
       - name: Retrieve the Android keystore and key properties
@@ -39,7 +40,7 @@ jobs:
           echo "$UPLOAD_KEYSTORE_B64" | base64 --decode > android/keystore.jks
           echo "$KEY_PROPERTIES" > android/key.properties
       - name: Compile Android app
-        run: flutter build appbundle --build-number ${{ github.run_number }}
+        run: flutter build appbundle --build-number ${{ github.run_number }} --dart-define=ENV=dev
       - name: Upload Android app to Play Store
         uses: r0adkll/upload-google-play@v1
         with:
