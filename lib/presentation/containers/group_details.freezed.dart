@@ -17,6 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ViewModel {
   bool get loading => throw _privateConstructorUsedError;
+  bool get isAdmin => throw _privateConstructorUsedError;
   Group? get group => throw _privateConstructorUsedError;
 
   /// Create a copy of _ViewModel
@@ -32,7 +33,7 @@ abstract class _$ViewModelCopyWith<$Res> {
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call({bool loading, Group? group});
+  $Res call({bool loading, bool isAdmin, Group? group});
 
   $GroupCopyWith<$Res>? get group;
 }
@@ -53,12 +54,17 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   @override
   $Res call({
     Object? loading = null,
+    Object? isAdmin = null,
     Object? group = freezed,
   }) {
     return _then(_value.copyWith(
       loading: null == loading
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAdmin: null == isAdmin
+          ? _value.isAdmin
+          : isAdmin // ignore: cast_nullable_to_non_nullable
               as bool,
       group: freezed == group
           ? _value.group
@@ -90,7 +96,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool loading, Group? group});
+  $Res call({bool loading, bool isAdmin, Group? group});
 
   @override
   $GroupCopyWith<$Res>? get group;
@@ -110,12 +116,17 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? loading = null,
+    Object? isAdmin = null,
     Object? group = freezed,
   }) {
     return _then(_$_ViewModelImpl(
       loading: null == loading
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isAdmin: null == isAdmin
+          ? _value.isAdmin
+          : isAdmin // ignore: cast_nullable_to_non_nullable
               as bool,
       group: freezed == group
           ? _value.group
@@ -128,16 +139,19 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
-  const _$_ViewModelImpl({required this.loading, this.group});
+  const _$_ViewModelImpl(
+      {required this.loading, required this.isAdmin, this.group});
 
   @override
   final bool loading;
+  @override
+  final bool isAdmin;
   @override
   final Group? group;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(loading: $loading, group: $group)';
+    return '_ViewModel(loading: $loading, isAdmin: $isAdmin, group: $group)';
   }
 
   @override
@@ -146,6 +160,7 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     properties
       ..add(DiagnosticsProperty('type', '_ViewModel'))
       ..add(DiagnosticsProperty('loading', loading))
+      ..add(DiagnosticsProperty('isAdmin', isAdmin))
       ..add(DiagnosticsProperty('group', group));
   }
 
@@ -155,11 +170,12 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
         (other.runtimeType == runtimeType &&
             other is _$_ViewModelImpl &&
             (identical(other.loading, loading) || other.loading == loading) &&
+            (identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin) &&
             (identical(other.group, group) || other.group == group));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, loading, group);
+  int get hashCode => Object.hash(runtimeType, loading, isAdmin, group);
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -171,11 +187,15 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 }
 
 abstract class __ViewModel implements _ViewModel {
-  const factory __ViewModel({required final bool loading, final Group? group}) =
-      _$_ViewModelImpl;
+  const factory __ViewModel(
+      {required final bool loading,
+      required final bool isAdmin,
+      final Group? group}) = _$_ViewModelImpl;
 
   @override
   bool get loading;
+  @override
+  bool get isAdmin;
   @override
   Group? get group;
 

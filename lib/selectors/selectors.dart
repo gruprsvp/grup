@@ -1,6 +1,7 @@
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/selectors/members.dart';
 import 'package:parousia/selectors/schedules.dart';
 import 'package:parousia/state/state.dart';
 import 'package:parousia/util/util.dart';
@@ -105,13 +106,7 @@ ScheduleEventDetails? selectScheduleForDate(
       .toList();
 
   // TODO This should be a selector and memoized
-  final canEditOthers = state.members.entities.values
-          .where((member) =>
-              member.groupId == selectedGroupId &&
-              member.profileId == state.auth.user?.id)
-          .firstOrNull
-          ?.role ==
-      GroupRoles.admin;
+  final canEditOthers = selectIsAdmin(state, selectedGroupId);
 
   return ScheduleEventDetails(
     scheduleId: scheduleSummary.scheduleId,
