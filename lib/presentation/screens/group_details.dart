@@ -7,11 +7,13 @@ import 'package:parousia/presentation/presentation.dart';
 
 class GroupDetailsScreen extends StatelessWidget {
   final bool loading;
+  final bool isAdmin;
   final Group? group;
 
   const GroupDetailsScreen({
     super.key,
     required this.loading,
+    required this.isAdmin,
     this.group,
   });
 
@@ -23,11 +25,14 @@ class GroupDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(group?.displayName ?? l10n.loading),
         actions: [
-          IconButton(
-            onPressed: () =>
-                GroupManageRoute(groupId: group!.id.toString()).push(context),
-            icon: const FaIcon(FontAwesomeIcons.penToSquare),
-          )
+          isAdmin
+              ? IconButton(
+                  onPressed: () =>
+                      GroupManageRoute(groupId: group!.id.toString())
+                          .push(context),
+                  icon: const FaIcon(FontAwesomeIcons.penToSquare),
+                )
+              : Container()
         ],
       ),
       body: Column(

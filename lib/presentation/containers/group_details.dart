@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:parousia/actions/actions.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
+import 'package:parousia/selectors/members.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
 
@@ -27,6 +28,7 @@ class GroupDetailsContainer extends StatelessWidget {
       builder: (context, vm) => GroupDetailsScreen(
         loading: vm.loading,
         group: vm.group,
+        isAdmin: vm.isAdmin,
       ),
     );
   }
@@ -36,6 +38,7 @@ class GroupDetailsContainer extends StatelessWidget {
 sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required bool loading,
+    required bool isAdmin,
     Group? group,
   }) = __ViewModel;
 
@@ -44,6 +47,7 @@ sealed class _ViewModel with _$ViewModel {
       loading: store.state.groups.loadingAll ||
           (store.state.groups.loadingIds[groupId] ?? false),
       group: store.state.groups.entities[groupId],
+      isAdmin: selectIsAdmin(store.state, int.parse(groupId)),
     );
   }
 }

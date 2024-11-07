@@ -20,3 +20,13 @@ Iterable<(Member, Profile?)> groupMembersWithProfilesSelector(
   final profiles = profilesSelector(state).entities;
   return members.map((member) => (member, profiles[member.profileId]));
 }
+
+bool selectIsAdmin(AppState state, int groupId) {
+  return state.members.entities.values
+          .where((member) =>
+              member.groupId == groupId &&
+              member.profileId == state.auth.user?.id)
+          .firstOrNull
+          ?.role ==
+      GroupRoles.admin;
+}
