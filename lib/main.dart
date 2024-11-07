@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,10 +22,12 @@ import 'router.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await dotenv.load();
+
   // TODO(borgoat): support more configuration files
-  final supabaseConfigFile =
-      // await rootBundle.loadString('supabase/config/localhost.json');
-      await rootBundle.loadString('supabase/config/supabase_dev.json');
+  final configPath =
+      dotenv.env['SUPABASE_CONFIG_PATH'] ?? 'supabase/config/supabase_dev.json';
+  final supabaseConfigFile = await rootBundle.loadString(configPath);
 
   final supabaseConfig = SupabaseConfig.fromString(supabaseConfigFile);
 
