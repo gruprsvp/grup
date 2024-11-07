@@ -23,7 +23,10 @@ jobs:
         uses: supabase/setup-cli@v1
       - name: Start Supabase local for tests
         run: supabase start
-      - run: flutter test
+      - name: Run tests
+        run: |
+          supabase status -o json > supabase/config/localhost.json
+          flutter test
       - name: Configure git
         run: |
           git config --global user.name "GitHub Actions Bot"
