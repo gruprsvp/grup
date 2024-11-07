@@ -45,3 +45,4 @@ app.*.map.json
 
 # Supabase
 supabase/.temp/
+supabase/config/localhost.json
