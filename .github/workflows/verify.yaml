@@ -22,6 +22,9 @@ jobs:
         uses: supabase/setup-cli@v1
       - name: Start Supabase local for tests
         run: supabase start
-      - run: flutter test
+      - name: Run tests
+        run: |
+          supabase status -o json > supabase/config/localhost.json
+          flutter test
       - name: Compile web
         run: flutter build web --dart-define=ENV=dev
