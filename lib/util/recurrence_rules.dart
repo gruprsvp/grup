@@ -1,6 +1,11 @@
 import 'package:rrule/rrule.dart';
 
 class CommonRecurrenceRules {
+  static final RecurrenceRule once = RecurrenceRule(
+    frequency: Frequency.daily,
+    count: 1,
+  );
+
   static final RecurrenceRule daily = RecurrenceRule(
     frequency: Frequency.daily,
     interval: 1,

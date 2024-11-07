@@ -185,6 +185,7 @@ class _RecurrenceRulePickerState extends FormBuilderFieldDecorationState<
             (CommonRecurrenceRules.yearly, Icons.cake),
             (CommonRecurrenceRules.weekdays, Icons.work),
             (CommonRecurrenceRules.weekends, Icons.beach_access),
+            (CommonRecurrenceRules.once, Icons.one_x_mobiledata),
           ]
               .map<ListTile>(
                 (r) => ListTile(
