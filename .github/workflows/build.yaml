@@ -38,12 +38,15 @@ jobs:
           if [[ -n "${{ inputs.version }}" ]]; then
             NEW_TAG_NAME="v${{ inputs.version }}"
           else
-            TAG_NAME="${1:-${GITHUB_REF/refs\/tags\//}}"
-            [[ "$TAG_NAME" == "$GITHUB_REF" ]] && TAG_NAME=$(git describe --tags --abbrev=0)
-            if [ -z "$TAG_NAME" ]; then
+            # Attempt to get the latest tag
+            LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+            
+            if [ -z "$LATEST_TAG" ]; then
+              # No tags exist, default to v1.0.0
               NEW_TAG_NAME="v1.0.0"
             else
-              NEW_TAG_NAME=$(echo $TAG_NAME | awk -F. '{OFS="."; $NF+=1; print $0}')
+              # Increment the latest tag
+              NEW_TAG_NAME=$(echo $LATEST_TAG | awk -F. '{OFS="."; $NF+=1; print $0}')
             fi
           fi
           echo "tag_name=${NEW_TAG_NAME}" >> $GITHUB_OUTPUT
