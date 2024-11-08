@@ -11,28 +11,38 @@ void main() {
   group('schedules instances', () {
     test('basic setup with default replies and overrides', () {
       const testDays = 10;
-      final startDate = DateTime.now().getDayStart();
+      final startDate = DateTime(2000, 1, 1).toUtc();
       final endDate = startDate.add(const Duration(days: testDays));
 
-      final recurrenceRule = CommonRecurrenceRules.daily;
-      final schedule = Schedule(
+      final dailyRecurrenceRule = CommonRecurrenceRules.daily;
+      final dailySchedule = Schedule(
+          id: 1,
+          groupId: 1,
+          displayName: 'Daily schedule',
+          startDate: startDate,
+          recurrenceRule: dailyRecurrenceRule);
+      final weekendRecurrenceRule = CommonRecurrenceRules.weekends;
+      final weekendSchedule = Schedule(
           id: 2,
           groupId: 1,
-          displayName: 'Test schedule',
+          displayName: 'Weekend schedule',
           startDate: startDate,
-          recurrenceRule: recurrenceRule);
+          recurrenceRule: weekendRecurrenceRule);
 
-      final dailyRecurrenceRule = CommonRecurrenceRules.daily;
-      final weekendRecurrenceRule = CommonRecurrenceRules.weekends;
       final defaultReplies = [
         DefaultReply(
             memberId: 32,
-            scheduleId: schedule.id,
+            scheduleId: dailySchedule.id,
             selectedOption: ReplyOptions.yes,
             recurrenceRule: dailyRecurrenceRule),
         DefaultReply(
+            memberId: 32,
+            scheduleId: weekendSchedule.id,
+            selectedOption: ReplyOptions.yes,
+            recurrenceRule: weekendRecurrenceRule),
+        DefaultReply(
             memberId: 33,
-            scheduleId: schedule.id,
+            scheduleId: dailySchedule.id,
             selectedOption: ReplyOptions.yes,
             recurrenceRule: weekendRecurrenceRule),
       ];
@@ -43,23 +53,28 @@ void main() {
       final replies = [
         Reply(
             memberId: 32,
-            scheduleId: schedule.id,
+            scheduleId: dailySchedule.id,
             eventDate: sunday,
             selectedOption: ReplyOptions.no),
         Reply(
             memberId: 33,
-            scheduleId: schedule.id,
+            scheduleId: dailySchedule.id,
             eventDate: sunday,
             selectedOption: ReplyOptions.no),
         Reply(
             memberId: 32,
-            scheduleId: schedule.id,
+            scheduleId: dailySchedule.id,
             eventDate: saturday,
             selectedOption: ReplyOptions.no),
+        Reply(
+            memberId: 32,
+            scheduleId: weekendSchedule.id,
+            eventDate: sunday,
+            selectedOption: ReplyOptions.yes),
       ];
 
       final result = getScheduleInstances(
-        schedule: schedule,
+        schedule: dailySchedule,
         defaultReplies: defaultReplies,
         replies: replies,
         startDate: startDate,
