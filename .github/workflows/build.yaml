@@ -1,6 +1,11 @@
 name: Build
 
 on:
+  workflow_dispatch:
+    inputs:
+      version:
+        required: false
+        description: The version to release
   push:
     branches:
       - main
@@ -27,6 +32,28 @@ jobs:
         run: |
           supabase status -o json > supabase/config/localhost.json
           flutter test
+      - name: Calculate new tag name
+        id: calculate
+        run: |
+          if [[ -n "${{ inputs.version }}" ]]; then
+            NEW_TAG_NAME="v${{ inputs.version }}"
+          else
+            TAG_NAME="${1:-${GITHUB_REF/refs\/tags\//}}"
+            [[ "$TAG_NAME" == "$GITHUB_REF" ]] && TAG_NAME=$(git describe --tags --abbrev=0)
+            if [ -z "$TAG_NAME" ]; then
+              NEW_TAG_NAME="v1.0.0"
+            else
+              NEW_TAG_NAME=$(echo $TAG_NAME | awk -F. '{OFS="."; $NF+=1; print $0}')
+            fi
+          fi
+          echo "tag_name=${NEW_TAG_NAME}" >> $GITHUB_OUTPUT
+      - name: Create release
+        uses: ncipollo/release-action@v1
+        with:
+          name: ${{ steps.calculate.outputs.tag_name }}
+          tag: ${{ steps.calculate.outputs.tag_name }}
+          generateReleaseNotes: true
+          makeLatest: true
       - name: Configure git
         run: |
           git config --global user.name "GitHub Actions Bot"
@@ -44,7 +71,9 @@ jobs:
           echo "$UPLOAD_KEYSTORE_B64" | base64 --decode > android/keystore.jks
           echo "$KEY_PROPERTIES" > android/key.properties
       - name: Compile Android app
-        run: flutter build appbundle --build-number ${{ github.run_number }} --dart-define=ENV=dev
+        run: |
+          TAG_NAME=${{ steps.calculate.outputs.tag_name }}
+          flutter build appbundle --build-number ${{ github.run_number }} --build-name ${TAG_NAME:1} --dart-define=ENV=dev
       - name: Upload Android app to Play Store
         uses: r0adkll/upload-google-play@v1
         with:
