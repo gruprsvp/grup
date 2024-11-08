@@ -1,0 +1,11 @@
+[
+  {
+    "relation": ["delegate_permission/common.handle_all_urls"],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "is.giorgio.app.parousia",
+      "sha256_cert_fingerprints":
+        ["02:A1:58:46:37:61:E8:D3:41:95:03:59:18:19:C6:51:7B:53:07:8D:0F:A5:D4:6F:D3:AF:C9:8F:7E:81:54:1B"]
+    }
+  }
+]
