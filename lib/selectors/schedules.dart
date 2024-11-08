@@ -25,9 +25,11 @@ ScheduleSummary repliesForScheduleInstance({
   );
 
   replies?.forEach(
-    (reply) => reply.eventDate.copyWith(isUtc: true).isAtSameMomentAs(eventDate)
-        ? allReplies[reply.memberId] = reply.selectedOption
-        : null,
+    (reply) =>
+        reply.eventDate.copyWith(isUtc: true).isAtSameMomentAs(eventDate) &&
+                reply.scheduleId == schedule.id
+            ? allReplies[reply.memberId] = reply.selectedOption
+            : null,
   );
 
   final myReply = allReplies[targetMemberId];
