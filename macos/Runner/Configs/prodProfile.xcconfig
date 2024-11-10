@@ -1,0 +1,7 @@
+#include "../../Flutter/prodProfile.xcconfig"
+#include "Warnings.xcconfig"
+
+FLUTTER_TARGET=lib/main_prod.dart
+ASSET_PREFIX=prod
+BUNDLE_NAME=AppFor.it
+BUNDLE_DISPLAY_NAME=AppFor.it

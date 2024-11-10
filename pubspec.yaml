@@ -103,7 +103,7 @@ dev_dependencies:
   peanut: ^5.0.0
 
   # To manage app flavours
-  flutter_flavorizr: ^2.2.1
+  flutter_flavorizr: ^2.2.3
 
   # For code generation
   build_runner: ^2.4.7

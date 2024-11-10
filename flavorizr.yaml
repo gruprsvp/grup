@@ -1,0 +1,24 @@
+flavors:
+  dev:
+    app:
+      name: "AppFor.it (Dev)"
+
+    android:
+      applicationId: "is.giorgio.app.parousia.dev"
+    ios:
+      bundleId: "is.giorgio.app.parousia.dev"
+    macos:
+      bundleId: "is.giorgio.app.parousia.dev"
+
+  prod:
+    app:
+      name: "AppFor.it"
+
+    android:
+      applicationId: "is.giorgio.app.parousia"
+    ios:
+      bundleId: "is.giorgio.app.parousia"
+    macos:
+      bundleId: "is.giorgio.app.parousia"
+
+ide: idea
