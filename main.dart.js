@@ -121092,7 +121092,7 @@ var $async$hj=A.q(function(b,c){if(b===1)return A.r(c,r)
 while(true)switch(s){case 0:n=t.P
 m=B.al
 s=2
-return A.x($.DZ().a8u("env/dev.json"),$async$hj)
+return A.x($.DZ().a8u("assets/env/supabase.json"),$async$hj)
 case 2:p=n.a(m.cJ(0,c))
 o=J.ap(p)
 q.a=new A.a7M(A.aO(o.i(p,"supabaseConfigPath")),A.aO(o.i(p,"socialAuthWebClientId")),A.aO(o.i(p,"socialAuthIosClientId")))
