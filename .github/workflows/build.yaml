@@ -86,6 +86,6 @@ jobs:
           packageName: is.giorgio.app.parousia
           releaseFiles: build/app/outputs/bundle/release/app-release.aab
           track: internal
-          status: draft
+          status: completed
           mappingFile: build/app/outputs/mapping/release/mapping.txt
           debugSymbols: build/app/intermediates/merged_native_libs/release/out/lib
