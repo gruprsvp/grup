@@ -89,6 +89,7 @@ dependencies:
   # Widgetbook
   widgetbook_annotation: ^3.1.0
   widgetbook: ^3.6.0
+  flutter_native_splash: ^2.4.2
 
 
 dev_dependencies:
@@ -192,13 +193,13 @@ flutter:
 
 # https://pub.dev/packages/flutter_launcher_icons
 flutter_launcher_icons:
-  image_path: "assets/images/logo.webp"
+  image_path: "assets/images/logo.png"
   android: true
   ios: true
   #  https://github.com/fluttercommunity/flutter_launcher_icons/issues/96
   #  adaptive_icon_background: "#ffffff"
-  #  adaptive_icon_foreground: "assets/images/logo.webp"
-  #  adaptive_icon_monochrome: "assets/images/logo.webp"
+  #  adaptive_icon_foreground: "assets/images/logo.png"
+  #  adaptive_icon_monochrome: "assets/images/logo.png"
   min_sdk_android: 21
   remove_alpha_ios: true
   background_color_ios: "#ffffff"
