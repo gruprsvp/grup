@@ -27,4 +27,4 @@ jobs:
           supabase status -o json > supabase/config/localhost.json
           flutter test
       - name: Compile web
-        run: flutter build web --dart-define=ENV=dev
+        run: flutter build web

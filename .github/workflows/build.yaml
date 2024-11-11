@@ -65,7 +65,7 @@ jobs:
           git config --global user.email "tech+gitbot@parousia.app"
           git fetch origin gh-pages:gh-pages
       - name: Compile web and put in gh-pages branch
-        run: dart run peanut --extra-args "--dart-define=ENV=dev"
+        run: dart run peanut
       - name: Push gh-pages
         run: git push origin gh-pages
       - name: Retrieve the Android keystore and key properties
@@ -78,7 +78,7 @@ jobs:
       - name: Compile Android app
         run: |
           TAG_NAME=${{ steps.calculate.outputs.tag_name }}
-          flutter build appbundle --build-number ${{ github.run_number }} --build-name ${TAG_NAME:1} --dart-define=ENV=dev
+          flutter build appbundle --build-number ${{ github.run_number }} --build-name ${TAG_NAME:1}
       - name: Upload Android app to Play Store
         uses: r0adkll/upload-google-play@v1
         with:
