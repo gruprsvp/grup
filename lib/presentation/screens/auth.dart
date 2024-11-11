@@ -15,6 +15,7 @@ class AuthScreen extends StatelessWidget {
     onSuccess(session) => HomeScreenRoute().go(context);
 
     final config = ConfigService().config;
+
     return Scaffold(
       appBar: AppBar(
         title: Text(AppLocalizations.of(context)!.appName),

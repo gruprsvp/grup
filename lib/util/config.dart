@@ -1,6 +1,8 @@
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'config.freezed.dart';
 part 'config.g.dart';
@@ -16,8 +18,8 @@ class ConfigService {
   }
 
   Future<void> initialize() async {
-    const env = String.fromEnvironment('ENV', defaultValue: 'local');
-    final envConfigFile = await rootBundle.loadString('env/$env.json');
+    const env = kReleaseMode ? 'supabase' : 'local';
+    final envConfigFile = await rootBundle.loadString('assets/env/$env.json');
     final config =
         Config.fromJson(json.decode(envConfigFile) as Map<String, dynamic>);
     this.config = config;
