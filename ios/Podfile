@@ -1,5 +1,7 @@
 # Uncomment this line to define a global platform for your project
-# platform :ios, '12.0'
+# Must be at least 11 because of RevenueCat:
+# https://www.revenuecat.com/docs/getting-started/installation/flutter#ios-deployment-target
+platform :ios, '11.0'
 
 # CocoaPods analytics sends network stats synchronously affecting flutter build latency.
 ENV['COCOAPODS_DISABLE_STATS'] = 'true'
