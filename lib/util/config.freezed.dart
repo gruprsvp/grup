@@ -23,6 +23,8 @@ mixin _$Config {
   String get supabaseConfigPath => throw _privateConstructorUsedError;
   String get socialAuthWebClientId => throw _privateConstructorUsedError;
   String get socialAuthIosClientId => throw _privateConstructorUsedError;
+  String get revenuecatGoogleApiKey => throw _privateConstructorUsedError;
+  String get revenuecatAppleApiKey => throw _privateConstructorUsedError;
 
   /// Serializes this Config to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -41,7 +43,9 @@ abstract class $ConfigCopyWith<$Res> {
   $Res call(
       {String supabaseConfigPath,
       String socialAuthWebClientId,
-      String socialAuthIosClientId});
+      String socialAuthIosClientId,
+      String revenuecatGoogleApiKey,
+      String revenuecatAppleApiKey});
 }
 
 /// @nodoc
@@ -62,6 +66,8 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config>
     Object? supabaseConfigPath = null,
     Object? socialAuthWebClientId = null,
     Object? socialAuthIosClientId = null,
+    Object? revenuecatGoogleApiKey = null,
+    Object? revenuecatAppleApiKey = null,
   }) {
     return _then(_value.copyWith(
       supabaseConfigPath: null == supabaseConfigPath
@@ -75,6 +81,14 @@ class _$ConfigCopyWithImpl<$Res, $Val extends Config>
       socialAuthIosClientId: null == socialAuthIosClientId
           ? _value.socialAuthIosClientId
           : socialAuthIosClientId // ignore: cast_nullable_to_non_nullable
+              as String,
+      revenuecatGoogleApiKey: null == revenuecatGoogleApiKey
+          ? _value.revenuecatGoogleApiKey
+          : revenuecatGoogleApiKey // ignore: cast_nullable_to_non_nullable
+              as String,
+      revenuecatAppleApiKey: null == revenuecatAppleApiKey
+          ? _value.revenuecatAppleApiKey
+          : revenuecatAppleApiKey // ignore: cast_nullable_to_non_nullable
               as String,
     ) as $Val);
   }
@@ -90,7 +104,9 @@ abstract class _$$ConfigImplCopyWith<$Res> implements $ConfigCopyWith<$Res> {
   $Res call(
       {String supabaseConfigPath,
       String socialAuthWebClientId,
-      String socialAuthIosClientId});
+      String socialAuthIosClientId,
+      String revenuecatGoogleApiKey,
+      String revenuecatAppleApiKey});
 }
 
 /// @nodoc
@@ -109,6 +125,8 @@ class __$$ConfigImplCopyWithImpl<$Res>
     Object? supabaseConfigPath = null,
     Object? socialAuthWebClientId = null,
     Object? socialAuthIosClientId = null,
+    Object? revenuecatGoogleApiKey = null,
+    Object? revenuecatAppleApiKey = null,
   }) {
     return _then(_$ConfigImpl(
       supabaseConfigPath: null == supabaseConfigPath
@@ -123,17 +141,27 @@ class __$$ConfigImplCopyWithImpl<$Res>
           ? _value.socialAuthIosClientId
           : socialAuthIosClientId // ignore: cast_nullable_to_non_nullable
               as String,
+      revenuecatGoogleApiKey: null == revenuecatGoogleApiKey
+          ? _value.revenuecatGoogleApiKey
+          : revenuecatGoogleApiKey // ignore: cast_nullable_to_non_nullable
+              as String,
+      revenuecatAppleApiKey: null == revenuecatAppleApiKey
+          ? _value.revenuecatAppleApiKey
+          : revenuecatAppleApiKey // ignore: cast_nullable_to_non_nullable
+              as String,
     ));
   }
 }
 
 /// @nodoc
 @JsonSerializable()
-class _$ConfigImpl implements _Config {
+class _$ConfigImpl with DiagnosticableTreeMixin implements _Config {
   const _$ConfigImpl(
       {required this.supabaseConfigPath,
       required this.socialAuthWebClientId,
-      required this.socialAuthIosClientId});
+      required this.socialAuthIosClientId,
+      required this.revenuecatGoogleApiKey,
+      required this.revenuecatAppleApiKey});
 
   factory _$ConfigImpl.fromJson(Map<String, dynamic> json) =>
       _$$ConfigImplFromJson(json);
@@ -144,10 +172,28 @@ class _$ConfigImpl implements _Config {
   final String socialAuthWebClientId;
   @override
   final String socialAuthIosClientId;
+  @override
+  final String revenuecatGoogleApiKey;
+  @override
+  final String revenuecatAppleApiKey;
 
   @override
-  String toString() {
-    return 'Config(supabaseConfigPath: $supabaseConfigPath, socialAuthWebClientId: $socialAuthWebClientId, socialAuthIosClientId: $socialAuthIosClientId)';
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Config(supabaseConfigPath: $supabaseConfigPath, socialAuthWebClientId: $socialAuthWebClientId, socialAuthIosClientId: $socialAuthIosClientId, revenuecatGoogleApiKey: $revenuecatGoogleApiKey, revenuecatAppleApiKey: $revenuecatAppleApiKey)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Config'))
+      ..add(DiagnosticsProperty('supabaseConfigPath', supabaseConfigPath))
+      ..add(DiagnosticsProperty('socialAuthWebClientId', socialAuthWebClientId))
+      ..add(DiagnosticsProperty('socialAuthIosClientId', socialAuthIosClientId))
+      ..add(
+          DiagnosticsProperty('revenuecatGoogleApiKey', revenuecatGoogleApiKey))
+      ..add(
+          DiagnosticsProperty('revenuecatAppleApiKey', revenuecatAppleApiKey));
   }
 
   @override
@@ -160,13 +206,22 @@ class _$ConfigImpl implements _Config {
             (identical(other.socialAuthWebClientId, socialAuthWebClientId) ||
                 other.socialAuthWebClientId == socialAuthWebClientId) &&
             (identical(other.socialAuthIosClientId, socialAuthIosClientId) ||
-                other.socialAuthIosClientId == socialAuthIosClientId));
+                other.socialAuthIosClientId == socialAuthIosClientId) &&
+            (identical(other.revenuecatGoogleApiKey, revenuecatGoogleApiKey) ||
+                other.revenuecatGoogleApiKey == revenuecatGoogleApiKey) &&
+            (identical(other.revenuecatAppleApiKey, revenuecatAppleApiKey) ||
+                other.revenuecatAppleApiKey == revenuecatAppleApiKey));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, supabaseConfigPath,
-      socialAuthWebClientId, socialAuthIosClientId);
+  int get hashCode => Object.hash(
+      runtimeType,
+      supabaseConfigPath,
+      socialAuthWebClientId,
+      socialAuthIosClientId,
+      revenuecatGoogleApiKey,
+      revenuecatAppleApiKey);
 
   /// Create a copy of Config
   /// with the given fields replaced by the non-null parameter values.
@@ -188,7 +243,9 @@ abstract class _Config implements Config {
   const factory _Config(
       {required final String supabaseConfigPath,
       required final String socialAuthWebClientId,
-      required final String socialAuthIosClientId}) = _$ConfigImpl;
+      required final String socialAuthIosClientId,
+      required final String revenuecatGoogleApiKey,
+      required final String revenuecatAppleApiKey}) = _$ConfigImpl;
 
   factory _Config.fromJson(Map<String, dynamic> json) = _$ConfigImpl.fromJson;
 
@@ -198,6 +255,10 @@ abstract class _Config implements Config {
   String get socialAuthWebClientId;
   @override
   String get socialAuthIosClientId;
+  @override
+  String get revenuecatGoogleApiKey;
+  @override
+  String get revenuecatAppleApiKey;
 
   /// Create a copy of Config
   /// with the given fields replaced by the non-null parameter values.

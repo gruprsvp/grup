@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,8 @@ import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/state/state.dart';
 import 'package:parousia/util/config.dart';
 import 'package:parousia/util/util.dart';
+import 'package:purchases_flutter/purchases_flutter.dart'
+    show PurchasesConfiguration, Purchases;
 import 'package:redux/redux.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:redux_persist/redux_persist.dart';
@@ -22,10 +25,17 @@ import 'router.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  // Load the configuration file depending on the environment
   final configService = ConfigService();
   await configService.initialize();
 
-  // TODO(borgoat): support more configuration files
+  // https://www.revenuecat.com/docs/getting-started/configuring-sdk#initialization
+  final revenuecatApiKey = Platform.isAndroid
+      ? configService.config.revenuecatGoogleApiKey
+      : configService.config.revenuecatAppleApiKey;
+  final purchasesConfigFuture =
+      Purchases.configure(PurchasesConfiguration(revenuecatApiKey));
+
   final supabaseConfigFile =
       await rootBundle.loadString(configService.config.supabaseConfigPath);
 
@@ -37,6 +47,9 @@ Future<void> main() async {
   );
 
   final store = await _initStore(supabase.client);
+
+  // Wait for the purchases configuration to be ready before starting the app
+  await purchasesConfigFuture;
 
   // Propagate auth state changes to the store
   supabase.client.auth.onAuthStateChange

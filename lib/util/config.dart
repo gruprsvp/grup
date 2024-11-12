@@ -20,8 +20,7 @@ class ConfigService {
   Future<void> initialize() async {
     const env = kReleaseMode ? 'supabase' : 'local';
     final envConfigFile = await rootBundle.loadString('assets/env/$env.json');
-    final config =
-        Config.fromJson(json.decode(envConfigFile) as Map<String, dynamic>);
+    final config = Config.fromJson(json.decode(envConfigFile));
     this.config = config;
   }
 }
@@ -32,6 +31,8 @@ sealed class Config with _$Config {
     required String supabaseConfigPath,
     required String socialAuthWebClientId,
     required String socialAuthIosClientId,
+    required String revenuecatGoogleApiKey,
+    required String revenuecatAppleApiKey,
   }) = _Config;
 
   factory Config.fromJson(Map<String, dynamic> json) => _$ConfigFromJson(json);
