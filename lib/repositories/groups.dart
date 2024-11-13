@@ -14,7 +14,7 @@ class GroupsRepository extends SupabaseRepository with Postgrest {
 
   Future<GroupsAndMembers> getUserGroups() async {
     return table()
-        .select('*,members!inner(*,profiles!inner(*))')
+        .select('*,members!inner(*,profiles!left(*))')
         // TODO(borgoat): should filter by profile_id but return all members
         // .eq('members.profile_id', supabase.auth.currentUser!.id)
         .withConverter(_convertGroupsAndMembers);
@@ -22,7 +22,7 @@ class GroupsRepository extends SupabaseRepository with Postgrest {
 
   Future<Group> getGroupById(int id) async {
     return table()
-        .select('*,members!inner(*,profiles!inner(*))')
+        .select('*,members!inner(*,profiles!left(*))')
         .eq('id', id)
         .single()
         .withConverter(Group.fromJson);
@@ -67,13 +67,15 @@ class GroupsRepository extends SupabaseRepository with Postgrest {
     final profiles = <Profile>{};
     for (var value in data) {
       groups.add(Group.fromJson(value));
-      for (var member in value['members']) {
-        members.add(Member.fromJson(member));
-        profiles.add(Profile.fromJson(member['profiles']));
+      if (value['members'] != null) {
+        for (var member in value['members']) {
+          members.add(Member.fromJson(member));
+          if (member['profiles'] != null) {
+            profiles.add(Profile.fromJson(member['profiles']));
+          }
+        }
       }
     }
     return (groups: groups, members: members, profiles: profiles);
   }
-
-
 }
