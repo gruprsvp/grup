@@ -46,27 +46,42 @@ Future<(AuthResponse, T)> runWithUser<T>(RunWithUserCallback<T> callback,
     {String? email, String? phone}) async {
   final supabase = supabaseAnonClient();
   final user = await signUpWithNewUser(supabase, email: email, phone: phone);
-  final result = await callback(supabase, user);
-  return (user, result);
+  try {
+    final result = await callback(supabase, user);
+    return (user, result);
+  } catch (e) {
+    supabaseAdmin.auth.admin.deleteUser(user.user!.id);
+    rethrow;
+  }
 }
 
 /// Run a closure with a temporary user created just for this and then deleted.
-Future<T> runWithTemporaryUser<T>(RunWithUserCallback<T> callback,
+Future<T?> runWithTemporaryUser<T>(RunWithUserCallback<T> callback,
     {String? email, String? phone}) async {
-  final (user, result) =
-      await runWithUser(callback, email: email, phone: phone);
-  await supabaseAdmin.auth.admin.deleteUser(user.user!.id);
-  return result;
+  try {
+    final (user, result) =
+        await runWithUser(callback, email: email, phone: phone);
+    await supabaseAdmin.auth.admin.deleteUser(user.user!.id);
+    return result;
+  } catch (e) {
+    rethrow;
+  }
 }
 
 /// Run a closure with a temporary group created just for this and then deleted.
-Future<T> runWithTemporaryGroup<T>(RunWithGroupCallback<T> callback) {
+Future<T?> runWithTemporaryGroup<T>(RunWithGroupCallback<T> callback) {
   return runWithTemporaryUser((supabase, user) async {
     final groupsRepository = GroupsRepository(supabase: supabase);
     final group = await groupsRepository.createGroup(Fake.group());
-    final result = await callback(supabase, group, groupsRepository);
-    await groupsRepository.deleteGroup(group.id);
-    return result;
+    late T result;
+    try {
+      result = await callback(supabase, group, groupsRepository);
+      await groupsRepository.deleteGroup(group.id);
+      return result;
+    } catch (e) {
+      await groupsRepository.deleteGroup(group.id);
+      rethrow;
+    }
   });
 }
 
@@ -213,6 +228,32 @@ void main() {
               memberId: guest.id, displayNameOverride: 'A guest with a name');
 
           await membersRepository.removeMember(updatedGuest.id);
+        }),
+      ),
+    );
+
+    test(
+      'users can see their groups and members',
+      () => runWithTemporaryUser(
+        (supabase, user) =>
+            runWithTemporaryGroup((supabase, group, groupsRepository) async {
+          final membersRepository = MembersRepository(supabase: supabase);
+
+          final member = await membersRepository.addMemberToGroup(group.id,
+              displayName: 'A member');
+
+          final userGroups = await groupsRepository.getUserGroups();
+          expect(userGroups.groups, hasLength(1));
+
+          final userGroup = userGroups.groups.first;
+          final members =
+              userGroups.members.where((m) => m.groupId == userGroup.id);
+
+          expect(userGroup.id, equals(group.id));
+          expect(members, hasLength(2));
+
+          final userMember = members.where((m) => m.id == member.id).first;
+          expect(userMember.id, equals(member.id));
         }),
       ),
     );
