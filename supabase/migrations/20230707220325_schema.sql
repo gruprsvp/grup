@@ -227,7 +227,16 @@ create policy "profiles_select"
     on profiles
     for select
     to authenticated
-    using ((select auth.uid()) = id);
+    using (
+      (select auth.uid()) = id
+      or
+      exists (
+        select 1
+        from   members
+        where  members.profile_id = auth.uid()
+          and  members.group_id = (select group_id from members where members.profile_id = profiles.id)
+      )
+    );
 comment on policy "profiles_select" on profiles is 'Users can see their own profile';
 
 create policy "profiles_update"
