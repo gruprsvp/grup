@@ -1,6 +1,7 @@
 import 'package:parousia/models/models.dart';
 
 import 'const.dart';
+import 'functions.dart';
 import 'supabase.dart';
 
 class ProfilesRepository extends SupabaseRepository with Postgrest {
@@ -24,5 +25,11 @@ class ProfilesRepository extends SupabaseRepository with Postgrest {
       if (displayName != null) 'display_name': displayName,
       if (pictureUrl != null) 'picture': pictureUrl,
     }).eq('id', id);
+  }
+
+  Future<void> deleteProfile() async {
+    await supabase.functions
+        .deleteAccount(supabase.auth.currentSession!.accessToken);
+    return table().delete().eq('id', supabase.auth.currentUser!.id);
   }
 }

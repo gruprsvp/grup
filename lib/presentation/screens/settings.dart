@@ -23,6 +23,7 @@ class SettingsScreen extends StatelessWidget {
             onTap: () => LocaleRoute().push(context),
           ),
           const ThemeSwitcherContainer(),
+          const DeleteProfileTile(),
           const SignOutTile(),
         ],
       ),
