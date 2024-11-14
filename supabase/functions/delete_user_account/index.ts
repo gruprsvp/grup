@@ -3,47 +3,59 @@
 // This enables autocomplete, go to definition, etc.
 
 // Setup type definitions for built-in Supabase Runtime APIs
-import "jsr:@supabase/functions-js/edge-runtime.d.ts"
-import { createClient } from 'jsr:@supabase/supabase-js@2'
+import "jsr:@supabase/functions-js/edge-runtime.d.ts";
+import { createClient } from "jsr:@supabase/supabase-js@2";
+import { corsHeaders } from "../_shared/cors.ts";
 
 Deno.serve(async (req) => {
-  console.log(req.url)
+  // This is needed if you're planning to invoke your function from a browser.
+  if (req.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders });
+  }
 
   const supabase = createClient(
-    Deno.env.get('SUPABASE_URL') ?? '',
-    Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
-  )
+    Deno.env.get("SUPABASE_URL") ?? "",
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
+  );
 
-  const token = req.headers.get('Authorization')?.split('Bearer ')[1]
-  console.log(req.headers.get('Authorization'))
+  const token = req.headers.get("Authorization")?.split("Bearer ")[1];
   if (!token) {
-    return new Response(JSON.stringify({ error: 'No token provided' }), {
+    return new Response(JSON.stringify({ error: "No token provided" }), {
       status: 401,
-      headers: { 'Content-Type': 'application/json' },
-    })
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
-  const { data: { user }, error: userError } = await supabase.auth.getUser(token)
+  const { data: { user }, error: userError } = await supabase.auth.getUser(
+    token,
+  );
   if (userError || !user) {
-    return new Response(JSON.stringify({ error: 'Invalid token' }), {
+    console.error(`Failed to get user: ${userError}`);
+    return new Response(JSON.stringify({ error: "Invalid token" }), {
       status: 401,
-      headers: { 'Content-Type': 'application/json' },
-    })
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
-  const { error: deleteError } = await supabase.auth.admin.deleteUser(user.id)
+  const { error: deleteError } = await supabase.auth.admin.deleteUser(
+    user.id,
+  );
   if (deleteError) {
+    console.error(`Failed to delete user: ${deleteError}`);
     return new Response(JSON.stringify({ error: deleteError.message }), {
       status: 400,
-      headers: { 'Content-Type': 'application/json' },
-    })
+      headers: { "Content-Type": "application/json" },
+    });
   }
 
-  return new Response(JSON.stringify({ message: 'User deleted successfully' }), {
-    status: 200,
-    headers: { 'Content-Type': 'application/json' },
-  })
-})
+  return new Response(
+    JSON.stringify({ message: "User deleted successfully" }),
+    {
+      status: 200,
+      headers: { "Content-Type": "application/json" },
+    },
+  );
+});
 
 /* To invoke locally:
 
