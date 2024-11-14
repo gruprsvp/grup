@@ -86,7 +86,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                     validator: FormBuilderValidators.required(),
                     rruleL10n: snapshot.data as RruleL10n,
                   )
-                : const CircularProgressIndicator(),
+                : const CircularProgressIndicator.adaptive(),
           ),
         ],
       ),

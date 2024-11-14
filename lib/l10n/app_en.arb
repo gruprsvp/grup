@@ -2,6 +2,7 @@
   "@@locale": "en",
   "appName": "AppFor.it",
   "addContact": "Add contact",
+  "addInvite": "Add invite",
   "camera": "Camera",
   "cancel": "Cancel",
   "changeTheme": "Theme",
@@ -30,8 +31,22 @@
   "eventName": "Event name",
   "events": "Events",
   "gallery": "Gallery",
+  "groupDismissAdmin": "Dismiss as admin",
+  "groupMakeAdmin": "Make group admin",
   "grantPermission": "Grant permission",
+  "groupRemoveMember": "Remove from group",
+  "groupRemoveConfirmation": "Are you sure you want to remove this member from the group?",
+  "groupRoles": "{role, select, admin{Admin} member{Member} other{Unknown}}",
+  "@groupRoles": {
+    "description": "Member roles in a group",
+    "placeholders": {
+      "role": {
+        "type": "String"
+      }
+    }
+  },
   "invite": "Invite members",
+  "invites": "Invites",
   "inviteFromContacts": "Invite from contacts",
   "inviteManual": "Invite manually",
   "inviteMembersCTA": "Invite some friends!",

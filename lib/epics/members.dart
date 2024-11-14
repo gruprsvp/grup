@@ -11,6 +11,7 @@ createMembersEpic(MembersRepository members) => combineEpics<AppState>([
       _createUpdateMemberEpic(members),
       _onNewMembersCreated,
       _createRetrieveOwnMemberByGroupIdEpic(members),
+      _createDeleteOneMember(members),
     ]);
 
 Epic<AppState> _createAddMembersToGroupEpic(MembersRepository members) {
@@ -65,5 +66,16 @@ Epic<AppState> _createRetrieveOwnMemberByGroupIdEpic(
             .then<dynamic>((member) => SuccessRetrieveOne(member))
             .catchError((error) =>
                 FailRetrieveOne(id: groupId.toString(), error: error));
+      });
+}
+
+Epic<AppState> _createDeleteOneMember(MembersRepository members) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) =>
+      actions.whereType<RequestDeleteOne<Member>>().asyncMap((action) {
+        return members
+            .deleteMember(int.parse(action.id))
+            .then<dynamic>((_) => SuccessDeleteOne<Member>(action.id))
+            .catchError(
+                (error) => FailDeleteOne<Member>(id: action.id, error: error));
       });
 }
