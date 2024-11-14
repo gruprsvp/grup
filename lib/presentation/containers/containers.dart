@@ -3,6 +3,7 @@ export 'group_details.dart';
 export 'group_events.dart';
 export 'group_form.dart';
 export 'group_manage.dart';
+export 'group_member_details.dart';
 export 'group_members.dart';
 export 'group_schedule_details.dart';
 export 'home.dart';

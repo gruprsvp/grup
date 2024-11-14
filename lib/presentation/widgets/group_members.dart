@@ -25,17 +25,15 @@ class GroupMembers extends StatelessWidget {
 
     final invited = await SelectContactsRoute().push<List<Contact>>(context);
 
-    return invited
-        ?.map(
-          (c) => ContactInvite(
-            displayNameOverride: c.displayName,
-            invites: [
-              ...(c.emails).map((e) => (InviteMethods.email, e.address)),
-              ...(c.phones).map((p) => (InviteMethods.phone, p.number)),
-            ],
-          ),
-        )
-        .toList();
+    if (invited == null) return null;
+
+    return [
+      for (final contact in invited)
+        ContactInvite(displayNameOverride: contact.displayName, invites: [
+          for (final e in contact.emails) (InviteMethods.email, e.address),
+          for (final p in contact.phones) (InviteMethods.phone, p.number),
+        ])
+    ];
   }
 
   Future<List<ContactInvite>?> _inviteManually(BuildContext context) async {
@@ -120,8 +118,13 @@ class GroupMembers extends StatelessWidget {
                   title: Text(member.displayNameOverride ??
                       memberProfile?.displayName ??
                       'Unknown'),
-                  subtitle: Text(member.role.name),
-                  onTap: () {});
+                  subtitle: Text(l10n.groupRoles(member.role.name)),
+                  onTap: () {
+                    GroupMemberDetailsRoute(
+                            groupId: member.groupId.toString(),
+                            memberId: member.id.toString())
+                        .push(context);
+                  });
             },
           )
         : Image.asset('assets/images/seeyoulateralligator.webp');

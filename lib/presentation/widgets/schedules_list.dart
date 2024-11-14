@@ -18,7 +18,7 @@ class SchedulesList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (schedules == null) {
-      return const Center(child: CircularProgressIndicator());
+      return const Center(child: CircularProgressIndicator.adaptive());
     }
 
     return ListView.builder(

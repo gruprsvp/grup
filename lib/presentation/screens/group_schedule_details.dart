@@ -32,13 +32,6 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(group?.displayName ?? l10n.loading),
-        // actions: [
-        //   IconButton(
-        //     onPressed: () =>
-        //         GroupManageRoute(groupId: group!.id.toString()).push(context),
-        //     icon: const FaIcon(FontAwesomeIcons.penToSquare),
-        //   )
-        // ],
       ),
       body: Column(
         children: [
