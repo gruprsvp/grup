@@ -8,3 +8,8 @@ class SaveProfileAction {
   final String? name;
   final XFile? image;
 }
+
+@immutable
+class DeleteProfileAction {
+  const DeleteProfileAction();
+}

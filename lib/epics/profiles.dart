@@ -14,6 +14,7 @@ createProfileEpics(ProfilesRepository profiles, StorageRepository storage) =>
       _createRetrieveOneProfileEpic(profiles),
       _createUpdateProfileEpic(profiles, storage),
       _createUpdateOneProfileEpic(profiles),
+      _createDeleteProfileEpic(profiles),
       _loadOwnProfileOnSignInEpic,
       _navigateToProfilePageEpic,
     ]);
@@ -78,6 +79,7 @@ Epic<AppState> _createUpdateProfileEpic(
       );
 }
 
+/// Update 1 user profile in the database
 Epic<AppState> _createUpdateOneProfileEpic(ProfilesRepository profiles) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
       .whereType<UpdateOne<Profile>>()
@@ -89,4 +91,16 @@ Epic<AppState> _createUpdateOneProfileEpic(ProfilesRepository profiles) {
           .then<dynamic>((profile) => SuccessUpdateOne<Profile>(action.entity))
           .catchError((error) => FailUpdateOne<Profile>(
               entity: action.entity, error: error as Object)));
+}
+
+/// When the user requests to delete their profile
+Epic<AppState> _createDeleteProfileEpic(ProfilesRepository profiles) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
+      .whereType<DeleteProfileAction>()
+      .asyncMap((action) => profiles
+          .deleteProfile()
+          .then<dynamic>(
+              (_) => SuccessDeleteOne<Profile>(store.state.auth.user!.id))
+          .catchError((error) => FailDeleteOne<Profile>(
+              id: store.state.auth.user!.id, error: error as Object)));
 }
