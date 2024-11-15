@@ -54,8 +54,26 @@ create or replace trigger on_auth_user_created
     after insert
     on auth.users
     for each row
-execute procedure public.handle_new_user();
+execute function public.handle_new_user();
 comment on trigger on_auth_user_created on auth.users is 'Creates a profile whenever a new user is created';
+
+create or replace function public.handle_delete_user()
+    returns trigger
+    language plpgsql
+    security definer
+as $$
+begin
+    delete from public.profiles where id = old.id;
+    return old;
+end;
+$$;
+comment on function public.handle_delete_user() is 'Deletes a profile when a user is deleted';
+
+create or replace trigger on_auth_user_deleted
+    before delete on auth.users
+    for each row
+    execute function public.handle_delete_user();
+comment on trigger on_auth_user_deleted on auth.users is 'Trigger to delete a profile when a user is deleted';
 
 -- TODO(borgoat): add a trigger to manage a phone number/email being added after sign up instead
 
