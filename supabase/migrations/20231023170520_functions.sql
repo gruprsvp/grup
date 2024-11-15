@@ -61,9 +61,33 @@ create or replace function public.handle_delete_user()
     returns trigger
     language plpgsql
     security definer
-as $$
+as
+$$
+declare
+    group_record record;
 begin
+    for group_record in
+        select g.id
+        from public.groups g
+        join public.members m on g.id = m.group_id
+        where m.profile_id = old.id and m.role = 'admin'
+    loop
+        if (select count(*) from public.members where group_id = group_record.id and role = 'admin') > 1 then
+            -- More than one admin, do nothing
+            continue;
+        elsif (select count(*) from public.members where group_id = group_record.id) > 1 then
+            -- Only one admin but more members, assign admin role to another member
+            update public.members
+            set role = 'admin'
+            where id = (select id from public.members where group_id = group_record.id and profile_id != old.id limit 1);
+        else
+            -- Only one admin and no other members, delete the group
+            delete from public.groups where id = group_record.id;
+        end if;
+    end loop;
+    
     delete from public.profiles where id = old.id;
+
     return old;
 end;
 $$;
