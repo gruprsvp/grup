@@ -9,6 +9,7 @@ enum InviteMethods {
 enum ReplyOptions {
   yes,
   no,
+  maybe,
 }
 
 /// The different roles a user can have in a group

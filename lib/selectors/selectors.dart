@@ -88,8 +88,7 @@ ScheduleEventDetails? selectScheduleForDate(
 
   if (scheduleSummary == null) return null;
 
-  Member getMember(int memberId) {
-    final member = state.members.entities[memberId.toString()]!;
+  Member getMember(Member member) {
     final profile = state.profiles.entities[member.profileId.toString()];
 
     return member.copyWith(
@@ -97,12 +96,16 @@ ScheduleEventDetails? selectScheduleForDate(
             member.displayNameOverride ?? profile?.displayName);
   }
 
-  final memberReplies = scheduleSummary.memberReplies.entries
-      .map((e) => (getMember(e.key), e.value))
-      .whereNot((e) =>
-          e.$1.id ==
-          scheduleSummary
-              .targetMemberId) // Remove target user from the list below
+  final members =
+      groupMembersSelector(state, scheduleSummary.groupId.toString());
+  final memberReplies = members
+      // Fill in the blanks for members who haven't replied
+      .map((m) {
+        final reply = scheduleSummary.memberReplies[m.id];
+        return (getMember(m), reply);
+      })
+      // Remove target user from the list below
+      .whereNot((e) => e.$1.id == scheduleSummary.targetMemberId)
       .toList();
 
   // TODO This should be a selector and memoized

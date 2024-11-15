@@ -333,7 +333,7 @@ mixin _$ScheduleEventDetails {
   int get groupId => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   DateTime get eventDate => throw _privateConstructorUsedError;
-  List<(Member, ReplyOptions)> get memberReplies =>
+  List<(Member, ReplyOptions?)> get memberReplies =>
       throw _privateConstructorUsedError;
   int get yesCount => throw _privateConstructorUsedError;
   ReplyOptions? get myReply => throw _privateConstructorUsedError;
@@ -358,7 +358,7 @@ abstract class $ScheduleEventDetailsCopyWith<$Res> {
       int groupId,
       String displayName,
       DateTime eventDate,
-      List<(Member, ReplyOptions)> memberReplies,
+      List<(Member, ReplyOptions?)> memberReplies,
       int yesCount,
       ReplyOptions? myReply,
       int? targetMemberId,
@@ -411,7 +411,7 @@ class _$ScheduleEventDetailsCopyWithImpl<$Res,
       memberReplies: null == memberReplies
           ? _value.memberReplies
           : memberReplies // ignore: cast_nullable_to_non_nullable
-              as List<(Member, ReplyOptions)>,
+              as List<(Member, ReplyOptions?)>,
       yesCount: null == yesCount
           ? _value.yesCount
           : yesCount // ignore: cast_nullable_to_non_nullable
@@ -445,7 +445,7 @@ abstract class _$$ScheduleEventDetailsImplCopyWith<$Res>
       int groupId,
       String displayName,
       DateTime eventDate,
-      List<(Member, ReplyOptions)> memberReplies,
+      List<(Member, ReplyOptions?)> memberReplies,
       int yesCount,
       ReplyOptions? myReply,
       int? targetMemberId,
@@ -495,7 +495,7 @@ class __$$ScheduleEventDetailsImplCopyWithImpl<$Res>
       memberReplies: null == memberReplies
           ? _value._memberReplies
           : memberReplies // ignore: cast_nullable_to_non_nullable
-              as List<(Member, ReplyOptions)>,
+              as List<(Member, ReplyOptions?)>,
       yesCount: null == yesCount
           ? _value.yesCount
           : yesCount // ignore: cast_nullable_to_non_nullable
@@ -526,7 +526,7 @@ class _$ScheduleEventDetailsImpl
       required this.groupId,
       required this.displayName,
       required this.eventDate,
-      required final List<(Member, ReplyOptions)> memberReplies,
+      required final List<(Member, ReplyOptions?)> memberReplies,
       required this.yesCount,
       this.myReply,
       this.targetMemberId,
@@ -541,9 +541,9 @@ class _$ScheduleEventDetailsImpl
   final String displayName;
   @override
   final DateTime eventDate;
-  final List<(Member, ReplyOptions)> _memberReplies;
+  final List<(Member, ReplyOptions?)> _memberReplies;
   @override
-  List<(Member, ReplyOptions)> get memberReplies {
+  List<(Member, ReplyOptions?)> get memberReplies {
     if (_memberReplies is EqualUnmodifiableListView) return _memberReplies;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableListView(_memberReplies);
@@ -632,7 +632,7 @@ abstract class _ScheduleEventDetails implements ScheduleEventDetails {
       required final int groupId,
       required final String displayName,
       required final DateTime eventDate,
-      required final List<(Member, ReplyOptions)> memberReplies,
+      required final List<(Member, ReplyOptions?)> memberReplies,
       required final int yesCount,
       final ReplyOptions? myReply,
       final int? targetMemberId,
@@ -647,7 +647,7 @@ abstract class _ScheduleEventDetails implements ScheduleEventDetails {
   @override
   DateTime get eventDate;
   @override
-  List<(Member, ReplyOptions)> get memberReplies;
+  List<(Member, ReplyOptions?)> get memberReplies;
   @override
   int get yesCount;
   @override
