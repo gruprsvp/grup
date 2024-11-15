@@ -35,4 +35,5 @@ Map<String, dynamic> _$$DefaultReplyImplToJson(_$DefaultReplyImpl instance) =>
 const _$ReplyOptionsEnumMap = {
   ReplyOptions.yes: 'yes',
   ReplyOptions.no: 'no',
+  ReplyOptions.maybe: 'maybe',
 };

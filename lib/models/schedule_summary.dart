@@ -29,7 +29,7 @@ sealed class ScheduleEventDetails with _$ScheduleEventDetails {
     required int groupId,
     required String displayName,
     required DateTime eventDate,
-    required List<(Member, ReplyOptions)> memberReplies,
+    required List<(Member, ReplyOptions?)> memberReplies,
     required int yesCount,
     ReplyOptions? myReply,
     int? targetMemberId,

@@ -129,7 +129,7 @@ class __$$ConfigImplCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$ConfigImpl implements _Config {
+class _$ConfigImpl with DiagnosticableTreeMixin implements _Config {
   const _$ConfigImpl(
       {required this.supabaseConfigPath,
       required this.socialAuthWebClientId,
@@ -146,8 +146,19 @@ class _$ConfigImpl implements _Config {
   final String socialAuthIosClientId;
 
   @override
-  String toString() {
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
     return 'Config(supabaseConfigPath: $supabaseConfigPath, socialAuthWebClientId: $socialAuthWebClientId, socialAuthIosClientId: $socialAuthIosClientId)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'Config'))
+      ..add(DiagnosticsProperty('supabaseConfigPath', supabaseConfigPath))
+      ..add(DiagnosticsProperty('socialAuthWebClientId', socialAuthWebClientId))
+      ..add(
+          DiagnosticsProperty('socialAuthIosClientId', socialAuthIosClientId));
   }
 
   @override
