@@ -28,6 +28,7 @@ class ProfilesRepository extends SupabaseRepository with Postgrest {
 
   Future<void> deleteProfile() async {
     await supabase.functions.invoke('delete_user_account');
-    return table().delete().eq('id', supabase.auth.currentUser!.id);
   }
+
+  Future<void> signOut() async => await supabase.auth.signOut();
 }

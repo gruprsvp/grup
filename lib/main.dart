@@ -84,6 +84,7 @@ Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
 
   AppState? localPersistedState = await persistor.load().catchError((e) {
     log('failed to load persisted state: $e');
+    return null;
   });
   final initialState = localPersistedState ?? AppState.initialState();
   final middleware = [

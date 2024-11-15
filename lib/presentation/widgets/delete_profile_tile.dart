@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:parousia/actions/profiles.dart';
-import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/state/state.dart';
 
 /// A ListTile that deletes the user profile when tapped,
@@ -15,7 +14,7 @@ class DeleteProfileTile extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     return ListTile(
-      title: Text("Delete profile"),
+      title: Text(l10n.deleteProfile),
       leading: const Icon(Icons.delete),
       onTap: () => _confirmDelete(context),
     );
@@ -32,8 +31,8 @@ class DeleteProfileTile extends StatelessWidget {
 
           return AlertDialog.adaptive(
             icon: const Icon(Icons.logout),
-            title: Text("Delete profile"),
-            content: Text("Are you sure you want to delete your profile?"),
+            title: Text(l10n.deleteProfile),
+            content: Text(l10n.deleteProfileConfirmation),
             actions: [
               TextButton(
                 onPressed: () => nav.pop(false),
@@ -44,7 +43,7 @@ class DeleteProfileTile extends StatelessWidget {
                 style: TextButton.styleFrom(
                   foregroundColor: theme.colorScheme.error,
                 ),
-                child: Text("Delete"),
+                child: Text(l10n.delete),
               ),
             ],
           );
@@ -52,9 +51,7 @@ class DeleteProfileTile extends StatelessWidget {
 
     if (doDelete == null || !doDelete) return;
 
-    //await Supabase.instance.client.auth.signOut();
     if (!context.mounted) return;
     StoreProvider.of<AppState>(context).dispatch(const DeleteProfileAction());
-    AuthRoute().replace(context);
   }
 }

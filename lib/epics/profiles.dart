@@ -12,10 +12,12 @@ import 'package:uuid/uuid.dart';
 createProfileEpics(ProfilesRepository profiles, StorageRepository storage) =>
     combineEpics<AppState>([
       _createRetrieveOneProfileEpic(profiles),
+      _createSignOutEpic(profiles),
       _createUpdateProfileEpic(profiles, storage),
       _createUpdateOneProfileEpic(profiles),
-      _createDeleteProfileEpic(profiles),
+      _createDeleteProfileEpic(profiles, storage),
       _loadOwnProfileOnSignInEpic,
+      _navigateToAuthPageEpic,
       _navigateToProfilePageEpic,
     ]);
 
@@ -94,13 +96,31 @@ Epic<AppState> _createUpdateOneProfileEpic(ProfilesRepository profiles) {
 }
 
 /// When the user requests to delete their profile
-Epic<AppState> _createDeleteProfileEpic(ProfilesRepository profiles) {
-  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
-      .whereType<DeleteProfileAction>()
-      .asyncMap((action) => profiles
-          .deleteProfile()
-          .then<dynamic>(
-              (_) => SuccessDeleteOne<Profile>(store.state.auth.user!.id))
-          .catchError((error) => FailDeleteOne<Profile>(
-              id: store.state.auth.user!.id, error: error as Object)));
+Epic<AppState> _createDeleteProfileEpic(
+    ProfilesRepository profiles, StorageRepository storage) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) =>
+      actions.whereType<DeleteProfileAction>().asyncMap((action) async {
+        final userId = store.state.auth.user!.id;
+        await storage.deleteUserFiles();
+        return profiles
+            .deleteProfile()
+            .then<dynamic>((_) => SuccessDeleteOne<Profile>(userId))
+            .catchError((error) =>
+                FailDeleteOne<Profile>(id: userId, error: error as Object));
+      });
 }
+
+/// When the user profile is deleted, sign out
+Epic<AppState> _createSignOutEpic(ProfilesRepository profiles) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) =>
+      actions.whereType<SuccessDeleteOne<Profile>>().asyncMap((action) async {
+        await profiles.signOut();
+      });
+}
+
+/// When the user profile is deleted, redirect to the sign-in page
+Stream<dynamic> _navigateToAuthPageEpic(
+        Stream<dynamic> actions, EpicStore<AppState> store) =>
+    actions
+        .whereType<SuccessDeleteOne<Profile>>()
+        .map((action) => NavigatePushAction(AuthRoute().location));

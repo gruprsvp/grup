@@ -19,5 +19,5 @@ mixin Postgrest on SupabaseRepository {
 }
 
 mixin Storage on SupabaseRepository {
-  bucket() => supabase.storage.from(bucketName!.name);
+  StorageFileApi bucket() => supabase.storage.from(bucketName!.name);
 }
