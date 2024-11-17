@@ -49,6 +49,7 @@ _$AppStateImpl _$$AppStateImplFromJson(Map<String, dynamic> json) =>
       themeMode: $enumDecodeNullable(_$ThemeModeEnumMap, json['themeMode']) ??
           ThemeMode.system,
       selectedDate: DateTime.parse(json['selectedDate'] as String),
+      selectedGroupId: json['selectedGroupId'] as String?,
       locale: json['locale'] == null
           ? null
           : LocaleState.fromJson(json['locale'] as Map<String, dynamic>),
@@ -66,6 +67,7 @@ Map<String, dynamic> _$$AppStateImplToJson(_$AppStateImpl instance) =>
       'auth': instance.auth,
       'themeMode': _$ThemeModeEnumMap[instance.themeMode]!,
       'selectedDate': instance.selectedDate.toIso8601String(),
+      'selectedGroupId': instance.selectedGroupId,
       'locale': instance.locale,
     };
 

@@ -12,6 +12,7 @@ createGroupsEpics(GroupsRepository groups) => combineEpics<AppState>([
       _createRetrieveOneGroupEpic(groups),
       _createCreateOneGroupEpic(groups),
       _createUpdateOneGroupEpic(groups),
+      _reloadGroupOnScheduleDateChange,
       _loadGroupsOnSignInEpic,
       _loadGroupsOnAppInitEpic,
       _loadGroupsOnInviteCodeUseEpic,
@@ -49,6 +50,17 @@ Stream<dynamic> _loadGroupOnGroupDetailsOpenEpic(
     actions
         .whereType<GroupDetailsOpenAction>()
         .map((action) => RequestRetrieveOne<Group>(action.groupId));
+
+/// Refresh the group details when the user changes the schedule date
+Stream<dynamic> _reloadGroupOnScheduleDateChange(
+        Stream<dynamic> actions, EpicStore<AppState> store) =>
+    actions.whereType<SelectDateAction>().switchMap((_) async* {
+      final selectedGroupId = store.state.selectedGroupId;
+      if (selectedGroupId != null) {
+        yield GroupDetailsOpenAction(selectedGroupId);
+      }
+      yield null; // or handle the null case appropriately
+    }).where((action) => action != null);
 
 /// Load all groups for the current user, together with their members and profiles.
 /// If the action includes a Completer, complete, to handle the refresh indicator.
