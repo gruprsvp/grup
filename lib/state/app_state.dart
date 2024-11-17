@@ -8,6 +8,7 @@ import 'auth_state.dart';
 import 'locale_state.dart';
 
 part 'app_state.freezed.dart';
+
 part 'app_state.g.dart';
 
 @freezed
@@ -25,6 +26,7 @@ sealed class AppState with _$AppState {
     @Default(AuthState(status: AuthStatus.initial)) AuthState auth,
     @Default(ThemeMode.system) ThemeMode themeMode,
     required DateTime selectedDate,
+    String? selectedGroupId,
     LocaleState? locale,
   }) = _AppState;
 

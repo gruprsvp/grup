@@ -32,6 +32,7 @@ mixin _$AppState {
   AuthState get auth => throw _privateConstructorUsedError;
   ThemeMode get themeMode => throw _privateConstructorUsedError;
   DateTime get selectedDate => throw _privateConstructorUsedError;
+  String? get selectedGroupId => throw _privateConstructorUsedError;
   LocaleState? get locale => throw _privateConstructorUsedError;
 
   /// Serializes this AppState to a JSON map.
@@ -60,6 +61,7 @@ abstract class $AppStateCopyWith<$Res> {
       AuthState auth,
       ThemeMode themeMode,
       DateTime selectedDate,
+      String? selectedGroupId,
       LocaleState? locale});
 
   $AuthStateCopyWith<$Res> get auth;
@@ -91,6 +93,7 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
     Object? auth = null,
     Object? themeMode = null,
     Object? selectedDate = null,
+    Object? selectedGroupId = freezed,
     Object? locale = freezed,
   }) {
     return _then(_value.copyWith(
@@ -134,6 +137,10 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
           ? _value.selectedDate
           : selectedDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      selectedGroupId: freezed == selectedGroupId
+          ? _value.selectedGroupId
+          : selectedGroupId // ignore: cast_nullable_to_non_nullable
+              as String?,
       locale: freezed == locale
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
@@ -185,6 +192,7 @@ abstract class _$$AppStateImplCopyWith<$Res>
       AuthState auth,
       ThemeMode themeMode,
       DateTime selectedDate,
+      String? selectedGroupId,
       LocaleState? locale});
 
   @override
@@ -216,6 +224,7 @@ class __$$AppStateImplCopyWithImpl<$Res>
     Object? auth = null,
     Object? themeMode = null,
     Object? selectedDate = null,
+    Object? selectedGroupId = freezed,
     Object? locale = freezed,
   }) {
     return _then(_$AppStateImpl(
@@ -259,6 +268,10 @@ class __$$AppStateImplCopyWithImpl<$Res>
           ? _value.selectedDate
           : selectedDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
+      selectedGroupId: freezed == selectedGroupId
+          ? _value.selectedGroupId
+          : selectedGroupId // ignore: cast_nullable_to_non_nullable
+              as String?,
       locale: freezed == locale
           ? _value.locale
           : locale // ignore: cast_nullable_to_non_nullable
@@ -281,6 +294,7 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
       this.auth = const AuthState(status: AuthStatus.initial),
       this.themeMode = ThemeMode.system,
       required this.selectedDate,
+      this.selectedGroupId,
       this.locale});
 
   factory _$AppStateImpl.fromJson(Map<String, dynamic> json) =>
@@ -316,11 +330,13 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
   @override
   final DateTime selectedDate;
   @override
+  final String? selectedGroupId;
+  @override
   final LocaleState? locale;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppState(profiles: $profiles, groups: $groups, members: $members, invites: $invites, schedules: $schedules, defaultReplies: $defaultReplies, replies: $replies, auth: $auth, themeMode: $themeMode, selectedDate: $selectedDate, locale: $locale)';
+    return 'AppState(profiles: $profiles, groups: $groups, members: $members, invites: $invites, schedules: $schedules, defaultReplies: $defaultReplies, replies: $replies, auth: $auth, themeMode: $themeMode, selectedDate: $selectedDate, selectedGroupId: $selectedGroupId, locale: $locale)';
   }
 
   @override
@@ -338,6 +354,7 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
       ..add(DiagnosticsProperty('auth', auth))
       ..add(DiagnosticsProperty('themeMode', themeMode))
       ..add(DiagnosticsProperty('selectedDate', selectedDate))
+      ..add(DiagnosticsProperty('selectedGroupId', selectedGroupId))
       ..add(DiagnosticsProperty('locale', locale));
   }
 
@@ -361,6 +378,8 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
                 other.themeMode == themeMode) &&
             (identical(other.selectedDate, selectedDate) ||
                 other.selectedDate == selectedDate) &&
+            (identical(other.selectedGroupId, selectedGroupId) ||
+                other.selectedGroupId == selectedGroupId) &&
             (identical(other.locale, locale) || other.locale == locale));
   }
 
@@ -378,6 +397,7 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
       auth,
       themeMode,
       selectedDate,
+      selectedGroupId,
       locale);
 
   /// Create a copy of AppState
@@ -408,6 +428,7 @@ abstract class _AppState implements AppState {
       final AuthState auth,
       final ThemeMode themeMode,
       required final DateTime selectedDate,
+      final String? selectedGroupId,
       final LocaleState? locale}) = _$AppStateImpl;
 
   factory _AppState.fromJson(Map<String, dynamic> json) =
@@ -433,6 +454,8 @@ abstract class _AppState implements AppState {
   ThemeMode get themeMode;
   @override
   DateTime get selectedDate;
+  @override
+  String? get selectedGroupId;
   @override
   LocaleState? get locale;
 
