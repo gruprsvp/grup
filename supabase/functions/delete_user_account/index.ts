@@ -18,11 +18,13 @@ Deno.serve(async (req) => {
     Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
   );
 
+  const headers = { ...corsHeaders, "Content-Type": "application/json" };
+
   const token = req.headers.get("Authorization")?.split("Bearer ")[1];
   if (!token) {
     return new Response(JSON.stringify({ error: "No token provided" }), {
       status: 401,
-      headers: { "Content-Type": "application/json" },
+      headers,
     });
   }
 
@@ -33,7 +35,7 @@ Deno.serve(async (req) => {
     console.error(`Failed to get user: ${userError}`);
     return new Response(JSON.stringify({ error: "Invalid token" }), {
       status: 401,
-      headers: { "Content-Type": "application/json" },
+      headers,
     });
   }
 
@@ -44,7 +46,7 @@ Deno.serve(async (req) => {
     console.error(`Failed to delete user: ${deleteError}`);
     return new Response(JSON.stringify({ error: deleteError.message }), {
       status: 400,
-      headers: { "Content-Type": "application/json" },
+      headers,
     });
   }
 
@@ -52,7 +54,7 @@ Deno.serve(async (req) => {
     JSON.stringify({ message: "User deleted successfully" }),
     {
       status: 200,
-      headers: { "Content-Type": "application/json" },
+      headers,
     },
   );
 });

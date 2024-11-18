@@ -13,6 +13,18 @@ create policy "Allow authenticated uploads to public"
             ((storage.foldername(name))[1] = auth.uid()::text)
     );
 
+create policy "Allow users to read their own public files"
+    on storage.objects
+    for select
+    to authenticated
+    using (owner_id = auth.uid()::text);
+
+create policy "Allow users to delete their own public files"
+    on storage.objects
+    for delete
+    to authenticated
+    using (owner_id = auth.uid()::text);
+
 
 -- create policy "Allow authenticated uploads and reads to private"
 --     on storage.objects

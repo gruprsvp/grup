@@ -1,4 +1,5 @@
 import 'package:parousia/models/models.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'const.dart';
 import 'supabase.dart';
@@ -30,5 +31,6 @@ class ProfilesRepository extends SupabaseRepository with Postgrest {
     await supabase.functions.invoke('delete_user_account');
   }
 
-  Future<void> signOut() async => await supabase.auth.signOut();
+  Future<void> signOut() async =>
+      await supabase.auth.signOut(scope: SignOutScope.global);
 }
