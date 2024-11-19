@@ -16,6 +16,9 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ViewModel {
+  ValueChanged<DateTime> get onDateChanged =>
+      throw _privateConstructorUsedError;
+  DateTime? get selectedDate => throw _privateConstructorUsedError;
   Iterable<ScheduleSummary>? get schedules =>
       throw _privateConstructorUsedError;
   OnReplyChangedCallback? get onReplyChanged =>
@@ -35,7 +38,9 @@ abstract class _$ViewModelCopyWith<$Res> {
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
   $Res call(
-      {Iterable<ScheduleSummary>? schedules,
+      {ValueChanged<DateTime> onDateChanged,
+      DateTime? selectedDate,
+      Iterable<ScheduleSummary>? schedules,
       OnReplyChangedCallback? onReplyChanged});
 }
 
@@ -54,10 +59,20 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? onDateChanged = null,
+    Object? selectedDate = freezed,
     Object? schedules = freezed,
     Object? onReplyChanged = freezed,
   }) {
     return _then(_value.copyWith(
+      onDateChanged: null == onDateChanged
+          ? _value.onDateChanged
+          : onDateChanged // ignore: cast_nullable_to_non_nullable
+              as ValueChanged<DateTime>,
+      selectedDate: freezed == selectedDate
+          ? _value.selectedDate
+          : selectedDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       schedules: freezed == schedules
           ? _value.schedules
           : schedules // ignore: cast_nullable_to_non_nullable
@@ -79,7 +94,9 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {Iterable<ScheduleSummary>? schedules,
+      {ValueChanged<DateTime> onDateChanged,
+      DateTime? selectedDate,
+      Iterable<ScheduleSummary>? schedules,
       OnReplyChangedCallback? onReplyChanged});
 }
 
@@ -96,10 +113,20 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
+    Object? onDateChanged = null,
+    Object? selectedDate = freezed,
     Object? schedules = freezed,
     Object? onReplyChanged = freezed,
   }) {
     return _then(_$_ViewModelImpl(
+      onDateChanged: null == onDateChanged
+          ? _value.onDateChanged
+          : onDateChanged // ignore: cast_nullable_to_non_nullable
+              as ValueChanged<DateTime>,
+      selectedDate: freezed == selectedDate
+          ? _value.selectedDate
+          : selectedDate // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
       schedules: freezed == schedules
           ? _value.schedules
           : schedules // ignore: cast_nullable_to_non_nullable
@@ -115,8 +142,16 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
-  const _$_ViewModelImpl({this.schedules, this.onReplyChanged});
+  const _$_ViewModelImpl(
+      {required this.onDateChanged,
+      this.selectedDate,
+      this.schedules,
+      this.onReplyChanged});
 
+  @override
+  final ValueChanged<DateTime> onDateChanged;
+  @override
+  final DateTime? selectedDate;
   @override
   final Iterable<ScheduleSummary>? schedules;
   @override
@@ -124,7 +159,7 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(schedules: $schedules, onReplyChanged: $onReplyChanged)';
+    return '_ViewModel(onDateChanged: $onDateChanged, selectedDate: $selectedDate, schedules: $schedules, onReplyChanged: $onReplyChanged)';
   }
 
   @override
@@ -132,6 +167,8 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', '_ViewModel'))
+      ..add(DiagnosticsProperty('onDateChanged', onDateChanged))
+      ..add(DiagnosticsProperty('selectedDate', selectedDate))
       ..add(DiagnosticsProperty('schedules', schedules))
       ..add(DiagnosticsProperty('onReplyChanged', onReplyChanged));
   }
@@ -141,13 +178,17 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$_ViewModelImpl &&
+            (identical(other.onDateChanged, onDateChanged) ||
+                other.onDateChanged == onDateChanged) &&
+            (identical(other.selectedDate, selectedDate) ||
+                other.selectedDate == selectedDate) &&
             const DeepCollectionEquality().equals(other.schedules, schedules) &&
             (identical(other.onReplyChanged, onReplyChanged) ||
                 other.onReplyChanged == onReplyChanged));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType,
+  int get hashCode => Object.hash(runtimeType, onDateChanged, selectedDate,
       const DeepCollectionEquality().hash(schedules), onReplyChanged);
 
   /// Create a copy of _ViewModel
@@ -161,9 +202,15 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 
 abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
-      {final Iterable<ScheduleSummary>? schedules,
+      {required final ValueChanged<DateTime> onDateChanged,
+      final DateTime? selectedDate,
+      final Iterable<ScheduleSummary>? schedules,
       final OnReplyChangedCallback? onReplyChanged}) = _$_ViewModelImpl;
 
+  @override
+  ValueChanged<DateTime> get onDateChanged;
+  @override
+  DateTime? get selectedDate;
   @override
   Iterable<ScheduleSummary>? get schedules;
   @override
