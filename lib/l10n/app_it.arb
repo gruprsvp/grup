@@ -16,6 +16,8 @@
   "delete": "Elimina",
   "deleteProfile": "Elimina il profilo",
   "deleteProfileConfirmation": "Sei sicuro di voler eliminare il tuo profilo?",
+  "deleteSchedule": "Elimina evento",
+  "deleteScheduleConfirmation": "Sei sicuro di voler eliminare questo evento?",
   "details": "Dettagli",
   "enterGroupDescription": "Puoi inserire una descrizione del gruppo se vuoi",
   "enterGroupName": "Inserisci il nome del gruppo",

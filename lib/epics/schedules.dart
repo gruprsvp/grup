@@ -9,6 +9,7 @@ import 'package:rxdart/rxdart.dart';
 createSchedulesEpics(SchedulesRepository schedules) => combineEpics<AppState>([
       _createRetrieveGroupSchedulesEpic(schedules),
       _createCreateOneScheduleEpic(schedules),
+      _createDeleteOneScheduleEpic(schedules),
     ]);
 
 /// Fetch all schedules for a group
@@ -24,6 +25,7 @@ Epic<AppState> _createRetrieveGroupSchedulesEpic(
           );
 }
 
+/// When the user requests to create a new schedule
 Epic<AppState> _createCreateOneScheduleEpic(SchedulesRepository schedules) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
       .whereType<RequestCreateOne<Schedule>>()
@@ -34,4 +36,16 @@ Epic<AppState> _createCreateOneScheduleEpic(SchedulesRepository schedules) {
             .catchError((error) =>
                 FailCreateOne<Schedule>(entity: action.entity, error: error)),
       );
+}
+
+/// When the user requests to delete one schedule
+Epic<AppState> _createDeleteOneScheduleEpic(SchedulesRepository schedules) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) =>
+      actions.whereType<RequestDeleteOne<Schedule>>().asyncMap(
+            (action) => schedules
+                .deleteSchedule(action.id)
+                .then<dynamic>((_) => SuccessDeleteOne<Schedule>(action.id))
+                .catchError((error) =>
+                    FailDeleteOne<Schedule>(id: action.id, error: error)),
+          );
 }

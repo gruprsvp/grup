@@ -21,6 +21,8 @@ mixin _$ViewModel {
   Iterable<Schedule>? get schedules => throw _privateConstructorUsedError;
   ValueSetter<Schedule>? get onScheduleCreate =>
       throw _privateConstructorUsedError;
+  ValueSetter<Schedule>? get onScheduleDelete =>
+      throw _privateConstructorUsedError;
   Future<RruleL10n>? get rrulel10n => throw _privateConstructorUsedError;
 
   /// Create a copy of _ViewModel
@@ -41,6 +43,7 @@ abstract class _$ViewModelCopyWith<$Res> {
       Group? group,
       Iterable<Schedule>? schedules,
       ValueSetter<Schedule>? onScheduleCreate,
+      ValueSetter<Schedule>? onScheduleDelete,
       Future<RruleL10n>? rrulel10n});
 
   $GroupCopyWith<$Res>? get group;
@@ -65,6 +68,7 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
     Object? group = freezed,
     Object? schedules = freezed,
     Object? onScheduleCreate = freezed,
+    Object? onScheduleDelete = freezed,
     Object? rrulel10n = freezed,
   }) {
     return _then(_value.copyWith(
@@ -83,6 +87,10 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
       onScheduleCreate: freezed == onScheduleCreate
           ? _value.onScheduleCreate
           : onScheduleCreate // ignore: cast_nullable_to_non_nullable
+              as ValueSetter<Schedule>?,
+      onScheduleDelete: freezed == onScheduleDelete
+          ? _value.onScheduleDelete
+          : onScheduleDelete // ignore: cast_nullable_to_non_nullable
               as ValueSetter<Schedule>?,
       rrulel10n: freezed == rrulel10n
           ? _value.rrulel10n
@@ -119,6 +127,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       Group? group,
       Iterable<Schedule>? schedules,
       ValueSetter<Schedule>? onScheduleCreate,
+      ValueSetter<Schedule>? onScheduleDelete,
       Future<RruleL10n>? rrulel10n});
 
   @override
@@ -142,6 +151,7 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     Object? group = freezed,
     Object? schedules = freezed,
     Object? onScheduleCreate = freezed,
+    Object? onScheduleDelete = freezed,
     Object? rrulel10n = freezed,
   }) {
     return _then(_$_ViewModelImpl(
@@ -161,6 +171,10 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
           ? _value.onScheduleCreate
           : onScheduleCreate // ignore: cast_nullable_to_non_nullable
               as ValueSetter<Schedule>?,
+      onScheduleDelete: freezed == onScheduleDelete
+          ? _value.onScheduleDelete
+          : onScheduleDelete // ignore: cast_nullable_to_non_nullable
+              as ValueSetter<Schedule>?,
       rrulel10n: freezed == rrulel10n
           ? _value.rrulel10n
           : rrulel10n // ignore: cast_nullable_to_non_nullable
@@ -177,6 +191,7 @@ class _$_ViewModelImpl implements __ViewModel {
       this.group,
       this.schedules,
       this.onScheduleCreate,
+      this.onScheduleDelete,
       this.rrulel10n});
 
   @override
@@ -188,11 +203,13 @@ class _$_ViewModelImpl implements __ViewModel {
   @override
   final ValueSetter<Schedule>? onScheduleCreate;
   @override
+  final ValueSetter<Schedule>? onScheduleDelete;
+  @override
   final Future<RruleL10n>? rrulel10n;
 
   @override
   String toString() {
-    return '_ViewModel(loading: $loading, group: $group, schedules: $schedules, onScheduleCreate: $onScheduleCreate, rrulel10n: $rrulel10n)';
+    return '_ViewModel(loading: $loading, group: $group, schedules: $schedules, onScheduleCreate: $onScheduleCreate, onScheduleDelete: $onScheduleDelete, rrulel10n: $rrulel10n)';
   }
 
   @override
@@ -205,6 +222,8 @@ class _$_ViewModelImpl implements __ViewModel {
             const DeepCollectionEquality().equals(other.schedules, schedules) &&
             (identical(other.onScheduleCreate, onScheduleCreate) ||
                 other.onScheduleCreate == onScheduleCreate) &&
+            (identical(other.onScheduleDelete, onScheduleDelete) ||
+                other.onScheduleDelete == onScheduleDelete) &&
             (identical(other.rrulel10n, rrulel10n) ||
                 other.rrulel10n == rrulel10n));
   }
@@ -216,6 +235,7 @@ class _$_ViewModelImpl implements __ViewModel {
       group,
       const DeepCollectionEquality().hash(schedules),
       onScheduleCreate,
+      onScheduleDelete,
       rrulel10n);
 
   /// Create a copy of _ViewModel
@@ -233,6 +253,7 @@ abstract class __ViewModel implements _ViewModel {
       final Group? group,
       final Iterable<Schedule>? schedules,
       final ValueSetter<Schedule>? onScheduleCreate,
+      final ValueSetter<Schedule>? onScheduleDelete,
       final Future<RruleL10n>? rrulel10n}) = _$_ViewModelImpl;
 
   @override
@@ -243,6 +264,8 @@ abstract class __ViewModel implements _ViewModel {
   Iterable<Schedule>? get schedules;
   @override
   ValueSetter<Schedule>? get onScheduleCreate;
+  @override
+  ValueSetter<Schedule>? get onScheduleDelete;
   @override
   Future<RruleL10n>? get rrulel10n;
 

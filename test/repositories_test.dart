@@ -227,7 +227,7 @@ void main() {
           final updatedGuest = await membersRepository.updateMember(
               memberId: guest.id, displayNameOverride: 'A guest with a name');
 
-          await membersRepository.removeMember(updatedGuest.id);
+          await membersRepository.deleteMember(updatedGuest.id);
         }),
       ),
     );

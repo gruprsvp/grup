@@ -26,4 +26,8 @@ class SchedulesRepository extends SupabaseRepository with Postgrest {
         .eq('group_id', groupId)
         .withConverter((data) => data.map(Schedule.fromJson));
   }
+
+  Future<void> deleteSchedule(String scheduleId) async {
+    return table().delete().eq('id', scheduleId);
+  }
 }
