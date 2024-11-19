@@ -8,6 +8,7 @@ class GroupEvents extends StatelessWidget {
   final Group? group; // TODO is this needed?
   final Iterable<Schedule>? schedules;
   final ValueSetter<Schedule>? onCreate;
+  final ValueSetter<Schedule>? onDelete;
   final Future<RruleL10n>? rrulel10n;
 
   const GroupEvents({
@@ -15,21 +16,9 @@ class GroupEvents extends StatelessWidget {
     this.group,
     this.schedules,
     this.onCreate,
+    this.onDelete,
     this.rrulel10n,
   });
-
-  _createNewEvent(BuildContext context) async {
-    final result = await GroupScheduleCreateRoute(groupId: group!.id.toString())
-        .push(context);
-
-    if (result is! Schedule) {
-      // TODO error handling
-      return;
-    }
-
-    final newSchedule = result.copyWith(groupId: group!.id);
-    onCreate?.call(newSchedule);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -52,9 +41,10 @@ class GroupEvents extends StatelessWidget {
                       }
                       return Text(l10n.loading);
                     }),
-                onTap: () {
-                  // TODO Go to schedule edit form
-                },
+                trailing: IconButton(
+                  icon: Icon(Icons.delete),
+                  onPressed: () => _deleteEvent(context, schedule),
+                ),
               );
             },
           )
@@ -72,5 +62,51 @@ class GroupEvents extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  _createNewEvent(BuildContext context) async {
+    final result = await GroupScheduleCreateRoute(groupId: group!.id.toString())
+        .push(context);
+
+    if (result is! Schedule) {
+      // TODO error handling
+      return;
+    }
+
+    final newSchedule = result.copyWith(groupId: group!.id);
+    onCreate?.call(newSchedule);
+  }
+
+  _deleteEvent(BuildContext context, Schedule schedule) async {
+    final doDelete = await showAdaptiveDialog<bool>(
+        context: context,
+        builder: (context) {
+          final l10n = AppLocalizations.of(context)!;
+          final theme = Theme.of(context);
+          final nav = Navigator.of(context);
+
+          return AlertDialog.adaptive(
+            icon: const Icon(Icons.logout),
+            title: Text(l10n.deleteSchedule),
+            content: Text(l10n.deleteScheduleConfirmation),
+            actions: [
+              TextButton(
+                onPressed: () => nav.pop(false),
+                child: Text(l10n.cancel),
+              ),
+              TextButton(
+                onPressed: () => nav.pop(true),
+                style: TextButton.styleFrom(
+                  foregroundColor: theme.colorScheme.error,
+                ),
+                child: Text(l10n.delete),
+              ),
+            ],
+          );
+        });
+
+    if (doDelete == null || !doDelete) return;
+
+    onDelete?.call(schedule);
   }
 }

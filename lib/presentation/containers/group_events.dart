@@ -28,6 +28,7 @@ class GroupEventsContainer extends StatelessWidget {
         group: vm.group,
         schedules: vm.schedules,
         onCreate: vm.onScheduleCreate,
+        onDelete: vm.onScheduleDelete,
         rrulel10n: vm.rrulel10n,
       ),
     );
@@ -41,6 +42,7 @@ sealed class _ViewModel with _$ViewModel {
     Group? group,
     Iterable<Schedule>? schedules,
     ValueSetter<Schedule>? onScheduleCreate,
+    ValueSetter<Schedule>? onScheduleDelete,
     Future<RruleL10n>? rrulel10n,
   }) = __ViewModel;
 
@@ -58,6 +60,9 @@ sealed class _ViewModel with _$ViewModel {
           (store.state.groups.loadingIds[groupId] ?? false),
       onScheduleCreate: (schedule) => store.dispatch(
         RequestCreateOne<Schedule>(schedule),
+      ),
+      onScheduleDelete: (schedule) => store.dispatch(
+        RequestDeleteOne<Schedule>(schedule.id.toString()),
       ),
       rrulel10n: rruleL10nSelector(store.state),
     );

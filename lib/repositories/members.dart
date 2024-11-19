@@ -38,7 +38,7 @@ class MembersRepository extends SupabaseRepository with Postgrest {
         .withConverter(Member.fromJson);
   }
 
-  Future<void> removeMember(int memberId) async {
+  Future<void> deleteMember(int memberId) async {
     return table().delete().eq('id', memberId);
   }
 
