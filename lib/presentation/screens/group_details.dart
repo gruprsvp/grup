@@ -37,13 +37,13 @@ class GroupDetailsScreen extends StatelessWidget {
       ),
       body: Column(
         children: [
+          const DateDropdownContainer(),
           ...(group?.description != null ? [Text(group!.description!)] : []),
           Expanded(
             child: SchedulesListContainer(groupId: group!.id),
           )
         ],
       ),
-      floatingActionButton: const DateFabContainer(),
     );
   }
 }

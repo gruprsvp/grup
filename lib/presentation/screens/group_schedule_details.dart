@@ -67,7 +67,6 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
           ),
         ],
       ),
-      floatingActionButton: const DateFabContainer(),
     );
   }
 }

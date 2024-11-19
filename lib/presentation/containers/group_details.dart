@@ -25,10 +25,23 @@ class GroupDetailsContainer extends StatelessWidget {
       distinct: true,
       converter: (store) => _ViewModel.fromStore(store, groupId),
       onInit: (store) => store.dispatch(GroupDetailsOpenAction(groupId)),
-      builder: (context, vm) => GroupDetailsScreen(
-        loading: vm.loading,
-        group: vm.group,
-        isAdmin: vm.isAdmin,
+      builder: (context, vm) => GestureDetector(
+        onHorizontalDragEnd: (details) {
+          if (details.primaryVelocity != null && vm.selectedDate != null) {
+            if (details.primaryVelocity! < 0) {
+              // Swipe left to increment date
+              vm.onDateChanged(vm.selectedDate!.add(Duration(days: 1)));
+            } else if (details.primaryVelocity! > 0) {
+              // Swipe right to decrement date
+              vm.onDateChanged(vm.selectedDate!.subtract(Duration(days: 1)));
+            }
+          }
+        },
+        child: GroupDetailsScreen(
+          loading: vm.loading,
+          group: vm.group,
+          isAdmin: vm.isAdmin,
+        ),
       ),
     );
   }
@@ -39,7 +52,9 @@ sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required bool loading,
     required bool isAdmin,
+    required ValueChanged<DateTime> onDateChanged,
     Group? group,
+    DateTime? selectedDate,
   }) = __ViewModel;
 
   static _ViewModel fromStore(Store<AppState> store, String groupId) {
@@ -47,7 +62,9 @@ sealed class _ViewModel with _$ViewModel {
       loading: store.state.groups.loadingAll ||
           (store.state.groups.loadingIds[groupId] ?? false),
       group: store.state.groups.entities[groupId],
+      selectedDate: store.state.selectedDate,
       isAdmin: selectIsAdmin(store.state, int.parse(groupId)),
+      onDateChanged: (value) => store.dispatch(SelectDateAction(value)),
     );
   }
 }
