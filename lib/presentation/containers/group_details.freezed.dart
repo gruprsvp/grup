@@ -18,9 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ViewModel {
   bool get loading => throw _privateConstructorUsedError;
   bool get isAdmin => throw _privateConstructorUsedError;
-  dynamic get onDateChanged => throw _privateConstructorUsedError;
   Group? get group => throw _privateConstructorUsedError;
-  DateTime? get selectedDate => throw _privateConstructorUsedError;
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -35,12 +33,7 @@ abstract class _$ViewModelCopyWith<$Res> {
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call(
-      {bool loading,
-      bool isAdmin,
-      dynamic onDateChanged,
-      Group? group,
-      DateTime? selectedDate});
+  $Res call({bool loading, bool isAdmin, Group? group});
 
   $GroupCopyWith<$Res>? get group;
 }
@@ -62,9 +55,7 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   $Res call({
     Object? loading = null,
     Object? isAdmin = null,
-    Object? onDateChanged = freezed,
     Object? group = freezed,
-    Object? selectedDate = freezed,
   }) {
     return _then(_value.copyWith(
       loading: null == loading
@@ -75,18 +66,10 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
               as bool,
-      onDateChanged: freezed == onDateChanged
-          ? _value.onDateChanged
-          : onDateChanged // ignore: cast_nullable_to_non_nullable
-              as dynamic,
       group: freezed == group
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as Group?,
-      selectedDate: freezed == selectedDate
-          ? _value.selectedDate
-          : selectedDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
     ) as $Val);
   }
 
@@ -113,12 +96,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {bool loading,
-      bool isAdmin,
-      dynamic onDateChanged,
-      Group? group,
-      DateTime? selectedDate});
+  $Res call({bool loading, bool isAdmin, Group? group});
 
   @override
   $GroupCopyWith<$Res>? get group;
@@ -139,9 +117,7 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
   $Res call({
     Object? loading = null,
     Object? isAdmin = null,
-    Object? onDateChanged = freezed,
     Object? group = freezed,
-    Object? selectedDate = freezed,
   }) {
     return _then(_$_ViewModelImpl(
       loading: null == loading
@@ -152,16 +128,10 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
           ? _value.isAdmin
           : isAdmin // ignore: cast_nullable_to_non_nullable
               as bool,
-      onDateChanged:
-          freezed == onDateChanged ? _value.onDateChanged! : onDateChanged,
       group: freezed == group
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as Group?,
-      selectedDate: freezed == selectedDate
-          ? _value.selectedDate
-          : selectedDate // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
     ));
   }
 }
@@ -170,26 +140,18 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   const _$_ViewModelImpl(
-      {required this.loading,
-      required this.isAdmin,
-      required this.onDateChanged,
-      this.group,
-      this.selectedDate});
+      {required this.loading, required this.isAdmin, this.group});
 
   @override
   final bool loading;
   @override
   final bool isAdmin;
   @override
-  final dynamic onDateChanged;
-  @override
   final Group? group;
-  @override
-  final DateTime? selectedDate;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(loading: $loading, isAdmin: $isAdmin, onDateChanged: $onDateChanged, group: $group, selectedDate: $selectedDate)';
+    return '_ViewModel(loading: $loading, isAdmin: $isAdmin, group: $group)';
   }
 
   @override
@@ -199,9 +161,7 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
       ..add(DiagnosticsProperty('type', '_ViewModel'))
       ..add(DiagnosticsProperty('loading', loading))
       ..add(DiagnosticsProperty('isAdmin', isAdmin))
-      ..add(DiagnosticsProperty('onDateChanged', onDateChanged))
-      ..add(DiagnosticsProperty('group', group))
-      ..add(DiagnosticsProperty('selectedDate', selectedDate));
+      ..add(DiagnosticsProperty('group', group));
   }
 
   @override
@@ -211,16 +171,11 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
             other is _$_ViewModelImpl &&
             (identical(other.loading, loading) || other.loading == loading) &&
             (identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin) &&
-            const DeepCollectionEquality()
-                .equals(other.onDateChanged, onDateChanged) &&
-            (identical(other.group, group) || other.group == group) &&
-            (identical(other.selectedDate, selectedDate) ||
-                other.selectedDate == selectedDate));
+            (identical(other.group, group) || other.group == group));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, loading, isAdmin,
-      const DeepCollectionEquality().hash(onDateChanged), group, selectedDate);
+  int get hashCode => Object.hash(runtimeType, loading, isAdmin, group);
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -235,20 +190,14 @@ abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
       {required final bool loading,
       required final bool isAdmin,
-      required final dynamic onDateChanged,
-      final Group? group,
-      final DateTime? selectedDate}) = _$_ViewModelImpl;
+      final Group? group}) = _$_ViewModelImpl;
 
   @override
   bool get loading;
   @override
   bool get isAdmin;
   @override
-  dynamic get onDateChanged;
-  @override
   Group? get group;
-  @override
-  DateTime? get selectedDate;
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
