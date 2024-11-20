@@ -45,7 +45,7 @@ sealed class _ViewModel with _$ViewModel {
         loading: store.state.groups.creating ||
             store.state.groups.loadingAll ||
             (store.state.groups.loadingIds[groupId] ?? false),
-        members: groupMembersWithProfilesSelector(store.state, groupId),
+        members: groupMembersWithProfilesSelector(store.state),
         onInvite: (contacts) => store.dispatch(InviteGroupMembersAction(
           groupId: int.parse(groupId),
           contacts: contacts,

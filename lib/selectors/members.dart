@@ -1,32 +1,34 @@
+import 'package:collection/collection.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux_entity/redux_entity.dart';
+import 'package:reselect/reselect.dart';
 
 RemoteEntityState<Member> membersSelector(AppState state) => state.members;
 
 RemoteEntityState<Profile> profilesSelector(AppState state) => state.profiles;
 
-Iterable<Member> groupMembersSelector(AppState state, String groupId) {
-  final id = int.parse(groupId);
-  return membersSelector(state)
-      .entities
-      .values
-      .where((member) => member.groupId == id);
-}
+String? selectGroupId(AppState state) => state.selectedGroupId;
 
-Iterable<(Member, Profile?)> groupMembersWithProfilesSelector(
-    AppState state, String groupId) {
-  final members = groupMembersSelector(state, groupId);
-  final profiles = profilesSelector(state).entities;
-  return members.map((member) => (member, profiles[member.profileId]));
-}
+String? selectAuthUserId(AppState state) => state.auth.user?.id;
 
-bool selectIsAdmin(AppState state, int groupId) {
-  return state.members.entities.values
-          .where((member) =>
-              member.groupId == groupId &&
-              member.profileId == state.auth.user?.id)
-          .firstOrNull
-          ?.role ==
-      GroupRoles.admin;
-}
+final groupMembersSelector = createSelector2(
+    membersSelector,
+    selectGroupId,
+    (members, groupId) => members.entities.values
+        .where((member) => member.groupId.toString() == groupId));
+
+final groupMembersWithProfilesSelector = createSelector2(
+    groupMembersSelector,
+    profilesSelector,
+    (members, profiles) =>
+        members.map((member) => (member, profiles.entities[member.profileId])));
+
+final selectMyMember = createSelector2(
+    groupMembersWithProfilesSelector,
+    selectAuthUserId,
+    (members, userId) =>
+        members.firstWhereOrNull((m) => m.$1.profileId == userId));
+
+final selectIsAdmin =
+    createSelector1(selectMyMember, (m) => m?.$1.role == GroupRoles.admin);

@@ -27,7 +27,8 @@ class GroupScheduleDetailsContainer extends StatelessWidget {
     return StoreConnector<AppState, _ViewModel>(
       distinct: true,
       converter: (store) => _ViewModel.fromStore(store, groupId, scheduleId),
-      onInit: (store) => store.dispatch(GroupDetailsOpenAction(groupId)),
+      onInit: (store) =>
+          store.dispatch(GroupScheduleDetailsOpenAction(scheduleId)),
       builder: (context, vm) => GroupScheduleDetailsScreen(
         loading: vm.loading,
         group: vm.group,
@@ -59,8 +60,7 @@ sealed class _ViewModel with _$ViewModel {
       loading: store.state.groups.loadingAll ||
           (store.state.groups.loadingIds[groupId] ?? false),
       group: group,
-      schedule:
-          selectScheduleForDate(store.state, group.id, int.parse(scheduleId)),
+      schedule: selectScheduleForDate(store.state),
       onReplyChanged: (schedule, targetMemberId, reply) {
         if (reply == null) {
           store.dispatch(RequestDeleteReplyAction(

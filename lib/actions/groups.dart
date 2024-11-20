@@ -10,6 +10,14 @@ class GroupDetailsOpenAction {
   final String groupId;
 }
 
+/// Dispatched when a group is selected and the group schedule details screen should be opened.
+@immutable
+class GroupScheduleDetailsOpenAction {
+  const GroupScheduleDetailsOpenAction(this.scheduleId);
+
+  final String scheduleId;
+}
+
 /// Dispatched when requesting to refresh all groups.
 @immutable
 class GroupRefreshAllAction {

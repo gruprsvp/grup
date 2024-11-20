@@ -50,6 +50,7 @@ _$AppStateImpl _$$AppStateImplFromJson(Map<String, dynamic> json) =>
           ThemeMode.system,
       selectedDate: DateTime.parse(json['selectedDate'] as String),
       selectedGroupId: json['selectedGroupId'] as String?,
+      selectedScheduleId: json['selectedScheduleId'] as String?,
       locale: json['locale'] == null
           ? null
           : LocaleState.fromJson(json['locale'] as Map<String, dynamic>),
@@ -68,6 +69,7 @@ Map<String, dynamic> _$$AppStateImplToJson(_$AppStateImpl instance) =>
       'themeMode': _$ThemeModeEnumMap[instance.themeMode]!,
       'selectedDate': instance.selectedDate.toIso8601String(),
       'selectedGroupId': instance.selectedGroupId,
+      'selectedScheduleId': instance.selectedScheduleId,
       'locale': instance.locale,
     };
 

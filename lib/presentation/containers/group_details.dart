@@ -47,7 +47,7 @@ sealed class _ViewModel with _$ViewModel {
       loading: store.state.groups.loadingAll ||
           (store.state.groups.loadingIds[groupId] ?? false),
       group: store.state.groups.entities[groupId],
-      isAdmin: selectIsAdmin(store.state, int.parse(groupId)),
+      isAdmin: selectIsAdmin(store.state),
     );
   }
 }
