@@ -4,10 +4,10 @@ const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
 const RESOURCES = {"flutter.js": "f393d3c16b631f36852323de8e583132",
-"main.dart.js": "34c0ce23d52a9aa11d5cf1e9e3a7d9de",
+"main.dart.js": "3698f2ad155b36fe7ca08a3efded0e46",
 "assets/FontManifest.json": "9c06e60d67f69c8ab1ba6b25f8aa203d",
 "assets/AssetManifest.bin": "810c1df776cf8d8db8696d28a0f93b99",
-"assets/fonts/MaterialIcons-Regular.otf": "1dd35e2e86517ef9167177e27e60556c",
+"assets/fonts/MaterialIcons-Regular.otf": "e6557e8d6b66643cf48193e4136b5c10",
 "assets/packages/widgetbook/assets/fonts/Poppins/Poppins-MediumItalic.ttf": "cf5ba39d9ac24652e25df8c291121506",
 "assets/packages/widgetbook/assets/fonts/Poppins/Poppins-Light.ttf": "fcc40ae9a542d001971e53eaed948410",
 "assets/packages/widgetbook/assets/fonts/Poppins/Poppins-Regular.ttf": "093ee89be9ede30383f39a899c485a82",
@@ -326,7 +326,7 @@ const RESOURCES = {"flutter.js": "f393d3c16b631f36852323de8e583132",
 "icons/Icon-maskable-512.png": "1a138de0bed92dd0c36e3119dc10cc8e",
 "favicon.png": "a25f58d07b1dd8a75c2c884aea9a1bf0",
 "version.json": "df7ea6a712af13f2a376d8306d414d78",
-"flutter_bootstrap.js": "f0b51eb9d9ae74c8d263953a2cd78291"};
+"flutter_bootstrap.js": "461b8c6ae95e156debed49c4d9cee2ef"};
 // The application shell files that are downloaded before a service worker can
 // start.
 const CORE = ["main.dart.js",
