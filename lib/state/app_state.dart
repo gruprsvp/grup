@@ -27,6 +27,7 @@ sealed class AppState with _$AppState {
     @Default(ThemeMode.system) ThemeMode themeMode,
     required DateTime selectedDate,
     String? selectedGroupId,
+    String? selectedScheduleId,
     LocaleState? locale,
   }) = _AppState;
 

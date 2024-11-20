@@ -8,6 +8,7 @@ import 'locale.dart';
 import 'remote_entities.dart';
 import 'selected_date.dart';
 import 'selected_group_id.dart';
+import 'selected_schedule_id.dart';
 import 'theme.dart';
 
 /// The root reducer combines all the reducers for the app into one.
@@ -30,5 +31,7 @@ AppState rootReducer(AppState state, dynamic action) {
     locale: localeReducer(state.locale, action),
     selectedDate: selectedDateReducer(state.selectedDate, action),
     selectedGroupId: selectedGroupIdReducer(state.selectedGroupId, action),
+    selectedScheduleId:
+        selectedScheduleIdReducer(state.selectedScheduleId, action),
   );
 }

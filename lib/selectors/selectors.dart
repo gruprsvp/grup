@@ -1,3 +1,5 @@
+import 'dart:core';
+
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:parousia/models/models.dart';
@@ -7,6 +9,7 @@ import 'package:parousia/state/state.dart';
 import 'package:parousia/util/util.dart';
 import 'package:reselect/reselect.dart';
 import 'package:rrule/rrule.dart';
+import 'package:memoized/memoized.dart';
 
 export 'members.dart';
 
@@ -42,74 +45,102 @@ DateTime selectedDateSelector(AppState state) => state.selectedDate;
 final selectedDateRangeSelector =
     createSelector1(selectedDateSelector, (date) => date.getDayRange());
 
+String? selectGroupId(AppState state) => state.selectedGroupId;
+
+Map<String, Group> selectGroupEntities(AppState state) => state.groups.entities;
+
+final selectGroup = createSelector2(
+    selectGroupId, selectGroupEntities, (id, entities) => entities[id]);
+
+Iterable<Schedule> selectScheduleEntities(AppState state) =>
+    state.schedules.entities.values;
+
+Iterable<DefaultReply> selectAllDefaultReplies(AppState state) =>
+    state.defaultReplies.entities.values;
+
+Iterable<Reply> selectAllReplies(AppState state) =>
+    state.replies.entities.values;
+
+final selectSchedules = createSelector3(
+    selectScheduleEntities,
+    selectGroupId,
+    selectedDateRangeSelector,
+    (schedules, groupId, range) => schedules.where((s) =>
+        s.groupId.toString() == groupId &&
+        (s.startDate.isBefore(range.start) ||
+            (s.startDate.compareTo(range.start) >= 0 &&
+                s.startDate.compareTo(range.end) <= 0))));
+
+final selectSchedulesIds =
+    createSelector1(selectSchedules, (schedules) => schedules.map((s) => s.id));
+
+final selectDefaultReplies = createSelector2(
+    selectAllDefaultReplies,
+    selectSchedulesIds,
+    (replies, scheduleIds) =>
+        replies.where((r) => scheduleIds.contains(r.scheduleId)));
+
+final selectReplies = createSelector3(
+    selectAllReplies,
+    selectSchedulesIds,
+    selectedDateRangeSelector,
+    (replies, scheduleIds, range) => replies.where((r) =>
+        scheduleIds.contains(r.scheduleId) && range.contains(r.eventDate)));
+
 // TODO This shit should be better tested, and use reselect for memoization
-Iterable<ScheduleSummary>? selectSchedulesForSelectedDate(
-    AppState state, int selectedGroupId) {
-  final range = selectedDateRangeSelector(state);
-  final group = state.groups.entities[selectedGroupId.toString()];
+final selectSchedulesForSelectedDate = createSelector5(
+    selectedDateRangeSelector,
+    selectMyMember,
+    selectSchedules,
+    selectDefaultReplies,
+    selectReplies,
+    (range, myMember, schedules, defaultReplies, replies) =>
+        schedules.expand((schedule) => getScheduleInstances(
+              schedule: schedule,
+              defaultReplies: defaultReplies,
+              replies: replies,
+              startDate: range.start,
+              endDate: range.end,
+              targetMemberId: myMember?.$1.id,
+            )));
 
-  if (group == null) return null;
+String? selectScheduleId(AppState state) => state.selectedScheduleId;
 
-  final schedules = state.schedules.entities.values.where((s) =>
-      s.groupId == selectedGroupId &&
-      (s.startDate.isBefore(range.start) ||
-          (s.startDate.compareTo(range.start) >= 0 &&
-              s.startDate.compareTo(range.end) <= 0)));
-  final scheduleIds = schedules.map((s) => s.id);
-  final defaultReplies = state.defaultReplies.entities.values
-      .where((r) => scheduleIds.contains(r.scheduleId));
-  final replies = state.replies.entities.values.where(
-      (r) => scheduleIds.contains(r.scheduleId) && range.contains(r.eventDate));
+final selectScheduleSummary = createSelector2(
+    selectSchedulesForSelectedDate,
+    selectScheduleId,
+    (schedules, id) =>
+        schedules.firstWhereOrNull((s) => s.scheduleId.toString() == id));
 
-  final myselfInGroup = state.members.entities.values
-      .where((member) =>
-          member.profileId != null &&
-          member.groupId == group.id &&
-          member.profileId == state.auth.user?.id)
-      .firstOrNull;
+final getMember = Memoized2((Member member, Map<String, Profile> profiles) {
+  final profile = profiles[member.profileId.toString()];
 
-  return schedules.expand((schedule) => getScheduleInstances(
-        schedule: schedule,
-        defaultReplies: defaultReplies,
-        replies: replies,
-        startDate: range.start,
-        endDate: range.end,
-        targetMemberId: myselfInGroup?.id,
-      ));
-}
+  return member.copyWith(
+      displayNameOverride: member.displayNameOverride ?? profile?.displayName);
+});
+
+Map<String, Profile> selectAllProfiles(AppState state) =>
+    state.profiles.entities;
+
+final selectMemberReplies = createSelector3(
+    groupMembersSelector,
+    selectScheduleSummary,
+    selectAllProfiles,
+    (members, scheduleSummary, profiles) => members
+        // Fill in the blanks for members who haven't replied
+        .map((m) {
+          final reply = scheduleSummary?.memberReplies[m.id];
+          return (getMember(m, profiles), reply);
+        })
+        // Remove target user from the list below
+        .whereNot((e) => e.$1.id == scheduleSummary?.targetMemberId)
+        .toList());
 
 // TODO This should work the other way around, and be memoized
-ScheduleEventDetails? selectScheduleForDate(
-    AppState state, int selectedGroupId, int selectedScheduleId) {
-  final allScheduleInstances =
-      selectSchedulesForSelectedDate(state, selectedGroupId);
-  final scheduleSummary = allScheduleInstances
-      ?.firstWhereOrNull((s) => s.scheduleId == selectedScheduleId);
-
+final selectScheduleForDate =
+    createSelector3(selectScheduleSummary, selectMemberReplies, selectIsAdmin,
+        (scheduleSummary, memberReplies, canEditOthers) {
   if (scheduleSummary == null) return null;
-
-  Member getMember(Member member) {
-    final profile = state.profiles.entities[member.profileId.toString()];
-
-    return member.copyWith(
-        displayNameOverride:
-            member.displayNameOverride ?? profile?.displayName);
-  }
-
-  final members =
-      groupMembersSelector(state, scheduleSummary.groupId.toString());
-  final memberReplies = members
-      // Fill in the blanks for members who haven't replied
-      .map((m) {
-        final reply = scheduleSummary.memberReplies[m.id];
-        return (getMember(m), reply);
-      })
-      // Remove target user from the list below
-      .whereNot((e) => e.$1.id == scheduleSummary.targetMemberId)
-      .toList();
-
-  // TODO This should be a selector and memoized
-  final canEditOthers = selectIsAdmin(state, selectedGroupId);
 
   return ScheduleEventDetails(
     scheduleId: scheduleSummary.scheduleId,
@@ -122,4 +153,4 @@ ScheduleEventDetails? selectScheduleForDate(
     targetMemberId: scheduleSummary.targetMemberId,
     canEditOthers: canEditOthers,
   );
-}
+});

@@ -71,7 +71,7 @@ sealed class _ViewModel with _$ViewModel {
   static _ViewModel fromStore(Store<AppState> store, int groupId) {
     return _ViewModel(
       selectedDate: store.state.selectedDate,
-      schedules: selectSchedulesForSelectedDate(store.state, groupId),
+      schedules: selectSchedulesForSelectedDate(store.state),
       onDateChanged: (value) => store.dispatch(SelectDateAction(value)),
       onReplyChanged: (schedule, reply) {
         if (schedule.targetMemberId == null) {
