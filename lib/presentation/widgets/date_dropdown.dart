@@ -25,28 +25,16 @@ class DateDropdown extends StatelessWidget {
     }
   }
 
-  void _changeDate(int days) {
-    onDateChanged?.call(date!.add(Duration(days: days)));
-  }
-
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
-        IconButton(
-          icon: const Icon(Icons.chevron_left),
-          onPressed: () => _changeDate(-1),
-        ),
         Expanded(
           child: ListTile(
             title: Text(date != null ? _dateFormat.format(date!) : ''),
             leading: const Icon(Icons.event),
             onTap: () => _selectDate(context),
           ),
-        ),
-        IconButton(
-          icon: const Icon(Icons.chevron_right),
-          onPressed: () => _changeDate(1),
         ),
       ],
     );
