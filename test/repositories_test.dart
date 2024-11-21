@@ -551,7 +551,7 @@ void main() {
                     Reply(
                       scheduleId: schedule.id,
                       memberId: member.id,
-                      eventDate: s,
+                      instanceDate: s,
                       selectedOption: ReplyOptions.yes,
                     ),
                   ),

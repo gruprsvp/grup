@@ -32,7 +32,7 @@ class GroupScheduleDetailsContainer extends StatelessWidget {
       builder: (context, vm) => GroupScheduleDetailsScreen(
         loading: vm.loading,
         group: vm.group,
-        schedule: vm.schedule,
+        scheduleInstance: vm.scheduleInstance,
         onReplyChanged: vm.onReplyChanged,
       ),
     );
@@ -44,7 +44,7 @@ sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required bool loading,
     Group? group,
-    ScheduleEventDetails? schedule,
+    ScheduleInstanceDetails? scheduleInstance,
     OnDetailsReplyChangedCallback? onReplyChanged,
   }) = __ViewModel;
 
@@ -60,19 +60,19 @@ sealed class _ViewModel with _$ViewModel {
       loading: store.state.groups.loadingAll ||
           (store.state.groups.loadingIds[groupId] ?? false),
       group: group,
-      schedule: selectScheduleForDate(store.state),
+      scheduleInstance: selectScheduleInstanceForDate(store.state),
       onReplyChanged: (schedule, targetMemberId, reply) {
         if (reply == null) {
           store.dispatch(RequestDeleteReplyAction(
             memberId: targetMemberId,
             scheduleId: schedule.scheduleId,
-            eventDate: schedule.eventDate,
+            instanceDate: schedule.instanceDate,
           ));
         } else {
           store.dispatch(RequestUpdateOne(Reply(
               memberId: targetMemberId,
               scheduleId: schedule.scheduleId,
-              eventDate: schedule.eventDate,
+              instanceDate: schedule.instanceDate,
               selectedOption: reply)));
         }
       },

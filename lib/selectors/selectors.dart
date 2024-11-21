@@ -85,10 +85,10 @@ final selectReplies = createSelector3(
     selectSchedulesIds,
     selectedDateRangeSelector,
     (replies, scheduleIds, range) => replies.where((r) =>
-        scheduleIds.contains(r.scheduleId) && range.contains(r.eventDate)));
+        scheduleIds.contains(r.scheduleId) && range.contains(r.instanceDate)));
 
 // TODO This shit should be better tested, and use reselect for memoization
-final selectSchedulesForSelectedDate = createSelector5(
+final selectScheduleInstancesForSelectedDate = createSelector5(
     selectedDateRangeSelector,
     selectMyMember,
     selectSchedules,
@@ -106,11 +106,11 @@ final selectSchedulesForSelectedDate = createSelector5(
 
 String? selectScheduleId(AppState state) => state.selectedScheduleId;
 
-final selectScheduleSummary = createSelector2(
-    selectSchedulesForSelectedDate,
+final selectScheduleInstanceSummary = createSelector2(
+    selectScheduleInstancesForSelectedDate,
     selectScheduleId,
-    (schedules, id) =>
-        schedules.firstWhereOrNull((s) => s.scheduleId.toString() == id));
+    (instances, id) =>
+        instances.firstWhereOrNull((s) => s.scheduleId.toString() == id));
 
 final getMember = Memoized2((Member member, Map<String, Profile> profiles) {
   final profile = profiles[member.profileId.toString()];
@@ -124,33 +124,33 @@ Map<String, Profile> selectAllProfiles(AppState state) =>
 
 final selectMemberReplies = createSelector3(
     groupMembersSelector,
-    selectScheduleSummary,
+    selectScheduleInstanceSummary,
     selectAllProfiles,
-    (members, scheduleSummary, profiles) => members
+    (members, instance, profiles) => members
         // Fill in the blanks for members who haven't replied
         .map((m) {
-          final reply = scheduleSummary?.memberReplies[m.id];
+          final reply = instance?.memberReplies[m.id];
           return (getMember(m, profiles), reply);
         })
         // Remove target user from the list below
-        .whereNot((e) => e.$1.id == scheduleSummary?.targetMemberId)
+        .whereNot((e) => e.$1.id == instance?.targetMemberId)
         .toList());
 
 // TODO This should work the other way around, and be memoized
-final selectScheduleForDate =
-    createSelector3(selectScheduleSummary, selectMemberReplies, selectIsAdmin,
-        (scheduleSummary, memberReplies, canEditOthers) {
-  if (scheduleSummary == null) return null;
+final selectScheduleInstanceForDate = createSelector3(
+    selectScheduleInstanceSummary, selectMemberReplies, selectIsAdmin,
+    (instance, memberReplies, canEditOthers) {
+  if (instance == null) return null;
 
-  return ScheduleEventDetails(
-    scheduleId: scheduleSummary.scheduleId,
-    groupId: scheduleSummary.groupId,
-    displayName: scheduleSummary.displayName,
-    eventDate: scheduleSummary.eventDate,
+  return ScheduleInstanceDetails(
+    scheduleId: instance.scheduleId,
+    groupId: instance.groupId,
+    displayName: instance.displayName,
+    instanceDate: instance.instanceDate,
     memberReplies: memberReplies,
-    yesCount: scheduleSummary.yesCount,
-    myReply: scheduleSummary.myReply,
-    targetMemberId: scheduleSummary.targetMemberId,
+    yesCount: instance.yesCount,
+    myReply: instance.myReply,
+    targetMemberId: instance.targetMemberId,
     canEditOthers: canEditOthers,
   );
 });

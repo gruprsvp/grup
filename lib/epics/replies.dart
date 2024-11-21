@@ -44,12 +44,12 @@ Epic<AppState> _createRequestDeleteReplyEpic(RepliesRepository replies) {
                 .deleteReply(
                   memberId: action.memberId,
                   scheduleId: action.scheduleId,
-                  eventDate: action.eventDate,
+                  instanceDate: action.instanceDate,
                 )
                 .then<dynamic>((_) => SuccessDeleteOne<Reply>(
-                    "${action.memberId}-${action.scheduleId}-${action.eventDate}"))
+                    "${action.memberId}-${action.scheduleId}-${action.instanceDate}"))
                 .catchError((error) => FailDeleteOne<Reply>(
-                    id: "${action.memberId}-${action.scheduleId}-${action.eventDate}",
+                    id: "${action.memberId}-${action.scheduleId}-${action.instanceDate}",
                     error: error)),
           );
 }

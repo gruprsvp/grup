@@ -17,8 +17,8 @@ class RepliesRepository extends SupabaseRepository with Postgrest {
     return table()
         .select('*,members!inner(*)')
         .eq('members.group_id', groupId)
-        .gte('event_date', dateRange.start)
-        .lt('event_date', dateRange.end)
+        .gte('instance_date', dateRange.start)
+        .lt('instance_date', dateRange.end)
         .withConverter((data) => data.map(Reply.fromJson));
   }
 
@@ -27,9 +27,9 @@ class RepliesRepository extends SupabaseRepository with Postgrest {
         .upsert({
           'schedule_id': reply.scheduleId,
           'member_id': reply.memberId,
-          'event_date': reply.eventDate.toIso8601String(),
+          'instance_date': reply.instanceDate.toIso8601String(),
           'selected_option': reply.selectedOption.name,
-        }, onConflict: 'member_id, schedule_id, event_date')
+        }, onConflict: 'member_id, schedule_id, instance_date')
         .select()
         .single()
         .withConverter((data) => Reply.fromJson(data));
@@ -38,12 +38,12 @@ class RepliesRepository extends SupabaseRepository with Postgrest {
   Future<void> deleteReply({
     required int memberId,
     required int scheduleId,
-    required DateTime eventDate,
+    required DateTime instanceDate,
   }) async {
     return table()
         .delete()
         .eq('member_id', memberId)
         .eq('schedule_id', scheduleId)
-        .eq('event_date', eventDate.toIso8601String());
+        .eq('instance_date', instanceDate.toIso8601String());
   }
 }

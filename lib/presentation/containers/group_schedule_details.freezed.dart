@@ -18,7 +18,8 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ViewModel {
   bool get loading => throw _privateConstructorUsedError;
   Group? get group => throw _privateConstructorUsedError;
-  ScheduleEventDetails? get schedule => throw _privateConstructorUsedError;
+  ScheduleInstanceDetails? get scheduleInstance =>
+      throw _privateConstructorUsedError;
   OnDetailsReplyChangedCallback? get onReplyChanged =>
       throw _privateConstructorUsedError;
 
@@ -38,11 +39,11 @@ abstract class _$ViewModelCopyWith<$Res> {
   $Res call(
       {bool loading,
       Group? group,
-      ScheduleEventDetails? schedule,
+      ScheduleInstanceDetails? scheduleInstance,
       OnDetailsReplyChangedCallback? onReplyChanged});
 
   $GroupCopyWith<$Res>? get group;
-  $ScheduleEventDetailsCopyWith<$Res>? get schedule;
+  $ScheduleInstanceDetailsCopyWith<$Res>? get scheduleInstance;
 }
 
 /// @nodoc
@@ -62,7 +63,7 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   $Res call({
     Object? loading = null,
     Object? group = freezed,
-    Object? schedule = freezed,
+    Object? scheduleInstance = freezed,
     Object? onReplyChanged = freezed,
   }) {
     return _then(_value.copyWith(
@@ -74,10 +75,10 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as Group?,
-      schedule: freezed == schedule
-          ? _value.schedule
-          : schedule // ignore: cast_nullable_to_non_nullable
-              as ScheduleEventDetails?,
+      scheduleInstance: freezed == scheduleInstance
+          ? _value.scheduleInstance
+          : scheduleInstance // ignore: cast_nullable_to_non_nullable
+              as ScheduleInstanceDetails?,
       onReplyChanged: freezed == onReplyChanged
           ? _value.onReplyChanged
           : onReplyChanged // ignore: cast_nullable_to_non_nullable
@@ -103,13 +104,14 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $ScheduleEventDetailsCopyWith<$Res>? get schedule {
-    if (_value.schedule == null) {
+  $ScheduleInstanceDetailsCopyWith<$Res>? get scheduleInstance {
+    if (_value.scheduleInstance == null) {
       return null;
     }
 
-    return $ScheduleEventDetailsCopyWith<$Res>(_value.schedule!, (value) {
-      return _then(_value.copyWith(schedule: value) as $Val);
+    return $ScheduleInstanceDetailsCopyWith<$Res>(_value.scheduleInstance!,
+        (value) {
+      return _then(_value.copyWith(scheduleInstance: value) as $Val);
     });
   }
 }
@@ -125,13 +127,13 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
   $Res call(
       {bool loading,
       Group? group,
-      ScheduleEventDetails? schedule,
+      ScheduleInstanceDetails? scheduleInstance,
       OnDetailsReplyChangedCallback? onReplyChanged});
 
   @override
   $GroupCopyWith<$Res>? get group;
   @override
-  $ScheduleEventDetailsCopyWith<$Res>? get schedule;
+  $ScheduleInstanceDetailsCopyWith<$Res>? get scheduleInstance;
 }
 
 /// @nodoc
@@ -149,7 +151,7 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
   $Res call({
     Object? loading = null,
     Object? group = freezed,
-    Object? schedule = freezed,
+    Object? scheduleInstance = freezed,
     Object? onReplyChanged = freezed,
   }) {
     return _then(_$_ViewModelImpl(
@@ -161,10 +163,10 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as Group?,
-      schedule: freezed == schedule
-          ? _value.schedule
-          : schedule // ignore: cast_nullable_to_non_nullable
-              as ScheduleEventDetails?,
+      scheduleInstance: freezed == scheduleInstance
+          ? _value.scheduleInstance
+          : scheduleInstance // ignore: cast_nullable_to_non_nullable
+              as ScheduleInstanceDetails?,
       onReplyChanged: freezed == onReplyChanged
           ? _value.onReplyChanged
           : onReplyChanged // ignore: cast_nullable_to_non_nullable
@@ -177,20 +179,23 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   const _$_ViewModelImpl(
-      {required this.loading, this.group, this.schedule, this.onReplyChanged});
+      {required this.loading,
+      this.group,
+      this.scheduleInstance,
+      this.onReplyChanged});
 
   @override
   final bool loading;
   @override
   final Group? group;
   @override
-  final ScheduleEventDetails? schedule;
+  final ScheduleInstanceDetails? scheduleInstance;
   @override
   final OnDetailsReplyChangedCallback? onReplyChanged;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(loading: $loading, group: $group, schedule: $schedule, onReplyChanged: $onReplyChanged)';
+    return '_ViewModel(loading: $loading, group: $group, scheduleInstance: $scheduleInstance, onReplyChanged: $onReplyChanged)';
   }
 
   @override
@@ -200,7 +205,7 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
       ..add(DiagnosticsProperty('type', '_ViewModel'))
       ..add(DiagnosticsProperty('loading', loading))
       ..add(DiagnosticsProperty('group', group))
-      ..add(DiagnosticsProperty('schedule', schedule))
+      ..add(DiagnosticsProperty('scheduleInstance', scheduleInstance))
       ..add(DiagnosticsProperty('onReplyChanged', onReplyChanged));
   }
 
@@ -211,15 +216,15 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
             other is _$_ViewModelImpl &&
             (identical(other.loading, loading) || other.loading == loading) &&
             (identical(other.group, group) || other.group == group) &&
-            (identical(other.schedule, schedule) ||
-                other.schedule == schedule) &&
+            (identical(other.scheduleInstance, scheduleInstance) ||
+                other.scheduleInstance == scheduleInstance) &&
             (identical(other.onReplyChanged, onReplyChanged) ||
                 other.onReplyChanged == onReplyChanged));
   }
 
   @override
-  int get hashCode =>
-      Object.hash(runtimeType, loading, group, schedule, onReplyChanged);
+  int get hashCode => Object.hash(
+      runtimeType, loading, group, scheduleInstance, onReplyChanged);
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -234,7 +239,7 @@ abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
       {required final bool loading,
       final Group? group,
-      final ScheduleEventDetails? schedule,
+      final ScheduleInstanceDetails? scheduleInstance,
       final OnDetailsReplyChangedCallback? onReplyChanged}) = _$_ViewModelImpl;
 
   @override
@@ -242,7 +247,7 @@ abstract class __ViewModel implements _ViewModel {
   @override
   Group? get group;
   @override
-  ScheduleEventDetails? get schedule;
+  ScheduleInstanceDetails? get scheduleInstance;
   @override
   OnDetailsReplyChangedCallback? get onReplyChanged;
 
