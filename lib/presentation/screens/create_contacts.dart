@@ -95,7 +95,7 @@ class _ContactFormState extends State<ContactForm> {
             autocorrect: true,
             validator: FormBuilderValidators.required(),
             decoration: InputDecoration(
-              labelText: 'Name', // l10n.contactName,
+              labelText: l10n.contactName,
             ),
           ),
           FormBuilderTextField(
@@ -104,7 +104,7 @@ class _ContactFormState extends State<ContactForm> {
             autocorrect: true,
             validator: FormBuilderValidators.email(checkNullOrEmpty: false),
             decoration: InputDecoration(
-              labelText: 'Email', // l10n.contactEmail,
+              labelText: l10n.contactEmail,
             ),
           ),
           FormBuilderPhoneField(
@@ -112,7 +112,7 @@ class _ContactFormState extends State<ContactForm> {
             controller: _phoneController,
             autocorrect: true,
             decoration: InputDecoration(
-              labelText: 'Phone', // l10n.contactPhone,
+              labelText: l10n.contactPhone,
             ),
           ),
         ],

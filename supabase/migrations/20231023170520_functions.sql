@@ -134,3 +134,41 @@ begin
 end;
 $$;
 comment on function consume_invite_code(text) is 'Adds the current user to a group based on an invite code';
+
+create or replace function handle_new_invite()
+    returns trigger
+    language plpgsql
+    security definer set search_path = public
+as
+$$
+declare
+    user_id uuid;
+begin
+    select id into user_id
+    from auth.users 
+    where 
+        case 
+            when new.method = 'email' then email = new.value
+            when new.method = 'phone' then phone = new.value
+        end
+    limit 1;
+
+    if user_id is not null then
+        update public.members
+        set profile_id = user_id
+        where id = new.member_id;
+
+        delete from invites where member_id = new.member_id;
+    end if;
+
+    return new;
+end;
+$$;
+comment on function handle_new_invite() is 'Updates members whenever an invite for an existing profile is created';
+
+create or replace trigger on_invite_created
+    after insert
+    on invites
+    for each row
+execute function public.handle_new_invite();
+comment on trigger on_auth_user_created on auth.users is 'Updates members whenever an invite is created';
