@@ -7,32 +7,32 @@ part 'schedule_summary.freezed.dart';
 /// A schedule instance with replies, to be displayed in a list.
 /// It's missing details about all the members in the group.
 @freezed
-sealed class ScheduleSummary with _$ScheduleSummary {
-  const factory ScheduleSummary({
+sealed class ScheduleInstanceSummary with _$ScheduleInstanceSummary {
+  const factory ScheduleInstanceSummary({
     required int scheduleId,
     required int groupId,
     required String displayName,
-    required DateTime eventDate,
+    required DateTime instanceDate,
     required Map<int, ReplyOptions> memberReplies,
     required int yesCount,
     ReplyOptions? myReply,
     int? targetMemberId,
-  }) = _ScheduleSummary;
+  }) = _ScheduleInstanceSummary;
 }
 
 /// A schedule instance with replies, to be displayed in a detailed view.
 /// It includes details about all the members in the group.
 @freezed
-sealed class ScheduleEventDetails with _$ScheduleEventDetails {
-  const factory ScheduleEventDetails({
+sealed class ScheduleInstanceDetails with _$ScheduleInstanceDetails {
+  const factory ScheduleInstanceDetails({
     required int scheduleId,
     required int groupId,
     required String displayName,
-    required DateTime eventDate,
+    required DateTime instanceDate,
     required List<(Member, ReplyOptions?)> memberReplies,
     required int yesCount,
     ReplyOptions? myReply,
     int? targetMemberId,
     bool? canEditOthers,
-  }) = _ScheduleEventDetails;
+  }) = _ScheduleInstanceDetails;
 }

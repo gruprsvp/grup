@@ -19,7 +19,7 @@ mixin _$ViewModel {
   ValueChanged<DateTime> get onDateChanged =>
       throw _privateConstructorUsedError;
   DateTime? get selectedDate => throw _privateConstructorUsedError;
-  Iterable<ScheduleSummary>? get schedules =>
+  Iterable<ScheduleInstanceSummary>? get schedules =>
       throw _privateConstructorUsedError;
   OnReplyChangedCallback? get onReplyChanged =>
       throw _privateConstructorUsedError;
@@ -40,7 +40,7 @@ abstract class _$ViewModelCopyWith<$Res> {
   $Res call(
       {ValueChanged<DateTime> onDateChanged,
       DateTime? selectedDate,
-      Iterable<ScheduleSummary>? schedules,
+      Iterable<ScheduleInstanceSummary>? schedules,
       OnReplyChangedCallback? onReplyChanged});
 }
 
@@ -76,7 +76,7 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
       schedules: freezed == schedules
           ? _value.schedules
           : schedules // ignore: cast_nullable_to_non_nullable
-              as Iterable<ScheduleSummary>?,
+              as Iterable<ScheduleInstanceSummary>?,
       onReplyChanged: freezed == onReplyChanged
           ? _value.onReplyChanged
           : onReplyChanged // ignore: cast_nullable_to_non_nullable
@@ -96,7 +96,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
   $Res call(
       {ValueChanged<DateTime> onDateChanged,
       DateTime? selectedDate,
-      Iterable<ScheduleSummary>? schedules,
+      Iterable<ScheduleInstanceSummary>? schedules,
       OnReplyChangedCallback? onReplyChanged});
 }
 
@@ -130,7 +130,7 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
       schedules: freezed == schedules
           ? _value.schedules
           : schedules // ignore: cast_nullable_to_non_nullable
-              as Iterable<ScheduleSummary>?,
+              as Iterable<ScheduleInstanceSummary>?,
       onReplyChanged: freezed == onReplyChanged
           ? _value.onReplyChanged
           : onReplyChanged // ignore: cast_nullable_to_non_nullable
@@ -153,7 +153,7 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   @override
   final DateTime? selectedDate;
   @override
-  final Iterable<ScheduleSummary>? schedules;
+  final Iterable<ScheduleInstanceSummary>? schedules;
   @override
   final OnReplyChangedCallback? onReplyChanged;
 
@@ -204,7 +204,7 @@ abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
       {required final ValueChanged<DateTime> onDateChanged,
       final DateTime? selectedDate,
-      final Iterable<ScheduleSummary>? schedules,
+      final Iterable<ScheduleInstanceSummary>? schedules,
       final OnReplyChangedCallback? onReplyChanged}) = _$_ViewModelImpl;
 
   @override
@@ -212,7 +212,7 @@ abstract class __ViewModel implements _ViewModel {
   @override
   DateTime? get selectedDate;
   @override
-  Iterable<ScheduleSummary>? get schedules;
+  Iterable<ScheduleInstanceSummary>? get schedules;
   @override
   OnReplyChangedCallback? get onReplyChanged;
 

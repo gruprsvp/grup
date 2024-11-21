@@ -4,11 +4,11 @@ import 'package:flutter/foundation.dart';
 class RequestDeleteReplyAction {
   final int memberId;
   final int scheduleId;
-  final DateTime eventDate;
+  final DateTime instanceDate;
 
   const RequestDeleteReplyAction({
     required this.memberId,
     required this.scheduleId,
-    required this.eventDate,
+    required this.instanceDate,
   });
 }

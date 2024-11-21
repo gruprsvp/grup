@@ -5,9 +5,9 @@ import 'package:parousia/presentation/widgets/widgets.dart';
 
 class ScheduleTile extends StatelessWidget {
   final timeFormat = DateFormat.jm();
-  final ScheduleSummary schedule;
+  final ScheduleInstanceSummary schedule;
   final ValueChanged<ReplyOptions?>? onReplyChanged;
-  final ValueChanged<ScheduleSummary>? onScheduleTapped;
+  final ValueChanged<ScheduleInstanceSummary>? onScheduleTapped;
 
   ScheduleTile({
     super.key,
@@ -20,7 +20,7 @@ class ScheduleTile extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(schedule.displayName),
-      subtitle: Text(timeFormat.format(schedule.eventDate)),
+      subtitle: Text(timeFormat.format(schedule.instanceDate)),
       trailing: Badge.count(
         count: schedule.yesCount,
         backgroundColor: Colors.green,

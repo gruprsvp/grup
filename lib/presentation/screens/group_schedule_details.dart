@@ -7,21 +7,21 @@ import 'package:parousia/presentation/presentation.dart';
 // The target member ID is the ID of the member that the user is replying for,
 // which is not necessarily the user's own ID in the details screen.
 typedef OnDetailsReplyChangedCallback = void Function(
-    ScheduleEventDetails, int, ReplyOptions?);
+    ScheduleInstanceDetails, int, ReplyOptions?);
 
 class GroupScheduleDetailsScreen extends StatelessWidget {
   final datetimeFormat = DateFormat.yMMMd()..add_jm();
 
   final bool loading;
   final Group? group;
-  final ScheduleEventDetails? schedule;
+  final ScheduleInstanceDetails? scheduleInstance;
   final OnDetailsReplyChangedCallback? onReplyChanged;
 
   GroupScheduleDetailsScreen({
     super.key,
     required this.loading,
     this.group,
-    this.schedule,
+    this.scheduleInstance,
     this.onReplyChanged,
   });
 
@@ -36,30 +36,30 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
       body: Column(
         children: [
           ListTile(
-            title: Text(schedule?.displayName ?? l10n.loading),
-            subtitle: schedule?.eventDate != null
-                ? Text(datetimeFormat.format(schedule!.eventDate))
+            title: Text(scheduleInstance?.displayName ?? l10n.loading),
+            subtitle: scheduleInstance?.instanceDate != null
+                ? Text(datetimeFormat.format(scheduleInstance!.instanceDate))
                 : Text(l10n.loading),
           ),
           ListTile(
             title: Text(l10n.you),
             trailing: ReplyButton(
-              myReply: schedule?.myReply,
+              myReply: scheduleInstance?.myReply,
               onReplyChanged: (reply) => onReplyChanged?.call(
-                  schedule!, schedule!.targetMemberId!, reply),
+                  scheduleInstance!, scheduleInstance!.targetMemberId!, reply),
             ),
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: schedule?.memberReplies.length ?? 0,
+              itemCount: scheduleInstance?.memberReplies.length ?? 0,
               itemBuilder: (context, index) {
-                final reply = schedule?.memberReplies.elementAt(index);
+                final reply = scheduleInstance?.memberReplies.elementAt(index);
                 return ListTile(
                   title: Text(reply?.$1.displayNameOverride ?? l10n.loading),
                   trailing: ReplyButton(
                     myReply: reply?.$2,
-                    onReplyChanged: (r) =>
-                        onReplyChanged?.call(schedule!, reply!.$1.id, r),
+                    onReplyChanged: (r) => onReplyChanged?.call(
+                        scheduleInstance!, reply!.$1.id, r),
                   ),
                 );
               },

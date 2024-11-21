@@ -22,7 +22,7 @@ Reply _$ReplyFromJson(Map<String, dynamic> json) {
 mixin _$Reply {
   int get memberId => throw _privateConstructorUsedError;
   int get scheduleId => throw _privateConstructorUsedError;
-  DateTime get eventDate => throw _privateConstructorUsedError;
+  DateTime get instanceDate => throw _privateConstructorUsedError;
   ReplyOptions get selectedOption => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
@@ -44,7 +44,7 @@ abstract class $ReplyCopyWith<$Res> {
   $Res call(
       {int memberId,
       int scheduleId,
-      DateTime eventDate,
+      DateTime instanceDate,
       ReplyOptions selectedOption,
       DateTime? createdAt,
       DateTime? updatedAt});
@@ -67,7 +67,7 @@ class _$ReplyCopyWithImpl<$Res, $Val extends Reply>
   $Res call({
     Object? memberId = null,
     Object? scheduleId = null,
-    Object? eventDate = null,
+    Object? instanceDate = null,
     Object? selectedOption = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -81,9 +81,9 @@ class _$ReplyCopyWithImpl<$Res, $Val extends Reply>
           ? _value.scheduleId
           : scheduleId // ignore: cast_nullable_to_non_nullable
               as int,
-      eventDate: null == eventDate
-          ? _value.eventDate
-          : eventDate // ignore: cast_nullable_to_non_nullable
+      instanceDate: null == instanceDate
+          ? _value.instanceDate
+          : instanceDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
       selectedOption: null == selectedOption
           ? _value.selectedOption
@@ -111,7 +111,7 @@ abstract class _$$ReplyImplCopyWith<$Res> implements $ReplyCopyWith<$Res> {
   $Res call(
       {int memberId,
       int scheduleId,
-      DateTime eventDate,
+      DateTime instanceDate,
       ReplyOptions selectedOption,
       DateTime? createdAt,
       DateTime? updatedAt});
@@ -132,7 +132,7 @@ class __$$ReplyImplCopyWithImpl<$Res>
   $Res call({
     Object? memberId = null,
     Object? scheduleId = null,
-    Object? eventDate = null,
+    Object? instanceDate = null,
     Object? selectedOption = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
@@ -146,9 +146,9 @@ class __$$ReplyImplCopyWithImpl<$Res>
           ? _value.scheduleId
           : scheduleId // ignore: cast_nullable_to_non_nullable
               as int,
-      eventDate: null == eventDate
-          ? _value.eventDate
-          : eventDate // ignore: cast_nullable_to_non_nullable
+      instanceDate: null == instanceDate
+          ? _value.instanceDate
+          : instanceDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
       selectedOption: null == selectedOption
           ? _value.selectedOption
@@ -173,7 +173,7 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
   const _$ReplyImpl(
       {required this.memberId,
       required this.scheduleId,
-      required this.eventDate,
+      required this.instanceDate,
       required this.selectedOption,
       this.createdAt,
       this.updatedAt});
@@ -186,7 +186,7 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
   @override
   final int scheduleId;
   @override
-  final DateTime eventDate;
+  final DateTime instanceDate;
   @override
   final ReplyOptions selectedOption;
   @override
@@ -196,7 +196,7 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Reply(memberId: $memberId, scheduleId: $scheduleId, eventDate: $eventDate, selectedOption: $selectedOption, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Reply(memberId: $memberId, scheduleId: $scheduleId, instanceDate: $instanceDate, selectedOption: $selectedOption, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -206,7 +206,7 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
       ..add(DiagnosticsProperty('type', 'Reply'))
       ..add(DiagnosticsProperty('memberId', memberId))
       ..add(DiagnosticsProperty('scheduleId', scheduleId))
-      ..add(DiagnosticsProperty('eventDate', eventDate))
+      ..add(DiagnosticsProperty('instanceDate', instanceDate))
       ..add(DiagnosticsProperty('selectedOption', selectedOption))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('updatedAt', updatedAt));
@@ -221,8 +221,8 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
                 other.memberId == memberId) &&
             (identical(other.scheduleId, scheduleId) ||
                 other.scheduleId == scheduleId) &&
-            (identical(other.eventDate, eventDate) ||
-                other.eventDate == eventDate) &&
+            (identical(other.instanceDate, instanceDate) ||
+                other.instanceDate == instanceDate) &&
             (identical(other.selectedOption, selectedOption) ||
                 other.selectedOption == selectedOption) &&
             (identical(other.createdAt, createdAt) ||
@@ -233,8 +233,8 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, memberId, scheduleId, eventDate,
-      selectedOption, createdAt, updatedAt);
+  int get hashCode => Object.hash(runtimeType, memberId, scheduleId,
+      instanceDate, selectedOption, createdAt, updatedAt);
 
   /// Create a copy of Reply
   /// with the given fields replaced by the non-null parameter values.
@@ -256,7 +256,7 @@ abstract class _Reply implements Reply {
   const factory _Reply(
       {required final int memberId,
       required final int scheduleId,
-      required final DateTime eventDate,
+      required final DateTime instanceDate,
       required final ReplyOptions selectedOption,
       final DateTime? createdAt,
       final DateTime? updatedAt}) = _$ReplyImpl;
@@ -268,7 +268,7 @@ abstract class _Reply implements Reply {
   @override
   int get scheduleId;
   @override
-  DateTime get eventDate;
+  DateTime get instanceDate;
   @override
   ReplyOptions get selectedOption;
   @override

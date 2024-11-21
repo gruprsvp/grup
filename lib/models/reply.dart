@@ -4,6 +4,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'enum.dart';
 
 part 'reply.freezed.dart';
+
 part 'reply.g.dart';
 
 @freezed
@@ -12,7 +13,7 @@ sealed class Reply with _$Reply {
   const factory Reply({
     required int memberId,
     required int scheduleId,
-    required DateTime eventDate,
+    required DateTime instanceDate,
     required ReplyOptions selectedOption,
     DateTime? createdAt,
     DateTime? updatedAt,

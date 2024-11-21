@@ -54,22 +54,22 @@ void main() {
         Reply(
             memberId: 32,
             scheduleId: dailySchedule.id,
-            eventDate: sunday,
+            instanceDate: sunday,
             selectedOption: ReplyOptions.no),
         Reply(
             memberId: 33,
             scheduleId: dailySchedule.id,
-            eventDate: sunday,
+            instanceDate: sunday,
             selectedOption: ReplyOptions.no),
         Reply(
             memberId: 32,
             scheduleId: dailySchedule.id,
-            eventDate: saturday,
+            instanceDate: saturday,
             selectedOption: ReplyOptions.no),
         Reply(
             memberId: 32,
             scheduleId: weekendSchedule.id,
-            eventDate: sunday,
+            instanceDate: sunday,
             selectedOption: ReplyOptions.yes),
       ];
 
@@ -77,7 +77,7 @@ void main() {
         schedule: dailySchedule,
         defaultReplies: defaultReplies,
         replies: replies,
-        startDate: startDate,
+        startDate: startDate.subtract(const Duration(days: 10)),
         endDate: endDate,
         targetMemberId: 32,
       );
@@ -86,12 +86,12 @@ void main() {
       expect(result, hasLength(testDays));
 
       final sundayInstance =
-          result.singleWhere((element) => element.eventDate == sunday);
+          result.singleWhere((element) => element.instanceDate == sunday);
       expect(sundayInstance.myReply, ReplyOptions.no);
       expect(sundayInstance.yesCount, 0);
 
       final saturdayInstance =
-          result.singleWhere((element) => element.eventDate == saturday);
+          result.singleWhere((element) => element.instanceDate == saturday);
       expect(saturdayInstance.myReply, ReplyOptions.no);
       expect(saturdayInstance.yesCount, 1);
     });

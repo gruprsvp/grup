@@ -64,14 +64,14 @@ sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required ValueChanged<DateTime> onDateChanged,
     DateTime? selectedDate,
-    Iterable<ScheduleSummary>? schedules,
+    Iterable<ScheduleInstanceSummary>? schedules,
     OnReplyChangedCallback? onReplyChanged,
   }) = __ViewModel;
 
   static _ViewModel fromStore(Store<AppState> store, int groupId) {
     return _ViewModel(
       selectedDate: store.state.selectedDate,
-      schedules: selectSchedulesForSelectedDate(store.state),
+      schedules: selectScheduleInstancesForSelectedDate(store.state),
       onDateChanged: (value) => store.dispatch(SelectDateAction(value)),
       onReplyChanged: (schedule, reply) {
         if (schedule.targetMemberId == null) {
@@ -81,13 +81,13 @@ sealed class _ViewModel with _$ViewModel {
           store.dispatch(RequestDeleteReplyAction(
             memberId: schedule.targetMemberId!,
             scheduleId: schedule.scheduleId,
-            eventDate: schedule.eventDate,
+            instanceDate: schedule.instanceDate,
           ));
         } else {
           store.dispatch(RequestUpdateOne(Reply(
               memberId: schedule.targetMemberId!,
               scheduleId: schedule.scheduleId,
-              eventDate: schedule.eventDate,
+              instanceDate: schedule.instanceDate,
               selectedOption: reply)));
         }
       },
