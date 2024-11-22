@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
@@ -31,14 +30,9 @@ class GroupDetailsScreen extends StatelessWidget {
         body: Column(
           children: [
             const DateDropdownContainer(),
-            ...(groupDescription != null ? [Text(groupDescription)] : []),
-            ...(groupId != null
-                ? [
-                    Expanded(
-                      child: SchedulesListContainer(groupId: groupId),
-                    )
-                  ]
-                : []),
+            if (groupDescription != null) Text(groupDescription),
+            if (groupId != null)
+              Expanded(child: SchedulesListContainer(groupId: groupId)),
           ],
         ),
         floatingActionButton: isAdmin && groupIdStr != null
