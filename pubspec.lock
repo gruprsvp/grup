@@ -206,6 +206,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.3"
+  circle_flags:
+    dependency: transitive
+    description:
+      name: circle_flags
+      sha256: "875cd64e607b46838ce429e2f7cc88c615f8514181d2d0f9e73de37ba3fb2f52"
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.0"
   cli_util:
     dependency: transitive
     description:
@@ -246,14 +254,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.1.1"
-  country_pickers:
-    dependency: transitive
-    description:
-      name: country_pickers
-      sha256: b10f6618fa64fbba02ffc4ad1b84dc0ca071cc206e5376de1698bddd980b355a
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.1"
   coverage:
     dependency: transitive
     description:
@@ -310,6 +310,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.0"
+  diacritic:
+    dependency: transitive
+    description:
+      name: diacritic
+      sha256: "12981945ec38931748836cd76f2b38773118d0baef3c68404bdfde9566147876"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.6"
   dynamic_color:
     dependency: "direct main"
     description:
@@ -412,6 +420,14 @@ packages:
       url: "https://github.com/Tradewind-apps/flutter_contacts"
     source: git
     version: "1.1.8"
+  flutter_country_selector:
+    dependency: transitive
+    description:
+      name: flutter_country_selector
+      sha256: "71e06142b71fd9f645ec7aa1817e0468974d971258d829549f42f2d39250888a"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.0.13"
   flutter_driver:
     dependency: transitive
     description: flutter
@@ -478,6 +494,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.10.0"
+  flutter_svg:
+    dependency: transitive
+    description:
+      name: flutter_svg
+      sha256: "936d9c1c010d3e234d1672574636f3352b4941ca3decaddd3cafaeb9ad49c471"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.15"
   flutter_test:
     dependency: "direct dev"
     description: flutter
@@ -496,15 +520,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "10.7.0"
-  form_builder_phone_field:
-    dependency: "direct main"
-    description:
-      path: "."
-      ref: main
-      resolved-ref: ac0ac5e0caec1b58116da817095cf8d016becc1d
-      url: "https://github.com/flutter-form-builder-ecosystem/form_builder_phone_field.git"
-    source: git
-    version: "2.0.1"
   form_builder_validators:
     dependency: "direct main"
     description:
@@ -947,6 +962,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.9.0"
+  path_parsing:
+    dependency: transitive
+    description:
+      name: path_parsing
+      sha256: "883402936929eac138ee0a45da5b0f2c80f89913e6dc3bf77eb65b84b409c6ca"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.0"
   path_provider:
     dependency: transitive
     description:
@@ -1011,14 +1034,22 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "6.0.2"
-  phone_number:
-    dependency: transitive
+  phone_form_field:
+    dependency: "direct main"
     description:
-      name: phone_number
-      sha256: c66d3e2f2c69ce95f10bb923957049b1e5b8c6efea02d7366353fa3b80d4338a
+      name: phone_form_field
+      sha256: d7c12db98925c61d24210cad6ba749e19a4458d461c4b0f6523b6f55be76ef7d
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "10.0.1"
+  phone_numbers_parser:
+    dependency: transitive
+    description:
+      name: phone_numbers_parser
+      sha256: "75986ce6185a601afcb791f79a650bbcb438c5672482da7efa40f0002a57cc74"
+      url: "https://pub.dev"
+    source: hosted
+    version: "9.0.2"
   platform:
     dependency: transitive
     description:
@@ -1569,6 +1600,30 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "4.5.1"
+  vector_graphics:
+    dependency: transitive
+    description:
+      name: vector_graphics
+      sha256: "27d5fefe86fb9aace4a9f8375b56b3c292b64d8c04510df230f849850d912cb7"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.15"
+  vector_graphics_codec:
+    dependency: transitive
+    description:
+      name: vector_graphics_codec
+      sha256: "2430b973a4ca3c4dbc9999b62b8c719a160100dcbae5c819bae0cacce32c9cdb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.12"
+  vector_graphics_compiler:
+    dependency: transitive
+    description:
+      name: vector_graphics_compiler
+      sha256: ab9ff38fc771e9ee1139320adbe3d18a60327370c218c60752068ebee4b49ab1
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.15"
   vector_math:
     dependency: transitive
     description:

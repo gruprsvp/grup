@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:form_builder_phone_field/form_builder_phone_field.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parousia/models/models.dart';
+import 'package:phone_form_field/phone_form_field.dart';
 
 class CreateContactsScreen extends StatefulWidget {
   const CreateContactsScreen({super.key});
@@ -61,56 +60,51 @@ class ContactForm extends StatefulWidget {
 }
 
 class _ContactFormState extends State<ContactForm> {
-  final _formKey = GlobalKey<FormBuilderState>();
+  final _formKey = GlobalKey<FormState>();
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
-  final _phoneController = TextEditingController();
+  final _phoneController = PhoneController();
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return FormBuilder(
+    return Form(
       key: _formKey,
+      autovalidateMode: AutovalidateMode.onUserInteraction,
       onChanged: () {
-        if (_formKey.currentState?.validate(focusOnInvalid: false) ?? false) {
+        if (_formKey.currentState?.validate() ?? false) {
           final name = _nameController.text.trim();
           final email = _emailController.text.trim();
-          final phone = _phoneController.text.trim();
+          final phone = _phoneController.value.international;
 
           widget.onChanged?.call(ContactInvite(
             displayNameOverride: name,
             invites: [
-              ...(email.isNotEmpty ? [(InviteMethods.email, email)] : []),
-              ...(phone.isNotEmpty ? [(InviteMethods.phone, phone)] : []),
+              if (email.isNotEmpty) (InviteMethods.email, email),
+              if (phone.isNotEmpty) (InviteMethods.phone, phone),
             ],
           ));
         }
       },
       child: Column(
         children: [
-          FormBuilderTextField(
-            name: 'name',
+          TextFormField(
             controller: _nameController,
-            autocorrect: true,
             validator: FormBuilderValidators.required(),
             decoration: InputDecoration(
               labelText: l10n.contactName,
             ),
           ),
-          FormBuilderTextField(
-            name: 'email',
+          TextFormField(
             controller: _emailController,
-            autocorrect: true,
             validator: FormBuilderValidators.email(checkNullOrEmpty: false),
             decoration: InputDecoration(
               labelText: l10n.contactEmail,
             ),
           ),
-          FormBuilderPhoneField(
-            name: 'phone',
+          PhoneFormField(
             controller: _phoneController,
-            autocorrect: true,
             decoration: InputDecoration(
               labelText: l10n.contactPhone,
             ),
