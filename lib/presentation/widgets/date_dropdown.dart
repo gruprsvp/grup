@@ -27,16 +27,13 @@ class DateDropdown extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Expanded(
-          child: ListTile(
-            title: Text(date != null ? _dateFormat.format(date!) : ''),
-            leading: const Icon(Icons.event),
-            onTap: () => _selectDate(context),
-          ),
-        ),
-      ],
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 16),
+      child: ElevatedButton.icon(
+        icon: const Icon(Icons.event),
+        label: Text(date != null ? _dateFormat.format(date!) : ''),
+        onPressed: () => _selectDate(context),
+      ),
     );
   }
 }
