@@ -35,8 +35,6 @@ target 'Runner' do
   target 'RunnerTests' do
     inherit! :search_paths
   end
-
-  pod 'PhoneNumberKit/PhoneNumberKitCore', :git => 'https://github.com/marmelroy/PhoneNumberKit', :tag => '3.6.6'
 end
 
 post_install do |installer|
