@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "appforit-util"
+version = "0.1.0"
+description = ""
+authors = ["Giorgio Azzinnaro <giorgio@azzinna.ro>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.13"
+google-cloud-firestore = "^2.19.0"
+supabase = "^2.10.0"
+pandas = "^2.2.3"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
