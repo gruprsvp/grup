@@ -36,6 +36,7 @@
   "gallery": "Galerie",
   "groupDismissAdmin": "Révoque l'admin",
   "groupMakeAdmin": "Rend admin du groupe",
+  "groupManage": "Gère le groupe",
   "grantPermission": "Donne la permission",
   "groupRemoveMember": "Retire du groupe",
   "groupRemoveConfirmation": "Es-tu sûr de vouloir retirer ce membre du groupe?",

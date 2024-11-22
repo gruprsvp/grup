@@ -81,6 +81,7 @@ dependencies:
   base32: ^2.1.3
   collection: ^1.18.0
   dynamic_color: ^1.6.8
+  flutter_native_splash: ^2.4.2
   font_awesome_flutter: ^10.6.0
   mime: ^1.0.4
   memoized: ^2.2.6
@@ -90,7 +91,6 @@ dependencies:
   # Widgetbook
   widgetbook_annotation: ^3.1.0
   widgetbook: ^3.6.0
-  flutter_native_splash: ^2.4.2
 
 
 dev_dependencies:

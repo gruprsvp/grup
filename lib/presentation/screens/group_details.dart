@@ -20,30 +20,34 @@ class GroupDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final groupId = group?.id;
+    final groupIdStr = groupId?.toString();
+    final groupDescription = group?.description;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(group?.displayName ?? l10n.loading),
-        actions: [
-          isAdmin
-              ? IconButton(
-                  onPressed: () =>
-                      GroupManageRoute(groupId: group!.id.toString())
-                          .push(context),
-                  icon: const FaIcon(FontAwesomeIcons.penToSquare),
-                )
-              : Container()
-        ],
-      ),
-      body: Column(
-        children: [
-          const DateDropdownContainer(),
-          ...(group?.description != null ? [Text(group!.description!)] : []),
-          Expanded(
-            child: SchedulesListContainer(groupId: group!.id),
-          )
-        ],
-      ),
-    );
+        appBar: AppBar(
+          title: Text(group?.displayName ?? l10n.loading),
+        ),
+        body: Column(
+          children: [
+            const DateDropdownContainer(),
+            ...(groupDescription != null ? [Text(groupDescription)] : []),
+            ...(groupId != null
+                ? [
+                    Expanded(
+                      child: SchedulesListContainer(groupId: groupId),
+                    )
+                  ]
+                : []),
+          ],
+        ),
+        floatingActionButton: isAdmin && groupIdStr != null
+            ? FloatingActionButton.extended(
+                onPressed: () =>
+                    GroupManageRoute(groupId: groupIdStr).push(context),
+                label: Text(l10n.groupManage),
+                icon: const Icon(Icons.edit),
+              )
+            : null);
   }
 }
