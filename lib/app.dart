@@ -10,6 +10,7 @@ import 'package:parousia/router.dart';
 import 'package:parousia/selectors/selectors.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
+import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 
 part 'app.freezed.dart';
 
@@ -53,6 +54,7 @@ class ParApp extends StatelessWidget {
               localizationsDelegates: const [
                 ...AppLocalizations.localizationsDelegates,
                 FormBuilderLocalizations.delegate,
+                SupabaseAuthUILocalizations.delegate,
               ],
               supportedLocales: AppLocalizations.supportedLocales,
               themeMode: vm.themeMode,
