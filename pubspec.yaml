@@ -133,13 +133,17 @@ dependency_overrides:
   # - https://github.com/careapp-inc/dart_redux_entity/pull/12
   redux_entity:
     git:
-      url: https://github.com/careapp-group/dart_redux_entity.git
+      url: https://github.com/careapp-group/dart_redux_entity
       ref: master
   # Waiting for a definitive fix for https://github.com/QuisApp/flutter_contacts/issues/169
   flutter_contacts:
     git:
       url: https://github.com/Tradewind-apps/flutter_contacts
       ref: pb/fix-incompatible-java-version-target
+  supabase_auth_ui:
+    git:
+      url: https://github.com/sealambda/flutter-auth-ui
+      ref: fork
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
