@@ -2,7 +2,6 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parousia/go_router_builder.dart';
-import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/util/config.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 import 'package:universal_html/html.dart' as html;
@@ -25,7 +24,10 @@ class AuthScreen extends StatelessWidget {
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(children: [
-          EmailOrPhoneAuth(),
+          SupaPasswordAuth(
+            onSignInComplete: onSuccess,
+            onSignUpComplete: onSuccess,
+          ),
           Divider(height: 64),
           SupaSocialsAuth(
             socialProviders: [OAuthProvider.apple, OAuthProvider.google],

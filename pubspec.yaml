@@ -143,7 +143,7 @@ dependency_overrides:
   supabase_auth_ui:
     git:
       url: https://github.com/sealambda/flutter-auth-ui
-      ref: fork
+      ref: main
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
