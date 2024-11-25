@@ -4,6 +4,7 @@ import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/util/util.dart';
 
 enum _InviteSource { contacts, manually }
@@ -127,7 +128,7 @@ class GroupMembers extends StatelessWidget {
                   });
             },
           )
-        : Image.asset('assets/images/seeyoulateralligator.webp');
+        : AddMembersEmptyState();
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
