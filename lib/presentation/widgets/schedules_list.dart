@@ -22,17 +22,19 @@ class SchedulesList extends StatelessWidget {
       return const Center(child: CircularProgressIndicator.adaptive());
     }
 
-    return ListView.builder(
-      itemCount: schedules!.length,
-      itemBuilder: (context, index) => ScheduleTile(
-        schedule: schedules!.elementAt(index),
-        onReplyChanged: (reply) =>
-            onReplyChanged?.call(schedules!.elementAt(index), reply),
-        onScheduleTapped: (schedule) => GroupScheduleDetailsRoute(
-                groupId: schedule.groupId.toString(),
-                scheduleId: schedule.scheduleId.toString())
-            .push(context),
-      ),
-    );
+    return schedules?.isNotEmpty ?? false
+        ? ListView.builder(
+            itemCount: schedules!.length,
+            itemBuilder: (context, index) => ScheduleTile(
+              schedule: schedules!.elementAt(index),
+              onReplyChanged: (reply) =>
+                  onReplyChanged?.call(schedules!.elementAt(index), reply),
+              onScheduleTapped: (schedule) => GroupScheduleDetailsRoute(
+                      groupId: schedule.groupId.toString(),
+                      scheduleId: schedule.scheduleId.toString())
+                  .push(context),
+            ),
+          )
+        : AddEventsEmptyState();
   }
 }
