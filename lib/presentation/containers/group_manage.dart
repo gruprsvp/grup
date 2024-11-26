@@ -6,6 +6,7 @@ import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
+import 'package:redux_entity/redux_entity.dart';
 
 part 'group_manage.freezed.dart';
 
@@ -25,6 +26,7 @@ class GroupManageContainer extends StatelessWidget {
       builder: (context, vm) => GroupManageScreen(
         loading: vm.loading,
         group: vm.group,
+        onDelete: vm.onDelete,
       ),
     );
   }
@@ -35,6 +37,7 @@ sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required bool loading,
     Group? group,
+    required ValueSetter<int> onDelete,
   }) = __ViewModel;
 
   static _ViewModel fromStore(Store<AppState> store, String groupId) {
@@ -45,6 +48,8 @@ sealed class _ViewModel with _$ViewModel {
       loading: store.state.groups.creating ||
           store.state.groups.loadingAll ||
           (store.state.groups.loadingIds[groupId] ?? false),
+      onDelete: (groupId) =>
+          store.dispatch(RequestDeleteOne<Group>(groupId.toString())),
     );
   }
 }

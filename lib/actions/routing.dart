@@ -9,8 +9,8 @@ class NavigatePushAction {
 }
 
 @immutable
-class NavigatePopAction {
-  const NavigatePopAction(this.location);
+class NavigateReplaceAction {
+  const NavigateReplaceAction(this.location);
 
-  final String? location;
+  final String location;
 }
