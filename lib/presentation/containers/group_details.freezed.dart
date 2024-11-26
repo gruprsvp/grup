@@ -19,6 +19,7 @@ mixin _$ViewModel {
   bool get loading => throw _privateConstructorUsedError;
   bool get isAdmin => throw _privateConstructorUsedError;
   Group? get group => throw _privateConstructorUsedError;
+  dynamic Function(int) get onDelete => throw _privateConstructorUsedError;
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -33,7 +34,11 @@ abstract class _$ViewModelCopyWith<$Res> {
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call({bool loading, bool isAdmin, Group? group});
+  $Res call(
+      {bool loading,
+      bool isAdmin,
+      Group? group,
+      dynamic Function(int) onDelete});
 
   $GroupCopyWith<$Res>? get group;
 }
@@ -56,6 +61,7 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
     Object? loading = null,
     Object? isAdmin = null,
     Object? group = freezed,
+    Object? onDelete = null,
   }) {
     return _then(_value.copyWith(
       loading: null == loading
@@ -70,6 +76,10 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as Group?,
+      onDelete: null == onDelete
+          ? _value.onDelete
+          : onDelete // ignore: cast_nullable_to_non_nullable
+              as dynamic Function(int),
     ) as $Val);
   }
 
@@ -96,7 +106,11 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool loading, bool isAdmin, Group? group});
+  $Res call(
+      {bool loading,
+      bool isAdmin,
+      Group? group,
+      dynamic Function(int) onDelete});
 
   @override
   $GroupCopyWith<$Res>? get group;
@@ -118,6 +132,7 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     Object? loading = null,
     Object? isAdmin = null,
     Object? group = freezed,
+    Object? onDelete = null,
   }) {
     return _then(_$_ViewModelImpl(
       loading: null == loading
@@ -132,6 +147,10 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as Group?,
+      onDelete: null == onDelete
+          ? _value.onDelete
+          : onDelete // ignore: cast_nullable_to_non_nullable
+              as dynamic Function(int),
     ));
   }
 }
@@ -140,7 +159,10 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   const _$_ViewModelImpl(
-      {required this.loading, required this.isAdmin, this.group});
+      {required this.loading,
+      required this.isAdmin,
+      this.group,
+      required this.onDelete});
 
   @override
   final bool loading;
@@ -148,10 +170,12 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   final bool isAdmin;
   @override
   final Group? group;
+  @override
+  final dynamic Function(int) onDelete;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(loading: $loading, isAdmin: $isAdmin, group: $group)';
+    return '_ViewModel(loading: $loading, isAdmin: $isAdmin, group: $group, onDelete: $onDelete)';
   }
 
   @override
@@ -161,7 +185,8 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
       ..add(DiagnosticsProperty('type', '_ViewModel'))
       ..add(DiagnosticsProperty('loading', loading))
       ..add(DiagnosticsProperty('isAdmin', isAdmin))
-      ..add(DiagnosticsProperty('group', group));
+      ..add(DiagnosticsProperty('group', group))
+      ..add(DiagnosticsProperty('onDelete', onDelete));
   }
 
   @override
@@ -171,11 +196,14 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
             other is _$_ViewModelImpl &&
             (identical(other.loading, loading) || other.loading == loading) &&
             (identical(other.isAdmin, isAdmin) || other.isAdmin == isAdmin) &&
-            (identical(other.group, group) || other.group == group));
+            (identical(other.group, group) || other.group == group) &&
+            (identical(other.onDelete, onDelete) ||
+                other.onDelete == onDelete));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, loading, isAdmin, group);
+  int get hashCode =>
+      Object.hash(runtimeType, loading, isAdmin, group, onDelete);
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -190,7 +218,8 @@ abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
       {required final bool loading,
       required final bool isAdmin,
-      final Group? group}) = _$_ViewModelImpl;
+      final Group? group,
+      required final dynamic Function(int) onDelete}) = _$_ViewModelImpl;
 
   @override
   bool get loading;
@@ -198,6 +227,8 @@ abstract class __ViewModel implements _ViewModel {
   bool get isAdmin;
   @override
   Group? get group;
+  @override
+  dynamic Function(int) get onDelete;
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.

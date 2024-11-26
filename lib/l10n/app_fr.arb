@@ -18,6 +18,8 @@
   "createNewGroup": "Crée un nouveau groupe",
   "createOrJoinGroup": "Crée ou rejoins un groupe",
   "delete": "Supprime",
+  "deleteGroup": "Supprime le groupe",
+  "deleteGroupConfirmation": "Es-tu sûr de vouloir supprimer ce groupe?",
   "deleteProfile": "Supprime le profil",
   "deleteProfileConfirmation": "Es-tu sûr de vouloir supprimer ton profil?",
   "deleteSchedule": "Supprime l'événement",

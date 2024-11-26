@@ -1,4 +1,5 @@
 import 'package:parousia/actions/actions.dart';
+import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/state/state.dart';
@@ -12,11 +13,13 @@ createGroupsEpics(GroupsRepository groups) => combineEpics<AppState>([
       _createRetrieveOneGroupEpic(groups),
       _createCreateOneGroupEpic(groups),
       _createUpdateOneGroupEpic(groups),
+      _createDeleteOneGroupEpic(groups),
       _reloadGroupOnScheduleDateChange,
       _loadGroupsOnSignInEpic,
       _loadGroupsOnAppInitEpic,
       _loadGroupsOnInviteCodeUseEpic,
-      _loadGroupOnGroupDetailsOpenEpic
+      _loadGroupOnGroupDetailsOpenEpic,
+      _navigateToHomePageEpic,
     ]);
 
 /// Once the user signs in, request to load all the groups
@@ -87,6 +90,7 @@ Epic<AppState> _createRetrieveAllGroupsEpic(GroupsRepository groups) {
       );
 }
 
+/// Retrieve a single group
 Epic<AppState> _createRetrieveOneGroupEpic(GroupsRepository groups) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestRetrieveOne<Group>>().asyncMap(
@@ -98,6 +102,7 @@ Epic<AppState> _createRetrieveOneGroupEpic(GroupsRepository groups) {
           );
 }
 
+/// Create a group
 Epic<AppState> _createCreateOneGroupEpic(GroupsRepository groups) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
       .whereType<RequestCreateOne<Group>>()
@@ -110,6 +115,7 @@ Epic<AppState> _createCreateOneGroupEpic(GroupsRepository groups) {
       );
 }
 
+/// Update a group
 Epic<AppState> _createUpdateOneGroupEpic(GroupsRepository groups) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
       .whereType<RequestUpdateOne<Group>>()
@@ -121,3 +127,23 @@ Epic<AppState> _createUpdateOneGroupEpic(GroupsRepository groups) {
                 (error) => FailUpdateOne(entity: action.entity, error: error)),
       );
 }
+
+/// Delete a group
+Epic<AppState> _createDeleteOneGroupEpic(GroupsRepository groups) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
+      .whereType<RequestDeleteOne<Group>>()
+      .asyncMap(
+        (action) => groups
+            .deleteGroup(int.parse(action.id))
+            .then<dynamic>((_) => SuccessDeleteOne<Group>(action.id))
+            .catchError(
+                (error) => FailDeleteOne<Group>(id: action.id, error: error)),
+      );
+}
+
+/// When a group is deleted, redirect to the home page
+Stream<dynamic> _navigateToHomePageEpic(
+        Stream<dynamic> actions, EpicStore<AppState> store) =>
+    actions
+        .whereType<SuccessDeleteOne<Group>>()
+        .map((action) => NavigatePopAction(HomeScreenRoute().location));
