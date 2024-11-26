@@ -7,3 +7,10 @@ class NavigatePushAction {
   final String location;
   final Object? extra;
 }
+
+@immutable
+class NavigatePopAction {
+  const NavigatePopAction(this.location);
+
+  final String? location;
+}

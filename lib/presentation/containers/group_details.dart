@@ -8,6 +8,7 @@ import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/selectors/members.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
+import 'package:redux_entity/redux_entity.dart';
 
 part 'group_details.freezed.dart';
 
@@ -29,6 +30,7 @@ class GroupDetailsContainer extends StatelessWidget {
         loading: vm.loading,
         group: vm.group,
         isAdmin: vm.isAdmin,
+        onDelete: vm.onDelete,
       ),
     );
   }
@@ -40,6 +42,7 @@ sealed class _ViewModel with _$ViewModel {
     required bool loading,
     required bool isAdmin,
     Group? group,
+    required Function(int) onDelete,
   }) = __ViewModel;
 
   static _ViewModel fromStore(Store<AppState> store, String groupId) {
@@ -48,6 +51,8 @@ sealed class _ViewModel with _$ViewModel {
           (store.state.groups.loadingIds[groupId] ?? false),
       group: store.state.groups.entities[groupId],
       isAdmin: selectIsAdmin(store.state),
+      onDelete: (groupId) =>
+          store.dispatch(RequestDeleteOne<Group>(groupId.toString())),
     );
   }
 }
