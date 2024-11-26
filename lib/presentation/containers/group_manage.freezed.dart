@@ -18,6 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ViewModel {
   bool get loading => throw _privateConstructorUsedError;
   Group? get group => throw _privateConstructorUsedError;
+  ValueSetter<int> get onDelete => throw _privateConstructorUsedError;
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -32,7 +33,7 @@ abstract class _$ViewModelCopyWith<$Res> {
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call({bool loading, Group? group});
+  $Res call({bool loading, Group? group, ValueSetter<int> onDelete});
 
   $GroupCopyWith<$Res>? get group;
 }
@@ -54,6 +55,7 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   $Res call({
     Object? loading = null,
     Object? group = freezed,
+    Object? onDelete = null,
   }) {
     return _then(_value.copyWith(
       loading: null == loading
@@ -64,6 +66,10 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as Group?,
+      onDelete: null == onDelete
+          ? _value.onDelete
+          : onDelete // ignore: cast_nullable_to_non_nullable
+              as ValueSetter<int>,
     ) as $Val);
   }
 
@@ -90,7 +96,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool loading, Group? group});
+  $Res call({bool loading, Group? group, ValueSetter<int> onDelete});
 
   @override
   $GroupCopyWith<$Res>? get group;
@@ -111,6 +117,7 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
   $Res call({
     Object? loading = null,
     Object? group = freezed,
+    Object? onDelete = null,
   }) {
     return _then(_$_ViewModelImpl(
       loading: null == loading
@@ -121,6 +128,10 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
               as Group?,
+      onDelete: null == onDelete
+          ? _value.onDelete
+          : onDelete // ignore: cast_nullable_to_non_nullable
+              as ValueSetter<int>,
     ));
   }
 }
@@ -128,16 +139,19 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 /// @nodoc
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
-  const _$_ViewModelImpl({required this.loading, this.group});
+  const _$_ViewModelImpl(
+      {required this.loading, this.group, required this.onDelete});
 
   @override
   final bool loading;
   @override
   final Group? group;
+  @override
+  final ValueSetter<int> onDelete;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(loading: $loading, group: $group)';
+    return '_ViewModel(loading: $loading, group: $group, onDelete: $onDelete)';
   }
 
   @override
@@ -146,7 +160,8 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
     properties
       ..add(DiagnosticsProperty('type', '_ViewModel'))
       ..add(DiagnosticsProperty('loading', loading))
-      ..add(DiagnosticsProperty('group', group));
+      ..add(DiagnosticsProperty('group', group))
+      ..add(DiagnosticsProperty('onDelete', onDelete));
   }
 
   @override
@@ -155,11 +170,13 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
         (other.runtimeType == runtimeType &&
             other is _$_ViewModelImpl &&
             (identical(other.loading, loading) || other.loading == loading) &&
-            (identical(other.group, group) || other.group == group));
+            (identical(other.group, group) || other.group == group) &&
+            (identical(other.onDelete, onDelete) ||
+                other.onDelete == onDelete));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, loading, group);
+  int get hashCode => Object.hash(runtimeType, loading, group, onDelete);
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -171,13 +188,17 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 }
 
 abstract class __ViewModel implements _ViewModel {
-  const factory __ViewModel({required final bool loading, final Group? group}) =
-      _$_ViewModelImpl;
+  const factory __ViewModel(
+      {required final bool loading,
+      final Group? group,
+      required final ValueSetter<int> onDelete}) = _$_ViewModelImpl;
 
   @override
   bool get loading;
   @override
   Group? get group;
+  @override
+  ValueSetter<int> get onDelete;
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.

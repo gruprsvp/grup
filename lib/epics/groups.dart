@@ -146,4 +146,4 @@ Stream<dynamic> _navigateToHomePageEpic(
         Stream<dynamic> actions, EpicStore<AppState> store) =>
     actions
         .whereType<SuccessDeleteOne<Group>>()
-        .map((action) => NavigatePopAction(HomeScreenRoute().location));
+        .map((action) => NavigateReplaceAction(HomeScreenRoute().location));
