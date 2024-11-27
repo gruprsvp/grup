@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/widgets/widgets.dart';
 import 'package:rrule/rrule.dart';
@@ -49,8 +50,6 @@ class _ScheduleMemberTileState extends State<ScheduleMemberTile> {
 
   /// Shows a confirmation action sheet to define the default reply.
   _confirmDefaultReply(BuildContext context, ReplyOptions reply) async {
-    final nav = Navigator.of(context);
-
     setState(() {
       previousDefaultOption = selectedDefaultOption;
     });
@@ -61,7 +60,7 @@ class _ScheduleMemberTileState extends State<ScheduleMemberTile> {
         selectedDefaultOption: selectedDefaultOption,
         onOptionTap: (option) {
           if (option == null) {
-            nav.pop(false);
+            context.pop(false);
             return;
           }
 
@@ -69,7 +68,7 @@ class _ScheduleMemberTileState extends State<ScheduleMemberTile> {
             selectedDefaultOption =
                 (selectedDefaultOption != option) ? option : null;
           });
-          nav.pop(true);
+          context.pop(true);
         },
       ),
     );
