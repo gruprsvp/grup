@@ -78,7 +78,7 @@ sealed class _ViewModel with _$ViewModel {
         }
       },
       onDefaultReplyChanged:
-          (defaultOption, targetMemberId, scheduleId, reply) {
+          (defaultOption, scheduleId, targetMemberId, reply) {
         if (defaultOption == null) {
           store.dispatch(RequestDeleteDefaultReplyAction(
             memberId: targetMemberId,

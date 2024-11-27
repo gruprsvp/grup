@@ -10,6 +10,10 @@ import 'package:rrule/rrule.dart';
 typedef OnDetailsReplyChangedCallback = void Function(
     ScheduleInstanceDetails, int, ReplyOptions?);
 
+// ! This kind of function signature is super risky, as it's easy to mix up the
+// ! order of the arguments. It's better to use a data class or a map instead.
+//   TODO(giorgio): I actually just fixed a bug because of this!
+//   I should refactor this to use either branded types or a map.
 typedef OnDetailsDefaultReplyChangedCallback = void Function(
     RecurrenceRule?, int, int, ReplyOptions);
 
