@@ -26,7 +26,7 @@ class GroupScheduleDetailsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
       distinct: true,
-      converter: (store) => _ViewModel.fromStore(store, groupId, scheduleId),
+      converter: (store) => _ViewModel.fromStore(store, groupId),
       onInit: (store) =>
           store.dispatch(GroupScheduleDetailsOpenAction(scheduleId)),
       builder: (context, vm) => GroupScheduleDetailsScreen(
@@ -34,6 +34,7 @@ class GroupScheduleDetailsContainer extends StatelessWidget {
         group: vm.group,
         scheduleInstance: vm.scheduleInstance,
         onReplyChanged: vm.onReplyChanged,
+        onDefaultReplyChanged: vm.onDefaultReplyChanged,
       ),
     );
   }
@@ -46,10 +47,10 @@ sealed class _ViewModel with _$ViewModel {
     Group? group,
     ScheduleInstanceDetails? scheduleInstance,
     OnDetailsReplyChangedCallback? onReplyChanged,
+    OnDetailsDefaultReplyChangedCallback? onDefaultReplyChanged,
   }) = __ViewModel;
 
-  static _ViewModel fromStore(
-      Store<AppState> store, String groupId, String scheduleId) {
+  static _ViewModel fromStore(Store<AppState> store, String groupId) {
     final group = store.state.groups.entities[groupId];
 
     if (group == null) {
@@ -74,6 +75,21 @@ sealed class _ViewModel with _$ViewModel {
               scheduleId: schedule.scheduleId,
               instanceDate: schedule.instanceDate,
               selectedOption: reply)));
+        }
+      },
+      onDefaultReplyChanged:
+          (defaultOption, targetMemberId, scheduleId, reply) {
+        if (defaultOption == null) {
+          store.dispatch(RequestDeleteDefaultReplyAction(
+            memberId: targetMemberId,
+            scheduleId: scheduleId,
+          ));
+        } else {
+          store.dispatch(RequestUpdateOne(DefaultReply(
+              memberId: targetMemberId,
+              scheduleId: scheduleId,
+              selectedOption: reply,
+              recurrenceRule: defaultOption)));
         }
       },
     );

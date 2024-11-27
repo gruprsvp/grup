@@ -3,11 +3,15 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
+import 'package:rrule/rrule.dart';
 
 // The target member ID is the ID of the member that the user is replying for,
 // which is not necessarily the user's own ID in the details screen.
 typedef OnDetailsReplyChangedCallback = void Function(
     ScheduleInstanceDetails, int, ReplyOptions?);
+
+typedef OnDetailsDefaultReplyChangedCallback = void Function(
+    RecurrenceRule?, int, int, ReplyOptions);
 
 class GroupScheduleDetailsScreen extends StatelessWidget {
   final datetimeFormat = DateFormat.yMMMd()..add_jm();
@@ -16,6 +20,7 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
   final Group? group;
   final ScheduleInstanceDetails? scheduleInstance;
   final OnDetailsReplyChangedCallback? onReplyChanged;
+  final OnDetailsDefaultReplyChangedCallback? onDefaultReplyChanged;
 
   GroupScheduleDetailsScreen({
     super.key,
@@ -23,6 +28,7 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
     this.group,
     this.scheduleInstance,
     this.onReplyChanged,
+    this.onDefaultReplyChanged,
   });
 
   @override
@@ -41,26 +47,36 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
                 ? Text(datetimeFormat.format(scheduleInstance!.instanceDate))
                 : Text(l10n.loading),
           ),
-          ListTile(
-            title: Text(l10n.you),
-            trailing: ReplyButton(
-              myReply: scheduleInstance?.myReply,
-              onReplyChanged: (reply) => onReplyChanged?.call(
-                  scheduleInstance!, scheduleInstance!.targetMemberId!, reply),
-            ),
+          ScheduleMemberTile(
+            name: l10n.you,
+            myReply: scheduleInstance?.myReply,
+            myDefaultOption: scheduleInstance?.myDefaultOption,
+            onReplyChanged: (reply) => onReplyChanged?.call(
+                scheduleInstance!, scheduleInstance!.targetMemberId!, reply),
+            onDefaultReplyChanged: (defaultOption, reply) =>
+                onDefaultReplyChanged?.call(
+                    defaultOption,
+                    scheduleInstance!.scheduleId,
+                    scheduleInstance!.targetMemberId!,
+                    reply),
           ),
           Expanded(
             child: ListView.builder(
               itemCount: scheduleInstance?.memberReplies.length ?? 0,
               itemBuilder: (context, index) {
                 final reply = scheduleInstance?.memberReplies.elementAt(index);
-                return ListTile(
-                  title: Text(reply?.$1.displayNameOverride ?? l10n.loading),
-                  trailing: ReplyButton(
-                    myReply: reply?.$2,
-                    onReplyChanged: (r) => onReplyChanged?.call(
-                        scheduleInstance!, reply!.$1.id, r),
-                  ),
+                final defaultOption =
+                    scheduleInstance?.memberDefaultOptions.elementAt(index);
+
+                return ScheduleMemberTile(
+                  name: reply?.$1.displayNameOverride ?? l10n.loading,
+                  myReply: reply?.$2,
+                  myDefaultOption: defaultOption,
+                  onReplyChanged: (r) =>
+                      onReplyChanged?.call(scheduleInstance!, reply!.$1.id, r),
+                  onDefaultReplyChanged: (defaultOption, r) =>
+                      onDefaultReplyChanged?.call(defaultOption,
+                          scheduleInstance!.scheduleId, reply!.$1.id, r),
                 );
               },
             ),

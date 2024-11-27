@@ -5,11 +5,13 @@ import 'package:parousia/models/models.dart';
 class ReplyButton extends StatelessWidget {
   final ReplyOptions? myReply;
   final ValueChanged<ReplyOptions?>? onReplyChanged;
+  final Function(ReplyOptions)? onDefaultReplyChanged;
 
   const ReplyButton({
     super.key,
-    this.onReplyChanged,
     this.myReply,
+    this.onReplyChanged,
+    this.onDefaultReplyChanged,
   });
 
   @override
@@ -18,8 +20,18 @@ class ReplyButton extends StatelessWidget {
 
     return SegmentedButton<ReplyOptions>(
       segments: [
-        ButtonSegment(value: ReplyOptions.yes, label: Text(l10n.yes)),
-        ButtonSegment(value: ReplyOptions.no, label: Text(l10n.no)),
+        ButtonSegment(
+            value: ReplyOptions.yes,
+            label: GestureDetector(
+              onLongPress: () => onDefaultReplyChanged?.call(ReplyOptions.yes),
+              child: Text(l10n.yes),
+            )),
+        ButtonSegment(
+            value: ReplyOptions.no,
+            label: GestureDetector(
+              onLongPress: () => onDefaultReplyChanged?.call(ReplyOptions.no),
+              child: Text(l10n.no),
+            )),
       ],
       selected: myReply != null ? {myReply!} : {},
       onSelectionChanged: (value) => onReplyChanged?.call(value.firstOrNull),

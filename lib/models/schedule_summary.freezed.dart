@@ -22,8 +22,11 @@ mixin _$ScheduleInstanceSummary {
   DateTime get instanceDate => throw _privateConstructorUsedError;
   Map<int, ReplyOptions> get memberReplies =>
       throw _privateConstructorUsedError;
+  Map<int, RecurrenceRule> get memberDefaultOptions =>
+      throw _privateConstructorUsedError;
   int get yesCount => throw _privateConstructorUsedError;
   ReplyOptions? get myReply => throw _privateConstructorUsedError;
+  RecurrenceRule? get myDefaultOption => throw _privateConstructorUsedError;
   int? get targetMemberId => throw _privateConstructorUsedError;
 
   /// Create a copy of ScheduleInstanceSummary
@@ -45,8 +48,10 @@ abstract class $ScheduleInstanceSummaryCopyWith<$Res> {
       String displayName,
       DateTime instanceDate,
       Map<int, ReplyOptions> memberReplies,
+      Map<int, RecurrenceRule> memberDefaultOptions,
       int yesCount,
       ReplyOptions? myReply,
+      RecurrenceRule? myDefaultOption,
       int? targetMemberId});
 }
 
@@ -71,8 +76,10 @@ class _$ScheduleInstanceSummaryCopyWithImpl<$Res,
     Object? displayName = null,
     Object? instanceDate = null,
     Object? memberReplies = null,
+    Object? memberDefaultOptions = null,
     Object? yesCount = null,
     Object? myReply = freezed,
+    Object? myDefaultOption = freezed,
     Object? targetMemberId = freezed,
   }) {
     return _then(_value.copyWith(
@@ -96,6 +103,10 @@ class _$ScheduleInstanceSummaryCopyWithImpl<$Res,
           ? _value.memberReplies
           : memberReplies // ignore: cast_nullable_to_non_nullable
               as Map<int, ReplyOptions>,
+      memberDefaultOptions: null == memberDefaultOptions
+          ? _value.memberDefaultOptions
+          : memberDefaultOptions // ignore: cast_nullable_to_non_nullable
+              as Map<int, RecurrenceRule>,
       yesCount: null == yesCount
           ? _value.yesCount
           : yesCount // ignore: cast_nullable_to_non_nullable
@@ -104,6 +115,10 @@ class _$ScheduleInstanceSummaryCopyWithImpl<$Res,
           ? _value.myReply
           : myReply // ignore: cast_nullable_to_non_nullable
               as ReplyOptions?,
+      myDefaultOption: freezed == myDefaultOption
+          ? _value.myDefaultOption
+          : myDefaultOption // ignore: cast_nullable_to_non_nullable
+              as RecurrenceRule?,
       targetMemberId: freezed == targetMemberId
           ? _value.targetMemberId
           : targetMemberId // ignore: cast_nullable_to_non_nullable
@@ -127,8 +142,10 @@ abstract class _$$ScheduleInstanceSummaryImplCopyWith<$Res>
       String displayName,
       DateTime instanceDate,
       Map<int, ReplyOptions> memberReplies,
+      Map<int, RecurrenceRule> memberDefaultOptions,
       int yesCount,
       ReplyOptions? myReply,
+      RecurrenceRule? myDefaultOption,
       int? targetMemberId});
 }
 
@@ -152,8 +169,10 @@ class __$$ScheduleInstanceSummaryImplCopyWithImpl<$Res>
     Object? displayName = null,
     Object? instanceDate = null,
     Object? memberReplies = null,
+    Object? memberDefaultOptions = null,
     Object? yesCount = null,
     Object? myReply = freezed,
+    Object? myDefaultOption = freezed,
     Object? targetMemberId = freezed,
   }) {
     return _then(_$ScheduleInstanceSummaryImpl(
@@ -177,6 +196,10 @@ class __$$ScheduleInstanceSummaryImplCopyWithImpl<$Res>
           ? _value._memberReplies
           : memberReplies // ignore: cast_nullable_to_non_nullable
               as Map<int, ReplyOptions>,
+      memberDefaultOptions: null == memberDefaultOptions
+          ? _value._memberDefaultOptions
+          : memberDefaultOptions // ignore: cast_nullable_to_non_nullable
+              as Map<int, RecurrenceRule>,
       yesCount: null == yesCount
           ? _value.yesCount
           : yesCount // ignore: cast_nullable_to_non_nullable
@@ -185,6 +208,10 @@ class __$$ScheduleInstanceSummaryImplCopyWithImpl<$Res>
           ? _value.myReply
           : myReply // ignore: cast_nullable_to_non_nullable
               as ReplyOptions?,
+      myDefaultOption: freezed == myDefaultOption
+          ? _value.myDefaultOption
+          : myDefaultOption // ignore: cast_nullable_to_non_nullable
+              as RecurrenceRule?,
       targetMemberId: freezed == targetMemberId
           ? _value.targetMemberId
           : targetMemberId // ignore: cast_nullable_to_non_nullable
@@ -204,10 +231,13 @@ class _$ScheduleInstanceSummaryImpl
       required this.displayName,
       required this.instanceDate,
       required final Map<int, ReplyOptions> memberReplies,
+      required final Map<int, RecurrenceRule> memberDefaultOptions,
       required this.yesCount,
       this.myReply,
+      this.myDefaultOption,
       this.targetMemberId})
-      : _memberReplies = memberReplies;
+      : _memberReplies = memberReplies,
+        _memberDefaultOptions = memberDefaultOptions;
 
   @override
   final int scheduleId;
@@ -225,16 +255,27 @@ class _$ScheduleInstanceSummaryImpl
     return EqualUnmodifiableMapView(_memberReplies);
   }
 
+  final Map<int, RecurrenceRule> _memberDefaultOptions;
+  @override
+  Map<int, RecurrenceRule> get memberDefaultOptions {
+    if (_memberDefaultOptions is EqualUnmodifiableMapView)
+      return _memberDefaultOptions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableMapView(_memberDefaultOptions);
+  }
+
   @override
   final int yesCount;
   @override
   final ReplyOptions? myReply;
   @override
+  final RecurrenceRule? myDefaultOption;
+  @override
   final int? targetMemberId;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ScheduleInstanceSummary(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, memberReplies: $memberReplies, yesCount: $yesCount, myReply: $myReply, targetMemberId: $targetMemberId)';
+    return 'ScheduleInstanceSummary(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, memberReplies: $memberReplies, memberDefaultOptions: $memberDefaultOptions, yesCount: $yesCount, myReply: $myReply, myDefaultOption: $myDefaultOption, targetMemberId: $targetMemberId)';
   }
 
   @override
@@ -247,8 +288,10 @@ class _$ScheduleInstanceSummaryImpl
       ..add(DiagnosticsProperty('displayName', displayName))
       ..add(DiagnosticsProperty('instanceDate', instanceDate))
       ..add(DiagnosticsProperty('memberReplies', memberReplies))
+      ..add(DiagnosticsProperty('memberDefaultOptions', memberDefaultOptions))
       ..add(DiagnosticsProperty('yesCount', yesCount))
       ..add(DiagnosticsProperty('myReply', myReply))
+      ..add(DiagnosticsProperty('myDefaultOption', myDefaultOption))
       ..add(DiagnosticsProperty('targetMemberId', targetMemberId));
   }
 
@@ -266,9 +309,13 @@ class _$ScheduleInstanceSummaryImpl
                 other.instanceDate == instanceDate) &&
             const DeepCollectionEquality()
                 .equals(other._memberReplies, _memberReplies) &&
+            const DeepCollectionEquality()
+                .equals(other._memberDefaultOptions, _memberDefaultOptions) &&
             (identical(other.yesCount, yesCount) ||
                 other.yesCount == yesCount) &&
             (identical(other.myReply, myReply) || other.myReply == myReply) &&
+            (identical(other.myDefaultOption, myDefaultOption) ||
+                other.myDefaultOption == myDefaultOption) &&
             (identical(other.targetMemberId, targetMemberId) ||
                 other.targetMemberId == targetMemberId));
   }
@@ -281,8 +328,10 @@ class _$ScheduleInstanceSummaryImpl
       displayName,
       instanceDate,
       const DeepCollectionEquality().hash(_memberReplies),
+      const DeepCollectionEquality().hash(_memberDefaultOptions),
       yesCount,
       myReply,
+      myDefaultOption,
       targetMemberId);
 
   /// Create a copy of ScheduleInstanceSummary
@@ -302,8 +351,10 @@ abstract class _ScheduleInstanceSummary implements ScheduleInstanceSummary {
       required final String displayName,
       required final DateTime instanceDate,
       required final Map<int, ReplyOptions> memberReplies,
+      required final Map<int, RecurrenceRule> memberDefaultOptions,
       required final int yesCount,
       final ReplyOptions? myReply,
+      final RecurrenceRule? myDefaultOption,
       final int? targetMemberId}) = _$ScheduleInstanceSummaryImpl;
 
   @override
@@ -317,9 +368,13 @@ abstract class _ScheduleInstanceSummary implements ScheduleInstanceSummary {
   @override
   Map<int, ReplyOptions> get memberReplies;
   @override
+  Map<int, RecurrenceRule> get memberDefaultOptions;
+  @override
   int get yesCount;
   @override
   ReplyOptions? get myReply;
+  @override
+  RecurrenceRule? get myDefaultOption;
   @override
   int? get targetMemberId;
 
@@ -339,8 +394,11 @@ mixin _$ScheduleInstanceDetails {
   DateTime get instanceDate => throw _privateConstructorUsedError;
   List<(Member, ReplyOptions?)> get memberReplies =>
       throw _privateConstructorUsedError;
+  List<RecurrenceRule?> get memberDefaultOptions =>
+      throw _privateConstructorUsedError;
   int get yesCount => throw _privateConstructorUsedError;
   ReplyOptions? get myReply => throw _privateConstructorUsedError;
+  RecurrenceRule? get myDefaultOption => throw _privateConstructorUsedError;
   int? get targetMemberId => throw _privateConstructorUsedError;
   bool? get canEditOthers => throw _privateConstructorUsedError;
 
@@ -363,8 +421,10 @@ abstract class $ScheduleInstanceDetailsCopyWith<$Res> {
       String displayName,
       DateTime instanceDate,
       List<(Member, ReplyOptions?)> memberReplies,
+      List<RecurrenceRule?> memberDefaultOptions,
       int yesCount,
       ReplyOptions? myReply,
+      RecurrenceRule? myDefaultOption,
       int? targetMemberId,
       bool? canEditOthers});
 }
@@ -390,8 +450,10 @@ class _$ScheduleInstanceDetailsCopyWithImpl<$Res,
     Object? displayName = null,
     Object? instanceDate = null,
     Object? memberReplies = null,
+    Object? memberDefaultOptions = null,
     Object? yesCount = null,
     Object? myReply = freezed,
+    Object? myDefaultOption = freezed,
     Object? targetMemberId = freezed,
     Object? canEditOthers = freezed,
   }) {
@@ -416,6 +478,10 @@ class _$ScheduleInstanceDetailsCopyWithImpl<$Res,
           ? _value.memberReplies
           : memberReplies // ignore: cast_nullable_to_non_nullable
               as List<(Member, ReplyOptions?)>,
+      memberDefaultOptions: null == memberDefaultOptions
+          ? _value.memberDefaultOptions
+          : memberDefaultOptions // ignore: cast_nullable_to_non_nullable
+              as List<RecurrenceRule?>,
       yesCount: null == yesCount
           ? _value.yesCount
           : yesCount // ignore: cast_nullable_to_non_nullable
@@ -424,6 +490,10 @@ class _$ScheduleInstanceDetailsCopyWithImpl<$Res,
           ? _value.myReply
           : myReply // ignore: cast_nullable_to_non_nullable
               as ReplyOptions?,
+      myDefaultOption: freezed == myDefaultOption
+          ? _value.myDefaultOption
+          : myDefaultOption // ignore: cast_nullable_to_non_nullable
+              as RecurrenceRule?,
       targetMemberId: freezed == targetMemberId
           ? _value.targetMemberId
           : targetMemberId // ignore: cast_nullable_to_non_nullable
@@ -451,8 +521,10 @@ abstract class _$$ScheduleInstanceDetailsImplCopyWith<$Res>
       String displayName,
       DateTime instanceDate,
       List<(Member, ReplyOptions?)> memberReplies,
+      List<RecurrenceRule?> memberDefaultOptions,
       int yesCount,
       ReplyOptions? myReply,
+      RecurrenceRule? myDefaultOption,
       int? targetMemberId,
       bool? canEditOthers});
 }
@@ -477,8 +549,10 @@ class __$$ScheduleInstanceDetailsImplCopyWithImpl<$Res>
     Object? displayName = null,
     Object? instanceDate = null,
     Object? memberReplies = null,
+    Object? memberDefaultOptions = null,
     Object? yesCount = null,
     Object? myReply = freezed,
+    Object? myDefaultOption = freezed,
     Object? targetMemberId = freezed,
     Object? canEditOthers = freezed,
   }) {
@@ -503,6 +577,10 @@ class __$$ScheduleInstanceDetailsImplCopyWithImpl<$Res>
           ? _value._memberReplies
           : memberReplies // ignore: cast_nullable_to_non_nullable
               as List<(Member, ReplyOptions?)>,
+      memberDefaultOptions: null == memberDefaultOptions
+          ? _value._memberDefaultOptions
+          : memberDefaultOptions // ignore: cast_nullable_to_non_nullable
+              as List<RecurrenceRule?>,
       yesCount: null == yesCount
           ? _value.yesCount
           : yesCount // ignore: cast_nullable_to_non_nullable
@@ -511,6 +589,10 @@ class __$$ScheduleInstanceDetailsImplCopyWithImpl<$Res>
           ? _value.myReply
           : myReply // ignore: cast_nullable_to_non_nullable
               as ReplyOptions?,
+      myDefaultOption: freezed == myDefaultOption
+          ? _value.myDefaultOption
+          : myDefaultOption // ignore: cast_nullable_to_non_nullable
+              as RecurrenceRule?,
       targetMemberId: freezed == targetMemberId
           ? _value.targetMemberId
           : targetMemberId // ignore: cast_nullable_to_non_nullable
@@ -534,11 +616,14 @@ class _$ScheduleInstanceDetailsImpl
       required this.displayName,
       required this.instanceDate,
       required final List<(Member, ReplyOptions?)> memberReplies,
+      required final List<RecurrenceRule?> memberDefaultOptions,
       required this.yesCount,
       this.myReply,
+      this.myDefaultOption,
       this.targetMemberId,
       this.canEditOthers})
-      : _memberReplies = memberReplies;
+      : _memberReplies = memberReplies,
+        _memberDefaultOptions = memberDefaultOptions;
 
   @override
   final int scheduleId;
@@ -556,10 +641,21 @@ class _$ScheduleInstanceDetailsImpl
     return EqualUnmodifiableListView(_memberReplies);
   }
 
+  final List<RecurrenceRule?> _memberDefaultOptions;
+  @override
+  List<RecurrenceRule?> get memberDefaultOptions {
+    if (_memberDefaultOptions is EqualUnmodifiableListView)
+      return _memberDefaultOptions;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_memberDefaultOptions);
+  }
+
   @override
   final int yesCount;
   @override
   final ReplyOptions? myReply;
+  @override
+  final RecurrenceRule? myDefaultOption;
   @override
   final int? targetMemberId;
   @override
@@ -567,7 +663,7 @@ class _$ScheduleInstanceDetailsImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ScheduleInstanceDetails(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, memberReplies: $memberReplies, yesCount: $yesCount, myReply: $myReply, targetMemberId: $targetMemberId, canEditOthers: $canEditOthers)';
+    return 'ScheduleInstanceDetails(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, memberReplies: $memberReplies, memberDefaultOptions: $memberDefaultOptions, yesCount: $yesCount, myReply: $myReply, myDefaultOption: $myDefaultOption, targetMemberId: $targetMemberId, canEditOthers: $canEditOthers)';
   }
 
   @override
@@ -580,8 +676,10 @@ class _$ScheduleInstanceDetailsImpl
       ..add(DiagnosticsProperty('displayName', displayName))
       ..add(DiagnosticsProperty('instanceDate', instanceDate))
       ..add(DiagnosticsProperty('memberReplies', memberReplies))
+      ..add(DiagnosticsProperty('memberDefaultOptions', memberDefaultOptions))
       ..add(DiagnosticsProperty('yesCount', yesCount))
       ..add(DiagnosticsProperty('myReply', myReply))
+      ..add(DiagnosticsProperty('myDefaultOption', myDefaultOption))
       ..add(DiagnosticsProperty('targetMemberId', targetMemberId))
       ..add(DiagnosticsProperty('canEditOthers', canEditOthers));
   }
@@ -600,9 +698,13 @@ class _$ScheduleInstanceDetailsImpl
                 other.instanceDate == instanceDate) &&
             const DeepCollectionEquality()
                 .equals(other._memberReplies, _memberReplies) &&
+            const DeepCollectionEquality()
+                .equals(other._memberDefaultOptions, _memberDefaultOptions) &&
             (identical(other.yesCount, yesCount) ||
                 other.yesCount == yesCount) &&
             (identical(other.myReply, myReply) || other.myReply == myReply) &&
+            (identical(other.myDefaultOption, myDefaultOption) ||
+                other.myDefaultOption == myDefaultOption) &&
             (identical(other.targetMemberId, targetMemberId) ||
                 other.targetMemberId == targetMemberId) &&
             (identical(other.canEditOthers, canEditOthers) ||
@@ -617,8 +719,10 @@ class _$ScheduleInstanceDetailsImpl
       displayName,
       instanceDate,
       const DeepCollectionEquality().hash(_memberReplies),
+      const DeepCollectionEquality().hash(_memberDefaultOptions),
       yesCount,
       myReply,
+      myDefaultOption,
       targetMemberId,
       canEditOthers);
 
@@ -639,8 +743,10 @@ abstract class _ScheduleInstanceDetails implements ScheduleInstanceDetails {
       required final String displayName,
       required final DateTime instanceDate,
       required final List<(Member, ReplyOptions?)> memberReplies,
+      required final List<RecurrenceRule?> memberDefaultOptions,
       required final int yesCount,
       final ReplyOptions? myReply,
+      final RecurrenceRule? myDefaultOption,
       final int? targetMemberId,
       final bool? canEditOthers}) = _$ScheduleInstanceDetailsImpl;
 
@@ -655,9 +761,13 @@ abstract class _ScheduleInstanceDetails implements ScheduleInstanceDetails {
   @override
   List<(Member, ReplyOptions?)> get memberReplies;
   @override
+  List<RecurrenceRule?> get memberDefaultOptions;
+  @override
   int get yesCount;
   @override
   ReplyOptions? get myReply;
+  @override
+  RecurrenceRule? get myDefaultOption;
   @override
   int? get targetMemberId;
   @override

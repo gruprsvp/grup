@@ -126,20 +126,31 @@ final selectMemberReplies = createSelector3(
     groupMembersSelector,
     selectScheduleInstanceSummary,
     selectAllProfiles,
-    (members, instance, profiles) => members
-        // Fill in the blanks for members who haven't replied
-        .map((m) {
-          final reply = instance?.memberReplies[m.id];
-          return (getMember(m, profiles), reply);
-        })
-        // Remove target user from the list below
-        .whereNot((e) => e.$1.id == instance?.targetMemberId)
-        .toList());
+    (members, instance, profiles) => getMemberReplies(
+          targetMemberId: instance?.targetMemberId,
+          members: members,
+          replies: instance?.memberReplies ?? {},
+          profiles: profiles,
+        ));
+
+final selectMemberDefaultOptions = createSelector3(
+    groupMembersSelector,
+    selectScheduleInstanceSummary,
+    selectAllProfiles,
+    (members, instance, profiles) => getMemberDefaultOptions(
+          targetMemberId: instance?.targetMemberId,
+          members: members,
+          defaultOptions: instance?.memberDefaultOptions ?? {},
+          profiles: profiles,
+        ));
 
 // TODO This should work the other way around, and be memoized
-final selectScheduleInstanceForDate = createSelector3(
-    selectScheduleInstanceSummary, selectMemberReplies, selectIsAdmin,
-    (instance, memberReplies, canEditOthers) {
+final selectScheduleInstanceForDate = createSelector4(
+    selectScheduleInstanceSummary,
+    selectMemberReplies,
+    selectMemberDefaultOptions,
+    selectIsAdmin,
+    (instance, memberReplies, memberDefaultOptions, canEditOthers) {
   if (instance == null) return null;
 
   return ScheduleInstanceDetails(
@@ -148,8 +159,10 @@ final selectScheduleInstanceForDate = createSelector3(
     displayName: instance.displayName,
     instanceDate: instance.instanceDate,
     memberReplies: memberReplies,
+    memberDefaultOptions: memberDefaultOptions,
     yesCount: instance.yesCount,
     myReply: instance.myReply,
+    myDefaultOption: instance.myDefaultOption,
     targetMemberId: instance.targetMemberId,
     canEditOthers: canEditOthers,
   );
