@@ -1,4 +1,5 @@
 import 'package:parousia/models/models.dart';
+import 'package:rrule/rrule.dart';
 
 ScheduleInstanceSummary repliesForScheduleInstance({
   required DateTime instanceDate,
@@ -10,9 +11,12 @@ ScheduleInstanceSummary repliesForScheduleInstance({
   int? targetMemberId,
 }) {
   final allReplies = <int, ReplyOptions>{};
+  final allDefaultOptions = <int, RecurrenceRule>{};
 
-  defaultReplies?.forEach(
-    (defaultReply) => defaultReply.recurrenceRule
+  defaultReplies?.forEach((defaultReply) {
+    allDefaultOptions[defaultReply.memberId] = defaultReply.recurrenceRule;
+
+    defaultReply.recurrenceRule
         .getInstances(
           start: schedule.startDate,
           after: startDate,
@@ -21,8 +25,8 @@ ScheduleInstanceSummary repliesForScheduleInstance({
         )
         .forEach((e) => e.copyWith(isUtc: true).isAtSameMomentAs(instanceDate)
             ? allReplies[defaultReply.memberId] = defaultReply.selectedOption
-            : null),
-  );
+            : null);
+  });
 
   replies?.forEach(
     (reply) => reply.instanceDate
@@ -34,6 +38,7 @@ ScheduleInstanceSummary repliesForScheduleInstance({
   );
 
   final myReply = allReplies[targetMemberId];
+  final myDefaultOption = allDefaultOptions[targetMemberId];
   final yesCount = allReplies.values.where((e) => e == ReplyOptions.yes).length;
 
   return ScheduleInstanceSummary(
@@ -42,8 +47,10 @@ ScheduleInstanceSummary repliesForScheduleInstance({
     displayName: schedule.displayName,
     instanceDate: instanceDate,
     memberReplies: allReplies,
+    memberDefaultOptions: allDefaultOptions,
     yesCount: yesCount,
     myReply: myReply,
+    myDefaultOption: myDefaultOption,
     targetMemberId: targetMemberId,
   );
 }
@@ -76,4 +83,38 @@ Iterable<ScheduleInstanceSummary> getScheduleInstances({
           targetMemberId: targetMemberId,
         ),
       );
+}
+
+List<(Member, ReplyOptions?)> getMemberReplies({
+  required int? targetMemberId,
+  required Iterable<Member> members,
+  required Map<int, ReplyOptions> replies,
+  required Map<String, Profile> profiles,
+}) {
+  return members
+      .map(
+        (m) {
+          final reply = replies[m.id];
+          return (
+            m.copyWith(
+                displayNameOverride: m.displayNameOverride ??
+                    profiles[m.profileId]?.displayName),
+            reply
+          );
+        },
+      )
+      .where((e) => e.$1.id != targetMemberId)
+      .toList();
+}
+
+List<RecurrenceRule?> getMemberDefaultOptions({
+  required int? targetMemberId,
+  required Iterable<Member> members,
+  required Map<int, RecurrenceRule> defaultOptions,
+  required Map<String, Profile> profiles,
+}) {
+  return members
+      .where((m) => m.id != targetMemberId)
+      .map((m) => defaultOptions[m.id])
+      .toList();
 }

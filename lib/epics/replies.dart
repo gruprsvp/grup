@@ -26,6 +26,7 @@ Epic<AppState> _createRetrieveGroupRepliesEpic(RepliesRepository replies) {
           );
 }
 
+/// Create a new reply
 Epic<AppState> _createRequestUpdateOneReplyEpic(RepliesRepository replies) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestUpdateOne<Reply>>().asyncMap(
@@ -37,6 +38,7 @@ Epic<AppState> _createRequestUpdateOneReplyEpic(RepliesRepository replies) {
           );
 }
 
+/// Delete a reply
 Epic<AppState> _createRequestDeleteReplyEpic(RepliesRepository replies) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestDeleteReplyAction>().asyncMap(

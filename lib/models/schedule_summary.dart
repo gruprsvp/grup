@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:parousia/models/models.dart';
+import 'package:rrule/rrule.dart';
 
 part 'schedule_summary.freezed.dart';
 
@@ -14,8 +15,10 @@ sealed class ScheduleInstanceSummary with _$ScheduleInstanceSummary {
     required String displayName,
     required DateTime instanceDate,
     required Map<int, ReplyOptions> memberReplies,
+    required Map<int, RecurrenceRule> memberDefaultOptions,
     required int yesCount,
     ReplyOptions? myReply,
+    RecurrenceRule? myDefaultOption,
     int? targetMemberId,
   }) = _ScheduleInstanceSummary;
 }
@@ -30,8 +33,10 @@ sealed class ScheduleInstanceDetails with _$ScheduleInstanceDetails {
     required String displayName,
     required DateTime instanceDate,
     required List<(Member, ReplyOptions?)> memberReplies,
+    required List<RecurrenceRule?> memberDefaultOptions,
     required int yesCount,
     ReplyOptions? myReply,
+    RecurrenceRule? myDefaultOption,
     int? targetMemberId,
     bool? canEditOthers,
   }) = _ScheduleInstanceDetails;

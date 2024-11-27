@@ -26,4 +26,12 @@ class DefaultRepliesRepository extends SupabaseRepository with Postgrest {
         .single()
         .withConverter((data) => DefaultReply.fromJson(data));
   }
+
+  Future<void> deleteDefaultReply(
+      {required int memberId, required int scheduleId}) async {
+    return table()
+        .delete()
+        .eq('member_id', memberId)
+        .eq('schedule_id', scheduleId);
+  }
 }

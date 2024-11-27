@@ -22,6 +22,8 @@ mixin _$ViewModel {
       throw _privateConstructorUsedError;
   OnDetailsReplyChangedCallback? get onReplyChanged =>
       throw _privateConstructorUsedError;
+  OnDetailsDefaultReplyChangedCallback? get onDefaultReplyChanged =>
+      throw _privateConstructorUsedError;
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -40,7 +42,8 @@ abstract class _$ViewModelCopyWith<$Res> {
       {bool loading,
       Group? group,
       ScheduleInstanceDetails? scheduleInstance,
-      OnDetailsReplyChangedCallback? onReplyChanged});
+      OnDetailsReplyChangedCallback? onReplyChanged,
+      OnDetailsDefaultReplyChangedCallback? onDefaultReplyChanged});
 
   $GroupCopyWith<$Res>? get group;
   $ScheduleInstanceDetailsCopyWith<$Res>? get scheduleInstance;
@@ -65,6 +68,7 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
     Object? group = freezed,
     Object? scheduleInstance = freezed,
     Object? onReplyChanged = freezed,
+    Object? onDefaultReplyChanged = freezed,
   }) {
     return _then(_value.copyWith(
       loading: null == loading
@@ -83,6 +87,10 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
           ? _value.onReplyChanged
           : onReplyChanged // ignore: cast_nullable_to_non_nullable
               as OnDetailsReplyChangedCallback?,
+      onDefaultReplyChanged: freezed == onDefaultReplyChanged
+          ? _value.onDefaultReplyChanged
+          : onDefaultReplyChanged // ignore: cast_nullable_to_non_nullable
+              as OnDetailsDefaultReplyChangedCallback?,
     ) as $Val);
   }
 
@@ -128,7 +136,8 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       {bool loading,
       Group? group,
       ScheduleInstanceDetails? scheduleInstance,
-      OnDetailsReplyChangedCallback? onReplyChanged});
+      OnDetailsReplyChangedCallback? onReplyChanged,
+      OnDetailsDefaultReplyChangedCallback? onDefaultReplyChanged});
 
   @override
   $GroupCopyWith<$Res>? get group;
@@ -153,6 +162,7 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     Object? group = freezed,
     Object? scheduleInstance = freezed,
     Object? onReplyChanged = freezed,
+    Object? onDefaultReplyChanged = freezed,
   }) {
     return _then(_$_ViewModelImpl(
       loading: null == loading
@@ -171,6 +181,10 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
           ? _value.onReplyChanged
           : onReplyChanged // ignore: cast_nullable_to_non_nullable
               as OnDetailsReplyChangedCallback?,
+      onDefaultReplyChanged: freezed == onDefaultReplyChanged
+          ? _value.onDefaultReplyChanged
+          : onDefaultReplyChanged // ignore: cast_nullable_to_non_nullable
+              as OnDetailsDefaultReplyChangedCallback?,
     ));
   }
 }
@@ -182,7 +196,8 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
       {required this.loading,
       this.group,
       this.scheduleInstance,
-      this.onReplyChanged});
+      this.onReplyChanged,
+      this.onDefaultReplyChanged});
 
   @override
   final bool loading;
@@ -192,10 +207,12 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   final ScheduleInstanceDetails? scheduleInstance;
   @override
   final OnDetailsReplyChangedCallback? onReplyChanged;
+  @override
+  final OnDetailsDefaultReplyChangedCallback? onDefaultReplyChanged;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(loading: $loading, group: $group, scheduleInstance: $scheduleInstance, onReplyChanged: $onReplyChanged)';
+    return '_ViewModel(loading: $loading, group: $group, scheduleInstance: $scheduleInstance, onReplyChanged: $onReplyChanged, onDefaultReplyChanged: $onDefaultReplyChanged)';
   }
 
   @override
@@ -206,7 +223,9 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
       ..add(DiagnosticsProperty('loading', loading))
       ..add(DiagnosticsProperty('group', group))
       ..add(DiagnosticsProperty('scheduleInstance', scheduleInstance))
-      ..add(DiagnosticsProperty('onReplyChanged', onReplyChanged));
+      ..add(DiagnosticsProperty('onReplyChanged', onReplyChanged))
+      ..add(
+          DiagnosticsProperty('onDefaultReplyChanged', onDefaultReplyChanged));
   }
 
   @override
@@ -219,12 +238,14 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
             (identical(other.scheduleInstance, scheduleInstance) ||
                 other.scheduleInstance == scheduleInstance) &&
             (identical(other.onReplyChanged, onReplyChanged) ||
-                other.onReplyChanged == onReplyChanged));
+                other.onReplyChanged == onReplyChanged) &&
+            (identical(other.onDefaultReplyChanged, onDefaultReplyChanged) ||
+                other.onDefaultReplyChanged == onDefaultReplyChanged));
   }
 
   @override
-  int get hashCode => Object.hash(
-      runtimeType, loading, group, scheduleInstance, onReplyChanged);
+  int get hashCode => Object.hash(runtimeType, loading, group, scheduleInstance,
+      onReplyChanged, onDefaultReplyChanged);
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -237,10 +258,12 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 
 abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
-      {required final bool loading,
-      final Group? group,
-      final ScheduleInstanceDetails? scheduleInstance,
-      final OnDetailsReplyChangedCallback? onReplyChanged}) = _$_ViewModelImpl;
+          {required final bool loading,
+          final Group? group,
+          final ScheduleInstanceDetails? scheduleInstance,
+          final OnDetailsReplyChangedCallback? onReplyChanged,
+          final OnDetailsDefaultReplyChangedCallback? onDefaultReplyChanged}) =
+      _$_ViewModelImpl;
 
   @override
   bool get loading;
@@ -250,6 +273,8 @@ abstract class __ViewModel implements _ViewModel {
   ScheduleInstanceDetails? get scheduleInstance;
   @override
   OnDetailsReplyChangedCallback? get onReplyChanged;
+  @override
+  OnDetailsDefaultReplyChangedCallback? get onDefaultReplyChanged;
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.

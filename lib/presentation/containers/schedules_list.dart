@@ -13,11 +13,8 @@ import 'package:redux_entity/redux_entity.dart';
 part 'schedules_list.freezed.dart';
 
 class SchedulesListContainer extends StatefulWidget {
-  final int groupId;
-
   const SchedulesListContainer({
     super.key,
-    required this.groupId,
   });
 
   @override
@@ -54,7 +51,7 @@ class SchedulesListContainerState extends State<SchedulesListContainer> {
           );
         },
       ),
-      converter: (store) => _ViewModel.fromStore(store, widget.groupId),
+      converter: _ViewModel.fromStore,
     );
   }
 }
@@ -68,7 +65,7 @@ sealed class _ViewModel with _$ViewModel {
     OnReplyChangedCallback? onReplyChanged,
   }) = __ViewModel;
 
-  static _ViewModel fromStore(Store<AppState> store, int groupId) {
+  static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
       selectedDate: store.state.selectedDate,
       schedules: selectScheduleInstancesForSelectedDate(store.state),

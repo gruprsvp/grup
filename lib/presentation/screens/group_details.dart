@@ -31,8 +31,7 @@ class GroupDetailsScreen extends StatelessWidget {
           children: [
             const DateDropdownContainer(),
             if (groupDescription != null) Text(groupDescription),
-            if (groupId != null)
-              Expanded(child: SchedulesListContainer(groupId: groupId)),
+            Expanded(child: SchedulesListContainer()),
           ],
         ),
         floatingActionButton: isAdmin && groupIdStr != null
