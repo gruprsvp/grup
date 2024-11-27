@@ -7,7 +7,7 @@ import 'package:rrule/rrule.dart';
 /// A widget to display the default reply options.
 class DefaultReplyActionSheet extends StatelessWidget {
   final RecurrenceRule? selectedDefaultOption;
-  final Function(RecurrenceRule?) onOptionTap;
+  final ValueSetter<RecurrenceRule?> onOptionTap;
 
   const DefaultReplyActionSheet({
     super.key,
@@ -18,7 +18,6 @@ class DefaultReplyActionSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final isCupertino = Theme.of(context).platform == TargetPlatform.iOS;
 
     final options = [
       (CommonRecurrenceRules.daily, l10n.defaultRepliesDaily),
@@ -26,26 +25,40 @@ class DefaultReplyActionSheet extends StatelessWidget {
       (CommonRecurrenceRules.weekends, l10n.defaultRepliesWeekends),
     ];
 
-    final actions = options
-        .map((option) =>
-            _buildActionSheetAction(context, onOptionTap, option.$2, option.$1))
-        .toList();
+    final actions = [
+      for (final (rrule, text) in options)
+        _buildActionSheetAction(
+          context,
+          onTap: onOptionTap,
+          text: text,
+          option: rrule,
+        ),
+    ];
 
-    return (isCupertino)
-        ? CupertinoActionSheet(
-            title: Text(l10n.defaultReplies),
-            message: Text(l10n.defaultRepliesDescription),
-            actions: actions,
-            cancelButton: _buildActionSheetAction(
-                context, onOptionTap, l10n.cancel, null),
-          )
-        : Wrap(
-            children: [
-              _buildActionSheetHeader(context),
-              ...actions,
-              _buildActionSheetAction(context, onOptionTap, l10n.cancel, null),
-            ],
-          );
+    if (_isIOS(context)) {
+      return CupertinoActionSheet(
+        title: Text(l10n.defaultReplies),
+        message: Text(l10n.defaultRepliesDescription),
+        actions: actions,
+        cancelButton: _buildActionSheetAction(
+          context,
+          onTap: onOptionTap,
+          text: l10n.cancel,
+        ),
+      );
+    }
+
+    return Wrap(
+      children: [
+        _buildActionSheetHeader(context),
+        ...actions,
+        _buildActionSheetAction(
+          context,
+          onTap: onOptionTap,
+          text: l10n.cancel,
+        ),
+      ],
+    );
   }
 
   Widget _buildActionSheetHeader(BuildContext context) {
@@ -84,30 +97,37 @@ class DefaultReplyActionSheet extends StatelessWidget {
     );
   }
 
-  Widget _buildActionSheetAction(BuildContext context,
-      Function(RecurrenceRule?) onTap, String text, RecurrenceRule? option) {
-    final isCupertino = Theme.of(context).platform == TargetPlatform.iOS;
+  Widget _buildActionSheetAction(
+    BuildContext context, {
+    required ValueSetter<RecurrenceRule?> onTap,
+    required String text,
+    RecurrenceRule? option,
+  }) {
     final checked =
         selectedDefaultOption != null && selectedDefaultOption == option;
-    return (isCupertino)
-        ? CupertinoActionSheetAction(
-            onPressed: () => onTap(option),
-            child: Row(
-              children: [
-                ...((checked)
-                    ? [
-                        Icon(CupertinoIcons.check_mark, size: 18),
-                        SizedBox(width: 10),
-                      ]
-                    : []),
-                Text(text),
-              ],
-            ),
-          )
-        : ListTile(
-            onTap: () => onTap(option),
-            leading: (checked) ? Icon(Icons.check) : null,
-            title: Text(text),
-          );
+
+    if (_isIOS(context)) {
+      return CupertinoActionSheetAction(
+        onPressed: () => onTap(option),
+        child: Row(
+          children: [
+            if (checked) ...[
+              Icon(CupertinoIcons.check_mark, size: 18),
+              SizedBox(width: 10),
+            ],
+            Text(text),
+          ],
+        ),
+      );
+    }
+
+    return ListTile(
+      onTap: () => onTap(option),
+      leading: (checked) ? Icon(Icons.check) : null,
+      title: Text(text),
+    );
   }
+
+  bool _isIOS(BuildContext context) =>
+      Theme.of(context).platform == TargetPlatform.iOS;
 }
