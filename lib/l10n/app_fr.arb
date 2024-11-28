@@ -13,6 +13,7 @@
   "contactPhone": "Téléphone",
   "contactsPermission": "Permission pour les contacts",
   "contactsPermissionMessage": "Pour inviter tes amis à des groupes, tu dois nous donner accès à tes contacts",
+  "copiedToClipboard": "Copié dans le presse-papiers",
   "create": "Crée",
   "createNewEvent": "Crée un nouvel événement",
   "createNewGroup": "Crée un nouveau groupe",
@@ -49,6 +50,8 @@
   "groupRemoveConfirmation": "Es-tu sûr de vouloir retirer ce membre du groupe?",
   "groupRoles": "{role, select, admin{Admin} member{Membre} other{Inconnu}}",
   "invite": "Invite des gens",
+  "inviteCodeExplanation": "Partage ce code avec {user} pour l'inviter dans le groupe",
+  "inviteMessage": "Hey, rejoins mon groupe sur AppFor.it! Utilise ce code {code} ou clique ici: {link}",
   "invites": "Invitations",
   "inviteFromContacts": "Invite depuis tes contacts",
   "inviteManual": "Invite manuellement",
@@ -72,6 +75,7 @@
   "themeDark": "Sombre",
   "themeLight": "Clair",
   "themeSystem": "Système",
+  "unknown": "Inconnu",
   "yes": "Oui",
   "you": "Toi"
 }

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parousia/models/models.dart';
+import 'package:share_plus/share_plus.dart';
 
 typedef OnRemoveFromGroupCallback = void Function(Member);
 
@@ -27,11 +29,12 @@ class GroupMemberDetailsScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
+    final displayName =
+        member?.displayNameOverride ?? profile?.displayName ?? l10n.unknown;
+
     return Scaffold(
       appBar: AppBar(
-        title: Text(member?.displayNameOverride ??
-            profile?.displayName ??
-            l10n.loading),
+        title: Text(displayName),
         bottom: PreferredSize(
           preferredSize: Size.zero,
           child: Text(group?.displayName ?? l10n.loading),
@@ -64,14 +67,33 @@ class GroupMemberDetailsScreen extends StatelessWidget {
               ),
             ),
             for (final invite in invites!)
-              ListTile(
-                leading: const Icon(Icons.email),
-                title: Text(invite.value),
-              ),
-            ListTile(
-              leading: const Icon(Icons.add_circle_outline),
-              title: Text(l10n.addInvite),
-            )
+              // TODO Should probably be its own widget
+              switch (invite.method) {
+                InviteMethods.email => ListTile(
+                    leading: const Icon(Icons.email),
+                    title: Text(invite.value),
+                  ),
+                InviteMethods.phone => ListTile(
+                    leading: const Icon(Icons.phone),
+                    title: Text(invite.value), // TODO Format phone number
+                  ),
+                InviteMethods.code => ListTile(
+                    leading: const Icon(Icons.copy),
+                    title: Text(invite.value),
+                    subtitle: Text(l10n.inviteCodeExplanation(displayName)),
+                    onTap: () => _copyInviteToClipboard(context, invite),
+                    trailing: IconButton(
+                      icon: Icon(Icons.adaptive.share),
+                      onPressed: () => _shareInvite(context, invite),
+                    ),
+                  ),
+              },
+
+            // TODO Create and remove invites
+            // ListTile(
+            //   leading: const Icon(Icons.add_circle_outline),
+            //   title: Text(l10n.addInvite),
+            // )
           ],
           Divider(),
           ListTile(
@@ -113,5 +135,27 @@ class GroupMemberDetailsScreen extends StatelessWidget {
         ],
       ),
     );
+  }
+
+  /// Copies the [value] to the clipboard and shows a snackbar with a confirmation.
+  _copyInviteToClipboard(BuildContext context, Invite invite) {
+    Clipboard.setData(ClipboardData(text: invite.value));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(AppLocalizations.of(context)!.copiedToClipboard),
+      ),
+    );
+  }
+
+  _shareInvite(BuildContext context, Invite invite) {
+    if (invite.method != InviteMethods.code) {
+      return;
+    }
+
+    final l10n = AppLocalizations.of(context)!;
+    final code = invite.value;
+    final deeplink = Uri.https('appfor.it', '/join/$code').toString();
+
+    return Share.share(l10n.inviteMessage(code, deeplink));
   }
 }
