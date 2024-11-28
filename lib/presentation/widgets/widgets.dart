@@ -13,6 +13,7 @@ export 'group_join.dart';
 export 'group_members.dart';
 export 'groups_list.dart';
 export 'home_empty_state.dart';
+export 'invite_modal.dart';
 export 'profile_picture.dart';
 export 'reply_button.dart';
 export 'schedule_form.dart';
