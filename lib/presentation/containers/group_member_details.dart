@@ -26,7 +26,7 @@ class GroupMemberDetailsContainer extends StatelessWidget {
     return StoreConnector<AppState, _ViewModel>(
       distinct: true,
       converter: (store) => _ViewModel.fromStore(store, groupId, memberId),
-      onInit: (store) => store.dispatch(GroupDetailsOpenAction(groupId)),
+      onInit: (store) => store.dispatch(MemberDetailsOpenAction(memberId)),
       builder: (context, vm) => GroupMemberDetailsScreen(
         loading: vm.loading,
         group: vm.group,

@@ -44,4 +44,11 @@ class InvitesRepository extends SupabaseRepository with Postgrest {
   Future<void> consumeInviteCode(String code) async {
     return supabase.rpc('consume_invite_code', params: {'code': code});
   }
+
+  Future<Iterable<Invite>> getInvitesForMember(int memberId) async {
+    return table()
+        .select()
+        .eq('member_id', memberId)
+        .withConverter((data) => data.map(Invite.fromJson));
+  }
 }

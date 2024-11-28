@@ -394,6 +394,27 @@ void main() {
         ),
       ),
     );
+
+    test(
+      'an admin can see all invites for a user',
+      () => runWithTemporaryUser(
+        (supabase, user) => runWithTemporaryGroup(
+          (supabase, group, groupsRepository) async {
+            final membersRepository = MembersRepository(supabase: supabase);
+            final invitesRepository = InvitesRepository(supabase: supabase);
+
+            final member = await membersRepository.addMemberToGroup(group.id,
+                displayName: 'Member invited with email');
+            final invite = await invitesRepository.inviteMember(
+                member.id, InviteMethods.email, 'user@example.com');
+
+            final invites =
+                await invitesRepository.getInvitesForMember(member.id);
+            expect(invites, hasLength(1));
+          },
+        ),
+      ),
+    );
   });
 
   group('schedules', () {
