@@ -78,11 +78,15 @@ class _ContactFormState extends State<ContactForm> {
           final email = _emailController.text.trim();
           final phone = _phoneController.value.international;
 
+          // Only use the phone number if it was actually inserted by the user
+          final phoneWasProvided = phone.isNotEmpty &&
+              phone != _phoneController.initialValue.international;
+
           widget.onChanged?.call(ContactInvite(
             displayNameOverride: name,
             invites: [
               if (email.isNotEmpty) (InviteMethods.email, email),
-              if (phone.isNotEmpty) (InviteMethods.phone, phone),
+              if (phoneWasProvided) (InviteMethods.phone, phone),
             ],
           ));
         }
@@ -105,6 +109,7 @@ class _ContactFormState extends State<ContactForm> {
           ),
           PhoneFormField(
             controller: _phoneController,
+            validator: PhoneValidator.valid(context),
             decoration: InputDecoration(
               labelText: l10n.contactPhone,
             ),

@@ -13,6 +13,7 @@
   "contactPhone": "Phone",
   "contactsPermission": "Contacts permission",
   "contactsPermissionMessage": "To invite your friends to groups you need to grant access to your contacts",
+  "copiedToClipboard": "Copied to clipboard",
   "create": "Create",
   "createNewEvent": "Create new event",
   "createNewGroup": "Create new group",
@@ -57,6 +58,30 @@
     }
   },
   "invite": "Invite members",
+  "inviteCodeExplanation": "Share this code with {user} to invite them to the group",
+  "@inviteCodeExplanation": {
+    "description": "Explain to admins how to use the invite code",
+    "placeholders": {
+      "user": {
+        "type": "String",
+        "example": "Alice"
+      }
+    }
+  },
+  "inviteMessage": "Hey, join my group on AppFor.it! Use this code {code} or click here: {link}",
+  "@inviteMessage": {
+    "description": "Invite message to send to friends",
+    "placeholders": {
+      "code": {
+        "type": "String",
+        "example": "ABCD-EFGH"
+      },
+      "link": {
+        "type": "String",
+        "example": "https://appfor.it/invite/ABCD-EFGH"
+      }
+    }
+  },
   "invites": "Invites",
   "inviteFromContacts": "Invite from contacts",
   "inviteManual": "Invite manually",
@@ -80,6 +105,7 @@
   "themeDark": "Dark",
   "themeLight": "Light",
   "themeSystem": "System",
+  "unknown": "Unknown",
   "yes": "Yes",
   "you": "You"
 }
