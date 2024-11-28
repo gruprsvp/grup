@@ -11,6 +11,7 @@
   "contactEmail": "Email",
   "contactName": "Name",
   "contactPhone": "Phone",
+  "contacts": "Contacts",
   "contactsPermission": "Contacts permission",
   "contactsPermissionMessage": "To invite your friends to groups you need to grant access to your contacts",
   "copiedToClipboard": "Copied to clipboard",
@@ -61,6 +62,7 @@
       }
     }
   },
+  "guest": "Guest",
   "invite": "Invite members",
   "inviteCodeExplanation": "Share this code with {user} to invite them to the group",
   "@inviteCodeExplanation": {
