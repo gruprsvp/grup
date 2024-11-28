@@ -9,6 +9,7 @@ import 'package:rxdart/rxdart.dart';
 createInvitesEpics(InvitesRepository invites) => combineEpics<AppState>([
       _createUseInviteCodeEpic(invites),
       _createCreateInvitesOnNewMembersCreatedEpic(invites),
+      _createGetInvitesForMemberEpic(invites),
     ]);
 
 Epic<AppState> _createUseInviteCodeEpic(InvitesRepository invites) {
@@ -26,6 +27,8 @@ Epic<AppState> _createCreateInvitesOnNewMembersCreatedEpic(
       actions.whereType<NewMembersCreatedAction>().asyncMap((action) async {
         final createInvitesPromise = [
           for (final member in action.members)
+            invites.inviteWithGeneratedCode(member.$1.id),
+          for (final member in action.members)
             for (final invite in member.$2.invites)
               invites.inviteMember(member.$1.id, invite.$1, invite.$2)
         ];
@@ -33,4 +36,14 @@ Epic<AppState> _createCreateInvitesOnNewMembersCreatedEpic(
         final allInvites = await Future.wait(createInvitesPromise);
         return SuccessCreateMany<Invite>(allInvites);
       });
+}
+
+Epic<AppState> _createGetInvitesForMemberEpic(InvitesRepository invites) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
+      .whereType<MemberDetailsOpenAction>()
+      .asyncMap((action) => invites
+          .getInvitesForMember(int.parse(action.memberId))
+          .then<dynamic>((invites) =>
+              SuccessRetrieveMany<Invite>(invites.toList(growable: false)))
+          .catchError((error) => FailRetrieveMany<Invite>([], error)));
 }
