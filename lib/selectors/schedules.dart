@@ -23,7 +23,10 @@ ScheduleInstanceSummary repliesForScheduleInstance({
           before: endDate,
           includeAfter: true,
         )
-        .forEach((e) => e.copyWith(isUtc: true).isAtSameMomentAs(instanceDate)
+        .forEach((e) => e
+                    .copyWith(isUtc: true)
+                    .isAtSameMomentAs(instanceDate) &&
+                defaultReply.scheduleId == schedule.id
             ? allReplies[defaultReply.memberId] = defaultReply.selectedOption
             : null);
   });
