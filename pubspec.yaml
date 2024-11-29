@@ -136,11 +136,6 @@ dependency_overrides:
     git:
       url: https://github.com/careapp-group/dart_redux_entity
       ref: master
-  # Waiting for a definitive fix for https://github.com/QuisApp/flutter_contacts/issues/169
-  flutter_contacts:
-    git:
-      url: https://github.com/Tradewind-apps/flutter_contacts
-      ref: pb/fix-incompatible-java-version-target
   supabase_auth_ui:
     git:
       url: https://github.com/sealambda/flutter-auth-ui
