@@ -257,6 +257,52 @@ void main() {
         }),
       ),
     );
+
+    test(
+      'admins can make other members admins',
+      () => runWithTemporaryUser((supabase, user) async {
+        final groupsRepository = GroupsRepository(supabase: supabase);
+        final membersRepository = MembersRepository(supabase: supabase);
+
+        final group = await groupsRepository.createGroup(Fake.group());
+        final member = await membersRepository.addMemberToGroup(group.id,
+            displayName: 'Member');
+
+        final updatedMember = await membersRepository.updateMember(
+          memberId: member.id,
+          role: GroupRoles.admin,
+        );
+
+        expect(updatedMember.role, equals(GroupRoles.admin));
+      }),
+    );
+
+    test(
+      'members cannot make themselves admins',
+      () => runWithTemporaryUser((supabase, user) async {
+        final groupsRepository = GroupsRepository(supabase: supabase);
+        final membersRepository = MembersRepository(supabase: supabase);
+
+        final group = await groupsRepository.createGroup(Fake.group());
+
+        await runWithTemporaryUser((supabase2, user2) async {
+          final membersRepository2 = MembersRepository(supabase: supabase2);
+
+          final member = await membersRepository.addMemberToGroup(group.id,
+              profileId: user2.user!.id);
+
+          try {
+            await membersRepository2.updateMember(
+              memberId: member.id,
+              role: GroupRoles.admin,
+            );
+            fail("Should not be able to make themselves admins");
+          } catch (e) {
+            expect(e, isA<PostgrestException>());
+          }
+        });
+      }),
+    );
   });
 
   group('invites', () {

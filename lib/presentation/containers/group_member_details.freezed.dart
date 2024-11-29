@@ -17,10 +17,12 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ViewModel {
   bool get loading => throw _privateConstructorUsedError;
+  bool get isCurrentUser => throw _privateConstructorUsedError;
   Group? get group => throw _privateConstructorUsedError;
   Member? get member => throw _privateConstructorUsedError;
   Profile? get profile => throw _privateConstructorUsedError;
   List<Invite>? get invites => throw _privateConstructorUsedError;
+  ValueSetter<Member>? get onUpdate => throw _privateConstructorUsedError;
   OnRemoveFromGroupCallback? get onRemove => throw _privateConstructorUsedError;
 
   /// Create a copy of _ViewModel
@@ -38,10 +40,12 @@ abstract class _$ViewModelCopyWith<$Res> {
   @useResult
   $Res call(
       {bool loading,
+      bool isCurrentUser,
       Group? group,
       Member? member,
       Profile? profile,
       List<Invite>? invites,
+      ValueSetter<Member>? onUpdate,
       OnRemoveFromGroupCallback? onRemove});
 
   $GroupCopyWith<$Res>? get group;
@@ -65,16 +69,22 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   @override
   $Res call({
     Object? loading = null,
+    Object? isCurrentUser = null,
     Object? group = freezed,
     Object? member = freezed,
     Object? profile = freezed,
     Object? invites = freezed,
+    Object? onUpdate = freezed,
     Object? onRemove = freezed,
   }) {
     return _then(_value.copyWith(
       loading: null == loading
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isCurrentUser: null == isCurrentUser
+          ? _value.isCurrentUser
+          : isCurrentUser // ignore: cast_nullable_to_non_nullable
               as bool,
       group: freezed == group
           ? _value.group
@@ -92,6 +102,10 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
           ? _value.invites
           : invites // ignore: cast_nullable_to_non_nullable
               as List<Invite>?,
+      onUpdate: freezed == onUpdate
+          ? _value.onUpdate
+          : onUpdate // ignore: cast_nullable_to_non_nullable
+              as ValueSetter<Member>?,
       onRemove: freezed == onRemove
           ? _value.onRemove
           : onRemove // ignore: cast_nullable_to_non_nullable
@@ -152,10 +166,12 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {bool loading,
+      bool isCurrentUser,
       Group? group,
       Member? member,
       Profile? profile,
       List<Invite>? invites,
+      ValueSetter<Member>? onUpdate,
       OnRemoveFromGroupCallback? onRemove});
 
   @override
@@ -180,16 +196,22 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
   @override
   $Res call({
     Object? loading = null,
+    Object? isCurrentUser = null,
     Object? group = freezed,
     Object? member = freezed,
     Object? profile = freezed,
     Object? invites = freezed,
+    Object? onUpdate = freezed,
     Object? onRemove = freezed,
   }) {
     return _then(_$_ViewModelImpl(
       loading: null == loading
           ? _value.loading
           : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isCurrentUser: null == isCurrentUser
+          ? _value.isCurrentUser
+          : isCurrentUser // ignore: cast_nullable_to_non_nullable
               as bool,
       group: freezed == group
           ? _value.group
@@ -207,6 +229,10 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
           ? _value._invites
           : invites // ignore: cast_nullable_to_non_nullable
               as List<Invite>?,
+      onUpdate: freezed == onUpdate
+          ? _value.onUpdate
+          : onUpdate // ignore: cast_nullable_to_non_nullable
+              as ValueSetter<Member>?,
       onRemove: freezed == onRemove
           ? _value.onRemove
           : onRemove // ignore: cast_nullable_to_non_nullable
@@ -217,18 +243,22 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
 
 /// @nodoc
 
-class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
+class _$_ViewModelImpl implements __ViewModel {
   const _$_ViewModelImpl(
       {required this.loading,
+      required this.isCurrentUser,
       this.group,
       this.member,
       this.profile,
       final List<Invite>? invites,
+      this.onUpdate,
       this.onRemove})
       : _invites = invites;
 
   @override
   final bool loading;
+  @override
+  final bool isCurrentUser;
   @override
   final Group? group;
   @override
@@ -246,24 +276,13 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   }
 
   @override
+  final ValueSetter<Member>? onUpdate;
+  @override
   final OnRemoveFromGroupCallback? onRemove;
 
   @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(loading: $loading, group: $group, member: $member, profile: $profile, invites: $invites, onRemove: $onRemove)';
-  }
-
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
-    properties
-      ..add(DiagnosticsProperty('type', '_ViewModel'))
-      ..add(DiagnosticsProperty('loading', loading))
-      ..add(DiagnosticsProperty('group', group))
-      ..add(DiagnosticsProperty('member', member))
-      ..add(DiagnosticsProperty('profile', profile))
-      ..add(DiagnosticsProperty('invites', invites))
-      ..add(DiagnosticsProperty('onRemove', onRemove));
+  String toString() {
+    return '_ViewModel(loading: $loading, isCurrentUser: $isCurrentUser, group: $group, member: $member, profile: $profile, invites: $invites, onUpdate: $onUpdate, onRemove: $onRemove)';
   }
 
   @override
@@ -272,17 +291,29 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
         (other.runtimeType == runtimeType &&
             other is _$_ViewModelImpl &&
             (identical(other.loading, loading) || other.loading == loading) &&
+            (identical(other.isCurrentUser, isCurrentUser) ||
+                other.isCurrentUser == isCurrentUser) &&
             (identical(other.group, group) || other.group == group) &&
             (identical(other.member, member) || other.member == member) &&
             (identical(other.profile, profile) || other.profile == profile) &&
             const DeepCollectionEquality().equals(other._invites, _invites) &&
+            (identical(other.onUpdate, onUpdate) ||
+                other.onUpdate == onUpdate) &&
             (identical(other.onRemove, onRemove) ||
                 other.onRemove == onRemove));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, loading, group, member, profile,
-      const DeepCollectionEquality().hash(_invites), onRemove);
+  int get hashCode => Object.hash(
+      runtimeType,
+      loading,
+      isCurrentUser,
+      group,
+      member,
+      profile,
+      const DeepCollectionEquality().hash(_invites),
+      onUpdate,
+      onRemove);
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -296,14 +327,18 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
       {required final bool loading,
+      required final bool isCurrentUser,
       final Group? group,
       final Member? member,
       final Profile? profile,
       final List<Invite>? invites,
+      final ValueSetter<Member>? onUpdate,
       final OnRemoveFromGroupCallback? onRemove}) = _$_ViewModelImpl;
 
   @override
   bool get loading;
+  @override
+  bool get isCurrentUser;
   @override
   Group? get group;
   @override
@@ -312,6 +347,8 @@ abstract class __ViewModel implements _ViewModel {
   Profile? get profile;
   @override
   List<Invite>? get invites;
+  @override
+  ValueSetter<Member>? get onUpdate;
   @override
   OnRemoveFromGroupCallback? get onRemove;
 
