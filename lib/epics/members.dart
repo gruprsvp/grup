@@ -37,8 +37,9 @@ Epic<AppState> _createUpdateMemberEpic(MembersRepository members) {
       actions.whereType<RequestUpdateOne<Member>>().asyncMap(
             (action) => members
                 .updateMember(
-                  displayNameOverride: action.entity.displayNameOverride,
                   memberId: action.entity.id,
+                  displayNameOverride: action.entity.displayNameOverride,
+                  role: action.entity.role,
                 )
                 .then<dynamic>((member) => SuccessUpdateOne<Member>(member))
                 .onError((error, stackTrace) =>
