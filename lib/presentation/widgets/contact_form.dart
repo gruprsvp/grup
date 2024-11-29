@@ -12,8 +12,8 @@ class ContactForm extends StatefulWidget {
       this.showPhone = true});
 
   final Function(ContactInvite, bool)? onChanged;
-  final dynamic showEmail;
-  final dynamic showPhone;
+  final bool showEmail;
+  final bool showPhone;
 
   @override
   State<ContactForm> createState() => _ContactFormState();
@@ -33,37 +33,55 @@ class _ContactFormState extends State<ContactForm> {
       key: _formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       onChanged: () {
-        final isValid = _formKey.currentState?.validate() ?? false;
         final name = _nameController.text.trim();
         final email = _emailController.text.trim();
         final phone = _phoneController.value.international;
 
+        // Only consider phone if it was provided and is different from the initial value
+        final phoneWasProvided = widget.showPhone &&
+            phone.isNotEmpty &&
+            _phoneController.value.isValid();
+
+        final invites = [
+          if (email.isNotEmpty) (InviteMethods.email, email),
+          if (phoneWasProvided) (InviteMethods.phone, phone),
+        ];
+
+        final formIsValid = _formKey.currentState?.validate() ?? false;
+        final onlyNameRequired = !widget.showEmail && !widget.showPhone;
+        final emailIsValid = widget.showEmail && email.isNotEmpty;
+        final phoneIsValid = widget.showPhone && phoneWasProvided;
+        final isValid =
+            formIsValid && (onlyNameRequired || emailIsValid || phoneIsValid);
+
         widget.onChanged?.call(
-            ContactInvite(
-              displayNameOverride: name,
-              invites: [
-                if (email.isNotEmpty) (InviteMethods.email, email),
-                if (phone.isNotEmpty) (InviteMethods.phone, phone),
-              ],
-            ),
+            ContactInvite(displayNameOverride: name, invites: invites),
             isValid);
       },
       child: Column(
         children: [
           TextFormField(
+            autofocus: true,
             controller: _nameController,
             validator: FormBuilderValidators.required(),
             decoration: InputDecoration(
               labelText: l10n.contactName,
             ),
+            textInputAction: widget.showPhone || widget.showEmail
+                ? TextInputAction.next
+                : TextInputAction.done,
           ),
           if (widget.showEmail)
             TextFormField(
               controller: _emailController,
+              keyboardType: TextInputType.emailAddress,
               validator: FormBuilderValidators.email(),
               decoration: InputDecoration(
                 labelText: l10n.contactEmail,
               ),
+              textInputAction: widget.showPhone
+                  ? TextInputAction.next
+                  : TextInputAction.done,
             ),
           if (widget.showPhone)
             PhoneFormField(
@@ -72,6 +90,7 @@ class _ContactFormState extends State<ContactForm> {
               decoration: InputDecoration(
                 labelText: l10n.contactPhone,
               ),
+              textInputAction: TextInputAction.done,
             )
         ],
       ),
