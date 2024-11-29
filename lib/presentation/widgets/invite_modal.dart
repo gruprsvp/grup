@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -46,12 +47,13 @@ class InviteModal extends StatelessWidget {
                   label: l10n.contactPhone,
                   option: InviteOptions.phone,
                 ),
-                _buildOption(
-                  context,
-                  icon: Icons.contacts,
-                  label: l10n.contacts,
-                  option: InviteOptions.contacts,
-                ),
+                if (!kIsWeb)
+                  _buildOption(
+                    context,
+                    icon: Icons.contacts,
+                    label: l10n.contacts,
+                    option: InviteOptions.contacts,
+                  ),
                 _buildOption(
                   context,
                   icon: Icons.person_outline,

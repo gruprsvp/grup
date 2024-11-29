@@ -30,9 +30,9 @@ class _CreateContactsScreenState extends State<CreateContactsScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: ContactForm(
-          onChanged: (contactInvite) {
+          onChanged: (contactInvite, isValid) {
             setState(() {
-              _showSaveButton = true;
+              _showSaveButton = isValid;
             });
             _contactInvite = contactInvite;
           },
@@ -51,9 +51,15 @@ class _CreateContactsScreenState extends State<CreateContactsScreen> {
 }
 
 class ContactForm extends StatefulWidget {
-  const ContactForm({super.key, this.onChanged});
+  const ContactForm(
+      {super.key,
+      this.onChanged,
+      this.showEmail = true,
+      this.showPhone = true});
 
-  final Function(ContactInvite)? onChanged;
+  final Function(ContactInvite, bool)? onChanged;
+  final dynamic showEmail;
+  final dynamic showPhone;
 
   @override
   State<ContactForm> createState() => _ContactFormState();
@@ -73,23 +79,20 @@ class _ContactFormState extends State<ContactForm> {
       key: _formKey,
       autovalidateMode: AutovalidateMode.onUserInteraction,
       onChanged: () {
-        if (_formKey.currentState?.validate() ?? false) {
-          final name = _nameController.text.trim();
-          final email = _emailController.text.trim();
-          final phone = _phoneController.value.international;
+        final isValid = _formKey.currentState?.validate() ?? false;
+        final name = _nameController.text.trim();
+        final email = _emailController.text.trim();
+        final phone = _phoneController.value.international;
 
-          // Only use the phone number if it was actually inserted by the user
-          final phoneWasProvided = phone.isNotEmpty &&
-              phone != _phoneController.initialValue.international;
-
-          widget.onChanged?.call(ContactInvite(
-            displayNameOverride: name,
-            invites: [
-              if (email.isNotEmpty) (InviteMethods.email, email),
-              if (phoneWasProvided) (InviteMethods.phone, phone),
-            ],
-          ));
-        }
+        widget.onChanged?.call(
+            ContactInvite(
+              displayNameOverride: name,
+              invites: [
+                if (email.isNotEmpty) (InviteMethods.email, email),
+                if (phone.isNotEmpty) (InviteMethods.phone, phone),
+              ],
+            ),
+            isValid);
       },
       child: Column(
         children: [
@@ -100,20 +103,21 @@ class _ContactFormState extends State<ContactForm> {
               labelText: l10n.contactName,
             ),
           ),
-          TextFormField(
-            controller: _emailController,
-            validator: FormBuilderValidators.email(checkNullOrEmpty: false),
-            decoration: InputDecoration(
-              labelText: l10n.contactEmail,
+          if (widget.showEmail)
+            TextFormField(
+              controller: _emailController,
+              validator: FormBuilderValidators.email(),
+              decoration: InputDecoration(
+                labelText: l10n.contactEmail,
+              ),
             ),
-          ),
-          PhoneFormField(
-            controller: _phoneController,
-            validator: PhoneValidator.valid(context),
-            decoration: InputDecoration(
-              labelText: l10n.contactPhone,
-            ),
-          ),
+          if (widget.showPhone)
+            PhoneFormField(
+              controller: _phoneController,
+              validator: PhoneValidator.valid(context),decoration: InputDecoration(
+                labelText: l10n.contactPhone,
+              ),
+            )
         ],
       ),
     );

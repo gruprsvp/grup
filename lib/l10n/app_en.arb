@@ -12,6 +12,7 @@
   "contactName": "Name",
   "contactPhone": "Phone",
   "contacts": "Contacts",
+  "contactNew": "New contact",
   "contactsPermission": "Contacts permission",
   "contactsPermissionMessage": "To invite your friends to groups you need to grant access to your contacts",
   "copiedToClipboard": "Copied to clipboard",
