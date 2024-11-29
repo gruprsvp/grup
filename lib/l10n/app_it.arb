@@ -12,6 +12,7 @@
   "contactName": "Nome",
   "contactPhone": "Telefono",
   "contacts": "Contatti",
+  "contactNew": "Nuovo contatto",
   "contactsPermission": "Permesso per i contatti",
   "contactsPermissionMessage": "Per invitare i tuoi amici ai gruppi, devi darci accesso ai tuoi contatti",
   "copiedToClipboard": "Copiato negli appunti",
