@@ -30,12 +30,15 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final theme = Theme.of(context);
     final l10n = AppLocalizations.of(context)!;
 
     final nothingToShow = groups == null || groups!.isEmpty;
-    final innerBody =
-        nothingToShow ? const HomeEmptyState() : GroupsList(groups: groups);
+    final innerBody = nothingToShow
+        ? EmptyState(
+            image: 'assets/images/home.webp',
+            text: l10n.onboardingMessage,
+          )
+        : GroupsList(groups: groups);
 
     return Scaffold(
       appBar: AppBar(

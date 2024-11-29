@@ -52,7 +52,7 @@ class GroupMembers extends StatelessWidget {
                   });
             },
           )
-        : AddMembersEmptyState();
+        : EmptyState.withImage('add-members.webp');
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),

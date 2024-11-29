@@ -35,6 +35,6 @@ class SchedulesList extends StatelessWidget {
                   .push(context),
             ),
           )
-        : AddEventsEmptyState();
+        : EmptyState.withImage('add-events.webp');
   }
 }

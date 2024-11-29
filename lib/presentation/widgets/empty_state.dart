@@ -34,4 +34,8 @@ class EmptyState extends StatelessWidget {
       ),
     );
   }
+
+  // Add a factory constructor to create an empty state with an image.
+  factory EmptyState.withImage(String image) =>
+      EmptyState(image: 'assets/images/$image');
 }
