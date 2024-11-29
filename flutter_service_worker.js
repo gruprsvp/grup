@@ -4,10 +4,10 @@ const TEMP = 'flutter-temp-cache';
 const CACHE_NAME = 'flutter-app-cache';
 
 const RESOURCES = {"flutter.js": "f393d3c16b631f36852323de8e583132",
-"main.dart.js": "e97d710d7088716218fabf2a84f88602",
+"main.dart.js": "9eb9030e5087a3b0e344bee374e616b4",
 "assets/FontManifest.json": "9c06e60d67f69c8ab1ba6b25f8aa203d",
 "assets/AssetManifest.bin": "e24cbf9243da3230c70e1d031f6d9f71",
-"assets/fonts/MaterialIcons-Regular.otf": "e2eff0e0caade8da87c8b9421f23ab09",
+"assets/fonts/MaterialIcons-Regular.otf": "3d626c02408b5a530882c66a94b54d68",
 "assets/packages/widgetbook/assets/fonts/Poppins/Poppins-MediumItalic.ttf": "cf5ba39d9ac24652e25df8c291121506",
 "assets/packages/widgetbook/assets/fonts/Poppins/Poppins-Light.ttf": "fcc40ae9a542d001971e53eaed948410",
 "assets/packages/widgetbook/assets/fonts/Poppins/Poppins-Regular.ttf": "093ee89be9ede30383f39a899c485a82",
@@ -289,7 +289,7 @@ const RESOURCES = {"flutter.js": "f393d3c16b631f36852323de8e583132",
 "assets/assets/images/logo.png": "6cb087f3073e10b12797909d6e46caa5",
 "assets/assets/env/supabase.json": "acec4626a9fd86ecd48ff16919e06160",
 "assets/assets/env/local.json": "282a03b11c2a67305d73e707f7cc4b1b",
-"assets/NOTICES": "ecace16d856e14f94f6c75447dddd9f0",
+"assets/NOTICES": "42b9042b93deb602e36228180121b6ad",
 "assets/shaders/ink_sparkle.frag": "ecc85a2e95f5e9f53123dcaf8cb9b6ce",
 "assets/AssetManifest.json": "97b5470c66e66f410ad96b6e246620fb",
 "assets/supabase/config/supabase.json": "fed899e3af98213be411078b223ea233",
@@ -316,7 +316,7 @@ const RESOURCES = {"flutter.js": "f393d3c16b631f36852323de8e583132",
 "icons/Icon-maskable-512.png": "1a138de0bed92dd0c36e3119dc10cc8e",
 "favicon.png": "a25f58d07b1dd8a75c2c884aea9a1bf0",
 "version.json": "df7ea6a712af13f2a376d8306d414d78",
-"flutter_bootstrap.js": "c4bd0c3e1ebf348eec4507419c954813"};
+"flutter_bootstrap.js": "25c36a9889be3e06f0fff60c14b8aabe"};
 // The application shell files that are downloaded before a service worker can
 // start.
 const CORE = ["main.dart.js",
