@@ -24,6 +24,11 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'zulu'
+          java-version: '17'
       - name: Download dependencies
         run: flutter pub get
       - name: Setup Supabase
@@ -42,7 +47,7 @@ jobs:
           else
             # Attempt to get the latest tag
             LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
-            
+          
             if [ -z "$LATEST_TAG" ]; then
               # No tags exist, default to v1.0.0
               NEW_TAG_NAME="v1.0.0"
