@@ -21,22 +21,6 @@ class GroupMembers extends StatelessWidget {
     this.onInvite,
   });
 
-  Future<List<ContactInvite>> _inviteFromContacts(BuildContext context) async {
-    if (!context.mounted) return [];
-
-    final invited = await SelectContactsRoute().push<List<Contact>>(context);
-
-    if (invited == null) return [];
-
-    return [
-      for (final contact in invited)
-        ContactInvite(displayNameOverride: contact.displayName, invites: [
-          for (final e in contact.emails) (InviteMethods.email, e.address),
-          for (final p in contact.phones) (InviteMethods.phone, p.number),
-        ])
-    ];
-  }
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
@@ -89,22 +73,15 @@ class GroupMembers extends StatelessWidget {
       builder: (context) {
         return InviteModal(
           onOptionSelected: (selectedOption) async {
-            switch (selectedOption) {
-              case InviteOptions.email:
-                _showEmailDialog(context, onInvite);
-                break;
-              case InviteOptions.phone:
-                _showPhoneDialog(context, onInvite);
-                break;
-              case InviteOptions.guest:
-                _showGuestDialog(context, onInvite);
-                break;
-              case InviteOptions.contacts:
-                final invites = await _inviteFromContacts(context);
-                if (invites.isNotEmpty) {
-                  onInvite?.call(invites);
-                }
-                break;
+            final invites = await switch (selectedOption) {
+              InviteOptions.email => _inviteEmailDialog(context),
+              InviteOptions.phone => _invitePhoneDialog(context),
+              InviteOptions.guest => _inviteGuestDialog(context),
+              InviteOptions.contacts => _inviteFromContacts(context),
+            };
+
+            if (invites != null && invites.isNotEmpty) {
+              onInvite?.call(invites);
             }
           },
         );
@@ -112,99 +89,86 @@ class GroupMembers extends StatelessWidget {
     );
   }
 
-  void _showContactDialog({
+  Future<List<ContactInvite>?> _showContactDialog({
     required BuildContext context,
     required bool showEmail,
     required bool showPhone,
-    required Function(String? name, String? contact) onSubmit,
-  }) {
-    String? name;
-    String? contact; // Can represent either email or phone.
-    bool showButton = false;
-    final l10n = AppLocalizations.of(context)!;
-
-    showAdaptiveDialog(
-      context: context,
-      builder: (context) {
-        return StatefulBuilder(
-          builder: (context, setState) {
-            return AlertDialog(
-              title: Text(l10n.contactNew),
-              content: ContactForm(
-                onChanged: (contactInvite, isValid) {
-                  setState(() {
-                    showButton = isValid;
-                    if (!isValid) return;
-                    contact = contactInvite.invites.first.$2;
-                    name = contactInvite.displayNameOverride;
-                  });
-                },
-                showEmail: showEmail,
-                showPhone: showPhone,
+  }) =>
+      showDialog(
+        context: context,
+        builder: (context) {
+          final l10n = AppLocalizations.of(context)!;
+          final showButton = ValueNotifier<bool>(false);
+          ContactInvite? contact;
+          // TODO: The alert dialog is not a very good UI for a form:
+          // just tapping outside the dialog will close it, and the user
+          // will lose their input. Consider using a modal sheet or a
+          // dedicated screen instead. It should also be possible to
+          // manage an arbitrary number of contacts to invite,
+          // so scrolling may be necessary.
+          return AlertDialog(
+            title: Text(l10n.contactNew),
+            content: ContactForm(
+              onChanged: (contactInvite, isValid) {
+                showButton.value = isValid;
+                if (!isValid) return;
+                contact = contactInvite;
+              },
+              showEmail: showEmail,
+              showPhone: showPhone,
+            ),
+            actions: [
+              TextButton(
+                onPressed: () => context.pop(),
+                child: Text(l10n.cancel),
               ),
-              actions: [
-                TextButton(
-                  onPressed: () => context.pop(),
-                  child: Text(l10n.cancel),
+              ValueListenableBuilder<bool>(
+                valueListenable: showButton,
+                child: Text(l10n.save),
+                builder: (context, value, child) => TextButton(
+                  onPressed: (value) ? () => context.pop([contact!]) : null,
+                  child: child!,
                 ),
-                TextButton(
-                  onPressed: (showButton)
-                      ? () {
-                          onSubmit(name, contact);
-                          context.pop();
-                        }
-                      : null,
-                  child: Text(l10n.save),
-                ),
-              ],
-            );
-          },
-        );
-      },
-    );
-  }
+              ),
+            ],
+          );
+        },
+      );
 
-  void _showEmailDialog(BuildContext context, OnInviteCallback? onInvite) =>
+  Future<List<ContactInvite>?> _inviteEmailDialog(BuildContext context) =>
       _showContactDialog(
         context: context,
         showEmail: true,
         showPhone: false,
-        onSubmit: (name, email) {
-          if (email == null) return;
-          final contactInvite = ContactInvite(
-            displayNameOverride: name,
-            invites: [(InviteMethods.email, email)],
-          );
-          onInvite?.call([contactInvite]);
-        },
       );
 
-  void _showPhoneDialog(BuildContext context, OnInviteCallback? onInvite) =>
+  Future<List<ContactInvite>?> _invitePhoneDialog(BuildContext context) =>
       _showContactDialog(
         context: context,
         showEmail: false,
         showPhone: true,
-        onSubmit: (name, phone) {
-          if (phone == null) return;
-          final contactInvite = ContactInvite(
-            displayNameOverride: name,
-            invites: [(InviteMethods.email, phone)],
-          );
-          onInvite?.call([contactInvite]);
-        },
       );
 
-  void _showGuestDialog(BuildContext context, OnInviteCallback? onInvite) =>
+  Future<List<ContactInvite>?> _inviteGuestDialog(BuildContext context) =>
       _showContactDialog(
         context: context,
         showEmail: false,
         showPhone: false,
-        onSubmit: (name, _) {
-          final contactInvite = ContactInvite(
-            displayNameOverride: name,
-            invites: [],
-          );
-          onInvite?.call([contactInvite]);
-        },
       );
+
+  Future<List<ContactInvite>> _inviteFromContacts(BuildContext context) async {
+    if (!context.mounted) return [];
+
+    final invited = await SelectContactsRoute().push<List<Contact>>(context);
+
+    if (invited == null) return [];
+
+    return [
+      for (final contact in invited)
+        ContactInvite(displayNameOverride: contact.displayName, invites: [
+          for (final e in contact.emails) (InviteMethods.email, e.address),
+          for (final p in contact.phones) (InviteMethods.phone, p.number),
+        ])
+    ];
+  }
 }
