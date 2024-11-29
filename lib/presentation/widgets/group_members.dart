@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:go_router/go_router.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/util/util.dart';
+
+import 'contact_form.dart';
 
 typedef OnInviteCallback = void Function(List<ContactInvite>);
 
@@ -45,7 +48,7 @@ class GroupMembers extends StatelessWidget {
               final (member, memberProfile) = members!.elementAt(index);
               final name = member.displayNameOverride ??
                   memberProfile?.displayName ??
-                  'Unknown'; // TODO
+                  l10n.unknown;
               return ListTile(
                   leading: CircleAvatar(
                     backgroundImage: memberProfile?.picture != null
@@ -55,9 +58,7 @@ class GroupMembers extends StatelessWidget {
                         ? Text(getNameInitials(name)!)
                         : null,
                   ),
-                  title: Text(member.displayNameOverride ??
-                      memberProfile?.displayName ??
-                      'Unknown'),
+                  title: Text(name),
                   subtitle: Text(l10n.groupRoles(member.role.name)),
                   onTap: () {
                     GroupMemberDetailsRoute(
@@ -142,11 +143,15 @@ class GroupMembers extends StatelessWidget {
                 showPhone: showPhone,
               ),
               actions: [
-                ElevatedButton(
+                TextButton(
+                  onPressed: () => context.pop(),
+                  child: Text(l10n.cancel),
+                ),
+                TextButton(
                   onPressed: (showButton)
                       ? () {
-                          Navigator.of(context).pop();
                           onSubmit(name, contact);
+                          context.pop();
                         }
                       : null,
                   child: Text(l10n.save),
