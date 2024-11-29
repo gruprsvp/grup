@@ -11,7 +11,6 @@ part 'go_router_builder.g.dart';
     TypedGoRoute<AuthRoute>(path: 'auth'),
     TypedGoRoute<ProfileRoute>(path: 'profile'),
     TypedGoRoute<SelectContactsRoute>(path: 'contacts-select'),
-    TypedGoRoute<CreateContactsRoute>(path: 'contacts-create'),
     TypedGoRoute<GroupCreateRoute>(path: 'group-create'),
     TypedGoRoute<GroupDetailsRoute>(
       path: 'groups/:groupId',
@@ -140,13 +139,6 @@ class SelectContactsRoute extends GoRouteData with AuthenticationGuard {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const SelectContactsScreen();
-}
-
-@immutable
-class CreateContactsRoute extends GoRouteData with AuthenticationGuard {
-  @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const CreateContactsScreen();
 }
 
 // Check if a user exists in the Supabase client

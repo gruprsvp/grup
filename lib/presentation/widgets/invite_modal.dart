@@ -28,40 +28,37 @@ class InviteModal extends StatelessWidget {
           ),
         ),
         const Divider(height: 1),
-        SingleChildScrollView(
-          scrollDirection: Axis.horizontal,
-          child: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(vertical: 16.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              _buildOption(
+                context,
+                icon: Icons.email,
+                label: l10n.contactEmail,
+                option: InviteOptions.email,
+              ),
+              _buildOption(
+                context,
+                icon: Icons.phone,
+                label: l10n.contactPhone,
+                option: InviteOptions.phone,
+              ),
+              if (!kIsWeb)
                 _buildOption(
                   context,
-                  icon: Icons.email,
-                  label: l10n.contactEmail,
-                  option: InviteOptions.email,
+                  icon: Icons.contacts,
+                  label: l10n.contacts,
+                  option: InviteOptions.contacts,
                 ),
-                _buildOption(
-                  context,
-                  icon: Icons.phone,
-                  label: l10n.contactPhone,
-                  option: InviteOptions.phone,
-                ),
-                if (!kIsWeb)
-                  _buildOption(
-                    context,
-                    icon: Icons.contacts,
-                    label: l10n.contacts,
-                    option: InviteOptions.contacts,
-                  ),
-                _buildOption(
-                  context,
-                  icon: Icons.person_outline,
-                  label: l10n.guest,
-                  option: InviteOptions.guest,
-                ),
-              ],
-            ),
+              _buildOption(
+                context,
+                icon: Icons.person_outline,
+                label: l10n.guest,
+                option: InviteOptions.guest,
+              ),
+            ],
           ),
         ),
       ],
@@ -74,21 +71,22 @@ class InviteModal extends StatelessWidget {
     required String label,
     required InviteOptions option,
   }) =>
-      GestureDetector(
-        onTap: () {
-          Navigator.of(context).pop(); // Close the modal
-          onOptionSelected?.call(option); // Notify the selection
-        },
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CircleAvatar(child: Icon(icon)),
-              const SizedBox(height: 8),
-              Text(label, style: Theme.of(context).textTheme.bodyMedium),
-            ],
+      Column(
+        children: [
+          IconButton.filled(
+            onPressed: () {
+              Navigator.of(context).pop(); // Close the modal
+              onOptionSelected?.call(option); // Notify the selection
+            },
+            enableFeedback: true,
+            icon: Icon(icon),
+            iconSize: 32,
           ),
-        ),
+          const SizedBox(height: 8),
+          Text(
+            label,
+            style: Theme.of(context).textTheme.bodyMedium,
+          ),
+        ],
       );
 }
