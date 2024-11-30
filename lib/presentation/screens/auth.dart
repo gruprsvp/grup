@@ -11,8 +11,6 @@ class AuthScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    onSuccess(session) => HomeScreenRoute().go(context);
-
     final config = ConfigService().config;
 
     return Scaffold(
@@ -25,8 +23,7 @@ class AuthScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Column(children: [
           SupaPasswordAuth(
-            onSignInComplete: onSuccess,
-            onSignUpComplete: onSuccess,
+            redirectTo: _getRedirectUrl(),
           ),
           Divider(height: 64),
           SupaSocialsAuth(
@@ -37,7 +34,7 @@ class AuthScreen extends StatelessWidget {
             ),
             enableNativeAppleAuth: true,
             redirectUrl: _getRedirectUrl(),
-            onSuccess: onSuccess,
+            onSuccess: (session) => HomeScreenRoute().go(context),
           ),
         ]),
       ),
@@ -52,6 +49,7 @@ class AuthScreen extends StatelessWidget {
 
     final currentUrl = html.window.location.href;
     final uri = Uri.parse(currentUrl);
-    return '${uri.scheme}://${uri.host}${uri.port != 80 && uri.port != 443 ? ':${uri.port}' : ''}';
+    final redirectUrl = Uri(scheme: uri.scheme, host: uri.host, port: uri.port);
+    return redirectUrl.toString();
   }
 }
