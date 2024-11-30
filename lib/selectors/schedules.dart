@@ -14,7 +14,9 @@ ScheduleInstanceSummary repliesForScheduleInstance({
   final allDefaultOptions = <int, RecurrenceRule>{};
 
   defaultReplies?.forEach((defaultReply) {
-    allDefaultOptions[defaultReply.memberId] = defaultReply.recurrenceRule;
+    if (defaultReply.scheduleId == schedule.id) {
+      allDefaultOptions[defaultReply.memberId] = defaultReply.recurrenceRule;
+    }
 
     defaultReply.recurrenceRule
         .getInstances(
