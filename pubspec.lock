@@ -1132,11 +1132,10 @@ packages:
   redux_entity:
     dependency: "direct main"
     description:
-      path: "."
-      ref: master
-      resolved-ref: "6af9130aef7b2c290517524f0310e2d0660ba718"
-      url: "https://github.com/careapp-group/dart_redux_entity"
-    source: git
+      name: redux_entity
+      sha256: ca5ddce3ad416d982beb68352f8bfbfc538ab54cd72c40bd56307e21bbfe6dec
+      url: "https://pub.dev"
+    source: hosted
     version: "1.2.0"
   redux_epics:
     dependency: "direct main"

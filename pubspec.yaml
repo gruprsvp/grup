@@ -129,13 +129,6 @@ dev_dependencies:
   flutter_lints: ^5.0.0
 
 dependency_overrides:
-  # We need these to make it into a release:
-  # - https://github.com/careapp-inc/dart_redux_entity/pull/11
-  # - https://github.com/careapp-inc/dart_redux_entity/pull/12
-  redux_entity:
-    git:
-      url: https://github.com/careapp-group/dart_redux_entity
-      ref: master
   supabase_auth_ui:
     git:
       url: https://github.com/sealambda/flutter-auth-ui
