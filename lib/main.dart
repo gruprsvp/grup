@@ -1,9 +1,11 @@
 import 'dart:developer';
 
 import 'package:app_links/app_links.dart';
+import 'package:device_preview_screenshot/device_preview_screenshot.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parousia/actions/actions.dart';
 import 'package:parousia/app.dart';
@@ -13,6 +15,7 @@ import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/state/state.dart';
 import 'package:parousia/util/config.dart';
 import 'package:parousia/util/util.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:redux_persist/redux_persist.dart';
@@ -61,8 +64,56 @@ Future<void> main() async {
       .uriLinkStream
       .listen((uri) => store.dispatch(HandleDeeplinkAction(uri.path)));
 
+  final screenshotsDirectory = await getTemporaryDirectory();
+  print('screenshotsDirectory: $screenshotsDirectory');
+
   runApp(
-    ParApp(store: store),
+    DevicePreview(
+      enabled: !kReleaseMode,
+      builder: (context) => ParApp(store: store),
+      availableLocales: AppLocalizations.supportedLocales,
+      devices: [
+        DeviceInfo.genericPhone(
+          platform: TargetPlatform.iOS,
+          id: '6_9',
+          name: '6.9" Display',
+          pixelRatio: 3,
+          screenSize: Size(430, 932),
+          safeAreas: EdgeInsets.only(top: 59, bottom: 34),
+        ),
+        DeviceInfo.genericTablet(
+          platform: TargetPlatform.iOS,
+          id: '12_9',
+          name: '12.9" Display',
+          pixelRatio: 2,
+          screenSize: Size(1024, 1366),
+          safeAreas: EdgeInsets.only(top: 59, bottom: 34),
+        ),
+        DeviceInfo.genericPhone(
+          platform: TargetPlatform.android,
+          id: 'galaxy',
+          name: 'Galaxy Note 20 Ultra',
+          pixelRatio: 4,
+          screenSize: Size(360, 772),
+          safeAreas: EdgeInsets.only(top: 36, bottom: 24),
+        ),
+        DeviceInfo.genericTablet(
+          platform: TargetPlatform.android,
+          id: 'tablet',
+          name: 'Tablet',
+          pixelRatio: 3,
+          screenSize: Size(556, 796),
+          safeAreas: EdgeInsets.only(top: 36, bottom: 24),
+        ),
+      ],
+      tools: [
+        ...DevicePreview.defaultTools,
+        DevicePreviewScreenshot(
+          multipleScreenshots: true,
+          onScreenshot: screenshotAsFiles(screenshotsDirectory),
+        ),
+      ],
+    ),
   );
 }
 

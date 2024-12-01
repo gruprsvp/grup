@@ -94,6 +94,8 @@ dependencies:
   uuid: ^4.1.0
   share_plus: ^10.1.2
   styled_text: ^8.1.0
+  device_preview: ^1.2.0
+  device_preview_screenshot: ^1.0.0
 
 
 dev_dependencies:
@@ -135,7 +137,12 @@ dependency_overrides:
     git:
       url: https://github.com/sealambda/flutter-auth-ui
       ref: main
-
+  device_preview_screenshot:
+    git:
+      url: https://github.com/sealambda/flutter_device_preview
+      ref: fix/multi-screenshots
+      path: plugins/device_preview_screenshot
+#
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
