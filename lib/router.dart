@@ -4,4 +4,7 @@ import 'go_router_builder.dart';
 
 final router = GoRouter(
   routes: $appRoutes,
+  redirect: (context, state) {
+    return state.uri.scheme.isNotEmpty ? HomeScreenRoute().location : null;
+  },
 );

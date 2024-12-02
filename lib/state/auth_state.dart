@@ -12,6 +12,7 @@ sealed class AuthState with _$AuthState {
   const factory AuthState({
     required AuthStatus status,
     @UserJsonConverter() User? user,
+    String? lastRoute,
   }) = _AuthState;
 
   factory AuthState.fromJson(Map<String, dynamic> json) =>

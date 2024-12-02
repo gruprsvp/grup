@@ -4,6 +4,7 @@ import 'package:redux/redux.dart';
 
 final authReducer = combineReducers<AuthState>([
   TypedReducer<AuthState, AuthStateChangedAction>(_authStateChanged).call,
+  TypedReducer<AuthState, HandleDeeplinkAction>(_deeplinkUnauthenticated).call,
 ]);
 
 AuthState _authStateChanged(
@@ -17,4 +18,15 @@ AuthState _authStateChanged(
   }
 
   return authState;
+}
+
+AuthState _deeplinkUnauthenticated(
+    AuthState authState, HandleDeeplinkAction action) {
+  final isLastRoute = action.route == authState.lastRoute;
+  final user = authState.user;
+  if (user != null && !isLastRoute) return authState;
+
+  return authState.copyWith(
+    lastRoute: isLastRoute ? null : action.route,
+  );
 }
