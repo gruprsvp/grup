@@ -1,6 +1,3 @@
-import 'dart:async';
-
-import 'package:app_links/app_links.dart';
 import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:flutter/material.dart';
@@ -17,43 +14,19 @@ import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 
 part 'app.freezed.dart';
 
-class ParApp extends StatefulWidget {
+class ParApp extends StatelessWidget {
   const ParApp({required this.store, super.key});
 
   final Store<AppState> store;
 
   @override
-  State<ParApp> createState() => _ParAppState();
-}
-
-class _ParAppState extends State<ParApp> {
-  StreamSubscription<Uri>? _linkSubscription;
-
-  @override
-  void initState() {
-    super.initState();
-
-    // Delegate deeplinks to the store
-    final appLinks = AppLinks();
-    _linkSubscription = appLinks.uriLinkStream.listen((uri) {
-      widget.store.dispatch(HandleDeeplinkAction(uri.path));
-    });
-  }
-
-  @override
-  void dispose() {
-    _linkSubscription?.cancel();
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return StoreProvider(
-      store: widget.store,
+      store: store,
       child: StoreConnector<AppState, _ViewModel>(
         distinct: true,
         converter: _ViewModel.fromStore,
-        onInit: widget.store.dispatch(AppStartedAction()),
+        onInit: store.dispatch(AppStartedAction()),
         builder: (context, vm) => DynamicColorBuilder(
           builder: (lightDynamic, darkDynamic) {
             final override = vm.overrideColour;

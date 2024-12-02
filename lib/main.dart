@@ -1,5 +1,6 @@
 import 'dart:developer';
 
+import 'package:app_links/app_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -41,6 +42,11 @@ Future<void> main() async {
   // Propagate auth state changes to the store
   supabase.client.auth.onAuthStateChange
       .listen((authState) => store.dispatch(AuthStateChangedAction(authState)));
+
+  // Propagate received deeplinks to the store
+  AppLinks()
+      .uriLinkStream
+      .listen((uri) => store.dispatch(HandleDeeplinkAction(uri.path)));
 
   runApp(
     ParApp(store: store),
