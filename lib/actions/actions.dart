@@ -1,6 +1,7 @@
 export 'app.dart';
 export 'auth.dart';
 export 'date.dart';
+export 'deeplinks.dart';
 export 'default_replies.dart';
 export 'groups.dart';
 export 'invites.dart';

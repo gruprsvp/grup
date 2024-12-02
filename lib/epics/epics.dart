@@ -1,3 +1,4 @@
+export 'auth.dart';
 export 'default_replies.dart';
 export 'groups.dart';
 export 'invites.dart';

@@ -23,6 +23,7 @@ mixin _$AuthState {
   AuthStatus get status => throw _privateConstructorUsedError;
   @UserJsonConverter()
   User? get user => throw _privateConstructorUsedError;
+  String? get lastRoute => throw _privateConstructorUsedError;
 
   /// Serializes this AuthState to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
@@ -39,7 +40,8 @@ abstract class $AuthStateCopyWith<$Res> {
   factory $AuthStateCopyWith(AuthState value, $Res Function(AuthState) then) =
       _$AuthStateCopyWithImpl<$Res, AuthState>;
   @useResult
-  $Res call({AuthStatus status, @UserJsonConverter() User? user});
+  $Res call(
+      {AuthStatus status, @UserJsonConverter() User? user, String? lastRoute});
 }
 
 /// @nodoc
@@ -59,6 +61,7 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
   $Res call({
     Object? status = null,
     Object? user = freezed,
+    Object? lastRoute = freezed,
   }) {
     return _then(_value.copyWith(
       status: null == status
@@ -69,6 +72,10 @@ class _$AuthStateCopyWithImpl<$Res, $Val extends AuthState>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
+      lastRoute: freezed == lastRoute
+          ? _value.lastRoute
+          : lastRoute // ignore: cast_nullable_to_non_nullable
+              as String?,
     ) as $Val);
   }
 }
@@ -81,7 +88,8 @@ abstract class _$$AuthStateImplCopyWith<$Res>
       __$$AuthStateImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({AuthStatus status, @UserJsonConverter() User? user});
+  $Res call(
+      {AuthStatus status, @UserJsonConverter() User? user, String? lastRoute});
 }
 
 /// @nodoc
@@ -99,6 +107,7 @@ class __$$AuthStateImplCopyWithImpl<$Res>
   $Res call({
     Object? status = null,
     Object? user = freezed,
+    Object? lastRoute = freezed,
   }) {
     return _then(_$AuthStateImpl(
       status: null == status
@@ -109,6 +118,10 @@ class __$$AuthStateImplCopyWithImpl<$Res>
           ? _value.user
           : user // ignore: cast_nullable_to_non_nullable
               as User?,
+      lastRoute: freezed == lastRoute
+          ? _value.lastRoute
+          : lastRoute // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -116,7 +129,8 @@ class __$$AuthStateImplCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$AuthStateImpl with DiagnosticableTreeMixin implements _AuthState {
-  const _$AuthStateImpl({required this.status, @UserJsonConverter() this.user});
+  const _$AuthStateImpl(
+      {required this.status, @UserJsonConverter() this.user, this.lastRoute});
 
   factory _$AuthStateImpl.fromJson(Map<String, dynamic> json) =>
       _$$AuthStateImplFromJson(json);
@@ -126,10 +140,12 @@ class _$AuthStateImpl with DiagnosticableTreeMixin implements _AuthState {
   @override
   @UserJsonConverter()
   final User? user;
+  @override
+  final String? lastRoute;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AuthState(status: $status, user: $user)';
+    return 'AuthState(status: $status, user: $user, lastRoute: $lastRoute)';
   }
 
   @override
@@ -138,7 +154,8 @@ class _$AuthStateImpl with DiagnosticableTreeMixin implements _AuthState {
     properties
       ..add(DiagnosticsProperty('type', 'AuthState'))
       ..add(DiagnosticsProperty('status', status))
-      ..add(DiagnosticsProperty('user', user));
+      ..add(DiagnosticsProperty('user', user))
+      ..add(DiagnosticsProperty('lastRoute', lastRoute));
   }
 
   @override
@@ -147,12 +164,14 @@ class _$AuthStateImpl with DiagnosticableTreeMixin implements _AuthState {
         (other.runtimeType == runtimeType &&
             other is _$AuthStateImpl &&
             (identical(other.status, status) || other.status == status) &&
-            (identical(other.user, user) || other.user == user));
+            (identical(other.user, user) || other.user == user) &&
+            (identical(other.lastRoute, lastRoute) ||
+                other.lastRoute == lastRoute));
   }
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, status, user);
+  int get hashCode => Object.hash(runtimeType, status, user, lastRoute);
 
   /// Create a copy of AuthState
   /// with the given fields replaced by the non-null parameter values.
@@ -173,7 +192,8 @@ class _$AuthStateImpl with DiagnosticableTreeMixin implements _AuthState {
 abstract class _AuthState implements AuthState {
   const factory _AuthState(
       {required final AuthStatus status,
-      @UserJsonConverter() final User? user}) = _$AuthStateImpl;
+      @UserJsonConverter() final User? user,
+      final String? lastRoute}) = _$AuthStateImpl;
 
   factory _AuthState.fromJson(Map<String, dynamic> json) =
       _$AuthStateImpl.fromJson;
@@ -183,6 +203,8 @@ abstract class _AuthState implements AuthState {
   @override
   @UserJsonConverter()
   User? get user;
+  @override
+  String? get lastRoute;
 
   /// Create a copy of AuthState
   /// with the given fields replaced by the non-null parameter values.
