@@ -30,7 +30,11 @@ class GroupDetailsScreen extends StatelessWidget {
         body: Column(
           children: [
             const DateDropdownContainer(),
-            if (groupDescription != null) Text(groupDescription),
+            if (groupDescription != null)
+              Padding(
+                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
+                child: Text(groupDescription),
+              ),
             Expanded(child: SchedulesListContainer()),
           ],
         ),
