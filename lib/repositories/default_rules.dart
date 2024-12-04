@@ -3,18 +3,18 @@ import 'package:parousia/models/models.dart';
 import 'const.dart';
 import 'supabase.dart';
 
-class DefaultRepliesRepository extends SupabaseRepository with Postgrest {
-  DefaultRepliesRepository({required super.supabase})
+class DefaultRulesRepository extends SupabaseRepository with Postgrest {
+  DefaultRulesRepository({required super.supabase})
       : super(tableName: Tables.default_replies);
 
-  Future<Iterable<DefaultReply>> getDefaultReplies(int groupId) async {
+  Future<Iterable<DefaultRule>> getDefaultRules(int groupId) async {
     return table()
         .select('*,members!inner(*)')
         .eq('members.group_id', groupId)
-        .withConverter((data) => data.map(DefaultReply.fromJson));
+        .withConverter((data) => data.map(DefaultRule.fromJson));
   }
 
-  Future<DefaultReply> createDefaultReply(DefaultReply reply) async {
+  Future<DefaultRule> createDefaultRule(DefaultRule reply) async {
     return table()
         .upsert({
           'schedule_id': reply.scheduleId,
@@ -24,10 +24,10 @@ class DefaultRepliesRepository extends SupabaseRepository with Postgrest {
         })
         .select()
         .single()
-        .withConverter((data) => DefaultReply.fromJson(data));
+        .withConverter((data) => DefaultRule.fromJson(data));
   }
 
-  Future<void> deleteDefaultReply(
+  Future<void> deleteDefaultRule(
       {required int memberId, required int scheduleId}) async {
     return table()
         .delete()

@@ -1,15 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/util/util.dart';
 import 'package:rrule/rrule.dart';
 
 /// A widget to display the default reply options.
-class DefaultReplyActionSheet extends StatelessWidget {
+class DefaultRuleActionSheet extends StatelessWidget {
   final RecurrenceRule? selectedDefaultOption;
   final ValueSetter<RecurrenceRule?> onOptionTap;
 
-  const DefaultReplyActionSheet({
+  const DefaultRuleActionSheet({
     super.key,
     this.selectedDefaultOption,
     required this.onOptionTap,
@@ -20,9 +21,9 @@ class DefaultReplyActionSheet extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     final options = [
-      (CommonRecurrenceRules.daily, l10n.defaultRepliesDaily),
-      (CommonRecurrenceRules.weekdays, l10n.defaultRepliesWeekdays),
-      (CommonRecurrenceRules.weekends, l10n.defaultRepliesWeekends),
+      (CommonRecurrenceRules.daily, l10n.defaultRulesDaily),
+      (CommonRecurrenceRules.weekdays, l10n.defaultRulesWeekdays),
+      (CommonRecurrenceRules.weekends, l10n.defaultRulesWeekends),
     ];
 
     final actions = [
@@ -37,8 +38,8 @@ class DefaultReplyActionSheet extends StatelessWidget {
 
     if (_isIOS(context)) {
       return CupertinoActionSheet(
-        title: Text(l10n.defaultReplies),
-        message: Text(l10n.defaultRepliesDescription),
+        title: Text(l10n.defaultRules),
+        message: Text(l10n.defaultRulesDescription),
         actions: actions,
         cancelButton: _buildActionSheetAction(
           context,
@@ -78,7 +79,7 @@ class DefaultReplyActionSheet extends StatelessWidget {
           child: DefaultTextStyle(
             style: Theme.of(context).textTheme.titleLarge!,
             textAlign: textAlign,
-            child: Text(l10n.defaultReplies),
+            child: Text(l10n.defaultRules),
           ),
         ),
         Padding(
@@ -90,7 +91,7 @@ class DefaultReplyActionSheet extends StatelessWidget {
           child: DefaultTextStyle(
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: textAlign,
-            child: Text(l10n.defaultRepliesDescription),
+            child: Text(l10n.defaultRulesDescription),
           ),
         )
       ],

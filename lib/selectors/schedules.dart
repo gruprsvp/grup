@@ -6,56 +6,83 @@ ScheduleInstanceSummary repliesForScheduleInstance({
   required Schedule schedule,
   required DateTime startDate,
   required DateTime endDate,
-  Iterable<DefaultReply>? defaultReplies,
+  Iterable<DefaultRule>? defaultRules,
   Iterable<Reply>? replies,
   int? targetMemberId,
 }) {
   final allReplies = <int, ReplyOptions>{};
-  final allDefaultOptions = <int, RecurrenceRule>{};
+  final memberReplies = <int, ReplyOptions>{};
+  final memberDefaultReplies = <int, ReplyOptions>{};
+  final memberDefaultRules = <int, DefaultRule>{};
 
-  defaultReplies?.forEach((defaultReply) {
-    if (defaultReply.scheduleId == schedule.id) {
-      allDefaultOptions[defaultReply.memberId] = defaultReply.recurrenceRule;
+  ReplyOptions? myReply;
+  ReplyOptions? myDefaultReply;
+  DefaultRule? myDefaultRule;
+
+  defaultRules?.forEach((defaultRule) {
+    if (defaultRule.scheduleId == schedule.id) {
+      if (defaultRule.memberId == targetMemberId) {
+        myDefaultRule = defaultRule;
+      } else {
+        memberDefaultRules[defaultRule.memberId] = defaultRule;
+      }
     }
 
-    defaultReply.recurrenceRule
+    defaultRule.recurrenceRule
         .getInstances(
-          start: schedule.startDate,
-          after: startDate,
-          before: endDate,
-          includeAfter: true,
-        )
-        .forEach((e) => e
-                    .copyWith(isUtc: true)
-                    .isAtSameMomentAs(instanceDate) &&
-                defaultReply.scheduleId == schedule.id
-            ? allReplies[defaultReply.memberId] = defaultReply.selectedOption
-            : null);
+      start: schedule.startDate,
+      after: startDate,
+      before: endDate,
+      includeAfter: true,
+    )
+        .forEach((e) {
+      final isSameDay = e.copyWith(isUtc: true).isAtSameMomentAs(instanceDate);
+      final isSameSchedule = defaultRule.scheduleId == schedule.id;
+
+      if (isSameDay && isSameSchedule) {
+        if (defaultRule.memberId == targetMemberId) {
+          myDefaultReply = defaultRule.selectedOption;
+        } else {
+          memberDefaultReplies[defaultRule.memberId] =
+              defaultRule.selectedOption;
+        }
+        allReplies[defaultRule.memberId] = defaultRule.selectedOption;
+      }
+    });
   });
 
   replies?.forEach(
-    (reply) => reply.instanceDate
-                .copyWith(isUtc: true)
-                .isAtSameMomentAs(instanceDate) &&
-            reply.scheduleId == schedule.id
-        ? allReplies[reply.memberId] = reply.selectedOption
-        : null,
+    (reply) {
+      final isSameDay = reply.instanceDate
+          .copyWith(isUtc: true)
+          .isAtSameMomentAs(instanceDate);
+      final isSameSchedule = reply.scheduleId == schedule.id;
+      if (isSameDay && isSameSchedule) {
+        if (reply.memberId == targetMemberId) {
+          myReply = reply.selectedOption;
+        } else {
+          memberReplies[reply.memberId] = reply.selectedOption;
+        }
+        allReplies[reply.memberId] = reply.selectedOption;
+      }
+    },
   );
 
-  final myReply = allReplies[targetMemberId];
-  final myDefaultOption = allDefaultOptions[targetMemberId];
-  final yesCount = allReplies.values.where((e) => e == ReplyOptions.yes).length;
+  final yesCount =
+      allReplies.entries.where((e) => e.value == ReplyOptions.yes).length;
 
   return ScheduleInstanceSummary(
     scheduleId: schedule.id,
     groupId: schedule.groupId,
     displayName: schedule.displayName,
     instanceDate: instanceDate,
-    memberReplies: allReplies,
-    memberDefaultOptions: allDefaultOptions,
+    memberReplies: memberReplies,
+    memberDefaultReplies: memberDefaultReplies,
+    memberDefaultRules: memberDefaultRules,
     yesCount: yesCount,
     myReply: myReply,
-    myDefaultOption: myDefaultOption,
+    myDefaultReply: myDefaultReply,
+    myDefaultRule: myDefaultRule,
     targetMemberId: targetMemberId,
   );
 }
@@ -64,7 +91,7 @@ Iterable<ScheduleInstanceSummary> getScheduleInstances({
   required Schedule schedule,
   required DateTime startDate,
   required DateTime endDate,
-  Iterable<DefaultReply>? defaultReplies,
+  Iterable<DefaultRule>? defaultRules,
   Iterable<Reply>? replies,
   int? targetMemberId,
 }) {
@@ -81,45 +108,11 @@ Iterable<ScheduleInstanceSummary> getScheduleInstances({
         (e) => repliesForScheduleInstance(
           instanceDate: e,
           schedule: schedule,
-          defaultReplies: defaultReplies,
+          defaultRules: defaultRules,
           replies: replies,
           startDate: after,
           endDate: endDate,
           targetMemberId: targetMemberId,
         ),
       );
-}
-
-List<(Member, ReplyOptions?)> getMemberReplies({
-  required int? targetMemberId,
-  required Iterable<Member> members,
-  required Map<int, ReplyOptions> replies,
-  required Map<String, Profile> profiles,
-}) {
-  return members
-      .map(
-        (m) {
-          final reply = replies[m.id];
-          return (
-            m.copyWith(
-                displayNameOverride: m.displayNameOverride ??
-                    profiles[m.profileId]?.displayName),
-            reply
-          );
-        },
-      )
-      .where((e) => e.$1.id != targetMemberId)
-      .toList();
-}
-
-List<RecurrenceRule?> getMemberDefaultOptions({
-  required int? targetMemberId,
-  required Iterable<Member> members,
-  required Map<int, RecurrenceRule> defaultOptions,
-  required Map<String, Profile> profiles,
-}) {
-  return members
-      .where((m) => m.id != targetMemberId)
-      .map((m) => defaultOptions[m.id])
-      .toList();
 }
