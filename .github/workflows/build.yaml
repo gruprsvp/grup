@@ -39,29 +39,24 @@ jobs:
         run: |
           supabase status -o json > supabase/config/localhost.json
           flutter test
-      - name: Calculate new tag name
-        id: calculate
+      - name: Compare pubspec version and git tag
+        id: pubspec_tag
         run: |
-          if [[ -n "${{ inputs.version }}" ]]; then
-            NEW_TAG_NAME="v${{ inputs.version }}"
-          else
-            # Attempt to get the latest tag
-            LATEST_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          PUBSPEC_VERSION=v$(grep -oP '^version:\s*\K[0-9]+\.[0-9]+\.[0-9]+' pubspec.yaml)
+          GIT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
+          echo "Found version in pubspec.yaml: $PUBSPEC_VERSION"      
+          echo "Found latest tag: $GIT_TAG"
           
-            if [ -z "$LATEST_TAG" ]; then
-              # No tags exist, default to v1.0.0
-              NEW_TAG_NAME="v1.0.0"
-            else
-              # Increment the latest tag
-              NEW_TAG_NAME=$(echo $LATEST_TAG | awk -F. '{OFS="."; $NF+=1; print $0}')
-            fi
+          # If the pubspec version is not the same as the latest tag, output the new tag
+          if [[ "$PUBSPEC_VERSION" != "$GIT_TAG" ]]; then
+              echo "tag_name=$PUBSPEC_VERSION" >> $GITHUB_OUTPUT
           fi
-          echo "tag_name=${NEW_TAG_NAME}" >> $GITHUB_OUTPUT
       - name: Create release
         uses: ncipollo/release-action@v1
+        if: steps.pubspec_tag.outputs.tag_name != ''
         with:
-          name: ${{ steps.calculate.outputs.tag_name }}
-          tag: ${{ steps.calculate.outputs.tag_name }}
+          name: ${{ steps.pubspec_tag.outputs.tag_name }}
+          tag: ${{ steps.pubspec_tag.outputs.tag_name }}
           generateReleaseNotes: true
           makeLatest: true
       - name: Configure git
@@ -81,9 +76,7 @@ jobs:
           echo "$UPLOAD_KEYSTORE_B64" | base64 --decode > android/keystore.jks
           echo "$KEY_PROPERTIES" > android/key.properties
       - name: Compile Android app
-        run: |
-          TAG_NAME=${{ steps.calculate.outputs.tag_name }}
-          flutter build appbundle --build-number ${{ github.run_number }} --build-name ${TAG_NAME:1}
+        run: flutter build appbundle --build-number ${{ github.run_number }}
       - name: Upload Android app to Play Store
         uses: r0adkll/upload-google-play@v1
         with:
