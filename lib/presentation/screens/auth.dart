@@ -45,7 +45,7 @@ class AuthScreen extends StatelessWidget {
   /// This is needed to handle different ports
   /// when launching on localhost.
   String? _getRedirectUrl() {
-    if (!kIsWeb) return null;
+    if (!kIsWeb) return 'appforit://auth-callback';
 
     final currentUrl = html.window.location.href;
     final uri = Uri.parse(currentUrl);

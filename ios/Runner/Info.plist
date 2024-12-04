@@ -63,6 +63,7 @@
 				<key>CFBundleURLSchemes</key>
 				<array>
 					<string>com.googleusercontent.apps.655087059227-o10vdnfsvnkl9ct8isg8db3j74s0rfur</string>
+                    <string>appforit</string>
 				</array>
 			</dict>
 		</array>
