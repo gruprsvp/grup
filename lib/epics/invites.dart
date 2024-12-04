@@ -52,7 +52,8 @@ Epic<AppState> _createGetInvitesForMemberEpic(InvitesRepository invites) {
 Epic<AppState> _createUseDeeplinkInviteCodeEpic(InvitesRepository invites) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
           .whereType<HandleDeeplinkAction>()
-          .where((action) => action.paths.first == 'join')
+          .where((action) =>
+              action.paths.isNotEmpty && action.paths.first == 'join')
           .asyncMap((action) {
         final code = action.paths.last;
         return invites

@@ -42,7 +42,7 @@ file_size_limit = "50MiB"
 # in emails.
 site_url = "https://appfor.it"
 # A list of *exact* URLs that auth providers are permitted to redirect to post authentication.
-additional_redirect_urls = ["http://localhost:*"]
+additional_redirect_urls = ["http://localhost:*", "appforit://auth-callback"]
 # How long tokens are valid for, in seconds. Defaults to 3600 (1 hour), maximum 604,800 seconds (one
 # week).
 jwt_expiry = 3600
