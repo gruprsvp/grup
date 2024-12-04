@@ -538,8 +538,8 @@ void main() {
             runWithTemporaryGroup((supabase, group, groupsRepository) async {
           final membersRepository = MembersRepository(supabase: supabase);
           final schedulesRepository = SchedulesRepository(supabase: supabase);
-          final defaultRepliesRepository =
-              DefaultRepliesRepository(supabase: supabase);
+          final defaultRulesRepository =
+              DefaultRulesRepository(supabase: supabase);
 
           final member = await membersRepository.addMemberToGroup(group.id,
               displayName: 'Member invited with code');
@@ -560,9 +560,8 @@ void main() {
             ),
           );
 
-          final defaultReply =
-              await defaultRepliesRepository.createDefaultReply(
-            DefaultReply(
+          final defaultRule = await defaultRulesRepository.createDefaultRule(
+            DefaultRule(
               scheduleId: schedule.id,
               memberId: member.id,
               selectedOption: ReplyOptions.yes,
@@ -570,14 +569,13 @@ void main() {
             ),
           );
 
-          final list =
-              await defaultRepliesRepository.getDefaultReplies(group.id);
+          final list = await defaultRulesRepository.getDefaultRules(group.id);
           expect(list, hasLength(1));
 
           final schedules =
               await schedulesRepository.getGroupSchedules(group.id);
           // TODO
-          // expect(schedules.single.defaultReplies?.single, equals(defaultReply));
+          // expect(schedules.single.defaultRules?.single, equals(defaultRule));
         }),
       ),
     );

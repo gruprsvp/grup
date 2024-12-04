@@ -20,8 +20,8 @@ sealed class AppState with _$AppState {
     @Default(RemoteEntityState<Invite>()) RemoteEntityState<Invite> invites,
     @Default(RemoteEntityState<Schedule>())
     RemoteEntityState<Schedule> schedules,
-    @Default(RemoteEntityState<DefaultReply>())
-    RemoteEntityState<DefaultReply> defaultReplies,
+    @Default(RemoteEntityState<DefaultRule>())
+    RemoteEntityState<DefaultRule> defaultRules,
     @Default(RemoteEntityState<Reply>()) RemoteEntityState<Reply> replies,
     @Default(AuthState(status: AuthStatus.initial)) AuthState auth,
     @Default(ThemeMode.system) ThemeMode themeMode,

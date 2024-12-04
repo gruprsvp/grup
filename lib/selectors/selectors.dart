@@ -55,8 +55,8 @@ final selectGroup = createSelector2(
 Iterable<Schedule> selectScheduleEntities(AppState state) =>
     state.schedules.entities.values;
 
-Iterable<DefaultReply> selectAllDefaultReplies(AppState state) =>
-    state.defaultReplies.entities.values;
+Iterable<DefaultRule> selectAllDefaultRules(AppState state) =>
+    state.defaultRules.entities.values;
 
 Iterable<Reply> selectAllReplies(AppState state) =>
     state.replies.entities.values;
@@ -74,8 +74,8 @@ final selectSchedules = createSelector3(
 final selectSchedulesIds =
     createSelector1(selectSchedules, (schedules) => schedules.map((s) => s.id));
 
-final selectDefaultReplies = createSelector2(
-    selectAllDefaultReplies,
+final selectDefaultRules = createSelector2(
+    selectAllDefaultRules,
     selectSchedulesIds,
     (replies, scheduleIds) =>
         replies.where((r) => scheduleIds.contains(r.scheduleId)));
@@ -87,17 +87,16 @@ final selectReplies = createSelector3(
     (replies, scheduleIds, range) => replies.where((r) =>
         scheduleIds.contains(r.scheduleId) && range.contains(r.instanceDate)));
 
-// TODO This shit should be better tested, and use reselect for memoization
 final selectScheduleInstancesForSelectedDate = createSelector5(
     selectedDateRangeSelector,
     selectMyMember,
     selectSchedules,
-    selectDefaultReplies,
+    selectDefaultRules,
     selectReplies,
-    (range, myMember, schedules, defaultReplies, replies) =>
+    (range, myMember, schedules, defaultRules, replies) =>
         schedules.expand((schedule) => getScheduleInstances(
               schedule: schedule,
-              defaultReplies: defaultReplies,
+              defaultRules: defaultRules,
               replies: replies,
               startDate: range.start,
               endDate: range.end,
@@ -122,35 +121,10 @@ final getMember = Memoized2((Member member, Map<String, Profile> profiles) {
 Map<String, Profile> selectAllProfiles(AppState state) =>
     state.profiles.entities;
 
-final selectMemberReplies = createSelector3(
-    groupMembersSelector,
+final selectScheduleInstanceForDate = createSelector3(
     selectScheduleInstanceSummary,
-    selectAllProfiles,
-    (members, instance, profiles) => getMemberReplies(
-          targetMemberId: instance?.targetMemberId,
-          members: members,
-          replies: instance?.memberReplies ?? {},
-          profiles: profiles,
-        ));
-
-final selectMemberDefaultOptions = createSelector3(
-    groupMembersSelector,
-    selectScheduleInstanceSummary,
-    selectAllProfiles,
-    (members, instance, profiles) => getMemberDefaultOptions(
-          targetMemberId: instance?.targetMemberId,
-          members: members,
-          defaultOptions: instance?.memberDefaultOptions ?? {},
-          profiles: profiles,
-        ));
-
-// TODO This should work the other way around, and be memoized
-final selectScheduleInstanceForDate = createSelector4(
-    selectScheduleInstanceSummary,
-    selectMemberReplies,
-    selectMemberDefaultOptions,
-    selectIsAdmin,
-    (instance, memberReplies, memberDefaultOptions, canEditOthers) {
+    groupMembersWithProfilesSelector,
+    selectIsAdmin, (instance, members, canEditOthers) {
   if (instance == null) return null;
 
   return ScheduleInstanceDetails(
@@ -158,11 +132,14 @@ final selectScheduleInstanceForDate = createSelector4(
     groupId: instance.groupId,
     displayName: instance.displayName,
     instanceDate: instance.instanceDate,
-    memberReplies: memberReplies,
-    memberDefaultOptions: memberDefaultOptions,
+    memberReplies: instance.memberReplies,
+    memberDefaultReplies: instance.memberDefaultReplies,
+    memberDefaultRules: instance.memberDefaultRules,
+    members:
+        members.whereNot((m) => m.$1.id == instance.targetMemberId).toList(),
     yesCount: instance.yesCount,
     myReply: instance.myReply,
-    myDefaultOption: instance.myDefaultOption,
+    myDefaultReply: instance.myDefaultReply,
     targetMemberId: instance.targetMemberId,
     canEditOthers: canEditOthers,
   );

@@ -7,18 +7,20 @@ import 'package:rrule/rrule.dart';
 
 class ScheduleMemberTile extends StatefulWidget {
   final String name;
-  final ReplyOptions? myReply;
-  final RecurrenceRule? myDefaultOption;
+  final ReplyOptions? reply;
+  final ReplyOptions? defaultReply;
+  final DefaultRule? defaultRule;
   final Function(ReplyOptions?)? onReplyChanged;
-  final Function(RecurrenceRule?, ReplyOptions)? onDefaultReplyChanged;
+  final Function(RecurrenceRule?, ReplyOptions)? onDefaultRuleChanged;
 
   const ScheduleMemberTile({
     super.key,
     required this.name,
-    this.myReply,
-    this.myDefaultOption,
+    this.reply,
+    this.defaultReply,
+    this.defaultRule,
     this.onReplyChanged,
-    this.onDefaultReplyChanged,
+    this.onDefaultRuleChanged,
   });
 
   @override
@@ -33,30 +35,32 @@ class _ScheduleMemberTileState extends State<ScheduleMemberTile> {
   void initState() {
     super.initState();
 
-    selectedDefaultOption = widget.myDefaultOption;
+    selectedDefaultOption = widget.defaultRule?.recurrenceRule;
   }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
       title: Text(widget.name),
-      trailing: ReplyButton(
-          myReply: widget.myReply,
-          onReplyChanged: (reply) => widget.onReplyChanged?.call(reply),
-          onDefaultReplyChanged: (reply) =>
-              _confirmDefaultReply(context, reply)),
+      trailing: ReplyButtons(
+        reply: widget.reply,
+        defaultReply: widget.defaultReply,
+        onReplyChanged: (reply) => widget.onReplyChanged?.call(reply),
+      ),
+      onLongPress: () =>
+          _confirmDefaultRule(context, widget.reply ?? ReplyOptions.yes),
     );
   }
 
   /// Shows a confirmation action sheet to define the default reply.
-  _confirmDefaultReply(BuildContext context, ReplyOptions reply) async {
+  _confirmDefaultRule(BuildContext context, ReplyOptions reply) async {
     setState(() {
       previousDefaultOption = selectedDefaultOption;
     });
 
-    final isConfirmed = await _confirmDefaultReplyActionSheet(
+    final isConfirmed = await _confirmDefaultRuleActionSheet(
       context,
-      (BuildContext context) => DefaultReplyActionSheet(
+      (BuildContext context) => DefaultRuleActionSheet(
         selectedDefaultOption: selectedDefaultOption,
         onOptionTap: (option) {
           if (option == null) {
@@ -74,7 +78,7 @@ class _ScheduleMemberTileState extends State<ScheduleMemberTile> {
     );
 
     if (isConfirmed == true) {
-      widget.onDefaultReplyChanged?.call(selectedDefaultOption, reply);
+      widget.onDefaultRuleChanged?.call(selectedDefaultOption, reply);
 
       return;
     }
@@ -84,7 +88,7 @@ class _ScheduleMemberTileState extends State<ScheduleMemberTile> {
     });
   }
 
-  Future<bool?> _confirmDefaultReplyActionSheet(
+  Future<bool?> _confirmDefaultRuleActionSheet(
       BuildContext context, WidgetBuilder builder) async {
     final isCupertino = Theme.of(context).platform == TargetPlatform.iOS;
 
