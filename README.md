@@ -49,10 +49,14 @@ and set it accordingly in the test file.
 
 The app can similarly be configured to run on local or remote servers.
 
-## TODO
+## Release
 
-- [ ] Use Flutter flavours to configure dev and test environments
-- [ ] Tailscale to connect to local Supabase server
+To release a new version of the app, update the version in `pubspec.yaml` and commit the changes.
+
+Only the `build-name` part - before the plus sign(+) - should be updated:
+the `build-number` is incremented automatically by the CI (GitHub Actions and Xcode Cloud).
+
+This will trigger a GitHub action that will create a new release then continue to build and deploy.
 
 [^flutter-get-started]: https://docs.flutter.dev/get-started/install
 
