@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:parousia/models/models.dart';
 
 class ReplyButtons extends StatelessWidget {
@@ -71,7 +72,7 @@ class ReplyButton extends StatelessWidget {
 
     if (isActive) {
       return IconButton.filled(
-        icon: Icon(activeIcon),
+        icon: FaIcon(activeIcon),
         onPressed: () => onReplyChanged?.call(null),
         style: ButtonStyle(
           foregroundColor: foregroundColor,
@@ -85,13 +86,13 @@ class ReplyButton extends StatelessWidget {
           foregroundColor: focusColor,
           side: WidgetStateProperty.all(BorderSide(color: activeColor)),
         ),
-        icon: Icon(activeIcon),
+        icon: FaIcon(activeIcon),
         onPressed: () => onReplyChanged?.call(option),
         tooltip: tooltip,
       );
     } else {
       return IconButton.outlined(
-        icon: Icon(inactiveIcon),
+        icon: FaIcon(inactiveIcon),
         onPressed: () => onReplyChanged?.call(option),
         tooltip: tooltip,
       );
@@ -120,8 +121,8 @@ class YesButton extends StatelessWidget {
       reply: reply,
       defaultReplyOption: defaultReplyOption,
       onReplyChanged: onReplyChanged,
-      activeIcon: Icons.event_available,
-      inactiveIcon: Icons.event_available_outlined,
+      activeIcon: FontAwesomeIcons.solidThumbsUp,
+      inactiveIcon: FontAwesomeIcons.thumbsUp,
       tooltip: l10n.yes,
       activeColor: Colors.green,
     );
@@ -149,8 +150,8 @@ class NoButton extends StatelessWidget {
       reply: reply,
       defaultReplyOption: defaultReplyOption,
       onReplyChanged: onReplyChanged,
-      activeIcon: Icons.event_busy,
-      inactiveIcon: Icons.event_busy_outlined,
+      activeIcon: FontAwesomeIcons.solidThumbsDown,
+      inactiveIcon: FontAwesomeIcons.thumbsDown,
       tooltip: l10n.no,
       activeColor: Colors.red,
     );
