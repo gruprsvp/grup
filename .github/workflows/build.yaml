@@ -45,7 +45,11 @@ jobs:
           PUBSPEC_VERSION=v$(grep -oP '^version:\s*\K[0-9]+\.[0-9]+\.[0-9]+' pubspec.yaml)
           echo "Found version in pubspec.yaml: $PUBSPEC_VERSION"      
           echo "tag_name=$PUBSPEC_VERSION" >> $GITHUB_OUTPUT
-      - name: Create or update release
+      # This step prepares a draft release with the release notes generated from the commit messages,
+      # and the tag name from the pubspec.yaml file. It will only update the release if it is a draft
+      # and has not been published yet. If the release is already published, it will not be updated and fail.
+      # Once a version is published to the app store, the release should be marked as published.
+      - name: Create or update draft release
         uses: ncipollo/release-action@v1
         with:
           name: ${{ steps.pubspec_tag.outputs.tag_name }}
@@ -53,6 +57,8 @@ jobs:
           generateReleaseNotes: true
           makeLatest: true
           draft: true
+          allowUpdates: true
+          updateOnlyUnreleased: true
       - name: Configure git
         run: |
           git config --global user.name "GitHub Actions Bot"
