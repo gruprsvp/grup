@@ -6,29 +6,29 @@ ScheduleInstanceSummary repliesForScheduleInstance({
   required Schedule schedule,
   required DateTime startDate,
   required DateTime endDate,
-  Iterable<DefaultRule>? defaultRules,
+  Iterable<DefaultReply>? defaultReplies,
   Iterable<Reply>? replies,
   int? targetMemberId,
 }) {
   final allReplies = <int, ReplyOptions>{};
   final memberReplies = <int, ReplyOptions>{};
-  final memberDefaultReplies = <int, ReplyOptions>{};
-  final memberDefaultRules = <int, DefaultRule>{};
+  final memberDefaultReplyOptions = <int, ReplyOptions>{};
+  final memberDefaultReplies = <int, DefaultReply>{};
 
   ReplyOptions? myReply;
-  ReplyOptions? myDefaultReply;
-  DefaultRule? myDefaultRule;
+  ReplyOptions? myDefaultReplyOption;
+  DefaultReply? myDefaultReply;
 
-  defaultRules?.forEach((defaultRule) {
-    if (defaultRule.scheduleId == schedule.id) {
-      if (defaultRule.memberId == targetMemberId) {
-        myDefaultRule = defaultRule;
+  defaultReplies?.forEach((defaultReply) {
+    if (defaultReply.scheduleId == schedule.id) {
+      if (defaultReply.memberId == targetMemberId) {
+        myDefaultReply = defaultReply;
       } else {
-        memberDefaultRules[defaultRule.memberId] = defaultRule;
+        memberDefaultReplies[defaultReply.memberId] = defaultReply;
       }
     }
 
-    defaultRule.recurrenceRule
+    defaultReply.recurrenceRule
         .getInstances(
       start: schedule.startDate,
       after: startDate,
@@ -37,16 +37,16 @@ ScheduleInstanceSummary repliesForScheduleInstance({
     )
         .forEach((e) {
       final isSameDay = e.copyWith(isUtc: true).isAtSameMomentAs(instanceDate);
-      final isSameSchedule = defaultRule.scheduleId == schedule.id;
+      final isSameSchedule = defaultReply.scheduleId == schedule.id;
 
       if (isSameDay && isSameSchedule) {
-        if (defaultRule.memberId == targetMemberId) {
-          myDefaultReply = defaultRule.selectedOption;
+        if (defaultReply.memberId == targetMemberId) {
+          myDefaultReplyOption = defaultReply.selectedOption;
         } else {
-          memberDefaultReplies[defaultRule.memberId] =
-              defaultRule.selectedOption;
+          memberDefaultReplyOptions[defaultReply.memberId] =
+              defaultReply.selectedOption;
         }
-        allReplies[defaultRule.memberId] = defaultRule.selectedOption;
+        allReplies[defaultReply.memberId] = defaultReply.selectedOption;
       }
     });
   });
@@ -77,12 +77,12 @@ ScheduleInstanceSummary repliesForScheduleInstance({
     displayName: schedule.displayName,
     instanceDate: instanceDate,
     memberReplies: memberReplies,
+    memberDefaultReplyOptions: memberDefaultReplyOptions,
     memberDefaultReplies: memberDefaultReplies,
-    memberDefaultRules: memberDefaultRules,
     yesCount: yesCount,
     myReply: myReply,
+    myDefaultReplyOption: myDefaultReplyOption,
     myDefaultReply: myDefaultReply,
-    myDefaultRule: myDefaultRule,
     targetMemberId: targetMemberId,
   );
 }
@@ -91,7 +91,7 @@ Iterable<ScheduleInstanceSummary> getScheduleInstances({
   required Schedule schedule,
   required DateTime startDate,
   required DateTime endDate,
-  Iterable<DefaultRule>? defaultRules,
+  Iterable<DefaultReply>? defaultReplies,
   Iterable<Reply>? replies,
   int? targetMemberId,
 }) {
@@ -108,7 +108,7 @@ Iterable<ScheduleInstanceSummary> getScheduleInstances({
         (e) => repliesForScheduleInstance(
           instanceDate: e,
           schedule: schedule,
-          defaultRules: defaultRules,
+          defaultReplies: defaultReplies,
           replies: replies,
           startDate: after,
           endDate: endDate,

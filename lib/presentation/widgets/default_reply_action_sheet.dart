@@ -4,16 +4,16 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/util/util.dart';
 import 'package:rrule/rrule.dart';
+import 'package:parousia/models/models.dart';
 
-/// A widget to display the default reply options.
-class DefaultRuleActionSheet extends StatelessWidget {
-  final RecurrenceRule? selectedDefaultOption;
-  final ValueSetter<RecurrenceRule?> onOptionTap;
+class DefaultReplyActionSheet extends StatelessWidget {
+  final RecurrenceRule? recurrenceRule;
+  final ReplyOptions? replyOption;
 
-  const DefaultRuleActionSheet({
+  const DefaultReplyActionSheet({
     super.key,
-    this.selectedDefaultOption,
-    required this.onOptionTap,
+    this.recurrenceRule,
+    this.replyOption,
   });
 
   @override
@@ -21,43 +21,29 @@ class DefaultRuleActionSheet extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     final options = [
-      (CommonRecurrenceRules.daily, l10n.defaultRulesDaily),
-      (CommonRecurrenceRules.weekdays, l10n.defaultRulesWeekdays),
-      (CommonRecurrenceRules.weekends, l10n.defaultRulesWeekends),
+      (CommonRecurrenceRules.daily, l10n.defaultRepliesDaily),
+      (CommonRecurrenceRules.weekdays, l10n.defaultRepliesWeekdays),
+      (CommonRecurrenceRules.weekends, l10n.defaultRepliesWeekends),
     ];
 
     final actions = [
-      for (final (rrule, text) in options)
+      for (final (rule, text) in options)
         _buildActionSheetAction(
           context,
-          onTap: onOptionTap,
           text: text,
-          option: rrule,
+          option: rule,
+          isSelected: recurrenceRule == rule,
+          onTap: (replyOption) {
+            Navigator.pop(context, (rule, replyOption));
+          },
         ),
     ];
-
-    if (_isIOS(context)) {
-      return CupertinoActionSheet(
-        title: Text(l10n.defaultRules),
-        message: Text(l10n.defaultRulesDescription),
-        actions: actions,
-        cancelButton: _buildActionSheetAction(
-          context,
-          onTap: onOptionTap,
-          text: l10n.cancel,
-        ),
-      );
-    }
 
     return Wrap(
       children: [
         _buildActionSheetHeader(context),
         ...actions,
-        _buildActionSheetAction(
-          context,
-          onTap: onOptionTap,
-          text: l10n.cancel,
-        ),
+        _buildExplanationWidget(context),
       ],
     );
   }
@@ -79,7 +65,7 @@ class DefaultRuleActionSheet extends StatelessWidget {
           child: DefaultTextStyle(
             style: Theme.of(context).textTheme.titleLarge!,
             textAlign: textAlign,
-            child: Text(l10n.defaultRules),
+            child: Text(l10n.defaultReplies),
           ),
         ),
         Padding(
@@ -91,44 +77,38 @@ class DefaultRuleActionSheet extends StatelessWidget {
           child: DefaultTextStyle(
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: textAlign,
-            child: Text(l10n.defaultRulesDescription),
+            child: Text(l10n.defaultRepliesDescription),
           ),
-        )
+        ),
       ],
     );
   }
 
   Widget _buildActionSheetAction(
     BuildContext context, {
-    required ValueSetter<RecurrenceRule?> onTap,
     required String text,
+    required bool isSelected,
+    required void Function(ReplyOptions?) onTap,
     RecurrenceRule? option,
   }) {
-    final checked =
-        selectedDefaultOption != null && selectedDefaultOption == option;
-
-    if (_isIOS(context)) {
-      return CupertinoActionSheetAction(
-        onPressed: () => onTap(option),
-        child: Row(
-          children: [
-            if (checked) ...[
-              Icon(CupertinoIcons.check_mark, size: 18),
-              SizedBox(width: 10),
-            ],
-            Text(text),
-          ],
-        ),
-      );
-    }
-
     return ListTile(
-      onTap: () => onTap(option),
-      leading: (checked) ? Icon(Icons.check) : null,
       title: Text(text),
+      trailing: ReplyButtons(
+        reply: isSelected ? replyOption : null,
+        onReplyChanged: (reply) => onTap(reply),
+      ),
     );
   }
 
-  bool _isIOS(BuildContext context) =>
-      Theme.of(context).platform == TargetPlatform.iOS;
+  Widget _buildExplanationWidget(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: Text(
+        l10n.defaultRepliesExplanation,
+        style: Theme.of(context).textTheme.bodySmall,
+        textAlign: TextAlign.center,
+      ),
+    );
+  }
 }

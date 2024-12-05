@@ -54,7 +54,7 @@ Future<void> main() async {
 }
 
 Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
-  final defaultRulesRepository = DefaultRulesRepository(supabase: supabase);
+  final defaultRepliesRepository = DefaultRepliesRepository(supabase: supabase);
   final groupsRepository = GroupsRepository(supabase: supabase);
   final membersRepository = MembersRepository(supabase: supabase);
   final invitesRepository = InvitesRepository(supabase: supabase);
@@ -66,7 +66,7 @@ Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
   final epics = combineEpics<AppState>([
     createRouterEpics(router),
     createAuthEpics(),
-    createDefaultRulesEpics(defaultRulesRepository),
+    createDefaultRepliesEpics(defaultRepliesRepository),
     createGroupsEpics(groupsRepository),
     createMembersEpic(membersRepository),
     createInvitesEpics(invitesRepository),

@@ -21,10 +21,10 @@ final schedulesReducer =
   selectId: (schedule) => schedule.id.toString(),
 );
 
-final defaultRulesReducer =
-    RemoteEntityReducer<RemoteEntityState<DefaultRule>, DefaultRule>(
-  selectId: (defaultRule) =>
-      "${defaultRule.memberId}-${defaultRule.scheduleId}",
+final defaultRepliesReducer =
+    RemoteEntityReducer<RemoteEntityState<DefaultReply>, DefaultReply>(
+  selectId: (defaultReply) =>
+      "${defaultReply.memberId}-${defaultReply.scheduleId}",
 );
 
 final repliesReducer = RemoteEntityReducer<RemoteEntityState<Reply>, Reply>(

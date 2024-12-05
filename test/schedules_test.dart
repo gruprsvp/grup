@@ -29,18 +29,18 @@ void main() {
           startDate: startDate,
           recurrenceRule: weekendRecurrenceRule);
 
-      final defaultRules = [
-        DefaultRule(
+      final defaultReplies = [
+        DefaultReply(
             memberId: 32,
             scheduleId: dailySchedule.id,
             selectedOption: ReplyOptions.yes,
             recurrenceRule: dailyRecurrenceRule),
-        DefaultRule(
+        DefaultReply(
             memberId: 32,
             scheduleId: weekendSchedule.id,
             selectedOption: ReplyOptions.yes,
             recurrenceRule: weekendRecurrenceRule),
-        DefaultRule(
+        DefaultReply(
             memberId: 33,
             scheduleId: dailySchedule.id,
             selectedOption: ReplyOptions.yes,
@@ -75,7 +75,7 @@ void main() {
 
       final result = getScheduleInstances(
         schedule: dailySchedule,
-        defaultRules: defaultRules,
+        defaultReplies: defaultReplies,
         replies: replies,
         startDate: startDate.subtract(const Duration(days: 10)),
         endDate: endDate,

@@ -33,11 +33,11 @@ _$AppStateImpl _$$AppStateImplFromJson(Map<String, dynamic> json) =>
           : RemoteEntityState<Schedule>.fromJson(
               json['schedules'] as Map<String, dynamic>,
               (value) => Schedule.fromJson(value as Map<String, dynamic>)),
-      defaultRules: json['defaultRules'] == null
-          ? const RemoteEntityState<DefaultRule>()
-          : RemoteEntityState<DefaultRule>.fromJson(
-              json['defaultRules'] as Map<String, dynamic>,
-              (value) => DefaultRule.fromJson(value as Map<String, dynamic>)),
+      defaultReplies: json['defaultReplies'] == null
+          ? const RemoteEntityState<DefaultReply>()
+          : RemoteEntityState<DefaultReply>.fromJson(
+              json['defaultReplies'] as Map<String, dynamic>,
+              (value) => DefaultReply.fromJson(value as Map<String, dynamic>)),
       replies: json['replies'] == null
           ? const RemoteEntityState<Reply>()
           : RemoteEntityState<Reply>.fromJson(
@@ -63,7 +63,7 @@ Map<String, dynamic> _$$AppStateImplToJson(_$AppStateImpl instance) =>
       'members': instance.members,
       'invites': instance.invites,
       'schedules': instance.schedules,
-      'defaultRules': instance.defaultRules,
+      'defaultReplies': instance.defaultReplies,
       'replies': instance.replies,
       'auth': instance.auth,
       'themeMode': _$ThemeModeEnumMap[instance.themeMode]!,

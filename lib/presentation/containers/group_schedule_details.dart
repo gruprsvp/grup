@@ -34,7 +34,7 @@ class GroupScheduleDetailsContainer extends StatelessWidget {
         group: vm.group,
         scheduleInstance: vm.scheduleInstance,
         onReplyChanged: vm.onReplyChanged,
-        onDefaultRuleChanged: vm.onDefaultRuleChanged,
+        onDefaultReplyChanged: vm.onDefaultReplyChanged,
       ),
     );
   }
@@ -47,7 +47,7 @@ sealed class _ViewModel with _$ViewModel {
     Group? group,
     ScheduleInstanceDetails? scheduleInstance,
     OnDetailsReplyChangedCallback? onReplyChanged,
-    OnDetailsDefaultRuleChangedCallback? onDefaultRuleChanged,
+    OnDetailsDefaultReplyChangedCallback? onDefaultReplyChanged,
   }) = __ViewModel;
 
   static _ViewModel fromStore(Store<AppState> store, String groupId) {
@@ -77,18 +77,18 @@ sealed class _ViewModel with _$ViewModel {
               selectedOption: reply)));
         }
       },
-      onDefaultRuleChanged: (defaultOption, scheduleId, targetMemberId, reply) {
-        if (defaultOption == null) {
-          store.dispatch(RequestDeleteDefaultRuleAction(
+      onDefaultReplyChanged: (defaultReply, scheduleId, targetMemberId, reply) {
+        if (reply == null || defaultReply == null) {
+          store.dispatch(RequestDeleteDefaultReplyAction(
             memberId: targetMemberId,
             scheduleId: scheduleId,
           ));
         } else {
-          store.dispatch(RequestUpdateOne(DefaultRule(
+          store.dispatch(RequestUpdateOne(DefaultReply(
               memberId: targetMemberId,
               scheduleId: scheduleId,
               selectedOption: reply,
-              recurrenceRule: defaultOption)));
+              recurrenceRule: defaultReply)));
         }
       },
     );

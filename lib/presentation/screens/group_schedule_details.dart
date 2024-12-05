@@ -14,8 +14,8 @@ typedef OnDetailsReplyChangedCallback = void Function(
 // ! order of the arguments. It's better to use a data class or a map instead.
 //   TODO(giorgio): I actually just fixed a bug because of this!
 //   I should refactor this to use either branded types or a map.
-typedef OnDetailsDefaultRuleChangedCallback = void Function(
-    RecurrenceRule?, int, int, ReplyOptions);
+typedef OnDetailsDefaultReplyChangedCallback = void Function(
+    RecurrenceRule?, int, int, ReplyOptions?);
 
 class GroupScheduleDetailsScreen extends StatelessWidget {
   final datetimeFormat = DateFormat.yMMMd()..add_jm();
@@ -24,7 +24,7 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
   final Group? group;
   final ScheduleInstanceDetails? scheduleInstance;
   final OnDetailsReplyChangedCallback? onReplyChanged;
-  final OnDetailsDefaultRuleChangedCallback? onDefaultRuleChanged;
+  final OnDetailsDefaultReplyChangedCallback? onDefaultReplyChanged;
 
   GroupScheduleDetailsScreen({
     super.key,
@@ -32,7 +32,7 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
     this.group,
     this.scheduleInstance,
     this.onReplyChanged,
-    this.onDefaultRuleChanged,
+    this.onDefaultReplyChanged,
   });
 
   @override
@@ -40,8 +40,9 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final members = scheduleInstance?.members ?? [];
     final replies = scheduleInstance?.memberReplies ?? {};
+    final defaultReplyOptions =
+        scheduleInstance?.memberDefaultReplyOptions ?? {};
     final defaultReplies = scheduleInstance?.memberDefaultReplies ?? {};
-    final defaultRules = scheduleInstance?.memberDefaultRules ?? {};
 
     return Scaffold(
       appBar: AppBar(
@@ -58,13 +59,13 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
           ScheduleMemberTile(
             name: l10n.you,
             reply: scheduleInstance?.myReply,
+            defaultReplyOption: scheduleInstance?.myDefaultReplyOption,
             defaultReply: scheduleInstance?.myDefaultReply,
-            defaultRule: scheduleInstance?.myDefaultRule,
             onReplyChanged: (reply) => onReplyChanged?.call(
                 scheduleInstance!, scheduleInstance!.targetMemberId!, reply),
-            onDefaultRuleChanged: (defaultOption, reply) =>
-                onDefaultRuleChanged?.call(
-                    defaultOption,
+            onDefaultReplyChanged: (recurrenceRule, reply) =>
+                onDefaultReplyChanged?.call(
+                    recurrenceRule,
                     scheduleInstance!.scheduleId,
                     scheduleInstance!.targetMemberId!,
                     reply),
@@ -78,19 +79,19 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
                     memberProfile?.displayName ??
                     l10n.unknown;
                 final reply = replies[member.id];
+                final defaultReplyOption = defaultReplyOptions[member.id];
                 final defaultReply = defaultReplies[member.id];
-                final defaultRule = defaultRules[member.id];
 
                 return ScheduleMemberTile(
                   name: name,
                   reply: reply,
+                  defaultReplyOption: defaultReplyOption,
                   defaultReply: defaultReply,
-                  defaultRule: defaultRule,
-                  onReplyChanged: (r) =>
-                      onReplyChanged?.call(scheduleInstance!, member.id, r),
-                  onDefaultRuleChanged: (defaultOption, r) =>
-                      onDefaultRuleChanged?.call(defaultOption,
-                          scheduleInstance!.scheduleId, member.id, r),
+                  onReplyChanged: (reply) =>
+                      onReplyChanged?.call(scheduleInstance!, member.id, reply),
+                  onDefaultReplyChanged: (recurrenceRule, reply) =>
+                      onDefaultReplyChanged?.call(recurrenceRule,
+                          scheduleInstance!.scheduleId, member.id, reply),
                 );
               },
             ),

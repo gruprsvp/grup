@@ -1,99 +1,68 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/widgets/widgets.dart';
 import 'package:rrule/rrule.dart';
 
-class ScheduleMemberTile extends StatefulWidget {
+class ScheduleMemberTile extends StatelessWidget {
   final String name;
   final ReplyOptions? reply;
-  final ReplyOptions? defaultReply;
-  final DefaultRule? defaultRule;
+  final ReplyOptions? defaultReplyOption;
+  final DefaultReply? defaultReply;
   final Function(ReplyOptions?)? onReplyChanged;
-  final Function(RecurrenceRule?, ReplyOptions)? onDefaultRuleChanged;
+  final Function(RecurrenceRule?, ReplyOptions?)? onDefaultReplyChanged;
 
   const ScheduleMemberTile({
     super.key,
     required this.name,
     this.reply,
+    this.defaultReplyOption,
     this.defaultReply,
-    this.defaultRule,
     this.onReplyChanged,
-    this.onDefaultRuleChanged,
+    this.onDefaultReplyChanged,
   });
-
-  @override
-  State<ScheduleMemberTile> createState() => _ScheduleMemberTileState();
-}
-
-class _ScheduleMemberTileState extends State<ScheduleMemberTile> {
-  RecurrenceRule? selectedDefaultOption;
-  RecurrenceRule? previousDefaultOption;
-
-  @override
-  void initState() {
-    super.initState();
-
-    selectedDefaultOption = widget.defaultRule?.recurrenceRule;
-  }
 
   @override
   Widget build(BuildContext context) {
     return ListTile(
-      title: Text(widget.name),
+      title: Text(name),
       trailing: ReplyButtons(
-        reply: widget.reply,
-        defaultReply: widget.defaultReply,
-        onReplyChanged: (reply) => widget.onReplyChanged?.call(reply),
+        reply: reply,
+        defaultReplyOption: defaultReplyOption,
+        onReplyChanged: (reply) => onReplyChanged?.call(reply),
       ),
-      onLongPress: () =>
-          _confirmDefaultRule(context, widget.reply ?? ReplyOptions.yes),
+      onTap: () => _confirmDefaultReply(context),
     );
   }
 
   /// Shows a confirmation action sheet to define the default reply.
-  _confirmDefaultRule(BuildContext context, ReplyOptions reply) async {
-    setState(() {
-      previousDefaultOption = selectedDefaultOption;
-    });
-
-    final isConfirmed = await _confirmDefaultRuleActionSheet(
+  _confirmDefaultReply(BuildContext context) async {
+    RecurrenceRule? selectedRecurrenceRule = defaultReply?.recurrenceRule;
+    ReplyOptions? selectedOption = defaultReply?.selectedOption;
+    final response = await _confirmDefaultReplyActionSheet(
       context,
-      (BuildContext context) => DefaultRuleActionSheet(
-        selectedDefaultOption: selectedDefaultOption,
-        onOptionTap: (option) {
-          if (option == null) {
-            context.pop(false);
-            return;
-          }
-
-          setState(() {
-            selectedDefaultOption =
-                (selectedDefaultOption != option) ? option : null;
-          });
-          context.pop(true);
-        },
+      (BuildContext context) => DefaultReplyActionSheet(
+        recurrenceRule: selectedRecurrenceRule,
+        replyOption: selectedOption,
       ),
     );
 
-    if (isConfirmed == true) {
-      widget.onDefaultRuleChanged?.call(selectedDefaultOption, reply);
+    if (response != null) {
+      final (recurrenceRule, replyOption) = response;
+      if (recurrenceRule == null) return;
 
-      return;
+      onDefaultReplyChanged?.call(recurrenceRule, replyOption);
     }
-
-    setState(() {
-      selectedDefaultOption = previousDefaultOption;
-    });
   }
 
-  Future<bool?> _confirmDefaultRuleActionSheet(
+  Future<(RecurrenceRule?, ReplyOptions?)?> _confirmDefaultReplyActionSheet<T>(
       BuildContext context, WidgetBuilder builder) async {
     final isCupertino = Theme.of(context).platform == TargetPlatform.iOS;
 
     return await (isCupertino
-        ? showCupertinoModalPopup<bool>(context: context, builder: builder)
-        : showModalBottomSheet<bool>(context: context, builder: builder));
+        ? showCupertinoModalPopup<(RecurrenceRule?, ReplyOptions?)>(
+            context: context, builder: builder)
+        : showModalBottomSheet<(RecurrenceRule?, ReplyOptions?)>(
+            context: context, builder: builder));
   }
 }
