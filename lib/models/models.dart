@@ -1,4 +1,4 @@
-export 'default_rule.dart';
+export 'default_reply.dart';
 export 'enum.dart';
 export 'group.dart';
 export 'invite.dart';

@@ -1,4 +1,4 @@
-export 'default_rules.dart';
+export 'default_replies.dart';
 export 'groups.dart';
 export 'invites.dart';
 export 'members.dart';

@@ -25,7 +25,7 @@ AppState rootReducer(AppState state, dynamic action) {
     members: membersReducer(state.members, action),
     invites: invitesReducer(state.invites, action),
     schedules: schedulesReducer(state.schedules, action),
-    defaultRules: defaultRulesReducer(state.defaultRules, action),
+    defaultReplies: defaultRepliesReducer(state.defaultReplies, action),
     replies: repliesReducer(state.replies, action),
     auth: authReducer(state.auth, action),
     themeMode: themeReducer(state.themeMode, action),

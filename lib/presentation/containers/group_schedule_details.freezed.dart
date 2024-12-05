@@ -22,7 +22,7 @@ mixin _$ViewModel {
       throw _privateConstructorUsedError;
   OnDetailsReplyChangedCallback? get onReplyChanged =>
       throw _privateConstructorUsedError;
-  OnDetailsDefaultRuleChangedCallback? get onDefaultRuleChanged =>
+  OnDetailsDefaultReplyChangedCallback? get onDefaultReplyChanged =>
       throw _privateConstructorUsedError;
 
   /// Create a copy of _ViewModel
@@ -43,7 +43,7 @@ abstract class _$ViewModelCopyWith<$Res> {
       Group? group,
       ScheduleInstanceDetails? scheduleInstance,
       OnDetailsReplyChangedCallback? onReplyChanged,
-      OnDetailsDefaultRuleChangedCallback? onDefaultRuleChanged});
+      OnDetailsDefaultReplyChangedCallback? onDefaultReplyChanged});
 
   $GroupCopyWith<$Res>? get group;
   $ScheduleInstanceDetailsCopyWith<$Res>? get scheduleInstance;
@@ -68,7 +68,7 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
     Object? group = freezed,
     Object? scheduleInstance = freezed,
     Object? onReplyChanged = freezed,
-    Object? onDefaultRuleChanged = freezed,
+    Object? onDefaultReplyChanged = freezed,
   }) {
     return _then(_value.copyWith(
       loading: null == loading
@@ -87,10 +87,10 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
           ? _value.onReplyChanged
           : onReplyChanged // ignore: cast_nullable_to_non_nullable
               as OnDetailsReplyChangedCallback?,
-      onDefaultRuleChanged: freezed == onDefaultRuleChanged
-          ? _value.onDefaultRuleChanged
-          : onDefaultRuleChanged // ignore: cast_nullable_to_non_nullable
-              as OnDetailsDefaultRuleChangedCallback?,
+      onDefaultReplyChanged: freezed == onDefaultReplyChanged
+          ? _value.onDefaultReplyChanged
+          : onDefaultReplyChanged // ignore: cast_nullable_to_non_nullable
+              as OnDetailsDefaultReplyChangedCallback?,
     ) as $Val);
   }
 
@@ -137,7 +137,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       Group? group,
       ScheduleInstanceDetails? scheduleInstance,
       OnDetailsReplyChangedCallback? onReplyChanged,
-      OnDetailsDefaultRuleChangedCallback? onDefaultRuleChanged});
+      OnDetailsDefaultReplyChangedCallback? onDefaultReplyChanged});
 
   @override
   $GroupCopyWith<$Res>? get group;
@@ -162,7 +162,7 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     Object? group = freezed,
     Object? scheduleInstance = freezed,
     Object? onReplyChanged = freezed,
-    Object? onDefaultRuleChanged = freezed,
+    Object? onDefaultReplyChanged = freezed,
   }) {
     return _then(_$_ViewModelImpl(
       loading: null == loading
@@ -181,10 +181,10 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
           ? _value.onReplyChanged
           : onReplyChanged // ignore: cast_nullable_to_non_nullable
               as OnDetailsReplyChangedCallback?,
-      onDefaultRuleChanged: freezed == onDefaultRuleChanged
-          ? _value.onDefaultRuleChanged
-          : onDefaultRuleChanged // ignore: cast_nullable_to_non_nullable
-              as OnDetailsDefaultRuleChangedCallback?,
+      onDefaultReplyChanged: freezed == onDefaultReplyChanged
+          ? _value.onDefaultReplyChanged
+          : onDefaultReplyChanged // ignore: cast_nullable_to_non_nullable
+              as OnDetailsDefaultReplyChangedCallback?,
     ));
   }
 }
@@ -197,7 +197,7 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
       this.group,
       this.scheduleInstance,
       this.onReplyChanged,
-      this.onDefaultRuleChanged});
+      this.onDefaultReplyChanged});
 
   @override
   final bool loading;
@@ -208,11 +208,11 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   @override
   final OnDetailsReplyChangedCallback? onReplyChanged;
   @override
-  final OnDetailsDefaultRuleChangedCallback? onDefaultRuleChanged;
+  final OnDetailsDefaultReplyChangedCallback? onDefaultReplyChanged;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(loading: $loading, group: $group, scheduleInstance: $scheduleInstance, onReplyChanged: $onReplyChanged, onDefaultRuleChanged: $onDefaultRuleChanged)';
+    return '_ViewModel(loading: $loading, group: $group, scheduleInstance: $scheduleInstance, onReplyChanged: $onReplyChanged, onDefaultReplyChanged: $onDefaultReplyChanged)';
   }
 
   @override
@@ -224,7 +224,8 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
       ..add(DiagnosticsProperty('group', group))
       ..add(DiagnosticsProperty('scheduleInstance', scheduleInstance))
       ..add(DiagnosticsProperty('onReplyChanged', onReplyChanged))
-      ..add(DiagnosticsProperty('onDefaultRuleChanged', onDefaultRuleChanged));
+      ..add(
+          DiagnosticsProperty('onDefaultReplyChanged', onDefaultReplyChanged));
   }
 
   @override
@@ -238,13 +239,13 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
                 other.scheduleInstance == scheduleInstance) &&
             (identical(other.onReplyChanged, onReplyChanged) ||
                 other.onReplyChanged == onReplyChanged) &&
-            (identical(other.onDefaultRuleChanged, onDefaultRuleChanged) ||
-                other.onDefaultRuleChanged == onDefaultRuleChanged));
+            (identical(other.onDefaultReplyChanged, onDefaultReplyChanged) ||
+                other.onDefaultReplyChanged == onDefaultReplyChanged));
   }
 
   @override
   int get hashCode => Object.hash(runtimeType, loading, group, scheduleInstance,
-      onReplyChanged, onDefaultRuleChanged);
+      onReplyChanged, onDefaultReplyChanged);
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -261,7 +262,7 @@ abstract class __ViewModel implements _ViewModel {
           final Group? group,
           final ScheduleInstanceDetails? scheduleInstance,
           final OnDetailsReplyChangedCallback? onReplyChanged,
-          final OnDetailsDefaultRuleChangedCallback? onDefaultRuleChanged}) =
+          final OnDetailsDefaultReplyChangedCallback? onDefaultReplyChanged}) =
       _$_ViewModelImpl;
 
   @override
@@ -273,7 +274,7 @@ abstract class __ViewModel implements _ViewModel {
   @override
   OnDetailsReplyChangedCallback? get onReplyChanged;
   @override
-  OnDetailsDefaultRuleChangedCallback? get onDefaultRuleChanged;
+  OnDetailsDefaultReplyChangedCallback? get onDefaultReplyChanged;
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.

@@ -55,8 +55,8 @@ final selectGroup = createSelector2(
 Iterable<Schedule> selectScheduleEntities(AppState state) =>
     state.schedules.entities.values;
 
-Iterable<DefaultRule> selectAllDefaultRules(AppState state) =>
-    state.defaultRules.entities.values;
+Iterable<DefaultReply> selectAllDefaultReplies(AppState state) =>
+    state.defaultReplies.entities.values;
 
 Iterable<Reply> selectAllReplies(AppState state) =>
     state.replies.entities.values;
@@ -74,8 +74,8 @@ final selectSchedules = createSelector3(
 final selectSchedulesIds =
     createSelector1(selectSchedules, (schedules) => schedules.map((s) => s.id));
 
-final selectDefaultRules = createSelector2(
-    selectAllDefaultRules,
+final selectDefaultReplies = createSelector2(
+    selectAllDefaultReplies,
     selectSchedulesIds,
     (replies, scheduleIds) =>
         replies.where((r) => scheduleIds.contains(r.scheduleId)));
@@ -91,12 +91,12 @@ final selectScheduleInstancesForSelectedDate = createSelector5(
     selectedDateRangeSelector,
     selectMyMember,
     selectSchedules,
-    selectDefaultRules,
+    selectDefaultReplies,
     selectReplies,
-    (range, myMember, schedules, defaultRules, replies) =>
+    (range, myMember, schedules, defaultReplies, replies) =>
         schedules.expand((schedule) => getScheduleInstances(
               schedule: schedule,
-              defaultRules: defaultRules,
+              defaultReplies: defaultReplies,
               replies: replies,
               startDate: range.start,
               endDate: range.end,
@@ -133,12 +133,13 @@ final selectScheduleInstanceForDate = createSelector3(
     displayName: instance.displayName,
     instanceDate: instance.instanceDate,
     memberReplies: instance.memberReplies,
+    memberDefaultReplyOptions: instance.memberDefaultReplyOptions,
     memberDefaultReplies: instance.memberDefaultReplies,
-    memberDefaultRules: instance.memberDefaultRules,
     members:
         members.whereNot((m) => m.$1.id == instance.targetMemberId).toList(),
     yesCount: instance.yesCount,
     myReply: instance.myReply,
+    myDefaultReplyOption: instance.myDefaultReplyOption,
     myDefaultReply: instance.myDefaultReply,
     targetMemberId: instance.targetMemberId,
     canEditOthers: canEditOthers,

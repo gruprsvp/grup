@@ -4,22 +4,22 @@ import 'package:rrule/rrule.dart';
 
 import 'enum.dart';
 
-part 'default_rule.freezed.dart';
+part 'default_reply.freezed.dart';
 
-part 'default_rule.g.dart';
+part 'default_reply.g.dart';
 
 @freezed
-sealed class DefaultRule with _$DefaultRule {
+sealed class DefaultReply with _$DefaultReply {
   @JsonSerializable(fieldRename: FieldRename.snake)
-  const factory DefaultRule({
+  const factory DefaultReply({
     required int memberId,
     required int scheduleId,
     required ReplyOptions selectedOption,
     required RecurrenceRule recurrenceRule,
     DateTime? createdAt,
     DateTime? updatedAt,
-  }) = _DefaultRule;
+  }) = _DefaultReply;
 
-  factory DefaultRule.fromJson(Map<String, dynamic> json) =>
-      _$DefaultRuleFromJson(json);
+  factory DefaultReply.fromJson(Map<String, dynamic> json) =>
+      _$DefaultReplyFromJson(json);
 }
