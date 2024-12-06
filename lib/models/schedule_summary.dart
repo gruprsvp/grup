@@ -1,7 +1,6 @@
 import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:parousia/models/models.dart';
-import 'package:rrule/rrule.dart';
 
 part 'schedule_summary.freezed.dart';
 
@@ -34,10 +33,7 @@ sealed class ScheduleInstanceDetails with _$ScheduleInstanceDetails {
     required int groupId,
     required String displayName,
     required DateTime instanceDate,
-    required List<(Member, Profile?)> members,
-    required Map<int, ReplyOptions> memberReplies,
-    required Map<int, ReplyOptions> memberDefaultReplyOptions,
-    required Map<int, DefaultReply> memberDefaultReplies,
+    required List<ScheduleInstanceMember> membersList,
     required int yesCount,
     ReplyOptions? myReply,
     ReplyOptions? myDefaultReplyOption,
@@ -45,4 +41,21 @@ sealed class ScheduleInstanceDetails with _$ScheduleInstanceDetails {
     int? targetMemberId,
     bool? canEditOthers,
   }) = _ScheduleInstanceDetails;
+}
+
+@freezed
+sealed class ScheduleInstanceMember with _$ScheduleInstanceMember {
+  const factory ScheduleInstanceMember.reply({
+    required Member member,
+    ReplyOptions? reply,
+    ReplyOptions? defaultReplyOption,
+    DefaultReply? defaultReply,
+    Profile? profile,
+  }) = ScheduleInstanceMemberReply;
+
+  const factory ScheduleInstanceMember.separator({
+    ReplyOptions? reply,
+    ReplyOptions? defaultReplyOption,
+    int? count,
+  }) = ScheduleInstanceMemberSeparator;
 }
