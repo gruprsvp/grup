@@ -2,6 +2,7 @@ import 'dart:core';
 
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
+import 'package:memoized/memoized.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/selectors/members.dart';
 import 'package:parousia/selectors/schedules.dart';
@@ -9,7 +10,6 @@ import 'package:parousia/state/state.dart';
 import 'package:parousia/util/util.dart';
 import 'package:reselect/reselect.dart';
 import 'package:rrule/rrule.dart';
-import 'package:memoized/memoized.dart';
 
 export 'members.dart';
 
@@ -127,16 +127,58 @@ final selectScheduleInstanceForDate = createSelector3(
     selectIsAdmin, (instance, members, canEditOthers) {
   if (instance == null) return null;
 
+  final groupedMembers = members
+      .map(
+        (m) => ScheduleInstanceMember.reply(
+          member: m.$1,
+          reply: instance.memberReplies[m.$1.id],
+          defaultReplyOption: instance.memberDefaultReplyOptions[m.$1.id],
+          defaultReply: instance.memberDefaultReplies[m.$1.id],
+          profile: m.$2,
+        ),
+      )
+      .whereNot((m) =>
+          (m as ScheduleInstanceMemberReply).member.id ==
+          instance.targetMemberId)
+      .groupListsBy((m) => m.reply ?? m.defaultReplyOption);
+
+  // This is ugly but I needed an easy way to count the user's reply,
+  // after grouping the members by their reply (where the user is not included).
+  final ownReply = instance.myReply ?? instance.myDefaultReplyOption;
+  final userRepliedYes = ownReply == ReplyOptions.yes ? 1 : 0;
+  final userRepliedNo = ownReply == ReplyOptions.no ? 1 : 0;
+  final userRepliedUnknown = ownReply == null ? 1 : 0;
+
+  final membersList = [
+    if (groupedMembers.containsKey(ReplyOptions.yes)) ...[
+      ScheduleInstanceMember.separator(
+        reply: ReplyOptions.yes,
+        count: groupedMembers[ReplyOptions.yes]!.length + userRepliedYes,
+      ),
+      ...groupedMembers[ReplyOptions.yes]!,
+    ],
+    if (groupedMembers.containsKey(ReplyOptions.no)) ...[
+      ScheduleInstanceMember.separator(
+        reply: ReplyOptions.no,
+        count: groupedMembers[ReplyOptions.no]!.length + userRepliedNo,
+      ),
+      ...groupedMembers[ReplyOptions.no]!,
+    ],
+    if (groupedMembers.containsKey(null)) ...[
+      ScheduleInstanceMember.separator(
+        reply: null,
+        count: groupedMembers[null]!.length + userRepliedUnknown,
+      ),
+      ...groupedMembers[null]!,
+    ],
+  ];
+
   return ScheduleInstanceDetails(
     scheduleId: instance.scheduleId,
     groupId: instance.groupId,
     displayName: instance.displayName,
     instanceDate: instance.instanceDate,
-    memberReplies: instance.memberReplies,
-    memberDefaultReplyOptions: instance.memberDefaultReplyOptions,
-    memberDefaultReplies: instance.memberDefaultReplies,
-    members:
-        members.whereNot((m) => m.$1.id == instance.targetMemberId).toList(),
+    membersList: membersList,
     yesCount: instance.yesCount,
     myReply: instance.myReply,
     myDefaultReplyOption: instance.myDefaultReplyOption,

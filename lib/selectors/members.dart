@@ -16,7 +16,8 @@ final groupMembersSelector = createSelector2(
     membersSelector,
     selectGroupId,
     (members, groupId) => members.entities.values
-        .where((member) => member.groupId.toString() == groupId));
+        .where((member) => member.groupId.toString() == groupId)
+        .sorted((a, b) => b.id.compareTo(a.id)));
 
 final groupMembersWithProfilesSelector = createSelector2(
     groupMembersSelector,

@@ -467,12 +467,7 @@ mixin _$ScheduleInstanceDetails {
   int get groupId => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   DateTime get instanceDate => throw _privateConstructorUsedError;
-  List<(Member, Profile?)> get members => throw _privateConstructorUsedError;
-  Map<int, ReplyOptions> get memberReplies =>
-      throw _privateConstructorUsedError;
-  Map<int, ReplyOptions> get memberDefaultReplyOptions =>
-      throw _privateConstructorUsedError;
-  Map<int, DefaultReply> get memberDefaultReplies =>
+  List<ScheduleInstanceMember> get membersList =>
       throw _privateConstructorUsedError;
   int get yesCount => throw _privateConstructorUsedError;
   ReplyOptions? get myReply => throw _privateConstructorUsedError;
@@ -499,10 +494,7 @@ abstract class $ScheduleInstanceDetailsCopyWith<$Res> {
       int groupId,
       String displayName,
       DateTime instanceDate,
-      List<(Member, Profile?)> members,
-      Map<int, ReplyOptions> memberReplies,
-      Map<int, ReplyOptions> memberDefaultReplyOptions,
-      Map<int, DefaultReply> memberDefaultReplies,
+      List<ScheduleInstanceMember> membersList,
       int yesCount,
       ReplyOptions? myReply,
       ReplyOptions? myDefaultReplyOption,
@@ -533,10 +525,7 @@ class _$ScheduleInstanceDetailsCopyWithImpl<$Res,
     Object? groupId = null,
     Object? displayName = null,
     Object? instanceDate = null,
-    Object? members = null,
-    Object? memberReplies = null,
-    Object? memberDefaultReplyOptions = null,
-    Object? memberDefaultReplies = null,
+    Object? membersList = null,
     Object? yesCount = null,
     Object? myReply = freezed,
     Object? myDefaultReplyOption = freezed,
@@ -561,22 +550,10 @@ class _$ScheduleInstanceDetailsCopyWithImpl<$Res,
           ? _value.instanceDate
           : instanceDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      members: null == members
-          ? _value.members
-          : members // ignore: cast_nullable_to_non_nullable
-              as List<(Member, Profile?)>,
-      memberReplies: null == memberReplies
-          ? _value.memberReplies
-          : memberReplies // ignore: cast_nullable_to_non_nullable
-              as Map<int, ReplyOptions>,
-      memberDefaultReplyOptions: null == memberDefaultReplyOptions
-          ? _value.memberDefaultReplyOptions
-          : memberDefaultReplyOptions // ignore: cast_nullable_to_non_nullable
-              as Map<int, ReplyOptions>,
-      memberDefaultReplies: null == memberDefaultReplies
-          ? _value.memberDefaultReplies
-          : memberDefaultReplies // ignore: cast_nullable_to_non_nullable
-              as Map<int, DefaultReply>,
+      membersList: null == membersList
+          ? _value.membersList
+          : membersList // ignore: cast_nullable_to_non_nullable
+              as List<ScheduleInstanceMember>,
       yesCount: null == yesCount
           ? _value.yesCount
           : yesCount // ignore: cast_nullable_to_non_nullable
@@ -633,10 +610,7 @@ abstract class _$$ScheduleInstanceDetailsImplCopyWith<$Res>
       int groupId,
       String displayName,
       DateTime instanceDate,
-      List<(Member, Profile?)> members,
-      Map<int, ReplyOptions> memberReplies,
-      Map<int, ReplyOptions> memberDefaultReplyOptions,
-      Map<int, DefaultReply> memberDefaultReplies,
+      List<ScheduleInstanceMember> membersList,
       int yesCount,
       ReplyOptions? myReply,
       ReplyOptions? myDefaultReplyOption,
@@ -667,10 +641,7 @@ class __$$ScheduleInstanceDetailsImplCopyWithImpl<$Res>
     Object? groupId = null,
     Object? displayName = null,
     Object? instanceDate = null,
-    Object? members = null,
-    Object? memberReplies = null,
-    Object? memberDefaultReplyOptions = null,
-    Object? memberDefaultReplies = null,
+    Object? membersList = null,
     Object? yesCount = null,
     Object? myReply = freezed,
     Object? myDefaultReplyOption = freezed,
@@ -695,22 +666,10 @@ class __$$ScheduleInstanceDetailsImplCopyWithImpl<$Res>
           ? _value.instanceDate
           : instanceDate // ignore: cast_nullable_to_non_nullable
               as DateTime,
-      members: null == members
-          ? _value._members
-          : members // ignore: cast_nullable_to_non_nullable
-              as List<(Member, Profile?)>,
-      memberReplies: null == memberReplies
-          ? _value._memberReplies
-          : memberReplies // ignore: cast_nullable_to_non_nullable
-              as Map<int, ReplyOptions>,
-      memberDefaultReplyOptions: null == memberDefaultReplyOptions
-          ? _value._memberDefaultReplyOptions
-          : memberDefaultReplyOptions // ignore: cast_nullable_to_non_nullable
-              as Map<int, ReplyOptions>,
-      memberDefaultReplies: null == memberDefaultReplies
-          ? _value._memberDefaultReplies
-          : memberDefaultReplies // ignore: cast_nullable_to_non_nullable
-              as Map<int, DefaultReply>,
+      membersList: null == membersList
+          ? _value._membersList
+          : membersList // ignore: cast_nullable_to_non_nullable
+              as List<ScheduleInstanceMember>,
       yesCount: null == yesCount
           ? _value.yesCount
           : yesCount // ignore: cast_nullable_to_non_nullable
@@ -749,20 +708,14 @@ class _$ScheduleInstanceDetailsImpl
       required this.groupId,
       required this.displayName,
       required this.instanceDate,
-      required final List<(Member, Profile?)> members,
-      required final Map<int, ReplyOptions> memberReplies,
-      required final Map<int, ReplyOptions> memberDefaultReplyOptions,
-      required final Map<int, DefaultReply> memberDefaultReplies,
+      required final List<ScheduleInstanceMember> membersList,
       required this.yesCount,
       this.myReply,
       this.myDefaultReplyOption,
       this.myDefaultReply,
       this.targetMemberId,
       this.canEditOthers})
-      : _members = members,
-        _memberReplies = memberReplies,
-        _memberDefaultReplyOptions = memberDefaultReplyOptions,
-        _memberDefaultReplies = memberDefaultReplies;
+      : _membersList = membersList;
 
   @override
   final int scheduleId;
@@ -772,38 +725,12 @@ class _$ScheduleInstanceDetailsImpl
   final String displayName;
   @override
   final DateTime instanceDate;
-  final List<(Member, Profile?)> _members;
+  final List<ScheduleInstanceMember> _membersList;
   @override
-  List<(Member, Profile?)> get members {
-    if (_members is EqualUnmodifiableListView) return _members;
+  List<ScheduleInstanceMember> get membersList {
+    if (_membersList is EqualUnmodifiableListView) return _membersList;
     // ignore: implicit_dynamic_type
-    return EqualUnmodifiableListView(_members);
-  }
-
-  final Map<int, ReplyOptions> _memberReplies;
-  @override
-  Map<int, ReplyOptions> get memberReplies {
-    if (_memberReplies is EqualUnmodifiableMapView) return _memberReplies;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_memberReplies);
-  }
-
-  final Map<int, ReplyOptions> _memberDefaultReplyOptions;
-  @override
-  Map<int, ReplyOptions> get memberDefaultReplyOptions {
-    if (_memberDefaultReplyOptions is EqualUnmodifiableMapView)
-      return _memberDefaultReplyOptions;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_memberDefaultReplyOptions);
-  }
-
-  final Map<int, DefaultReply> _memberDefaultReplies;
-  @override
-  Map<int, DefaultReply> get memberDefaultReplies {
-    if (_memberDefaultReplies is EqualUnmodifiableMapView)
-      return _memberDefaultReplies;
-    // ignore: implicit_dynamic_type
-    return EqualUnmodifiableMapView(_memberDefaultReplies);
+    return EqualUnmodifiableListView(_membersList);
   }
 
   @override
@@ -821,7 +748,7 @@ class _$ScheduleInstanceDetailsImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ScheduleInstanceDetails(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, members: $members, memberReplies: $memberReplies, memberDefaultReplyOptions: $memberDefaultReplyOptions, memberDefaultReplies: $memberDefaultReplies, yesCount: $yesCount, myReply: $myReply, myDefaultReplyOption: $myDefaultReplyOption, myDefaultReply: $myDefaultReply, targetMemberId: $targetMemberId, canEditOthers: $canEditOthers)';
+    return 'ScheduleInstanceDetails(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, membersList: $membersList, yesCount: $yesCount, myReply: $myReply, myDefaultReplyOption: $myDefaultReplyOption, myDefaultReply: $myDefaultReply, targetMemberId: $targetMemberId, canEditOthers: $canEditOthers)';
   }
 
   @override
@@ -833,11 +760,7 @@ class _$ScheduleInstanceDetailsImpl
       ..add(DiagnosticsProperty('groupId', groupId))
       ..add(DiagnosticsProperty('displayName', displayName))
       ..add(DiagnosticsProperty('instanceDate', instanceDate))
-      ..add(DiagnosticsProperty('members', members))
-      ..add(DiagnosticsProperty('memberReplies', memberReplies))
-      ..add(DiagnosticsProperty(
-          'memberDefaultReplyOptions', memberDefaultReplyOptions))
-      ..add(DiagnosticsProperty('memberDefaultReplies', memberDefaultReplies))
+      ..add(DiagnosticsProperty('membersList', membersList))
       ..add(DiagnosticsProperty('yesCount', yesCount))
       ..add(DiagnosticsProperty('myReply', myReply))
       ..add(DiagnosticsProperty('myDefaultReplyOption', myDefaultReplyOption))
@@ -858,13 +781,8 @@ class _$ScheduleInstanceDetailsImpl
                 other.displayName == displayName) &&
             (identical(other.instanceDate, instanceDate) ||
                 other.instanceDate == instanceDate) &&
-            const DeepCollectionEquality().equals(other._members, _members) &&
             const DeepCollectionEquality()
-                .equals(other._memberReplies, _memberReplies) &&
-            const DeepCollectionEquality().equals(
-                other._memberDefaultReplyOptions, _memberDefaultReplyOptions) &&
-            const DeepCollectionEquality()
-                .equals(other._memberDefaultReplies, _memberDefaultReplies) &&
+                .equals(other._membersList, _membersList) &&
             (identical(other.yesCount, yesCount) ||
                 other.yesCount == yesCount) &&
             (identical(other.myReply, myReply) || other.myReply == myReply) &&
@@ -885,10 +803,7 @@ class _$ScheduleInstanceDetailsImpl
       groupId,
       displayName,
       instanceDate,
-      const DeepCollectionEquality().hash(_members),
-      const DeepCollectionEquality().hash(_memberReplies),
-      const DeepCollectionEquality().hash(_memberDefaultReplyOptions),
-      const DeepCollectionEquality().hash(_memberDefaultReplies),
+      const DeepCollectionEquality().hash(_membersList),
       yesCount,
       myReply,
       myDefaultReplyOption,
@@ -912,10 +827,7 @@ abstract class _ScheduleInstanceDetails implements ScheduleInstanceDetails {
       required final int groupId,
       required final String displayName,
       required final DateTime instanceDate,
-      required final List<(Member, Profile?)> members,
-      required final Map<int, ReplyOptions> memberReplies,
-      required final Map<int, ReplyOptions> memberDefaultReplyOptions,
-      required final Map<int, DefaultReply> memberDefaultReplies,
+      required final List<ScheduleInstanceMember> membersList,
       required final int yesCount,
       final ReplyOptions? myReply,
       final ReplyOptions? myDefaultReplyOption,
@@ -932,13 +844,7 @@ abstract class _ScheduleInstanceDetails implements ScheduleInstanceDetails {
   @override
   DateTime get instanceDate;
   @override
-  List<(Member, Profile?)> get members;
-  @override
-  Map<int, ReplyOptions> get memberReplies;
-  @override
-  Map<int, ReplyOptions> get memberDefaultReplyOptions;
-  @override
-  Map<int, DefaultReply> get memberDefaultReplies;
+  List<ScheduleInstanceMember> get membersList;
   @override
   int get yesCount;
   @override
@@ -957,5 +863,618 @@ abstract class _ScheduleInstanceDetails implements ScheduleInstanceDetails {
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
   _$$ScheduleInstanceDetailsImplCopyWith<_$ScheduleInstanceDetailsImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+mixin _$ScheduleInstanceMember {
+  ReplyOptions? get reply => throw _privateConstructorUsedError;
+  ReplyOptions? get defaultReplyOption => throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            Member member,
+            ReplyOptions? reply,
+            ReplyOptions? defaultReplyOption,
+            DefaultReply? defaultReply,
+            Profile? profile)
+        reply,
+    required TResult Function(
+            ReplyOptions? reply, ReplyOptions? defaultReplyOption, int? count)
+        separator,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            Member member,
+            ReplyOptions? reply,
+            ReplyOptions? defaultReplyOption,
+            DefaultReply? defaultReply,
+            Profile? profile)?
+        reply,
+    TResult? Function(
+            ReplyOptions? reply, ReplyOptions? defaultReplyOption, int? count)?
+        separator,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            Member member,
+            ReplyOptions? reply,
+            ReplyOptions? defaultReplyOption,
+            DefaultReply? defaultReply,
+            Profile? profile)?
+        reply,
+    TResult Function(
+            ReplyOptions? reply, ReplyOptions? defaultReplyOption, int? count)?
+        separator,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ScheduleInstanceMemberReply value) reply,
+    required TResult Function(ScheduleInstanceMemberSeparator value) separator,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ScheduleInstanceMemberReply value)? reply,
+    TResult? Function(ScheduleInstanceMemberSeparator value)? separator,
+  }) =>
+      throw _privateConstructorUsedError;
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ScheduleInstanceMemberReply value)? reply,
+    TResult Function(ScheduleInstanceMemberSeparator value)? separator,
+    required TResult orElse(),
+  }) =>
+      throw _privateConstructorUsedError;
+
+  /// Create a copy of ScheduleInstanceMember
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  $ScheduleInstanceMemberCopyWith<ScheduleInstanceMember> get copyWith =>
+      throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class $ScheduleInstanceMemberCopyWith<$Res> {
+  factory $ScheduleInstanceMemberCopyWith(ScheduleInstanceMember value,
+          $Res Function(ScheduleInstanceMember) then) =
+      _$ScheduleInstanceMemberCopyWithImpl<$Res, ScheduleInstanceMember>;
+  @useResult
+  $Res call({ReplyOptions? reply, ReplyOptions? defaultReplyOption});
+}
+
+/// @nodoc
+class _$ScheduleInstanceMemberCopyWithImpl<$Res,
+        $Val extends ScheduleInstanceMember>
+    implements $ScheduleInstanceMemberCopyWith<$Res> {
+  _$ScheduleInstanceMemberCopyWithImpl(this._value, this._then);
+
+  // ignore: unused_field
+  final $Val _value;
+  // ignore: unused_field
+  final $Res Function($Val) _then;
+
+  /// Create a copy of ScheduleInstanceMember
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? reply = freezed,
+    Object? defaultReplyOption = freezed,
+  }) {
+    return _then(_value.copyWith(
+      reply: freezed == reply
+          ? _value.reply
+          : reply // ignore: cast_nullable_to_non_nullable
+              as ReplyOptions?,
+      defaultReplyOption: freezed == defaultReplyOption
+          ? _value.defaultReplyOption
+          : defaultReplyOption // ignore: cast_nullable_to_non_nullable
+              as ReplyOptions?,
+    ) as $Val);
+  }
+}
+
+/// @nodoc
+abstract class _$$ScheduleInstanceMemberReplyImplCopyWith<$Res>
+    implements $ScheduleInstanceMemberCopyWith<$Res> {
+  factory _$$ScheduleInstanceMemberReplyImplCopyWith(
+          _$ScheduleInstanceMemberReplyImpl value,
+          $Res Function(_$ScheduleInstanceMemberReplyImpl) then) =
+      __$$ScheduleInstanceMemberReplyImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {Member member,
+      ReplyOptions? reply,
+      ReplyOptions? defaultReplyOption,
+      DefaultReply? defaultReply,
+      Profile? profile});
+
+  $MemberCopyWith<$Res> get member;
+  $DefaultReplyCopyWith<$Res>? get defaultReply;
+  $ProfileCopyWith<$Res>? get profile;
+}
+
+/// @nodoc
+class __$$ScheduleInstanceMemberReplyImplCopyWithImpl<$Res>
+    extends _$ScheduleInstanceMemberCopyWithImpl<$Res,
+        _$ScheduleInstanceMemberReplyImpl>
+    implements _$$ScheduleInstanceMemberReplyImplCopyWith<$Res> {
+  __$$ScheduleInstanceMemberReplyImplCopyWithImpl(
+      _$ScheduleInstanceMemberReplyImpl _value,
+      $Res Function(_$ScheduleInstanceMemberReplyImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ScheduleInstanceMember
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? member = null,
+    Object? reply = freezed,
+    Object? defaultReplyOption = freezed,
+    Object? defaultReply = freezed,
+    Object? profile = freezed,
+  }) {
+    return _then(_$ScheduleInstanceMemberReplyImpl(
+      member: null == member
+          ? _value.member
+          : member // ignore: cast_nullable_to_non_nullable
+              as Member,
+      reply: freezed == reply
+          ? _value.reply
+          : reply // ignore: cast_nullable_to_non_nullable
+              as ReplyOptions?,
+      defaultReplyOption: freezed == defaultReplyOption
+          ? _value.defaultReplyOption
+          : defaultReplyOption // ignore: cast_nullable_to_non_nullable
+              as ReplyOptions?,
+      defaultReply: freezed == defaultReply
+          ? _value.defaultReply
+          : defaultReply // ignore: cast_nullable_to_non_nullable
+              as DefaultReply?,
+      profile: freezed == profile
+          ? _value.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as Profile?,
+    ));
+  }
+
+  /// Create a copy of ScheduleInstanceMember
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MemberCopyWith<$Res> get member {
+    return $MemberCopyWith<$Res>(_value.member, (value) {
+      return _then(_value.copyWith(member: value));
+    });
+  }
+
+  /// Create a copy of ScheduleInstanceMember
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $DefaultReplyCopyWith<$Res>? get defaultReply {
+    if (_value.defaultReply == null) {
+      return null;
+    }
+
+    return $DefaultReplyCopyWith<$Res>(_value.defaultReply!, (value) {
+      return _then(_value.copyWith(defaultReply: value));
+    });
+  }
+
+  /// Create a copy of ScheduleInstanceMember
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProfileCopyWith<$Res>? get profile {
+    if (_value.profile == null) {
+      return null;
+    }
+
+    return $ProfileCopyWith<$Res>(_value.profile!, (value) {
+      return _then(_value.copyWith(profile: value));
+    });
+  }
+}
+
+/// @nodoc
+
+class _$ScheduleInstanceMemberReplyImpl
+    with DiagnosticableTreeMixin
+    implements ScheduleInstanceMemberReply {
+  const _$ScheduleInstanceMemberReplyImpl(
+      {required this.member,
+      this.reply,
+      this.defaultReplyOption,
+      this.defaultReply,
+      this.profile});
+
+  @override
+  final Member member;
+  @override
+  final ReplyOptions? reply;
+  @override
+  final ReplyOptions? defaultReplyOption;
+  @override
+  final DefaultReply? defaultReply;
+  @override
+  final Profile? profile;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ScheduleInstanceMember.reply(member: $member, reply: $reply, defaultReplyOption: $defaultReplyOption, defaultReply: $defaultReply, profile: $profile)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ScheduleInstanceMember.reply'))
+      ..add(DiagnosticsProperty('member', member))
+      ..add(DiagnosticsProperty('reply', reply))
+      ..add(DiagnosticsProperty('defaultReplyOption', defaultReplyOption))
+      ..add(DiagnosticsProperty('defaultReply', defaultReply))
+      ..add(DiagnosticsProperty('profile', profile));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ScheduleInstanceMemberReplyImpl &&
+            (identical(other.member, member) || other.member == member) &&
+            (identical(other.reply, reply) || other.reply == reply) &&
+            (identical(other.defaultReplyOption, defaultReplyOption) ||
+                other.defaultReplyOption == defaultReplyOption) &&
+            (identical(other.defaultReply, defaultReply) ||
+                other.defaultReply == defaultReply) &&
+            (identical(other.profile, profile) || other.profile == profile));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, member, reply, defaultReplyOption, defaultReply, profile);
+
+  /// Create a copy of ScheduleInstanceMember
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ScheduleInstanceMemberReplyImplCopyWith<_$ScheduleInstanceMemberReplyImpl>
+      get copyWith => __$$ScheduleInstanceMemberReplyImplCopyWithImpl<
+          _$ScheduleInstanceMemberReplyImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            Member member,
+            ReplyOptions? reply,
+            ReplyOptions? defaultReplyOption,
+            DefaultReply? defaultReply,
+            Profile? profile)
+        reply,
+    required TResult Function(
+            ReplyOptions? reply, ReplyOptions? defaultReplyOption, int? count)
+        separator,
+  }) {
+    return reply(member, this.reply, defaultReplyOption, defaultReply, profile);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            Member member,
+            ReplyOptions? reply,
+            ReplyOptions? defaultReplyOption,
+            DefaultReply? defaultReply,
+            Profile? profile)?
+        reply,
+    TResult? Function(
+            ReplyOptions? reply, ReplyOptions? defaultReplyOption, int? count)?
+        separator,
+  }) {
+    return reply?.call(
+        member, this.reply, defaultReplyOption, defaultReply, profile);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            Member member,
+            ReplyOptions? reply,
+            ReplyOptions? defaultReplyOption,
+            DefaultReply? defaultReply,
+            Profile? profile)?
+        reply,
+    TResult Function(
+            ReplyOptions? reply, ReplyOptions? defaultReplyOption, int? count)?
+        separator,
+    required TResult orElse(),
+  }) {
+    if (reply != null) {
+      return reply(
+          member, this.reply, defaultReplyOption, defaultReply, profile);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ScheduleInstanceMemberReply value) reply,
+    required TResult Function(ScheduleInstanceMemberSeparator value) separator,
+  }) {
+    return reply(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ScheduleInstanceMemberReply value)? reply,
+    TResult? Function(ScheduleInstanceMemberSeparator value)? separator,
+  }) {
+    return reply?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ScheduleInstanceMemberReply value)? reply,
+    TResult Function(ScheduleInstanceMemberSeparator value)? separator,
+    required TResult orElse(),
+  }) {
+    if (reply != null) {
+      return reply(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ScheduleInstanceMemberReply implements ScheduleInstanceMember {
+  const factory ScheduleInstanceMemberReply(
+      {required final Member member,
+      final ReplyOptions? reply,
+      final ReplyOptions? defaultReplyOption,
+      final DefaultReply? defaultReply,
+      final Profile? profile}) = _$ScheduleInstanceMemberReplyImpl;
+
+  Member get member;
+  @override
+  ReplyOptions? get reply;
+  @override
+  ReplyOptions? get defaultReplyOption;
+  DefaultReply? get defaultReply;
+  Profile? get profile;
+
+  /// Create a copy of ScheduleInstanceMember
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ScheduleInstanceMemberReplyImplCopyWith<_$ScheduleInstanceMemberReplyImpl>
+      get copyWith => throw _privateConstructorUsedError;
+}
+
+/// @nodoc
+abstract class _$$ScheduleInstanceMemberSeparatorImplCopyWith<$Res>
+    implements $ScheduleInstanceMemberCopyWith<$Res> {
+  factory _$$ScheduleInstanceMemberSeparatorImplCopyWith(
+          _$ScheduleInstanceMemberSeparatorImpl value,
+          $Res Function(_$ScheduleInstanceMemberSeparatorImpl) then) =
+      __$$ScheduleInstanceMemberSeparatorImplCopyWithImpl<$Res>;
+  @override
+  @useResult
+  $Res call(
+      {ReplyOptions? reply, ReplyOptions? defaultReplyOption, int? count});
+}
+
+/// @nodoc
+class __$$ScheduleInstanceMemberSeparatorImplCopyWithImpl<$Res>
+    extends _$ScheduleInstanceMemberCopyWithImpl<$Res,
+        _$ScheduleInstanceMemberSeparatorImpl>
+    implements _$$ScheduleInstanceMemberSeparatorImplCopyWith<$Res> {
+  __$$ScheduleInstanceMemberSeparatorImplCopyWithImpl(
+      _$ScheduleInstanceMemberSeparatorImpl _value,
+      $Res Function(_$ScheduleInstanceMemberSeparatorImpl) _then)
+      : super(_value, _then);
+
+  /// Create a copy of ScheduleInstanceMember
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? reply = freezed,
+    Object? defaultReplyOption = freezed,
+    Object? count = freezed,
+  }) {
+    return _then(_$ScheduleInstanceMemberSeparatorImpl(
+      reply: freezed == reply
+          ? _value.reply
+          : reply // ignore: cast_nullable_to_non_nullable
+              as ReplyOptions?,
+      defaultReplyOption: freezed == defaultReplyOption
+          ? _value.defaultReplyOption
+          : defaultReplyOption // ignore: cast_nullable_to_non_nullable
+              as ReplyOptions?,
+      count: freezed == count
+          ? _value.count
+          : count // ignore: cast_nullable_to_non_nullable
+              as int?,
+    ));
+  }
+}
+
+/// @nodoc
+
+class _$ScheduleInstanceMemberSeparatorImpl
+    with DiagnosticableTreeMixin
+    implements ScheduleInstanceMemberSeparator {
+  const _$ScheduleInstanceMemberSeparatorImpl(
+      {this.reply, this.defaultReplyOption, this.count});
+
+  @override
+  final ReplyOptions? reply;
+  @override
+  final ReplyOptions? defaultReplyOption;
+  @override
+  final int? count;
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'ScheduleInstanceMember.separator(reply: $reply, defaultReplyOption: $defaultReplyOption, count: $count)';
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    super.debugFillProperties(properties);
+    properties
+      ..add(DiagnosticsProperty('type', 'ScheduleInstanceMember.separator'))
+      ..add(DiagnosticsProperty('reply', reply))
+      ..add(DiagnosticsProperty('defaultReplyOption', defaultReplyOption))
+      ..add(DiagnosticsProperty('count', count));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _$ScheduleInstanceMemberSeparatorImpl &&
+            (identical(other.reply, reply) || other.reply == reply) &&
+            (identical(other.defaultReplyOption, defaultReplyOption) ||
+                other.defaultReplyOption == defaultReplyOption) &&
+            (identical(other.count, count) || other.count == count));
+  }
+
+  @override
+  int get hashCode =>
+      Object.hash(runtimeType, reply, defaultReplyOption, count);
+
+  /// Create a copy of ScheduleInstanceMember
+  /// with the given fields replaced by the non-null parameter values.
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  @pragma('vm:prefer-inline')
+  _$$ScheduleInstanceMemberSeparatorImplCopyWith<
+          _$ScheduleInstanceMemberSeparatorImpl>
+      get copyWith => __$$ScheduleInstanceMemberSeparatorImplCopyWithImpl<
+          _$ScheduleInstanceMemberSeparatorImpl>(this, _$identity);
+
+  @override
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>({
+    required TResult Function(
+            Member member,
+            ReplyOptions? reply,
+            ReplyOptions? defaultReplyOption,
+            DefaultReply? defaultReply,
+            Profile? profile)
+        reply,
+    required TResult Function(
+            ReplyOptions? reply, ReplyOptions? defaultReplyOption, int? count)
+        separator,
+  }) {
+    return separator(this.reply, defaultReplyOption, count);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>({
+    TResult? Function(
+            Member member,
+            ReplyOptions? reply,
+            ReplyOptions? defaultReplyOption,
+            DefaultReply? defaultReply,
+            Profile? profile)?
+        reply,
+    TResult? Function(
+            ReplyOptions? reply, ReplyOptions? defaultReplyOption, int? count)?
+        separator,
+  }) {
+    return separator?.call(this.reply, defaultReplyOption, count);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>({
+    TResult Function(
+            Member member,
+            ReplyOptions? reply,
+            ReplyOptions? defaultReplyOption,
+            DefaultReply? defaultReply,
+            Profile? profile)?
+        reply,
+    TResult Function(
+            ReplyOptions? reply, ReplyOptions? defaultReplyOption, int? count)?
+        separator,
+    required TResult orElse(),
+  }) {
+    if (separator != null) {
+      return separator(this.reply, defaultReplyOption, count);
+    }
+    return orElse();
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>({
+    required TResult Function(ScheduleInstanceMemberReply value) reply,
+    required TResult Function(ScheduleInstanceMemberSeparator value) separator,
+  }) {
+    return separator(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>({
+    TResult? Function(ScheduleInstanceMemberReply value)? reply,
+    TResult? Function(ScheduleInstanceMemberSeparator value)? separator,
+  }) {
+    return separator?.call(this);
+  }
+
+  @override
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>({
+    TResult Function(ScheduleInstanceMemberReply value)? reply,
+    TResult Function(ScheduleInstanceMemberSeparator value)? separator,
+    required TResult orElse(),
+  }) {
+    if (separator != null) {
+      return separator(this);
+    }
+    return orElse();
+  }
+}
+
+abstract class ScheduleInstanceMemberSeparator
+    implements ScheduleInstanceMember {
+  const factory ScheduleInstanceMemberSeparator(
+      {final ReplyOptions? reply,
+      final ReplyOptions? defaultReplyOption,
+      final int? count}) = _$ScheduleInstanceMemberSeparatorImpl;
+
+  @override
+  ReplyOptions? get reply;
+  @override
+  ReplyOptions? get defaultReplyOption;
+  int? get count;
+
+  /// Create a copy of ScheduleInstanceMember
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  _$$ScheduleInstanceMemberSeparatorImplCopyWith<
+          _$ScheduleInstanceMemberSeparatorImpl>
       get copyWith => throw _privateConstructorUsedError;
 }

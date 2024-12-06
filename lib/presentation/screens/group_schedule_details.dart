@@ -38,11 +38,7 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final members = scheduleInstance?.members ?? [];
-    final replies = scheduleInstance?.memberReplies ?? {};
-    final defaultReplyOptions =
-        scheduleInstance?.memberDefaultReplyOptions ?? {};
-    final defaultReplies = scheduleInstance?.memberDefaultReplies ?? {};
+    final membersList = scheduleInstance?.membersList ?? [];
 
     return Scaffold(
       appBar: AppBar(
@@ -72,27 +68,46 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
           ),
           Expanded(
             child: ListView.builder(
-              itemCount: members.length ?? 0,
+              itemCount: membersList.length,
               itemBuilder: (context, index) {
-                final (member, memberProfile) = members.elementAt(index);
-                final name = member.displayNameOverride ??
-                    memberProfile?.displayName ??
-                    l10n.unknown;
-                final reply = replies[member.id];
-                final defaultReplyOption = defaultReplyOptions[member.id];
-                final defaultReply = defaultReplies[member.id];
+                final el = membersList.elementAt(index);
+                if (el is ScheduleInstanceMemberSeparator) {
+                  return ListTile(
+                    dense: true,
+                    title: Text(
+                      el.reply == null
+                          ? l10n.unknown
+                          : el.reply == ReplyOptions.yes
+                              ? l10n.yes
+                              : l10n.no,
+                    ),
+                    trailing: Text('${el.count}'),
+                    subtitle: Divider(),
+                  );
+                } else if (el is ScheduleInstanceMemberReply) {
+                  final member = el.member;
+                  final profile = el.profile;
+                  final reply = el.reply;
+                  final defaultReplyOption = el.defaultReplyOption;
+                  final defaultReply = el.defaultReply;
 
-                return ScheduleMemberTile(
-                  name: name,
-                  reply: reply,
-                  defaultReplyOption: defaultReplyOption,
-                  defaultReply: defaultReply,
-                  onReplyChanged: (reply) =>
-                      onReplyChanged?.call(scheduleInstance!, member.id, reply),
-                  onDefaultReplyChanged: (recurrenceRule, reply) =>
-                      onDefaultReplyChanged?.call(recurrenceRule,
-                          scheduleInstance!.scheduleId, member.id, reply),
-                );
+                  final name = member.displayNameOverride ??
+                      profile?.displayName ??
+                      l10n.unknown;
+
+                  return ScheduleMemberTile(
+                    name: name,
+                    reply: reply,
+                    defaultReplyOption: defaultReplyOption,
+                    defaultReply: defaultReply,
+                    onReplyChanged: (reply) => onReplyChanged?.call(
+                        scheduleInstance!, member.id, reply),
+                    onDefaultReplyChanged: (recurrenceRule, reply) =>
+                        onDefaultReplyChanged?.call(recurrenceRule,
+                            scheduleInstance!.scheduleId, member.id, reply),
+                  );
+                }
+                throw Exception('Unknown member type: $el');
               },
             ),
           ),
