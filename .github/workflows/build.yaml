@@ -43,22 +43,22 @@ jobs:
         id: pubspec_tag
         run: |
           PUBSPEC_VERSION=v$(grep -oP '^version:\s*\K[0-9]+\.[0-9]+\.[0-9]+' pubspec.yaml)
+          GIT_TAG=$(git describe --tags --abbrev=0 2>/dev/null || echo "")
           echo "Found version in pubspec.yaml: $PUBSPEC_VERSION"      
-          echo "tag_name=$PUBSPEC_VERSION" >> $GITHUB_OUTPUT
-      # This step prepares a draft release with the release notes generated from the commit messages,
-      # and the tag name from the pubspec.yaml file. It will only update the release if it is a draft
-      # and has not been published yet. If the release is already published, it will not be updated and fail.
-      # Once a version is published to the app store, the release should be marked as published.
-      - name: Create or update draft release
+          echo "Found latest tag: $GIT_TAG"
+          
+          # If the pubspec version is not the same as the latest tag, output the new tag
+          if [[ "$PUBSPEC_VERSION" != "$GIT_TAG" ]]; then
+              echo "tag_name=$PUBSPEC_VERSION" >> $GITHUB_OUTPUT
+          fi
+      - name: Create release
         uses: ncipollo/release-action@v1
+        if: steps.pubspec_tag.outputs.tag_name != ''
         with:
           name: ${{ steps.pubspec_tag.outputs.tag_name }}
           tag: ${{ steps.pubspec_tag.outputs.tag_name }}
           generateReleaseNotes: true
           makeLatest: true
-          draft: true
-          allowUpdates: true
-          updateOnlyUnreleased: true
       - name: Configure git
         run: |
           git config --global user.name "GitHub Actions Bot"
