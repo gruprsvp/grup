@@ -183,15 +183,14 @@ flutter:
 
 # https://pub.dev/packages/flutter_launcher_icons
 flutter_launcher_icons:
-  image_path: "assets/images/logo.png"
+  image_path: "assets/icon/icon.png"
   android: true
-  ios: true
-  #  https://github.com/fluttercommunity/flutter_launcher_icons/issues/96
-  #  adaptive_icon_background: "#ffffff"
-  #  adaptive_icon_foreground: "assets/images/logo.png"
-  #  adaptive_icon_monochrome: "assets/images/logo.png"
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/icon/icon.png"
+  adaptive_icon_monochrome: "assets/icon/icon-monochrome.png"
   min_sdk_android: 21
+  ios: true
+  image_path_ios_tinted_grayscale: "assets/icon/icon-grayscale.png"
   remove_alpha_ios: true
-  background_color_ios: "#ffffff"
   web:
     generate: true

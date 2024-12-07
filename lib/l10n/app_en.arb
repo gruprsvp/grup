@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appName": "AppFor.it",
+  "appName": "Grup",
   "addContact": "Add contact",
   "addInvite": "Add invite",
   "camera": "Camera",
@@ -76,7 +76,7 @@
       }
     }
   },
-  "inviteMessage": "Hey, join my group on AppFor.it! Use this code {code} or click here: {link}",
+  "inviteMessage": "Hey, join my group on Grup! Use this code {code} or click here: {link}",
   "@inviteMessage": {
     "description": "Invite message to send to friends",
     "placeholders": {
