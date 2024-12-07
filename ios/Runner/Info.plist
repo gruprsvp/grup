@@ -11,7 +11,7 @@
 		<key>CFBundleDevelopmentRegion</key>
 		<string>$(DEVELOPMENT_LANGUAGE)</string>
 		<key>CFBundleDisplayName</key>
-		<string>AppFor.it</string>
+		<string>Grup</string>
 		<key>CFBundleExecutable</key>
 		<string>$(EXECUTABLE_NAME)</string>
 		<key>CFBundleIdentifier</key>
@@ -63,7 +63,7 @@
 				<key>CFBundleURLSchemes</key>
 				<array>
 					<string>com.googleusercontent.apps.655087059227-o10vdnfsvnkl9ct8isg8db3j74s0rfur</string>
-                    <string>appforit</string>
+					<string>appforit</string>
 				</array>
 			</dict>
 		</array>

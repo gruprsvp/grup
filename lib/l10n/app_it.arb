@@ -1,6 +1,6 @@
 {
   "@@locale": "it",
-  "appName": "AppFor.it",
+  "appName": "Grup",
   "addContact": "Aggiungi contatto",
   "addInvite": "Aggiungi invito",
   "camera": "Fotocamera",
@@ -59,7 +59,7 @@
   "guest": "Ospite",
   "invite": "Invita la gente",
   "inviteCodeExplanation": "Condividi questo codice con {user} per invitarlo nel gruppo",
-  "inviteMessage": "Ehi, unisciti al mio gruppo su AppFor.it! Usa questo codice {code} o clicca qui: {link}",
+  "inviteMessage": "Ehi, unisciti al mio gruppo su Grup! Usa questo codice {code} o clicca qui: {link}",
   "invites": "Inviti",
   "inviteFromContacts": "Invita dai tuoi contatti",
   "inviteManual": "Invita manualmente",

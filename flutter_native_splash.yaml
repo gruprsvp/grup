@@ -22,7 +22,7 @@ flutter_native_splash:
 
   # The image parameter allows you to specify an image used in the splash screen.  It must be a
   # png file and should be sized for 4x pixel density.
-  image: assets/images/logo.png
+  image: assets/icon/icon.png
 
   # The branding property allows you to specify an image used as branding in the splash screen.
   # It must be a png file. It is supported for Android, iOS and the Web.  For Android 12,
@@ -32,7 +32,7 @@ flutter_native_splash:
   # To position the branding image at the bottom of the screen you can use bottom, bottomRight,
   # and bottomLeft. The default values is bottom if not specified or specified something else.
   #branding_mode: bottom
-  
+
   # Set the branding padding from the bottom of the screen.  The default value is 0
   # branding_bottom_padding: 24
 
@@ -42,21 +42,21 @@ flutter_native_splash:
   # background_image_dark must be specified.  color_dark and background_image_dark cannot both be
   # set.
   color_dark: "#191A1D"
-  #background_image_dark: "assets/dark-background.png"
-  #image_dark: assets/splash-invert.png
-  #branding_dark: assets/dart_dark.png
+    #background_image_dark: "assets/dark-background.png"
+    #image_dark: assets/splash-invert.png
+    #branding_dark: assets/dart_dark.png
 
-  # From Android 12 onwards, the splash screen is handled differently than in previous versions.
-  # Please visit https://developer.android.com/guide/topics/ui/splash-screen
-  # Following are specific parameters for Android 12+.
-  #android_12:
+    # From Android 12 onwards, the splash screen is handled differently than in previous versions.
+    # Please visit https://developer.android.com/guide/topics/ui/splash-screen
+    # Following are specific parameters for Android 12+.
+    #android_12:
     # The image parameter sets the splash screen icon image.  If this parameter is not specified,
     # the app's launcher icon will be used instead.
     # Please note that the splash screen will be clipped to a circle on the center of the screen.
     # App icon with an icon background: This should be 960×960 pixels, and fit within a circle
     # 640 pixels in diameter.
     # App icon without an icon background: This should be 1152×1152 pixels, and fit within a circle
-    # 768 pixels in diameter.  To fit a 1152x1152 image within a circle with a 768 diameter, simply 
+    # 768 pixels in diameter.  To fit a 1152x1152 image within a circle with a 768 diameter, simply
     # ensure that the most important design elements of your image are placed within a circular area
     # with a 768 diameter at the center of the 1152x1152 canvas.
     #image: assets/images/logo.png
@@ -75,7 +75,7 @@ flutter_native_splash:
     # parameters from above.
     #image_dark: assets/android12splash-invert.png
     #color_dark: "#042a49"
-    #icon_background_color_dark: "#191A1D"
+  #icon_background_color_dark: "#191A1D"
 
   # The android, ios and web parameters can be used to disable generating a splash screen on a given
   # platform.

@@ -1,6 +1,6 @@
-# AppFor.it
+# Grup
 
-A calendar app for humans.
+Event Scheduling for Groups
 
 [Access it here](https://appfor.it)
 
