@@ -86,7 +86,7 @@
       },
       "link": {
         "type": "String",
-        "example": "https://appfor.it/invite/ABCD-EFGH"
+        "example": "https://grup.rsvp/invite/ABCD-EFGH"
       }
     }
   },
