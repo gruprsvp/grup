@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/widgets/widgets.dart';
@@ -57,12 +56,7 @@ class ScheduleMemberTile extends StatelessWidget {
 
   Future<(RecurrenceRule?, ReplyOptions?)?> _confirmDefaultReplyActionSheet<T>(
       BuildContext context, WidgetBuilder builder) async {
-    final isCupertino = Theme.of(context).platform == TargetPlatform.iOS;
-
-    return await (isCupertino
-        ? showCupertinoModalPopup<(RecurrenceRule?, ReplyOptions?)>(
-            context: context, builder: builder)
-        : showModalBottomSheet<(RecurrenceRule?, ReplyOptions?)>(
-            context: context, builder: builder));
+    return showModalBottomSheet<(RecurrenceRule?, ReplyOptions?)>(
+        context: context, builder: builder);
   }
 }

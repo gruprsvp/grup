@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/util/config.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';
@@ -12,10 +13,18 @@ class AuthScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final config = ConfigService().config;
+    final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(AppLocalizations.of(context)!.appName),
+        title: Text(
+          l10n.appName.toUpperCase(),
+          style: GoogleFonts.ranchers(
+            color: theme.colorScheme.primary,
+            textStyle: theme.textTheme.headlineLarge,
+          ),
+        ),
         // TODO(borgoat): this shouldn't be needed: fix the navigation stack instead
         automaticallyImplyLeading: false,
       ),

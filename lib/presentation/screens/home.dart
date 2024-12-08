@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
@@ -31,6 +32,7 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     final nothingToShow = groups == null || groups!.isEmpty;
     final innerBody = nothingToShow
@@ -42,7 +44,13 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(l10n.appName),
+        title: Text(
+          l10n.appName.toUpperCase(),
+          style: GoogleFonts.ranchers(
+            color: theme.colorScheme.primary,
+            textStyle: theme.textTheme.headlineLarge,
+          ),
+        ),
         bottom: loading
             ? PreferredSize(
                 preferredSize: Size(MediaQuery.of(context).size.width, 0),
