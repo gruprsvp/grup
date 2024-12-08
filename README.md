@@ -2,7 +2,7 @@
 
 Event Scheduling for Groups
 
-[Access it here](https://appfor.it)
+[Access it here](https://grup.rsvp)
 
 ## Getting started
 

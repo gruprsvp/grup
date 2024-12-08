@@ -12,6 +12,8 @@
 	<array>
 		<string>applinks:appfor.it</string>
 		<string>webcredentials:appfor.it</string>
+		<string>applinks:grup.rsvp</string>
+		<string>webcredentials:grup.rsvp</string>
 	</array>
 </dict>
 </plist>

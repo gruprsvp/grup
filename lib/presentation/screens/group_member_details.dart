@@ -154,7 +154,7 @@ class GroupMemberDetailsScreen extends StatelessWidget {
 
     final l10n = AppLocalizations.of(context)!;
     final code = invite.value;
-    final deeplink = Uri.https('appfor.it', '/join/$code').toString();
+    final deeplink = Uri.https('grup.rsvp', '/join/$code').toString();
 
     return Share.share(l10n.inviteMessage(code, deeplink));
   }
