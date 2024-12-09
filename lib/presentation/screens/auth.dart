@@ -20,7 +20,7 @@ class AuthScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           l10n.appName.toUpperCase(),
-          style: GoogleFonts.ranchers(
+          style: GoogleFonts.sniglet(
             color: theme.colorScheme.primary,
             textStyle: theme.textTheme.headlineLarge,
           ),

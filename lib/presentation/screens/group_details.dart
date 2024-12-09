@@ -35,7 +35,7 @@ class GroupDetailsScreen extends StatelessWidget {
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
                 child: Text(groupDescription),
               ),
-            Expanded(child: SchedulesListContainer()),
+            Expanded(child: SchedulesListContainer(groupId: groupIdStr)),
           ],
         ),
         floatingActionButton: isAdmin && groupIdStr != null

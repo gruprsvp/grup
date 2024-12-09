@@ -13,8 +13,11 @@ import 'package:redux_entity/redux_entity.dart';
 part 'schedules_list.freezed.dart';
 
 class SchedulesListContainer extends StatefulWidget {
+  final String? groupId;
+
   const SchedulesListContainer({
     super.key,
+    this.groupId,
   });
 
   @override
@@ -46,6 +49,7 @@ class SchedulesListContainerState extends State<SchedulesListContainer> {
         },
         itemBuilder: (context, index) {
           return SchedulesList(
+            groupId: widget.groupId,
             schedules: vm.schedules,
             onReplyChanged: vm.onReplyChanged,
           );

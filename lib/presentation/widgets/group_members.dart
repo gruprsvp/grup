@@ -6,6 +6,7 @@ import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/util/util.dart';
+import 'package:styled_text/styled_text.dart';
 
 import 'contact_form.dart';
 
@@ -24,6 +25,7 @@ class GroupMembers extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     final topWidget = members?.isNotEmpty ?? false
         ? ListView.builder(
@@ -52,7 +54,23 @@ class GroupMembers extends StatelessWidget {
                   });
             },
           )
-        : EmptyState.withImage('add-members.webp');
+        // TODO This is actually never shown, because the members list has at least the current user...
+        // Refactor this so that the current user is shown differently,
+        // and the empty state is shown when there are no members other than the current user.
+        : EmptyState(
+            image: 'add-members.webp',
+            text: StyledText(
+              text: l10n.invitesEmpty,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodyLarge,
+              tags: {
+                'invite': StyledTextWidgetTag(TextButton(
+                  onPressed: () => _showInviteModal(context),
+                  child: Text(l10n.inviteMembersCTA),
+                )),
+              },
+            ),
+          );
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
