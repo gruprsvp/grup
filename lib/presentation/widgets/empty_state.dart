@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class EmptyState extends StatelessWidget {
-  final String? text;
+  final Widget? text;
   final String? image;
 
   const EmptyState({super.key, this.text, this.image});
@@ -10,21 +10,19 @@ class EmptyState extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
 
+    final imageUri = image != null ? 'assets/images/$image' : null;
+
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          if (text != null)
-            Text(
-              text!,
-              style: theme.textTheme.bodyLarge,
-            ),
+          if (text != null) text!,
           if (image != null)
             Expanded(
               child: Container(
                 decoration: BoxDecoration(
                   image: DecorationImage(
-                    image: AssetImage(image!),
+                    image: AssetImage(imageUri!),
                     invertColors: theme.brightness == Brightness.dark,
                   ),
                 ),
@@ -34,8 +32,4 @@ class EmptyState extends StatelessWidget {
       ),
     );
   }
-
-  // Add a factory constructor to create an empty state with an image.
-  factory EmptyState.withImage(String image) =>
-      EmptyState(image: 'assets/images/$image');
 }

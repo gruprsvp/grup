@@ -4,6 +4,7 @@ import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:rrule/rrule.dart';
+import 'package:styled_text/styled_text.dart';
 
 class GroupEvents extends StatelessWidget {
   final Group? group; // TODO is this needed?
@@ -24,6 +25,7 @@ class GroupEvents extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     final topWidget = schedules?.isNotEmpty ?? false
         ? ListView.builder(
@@ -49,7 +51,20 @@ class GroupEvents extends StatelessWidget {
               );
             },
           )
-        : EmptyState.withImage('events.webp');
+        : EmptyState(
+            image: 'events.webp',
+            text: StyledText(
+              text: l10n.eventsEmpty,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodyLarge,
+              tags: {
+                'newevent': StyledTextWidgetTag(TextButton(
+                  onPressed: () => _createNewEvent(context),
+                  child: Text(l10n.createNewEvent),
+                ))
+              },
+            ),
+          );
 
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),

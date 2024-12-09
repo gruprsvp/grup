@@ -5,6 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
+import 'package:styled_text/styled_text.dart';
 
 class HomeScreen extends StatelessWidget {
   final Profile? profile;
@@ -37,8 +38,24 @@ class HomeScreen extends StatelessWidget {
     final nothingToShow = groups == null || groups!.isEmpty;
     final innerBody = nothingToShow
         ? EmptyState(
-            image: 'assets/images/home.webp',
-            text: l10n.onboardingMessage,
+            image: 'home.webp',
+            text: StyledText(
+              text: l10n.onboardingMessage,
+              textAlign: TextAlign.center,
+              style: theme.textTheme.bodyLarge,
+              tags: {
+                'title': StyledTextTag(
+                  style: GoogleFonts.sniglet(color: theme.colorScheme.primary),
+                ),
+                'plus': StyledTextWidgetTag(
+                  TextButton.icon(
+                    icon: Icon(Icons.group_add_outlined),
+                    label: Text(l10n.createOrJoinGroup),
+                    onPressed: () => _onGroupCreate(context),
+                  ),
+                )
+              },
+            ),
           )
         : GroupsList(groups: groups);
 
@@ -46,9 +63,10 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text(
           l10n.appName.toUpperCase(),
-          style: GoogleFonts.ranchers(
+          style: GoogleFonts.sniglet(
             color: theme.colorScheme.primary,
             textStyle: theme.textTheme.headlineLarge,
+            fontWeight: FontWeight.bold,
           ),
         ),
         bottom: loading
@@ -69,12 +87,16 @@ class HomeScreen extends StatelessWidget {
         child: innerBody,
       ),
       floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => GroupCreateRoute()
-            .push<GroupCreateResult>(context)
-            .then((value) => value != null ? onGroupCreate?.call(value) : null),
+        onPressed: () => _onGroupCreate(context),
         label: Text(l10n.createOrJoinGroup),
         icon: const Icon(Icons.group_add_outlined),
       ),
     );
+  }
+
+  _onGroupCreate(BuildContext context) {
+    return GroupCreateRoute()
+        .push<GroupCreateResult>(context)
+        .then((value) => value != null ? onGroupCreate?.call(value) : null);
   }
 }

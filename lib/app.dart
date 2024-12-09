@@ -5,6 +5,7 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:parousia/actions/actions.dart';
 import 'package:parousia/router.dart';
 import 'package:parousia/selectors/selectors.dart';
@@ -61,10 +62,12 @@ class ParApp extends StatelessWidget {
               locale: vm.locale,
               darkTheme: ThemeData(
                 colorScheme: darkColorScheme,
+                fontFamily: GoogleFonts.cabin().fontFamily,
               ),
               theme: ThemeData(
                 // TODO(borgoat): dynamic color scheme using dynamic_color package
                 colorScheme: lightColorScheme,
+                fontFamily: GoogleFonts.cabin().fontFamily,
               ),
               routerConfig: router,
             );
