@@ -182,17 +182,3 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-
-# https://pub.dev/packages/flutter_launcher_icons
-flutter_launcher_icons:
-  image_path: "assets/icon/icon.png"
-  android: true
-  adaptive_icon_background: "#ffffff"
-  adaptive_icon_foreground: "assets/icon/icon.png"
-  adaptive_icon_monochrome: "assets/icon/icon-monochrome.png"
-  min_sdk_android: 21
-  ios: true
-  image_path_ios_tinted_grayscale: "assets/icon/icon-grayscale.png"
-  remove_alpha_ios: true
-  web:
-    generate: true
