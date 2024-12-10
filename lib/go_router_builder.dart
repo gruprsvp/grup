@@ -26,6 +26,8 @@ part 'go_router_builder.g.dart';
       path: 'settings',
       routes: [
         TypedGoRoute<LocaleRoute>(path: 'locale'),
+        TypedGoRoute<SettingsMoreRoute>(path: 'more'),
+        TypedGoRoute<LicensesRoute>(path: 'licenses'),
       ],
     ),
   ],
@@ -55,6 +57,20 @@ class LocaleRoute extends GoRouteData with AuthenticationGuard {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const LocaleContainer();
+}
+
+@immutable
+class SettingsMoreRoute extends GoRouteData with AuthenticationGuard {
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const SettingsMoreScreen();
+}
+
+@immutable
+class LicensesRoute extends GoRouteData with AuthenticationGuard {
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const LicensePage();
 }
 
 @immutable

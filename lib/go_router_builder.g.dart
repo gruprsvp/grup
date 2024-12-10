@@ -60,6 +60,14 @@ RouteBase get $homeScreenRoute => GoRouteData.$route(
               path: 'locale',
               factory: $LocaleRouteExtension._fromState,
             ),
+            GoRouteData.$route(
+              path: 'more',
+              factory: $SettingsMoreRouteExtension._fromState,
+            ),
+            GoRouteData.$route(
+              path: 'licenses',
+              factory: $LicensesRouteExtension._fromState,
+            ),
           ],
         ),
       ],
@@ -273,6 +281,41 @@ extension $LocaleRouteExtension on LocaleRoute {
 
   String get location => GoRouteData.$location(
         '/settings/locale',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $SettingsMoreRouteExtension on SettingsMoreRoute {
+  static SettingsMoreRoute _fromState(GoRouterState state) =>
+      SettingsMoreRoute();
+
+  String get location => GoRouteData.$location(
+        '/settings/more',
+      );
+
+  void go(BuildContext context) => context.go(location);
+
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  void replace(BuildContext context) => context.replace(location);
+}
+
+extension $LicensesRouteExtension on LicensesRoute {
+  static LicensesRoute _fromState(GoRouterState state) => LicensesRoute();
+
+  String get location => GoRouteData.$location(
+        '/settings/licenses',
       );
 
   void go(BuildContext context) => context.go(location);

@@ -4,6 +4,7 @@ import 'package:app_links/app_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:parousia/actions/actions.dart';
 import 'package:parousia/app.dart';
 import 'package:parousia/epics/epics.dart';
@@ -22,6 +23,18 @@ import 'router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Disable runtime fetching of Google Fonts to avoid network requests
+  // They must be bundled with assets
+  // https://pub.dev/packages/google_fonts#bundling-fonts-when-releasing
+  GoogleFonts.config.allowRuntimeFetching = false;
+
+  // Add the Google Fonts license to the LicenseRegistry
+  // https://pub.dev/packages/google_fonts#licensing-fonts
+  LicenseRegistry.addLicense(() async* {
+    final license = await rootBundle.loadString('assets/google_fonts/OFL.txt');
+    yield LicenseEntryWithLineBreaks(['google_fonts'], license);
+  });
 
   final configService = ConfigService();
   await configService.initialize();
