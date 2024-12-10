@@ -1,4 +1,3 @@
-import 'package:dynamic_color/dynamic_color.dart';
 import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -28,51 +27,57 @@ class ParApp extends StatelessWidget {
         distinct: true,
         converter: _ViewModel.fromStore,
         onInit: store.dispatch(AppStartedAction()),
-        builder: (context, vm) => DynamicColorBuilder(
-          builder: (lightDynamic, darkDynamic) {
-            final override = vm.overrideColour;
-            const defaultColour = Color(0xFF34558B);
+        builder: (context, vm) {
+          ColorScheme lightColorScheme = ColorScheme.fromSeed(
+            seedColor: Color(0xFF34558B),
+            secondary: Color(0xFF00A4B8),
+            tertiary: Color(0xFF8BE585),
+          );
 
-            ColorScheme lightColorScheme;
-            ColorScheme darkColorScheme;
+          ColorScheme darkColorScheme = ColorScheme.fromSeed(
+            brightness: Brightness.dark,
+            seedColor: Color(0xFF93920B),
+            secondary: Color(0xFF00623F),
+            tertiary: Color(0xFF257F1F),
+          );
 
-            if (lightDynamic != null && darkDynamic != null) {
-              lightColorScheme =
-                  lightDynamic.harmonized().copyWith(secondary: override);
-              darkColorScheme =
-                  darkDynamic.harmonized().copyWith(secondary: override);
-            } else {
-              // Otherwise, use fallback schemes.
-              lightColorScheme =
-                  ColorScheme.fromSeed(seedColor: override ?? defaultColour);
-              darkColorScheme = ColorScheme.fromSeed(
-                  seedColor: override ?? defaultColour,
-                  brightness: Brightness.dark);
-            }
+          // Light theme colors for reference
+          Color(0xFF34558B);
+          Color(0xFF007DAF);
+          Color(0xFF00A4B8);
+          Color(0xFF00C8A5);
+          Color(0xFF8BE585);
+          Color(0xFFF9F871);
 
-            return MaterialApp.router(
-              title: 'Grup',
-              localizationsDelegates: const [
-                ...AppLocalizations.localizationsDelegates,
-                FormBuilderLocalizations.delegate,
-                SupabaseAuthUILocalizations.delegate,
-              ],
-              supportedLocales: AppLocalizations.supportedLocales,
-              themeMode: vm.themeMode,
-              locale: vm.locale,
-              darkTheme: ThemeData(
-                colorScheme: darkColorScheme,
-                fontFamily: GoogleFonts.cabin().fontFamily,
-              ),
-              theme: ThemeData(
-                // TODO(borgoat): dynamic color scheme using dynamic_color package
-                colorScheme: lightColorScheme,
-                fontFamily: GoogleFonts.cabin().fontFamily,
-              ),
-              routerConfig: router,
-            );
-          },
-        ),
+          // Dark theme colors for reference
+          Color(0xFF000025);
+          Color(0xFF001749);
+          Color(0xFF003E52);
+          Color(0xFF00623F);
+          Color(0xFF257F1F);
+          Color(0xFF93920B);
+
+          return MaterialApp.router(
+            title: 'Grup',
+            localizationsDelegates: const [
+              ...AppLocalizations.localizationsDelegates,
+              FormBuilderLocalizations.delegate,
+              SupabaseAuthUILocalizations.delegate,
+            ],
+            supportedLocales: AppLocalizations.supportedLocales,
+            themeMode: vm.themeMode,
+            locale: vm.locale,
+            darkTheme: ThemeData(
+              colorScheme: darkColorScheme,
+              fontFamily: GoogleFonts.cabin().fontFamily,
+            ),
+            theme: ThemeData(
+              colorScheme: lightColorScheme,
+              fontFamily: GoogleFonts.cabin().fontFamily,
+            ),
+            routerConfig: router,
+          );
+        },
       ),
     );
   }
@@ -83,14 +88,12 @@ sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required ThemeMode themeMode,
     Locale? locale,
-    Color? overrideColour,
   }) = __ViewModel;
 
   factory _ViewModel.fromStore(Store<AppState> store) {
     return _ViewModel(
       themeMode: themeModeSelector(store.state),
       locale: localeSelector(store.state),
-      overrideColour: null, // TODO Where could this come from?
     );
   }
 }

@@ -23,6 +23,7 @@ class AuthScreen extends StatelessWidget {
           style: GoogleFonts.sniglet(
             color: theme.colorScheme.primary,
             textStyle: theme.textTheme.headlineLarge,
+            fontWeight: FontWeight.bold,
           ),
         ),
         // TODO(borgoat): this shouldn't be needed: fix the navigation stack instead
