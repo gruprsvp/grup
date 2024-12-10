@@ -1,0 +1,24 @@
+# https://pub.dev/packages/flutter_launcher_icons
+# dart run flutter_launcher_icons
+flutter_launcher_icons:
+  image_path: "assets/icon/icon.png"
+
+  # image_path_android: "assets/icon/icon.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
+  adaptive_icon_background: "#ffffff"
+  adaptive_icon_foreground: "assets/icon/icon.png"
+  adaptive_icon_monochrome: "assets/icon/icon-monochrome.png"
+
+  ios: true
+  # image_path_ios: "assets/icon/icon.png"
+  remove_alpha_ios: true # Remove alpha from iOS icons - not allowed in the App Store
+  image_path_ios_tinted_grayscale: "assets/icon/icon-grayscale.png"
+  image_path_ios_dark_transparent: "assets/icon/icon-dark.png"
+  # image_path_ios_dark_transparent: "assets/icon/icon_dark.png"
+  # image_path_ios_tinted_grayscale: "assets/icon/icon_tinted.png"
+  # desaturate_tinted_to_grayscale_ios: true
+
+  web:
+    generate: true
+    background_color: "#FFFFFF"
+    theme_color: "#34558B"
