@@ -12,10 +12,17 @@ class DeleteProfileTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
 
     return ListTile(
       title: Text(l10n.deleteProfile),
       leading: const Icon(Icons.delete),
+      // Show in red to indicate danger.
+      iconColor: theme.colorScheme.error,
+      splashColor: theme.colorScheme.error.withOpacity(0.2),
+      hoverColor: theme.colorScheme.error.withOpacity(0.1),
+      focusColor: theme.colorScheme.error.withOpacity(0.1),
+      textColor: theme.colorScheme.error,
       onTap: () => _confirmDelete(context),
     );
   }

@@ -5,7 +5,6 @@ import 'package:parousia/presentation/presentation.dart';
 
 /// A screen that allows the user to configure app settings.
 class SettingsScreen extends StatelessWidget {
-  /// Creates a [SettingsScreen].
   const SettingsScreen({super.key});
 
   @override
@@ -23,7 +22,11 @@ class SettingsScreen extends StatelessWidget {
             onTap: () => LocaleRoute().push(context),
           ),
           const ThemeSwitcherContainer(),
-          const DeleteProfileTile(),
+          ListTile(
+            title: Text(l10n.settingsMoreInfo),
+            leading: const Icon(Icons.info_outline),
+            onTap: () => SettingsMoreRoute().push(context),
+          ),
           const SignOutTile(),
         ],
       ),
