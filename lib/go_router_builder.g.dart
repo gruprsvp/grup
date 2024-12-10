@@ -108,10 +108,17 @@ extension $AuthRouteExtension on AuthRoute {
 }
 
 extension $ProfileRouteExtension on ProfileRoute {
-  static ProfileRoute _fromState(GoRouterState state) => ProfileRoute();
+  static ProfileRoute _fromState(GoRouterState state) => ProfileRoute(
+        userNavigated: _$convertMapValue(
+            'user-navigated', state.uri.queryParameters, _$boolConverter),
+      );
 
   String get location => GoRouteData.$location(
         '/profile',
+        queryParams: {
+          if (userNavigated != null)
+            'user-navigated': userNavigated!.toString(),
+        },
       );
 
   void go(BuildContext context) => context.go(location);
@@ -326,4 +333,24 @@ extension $LicensesRouteExtension on LicensesRoute {
       context.pushReplacement(location);
 
   void replace(BuildContext context) => context.replace(location);
+}
+
+T? _$convertMapValue<T>(
+  String key,
+  Map<String, String> map,
+  T Function(String) converter,
+) {
+  final value = map[key];
+  return value == null ? null : converter(value);
+}
+
+bool _$boolConverter(String value) {
+  switch (value) {
+    case 'true':
+      return true;
+    case 'false':
+      return false;
+    default:
+      throw UnsupportedError('Cannot convert "$value" into a bool.');
+  }
 }
