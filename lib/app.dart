@@ -31,7 +31,7 @@ class ParApp extends StatelessWidget {
         builder: (context, vm) => DynamicColorBuilder(
           builder: (lightDynamic, darkDynamic) {
             final override = vm.overrideColour;
-            const defaultColour = Colors.lime;
+            const defaultColour = Color(0xFF34558B);
 
             ColorScheme lightColorScheme;
             ColorScheme darkColorScheme;
