@@ -11,13 +11,16 @@ import 'package:redux/redux.dart';
 part 'profile.freezed.dart';
 
 class ProfileContainer extends StatelessWidget {
-  const ProfileContainer({super.key});
+  final bool? userNavigated;
+
+  const ProfileContainer({super.key, this.userNavigated});
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector(
       builder: (context, vm) => ProfileScreen(
         profile: vm.profile,
+        userNavigated: userNavigated,
         onSave: vm.onSave,
       ),
       converter: _ViewModel.fromStore,

@@ -76,7 +76,7 @@ class HomeScreen extends StatelessWidget {
             : null,
         actions: [
           ProfilePicture(
-            onPressed: () => ProfileRoute().push(context),
+            onPressed: () => ProfileRoute(userNavigated: true).push(context),
             image: _profilePicture(),
             name: profile?.displayName,
           ),

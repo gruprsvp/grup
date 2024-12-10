@@ -13,9 +13,11 @@ typedef OnProfileSaveCallback = ValueSetter<(String? name, XFile? image)>;
 
 class ProfileScreen extends StatefulWidget {
   final Profile? profile;
+  final bool? userNavigated;
   final OnProfileSaveCallback onSave;
 
-  const ProfileScreen({super.key, this.profile, required this.onSave});
+  const ProfileScreen(
+      {super.key, this.profile, this.userNavigated, required this.onSave});
 
   @override
   createState() => _ProfileScreenState();
@@ -27,7 +29,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   late TextEditingController _nameController;
 
-  bool _showSaveButton = false;
+  bool _enableSaveButton = false;
   XFile? _tempImageFile;
 
   @override
@@ -111,7 +113,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
     setState(() {
       _tempImageFile = imageFile;
-      _showSaveButton = true;
+      _enableSaveButton = true;
     });
   }
 
@@ -133,60 +135,71 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Form(
         key: _formKey,
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              ProfilePicture(
-                onPressed: () => _changeImage(),
-                image: profilePicture,
-                name: _nameController.value.text,
-                radius: 64,
-              ),
-              TextFormField(
-                focusNode: _nameFocusNode,
-                controller: _nameController,
-                decoration: InputDecoration(
-                  labelText: l10n.enterYourName,
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    ProfilePicture(
+                      onPressed: () => _changeImage(),
+                      image: profilePicture,
+                      name: _nameController.value.text,
+                      radius: 64,
+                    ),
+                    TextFormField(
+                      focusNode: _nameFocusNode,
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                        labelText: l10n.enterYourName,
+                      ),
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return l10n.enterYourNamePlease;
+                        }
+                        return null;
+                      },
+                      onChanged: (value) {
+                        setState(() {
+                          if (_formKey.currentState!.validate()) {
+                            _enableSaveButton = true;
+                          } else {
+                            _enableSaveButton = false;
+                          }
+                        });
+                      },
+                    ),
+                    // TODO(borgoat): options to link additional auth providers
+                  ],
                 ),
-                validator: (value) {
-                  if (value == null || value.isEmpty) {
-                    return l10n.enterYourNamePlease;
-                  }
-                  return null;
-                },
-                onChanged: (value) {
-                  setState(() {
-                    if (_formKey.currentState!.validate()) {
-                      _showSaveButton = true;
-                    } else {
-                      _showSaveButton = false;
-                    }
-                  });
-                },
               ),
-              // TODO(borgoat): options to link additional auth providers
-            ],
-          ),
+            ),
+            Padding(
+                padding: const EdgeInsets.all(16),
+                child: FilledButton(
+                  onPressed: _enableSaveButton
+                      ? () {
+                          if (_formKey.currentState!.validate()) {
+                            setState(() {
+                              _enableSaveButton = false;
+                            });
+                            _formKey.currentState!.save();
+                            _nameFocusNode.unfocus();
+                            widget.onSave(
+                                (_nameController.text.trim(), _tempImageFile));
+
+                            if (!(widget.userNavigated ?? false)) {
+                              Navigator.of(context).pop(context);
+                            }
+                          }
+                        }
+                      : null,
+                  child: Text(l10n.save),
+                )),
+          ],
         ),
       ),
-      floatingActionButton: _showSaveButton
-          ? FloatingActionButton.extended(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  setState(() {
-                    _showSaveButton = false;
-                  });
-                  _formKey.currentState!.save();
-                  _nameFocusNode.unfocus();
-                  widget.onSave((_nameController.text.trim(), _tempImageFile));
-                }
-              },
-              label: Text(l10n.save),
-              icon: const Icon(Icons.check),
-            )
-          : null,
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }

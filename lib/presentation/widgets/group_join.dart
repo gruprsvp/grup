@@ -40,7 +40,6 @@ class _GroupJoinState extends State<GroupJoin> {
     return Form(
       key: _formKey,
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Expanded(
             child: SingleChildScrollView(
@@ -76,13 +75,11 @@ class _GroupJoinState extends State<GroupJoin> {
             child: ValueListenableBuilder(
               valueListenable: _codeController,
               builder: (context, value, child) => FilledButton(
-                onPressed: value.text.length == 9
-                    ? () {
-                        if (_formKey.currentState!.validate()) {
-                          widget.onJoin(_codeController.text);
-                        }
-                      }
-                    : null,
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    widget.onJoin(_codeController.text);
+                  }
+                },
                 child: Text(l10n.joinGroup),
               ),
             ),

@@ -75,9 +75,13 @@ class LicensesRoute extends GoRouteData with AuthenticationGuard {
 
 @immutable
 class ProfileRoute extends GoRouteData with AuthenticationGuard {
+  final bool? userNavigated;
+
+  ProfileRoute({this.userNavigated});
+
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const ProfileContainer();
+      ProfileContainer(userNavigated: userNavigated);
 }
 
 @immutable
