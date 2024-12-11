@@ -51,6 +51,7 @@ class SchedulesListContainerState extends State<SchedulesListContainer> {
           return SchedulesList(
             groupId: widget.groupId,
             schedules: vm.schedules,
+            isAdmin: vm.isAdmin,
             onReplyChanged: vm.onReplyChanged,
           );
         },
@@ -64,6 +65,7 @@ class SchedulesListContainerState extends State<SchedulesListContainer> {
 sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required ValueChanged<DateTime> onDateChanged,
+    required bool isAdmin,
     DateTime? selectedDate,
     Iterable<ScheduleInstanceSummary>? schedules,
     OnReplyChangedCallback? onReplyChanged,
@@ -71,6 +73,7 @@ sealed class _ViewModel with _$ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(
+      isAdmin: selectIsAdmin(store.state),
       selectedDate: store.state.selectedDate,
       schedules: selectScheduleInstancesForSelectedDate(store.state),
       onDateChanged: (value) => store.dispatch(SelectDateAction(value)),
