@@ -1,5 +1,5 @@
 import 'package:faker/faker.dart';
-import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/util/recurrence_rules.dart';
 import 'package:uuid/uuid.dart';
 

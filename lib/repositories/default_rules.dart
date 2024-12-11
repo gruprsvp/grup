@@ -1,37 +1,42 @@
-import 'package:parousia/models/models.dart';
+import 'package:brick_core/core.dart';
+import 'package:parousia/brick/brick.dart';
 
-import 'const.dart';
 import 'supabase.dart';
 
-class DefaultRulesRepository extends SupabaseRepository with Postgrest {
-  DefaultRulesRepository({required super.supabase})
-      : super(tableName: Tables.default_rules);
+class DefaultRulesRepository extends SupabaseRepository {
+  DefaultRulesRepository({required super.repository});
 
   Future<Iterable<DefaultRule>> getDefaultRules(String groupId) async {
-    return table()
-        .select('*,members!inner(*)')
-        .eq('members.group_id', groupId)
-        .withConverter((data) => data.map(DefaultRule.fromJson));
+    return repository.get<DefaultRule>(
+      query: Query(where: [
+        Where('member').isExactly(
+          Where('group_id').isExactly(groupId),
+        ),
+      ]),
+    );
   }
 
   Future<DefaultRule> createDefaultRule(DefaultRule reply) async {
-    return table()
-        .upsert({
-          'schedule_id': reply.scheduleId,
-          'member_id': reply.memberId,
-          'selected_option': reply.selectedOption.name,
-          'recurrence_rule': reply.recurrenceRule,
-        })
-        .select()
-        .single()
-        .withConverter((data) => DefaultRule.fromJson(data));
+    return repository.upsert<DefaultRule>(reply);
   }
 
-  Future<void> deleteDefaultRule(
+  Future<DefaultRule> getDefaultRule(
       {required String memberId, required String scheduleId}) async {
-    return table()
-        .delete()
-        .eq('member_id', memberId)
-        .eq('schedule_id', scheduleId);
+    final list = await repository.get<DefaultRule>(
+      query: Query(
+        where: [
+          Where('member').isExactly(memberId),
+          Where('schedule').isExactly(scheduleId),
+        ],
+      ),
+    );
+    return list.first;
+  }
+
+  Future<bool> deleteDefaultRule(
+      {required String memberId, required String scheduleId}) async {
+    final rule =
+        await getDefaultRule(memberId: memberId, scheduleId: scheduleId);
+    return repository.delete<DefaultRule>(rule);
   }
 }

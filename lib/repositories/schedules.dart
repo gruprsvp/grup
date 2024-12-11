@@ -1,4 +1,5 @@
 import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:uuid/uuid.dart';
 
 import 'const.dart';
