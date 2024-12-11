@@ -15,8 +15,7 @@ class GroupsRepository extends SupabaseRepository with Postgrest {
   Future<GroupsAndMembers> getUserGroups() async {
     return table()
         .select('*,members!inner(*,profiles!left(*))')
-        // TODO(borgoat): should filter by profile_id but return all members
-        // .eq('members.profile_id', supabase.auth.currentUser!.id)
+        .eq('members.profile_id', supabase.auth.currentUser!.id)
         .withConverter(_convertGroupsAndMembers);
   }
 
