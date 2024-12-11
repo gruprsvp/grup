@@ -134,12 +134,11 @@ void main() {
           await runWithTemporaryUser((supabase, user) async {
             final secondUserGroupsRepository =
                 GroupsRepository(supabase: supabase);
-            try {
-              await secondUserGroupsRepository.getGroupById(newGroup.id);
-              fail("Should not be able to get group without being a member");
-            } catch (e) {
-              expect(e, isA<PostgrestException>());
-            }
+            final fetchedGroups =
+                await secondUserGroupsRepository.getGroupById(newGroup.id);
+            expect(fetchedGroups.groups, isEmpty);
+            expect(fetchedGroups.members, isEmpty);
+            expect(fetchedGroups.profiles, isEmpty);
 
             try {
               await secondUserGroupsRepository
@@ -172,13 +171,13 @@ void main() {
 
         final userGroups = await groupsRepository.getUserGroups();
 
-        expect(userGroups.groups, hasLength(groupsCount));
+        expect(userGroups, hasLength(groupsCount));
 
         // ? How to match just user-configured properties?
         // expect(userGroups, unorderedEquals(createdGroups));
 
         await Future.wait(
-            userGroups.groups.map((g) => groupsRepository.deleteGroup(g.id)));
+            userGroups.map((g) => groupsRepository.deleteGroup(g.id)));
       }),
     );
 
@@ -243,13 +242,13 @@ void main() {
               displayName: 'A member');
 
           final userGroups = await groupsRepository.getUserGroups();
-          expect(userGroups.groups, hasLength(1));
+          expect(userGroups, hasLength(1));
 
-          final userGroup = userGroups.groups.first;
-          final members =
-              userGroups.members.where((m) => m.groupId == userGroup.id);
+          final newGroup =
+              await groupsRepository.getGroupById(userGroups.first.id);
+          final members = newGroup.members;
 
-          expect(userGroup.id, equals(group.id));
+          expect(userGroups.first.id, equals(group.id));
           expect(members, hasLength(2));
 
           final userMember = members.where((m) => m.id == member.id).first;
@@ -327,9 +326,9 @@ void main() {
               final groupsRepository2 = GroupsRepository(supabase: supabase2);
               final userGroups = await groupsRepository2.getUserGroups();
 
-              expect(userGroups.groups, hasLength(1));
+              expect(userGroups, hasLength(1));
 
-              final group2 = userGroups.groups.first;
+              final group2 = userGroups.first;
               expect(group2.id, equals(group.id));
               // TODO check that there are 2 members
               // TODO check user is member of group and display name override is reset
@@ -363,8 +362,8 @@ void main() {
               final groupsRepository2 = GroupsRepository(supabase: supabase2);
               final userGroups = await groupsRepository2.getUserGroups();
 
-              expect(userGroups.groups, hasLength(1));
-              expect(userGroups.groups.first.id, equals(group.id));
+              expect(userGroups, hasLength(1));
+              expect(userGroups.first.id, equals(group.id));
             },
             phone: invitedUserPhone,
           );
@@ -391,7 +390,7 @@ void main() {
             final invitesRepository2 = InvitesRepository(supabase: supabase2);
 
             final userGroups1 = await groupsRepository2.getUserGroups();
-            expect(userGroups1.groups, hasLength(0));
+            expect(userGroups1, hasLength(0));
 
             final memberId = await invitesRepository2.checkInviteCode(testCode);
             expect(memberId, member.id);
@@ -407,7 +406,7 @@ void main() {
             }
 
             final userGroups2 = await groupsRepository2.getUserGroups();
-            expect(userGroups2.groups, hasLength(1));
+            expect(userGroups2, hasLength(1));
           });
         }),
       ),
@@ -432,8 +431,8 @@ void main() {
                 final groupsRepository2 = GroupsRepository(supabase: supabase2);
                 final userGroups = await groupsRepository2.getUserGroups();
 
-                expect(userGroups.groups, hasLength(1));
-                expect(userGroups.groups.first.id, equals(group.id));
+                expect(userGroups, hasLength(1));
+                expect(userGroups.first.id, equals(group.id));
               },
             );
           },

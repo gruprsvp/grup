@@ -12,20 +12,20 @@ typedef GroupsAndMembers = ({
 class GroupsRepository extends SupabaseRepository with Postgrest {
   GroupsRepository({required super.supabase}) : super(tableName: Tables.groups);
 
-  Future<GroupsAndMembers> getUserGroups() async {
+  Future<Iterable<Group>> getUserGroups() async {
     return table()
         .select('*,members!inner(*,profiles!left(*))')
-        // TODO(borgoat): should filter by profile_id but return all members
-        // .eq('members.profile_id', supabase.auth.currentUser!.id)
-        .withConverter(_convertGroupsAndMembers);
+        // ! Trying to load all profiles in one shot will trigger an exception
+        // ! https://github.com/appforit/appforit/issues/112
+        .eq('members.profile_id', supabase.auth.currentUser!.id)
+        .withConverter((data) => data.map(Group.fromJson));
   }
 
-  Future<Group> getGroupById(int id) async {
+  Future<GroupsAndMembers> getGroupById(int id) async {
     return table()
         .select('*,members!inner(*,profiles!left(*))')
         .eq('id', id)
-        .single()
-        .withConverter(Group.fromJson);
+        .withConverter(_convertGroupsAndMembers);
   }
 
   Future<Group> createGroup(Group group) async {
