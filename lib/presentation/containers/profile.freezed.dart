@@ -33,8 +33,6 @@ abstract class _$ViewModelCopyWith<$Res> {
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
   $Res call({Profile? profile, OnProfileSaveCallback onSave});
-
-  $ProfileCopyWith<$Res>? get profile;
 }
 
 /// @nodoc
@@ -66,20 +64,6 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
               as OnProfileSaveCallback,
     ) as $Val);
   }
-
-  /// Create a copy of _ViewModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ProfileCopyWith<$Res>? get profile {
-    if (_value.profile == null) {
-      return null;
-    }
-
-    return $ProfileCopyWith<$Res>(_value.profile!, (value) {
-      return _then(_value.copyWith(profile: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -91,9 +75,6 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call({Profile? profile, OnProfileSaveCallback onSave});
-
-  @override
-  $ProfileCopyWith<$Res>? get profile;
 }
 
 /// @nodoc

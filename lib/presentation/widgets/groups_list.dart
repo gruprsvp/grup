@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 
 /// A widget to display a list of groups and route to their details.
 class GroupsList extends StatelessWidget {

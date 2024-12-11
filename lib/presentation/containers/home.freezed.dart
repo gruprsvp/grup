@@ -42,8 +42,6 @@ abstract class _$ViewModelCopyWith<$Res> {
       Iterable<Group>? groups,
       ValueSetter<GroupCreateResult>? onGroupCreate,
       AsyncCallback? onRefresh});
-
-  $ProfileCopyWith<$Res>? get profile;
 }
 
 /// @nodoc
@@ -90,20 +88,6 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
               as AsyncCallback?,
     ) as $Val);
   }
-
-  /// Create a copy of _ViewModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ProfileCopyWith<$Res>? get profile {
-    if (_value.profile == null) {
-      return null;
-    }
-
-    return $ProfileCopyWith<$Res>(_value.profile!, (value) {
-      return _then(_value.copyWith(profile: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -120,9 +104,6 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       Iterable<Group>? groups,
       ValueSetter<GroupCreateResult>? onGroupCreate,
       AsyncCallback? onRefresh});
-
-  @override
-  $ProfileCopyWith<$Res>? get profile;
 }
 
 /// @nodoc

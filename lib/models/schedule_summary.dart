@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 
 part 'schedule_summary.freezed.dart';
 

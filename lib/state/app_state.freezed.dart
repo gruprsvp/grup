@@ -14,10 +14,6 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-AppState _$AppStateFromJson(Map<String, dynamic> json) {
-  return _AppState.fromJson(json);
-}
-
 /// @nodoc
 mixin _$AppState {
   RemoteEntityState<Profile> get profiles => throw _privateConstructorUsedError;
@@ -35,9 +31,6 @@ mixin _$AppState {
   String? get selectedGroupId => throw _privateConstructorUsedError;
   String? get selectedScheduleId => throw _privateConstructorUsedError;
   LocaleState? get locale => throw _privateConstructorUsedError;
-
-  /// Serializes this AppState to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
   /// Create a copy of AppState
   /// with the given fields replaced by the non-null parameter values.
@@ -294,7 +287,7 @@ class __$$AppStateImplCopyWithImpl<$Res>
 }
 
 /// @nodoc
-@JsonSerializable()
+
 class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
   const _$AppStateImpl(
       {this.profiles = const RemoteEntityState<Profile>(),
@@ -310,9 +303,6 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
       this.selectedGroupId,
       this.selectedScheduleId,
       this.locale});
-
-  factory _$AppStateImpl.fromJson(Map<String, dynamic> json) =>
-      _$$AppStateImplFromJson(json);
 
   @override
   @JsonKey()
@@ -402,7 +392,6 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
             (identical(other.locale, locale) || other.locale == locale));
   }
 
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(
       runtimeType,
@@ -427,13 +416,6 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
   @pragma('vm:prefer-inline')
   _$$AppStateImplCopyWith<_$AppStateImpl> get copyWith =>
       __$$AppStateImplCopyWithImpl<_$AppStateImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$AppStateImplToJson(
-      this,
-    );
-  }
 }
 
 abstract class _AppState implements AppState {
@@ -451,9 +433,6 @@ abstract class _AppState implements AppState {
       final String? selectedGroupId,
       final String? selectedScheduleId,
       final LocaleState? locale}) = _$AppStateImpl;
-
-  factory _AppState.fromJson(Map<String, dynamic> json) =
-      _$AppStateImpl.fromJson;
 
   @override
   RemoteEntityState<Profile> get profiles;

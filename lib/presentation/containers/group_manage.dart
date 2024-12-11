@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';

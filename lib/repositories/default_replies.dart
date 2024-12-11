@@ -1,37 +1,42 @@
-import 'package:parousia/models/models.dart';
+import 'package:brick_core/core.dart';
+import 'package:parousia/brick/brick.dart';
 
-import 'const.dart';
 import 'supabase.dart';
 
-class DefaultRepliesRepository extends SupabaseRepository with Postgrest {
-  DefaultRepliesRepository({required super.supabase})
-      : super(tableName: Tables.default_replies);
+class DefaultRepliesRepository extends SupabaseRepository {
+  DefaultRepliesRepository({required super.repository});
 
   Future<Iterable<DefaultReply>> getDefaultReplies(int groupId) async {
-    return table()
-        .select('*,members!inner(*)')
-        .eq('members.group_id', groupId)
-        .withConverter((data) => data.map(DefaultReply.fromJson));
+    return repository.get<DefaultReply>(
+      query: Query(where: [
+        Where('member').isExactly(
+          Where('group_id').isExactly(groupId),
+        ),
+      ]),
+    );
   }
 
   Future<DefaultReply> createDefaultReply(DefaultReply reply) async {
-    return table()
-        .upsert({
-          'schedule_id': reply.scheduleId,
-          'member_id': reply.memberId,
-          'selected_option': reply.selectedOption.name,
-          'recurrence_rule': reply.recurrenceRule,
-        })
-        .select()
-        .single()
-        .withConverter((data) => DefaultReply.fromJson(data));
+    return repository.upsert<DefaultReply>(reply);
   }
 
-  Future<void> deleteDefaultReply(
+  Future<DefaultReply> getDefaultReply(
       {required int memberId, required int scheduleId}) async {
-    return table()
-        .delete()
-        .eq('member_id', memberId)
-        .eq('schedule_id', scheduleId);
+    final list = await repository.get<DefaultReply>(
+      query: Query(
+        where: [
+          Where('member').isExactly(memberId),
+          Where('schedule').isExactly(scheduleId),
+        ],
+      ),
+    );
+    return list.first;
+  }
+
+  Future<bool> deleteDefaultReply(
+      {required int memberId, required int scheduleId}) async {
+    final reply =
+        await getDefaultReply(memberId: memberId, scheduleId: scheduleId);
+    return repository.delete<DefaultReply>(reply);
   }
 }

@@ -47,10 +47,6 @@ abstract class _$ViewModelCopyWith<$Res> {
       List<Invite>? invites,
       ValueSetter<Member>? onUpdate,
       OnRemoveFromGroupCallback? onRemove});
-
-  $GroupCopyWith<$Res>? get group;
-  $MemberCopyWith<$Res>? get member;
-  $ProfileCopyWith<$Res>? get profile;
 }
 
 /// @nodoc
@@ -112,48 +108,6 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
               as OnRemoveFromGroupCallback?,
     ) as $Val);
   }
-
-  /// Create a copy of _ViewModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $GroupCopyWith<$Res>? get group {
-    if (_value.group == null) {
-      return null;
-    }
-
-    return $GroupCopyWith<$Res>(_value.group!, (value) {
-      return _then(_value.copyWith(group: value) as $Val);
-    });
-  }
-
-  /// Create a copy of _ViewModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $MemberCopyWith<$Res>? get member {
-    if (_value.member == null) {
-      return null;
-    }
-
-    return $MemberCopyWith<$Res>(_value.member!, (value) {
-      return _then(_value.copyWith(member: value) as $Val);
-    });
-  }
-
-  /// Create a copy of _ViewModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ProfileCopyWith<$Res>? get profile {
-    if (_value.profile == null) {
-      return null;
-    }
-
-    return $ProfileCopyWith<$Res>(_value.profile!, (value) {
-      return _then(_value.copyWith(profile: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -173,13 +127,6 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       List<Invite>? invites,
       ValueSetter<Member>? onUpdate,
       OnRemoveFromGroupCallback? onRemove});
-
-  @override
-  $GroupCopyWith<$Res>? get group;
-  @override
-  $MemberCopyWith<$Res>? get member;
-  @override
-  $ProfileCopyWith<$Res>? get profile;
 }
 
 /// @nodoc

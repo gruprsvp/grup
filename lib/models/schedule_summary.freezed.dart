@@ -58,8 +58,6 @@ abstract class $ScheduleInstanceSummaryCopyWith<$Res> {
       ReplyOptions? myDefaultReplyOption,
       DefaultReply? myDefaultReply,
       int? targetMemberId});
-
-  $DefaultReplyCopyWith<$Res>? get myDefaultReply;
 }
 
 /// @nodoc
@@ -142,20 +140,6 @@ class _$ScheduleInstanceSummaryCopyWithImpl<$Res,
               as int?,
     ) as $Val);
   }
-
-  /// Create a copy of ScheduleInstanceSummary
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $DefaultReplyCopyWith<$Res>? get myDefaultReply {
-    if (_value.myDefaultReply == null) {
-      return null;
-    }
-
-    return $DefaultReplyCopyWith<$Res>(_value.myDefaultReply!, (value) {
-      return _then(_value.copyWith(myDefaultReply: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -180,9 +164,6 @@ abstract class _$$ScheduleInstanceSummaryImplCopyWith<$Res>
       ReplyOptions? myDefaultReplyOption,
       DefaultReply? myDefaultReply,
       int? targetMemberId});
-
-  @override
-  $DefaultReplyCopyWith<$Res>? get myDefaultReply;
 }
 
 /// @nodoc
@@ -501,8 +482,6 @@ abstract class $ScheduleInstanceDetailsCopyWith<$Res> {
       DefaultReply? myDefaultReply,
       int? targetMemberId,
       bool? canEditOthers});
-
-  $DefaultReplyCopyWith<$Res>? get myDefaultReply;
 }
 
 /// @nodoc
@@ -580,20 +559,6 @@ class _$ScheduleInstanceDetailsCopyWithImpl<$Res,
               as bool?,
     ) as $Val);
   }
-
-  /// Create a copy of ScheduleInstanceDetails
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $DefaultReplyCopyWith<$Res>? get myDefaultReply {
-    if (_value.myDefaultReply == null) {
-      return null;
-    }
-
-    return $DefaultReplyCopyWith<$Res>(_value.myDefaultReply!, (value) {
-      return _then(_value.copyWith(myDefaultReply: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -617,9 +582,6 @@ abstract class _$$ScheduleInstanceDetailsImplCopyWith<$Res>
       DefaultReply? myDefaultReply,
       int? targetMemberId,
       bool? canEditOthers});
-
-  @override
-  $DefaultReplyCopyWith<$Res>? get myDefaultReply;
 }
 
 /// @nodoc
@@ -996,10 +958,6 @@ abstract class _$$ScheduleInstanceMemberReplyImplCopyWith<$Res>
       ReplyOptions? defaultReplyOption,
       DefaultReply? defaultReply,
       Profile? profile});
-
-  $MemberCopyWith<$Res> get member;
-  $DefaultReplyCopyWith<$Res>? get defaultReply;
-  $ProfileCopyWith<$Res>? get profile;
 }
 
 /// @nodoc
@@ -1045,44 +1003,6 @@ class __$$ScheduleInstanceMemberReplyImplCopyWithImpl<$Res>
           : profile // ignore: cast_nullable_to_non_nullable
               as Profile?,
     ));
-  }
-
-  /// Create a copy of ScheduleInstanceMember
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $MemberCopyWith<$Res> get member {
-    return $MemberCopyWith<$Res>(_value.member, (value) {
-      return _then(_value.copyWith(member: value));
-    });
-  }
-
-  /// Create a copy of ScheduleInstanceMember
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $DefaultReplyCopyWith<$Res>? get defaultReply {
-    if (_value.defaultReply == null) {
-      return null;
-    }
-
-    return $DefaultReplyCopyWith<$Res>(_value.defaultReply!, (value) {
-      return _then(_value.copyWith(defaultReply: value));
-    });
-  }
-
-  /// Create a copy of ScheduleInstanceMember
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ProfileCopyWith<$Res>? get profile {
-    if (_value.profile == null) {
-      return null;
-    }
-
-    return $ProfileCopyWith<$Res>(_value.profile!, (value) {
-      return _then(_value.copyWith(profile: value));
-    });
   }
 }
 

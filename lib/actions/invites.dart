@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 
 /// Dispatched when the user entered an invite code to join a group.
 @immutable

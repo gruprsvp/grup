@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:app_links/app_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -7,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parousia/actions/actions.dart';
 import 'package:parousia/app.dart';
+import 'package:parousia/brick/repository.dart';
 import 'package:parousia/epics/epics.dart';
 import 'package:parousia/reducers/reducers.dart';
 import 'package:parousia/repositories/repositories.dart';
@@ -15,8 +14,6 @@ import 'package:parousia/util/config.dart';
 import 'package:parousia/util/util.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_epics/redux_epics.dart';
-import 'package:redux_persist/redux_persist.dart';
-import 'package:redux_persist_flutter/redux_persist_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'router.dart';
@@ -45,15 +42,18 @@ Future<void> main() async {
 
   final supabaseConfig = SupabaseConfig.fromString(supabaseConfigFile);
 
-  final supabase = await Supabase.initialize(
-    anonKey: supabaseConfig.anonKey,
-    url: supabaseConfig.apiUrl,
-  );
+  await ParRepository.configure(
+      supabaseUrl: supabaseConfig.apiUrl,
+      supabaseAnonKey: supabaseConfig.anonKey);
 
-  final store = await _initStore(supabase.client);
+  final repo = ParRepository();
+  await repo.initialize();
+  final supabaseClient = repo.remoteProvider.client;
+
+  final store = await _initStore(supabaseClient);
 
   // Propagate auth state changes to the store
-  supabase.client.auth.onAuthStateChange
+  supabaseClient.auth.onAuthStateChange
       .listen((authState) => store.dispatch(AuthStateChangedAction(authState)));
 
   // Propagate received deeplinks to the store
@@ -88,27 +88,8 @@ Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
     createSchedulesEpics(schedulesRepository),
   ]);
 
-  const storageLocation = kIsWeb
-      ? FlutterSaveLocation.sharedPreferences
-      : FlutterSaveLocation.documentFile;
-
-  final persistor = Persistor<AppState>(
-    storage: FlutterStorage(location: storageLocation),
-    serializer: JsonSerializer((json) =>
-        json != null ? AppState.fromJson(json as Map<String, dynamic>) : null),
-    transforms: Transforms(
-      onSave: [(state) => AppState.copyWithoutErrors(state)],
-      onLoad: [(state) => AppState.copyWithSelectedDateToday(state)],
-    ),
-  );
-
-  AppState? localPersistedState = await persistor.load().catchError((e) {
-    log('failed to load persisted state: $e');
-    return null;
-  });
-  final initialState = localPersistedState ?? AppState.initialState();
+  final initialState = AppState.initialState();
   final middleware = [
-    persistor.createMiddleware(),
     EpicMiddleware<AppState>(epics).call,
   ];
 

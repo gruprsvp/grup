@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:faker/faker.dart';
-import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/util/recurrence_rules.dart';
 import 'package:uuid/uuid.dart';
 
@@ -22,7 +22,7 @@ class Fake {
 
   static Schedule schedule() => Schedule(
         id: Random().nextInt(1000),
-        groupId: Random().nextInt(1000),
+        group: group(),
         displayName: faker.lorem.sentence(),
         recurrenceRule: CommonRecurrenceRules.monthly,
         startDate: DateTime.now(),

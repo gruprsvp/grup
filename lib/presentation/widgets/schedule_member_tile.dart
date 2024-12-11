@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/presentation/widgets/widgets.dart';
 import 'package:rrule/rrule.dart';
 

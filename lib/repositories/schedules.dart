@@ -1,4 +1,5 @@
 import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 
 import 'const.dart';
 import 'supabase.dart';

@@ -1,6 +1,7 @@
 import 'package:parousia/actions/actions.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux_entity/redux_entity.dart';

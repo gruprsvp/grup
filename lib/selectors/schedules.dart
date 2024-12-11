@@ -1,4 +1,6 @@
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:rrule/rrule.dart';
 
 ScheduleInstanceSummary repliesForScheduleInstance({
@@ -20,11 +22,11 @@ ScheduleInstanceSummary repliesForScheduleInstance({
   DefaultReply? myDefaultReply;
 
   defaultReplies?.forEach((defaultReply) {
-    if (defaultReply.scheduleId == schedule.id) {
-      if (defaultReply.memberId == targetMemberId) {
+    if (defaultReply.schedule.id == schedule.id) {
+      if (defaultReply.member.id == targetMemberId) {
         myDefaultReply = defaultReply;
       } else {
-        memberDefaultReplies[defaultReply.memberId] = defaultReply;
+        memberDefaultReplies[defaultReply.member.id] = defaultReply;
       }
     }
 
@@ -37,16 +39,16 @@ ScheduleInstanceSummary repliesForScheduleInstance({
     )
         .forEach((e) {
       final isSameDay = e.copyWith(isUtc: true).isAtSameMomentAs(instanceDate);
-      final isSameSchedule = defaultReply.scheduleId == schedule.id;
+      final isSameSchedule = defaultReply.schedule.id == schedule.id;
 
       if (isSameDay && isSameSchedule) {
-        if (defaultReply.memberId == targetMemberId) {
+        if (defaultReply.member.id == targetMemberId) {
           myDefaultReplyOption = defaultReply.selectedOption;
         } else {
-          memberDefaultReplyOptions[defaultReply.memberId] =
+          memberDefaultReplyOptions[defaultReply.member.id] =
               defaultReply.selectedOption;
         }
-        allReplies[defaultReply.memberId] = defaultReply.selectedOption;
+        allReplies[defaultReply.member.id] = defaultReply.selectedOption;
       }
     });
   });
@@ -56,14 +58,14 @@ ScheduleInstanceSummary repliesForScheduleInstance({
       final isSameDay = reply.instanceDate
           .copyWith(isUtc: true)
           .isAtSameMomentAs(instanceDate);
-      final isSameSchedule = reply.scheduleId == schedule.id;
+      final isSameSchedule = reply.schedule.id == schedule.id;
       if (isSameDay && isSameSchedule) {
-        if (reply.memberId == targetMemberId) {
+        if (reply.member.id == targetMemberId) {
           myReply = reply.selectedOption;
         } else {
-          memberReplies[reply.memberId] = reply.selectedOption;
+          memberReplies[reply.member.id] = reply.selectedOption;
         }
-        allReplies[reply.memberId] = reply.selectedOption;
+        allReplies[reply.member.id] = reply.selectedOption;
       }
     },
   );
@@ -73,7 +75,7 @@ ScheduleInstanceSummary repliesForScheduleInstance({
 
   return ScheduleInstanceSummary(
     scheduleId: schedule.id,
-    groupId: schedule.groupId,
+    groupId: schedule.group.id,
     displayName: schedule.displayName,
     instanceDate: instanceDate,
     memberReplies: memberReplies,

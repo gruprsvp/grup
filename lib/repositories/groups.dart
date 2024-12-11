@@ -1,81 +1,32 @@
-import 'package:parousia/models/models.dart';
+import 'package:brick_core/core.dart';
+import 'package:parousia/brick/brick.dart';
 
-import 'const.dart';
 import 'supabase.dart';
 
-typedef GroupsAndMembers = ({
-  Iterable<Group> groups,
-  Iterable<Member> members,
-  Iterable<Profile> profiles,
-});
+class GroupsRepository extends SupabaseRepository {
+  GroupsRepository({required super.repository});
 
-class GroupsRepository extends SupabaseRepository with Postgrest {
-  GroupsRepository({required super.supabase}) : super(tableName: Tables.groups);
-
-  Future<GroupsAndMembers> getUserGroups() async {
-    return table()
-        .select('*,members!inner(*,profiles!left(*))')
-        // TODO(borgoat): should filter by profile_id but return all members
-        // .eq('members.profile_id', supabase.auth.currentUser!.id)
-        .withConverter(_convertGroupsAndMembers);
-  }
-
-  Future<Group> getGroupById(int id) async {
-    return table()
-        .select('*,members!inner(*,profiles!left(*))')
-        .eq('id', id)
-        .single()
-        .withConverter(Group.fromJson);
+  Future<Iterable<Group>> getUserGroups() async {
+    return repository.get<Group>(
+      query: Query(where: [
+        Where('member').isExactly(
+          Where('id')
+              // ! This is a bit of a hack to get the current user's ID...
+              .isExactly(repository.remoteProvider.client.auth.currentUser!.id),
+        ),
+      ]),
+    );
   }
 
   Future<Group> createGroup(Group group) async {
-    return supabase
-        .rpc('create_group', params: {
-          'display_name': group.displayName,
-          'description': group.description,
-          'picture': group.picture,
-        })
-        .single()
-        .withConverter((data) => Group.fromJson(data));
+    return repository.upsert(group);
   }
 
   Future<Group> updateGroup(Group group) async {
-    return table()
-        .update({
-          'display_name': group.displayName,
-          'description': group.description,
-          'picture': group.picture,
-        })
-        .eq('id', group.id)
-        .select('*')
-        .single()
-        .withConverter(Group.fromJson);
+    return repository.upsert(group);
   }
 
-  Future<Group> deleteGroup(int id) async {
-    return table()
-        .delete()
-        .eq('id', id)
-        .select()
-        .single()
-        .withConverter(Group.fromJson);
-  }
-
-  GroupsAndMembers _convertGroupsAndMembers(List<Map<String, dynamic>> data) {
-    final groups = <Group>{};
-    final members = <Member>{};
-    final profiles = <Profile>{};
-    for (var value in data) {
-      groups.add(Group.fromJson(value));
-      if (value['members'] != null) {
-        for (var member in value['members']) {
-          members.add(Member.fromJson(member));
-          if (member['profiles'] != null) {
-            profiles.add(Profile.fromJson(member['profiles']));
-          }
-        }
-      }
-    }
-    return (groups: groups, members: members, profiles: profiles);
+  Future<bool> deleteGroup(Group group) async {
+    return repository.delete(group);
   }
 }

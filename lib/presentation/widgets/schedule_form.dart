@@ -3,7 +3,7 @@ import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
-import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:rrule/rrule.dart';
 
 import 'form_builder_recurrence_rule.dart';
@@ -41,8 +41,8 @@ class _ScheduleFormState extends State<ScheduleForm> {
               .currentState?.fields['recurrenceRule']?.value as RecurrenceRule;
 
           widget.onChanged?.call(Schedule(
-            id: 0,
-            groupId: 0,
+            // TODO there's no group here
+            group: widget.schedule?.group,
             displayName: displayName,
             startDate: startDate,
             recurrenceRule: recurrenceRule,

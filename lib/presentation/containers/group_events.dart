@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/selectors/selectors.dart';
 import 'package:parousia/state/state.dart';
@@ -53,7 +53,7 @@ sealed class _ViewModel with _$ViewModel {
       group: group,
       schedules: store.state.schedules.entities.values
           // TODO Should have a better data model to represent relationships
-          .where((schedule) => schedule.groupId == group?.id)
+          .where((schedule) => schedule.group.id == group?.id)
           .toList(),
       loading: store.state.groups.creating ||
           store.state.groups.loadingAll ||

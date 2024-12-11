@@ -1,11 +1,11 @@
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/models/models.dart';
 
 import 'const.dart';
 import 'supabase.dart';
 
-class MembersRepository extends SupabaseRepository with Postgrest {
-  const MembersRepository({required super.supabase})
-      : super(tableName: Tables.members);
+class MembersRepository extends SupabaseRepository {
+  const MembersRepository({required super.repository});
 
   Future<Member> addMemberToGroup(int groupId,
       {String? displayName, String? profileId}) async {

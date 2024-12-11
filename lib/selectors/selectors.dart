@@ -3,7 +3,9 @@ import 'dart:core';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:memoized/memoized.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/selectors/members.dart';
 import 'package:parousia/selectors/schedules.dart';
 import 'package:parousia/state/state.dart';
@@ -66,7 +68,7 @@ final selectSchedules = createSelector3(
     selectGroupId,
     selectedDateRangeSelector,
     (schedules, groupId, range) => schedules.where((s) =>
-        s.groupId.toString() == groupId &&
+        s.group.id.toString() == groupId &&
         (s.startDate.isBefore(range.start) ||
             (s.startDate.compareTo(range.start) >= 0 &&
                 s.startDate.compareTo(range.end) <= 0))));
@@ -78,14 +80,14 @@ final selectDefaultReplies = createSelector2(
     selectAllDefaultReplies,
     selectSchedulesIds,
     (replies, scheduleIds) =>
-        replies.where((r) => scheduleIds.contains(r.scheduleId)));
+        replies.where((r) => scheduleIds.contains(r.schedule.id)));
 
 final selectReplies = createSelector3(
     selectAllReplies,
     selectSchedulesIds,
     selectedDateRangeSelector,
     (replies, scheduleIds, range) => replies.where((r) =>
-        scheduleIds.contains(r.scheduleId) && range.contains(r.instanceDate)));
+        scheduleIds.contains(r.schedule.id) && range.contains(r.instanceDate)));
 
 final selectScheduleInstancesForSelectedDate = createSelector5(
     selectedDateRangeSelector,
@@ -112,7 +114,7 @@ final selectScheduleInstanceSummary = createSelector2(
         instances.firstWhereOrNull((s) => s.scheduleId.toString() == id));
 
 final getMember = Memoized2((Member member, Map<String, Profile> profiles) {
-  final profile = profiles[member.profileId.toString()];
+  final profile = profiles[member.profile?.id.toString()];
 
   return member.copyWith(
       displayNameOverride: member.displayNameOverride ?? profile?.displayName);

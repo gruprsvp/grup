@@ -3,52 +3,45 @@ import 'dart:typed_data';
 
 import 'package:base32/base32.dart';
 import 'package:base32/encodings.dart';
+import 'package:brick_core/core.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/util/util.dart';
 
-import 'const.dart';
 import 'supabase.dart';
 
-class InvitesRepository extends SupabaseRepository with Postgrest {
-  const InvitesRepository({required super.supabase})
-      : super(tableName: Tables.invites);
+class InvitesRepository extends SupabaseRepository {
+  const InvitesRepository({required super.repository});
 
-  Future<Invite> inviteMember(
-    int memberId,
-    InviteMethods method,
-    String value,
-  ) async {
-    return table()
-        .insert({
-          'member_id': memberId,
-          'method': method.name,
-          'value': value,
-        })
-        .select()
-        .single()
-        .withConverter((data) => Invite.fromJson(data));
+  Future<Invite> inviteMember(Invite invite) async {
+    return repository.upsert<Invite>(invite);
   }
 
-  Future<Invite> inviteWithGeneratedCode(int memberId) async {
+  Future<Invite> inviteWithGeneratedCode(Member member) async {
     final code = base32.encode(
         Uint8List.fromList(List.generate(5, (_) => Random().nextInt(256))),
         encoding: Encoding.crockford);
     final formatted = formatBase32Code(code);
-    return inviteMember(memberId, InviteMethods.code, formatted);
+    return inviteMember(
+      Invite(member: member, method: InviteMethods.code, value: formatted),
+    );
   }
 
   Future<int> checkInviteCode(String code) async {
-    return supabase.rpc('check_invite_code', params: {'code': code});
+    return repository.remoteProvider.client
+        .rpc('check_invite_code', params: {'code': code});
   }
 
   Future<void> consumeInviteCode(String code) async {
-    return supabase.rpc('consume_invite_code', params: {'code': code});
+    return repository.remoteProvider.client
+        .rpc('consume_invite_code', params: {'code': code});
   }
 
   Future<Iterable<Invite>> getInvitesForMember(int memberId) async {
-    return table()
-        .select()
-        .eq('member_id', memberId)
-        .withConverter((data) => data.map(Invite.fromJson));
+    return repository.get<Invite>(
+      query: Query(where: [
+        Where('member_id').isExactly(memberId),
+      ]),
+    );
   }
 }
