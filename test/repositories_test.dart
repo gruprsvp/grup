@@ -303,6 +303,31 @@ void main() {
         });
       }),
     );
+
+    // Fix for https://github.com/appforit/appforit/issues/112 - throws:
+    // PostgrestException(message: more than one row returned by a subquery used as an expression, code: 21000, details: Internal Server Error, hint: null)
+    test(
+      'members can see other members profiles across multiple groups',
+      () => runWithTemporaryGroup((supabase, group1, groupsRepository) async {
+        final membersRepository = MembersRepository(supabase: supabase);
+        final group2 = await groupsRepository.createGroup(Fake.group());
+
+        await runWithTemporaryUser(
+          (supabase2, user2) async {
+            await membersRepository.addMemberToGroup(group1.id,
+                profileId: user2.user!.id);
+            await membersRepository.addMemberToGroup(group2.id,
+                profileId: user2.user!.id);
+
+            final groups = await groupsRepository.getUserGroups();
+            expect(groups.groups, hasLength(2));
+            expect(groups.members, hasLength(4));
+            expect(groups.profiles, hasLength(2));
+          },
+        );
+        await groupsRepository.deleteGroup(group2.id);
+      }),
+    );
   });
 
   group('invites', () {
