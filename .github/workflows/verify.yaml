@@ -15,17 +15,20 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.24.5'
 
       - name: Download dependencies
         run: flutter pub get
+
       - name: Setup Supabase
         uses: supabase/setup-cli@v1
+
       - name: Start Supabase local for tests
         run: supabase start
+
       - name: Run tests
         run: |
           supabase status -o json > supabase/config/localhost.json
           flutter test
+
       - name: Compile web
         run: flutter build web
