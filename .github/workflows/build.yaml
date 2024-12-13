@@ -20,32 +20,39 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Get Flutter
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          flutter-version: '3.24.5'
+
       - name: Setup Java
         uses: actions/setup-java@v4
         with:
           distribution: 'zulu'
           java-version: '17'
+
       - name: Download dependencies
         run: flutter pub get
+
       - name: Setup Supabase
         uses: supabase/setup-cli@v1
+
       - name: Start Supabase local for tests
         run: supabase start
+
       - name: Run tests
         run: |
           supabase status -o json > supabase/config/localhost.json
           flutter test
+
       - name: Compare pubspec version and git tag
         id: pubspec_tag
         run: |
           PUBSPEC_VERSION=v$(grep -oP '^version:\s*\K[0-9]+\.[0-9]+\.[0-9]+' pubspec.yaml)
           echo "Found version in pubspec.yaml: $PUBSPEC_VERSION"      
           echo "tag_name=$PUBSPEC_VERSION" >> $GITHUB_OUTPUT
+
       # This step prepares a draft release with the release notes generated from the commit messages,
       # and the tag name from the pubspec.yaml file. It will only update the release if it is a draft
       # and has not been published yet. If the release is already published, it will not be updated and fail.
@@ -60,15 +67,19 @@ jobs:
           draft: true
           allowUpdates: true
           updateOnlyUnreleased: true
+
       - name: Configure git
         run: |
           git config --global user.name "GitHub Actions Bot"
           git config --global user.email "tech+gitbot@parousia.app"
           git fetch origin gh-pages:gh-pages
+
       - name: Compile web and put in gh-pages branch
         run: dart run peanut
+
       - name: Push gh-pages
         run: git push origin gh-pages
+
       - name: Retrieve the Android keystore and key properties
         env:
           UPLOAD_KEYSTORE_B64: ${{ secrets.UPLOAD_KEYSTORE_B64 }}
@@ -76,8 +87,10 @@ jobs:
         run: |
           echo "$UPLOAD_KEYSTORE_B64" | base64 --decode > android/keystore.jks
           echo "$KEY_PROPERTIES" > android/key.properties
+
       - name: Compile Android app
         run: flutter build appbundle --build-number ${{ github.run_number }}
+
       - name: Upload Android app to Play Store
         uses: r0adkll/upload-google-play@v1
         with:
