@@ -15,7 +15,7 @@ typedef OnDetailsReplyChangedCallback = void Function(
 // ! order of the arguments. It's better to use a data class or a map instead.
 //   TODO(giorgio): I actually just fixed a bug because of this!
 //   I should refactor this to use either branded types or a map.
-typedef OnDetailsDefaultReplyChangedCallback = void Function(
+typedef OnDetailsDefaultRuleChangedCallback = void Function(
     RecurrenceRule?, int, int, ReplyOptions?);
 
 class GroupScheduleDetailsScreen extends StatelessWidget {
@@ -25,7 +25,7 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
   final Group? group;
   final ScheduleInstanceDetails? scheduleInstance;
   final OnDetailsReplyChangedCallback? onReplyChanged;
-  final OnDetailsDefaultReplyChangedCallback? onDefaultReplyChanged;
+  final OnDetailsDefaultRuleChangedCallback? onDefaultRuleChanged;
 
   GroupScheduleDetailsScreen({
     super.key,
@@ -33,7 +33,7 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
     this.group,
     this.scheduleInstance,
     this.onReplyChanged,
-    this.onDefaultReplyChanged,
+    this.onDefaultRuleChanged,
   });
 
   @override
@@ -56,12 +56,12 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
           ScheduleMemberTile(
             name: l10n.you,
             reply: scheduleInstance?.myReply,
-            defaultReplyOption: scheduleInstance?.myDefaultReplyOption,
             defaultReply: scheduleInstance?.myDefaultReply,
+            defaultRule: scheduleInstance?.myDefaultRule,
             onReplyChanged: (reply) => onReplyChanged?.call(
                 scheduleInstance!, scheduleInstance!.targetMemberId!, reply),
-            onDefaultReplyChanged: (recurrenceRule, reply) =>
-                onDefaultReplyChanged?.call(
+            onDefaultRuleChanged: (recurrenceRule, reply) =>
+                onDefaultRuleChanged?.call(
                     recurrenceRule,
                     scheduleInstance!.scheduleId,
                     scheduleInstance!.targetMemberId!,
@@ -89,8 +89,8 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
                   final member = el.member;
                   final profile = el.profile;
                   final reply = el.reply;
-                  final defaultReplyOption = el.defaultReplyOption;
                   final defaultReply = el.defaultReply;
+                  final defaultRule = el.defaultRule;
 
                   final name = member.displayNameOverride ??
                       profile?.displayName ??
@@ -99,12 +99,12 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
                   return ScheduleMemberTile(
                     name: name,
                     reply: reply,
-                    defaultReplyOption: defaultReplyOption,
                     defaultReply: defaultReply,
+                    defaultRule: defaultRule,
                     onReplyChanged: (reply) => onReplyChanged?.call(
                         scheduleInstance!, member.id, reply),
-                    onDefaultReplyChanged: (recurrenceRule, reply) =>
-                        onDefaultReplyChanged?.call(recurrenceRule,
+                    onDefaultRuleChanged: (recurrenceRule, reply) =>
+                        onDefaultRuleChanged?.call(recurrenceRule,
                             scheduleInstance!.scheduleId, member.id, reply),
                   );
                 }

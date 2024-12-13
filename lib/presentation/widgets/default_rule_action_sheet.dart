@@ -6,11 +6,11 @@ import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/util/util.dart';
 import 'package:rrule/rrule.dart';
 
-class DefaultReplyActionSheet extends StatelessWidget {
+class DefaultRuleActionSheet extends StatelessWidget {
   final RecurrenceRule? recurrenceRule;
   final ReplyOptions? replyOption;
 
-  const DefaultReplyActionSheet({
+  const DefaultRuleActionSheet({
     super.key,
     this.recurrenceRule,
     this.replyOption,
@@ -21,9 +21,9 @@ class DefaultReplyActionSheet extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     final options = [
-      (CommonRecurrenceRules.daily, l10n.defaultRepliesDaily),
-      (CommonRecurrenceRules.weekdays, l10n.defaultRepliesWeekdays),
-      (CommonRecurrenceRules.weekends, l10n.defaultRepliesWeekends),
+      (CommonRecurrenceRules.daily, l10n.defaultRulesDaily),
+      (CommonRecurrenceRules.weekdays, l10n.defaultRulesWeekdays),
+      (CommonRecurrenceRules.weekends, l10n.defaultRulesWeekends),
     ];
 
     final actions = [
@@ -65,7 +65,7 @@ class DefaultReplyActionSheet extends StatelessWidget {
           child: DefaultTextStyle(
             style: Theme.of(context).textTheme.titleLarge!,
             textAlign: textAlign,
-            child: Text(l10n.defaultReplies),
+            child: Text(l10n.defaultRules),
           ),
         ),
         Padding(
@@ -77,7 +77,7 @@ class DefaultReplyActionSheet extends StatelessWidget {
           child: DefaultTextStyle(
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: textAlign,
-            child: Text(l10n.defaultRepliesDescription),
+            child: Text(l10n.defaultRulesDescription),
           ),
         ),
       ],
@@ -105,7 +105,7 @@ class DefaultReplyActionSheet extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Text(
-        l10n.defaultRepliesExplanation,
+        l10n.defaultRulesExplanation,
         style: Theme.of(context).textTheme.bodySmall,
         textAlign: TextAlign.center,
       ),

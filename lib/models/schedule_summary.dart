@@ -16,12 +16,12 @@ sealed class ScheduleInstanceSummary with _$ScheduleInstanceSummary {
     required String displayName,
     required DateTime instanceDate,
     required Map<int, ReplyOptions> memberReplies,
-    required Map<int, ReplyOptions> memberDefaultReplyOptions,
-    required Map<int, DefaultReply> memberDefaultReplies,
+    required Map<int, ReplyOptions> memberDefaultReplies,
+    required Map<int, DefaultRule> memberDefaultRules,
     required int yesCount,
     ReplyOptions? myReply,
-    ReplyOptions? myDefaultReplyOption,
-    DefaultReply? myDefaultReply,
+    ReplyOptions? myDefaultReply,
+    DefaultRule? myDefaultRule,
     int? targetMemberId,
   }) = _ScheduleInstanceSummary;
 }
@@ -38,8 +38,8 @@ sealed class ScheduleInstanceDetails with _$ScheduleInstanceDetails {
     required List<ScheduleInstanceMember> membersList,
     required int yesCount,
     ReplyOptions? myReply,
-    ReplyOptions? myDefaultReplyOption,
-    DefaultReply? myDefaultReply,
+    ReplyOptions? myDefaultReply,
+    DefaultRule? myDefaultRule,
     int? targetMemberId,
     bool? canEditOthers,
   }) = _ScheduleInstanceDetails;
@@ -50,14 +50,14 @@ sealed class ScheduleInstanceMember with _$ScheduleInstanceMember {
   const factory ScheduleInstanceMember.reply({
     required Member member,
     ReplyOptions? reply,
-    ReplyOptions? defaultReplyOption,
-    DefaultReply? defaultReply,
+    ReplyOptions? defaultReply,
+    DefaultRule? defaultRule,
     Profile? profile,
   }) = ScheduleInstanceMemberReply;
 
   const factory ScheduleInstanceMember.separator({
     ReplyOptions? reply,
-    ReplyOptions? defaultReplyOption,
+    ReplyOptions? defaultReply,
     int? count,
   }) = ScheduleInstanceMemberSeparator;
 }

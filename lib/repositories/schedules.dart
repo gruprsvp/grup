@@ -23,7 +23,7 @@ class SchedulesRepository extends SupabaseRepository with Postgrest {
 
   Future<Iterable<Schedule>> getGroupSchedules(int groupId) async {
     return table()
-        .select('*,replies(*),default_replies(*)')
+        .select('*,replies(*),default_rules(*)')
         .eq('group_id', groupId)
         .withConverter((data) => data.map(Schedule.fromJson));
   }

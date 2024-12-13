@@ -1,4 +1,4 @@
-import 'package:parousia/brick/brick.dart';
+import 'package:parousia/models/models.dart';
 import 'package:redux_entity/redux_entity.dart';
 
 final profilesReducer =
@@ -21,13 +21,13 @@ final schedulesReducer =
   selectId: (schedule) => schedule.id.toString(),
 );
 
-final defaultRepliesReducer =
-    RemoteEntityReducer<RemoteEntityState<DefaultReply>, DefaultReply>(
-  selectId: (defaultReply) =>
-      "${defaultReply.member.id}-${defaultReply.schedule.id}",
+final defaultRulesReducer =
+    RemoteEntityReducer<RemoteEntityState<DefaultRule>, DefaultRule>(
+  selectId: (defaultRule) =>
+      "${defaultRule.memberId}-${defaultRule.scheduleId}",
 );
 
 final repliesReducer = RemoteEntityReducer<RemoteEntityState<Reply>, Reply>(
   selectId: (reply) =>
-      "${reply.member.id}-${reply.schedule.id}-${reply.instanceDate}",
+      "${reply.memberId}-${reply.scheduleId}-${reply.instanceDate}",
 );
