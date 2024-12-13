@@ -21,19 +21,31 @@ AppState _$AppStateFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$AppState {
   RemoteEntityState<Profile> get profiles => throw _privateConstructorUsedError;
+
   RemoteEntityState<Group> get groups => throw _privateConstructorUsedError;
+
   RemoteEntityState<Member> get members => throw _privateConstructorUsedError;
+
   RemoteEntityState<Invite> get invites => throw _privateConstructorUsedError;
+
   RemoteEntityState<Schedule> get schedules =>
       throw _privateConstructorUsedError;
-  RemoteEntityState<DefaultReply> get defaultReplies =>
+
+  RemoteEntityState<DefaultRule> get defaultRules =>
       throw _privateConstructorUsedError;
+
   RemoteEntityState<Reply> get replies => throw _privateConstructorUsedError;
+
   AuthState get auth => throw _privateConstructorUsedError;
+
   ThemeMode get themeMode => throw _privateConstructorUsedError;
+
   DateTime get selectedDate => throw _privateConstructorUsedError;
+
   String? get selectedGroupId => throw _privateConstructorUsedError;
+
   String? get selectedScheduleId => throw _privateConstructorUsedError;
+
   LocaleState? get locale => throw _privateConstructorUsedError;
 
   /// Serializes this AppState to a JSON map.
@@ -50,6 +62,7 @@ mixin _$AppState {
 abstract class $AppStateCopyWith<$Res> {
   factory $AppStateCopyWith(AppState value, $Res Function(AppState) then) =
       _$AppStateCopyWithImpl<$Res, AppState>;
+
   @useResult
   $Res call(
       {RemoteEntityState<Profile> profiles,
@@ -57,7 +70,7 @@ abstract class $AppStateCopyWith<$Res> {
       RemoteEntityState<Member> members,
       RemoteEntityState<Invite> invites,
       RemoteEntityState<Schedule> schedules,
-      RemoteEntityState<DefaultReply> defaultReplies,
+      RemoteEntityState<DefaultRule> defaultRules,
       RemoteEntityState<Reply> replies,
       AuthState auth,
       ThemeMode themeMode,
@@ -67,6 +80,7 @@ abstract class $AppStateCopyWith<$Res> {
       LocaleState? locale});
 
   $AuthStateCopyWith<$Res> get auth;
+
   $LocaleStateCopyWith<$Res>? get locale;
 }
 
@@ -77,6 +91,7 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -90,7 +105,7 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
     Object? members = null,
     Object? invites = null,
     Object? schedules = null,
-    Object? defaultReplies = null,
+    Object? defaultRules = null,
     Object? replies = null,
     Object? auth = null,
     Object? themeMode = null,
@@ -120,10 +135,10 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
           ? _value.schedules
           : schedules // ignore: cast_nullable_to_non_nullable
               as RemoteEntityState<Schedule>,
-      defaultReplies: null == defaultReplies
-          ? _value.defaultReplies
-          : defaultReplies // ignore: cast_nullable_to_non_nullable
-              as RemoteEntityState<DefaultReply>,
+      defaultRules: null == defaultRules
+          ? _value.defaultRules
+          : defaultRules // ignore: cast_nullable_to_non_nullable
+              as RemoteEntityState<DefaultRule>,
       replies: null == replies
           ? _value.replies
           : replies // ignore: cast_nullable_to_non_nullable
@@ -186,6 +201,7 @@ abstract class _$$AppStateImplCopyWith<$Res>
   factory _$$AppStateImplCopyWith(
           _$AppStateImpl value, $Res Function(_$AppStateImpl) then) =
       __$$AppStateImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
@@ -194,7 +210,7 @@ abstract class _$$AppStateImplCopyWith<$Res>
       RemoteEntityState<Member> members,
       RemoteEntityState<Invite> invites,
       RemoteEntityState<Schedule> schedules,
-      RemoteEntityState<DefaultReply> defaultReplies,
+      RemoteEntityState<DefaultRule> defaultRules,
       RemoteEntityState<Reply> replies,
       AuthState auth,
       ThemeMode themeMode,
@@ -205,6 +221,7 @@ abstract class _$$AppStateImplCopyWith<$Res>
 
   @override
   $AuthStateCopyWith<$Res> get auth;
+
   @override
   $LocaleStateCopyWith<$Res>? get locale;
 }
@@ -227,7 +244,7 @@ class __$$AppStateImplCopyWithImpl<$Res>
     Object? members = null,
     Object? invites = null,
     Object? schedules = null,
-    Object? defaultReplies = null,
+    Object? defaultRules = null,
     Object? replies = null,
     Object? auth = null,
     Object? themeMode = null,
@@ -257,10 +274,10 @@ class __$$AppStateImplCopyWithImpl<$Res>
           ? _value.schedules
           : schedules // ignore: cast_nullable_to_non_nullable
               as RemoteEntityState<Schedule>,
-      defaultReplies: null == defaultReplies
-          ? _value.defaultReplies
-          : defaultReplies // ignore: cast_nullable_to_non_nullable
-              as RemoteEntityState<DefaultReply>,
+      defaultRules: null == defaultRules
+          ? _value.defaultRules
+          : defaultRules // ignore: cast_nullable_to_non_nullable
+              as RemoteEntityState<DefaultRule>,
       replies: null == replies
           ? _value.replies
           : replies // ignore: cast_nullable_to_non_nullable
@@ -302,7 +319,7 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
       this.members = const RemoteEntityState<Member>(),
       this.invites = const RemoteEntityState<Invite>(),
       this.schedules = const RemoteEntityState<Schedule>(),
-      this.defaultReplies = const RemoteEntityState<DefaultReply>(),
+      this.defaultRules = const RemoteEntityState<DefaultRule>(),
       this.replies = const RemoteEntityState<Reply>(),
       this.auth = const AuthState(status: AuthStatus.initial),
       this.themeMode = ThemeMode.system,
@@ -331,7 +348,7 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
   final RemoteEntityState<Schedule> schedules;
   @override
   @JsonKey()
-  final RemoteEntityState<DefaultReply> defaultReplies;
+  final RemoteEntityState<DefaultRule> defaultRules;
   @override
   @JsonKey()
   final RemoteEntityState<Reply> replies;
@@ -352,7 +369,7 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'AppState(profiles: $profiles, groups: $groups, members: $members, invites: $invites, schedules: $schedules, defaultReplies: $defaultReplies, replies: $replies, auth: $auth, themeMode: $themeMode, selectedDate: $selectedDate, selectedGroupId: $selectedGroupId, selectedScheduleId: $selectedScheduleId, locale: $locale)';
+    return 'AppState(profiles: $profiles, groups: $groups, members: $members, invites: $invites, schedules: $schedules, defaultRules: $defaultRules, replies: $replies, auth: $auth, themeMode: $themeMode, selectedDate: $selectedDate, selectedGroupId: $selectedGroupId, selectedScheduleId: $selectedScheduleId, locale: $locale)';
   }
 
   @override
@@ -365,7 +382,7 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
       ..add(DiagnosticsProperty('members', members))
       ..add(DiagnosticsProperty('invites', invites))
       ..add(DiagnosticsProperty('schedules', schedules))
-      ..add(DiagnosticsProperty('defaultReplies', defaultReplies))
+      ..add(DiagnosticsProperty('defaultRules', defaultRules))
       ..add(DiagnosticsProperty('replies', replies))
       ..add(DiagnosticsProperty('auth', auth))
       ..add(DiagnosticsProperty('themeMode', themeMode))
@@ -387,8 +404,8 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
             (identical(other.invites, invites) || other.invites == invites) &&
             (identical(other.schedules, schedules) ||
                 other.schedules == schedules) &&
-            (identical(other.defaultReplies, defaultReplies) ||
-                other.defaultReplies == defaultReplies) &&
+            (identical(other.defaultRules, defaultRules) ||
+                other.defaultRules == defaultRules) &&
             (identical(other.replies, replies) || other.replies == replies) &&
             (identical(other.auth, auth) || other.auth == auth) &&
             (identical(other.themeMode, themeMode) ||
@@ -411,7 +428,7 @@ class _$AppStateImpl with DiagnosticableTreeMixin implements _AppState {
       members,
       invites,
       schedules,
-      defaultReplies,
+      defaultRules,
       replies,
       auth,
       themeMode,
@@ -443,7 +460,7 @@ abstract class _AppState implements AppState {
       final RemoteEntityState<Member> members,
       final RemoteEntityState<Invite> invites,
       final RemoteEntityState<Schedule> schedules,
-      final RemoteEntityState<DefaultReply> defaultReplies,
+      final RemoteEntityState<DefaultRule> defaultRules,
       final RemoteEntityState<Reply> replies,
       final AuthState auth,
       final ThemeMode themeMode,
@@ -457,28 +474,40 @@ abstract class _AppState implements AppState {
 
   @override
   RemoteEntityState<Profile> get profiles;
+
   @override
   RemoteEntityState<Group> get groups;
+
   @override
   RemoteEntityState<Member> get members;
+
   @override
   RemoteEntityState<Invite> get invites;
+
   @override
   RemoteEntityState<Schedule> get schedules;
+
   @override
-  RemoteEntityState<DefaultReply> get defaultReplies;
+  RemoteEntityState<DefaultRule> get defaultRules;
+
   @override
   RemoteEntityState<Reply> get replies;
+
   @override
   AuthState get auth;
+
   @override
   ThemeMode get themeMode;
+
   @override
   DateTime get selectedDate;
+
   @override
   String? get selectedGroupId;
+
   @override
   String? get selectedScheduleId;
+
   @override
   LocaleState? get locale;
 

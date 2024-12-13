@@ -1,5 +1,5 @@
 drop table if exists replies;
-drop table if exists default_replies;
+drop table if exists default_rules;
 drop table if exists schedules;
 drop table if exists invites;
 drop table if exists members;
@@ -116,7 +116,7 @@ comment on column schedules.display_name is 'A name for the schedule';
 comment on column schedules.start_date is 'The first occurrence of the schedule.';
 comment on column schedules.recurrence_rule is 'The rrule that defines when events are scheduled.';
 
-create table default_replies
+create table default_rules
 (
     created_at      timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at      timestamp with time zone default timezone('utc'::text, now()) not null,
@@ -129,8 +129,8 @@ create table default_replies
 
     primary key (member_id, schedule_id)
 );
-comment on table default_replies is 'The default replies for each member, per schedule.';
-comment on column default_replies.recurrence_rule is 'Must be equal or a subset of the corresponding schedule rule.';
+comment on table default_rules is 'The default replies for each member, per schedule.';
+comment on column default_rules.recurrence_rule is 'Must be equal or a subset of the corresponding schedule rule.';
 
 create table replies
 (
@@ -178,9 +178,9 @@ create trigger handle_schedules_updated_at
     on schedules
     for each row
 execute procedure moddatetime(updated_at);
-create trigger handle_default_replies_updated_at
+create trigger handle_default_rules_updated_at
     before update
-    on default_replies
+    on default_rules
     for each row
 execute procedure moddatetime(updated_at);
 create trigger handle_replies_updated_at
@@ -200,7 +200,7 @@ alter table members
     enable row level security;
 alter table schedules
     enable row level security;
-alter table default_replies
+alter table default_rules
     enable row level security;
 alter table replies
     enable row level security;
@@ -308,32 +308,32 @@ create policy "schedules_all"
     with check (is_member_of_group(schedules.group_id, '{admin}'::group_roles[]));
 comment on policy "schedules_all" on schedules is 'Admins can manage schedules';
 
-create policy "default_replies_select"
-    on default_replies
+create policy "default_rules_select"
+    on default_rules
     for select
     to authenticated
     using (is_member_of_group(
         (select group_id
          from schedules
          where id = schedule_id)));
-comment on policy "default_replies_select" on default_replies is 'Users can see default replies of schedules of groups they are members of';
+comment on policy "default_rules_select" on default_rules is 'Users can see default replies of schedules of groups they are members of';
 
-create policy "default_replies_all"
-    on default_replies
+create policy "default_rules_all"
+    on default_rules
     for all
     to authenticated
     using (is_member_of_group(
         (select group_id
          from schedules
-         where id = default_replies.schedule_id), '{admin}'::group_roles[]))
+         where id = default_rules.schedule_id), '{admin}'::group_roles[]))
     with check (is_member_of_group(
         (select group_id
          from schedules
-         where id = default_replies.schedule_id), '{admin}'::group_roles[]));
-comment on policy "default_replies_all" on default_replies is 'Admins can manage all default replies';
+         where id = default_rules.schedule_id), '{admin}'::group_roles[]));
+comment on policy "default_rules_all" on default_rules is 'Admins can manage all default replies';
 
-create policy "default_replies_all_self"
-    on default_replies
+create policy "default_rules_all_self"
+    on default_rules
     for all
     to authenticated
     using ((select auth.uid()) = (select profile_id
@@ -342,7 +342,7 @@ create policy "default_replies_all_self"
     with check ((select auth.uid()) = (select profile_id
                                        from members
                                        where id = member_id));
-comment on policy "default_replies_all_self" on default_replies is 'Users can manage their own default replies';
+comment on policy "default_rules_all_self" on default_rules is 'Users can manage their own default replies';
 
 create policy "replies_select"
     on replies

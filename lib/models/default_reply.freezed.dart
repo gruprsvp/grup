@@ -14,34 +14,40 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-DefaultReply _$DefaultReplyFromJson(Map<String, dynamic> json) {
-  return _DefaultReply.fromJson(json);
+DefaultRule _$DefaultRuleFromJson(Map<String, dynamic> json) {
+  return _DefaultRule.fromJson(json);
 }
 
 /// @nodoc
-mixin _$DefaultReply {
+mixin _$DefaultRule {
   int get memberId => throw _privateConstructorUsedError;
+
   int get scheduleId => throw _privateConstructorUsedError;
+
   ReplyOptions get selectedOption => throw _privateConstructorUsedError;
+
   RecurrenceRule get recurrenceRule => throw _privateConstructorUsedError;
+
   DateTime? get createdAt => throw _privateConstructorUsedError;
+
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
-  /// Serializes this DefaultReply to a JSON map.
+  /// Serializes this DefaultRule to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of DefaultReply
+  /// Create a copy of DefaultRule
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $DefaultReplyCopyWith<DefaultReply> get copyWith =>
+  $DefaultRuleCopyWith<DefaultRule> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DefaultReplyCopyWith<$Res> {
-  factory $DefaultReplyCopyWith(
-          DefaultReply value, $Res Function(DefaultReply) then) =
-      _$DefaultReplyCopyWithImpl<$Res, DefaultReply>;
+abstract class $DefaultRuleCopyWith<$Res> {
+  factory $DefaultRuleCopyWith(
+          DefaultRule value, $Res Function(DefaultRule) then) =
+      _$DefaultRuleCopyWithImpl<$Res, DefaultRule>;
+
   @useResult
   $Res call(
       {int memberId,
@@ -53,16 +59,17 @@ abstract class $DefaultReplyCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$DefaultReplyCopyWithImpl<$Res, $Val extends DefaultReply>
-    implements $DefaultReplyCopyWith<$Res> {
-  _$DefaultReplyCopyWithImpl(this._value, this._then);
+class _$DefaultRuleCopyWithImpl<$Res, $Val extends DefaultRule>
+    implements $DefaultRuleCopyWith<$Res> {
+  _$DefaultRuleCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
+
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of DefaultReply
+  /// Create a copy of DefaultRule
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -104,11 +111,12 @@ class _$DefaultReplyCopyWithImpl<$Res, $Val extends DefaultReply>
 }
 
 /// @nodoc
-abstract class _$$DefaultReplyImplCopyWith<$Res>
-    implements $DefaultReplyCopyWith<$Res> {
-  factory _$$DefaultReplyImplCopyWith(
-          _$DefaultReplyImpl value, $Res Function(_$DefaultReplyImpl) then) =
-      __$$DefaultReplyImplCopyWithImpl<$Res>;
+abstract class _$$DefaultRuleImplCopyWith<$Res>
+    implements $DefaultRuleCopyWith<$Res> {
+  factory _$$DefaultRuleImplCopyWith(
+          _$DefaultRuleImpl value, $Res Function(_$DefaultRuleImpl) then) =
+      __$$DefaultRuleImplCopyWithImpl<$Res>;
+
   @override
   @useResult
   $Res call(
@@ -121,14 +129,14 @@ abstract class _$$DefaultReplyImplCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$DefaultReplyImplCopyWithImpl<$Res>
-    extends _$DefaultReplyCopyWithImpl<$Res, _$DefaultReplyImpl>
-    implements _$$DefaultReplyImplCopyWith<$Res> {
-  __$$DefaultReplyImplCopyWithImpl(
-      _$DefaultReplyImpl _value, $Res Function(_$DefaultReplyImpl) _then)
+class __$$DefaultRuleImplCopyWithImpl<$Res>
+    extends _$DefaultRuleCopyWithImpl<$Res, _$DefaultRuleImpl>
+    implements _$$DefaultRuleImplCopyWith<$Res> {
+  __$$DefaultRuleImplCopyWithImpl(
+      _$DefaultRuleImpl _value, $Res Function(_$DefaultRuleImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of DefaultReply
+  /// Create a copy of DefaultRule
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
@@ -140,7 +148,7 @@ class __$$DefaultReplyImplCopyWithImpl<$Res>
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
-    return _then(_$DefaultReplyImpl(
+    return _then(_$DefaultRuleImpl(
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
@@ -172,8 +180,8 @@ class __$$DefaultReplyImplCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$DefaultReplyImpl with DiagnosticableTreeMixin implements _DefaultReply {
-  const _$DefaultReplyImpl(
+class _$DefaultRuleImpl with DiagnosticableTreeMixin implements _DefaultRule {
+  const _$DefaultRuleImpl(
       {required this.memberId,
       required this.scheduleId,
       required this.selectedOption,
@@ -181,8 +189,8 @@ class _$DefaultReplyImpl with DiagnosticableTreeMixin implements _DefaultReply {
       this.createdAt,
       this.updatedAt});
 
-  factory _$DefaultReplyImpl.fromJson(Map<String, dynamic> json) =>
-      _$$DefaultReplyImplFromJson(json);
+  factory _$DefaultRuleImpl.fromJson(Map<String, dynamic> json) =>
+      _$$DefaultRuleImplFromJson(json);
 
   @override
   final int memberId;
@@ -199,14 +207,14 @@ class _$DefaultReplyImpl with DiagnosticableTreeMixin implements _DefaultReply {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DefaultReply(memberId: $memberId, scheduleId: $scheduleId, selectedOption: $selectedOption, recurrenceRule: $recurrenceRule, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'DefaultRule(memberId: $memberId, scheduleId: $scheduleId, selectedOption: $selectedOption, recurrenceRule: $recurrenceRule, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'DefaultReply'))
+      ..add(DiagnosticsProperty('type', 'DefaultRule'))
       ..add(DiagnosticsProperty('memberId', memberId))
       ..add(DiagnosticsProperty('scheduleId', scheduleId))
       ..add(DiagnosticsProperty('selectedOption', selectedOption))
@@ -219,7 +227,7 @@ class _$DefaultReplyImpl with DiagnosticableTreeMixin implements _DefaultReply {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DefaultReplyImpl &&
+            other is _$DefaultRuleImpl &&
             (identical(other.memberId, memberId) ||
                 other.memberId == memberId) &&
             (identical(other.scheduleId, scheduleId) ||
@@ -239,51 +247,56 @@ class _$DefaultReplyImpl with DiagnosticableTreeMixin implements _DefaultReply {
   int get hashCode => Object.hash(runtimeType, memberId, scheduleId,
       selectedOption, recurrenceRule, createdAt, updatedAt);
 
-  /// Create a copy of DefaultReply
+  /// Create a copy of DefaultRule
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$DefaultReplyImplCopyWith<_$DefaultReplyImpl> get copyWith =>
-      __$$DefaultReplyImplCopyWithImpl<_$DefaultReplyImpl>(this, _$identity);
+  _$$DefaultRuleImplCopyWith<_$DefaultRuleImpl> get copyWith =>
+      __$$DefaultRuleImplCopyWithImpl<_$DefaultRuleImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$DefaultReplyImplToJson(
+    return _$$DefaultRuleImplToJson(
       this,
     );
   }
 }
 
-abstract class _DefaultReply implements DefaultReply {
-  const factory _DefaultReply(
+abstract class _DefaultRule implements DefaultRule {
+  const factory _DefaultRule(
       {required final int memberId,
       required final int scheduleId,
       required final ReplyOptions selectedOption,
       required final RecurrenceRule recurrenceRule,
       final DateTime? createdAt,
-      final DateTime? updatedAt}) = _$DefaultReplyImpl;
+      final DateTime? updatedAt}) = _$DefaultRuleImpl;
 
-  factory _DefaultReply.fromJson(Map<String, dynamic> json) =
-      _$DefaultReplyImpl.fromJson;
+  factory _DefaultRule.fromJson(Map<String, dynamic> json) =
+      _$DefaultRuleImpl.fromJson;
 
   @override
   int get memberId;
+
   @override
   int get scheduleId;
+
   @override
   ReplyOptions get selectedOption;
+
   @override
   RecurrenceRule get recurrenceRule;
+
   @override
   DateTime? get createdAt;
+
   @override
   DateTime? get updatedAt;
 
-  /// Create a copy of DefaultReply
+  /// Create a copy of DefaultRule
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DefaultReplyImplCopyWith<_$DefaultReplyImpl> get copyWith =>
+  _$$DefaultRuleImplCopyWith<_$DefaultRuleImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

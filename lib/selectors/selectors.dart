@@ -55,8 +55,8 @@ final selectGroup = createSelector2(
 Iterable<Schedule> selectScheduleEntities(AppState state) =>
     state.schedules.entities.values;
 
-Iterable<DefaultReply> selectAllDefaultReplies(AppState state) =>
-    state.defaultReplies.entities.values;
+Iterable<DefaultRule> selectAllDefaultRules(AppState state) =>
+    state.defaultRules.entities.values;
 
 Iterable<Reply> selectAllReplies(AppState state) =>
     state.replies.entities.values;
@@ -74,8 +74,8 @@ final selectSchedules = createSelector3(
 final selectSchedulesIds =
     createSelector1(selectSchedules, (schedules) => schedules.map((s) => s.id));
 
-final selectDefaultReplies = createSelector2(
-    selectAllDefaultReplies,
+final selectDefaultRules = createSelector2(
+    selectAllDefaultRules,
     selectSchedulesIds,
     (replies, scheduleIds) =>
         replies.where((r) => scheduleIds.contains(r.scheduleId)));
@@ -91,12 +91,12 @@ final selectScheduleInstancesForSelectedDate = createSelector5(
     selectedDateRangeSelector,
     selectMyMember,
     selectSchedules,
-    selectDefaultReplies,
+    selectDefaultRules,
     selectReplies,
-    (range, myMember, schedules, defaultReplies, replies) =>
+    (range, myMember, schedules, defaultRules, replies) =>
         schedules.expand((schedule) => getScheduleInstances(
               schedule: schedule,
-              defaultReplies: defaultReplies,
+              defaultRules: defaultRules,
               replies: replies,
               startDate: range.start,
               endDate: range.end,
@@ -132,19 +132,19 @@ final selectScheduleInstanceForDate = createSelector3(
         (m) => ScheduleInstanceMember.reply(
           member: m.$1,
           reply: instance.memberReplies[m.$1.id],
-          defaultReplyOption: instance.memberDefaultReplyOptions[m.$1.id],
           defaultReply: instance.memberDefaultReplies[m.$1.id],
+          defaultRule: instance.memberDefaultRules[m.$1.id],
           profile: m.$2,
         ),
       )
       .whereNot((m) =>
           (m as ScheduleInstanceMemberReply).member.id ==
           instance.targetMemberId)
-      .groupListsBy((m) => m.reply ?? m.defaultReplyOption);
+      .groupListsBy((m) => m.reply ?? m.defaultReply);
 
   // This is ugly but I needed an easy way to count the user's reply,
   // after grouping the members by their reply (where the user is not included).
-  final ownReply = instance.myReply ?? instance.myDefaultReplyOption;
+  final ownReply = instance.myReply ?? instance.myDefaultReply;
   final userRepliedYes = ownReply == ReplyOptions.yes ? 1 : 0;
   final userRepliedNo = ownReply == ReplyOptions.no ? 1 : 0;
   final userRepliedUnknown = ownReply == null ? 1 : 0;
@@ -181,8 +181,8 @@ final selectScheduleInstanceForDate = createSelector3(
     membersList: membersList,
     yesCount: instance.yesCount,
     myReply: instance.myReply,
-    myDefaultReplyOption: instance.myDefaultReplyOption,
     myDefaultReply: instance.myDefaultReply,
+    myDefaultRule: instance.myDefaultRule,
     targetMemberId: instance.targetMemberId,
     canEditOthers: canEditOthers,
   );

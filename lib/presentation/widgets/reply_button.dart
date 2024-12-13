@@ -5,13 +5,13 @@ import 'package:parousia/models/models.dart';
 
 class ReplyButtons extends StatelessWidget {
   final ReplyOptions? reply;
-  final ReplyOptions? defaultReplyOption;
+  final ReplyOptions? defaultReply;
   final ValueChanged<ReplyOptions?>? onReplyChanged;
 
   const ReplyButtons({
     super.key,
     this.reply,
-    this.defaultReplyOption,
+    this.defaultReply,
     this.onReplyChanged,
   });
 
@@ -24,13 +24,13 @@ class ReplyButtons extends StatelessWidget {
           children: [
             YesButton(
               reply: reply,
-              defaultReplyOption: defaultReplyOption,
+              defaultReply: defaultReply,
               onReplyChanged: onReplyChanged,
             ),
             SizedBox(width: 8),
             NoButton(
               reply: reply,
-              defaultReplyOption: defaultReplyOption,
+              defaultReply: defaultReply,
               onReplyChanged: onReplyChanged,
             ),
           ],
@@ -41,7 +41,7 @@ class ReplyButtons extends StatelessWidget {
 class ReplyButton extends StatelessWidget {
   final ReplyOptions option;
   final ReplyOptions? reply;
-  final ReplyOptions? defaultReplyOption;
+  final ReplyOptions? defaultReply;
   final ValueChanged<ReplyOptions?>? onReplyChanged;
   final IconData activeIcon;
   final IconData inactiveIcon;
@@ -52,7 +52,7 @@ class ReplyButton extends StatelessWidget {
     super.key,
     required this.option,
     this.reply,
-    this.defaultReplyOption,
+    this.defaultReply,
     this.onReplyChanged,
     required this.activeIcon,
     required this.inactiveIcon,
@@ -68,7 +68,7 @@ class ReplyButton extends StatelessWidget {
     final focusColor = WidgetStatePropertyAll<Color>(activeColor);
 
     final isActive = reply == option;
-    final isDefault = defaultReplyOption == option && reply == null;
+    final isDefault = defaultReply == option && reply == null;
 
     if (isActive) {
       return IconButton.filled(
@@ -102,13 +102,13 @@ class ReplyButton extends StatelessWidget {
 
 class YesButton extends StatelessWidget {
   final ReplyOptions? reply;
-  final ReplyOptions? defaultReplyOption;
+  final ReplyOptions? defaultReply;
   final ValueChanged<ReplyOptions?>? onReplyChanged;
 
   const YesButton({
     super.key,
     this.reply,
-    this.defaultReplyOption,
+    this.defaultReply,
     this.onReplyChanged,
   });
 
@@ -119,7 +119,7 @@ class YesButton extends StatelessWidget {
     return ReplyButton(
       option: ReplyOptions.yes,
       reply: reply,
-      defaultReplyOption: defaultReplyOption,
+      defaultReply: defaultReply,
       onReplyChanged: onReplyChanged,
       activeIcon: FontAwesomeIcons.solidThumbsUp,
       inactiveIcon: FontAwesomeIcons.thumbsUp,
@@ -131,13 +131,13 @@ class YesButton extends StatelessWidget {
 
 class NoButton extends StatelessWidget {
   final ReplyOptions? reply;
-  final ReplyOptions? defaultReplyOption;
+  final ReplyOptions? defaultReply;
   final ValueChanged<ReplyOptions?>? onReplyChanged;
 
   const NoButton({
     super.key,
     this.reply,
-    this.defaultReplyOption,
+    this.defaultReply,
     this.onReplyChanged,
   });
 
@@ -148,7 +148,7 @@ class NoButton extends StatelessWidget {
     return ReplyButton(
       option: ReplyOptions.no,
       reply: reply,
-      defaultReplyOption: defaultReplyOption,
+      defaultReply: defaultReply,
       onReplyChanged: onReplyChanged,
       activeIcon: FontAwesomeIcons.solidThumbsDown,
       inactiveIcon: FontAwesomeIcons.thumbsDown,

@@ -6,7 +6,7 @@ enum Tables {
   members,
   invites,
   schedules,
-  default_replies,
+  default_rules,
   replies,
 }
 

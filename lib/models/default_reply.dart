@@ -9,17 +9,17 @@ part 'default_reply.freezed.dart';
 part 'default_reply.g.dart';
 
 @freezed
-sealed class DefaultReply with _$DefaultReply {
+sealed class DefaultRule with _$DefaultRule {
   @JsonSerializable(fieldRename: FieldRename.snake)
-  const factory DefaultReply({
+  const factory DefaultRule({
     required int memberId,
     required int scheduleId,
     required ReplyOptions selectedOption,
     required RecurrenceRule recurrenceRule,
     DateTime? createdAt,
     DateTime? updatedAt,
-  }) = _DefaultReply;
+  }) = _DefaultRule;
 
-  factory DefaultReply.fromJson(Map<String, dynamic> json) =>
-      _$DefaultReplyFromJson(json);
+  factory DefaultRule.fromJson(Map<String, dynamic> json) =>
+      _$DefaultRuleFromJson(json);
 }
