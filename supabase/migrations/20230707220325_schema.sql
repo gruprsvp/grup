@@ -231,11 +231,11 @@ create policy "profiles_select"
     (select auth.uid()) = id
         or
     exists (select 1
-            from members
-            where members.profile_id = auth.uid()
-              and members.group_id = (select group_id from members where members.profile_id = profiles.id))
+            from members m1
+            join members m2 on m1.group_id = m2.group_id and m2.profile_id = profiles.id
+            where m1.profile_id = auth.uid())
     );
-comment on policy "profiles_select" on profiles is 'Users can see their own profile';
+comment on policy "profiles_select" on profiles is 'Users can see their own profile and profiles of members of groups they are in';
 
 create policy "profiles_update"
     on profiles
