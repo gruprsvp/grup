@@ -96,7 +96,7 @@ Epic<AppState> _createRetrieveOneGroupEpic(GroupsRepository groups) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestRetrieveOne<Group>>().asyncMap(
             (action) => groups
-                .getGroupById(int.parse(action.id))
+                .getGroupById(action.id)
                 .then<dynamic>((group) => SuccessRetrieveOne(group))
                 .catchError(
                     (error) => FailRetrieveOne(id: action.id, error: error)),
@@ -135,7 +135,7 @@ Epic<AppState> _createDeleteOneGroupEpic(GroupsRepository groups) {
       .whereType<RequestDeleteOne<Group>>()
       .asyncMap(
         (action) => groups
-            .deleteGroup(int.parse(action.id))
+            .deleteGroup(action.id)
             .then<dynamic>((_) => SuccessDeleteOne<Group>(action.id))
             .catchError(
                 (error) => FailDeleteOne<Group>(id: action.id, error: error)),

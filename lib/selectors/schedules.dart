@@ -8,12 +8,12 @@ ScheduleInstanceSummary repliesForScheduleInstance({
   required DateTime endDate,
   Iterable<DefaultRule>? defaultRules,
   Iterable<Reply>? replies,
-  int? targetMemberId,
+  String? targetMemberId,
 }) {
-  final allReplies = <int, ReplyOptions>{};
-  final memberReplies = <int, ReplyOptions>{};
-  final memberDefaultReplies = <int, ReplyOptions>{};
-  final memberDefaultRules = <int, DefaultRule>{};
+  final allReplies = <String, ReplyOptions>{};
+  final memberReplies = <String, ReplyOptions>{};
+  final memberDefaultReplies = <String, ReplyOptions>{};
+  final memberDefaultRules = <String, DefaultRule>{};
 
   ReplyOptions? myReply;
   ReplyOptions? myDefaultReply;
@@ -93,7 +93,7 @@ Iterable<ScheduleInstanceSummary> getScheduleInstances({
   required DateTime endDate,
   Iterable<DefaultRule>? defaultRules,
   Iterable<Reply>? replies,
-  int? targetMemberId,
+  String? targetMemberId,
 }) {
   final after =
       startDate.isAfter(schedule.startDate) ? startDate : schedule.startDate;

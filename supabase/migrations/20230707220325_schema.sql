@@ -37,7 +37,7 @@ comment on column profiles.picture is 'A URL to the user profile picture.';
 
 create table groups
 (
-    id           bigint generated always as identity primary key,
+    id           uuid                     default uuid_generate_v4() primary key,
     created_at   timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at   timestamp with time zone default timezone('utc'::text, now()) not null,
 
@@ -52,11 +52,11 @@ comment on column groups.picture is 'A URL to the group picture.';
 
 create table members
 (
-    id                    bigint generated always as identity primary key,
+    id                    uuid                     default uuid_generate_v4() primary key,
     created_at            timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at            timestamp with time zone default timezone('utc'::text, now()) not null,
 
-    group_id              bigint                                                        not null references groups on delete cascade,
+    group_id              uuid                                                          not null references groups on delete cascade,
     profile_id            uuid references profiles on delete cascade,
 
     -- TODO a group should be able to insert a profile with default replies before it even exists...
@@ -78,11 +78,11 @@ comment on column members.display_name_override is 'In case a user wants to be k
 
 create table invites
 (
-    id         bigint generated always as identity primary key,
+    id         uuid                     default uuid_generate_v4() primary key,
     created_at timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at timestamp with time zone default timezone('utc'::text, now()) not null,
 
-    member_id  bigint                                                        not null references members on delete cascade,
+    member_id  uuid                                                          not null references members on delete cascade,
 
     method     invite_methods                                                not null,
     value      text                                                          not null
@@ -100,11 +100,11 @@ comment on index invites_method_values is 'Index for invites, to find by method 
 
 create table schedules
 (
-    id              bigint generated always as identity primary key,
+    id              uuid                     default uuid_generate_v4() primary key,
     created_at      timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at      timestamp with time zone default timezone('utc'::text, now()) not null,
 
-    group_id        bigint                                                        not null references groups on delete cascade,
+    group_id        uuid                                                          not null references groups on delete cascade,
 
     display_name    text                                                          not null,
     start_date      timestamp with time zone                                      not null,
@@ -121,8 +121,8 @@ create table default_rules
     created_at      timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at      timestamp with time zone default timezone('utc'::text, now()) not null,
 
-    member_id       bigint                                                        not null references members on delete cascade,
-    schedule_id     bigint                                                        not null references schedules on delete cascade,
+    member_id       uuid                                                          not null references members on delete cascade,
+    schedule_id     uuid                                                          not null references schedules on delete cascade,
 
     selected_option reply_options                                                 not null,
     recurrence_rule rfc7265                                                       not null,
@@ -137,9 +137,9 @@ create table replies
     created_at      timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at      timestamp with time zone default timezone('utc'::text, now()) not null,
 
-    member_id       bigint                                                        not null references members on delete cascade,
-    schedule_id     bigint                                                        not null references schedules on delete cascade,
-    instance_date      timestamp with time zone                                      not null,
+    member_id       uuid                                                          not null references members on delete cascade,
+    schedule_id     uuid                                                          not null references schedules on delete cascade,
+    instance_date   timestamp with time zone                                      not null,
 
     selected_option reply_options                                                 not null,
 
@@ -157,37 +157,37 @@ create trigger handle_profiles_updated_at
     before update
     on profiles
     for each row
-execute procedure moddatetime(updated_at);
+    execute procedure moddatetime(updated_at);
 create trigger handle_groups_updated_at
     before update
     on groups
     for each row
-execute procedure moddatetime(updated_at);
+    execute procedure moddatetime(updated_at);
 create trigger handle_invites_updated_at
     before update
     on invites
     for each row
-execute procedure moddatetime(updated_at);
+    execute procedure moddatetime(updated_at);
 create trigger handle_members_updated_at
     before update
     on members
     for each row
-execute procedure moddatetime(updated_at);
+    execute procedure moddatetime(updated_at);
 create trigger handle_schedules_updated_at
     before update
     on schedules
     for each row
-execute procedure moddatetime(updated_at);
+    execute procedure moddatetime(updated_at);
 create trigger handle_default_rules_updated_at
     before update
     on default_rules
     for each row
-execute procedure moddatetime(updated_at);
+    execute procedure moddatetime(updated_at);
 create trigger handle_replies_updated_at
     before update
     on replies
     for each row
-execute procedure moddatetime(updated_at);
+    execute procedure moddatetime(updated_at);
 
 
 alter table profiles
@@ -206,7 +206,7 @@ alter table replies
     enable row level security;
 
 create or replace function is_member_of_group(
-    check_group_id bigint,
+    check_group_id uuid,
     with_role group_roles[] default '{admin, member}'::group_roles[])
     returns boolean
     security definer set search_path = public
@@ -221,7 +221,7 @@ begin
                      and role = any (is_member_of_group.with_role));
 end;
 $$;
-comment on function is_member_of_group(bigint, group_roles[]) is 'Check if the current user is a member of a group, with a specific role.';
+comment on function is_member_of_group(uuid, group_roles[]) is 'Check if the current user is a member of a group, with a specific role.';
 
 create policy "profiles_select"
     on profiles

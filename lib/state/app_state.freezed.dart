@@ -17,31 +17,19 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$AppState {
   RemoteEntityState<Profile> get profiles => throw _privateConstructorUsedError;
-
   RemoteEntityState<Group> get groups => throw _privateConstructorUsedError;
-
   RemoteEntityState<Member> get members => throw _privateConstructorUsedError;
-
   RemoteEntityState<Invite> get invites => throw _privateConstructorUsedError;
-
   RemoteEntityState<Schedule> get schedules =>
       throw _privateConstructorUsedError;
-
   RemoteEntityState<DefaultRule> get defaultRules =>
       throw _privateConstructorUsedError;
-
   RemoteEntityState<Reply> get replies => throw _privateConstructorUsedError;
-
   AuthState get auth => throw _privateConstructorUsedError;
-
   ThemeMode get themeMode => throw _privateConstructorUsedError;
-
   DateTime get selectedDate => throw _privateConstructorUsedError;
-
   String? get selectedGroupId => throw _privateConstructorUsedError;
-
   String? get selectedScheduleId => throw _privateConstructorUsedError;
-
   LocaleState? get locale => throw _privateConstructorUsedError;
 
   /// Create a copy of AppState
@@ -55,7 +43,6 @@ mixin _$AppState {
 abstract class $AppStateCopyWith<$Res> {
   factory $AppStateCopyWith(AppState value, $Res Function(AppState) then) =
       _$AppStateCopyWithImpl<$Res, AppState>;
-
   @useResult
   $Res call(
       {RemoteEntityState<Profile> profiles,
@@ -73,7 +60,6 @@ abstract class $AppStateCopyWith<$Res> {
       LocaleState? locale});
 
   $AuthStateCopyWith<$Res> get auth;
-
   $LocaleStateCopyWith<$Res>? get locale;
 }
 
@@ -84,7 +70,6 @@ class _$AppStateCopyWithImpl<$Res, $Val extends AppState>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -194,7 +179,6 @@ abstract class _$$AppStateImplCopyWith<$Res>
   factory _$$AppStateImplCopyWith(
           _$AppStateImpl value, $Res Function(_$AppStateImpl) then) =
       __$$AppStateImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
@@ -214,7 +198,6 @@ abstract class _$$AppStateImplCopyWith<$Res>
 
   @override
   $AuthStateCopyWith<$Res> get auth;
-
   @override
   $LocaleStateCopyWith<$Res>? get locale;
 }
@@ -453,40 +436,28 @@ abstract class _AppState implements AppState {
 
   @override
   RemoteEntityState<Profile> get profiles;
-
   @override
   RemoteEntityState<Group> get groups;
-
   @override
   RemoteEntityState<Member> get members;
-
   @override
   RemoteEntityState<Invite> get invites;
-
   @override
   RemoteEntityState<Schedule> get schedules;
-
   @override
   RemoteEntityState<DefaultRule> get defaultRules;
-
   @override
   RemoteEntityState<Reply> get replies;
-
   @override
   AuthState get auth;
-
   @override
   ThemeMode get themeMode;
-
   @override
   DateTime get selectedDate;
-
   @override
   String? get selectedGroupId;
-
   @override
   String? get selectedScheduleId;
-
   @override
   LocaleState? get locale;
 

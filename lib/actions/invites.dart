@@ -32,7 +32,7 @@ class InviteGroupMembersAction {
     required this.contacts,
   });
 
-  final int groupId;
+  final String groupId;
   final List<ContactInvite> contacts;
 }
 

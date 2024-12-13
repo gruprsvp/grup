@@ -2,6 +2,7 @@ import 'package:parousia/models/models.dart';
 import 'package:parousia/selectors/schedules.dart';
 import 'package:parousia/util/util.dart';
 import 'package:test/test.dart';
+import 'package:uuid/uuid.dart';
 
 DateTime _findSunday(DateTime date) {
   return date.add(Duration(days: DateTime.daysPerWeek - date.weekday));
@@ -14,34 +15,40 @@ void main() {
       final startDate = DateTime(2000, 1, 1).toUtc();
       final endDate = startDate.add(const Duration(days: testDays));
 
+      final dailyScheduleId = const Uuid().v7();
+      final weekendScheduleId = const Uuid().v7();
+      final member1Id = const Uuid().v7();
+      final member2Id = const Uuid().v7();
+      final groupId = const Uuid().v7();
+
       final dailyRecurrenceRule = CommonRecurrenceRules.daily;
       final dailySchedule = Schedule(
-          id: 1,
-          groupId: 1,
+          id: dailyScheduleId,
+          groupId: 'group',
           displayName: 'Daily schedule',
           startDate: startDate,
           recurrenceRule: dailyRecurrenceRule);
       final weekendRecurrenceRule = CommonRecurrenceRules.weekends;
       final weekendSchedule = Schedule(
-          id: 2,
-          groupId: 1,
+          id: weekendScheduleId,
+          groupId: groupId,
           displayName: 'Weekend schedule',
           startDate: startDate,
           recurrenceRule: weekendRecurrenceRule);
 
       final defaultRules = [
         DefaultRule(
-            memberId: 32,
+            memberId: member1Id,
             scheduleId: dailySchedule.id,
             selectedOption: ReplyOptions.yes,
             recurrenceRule: dailyRecurrenceRule),
         DefaultRule(
-            memberId: 32,
+            memberId: member1Id,
             scheduleId: weekendSchedule.id,
             selectedOption: ReplyOptions.yes,
             recurrenceRule: weekendRecurrenceRule),
         DefaultRule(
-            memberId: 33,
+            memberId: member2Id,
             scheduleId: dailySchedule.id,
             selectedOption: ReplyOptions.yes,
             recurrenceRule: weekendRecurrenceRule),
@@ -52,22 +59,22 @@ void main() {
       final saturday = sunday.add(const Duration(days: -1));
       final replies = [
         Reply(
-            memberId: 32,
+            memberId: member1Id,
             scheduleId: dailySchedule.id,
             instanceDate: sunday,
             selectedOption: ReplyOptions.no),
         Reply(
-            memberId: 33,
+            memberId: member2Id,
             scheduleId: dailySchedule.id,
             instanceDate: sunday,
             selectedOption: ReplyOptions.no),
         Reply(
-            memberId: 32,
+            memberId: member1Id,
             scheduleId: dailySchedule.id,
             instanceDate: saturday,
             selectedOption: ReplyOptions.no),
         Reply(
-            memberId: 32,
+            memberId: member1Id,
             scheduleId: weekendSchedule.id,
             instanceDate: sunday,
             selectedOption: ReplyOptions.yes),
@@ -79,7 +86,7 @@ void main() {
         replies: replies,
         startDate: startDate.subtract(const Duration(days: 10)),
         endDate: endDate,
-        targetMemberId: 32,
+        targetMemberId: member1Id,
       );
 
       expect(result, isNotNull);

@@ -62,12 +62,11 @@ Epic<AppState> _createRetrieveOwnMemberByGroupIdEpic(
     MembersRepository members) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<SuccessCreateOne<Group>>().asyncMap((action) {
-        int groupId = action.entity.id;
+        final groupId = action.entity.id;
         return members
             .getOwnMemberByGroupId(groupId)
             .then<dynamic>((member) => SuccessRetrieveOne(member))
-            .catchError((error) =>
-                FailRetrieveOne(id: groupId.toString(), error: error));
+            .catchError((error) => FailRetrieveOne(id: groupId, error: error));
       });
 }
 
@@ -75,7 +74,7 @@ Epic<AppState> _createDeleteOneMember(MembersRepository members) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestDeleteOne<Member>>().asyncMap((action) {
         return members
-            .deleteMember(int.parse(action.id))
+            .deleteMember(action.id)
             .then<dynamic>((_) => SuccessDeleteOne<Member>(action.id))
             .catchError(
                 (error) => FailDeleteOne<Member>(id: action.id, error: error));

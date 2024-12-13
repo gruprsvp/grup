@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
-part of 'default_reply.dart';
+part of 'schedule.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,79 +14,85 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
-DefaultRule _$DefaultRuleFromJson(Map<String, dynamic> json) {
-  return _DefaultRule.fromJson(json);
+Schedule _$ScheduleFromJson(Map<String, dynamic> json) {
+  return _Schedule.fromJson(json);
 }
 
 /// @nodoc
-mixin _$DefaultRule {
-  String get memberId => throw _privateConstructorUsedError;
-  String get scheduleId => throw _privateConstructorUsedError;
-  ReplyOptions get selectedOption => throw _privateConstructorUsedError;
+mixin _$Schedule {
+  String get id => throw _privateConstructorUsedError;
+  String get groupId => throw _privateConstructorUsedError;
+  String get displayName => throw _privateConstructorUsedError;
+  DateTime get startDate => throw _privateConstructorUsedError;
   RecurrenceRule get recurrenceRule => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
-  /// Serializes this DefaultRule to a JSON map.
+  /// Serializes this Schedule to a JSON map.
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
 
-  /// Create a copy of DefaultRule
+  /// Create a copy of Schedule
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $DefaultRuleCopyWith<DefaultRule> get copyWith =>
+  $ScheduleCopyWith<Schedule> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $DefaultRuleCopyWith<$Res> {
-  factory $DefaultRuleCopyWith(
-          DefaultRule value, $Res Function(DefaultRule) then) =
-      _$DefaultRuleCopyWithImpl<$Res, DefaultRule>;
+abstract class $ScheduleCopyWith<$Res> {
+  factory $ScheduleCopyWith(Schedule value, $Res Function(Schedule) then) =
+      _$ScheduleCopyWithImpl<$Res, Schedule>;
   @useResult
   $Res call(
-      {String memberId,
-      String scheduleId,
-      ReplyOptions selectedOption,
+      {String id,
+      String groupId,
+      String displayName,
+      DateTime startDate,
       RecurrenceRule recurrenceRule,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
 
 /// @nodoc
-class _$DefaultRuleCopyWithImpl<$Res, $Val extends DefaultRule>
-    implements $DefaultRuleCopyWith<$Res> {
-  _$DefaultRuleCopyWithImpl(this._value, this._then);
+class _$ScheduleCopyWithImpl<$Res, $Val extends Schedule>
+    implements $ScheduleCopyWith<$Res> {
+  _$ScheduleCopyWithImpl(this._value, this._then);
 
   // ignore: unused_field
   final $Val _value;
   // ignore: unused_field
   final $Res Function($Val) _then;
 
-  /// Create a copy of DefaultRule
+  /// Create a copy of Schedule
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? memberId = null,
-    Object? scheduleId = null,
-    Object? selectedOption = null,
+    Object? id = null,
+    Object? groupId = null,
+    Object? displayName = null,
+    Object? startDate = null,
     Object? recurrenceRule = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
     return _then(_value.copyWith(
-      memberId: null == memberId
-          ? _value.memberId
-          : memberId // ignore: cast_nullable_to_non_nullable
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
-      scheduleId: null == scheduleId
-          ? _value.scheduleId
-          : scheduleId // ignore: cast_nullable_to_non_nullable
+      groupId: null == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
               as String,
-      selectedOption: null == selectedOption
-          ? _value.selectedOption
-          : selectedOption // ignore: cast_nullable_to_non_nullable
-              as ReplyOptions,
+      displayName: null == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
+              as String,
+      startDate: null == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       recurrenceRule: null == recurrenceRule
           ? _value.recurrenceRule
           : recurrenceRule // ignore: cast_nullable_to_non_nullable
@@ -104,55 +110,61 @@ class _$DefaultRuleCopyWithImpl<$Res, $Val extends DefaultRule>
 }
 
 /// @nodoc
-abstract class _$$DefaultRuleImplCopyWith<$Res>
-    implements $DefaultRuleCopyWith<$Res> {
-  factory _$$DefaultRuleImplCopyWith(
-          _$DefaultRuleImpl value, $Res Function(_$DefaultRuleImpl) then) =
-      __$$DefaultRuleImplCopyWithImpl<$Res>;
+abstract class _$$ScheduleImplCopyWith<$Res>
+    implements $ScheduleCopyWith<$Res> {
+  factory _$$ScheduleImplCopyWith(
+          _$ScheduleImpl value, $Res Function(_$ScheduleImpl) then) =
+      __$$ScheduleImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call(
-      {String memberId,
-      String scheduleId,
-      ReplyOptions selectedOption,
+      {String id,
+      String groupId,
+      String displayName,
+      DateTime startDate,
       RecurrenceRule recurrenceRule,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
 
 /// @nodoc
-class __$$DefaultRuleImplCopyWithImpl<$Res>
-    extends _$DefaultRuleCopyWithImpl<$Res, _$DefaultRuleImpl>
-    implements _$$DefaultRuleImplCopyWith<$Res> {
-  __$$DefaultRuleImplCopyWithImpl(
-      _$DefaultRuleImpl _value, $Res Function(_$DefaultRuleImpl) _then)
+class __$$ScheduleImplCopyWithImpl<$Res>
+    extends _$ScheduleCopyWithImpl<$Res, _$ScheduleImpl>
+    implements _$$ScheduleImplCopyWith<$Res> {
+  __$$ScheduleImplCopyWithImpl(
+      _$ScheduleImpl _value, $Res Function(_$ScheduleImpl) _then)
       : super(_value, _then);
 
-  /// Create a copy of DefaultRule
+  /// Create a copy of Schedule
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? memberId = null,
-    Object? scheduleId = null,
-    Object? selectedOption = null,
+    Object? id = null,
+    Object? groupId = null,
+    Object? displayName = null,
+    Object? startDate = null,
     Object? recurrenceRule = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
-    return _then(_$DefaultRuleImpl(
-      memberId: null == memberId
-          ? _value.memberId
-          : memberId // ignore: cast_nullable_to_non_nullable
+    return _then(_$ScheduleImpl(
+      id: null == id
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
               as String,
-      scheduleId: null == scheduleId
-          ? _value.scheduleId
-          : scheduleId // ignore: cast_nullable_to_non_nullable
+      groupId: null == groupId
+          ? _value.groupId
+          : groupId // ignore: cast_nullable_to_non_nullable
               as String,
-      selectedOption: null == selectedOption
-          ? _value.selectedOption
-          : selectedOption // ignore: cast_nullable_to_non_nullable
-              as ReplyOptions,
+      displayName: null == displayName
+          ? _value.displayName
+          : displayName // ignore: cast_nullable_to_non_nullable
+              as String,
+      startDate: null == startDate
+          ? _value.startDate
+          : startDate // ignore: cast_nullable_to_non_nullable
+              as DateTime,
       recurrenceRule: null == recurrenceRule
           ? _value.recurrenceRule
           : recurrenceRule // ignore: cast_nullable_to_non_nullable
@@ -172,24 +184,27 @@ class __$$DefaultRuleImplCopyWithImpl<$Res>
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _$DefaultRuleImpl with DiagnosticableTreeMixin implements _DefaultRule {
-  const _$DefaultRuleImpl(
-      {required this.memberId,
-      required this.scheduleId,
-      required this.selectedOption,
+class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
+  const _$ScheduleImpl(
+      {required this.id,
+      required this.groupId,
+      required this.displayName,
+      required this.startDate,
       required this.recurrenceRule,
       this.createdAt,
       this.updatedAt});
 
-  factory _$DefaultRuleImpl.fromJson(Map<String, dynamic> json) =>
-      _$$DefaultRuleImplFromJson(json);
+  factory _$ScheduleImpl.fromJson(Map<String, dynamic> json) =>
+      _$$ScheduleImplFromJson(json);
 
   @override
-  final String memberId;
+  final String id;
   @override
-  final String scheduleId;
+  final String groupId;
   @override
-  final ReplyOptions selectedOption;
+  final String displayName;
+  @override
+  final DateTime startDate;
   @override
   final RecurrenceRule recurrenceRule;
   @override
@@ -199,17 +214,18 @@ class _$DefaultRuleImpl with DiagnosticableTreeMixin implements _DefaultRule {
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'DefaultRule(memberId: $memberId, scheduleId: $scheduleId, selectedOption: $selectedOption, recurrenceRule: $recurrenceRule, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Schedule(id: $id, groupId: $groupId, displayName: $displayName, startDate: $startDate, recurrenceRule: $recurrenceRule, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     super.debugFillProperties(properties);
     properties
-      ..add(DiagnosticsProperty('type', 'DefaultRule'))
-      ..add(DiagnosticsProperty('memberId', memberId))
-      ..add(DiagnosticsProperty('scheduleId', scheduleId))
-      ..add(DiagnosticsProperty('selectedOption', selectedOption))
+      ..add(DiagnosticsProperty('type', 'Schedule'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('groupId', groupId))
+      ..add(DiagnosticsProperty('displayName', displayName))
+      ..add(DiagnosticsProperty('startDate', startDate))
       ..add(DiagnosticsProperty('recurrenceRule', recurrenceRule))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('updatedAt', updatedAt));
@@ -219,13 +235,13 @@ class _$DefaultRuleImpl with DiagnosticableTreeMixin implements _DefaultRule {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$DefaultRuleImpl &&
-            (identical(other.memberId, memberId) ||
-                other.memberId == memberId) &&
-            (identical(other.scheduleId, scheduleId) ||
-                other.scheduleId == scheduleId) &&
-            (identical(other.selectedOption, selectedOption) ||
-                other.selectedOption == selectedOption) &&
+            other is _$ScheduleImpl &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.groupId, groupId) || other.groupId == groupId) &&
+            (identical(other.displayName, displayName) ||
+                other.displayName == displayName) &&
+            (identical(other.startDate, startDate) ||
+                other.startDate == startDate) &&
             (identical(other.recurrenceRule, recurrenceRule) ||
                 other.recurrenceRule == recurrenceRule) &&
             (identical(other.createdAt, createdAt) ||
@@ -236,43 +252,46 @@ class _$DefaultRuleImpl with DiagnosticableTreeMixin implements _DefaultRule {
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, memberId, scheduleId,
-      selectedOption, recurrenceRule, createdAt, updatedAt);
+  int get hashCode => Object.hash(runtimeType, id, groupId, displayName,
+      startDate, recurrenceRule, createdAt, updatedAt);
 
-  /// Create a copy of DefaultRule
+  /// Create a copy of Schedule
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$DefaultRuleImplCopyWith<_$DefaultRuleImpl> get copyWith =>
-      __$$DefaultRuleImplCopyWithImpl<_$DefaultRuleImpl>(this, _$identity);
+  _$$ScheduleImplCopyWith<_$ScheduleImpl> get copyWith =>
+      __$$ScheduleImplCopyWithImpl<_$ScheduleImpl>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$DefaultRuleImplToJson(
+    return _$$ScheduleImplToJson(
       this,
     );
   }
 }
 
-abstract class _DefaultRule implements DefaultRule {
-  const factory _DefaultRule(
-      {required final String memberId,
-      required final String scheduleId,
-      required final ReplyOptions selectedOption,
+abstract class _Schedule implements Schedule {
+  const factory _Schedule(
+      {required final String id,
+      required final String groupId,
+      required final String displayName,
+      required final DateTime startDate,
       required final RecurrenceRule recurrenceRule,
       final DateTime? createdAt,
-      final DateTime? updatedAt}) = _$DefaultRuleImpl;
+      final DateTime? updatedAt}) = _$ScheduleImpl;
 
-  factory _DefaultRule.fromJson(Map<String, dynamic> json) =
-      _$DefaultRuleImpl.fromJson;
+  factory _Schedule.fromJson(Map<String, dynamic> json) =
+      _$ScheduleImpl.fromJson;
 
   @override
-  String get memberId;
+  String get id;
   @override
-  String get scheduleId;
+  String get groupId;
   @override
-  ReplyOptions get selectedOption;
+  String get displayName;
+  @override
+  DateTime get startDate;
   @override
   RecurrenceRule get recurrenceRule;
   @override
@@ -280,10 +299,10 @@ abstract class _DefaultRule implements DefaultRule {
   @override
   DateTime? get updatedAt;
 
-  /// Create a copy of DefaultRule
+  /// Create a copy of Schedule
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$DefaultRuleImplCopyWith<_$DefaultRuleImpl> get copyWith =>
+  _$$ScheduleImplCopyWith<_$ScheduleImpl> get copyWith =>
       throw _privateConstructorUsedError;
 }

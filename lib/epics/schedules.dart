@@ -19,7 +19,7 @@ Epic<AppState> _createRetrieveGroupSchedulesEpic(
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<GroupDetailsOpenAction>().asyncMap(
             (action) => schedules
-                .getGroupSchedules(int.parse(action.groupId))
+                .getGroupSchedules(action.groupId)
                 .then<dynamic>((schedules) =>
                     SuccessRetrieveMany(schedules.toList(growable: false)))
                 .catchError((error) => FailRetrieveMany<Schedule>([], error)),

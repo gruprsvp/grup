@@ -1,17 +1,17 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'default_reply.dart';
+part of 'schedule.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$DefaultRuleImpl _$$DefaultRuleImplFromJson(Map<String, dynamic> json) =>
-    _$DefaultRuleImpl(
-      memberId: json['member_id'] as String,
-      scheduleId: json['schedule_id'] as String,
-      selectedOption:
-          $enumDecode(_$ReplyOptionsEnumMap, json['selected_option']),
+_$ScheduleImpl _$$ScheduleImplFromJson(Map<String, dynamic> json) =>
+    _$ScheduleImpl(
+      id: json['id'] as String,
+      groupId: json['group_id'] as String,
+      displayName: json['display_name'] as String,
+      startDate: DateTime.parse(json['start_date'] as String),
       recurrenceRule: RecurrenceRule.fromJson(
           json['recurrence_rule'] as Map<String, dynamic>),
       createdAt: json['created_at'] == null
@@ -22,18 +22,13 @@ _$DefaultRuleImpl _$$DefaultRuleImplFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$DefaultRuleImplToJson(_$DefaultRuleImpl instance) =>
+Map<String, dynamic> _$$ScheduleImplToJson(_$ScheduleImpl instance) =>
     <String, dynamic>{
-      'member_id': instance.memberId,
-      'schedule_id': instance.scheduleId,
-      'selected_option': _$ReplyOptionsEnumMap[instance.selectedOption]!,
+      'id': instance.id,
+      'group_id': instance.groupId,
+      'display_name': instance.displayName,
+      'start_date': instance.startDate.toIso8601String(),
       'recurrence_rule': instance.recurrenceRule,
       'created_at': instance.createdAt?.toIso8601String(),
       'updated_at': instance.updatedAt?.toIso8601String(),
     };
-
-const _$ReplyOptionsEnumMap = {
-  ReplyOptions.yes: 'yes',
-  ReplyOptions.no: 'no',
-  ReplyOptions.maybe: 'maybe',
-};

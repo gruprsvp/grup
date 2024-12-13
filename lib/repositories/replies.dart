@@ -9,12 +9,12 @@ class RepliesRepository extends SupabaseRepository with Postgrest {
   const RepliesRepository({required super.supabase})
       : super(tableName: Tables.replies);
 
-  Future<Iterable<Reply>> getRepliesForDay(int groupId, DateTime day) async {
+  Future<Iterable<Reply>> getRepliesForDay(String groupId, DateTime day) async {
     return getRepliesForDateRange(groupId, day.toUtc().getDayRange());
   }
 
   Future<Iterable<Reply>> getRepliesForDateRange(
-      int groupId, DateTimeRange dateRange) async {
+      String groupId, DateTimeRange dateRange) async {
     return table()
         .select('*,members!inner(*)')
         .eq('members.group_id', groupId)
@@ -37,8 +37,8 @@ class RepliesRepository extends SupabaseRepository with Postgrest {
   }
 
   Future<void> deleteReply({
-    required int memberId,
-    required int scheduleId,
+    required String memberId,
+    required String scheduleId,
     required DateTime instanceDate,
   }) async {
     return table()

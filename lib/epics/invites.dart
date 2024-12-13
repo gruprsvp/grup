@@ -44,7 +44,7 @@ Epic<AppState> _createGetInvitesForMemberEpic(InvitesRepository invites) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
       .whereType<MemberDetailsOpenAction>()
       .asyncMap((action) => invites
-          .getInvitesForMember(int.parse(action.memberId))
+          .getInvitesForMember(action.memberId)
           .then<dynamic>((invites) =>
               SuccessRetrieveMany<Invite>(invites.toList(growable: false)))
           .catchError((error) => FailRetrieveMany<Invite>([], error)));

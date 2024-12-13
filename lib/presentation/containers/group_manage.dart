@@ -38,7 +38,7 @@ sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required bool loading,
     Group? group,
-    required ValueSetter<int> onDelete,
+    required ValueSetter<String> onDelete,
   }) = __ViewModel;
 
   static _ViewModel fromStore(Store<AppState> store, String groupId) {
@@ -49,8 +49,7 @@ sealed class _ViewModel with _$ViewModel {
       loading: store.state.groups.creating ||
           store.state.groups.loadingAll ||
           (store.state.groups.loadingIds[groupId] ?? false),
-      onDelete: (groupId) =>
-          store.dispatch(RequestDeleteOne<Group>(groupId.toString())),
+      onDelete: (groupId) => store.dispatch(RequestDeleteOne<Group>(groupId)),
     );
   }
 }

@@ -11,18 +11,18 @@ part 'schedule_summary.freezed.dart';
 @freezed
 sealed class ScheduleInstanceSummary with _$ScheduleInstanceSummary {
   const factory ScheduleInstanceSummary({
-    required int scheduleId,
-    required int groupId,
+    required String scheduleId,
+    required String groupId,
     required String displayName,
     required DateTime instanceDate,
-    required Map<int, ReplyOptions> memberReplies,
-    required Map<int, ReplyOptions> memberDefaultReplies,
-    required Map<int, DefaultRule> memberDefaultRules,
+    required Map<String, ReplyOptions> memberReplies,
+    required Map<String, ReplyOptions> memberDefaultReplies,
+    required Map<String, DefaultRule> memberDefaultRules,
     required int yesCount,
     ReplyOptions? myReply,
     ReplyOptions? myDefaultReply,
     DefaultRule? myDefaultRule,
-    int? targetMemberId,
+    String? targetMemberId,
   }) = _ScheduleInstanceSummary;
 }
 
@@ -31,8 +31,8 @@ sealed class ScheduleInstanceSummary with _$ScheduleInstanceSummary {
 @freezed
 sealed class ScheduleInstanceDetails with _$ScheduleInstanceDetails {
   const factory ScheduleInstanceDetails({
-    required int scheduleId,
-    required int groupId,
+    required String scheduleId,
+    required String groupId,
     required String displayName,
     required DateTime instanceDate,
     required List<ScheduleInstanceMember> membersList,
@@ -40,7 +40,7 @@ sealed class ScheduleInstanceDetails with _$ScheduleInstanceDetails {
     ReplyOptions? myReply,
     ReplyOptions? myDefaultReply,
     DefaultRule? myDefaultRule,
-    int? targetMemberId,
+    String? targetMemberId,
     bool? canEditOthers,
   }) = _ScheduleInstanceDetails;
 }
