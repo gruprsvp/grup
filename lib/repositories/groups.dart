@@ -1,4 +1,5 @@
 import 'package:parousia/models/models.dart';
+import 'package:uuid/uuid.dart';
 
 import 'const.dart';
 import 'supabase.dart';
@@ -20,7 +21,7 @@ class GroupsRepository extends SupabaseRepository with Postgrest {
         .withConverter(_convertGroupsAndMembers);
   }
 
-  Future<Group> getGroupById(int id) async {
+  Future<Group> getGroupById(String id) async {
     return table()
         .select('*,members!inner(*,profiles!left(*))')
         .eq('id', id)
@@ -31,6 +32,7 @@ class GroupsRepository extends SupabaseRepository with Postgrest {
   Future<Group> createGroup(Group group) async {
     return supabase
         .rpc('create_group', params: {
+          'id': const Uuid().v7(),
           'display_name': group.displayName,
           'description': group.description,
           'picture': group.picture,
@@ -52,7 +54,7 @@ class GroupsRepository extends SupabaseRepository with Postgrest {
         .withConverter(Group.fromJson);
   }
 
-  Future<Group> deleteGroup(int id) async {
+  Future<Group> deleteGroup(String id) async {
     return table()
         .delete()
         .eq('id', id)

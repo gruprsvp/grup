@@ -20,8 +20,8 @@ Member _$MemberFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Member {
-  int get id => throw _privateConstructorUsedError;
-  int get groupId => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get groupId => throw _privateConstructorUsedError;
   GroupRoles get role => throw _privateConstructorUsedError;
   String? get profileId => throw _privateConstructorUsedError;
   String? get displayNameOverride => throw _privateConstructorUsedError;
@@ -43,8 +43,8 @@ abstract class $MemberCopyWith<$Res> {
       _$MemberCopyWithImpl<$Res, Member>;
   @useResult
   $Res call(
-      {int id,
-      int groupId,
+      {String id,
+      String groupId,
       GroupRoles role,
       String? profileId,
       String? displayNameOverride,
@@ -79,11 +79,11 @@ class _$MemberCopyWithImpl<$Res, $Val extends Member>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       groupId: null == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
@@ -116,8 +116,8 @@ abstract class _$$MemberImplCopyWith<$Res> implements $MemberCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
-      int groupId,
+      {String id,
+      String groupId,
       GroupRoles role,
       String? profileId,
       String? displayNameOverride,
@@ -150,11 +150,11 @@ class __$$MemberImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       groupId: null == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       role: null == role
           ? _value.role
           : role // ignore: cast_nullable_to_non_nullable
@@ -196,9 +196,9 @@ class _$MemberImpl with DiagnosticableTreeMixin implements _Member {
       _$$MemberImplFromJson(json);
 
   @override
-  final int id;
+  final String id;
   @override
-  final int groupId;
+  final String groupId;
   @override
   final GroupRoles role;
   @override
@@ -270,8 +270,8 @@ class _$MemberImpl with DiagnosticableTreeMixin implements _Member {
 
 abstract class _Member implements Member {
   const factory _Member(
-      {required final int id,
-      required final int groupId,
+      {required final String id,
+      required final String groupId,
       required final GroupRoles role,
       final String? profileId,
       final String? displayNameOverride,
@@ -281,9 +281,9 @@ abstract class _Member implements Member {
   factory _Member.fromJson(Map<String, dynamic> json) = _$MemberImpl.fromJson;
 
   @override
-  int get id;
+  String get id;
   @override
-  int get groupId;
+  String get groupId;
   @override
   GroupRoles get role;
   @override

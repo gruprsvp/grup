@@ -17,15 +17,11 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ViewModel {
   bool get loading => throw _privateConstructorUsedError;
-
   Group? get group => throw _privateConstructorUsedError;
-
   ScheduleInstanceDetails? get scheduleInstance =>
       throw _privateConstructorUsedError;
-
   OnDetailsReplyChangedCallback? get onReplyChanged =>
       throw _privateConstructorUsedError;
-
   OnDetailsDefaultRuleChangedCallback? get onDefaultRuleChanged =>
       throw _privateConstructorUsedError;
 
@@ -41,7 +37,6 @@ abstract class _$ViewModelCopyWith<$Res> {
   factory _$ViewModelCopyWith(
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
-
   @useResult
   $Res call(
       {bool loading,
@@ -51,7 +46,6 @@ abstract class _$ViewModelCopyWith<$Res> {
       OnDetailsDefaultRuleChangedCallback? onDefaultRuleChanged});
 
   $GroupCopyWith<$Res>? get group;
-
   $ScheduleInstanceDetailsCopyWith<$Res>? get scheduleInstance;
 }
 
@@ -62,7 +56,6 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -137,7 +130,6 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
   factory _$$_ViewModelImplCopyWith(
           _$_ViewModelImpl value, $Res Function(_$_ViewModelImpl) then) =
       __$$_ViewModelImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
@@ -149,7 +141,6 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
 
   @override
   $GroupCopyWith<$Res>? get group;
-
   @override
   $ScheduleInstanceDetailsCopyWith<$Res>? get scheduleInstance;
 }
@@ -275,16 +266,12 @@ abstract class __ViewModel implements _ViewModel {
 
   @override
   bool get loading;
-
   @override
   Group? get group;
-
   @override
   ScheduleInstanceDetails? get scheduleInstance;
-
   @override
   OnDetailsReplyChangedCallback? get onReplyChanged;
-
   @override
   OnDetailsDefaultRuleChangedCallback? get onDefaultRuleChanged;
 

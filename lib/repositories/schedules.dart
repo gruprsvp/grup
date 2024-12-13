@@ -1,4 +1,5 @@
 import 'package:parousia/models/models.dart';
+import 'package:uuid/uuid.dart';
 
 import 'const.dart';
 import 'supabase.dart';
@@ -10,6 +11,7 @@ class SchedulesRepository extends SupabaseRepository with Postgrest {
   Future<Schedule> createSchedule(Schedule schedule) async {
     return table()
         .insert({
+          'id': const Uuid().v7(),
           'group_id': schedule.groupId,
           'display_name': schedule.displayName,
           'start_date': schedule.startDate.toIso8601String(),
@@ -20,7 +22,7 @@ class SchedulesRepository extends SupabaseRepository with Postgrest {
         .withConverter((data) => Schedule.fromJson(data));
   }
 
-  Future<Iterable<Schedule>> getGroupSchedules(int groupId) async {
+  Future<Iterable<Schedule>> getGroupSchedules(String groupId) async {
     return table()
         .select('*,replies(*),default_rules(*)')
         .eq('group_id', groupId)

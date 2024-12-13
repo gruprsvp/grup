@@ -2,8 +2,8 @@ import 'package:flutter/foundation.dart';
 
 @immutable
 class RequestDeleteReplyAction {
-  final int memberId;
-  final int scheduleId;
+  final String memberId;
+  final String scheduleId;
   final DateTime instanceDate;
 
   const RequestDeleteReplyAction({

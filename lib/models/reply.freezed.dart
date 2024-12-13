@@ -20,8 +20,8 @@ Reply _$ReplyFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Reply {
-  int get memberId => throw _privateConstructorUsedError;
-  int get scheduleId => throw _privateConstructorUsedError;
+  String get memberId => throw _privateConstructorUsedError;
+  String get scheduleId => throw _privateConstructorUsedError;
   DateTime get instanceDate => throw _privateConstructorUsedError;
   ReplyOptions get selectedOption => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
@@ -42,8 +42,8 @@ abstract class $ReplyCopyWith<$Res> {
       _$ReplyCopyWithImpl<$Res, Reply>;
   @useResult
   $Res call(
-      {int memberId,
-      int scheduleId,
+      {String memberId,
+      String scheduleId,
       DateTime instanceDate,
       ReplyOptions selectedOption,
       DateTime? createdAt,
@@ -76,11 +76,11 @@ class _$ReplyCopyWithImpl<$Res, $Val extends Reply>
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       scheduleId: null == scheduleId
           ? _value.scheduleId
           : scheduleId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       instanceDate: null == instanceDate
           ? _value.instanceDate
           : instanceDate // ignore: cast_nullable_to_non_nullable
@@ -109,8 +109,8 @@ abstract class _$$ReplyImplCopyWith<$Res> implements $ReplyCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int memberId,
-      int scheduleId,
+      {String memberId,
+      String scheduleId,
       DateTime instanceDate,
       ReplyOptions selectedOption,
       DateTime? createdAt,
@@ -141,11 +141,11 @@ class __$$ReplyImplCopyWithImpl<$Res>
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       scheduleId: null == scheduleId
           ? _value.scheduleId
           : scheduleId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       instanceDate: null == instanceDate
           ? _value.instanceDate
           : instanceDate // ignore: cast_nullable_to_non_nullable
@@ -182,9 +182,9 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
       _$$ReplyImplFromJson(json);
 
   @override
-  final int memberId;
+  final String memberId;
   @override
-  final int scheduleId;
+  final String scheduleId;
   @override
   final DateTime instanceDate;
   @override
@@ -254,8 +254,8 @@ class _$ReplyImpl with DiagnosticableTreeMixin implements _Reply {
 
 abstract class _Reply implements Reply {
   const factory _Reply(
-      {required final int memberId,
-      required final int scheduleId,
+      {required final String memberId,
+      required final String scheduleId,
       required final DateTime instanceDate,
       required final ReplyOptions selectedOption,
       final DateTime? createdAt,
@@ -264,9 +264,9 @@ abstract class _Reply implements Reply {
   factory _Reply.fromJson(Map<String, dynamic> json) = _$ReplyImpl.fromJson;
 
   @override
-  int get memberId;
+  String get memberId;
   @override
-  int get scheduleId;
+  String get scheduleId;
   @override
   DateTime get instanceDate;
   @override

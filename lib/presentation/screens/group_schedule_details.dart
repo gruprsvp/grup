@@ -8,14 +8,14 @@ import 'package:rrule/rrule.dart';
 // The target member ID is the ID of the member that the user is replying for,
 // which is not necessarily the user's own ID in the details screen.
 typedef OnDetailsReplyChangedCallback = void Function(
-    ScheduleInstanceDetails, int, ReplyOptions?);
+    ScheduleInstanceDetails, String, ReplyOptions?);
 
 // ! This kind of function signature is super risky, as it's easy to mix up the
 // ! order of the arguments. It's better to use a data class or a map instead.
 //   TODO(giorgio): I actually just fixed a bug because of this!
 //   I should refactor this to use either branded types or a map.
 typedef OnDetailsDefaultRuleChangedCallback = void Function(
-    RecurrenceRule?, int, int, ReplyOptions?);
+    RecurrenceRule?, String, String, ReplyOptions?);
 
 class GroupScheduleDetailsScreen extends StatelessWidget {
   final datetimeFormat = DateFormat.yMMMd()..add_jm();

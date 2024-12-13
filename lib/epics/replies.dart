@@ -18,8 +18,8 @@ Epic<AppState> _createRetrieveGroupRepliesEpic(RepliesRepository replies) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<GroupDetailsOpenAction>().asyncMap(
             (action) => replies
-                .getRepliesForDateRange(int.parse(action.groupId),
-                    store.state.selectedDate.getNdayRange(1))
+                .getRepliesForDateRange(
+                    action.groupId, store.state.selectedDate.getNdayRange(1))
                 .then<dynamic>((replies) =>
                     SuccessRetrieveMany(replies.toList(growable: false)))
                 .catchError((error) => FailRetrieveMany<Reply>([], error)),

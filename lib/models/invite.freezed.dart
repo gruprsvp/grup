@@ -20,8 +20,8 @@ Invite _$InviteFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Invite {
-  int get id => throw _privateConstructorUsedError;
-  int get memberId => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get memberId => throw _privateConstructorUsedError;
   InviteMethods get method => throw _privateConstructorUsedError;
   String get value => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
@@ -42,8 +42,8 @@ abstract class $InviteCopyWith<$Res> {
       _$InviteCopyWithImpl<$Res, Invite>;
   @useResult
   $Res call(
-      {int id,
-      int memberId,
+      {String id,
+      String memberId,
       InviteMethods method,
       String value,
       DateTime? createdAt,
@@ -76,11 +76,11 @@ class _$InviteCopyWithImpl<$Res, $Val extends Invite>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       method: null == method
           ? _value.method
           : method // ignore: cast_nullable_to_non_nullable
@@ -109,8 +109,8 @@ abstract class _$$InviteImplCopyWith<$Res> implements $InviteCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
-      int memberId,
+      {String id,
+      String memberId,
       InviteMethods method,
       String value,
       DateTime? createdAt,
@@ -141,11 +141,11 @@ class __$$InviteImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       method: null == method
           ? _value.method
           : method // ignore: cast_nullable_to_non_nullable
@@ -182,9 +182,9 @@ class _$InviteImpl with DiagnosticableTreeMixin implements _Invite {
       _$$InviteImplFromJson(json);
 
   @override
-  final int id;
+  final String id;
   @override
-  final int memberId;
+  final String memberId;
   @override
   final InviteMethods method;
   @override
@@ -251,8 +251,8 @@ class _$InviteImpl with DiagnosticableTreeMixin implements _Invite {
 
 abstract class _Invite implements Invite {
   const factory _Invite(
-      {required final int id,
-      required final int memberId,
+      {required final String id,
+      required final String memberId,
       required final InviteMethods method,
       required final String value,
       final DateTime? createdAt,
@@ -261,9 +261,9 @@ abstract class _Invite implements Invite {
   factory _Invite.fromJson(Map<String, dynamic> json) = _$InviteImpl.fromJson;
 
   @override
-  int get id;
+  String get id;
   @override
-  int get memberId;
+  String get memberId;
   @override
   InviteMethods get method;
   @override

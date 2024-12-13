@@ -4,14 +4,15 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'enum.dart';
 
 part 'invite.freezed.dart';
+
 part 'invite.g.dart';
 
 @freezed
 sealed class Invite with _$Invite {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Invite({
-    required int id,
-    required int memberId,
+    required String id,
+    required String memberId,
     required InviteMethods method,
     required String value,
     DateTime? createdAt,

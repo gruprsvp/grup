@@ -12,8 +12,8 @@ part 'default_reply.g.dart';
 sealed class DefaultRule with _$DefaultRule {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory DefaultRule({
-    required int memberId,
-    required int scheduleId,
+    required String memberId,
+    required String scheduleId,
     required ReplyOptions selectedOption,
     required RecurrenceRule recurrenceRule,
     DateTime? createdAt,
