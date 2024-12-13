@@ -37,7 +37,7 @@ comment on column profiles.picture is 'A URL to the user profile picture.';
 
 create table groups
 (
-    id           uuid                     default uuid_generate_v4() primary key,
+    id           uuid                     default gen_random_uuid_v7() primary key,
     created_at   timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at   timestamp with time zone default timezone('utc'::text, now()) not null,
 
@@ -52,7 +52,7 @@ comment on column groups.picture is 'A URL to the group picture.';
 
 create table members
 (
-    id                    uuid                     default uuid_generate_v4() primary key,
+    id                    uuid                     default gen_random_uuid_v7() primary key,
     created_at            timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at            timestamp with time zone default timezone('utc'::text, now()) not null,
 
@@ -78,7 +78,7 @@ comment on column members.display_name_override is 'In case a user wants to be k
 
 create table invites
 (
-    id         uuid                     default uuid_generate_v4() primary key,
+    id         uuid                     default gen_random_uuid_v7() primary key,
     created_at timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at timestamp with time zone default timezone('utc'::text, now()) not null,
 
@@ -100,7 +100,7 @@ comment on index invites_method_values is 'Index for invites, to find by method 
 
 create table schedules
 (
-    id              uuid                     default uuid_generate_v4() primary key,
+    id              uuid                     default gen_random_uuid_v7() primary key,
     created_at      timestamp with time zone default timezone('utc'::text, now()) not null,
     updated_at      timestamp with time zone default timezone('utc'::text, now()) not null,
 
