@@ -20,8 +20,8 @@ Schedule _$ScheduleFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Schedule {
-  int get id => throw _privateConstructorUsedError;
-  int get groupId => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get groupId => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   DateTime get startDate => throw _privateConstructorUsedError;
   RecurrenceRule get recurrenceRule => throw _privateConstructorUsedError;
@@ -44,8 +44,8 @@ abstract class $ScheduleCopyWith<$Res> {
       _$ScheduleCopyWithImpl<$Res, Schedule>;
   @useResult
   $Res call(
-      {int id,
-      int groupId,
+      {String id,
+      String groupId,
       String displayName,
       DateTime startDate,
       RecurrenceRule recurrenceRule,
@@ -80,11 +80,11 @@ class _$ScheduleCopyWithImpl<$Res, $Val extends Schedule>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       groupId: null == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       displayName: null == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
@@ -118,8 +118,8 @@ abstract class _$$ScheduleImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {int id,
-      int groupId,
+      {String id,
+      String groupId,
       String displayName,
       DateTime startDate,
       RecurrenceRule recurrenceRule,
@@ -152,11 +152,11 @@ class __$$ScheduleImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       groupId: null == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       displayName: null == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
@@ -198,9 +198,9 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
       _$$ScheduleImplFromJson(json);
 
   @override
-  final int id;
+  final String id;
   @override
-  final int groupId;
+  final String groupId;
   @override
   final String displayName;
   @override
@@ -273,8 +273,8 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
 
 abstract class _Schedule implements Schedule {
   const factory _Schedule(
-      {required final int id,
-      required final int groupId,
+      {required final String id,
+      required final String groupId,
       required final String displayName,
       required final DateTime startDate,
       required final RecurrenceRule recurrenceRule,
@@ -285,9 +285,9 @@ abstract class _Schedule implements Schedule {
       _$ScheduleImpl.fromJson;
 
   @override
-  int get id;
+  String get id;
   @override
-  int get groupId;
+  String get groupId;
   @override
   String get displayName;
   @override

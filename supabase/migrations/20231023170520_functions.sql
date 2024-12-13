@@ -1,4 +1,5 @@
 create or replace function create_group(
+    id uuid,
     display_name text,
     description text,
     picture text)
@@ -11,15 +12,15 @@ declare
 begin
     -- TODO(borgoat): check subscription status
 
-    insert into groups (display_name, description, picture)
-    values (create_group.display_name, create_group.description, create_group.picture)
+    insert into groups (id, display_name, description, picture)
+    values (create_group.id, create_group.display_name, create_group.description, create_group.picture)
     returning * into new_group;
     insert into members (group_id, profile_id, role) values (new_group.id, auth.uid(), 'admin');
 
     return next new_group;
 end;
 $$;
-comment on function create_group(text, text, text) is 'Creates a group with the given display name and adds the current user as an admin';
+comment on function create_group(uuid, text, text, text) is 'Creates a group with the given display name and adds the current user as an admin';
 
 create or replace function handle_new_user()
     returns trigger
@@ -85,7 +86,7 @@ begin
             delete from public.groups where id = group_record.id;
         end if;
     end loop;
-    
+
     delete from public.profiles where id = old.id;
 
     return old;
@@ -102,12 +103,12 @@ comment on trigger on_auth_user_deleted on auth.users is 'Trigger to delete a pr
 -- TODO(borgoat): add a trigger to manage a phone number/email being added after sign up instead
 
 create or replace function check_invite_code(code text)
-    returns bigint
+    returns uuid
     language plpgsql
     security definer set search_path = public as
 $$
 declare
-    id bigint;
+    id uuid;
 begin
     select member_id from invites where method = 'code' and value = check_invite_code.code into strict id;
     return id;
@@ -121,7 +122,7 @@ create or replace function consume_invite_code(code text)
     security definer set search_path = public as
 $$
 declare
-    new_member_id bigint;
+    new_member_id uuid;
 begin
     select check_invite_code(code) into strict new_member_id;
 
@@ -145,9 +146,9 @@ declare
     user_id uuid;
 begin
     select id into user_id
-    from auth.users 
-    where 
-        case 
+    from auth.users
+    where
+        case
             when new.method = 'email' then email = new.value
             when new.method = 'phone' then phone = new.value
         end

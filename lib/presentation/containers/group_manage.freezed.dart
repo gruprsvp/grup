@@ -18,7 +18,7 @@ final _privateConstructorUsedError = UnsupportedError(
 mixin _$ViewModel {
   bool get loading => throw _privateConstructorUsedError;
   Group? get group => throw _privateConstructorUsedError;
-  ValueSetter<int> get onDelete => throw _privateConstructorUsedError;
+  ValueSetter<String> get onDelete => throw _privateConstructorUsedError;
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -33,7 +33,7 @@ abstract class _$ViewModelCopyWith<$Res> {
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call({bool loading, Group? group, ValueSetter<int> onDelete});
+  $Res call({bool loading, Group? group, ValueSetter<String> onDelete});
 
   $GroupCopyWith<$Res>? get group;
 }
@@ -69,7 +69,7 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
       onDelete: null == onDelete
           ? _value.onDelete
           : onDelete // ignore: cast_nullable_to_non_nullable
-              as ValueSetter<int>,
+              as ValueSetter<String>,
     ) as $Val);
   }
 
@@ -96,7 +96,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool loading, Group? group, ValueSetter<int> onDelete});
+  $Res call({bool loading, Group? group, ValueSetter<String> onDelete});
 
   @override
   $GroupCopyWith<$Res>? get group;
@@ -131,7 +131,7 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
       onDelete: null == onDelete
           ? _value.onDelete
           : onDelete // ignore: cast_nullable_to_non_nullable
-              as ValueSetter<int>,
+              as ValueSetter<String>,
     ));
   }
 }
@@ -147,7 +147,7 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   @override
   final Group? group;
   @override
-  final ValueSetter<int> onDelete;
+  final ValueSetter<String> onDelete;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
@@ -191,14 +191,14 @@ abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
       {required final bool loading,
       final Group? group,
-      required final ValueSetter<int> onDelete}) = _$_ViewModelImpl;
+      required final ValueSetter<String> onDelete}) = _$_ViewModelImpl;
 
   @override
   bool get loading;
   @override
   Group? get group;
   @override
-  ValueSetter<int> get onDelete;
+  ValueSetter<String> get onDelete;
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.

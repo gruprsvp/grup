@@ -20,16 +20,11 @@ DefaultRule _$DefaultRuleFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$DefaultRule {
-  int get memberId => throw _privateConstructorUsedError;
-
-  int get scheduleId => throw _privateConstructorUsedError;
-
+  String get memberId => throw _privateConstructorUsedError;
+  String get scheduleId => throw _privateConstructorUsedError;
   ReplyOptions get selectedOption => throw _privateConstructorUsedError;
-
   RecurrenceRule get recurrenceRule => throw _privateConstructorUsedError;
-
   DateTime? get createdAt => throw _privateConstructorUsedError;
-
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
   /// Serializes this DefaultRule to a JSON map.
@@ -47,11 +42,10 @@ abstract class $DefaultRuleCopyWith<$Res> {
   factory $DefaultRuleCopyWith(
           DefaultRule value, $Res Function(DefaultRule) then) =
       _$DefaultRuleCopyWithImpl<$Res, DefaultRule>;
-
   @useResult
   $Res call(
-      {int memberId,
-      int scheduleId,
+      {String memberId,
+      String scheduleId,
       ReplyOptions selectedOption,
       RecurrenceRule recurrenceRule,
       DateTime? createdAt,
@@ -65,7 +59,6 @@ class _$DefaultRuleCopyWithImpl<$Res, $Val extends DefaultRule>
 
   // ignore: unused_field
   final $Val _value;
-
   // ignore: unused_field
   final $Res Function($Val) _then;
 
@@ -85,11 +78,11 @@ class _$DefaultRuleCopyWithImpl<$Res, $Val extends DefaultRule>
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       scheduleId: null == scheduleId
           ? _value.scheduleId
           : scheduleId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       selectedOption: null == selectedOption
           ? _value.selectedOption
           : selectedOption // ignore: cast_nullable_to_non_nullable
@@ -116,12 +109,11 @@ abstract class _$$DefaultRuleImplCopyWith<$Res>
   factory _$$DefaultRuleImplCopyWith(
           _$DefaultRuleImpl value, $Res Function(_$DefaultRuleImpl) then) =
       __$$DefaultRuleImplCopyWithImpl<$Res>;
-
   @override
   @useResult
   $Res call(
-      {int memberId,
-      int scheduleId,
+      {String memberId,
+      String scheduleId,
       ReplyOptions selectedOption,
       RecurrenceRule recurrenceRule,
       DateTime? createdAt,
@@ -152,11 +144,11 @@ class __$$DefaultRuleImplCopyWithImpl<$Res>
       memberId: null == memberId
           ? _value.memberId
           : memberId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       scheduleId: null == scheduleId
           ? _value.scheduleId
           : scheduleId // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       selectedOption: null == selectedOption
           ? _value.selectedOption
           : selectedOption // ignore: cast_nullable_to_non_nullable
@@ -193,9 +185,9 @@ class _$DefaultRuleImpl with DiagnosticableTreeMixin implements _DefaultRule {
       _$$DefaultRuleImplFromJson(json);
 
   @override
-  final int memberId;
+  final String memberId;
   @override
-  final int scheduleId;
+  final String scheduleId;
   @override
   final ReplyOptions selectedOption;
   @override
@@ -265,8 +257,8 @@ class _$DefaultRuleImpl with DiagnosticableTreeMixin implements _DefaultRule {
 
 abstract class _DefaultRule implements DefaultRule {
   const factory _DefaultRule(
-      {required final int memberId,
-      required final int scheduleId,
+      {required final String memberId,
+      required final String scheduleId,
       required final ReplyOptions selectedOption,
       required final RecurrenceRule recurrenceRule,
       final DateTime? createdAt,
@@ -276,20 +268,15 @@ abstract class _DefaultRule implements DefaultRule {
       _$DefaultRuleImpl.fromJson;
 
   @override
-  int get memberId;
-
+  String get memberId;
   @override
-  int get scheduleId;
-
+  String get scheduleId;
   @override
   ReplyOptions get selectedOption;
-
   @override
   RecurrenceRule get recurrenceRule;
-
   @override
   DateTime? get createdAt;
-
   @override
   DateTime? get updatedAt;
 

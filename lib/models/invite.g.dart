@@ -7,8 +7,8 @@ part of 'invite.dart';
 // **************************************************************************
 
 _$InviteImpl _$$InviteImplFromJson(Map<String, dynamic> json) => _$InviteImpl(
-      id: (json['id'] as num).toInt(),
-      memberId: (json['member_id'] as num).toInt(),
+      id: json['id'] as String,
+      memberId: json['member_id'] as String,
       method: $enumDecode(_$InviteMethodsEnumMap, json['method']),
       value: json['value'] as String,
       createdAt: json['created_at'] == null

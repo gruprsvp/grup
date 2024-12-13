@@ -20,7 +20,7 @@ Group _$GroupFromJson(Map<String, dynamic> json) {
 
 /// @nodoc
 mixin _$Group {
-  int get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   String? get picture => throw _privateConstructorUsedError;
@@ -42,7 +42,7 @@ abstract class $GroupCopyWith<$Res> {
       _$GroupCopyWithImpl<$Res, Group>;
   @useResult
   $Res call(
-      {int id,
+      {String id,
       String displayName,
       String? description,
       String? picture,
@@ -76,7 +76,7 @@ class _$GroupCopyWithImpl<$Res, $Val extends Group>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       displayName: null == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
@@ -109,7 +109,7 @@ abstract class _$$GroupImplCopyWith<$Res> implements $GroupCopyWith<$Res> {
   @override
   @useResult
   $Res call(
-      {int id,
+      {String id,
       String displayName,
       String? description,
       String? picture,
@@ -141,7 +141,7 @@ class __$$GroupImplCopyWithImpl<$Res>
       id: null == id
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as int,
+              as String,
       displayName: null == displayName
           ? _value.displayName
           : displayName // ignore: cast_nullable_to_non_nullable
@@ -182,7 +182,7 @@ class _$GroupImpl with DiagnosticableTreeMixin implements _Group {
       _$$GroupImplFromJson(json);
 
   @override
-  final int id;
+  final String id;
   @override
   final String displayName;
   @override
@@ -252,7 +252,7 @@ class _$GroupImpl with DiagnosticableTreeMixin implements _Group {
 
 abstract class _Group implements Group {
   const factory _Group(
-      {required final int id,
+      {required final String id,
       required final String displayName,
       final String? description,
       final String? picture,
@@ -262,7 +262,7 @@ abstract class _Group implements Group {
   factory _Group.fromJson(Map<String, dynamic> json) = _$GroupImpl.fromJson;
 
   @override
-  int get id;
+  String get id;
   @override
   String get displayName;
   @override

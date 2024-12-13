@@ -11,8 +11,8 @@ part 'reply.g.dart';
 sealed class Reply with _$Reply {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Reply({
-    required int memberId,
-    required int scheduleId,
+    required String memberId,
+    required String scheduleId,
     required DateTime instanceDate,
     required ReplyOptions selectedOption,
     DateTime? createdAt,

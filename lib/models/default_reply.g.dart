@@ -8,8 +8,8 @@ part of 'default_reply.dart';
 
 _$DefaultRuleImpl _$$DefaultRuleImplFromJson(Map<String, dynamic> json) =>
     _$DefaultRuleImpl(
-      memberId: (json['member_id'] as num).toInt(),
-      scheduleId: (json['schedule_id'] as num).toInt(),
+      memberId: json['member_id'] as String,
+      scheduleId: json['schedule_id'] as String,
       selectedOption:
           $enumDecode(_$ReplyOptionsEnumMap, json['selected_option']),
       recurrenceRule: RecurrenceRule.fromJson(

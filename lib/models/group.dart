@@ -2,13 +2,14 @@ import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'group.freezed.dart';
+
 part 'group.g.dart';
 
 @freezed
 sealed class Group with _$Group {
   @JsonSerializable(fieldRename: FieldRename.snake)
   const factory Group({
-    required int id,
+    required String id,
     required String displayName,
     String? description,
     String? picture,

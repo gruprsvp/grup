@@ -498,7 +498,7 @@ void main() {
 
           final schedule = await schedulesRepository.createSchedule(
             Schedule(
-              id: 0,
+              id: '',
               groupId: group.id,
               displayName: 'A schedule',
               startDate: DateTime.now(),
@@ -530,7 +530,7 @@ void main() {
 
           await Future.wait(recurrenceRules
               .map((r) => Schedule(
-                  id: 0,
+                  id: '',
                   groupId: group.id,
                   displayName: r.toString(),
                   startDate: DateTime.now(),
@@ -577,7 +577,7 @@ void main() {
 
           final schedule = await schedulesRepository.createSchedule(
             Schedule(
-              id: 0,
+              id: '',
               groupId: group.id,
               displayName: 'A schedule',
               startDate: startDate,
@@ -627,7 +627,7 @@ void main() {
 
           final schedule = await schedulesRepository.createSchedule(
             Schedule(
-              id: 0,
+              id: '',
               groupId: group.id,
               displayName: 'A schedule',
               startDate: startDate,

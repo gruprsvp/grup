@@ -1,4 +1,5 @@
 import 'package:parousia/models/models.dart';
+import 'package:uuid/uuid.dart';
 
 import 'const.dart';
 import 'supabase.dart';
@@ -7,7 +8,7 @@ class MembersRepository extends SupabaseRepository with Postgrest {
   const MembersRepository({required super.supabase})
       : super(tableName: Tables.members);
 
-  Future<Member> addMemberToGroup(int groupId,
+  Future<Member> addMemberToGroup(String groupId,
       {String? displayName, String? profileId}) async {
     if ((displayName == null || displayName.isEmpty) &&
         (profileId == null || profileId.isEmpty)) {
@@ -17,6 +18,7 @@ class MembersRepository extends SupabaseRepository with Postgrest {
 
     return table()
         .insert({
+          'id': const Uuid().v7(),
           'group_id': groupId,
           'profile_id': profileId,
           'display_name_override': displayName,
@@ -27,7 +29,7 @@ class MembersRepository extends SupabaseRepository with Postgrest {
   }
 
   Future<Member> updateMember(
-      {required int memberId,
+      {required String memberId,
       String? displayNameOverride,
       GroupRoles? role}) async {
     return table()
@@ -42,11 +44,11 @@ class MembersRepository extends SupabaseRepository with Postgrest {
         .withConverter(Member.fromJson);
   }
 
-  Future<void> deleteMember(int memberId) async {
+  Future<void> deleteMember(String memberId) async {
     return table().delete().eq('id', memberId);
   }
 
-  Future<Member> getOwnMemberByGroupId(int groupId) async {
+  Future<Member> getOwnMemberByGroupId(String groupId) async {
     return table()
         .select('*')
         .eq('group_id', groupId)

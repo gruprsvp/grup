@@ -41,8 +41,8 @@ class _ScheduleFormState extends State<ScheduleForm> {
               .currentState?.fields['recurrenceRule']?.value as RecurrenceRule;
 
           widget.onChanged?.call(Schedule(
-            id: 0,
-            groupId: 0,
+            id: '',
+            groupId: '',
             displayName: displayName,
             startDate: startDate,
             recurrenceRule: recurrenceRule,

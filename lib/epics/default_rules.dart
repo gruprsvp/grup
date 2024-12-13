@@ -20,7 +20,7 @@ Epic<AppState> _createRetrieveGroupDefaultRulesEpic(
       .whereType<GroupDetailsOpenAction>()
       .asyncMap(
         (action) => defaultRules
-            .getDefaultRules(int.parse(action.groupId))
+            .getDefaultRules(action.groupId)
             .then<dynamic>((defaultRules) =>
                 SuccessRetrieveMany(defaultRules.toList(growable: false)))
             .catchError((error) => FailRetrieveMany<DefaultRule>([], error)),

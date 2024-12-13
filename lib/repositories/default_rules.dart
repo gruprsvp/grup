@@ -1,4 +1,5 @@
 import 'package:parousia/models/models.dart';
+import 'package:uuid/uuid.dart';
 
 import 'const.dart';
 import 'supabase.dart';
@@ -7,7 +8,7 @@ class DefaultRulesRepository extends SupabaseRepository with Postgrest {
   DefaultRulesRepository({required super.supabase})
       : super(tableName: Tables.default_rules);
 
-  Future<Iterable<DefaultRule>> getDefaultRules(int groupId) async {
+  Future<Iterable<DefaultRule>> getDefaultRules(String groupId) async {
     return table()
         .select('*,members!inner(*)')
         .eq('members.group_id', groupId)
@@ -28,7 +29,7 @@ class DefaultRulesRepository extends SupabaseRepository with Postgrest {
   }
 
   Future<void> deleteDefaultRule(
-      {required int memberId, required int scheduleId}) async {
+      {required String memberId, required String scheduleId}) async {
     return table()
         .delete()
         .eq('member_id', memberId)
