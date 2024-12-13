@@ -17,24 +17,22 @@ class ReplyButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-        width: 100,
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            YesButton(
-              reply: reply,
-              defaultReply: defaultReply,
-              onReplyChanged: onReplyChanged,
-            ),
-            SizedBox(width: 8),
-            NoButton(
-              reply: reply,
-              defaultReply: defaultReply,
-              onReplyChanged: onReplyChanged,
-            ),
-          ],
-        ));
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        YesButton(
+          reply: reply,
+          defaultReply: defaultReply,
+          onReplyChanged: onReplyChanged,
+        ),
+        SizedBox(width: 8),
+        NoButton(
+          reply: reply,
+          defaultReply: defaultReply,
+          onReplyChanged: onReplyChanged,
+        ),
+      ],
+    );
   }
 }
 
