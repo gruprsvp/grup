@@ -27,7 +27,7 @@ class ScheduleTile extends StatelessWidget {
         alignment: Alignment.topLeft,
         child: ReplyButtons(
           reply: schedule.myReply,
-          defaultReplyOption: schedule.myDefaultReplyOption,
+          defaultReply: schedule.myDefaultReply,
           onReplyChanged: onReplyChanged,
         ),
       ),

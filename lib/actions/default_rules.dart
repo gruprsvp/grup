@@ -1,11 +1,11 @@
 import 'package:flutter/foundation.dart';
 
 @immutable
-class RequestDeleteDefaultReplyAction {
+class RequestDeleteDefaultRuleAction {
   final int memberId;
   final int scheduleId;
 
-  const RequestDeleteDefaultReplyAction({
+  const RequestDeleteDefaultRuleAction({
     required this.memberId,
     required this.scheduleId,
   });

@@ -6,8 +6,8 @@ part of 'default_reply.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$DefaultReplyImpl _$$DefaultReplyImplFromJson(Map<String, dynamic> json) =>
-    _$DefaultReplyImpl(
+_$DefaultRuleImpl _$$DefaultRuleImplFromJson(Map<String, dynamic> json) =>
+    _$DefaultRuleImpl(
       memberId: (json['member_id'] as num).toInt(),
       scheduleId: (json['schedule_id'] as num).toInt(),
       selectedOption:
@@ -22,7 +22,7 @@ _$DefaultReplyImpl _$$DefaultReplyImplFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$DefaultReplyImplToJson(_$DefaultReplyImpl instance) =>
+Map<String, dynamic> _$$DefaultRuleImplToJson(_$DefaultRuleImpl instance) =>
     <String, dynamic>{
       'member_id': instance.memberId,
       'schedule_id': instance.scheduleId,
