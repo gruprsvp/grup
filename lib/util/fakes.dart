@@ -1,10 +1,7 @@
-import 'dart:math';
-
 import 'package:faker/faker.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/util/recurrence_rules.dart';
 import 'package:uuid/uuid.dart';
-import 'package:uuid/v7.dart';
 
 /// Gnenerate fake data for testing
 class Fake {

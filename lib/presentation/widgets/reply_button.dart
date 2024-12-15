@@ -17,15 +17,15 @@ class ReplyButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Wrap(
+      alignment: WrapAlignment.center,
+      spacing: 8,
       children: [
         YesButton(
           reply: reply,
           defaultReply: defaultReply,
           onReplyChanged: onReplyChanged,
         ),
-        SizedBox(width: 8),
         NoButton(
           reply: reply,
           defaultReply: defaultReply,

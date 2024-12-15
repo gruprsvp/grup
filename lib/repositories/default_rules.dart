@@ -1,5 +1,4 @@
 import 'package:parousia/models/models.dart';
-import 'package:uuid/uuid.dart';
 
 import 'const.dart';
 import 'supabase.dart';
