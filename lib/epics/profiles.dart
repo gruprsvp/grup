@@ -28,7 +28,12 @@ Stream<dynamic> _loadOwnProfileOnSignInEpic(
     actions
         .whereType<AuthStateChangedAction>()
         .where((action) =>
+            // When the user signs in with Apple,
+            // we have to wait for the user to be
+            // updated with their display name
+            // before we can load their profile.
             action.authState.event == AuthChangeEvent.signedIn ||
+            action.authState.event == AuthChangeEvent.userUpdated ||
             action.authState.event == AuthChangeEvent.initialSession)
         .where((action) => action.authState.session != null)
         .map((action) => RequestRetrieveOne<Profile>(
