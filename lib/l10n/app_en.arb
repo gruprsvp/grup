@@ -1,6 +1,6 @@
 {
   "@@locale": "en",
-  "appName": "Grup",
+  "appName": "GRUP",
   "addContact": "Add contact",
   "addInvite": "Add invite",
   "camera": "Camera",
@@ -79,7 +79,7 @@
       }
     }
   },
-  "inviteMessage": "Hey, join my group on Grup! Use this code {code} or click here: {link}",
+  "inviteMessage": "Hey, join my group on GRUP! Use this code {code} or click here: {link}",
   "@inviteMessage": {
     "description": "Invite message to send to friends",
     "placeholders": {

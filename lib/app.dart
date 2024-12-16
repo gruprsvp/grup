@@ -58,7 +58,7 @@ class ParApp extends StatelessWidget {
           Color(0xFF93920B);
 
           return MaterialApp.router(
-            title: 'Grup',
+            title: 'GRUP',
             localizationsDelegates: const [
               ...AppLocalizations.localizationsDelegates,
               FormBuilderLocalizations.delegate,

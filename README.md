@@ -1,4 +1,4 @@
-# Grup
+# GRUP
 
 Event Scheduling for Groups
 
