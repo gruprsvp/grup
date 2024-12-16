@@ -1,6 +1,6 @@
 {
   "@@locale": "es",
-  "appName": "Grup",
+  "appName": "GRUP",
   "addContact": "Añade un contacto",
   "addInvite": "Añade una invitación",
   "camera": "Cámara",
@@ -62,7 +62,7 @@
   "guest": "Invitado",
   "invite": "Invita a la gente",
   "inviteCodeExplanation": "Comparte este código con {user} para invitarlo al grupo",
-  "inviteMessage": "¡Ey, únete a mi grupo en Grup! Usa este código {code} o haz clic aquí: {link}",
+  "inviteMessage": "¡Ey, únete a mi grupo en GRUP! Usa este código {code} o haz clic aquí: {link}",
   "invites": "Invitaciones",
   "invitesEmpty": "¡Es hora de invitar a tus amigos a unirse a tus grupos!<br/>Toca el botón <invite/> para invitar a tus amigos a unirse a tus grupos y empezar a organizar eventos juntos.",
   "inviteFromContacts": "Invita desde tus contactos",
