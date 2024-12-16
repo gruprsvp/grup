@@ -323,7 +323,7 @@ const RESOURCES = {"icons/Icon-maskable-192.png": "d6b38224216460f33e50a8cee34e0
 "assets/FontManifest.json": "9c06e60d67f69c8ab1ba6b25f8aa203d",
 "assets/shaders/ink_sparkle.frag": "ecc85a2e95f5e9f53123dcaf8cb9b6ce",
 "assets/AssetManifest.bin.json": "bbafe8b140975f24f257dabec2d6a9ca",
-"version.json": "862f24b503f197b3b1761c550c81bdf6",
+"version.json": "8210a37d0c02d0b8d52c3cd1d8eb4e3e",
 "manifest.json": "eb4cba04ab2e411c7955e9a8df9c2a44",
 "canvaskit/chromium/canvaskit.js.symbols": "a012ed99ccba193cf96bb2643003f6fc",
 "canvaskit/chromium/canvaskit.wasm": "b1ac05b29c127d86df4bcfbf50dd902a",
@@ -347,7 +347,7 @@ const RESOURCES = {"icons/Icon-maskable-192.png": "d6b38224216460f33e50a8cee34e0
 "/": "e5f9ce99e5267af42a49be43708622d9",
 "flutter.js": "f393d3c16b631f36852323de8e583132",
 "favicon.png": "5baeaea3c5c07c388b038b2e2378e60c",
-"flutter_bootstrap.js": "2279c162f5a41c404fcb8efa63477bce",
+"flutter_bootstrap.js": "86bc2f1bfe36f5aa9ff814079a9c8b5a",
 ".well-known/apple-app-site-association": "c7217b3ae7dc490f17caab24cb912bf6",
 ".well-known/assetlinks.json": "e39ffa12fd6ca02da0856d19f2ae992d",
 "main.dart.js": "04c53068637948e4b26334444ad50402"};
