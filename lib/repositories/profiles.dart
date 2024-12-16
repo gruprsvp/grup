@@ -16,15 +16,15 @@ class ProfilesRepository extends SupabaseRepository with Postgrest {
         .withConverter(Profile.fromJson);
   }
 
-  Future<void> updateProfile({
+  Future<UserResponse> updateProfile({
     required String id,
     String? displayName,
     String? pictureUrl,
   }) async {
-    return table().update({
-      if (displayName != null) 'display_name': displayName,
+    return supabase.auth.updateUser(UserAttributes(data: {
+      if (displayName != null) 'full_name': displayName,
       if (pictureUrl != null) 'picture': pictureUrl,
-    }).eq('id', id);
+    }));
   }
 
   Future<void> deleteProfile() async {
