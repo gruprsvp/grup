@@ -25,9 +25,9 @@ declare
     invite public.invites;
 begin
     insert into public.profiles (id, display_name, picture)
-    values (new.id, new.raw_user_meta_data ->> 'full_name', new.raw_user_meta_data ->> 'picture')
+    values (new.id, new.raw_user_meta_data ->> 'full_name', new.raw_user_meta_data ->> 'avatar_url')
     on conflict (id) do update set display_name = new.raw_user_meta_data ->> 'full_name',
-                                   picture      = new.raw_user_meta_data ->> 'picture';
+                                   picture      = new.raw_user_meta_data ->> 'avatar_url';
 
     for invite in
         select *
