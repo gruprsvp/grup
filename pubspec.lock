@@ -1635,10 +1635,10 @@ packages:
     description:
       path: "."
       ref: main
-      resolved-ref: a20c7ecd610de227eb6cce469fa877e3b1c4556c
+      resolved-ref: ae08034a859fa4c44897b259c6d1a8dfcb7ab013
       url: "https://github.com/sealambda/flutter-auth-ui"
     source: git
-    version: "0.5.4"
+    version: "0.6.0"
   supabase_flutter:
     dependency: "direct main"
     description:
