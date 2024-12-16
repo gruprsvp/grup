@@ -237,14 +237,6 @@ create policy "profiles_select"
     );
 comment on policy "profiles_select" on profiles is 'Users can see their own profile and profiles of members of groups they are in';
 
-create policy "profiles_update"
-    on profiles
-    for update
-    to authenticated
-    using ((select auth.uid()) = id)
-    with check ((select auth.uid()) = id);
-comment on policy "profiles_update" on profiles is 'Users can update their own profile';
-
 create policy "groups_select"
     on groups
     for select
