@@ -22,22 +22,25 @@ end;
 $$;
 comment on function create_group(uuid, text, text, text) is 'Creates a group with the given display name and adds the current user as an admin';
 
-create or replace function handle_new_user()
+create or replace function handle_upsert_user()
     returns trigger
     language plpgsql
     security definer set search_path = public
 as
 $$
 declare
-    invite record;
+    invite public.invites;
 begin
-    insert into public.profiles (id) values (new.id);
+    insert into public.profiles (id, display_name, picture)
+    values (new.id, new.raw_user_meta_data ->> 'full_name', new.raw_user_meta_data ->> 'avatar_url')
+    on conflict (id) do update set display_name = new.raw_user_meta_data ->> 'full_name',
+                                   picture      = new.raw_user_meta_data ->> 'avatar_url';
 
     for invite in
         select *
         from public.invites
         where (method = 'email' and value = new.email)
-           or (method = 'phone' and value = '+' || new.phone) -- TODO(borgoat): normalize phone numbers
+           or (method = 'phone' and value = '+' || new.phone) -- TODO: normalize phone numbers
         loop
             update public.members
             set profile_id            = new.id,
@@ -49,14 +52,14 @@ begin
     return new;
 end;
 $$;
-comment on function handle_new_user() is 'Creates a profile for a new user and add to groups they have been invited to';
+comment on function handle_upsert_user() is 'Upsert a profile for a new user and add to groups they have been invited to';
 
-create or replace trigger on_auth_user_created
-    after insert
+create or replace trigger on_auth_user_updated
+    after insert or update
     on auth.users
     for each row
-execute function public.handle_new_user();
-comment on trigger on_auth_user_created on auth.users is 'Creates a profile whenever a new user is created';
+execute function public.handle_upsert_user();
+comment on trigger on_auth_user_updated on auth.users is 'Upserts a profile whenever a user is created or updated';
 
 create or replace function public.handle_delete_user()
     returns trigger
@@ -70,22 +73,24 @@ begin
     for group_record in
         select g.id
         from public.groups g
-        join public.members m on g.id = m.group_id
-        where m.profile_id = old.id and m.role = 'admin'
-    loop
-        if (select count(*) from public.members where group_id = group_record.id and role = 'admin') > 1 then
-            -- More than one admin, do nothing
-            continue;
-        elsif (select count(*) from public.members where group_id = group_record.id) > 1 then
-            -- Only one admin but more members, assign admin role to another member
-            update public.members
-            set role = 'admin'
-            where id = (select id from public.members where group_id = group_record.id and profile_id != old.id limit 1);
-        else
-            -- Only one admin and no other members, delete the group
-            delete from public.groups where id = group_record.id;
-        end if;
-    end loop;
+                 join public.members m on g.id = m.group_id
+        where m.profile_id = old.id
+          and m.role = 'admin'
+        loop
+            if (select count(*) from public.members where group_id = group_record.id and role = 'admin') > 1 then
+                -- More than one admin, do nothing
+                continue;
+            elsif (select count(*) from public.members where group_id = group_record.id) > 1 then
+                -- Only one admin but more members, assign admin role to another member
+                update public.members
+                set role = 'admin'
+                where id =
+                      (select id from public.members where group_id = group_record.id and profile_id != old.id limit 1);
+            else
+                -- Only one admin and no other members, delete the group
+                delete from public.groups where id = group_record.id;
+            end if;
+        end loop;
 
     delete from public.profiles where id = old.id;
 
@@ -95,9 +100,10 @@ $$;
 comment on function public.handle_delete_user() is 'Deletes a profile when a user is deleted';
 
 create or replace trigger on_auth_user_deleted
-    before delete on auth.users
+    before delete
+    on auth.users
     for each row
-    execute function public.handle_delete_user();
+execute function public.handle_delete_user();
 comment on trigger on_auth_user_deleted on auth.users is 'Trigger to delete a profile when a user is deleted';
 
 -- TODO(borgoat): add a trigger to manage a phone number/email being added after sign up instead
@@ -145,13 +151,13 @@ $$
 declare
     user_id uuid;
 begin
-    select id into user_id
+    select id
+    into user_id
     from auth.users
-    where
-        case
-            when new.method = 'email' then email = new.value
-            when new.method = 'phone' then phone = new.value
-        end
+    where case
+              when new.method = 'email' then email = new.value
+              when new.method = 'phone' then phone = new.value
+              end
     limit 1;
 
     if user_id is not null then
@@ -172,4 +178,4 @@ create or replace trigger on_invite_created
     on invites
     for each row
 execute function public.handle_new_invite();
-comment on trigger on_auth_user_created on auth.users is 'Updates members whenever an invite is created';
+comment on trigger on_invite_created on public.invites is 'Updates members whenever an invite is created';
