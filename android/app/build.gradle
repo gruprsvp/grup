@@ -15,7 +15,9 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace = "is.giorgio.app.parousia"
     compileSdk = flutter.compileSdkVersion
-    ndkVersion = flutter.ndkVersion
+    // ndkVersion = flutter.ndkVersion
+    // This was failing as the Flutter NDK version is now 26 - which is not compatible with the Android Gradle Plugin
+    ndkVersion = "27.0.12077973"
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
