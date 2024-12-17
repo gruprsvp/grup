@@ -347,7 +347,7 @@ const RESOURCES = {"icons/Icon-maskable-192.png": "d6b38224216460f33e50a8cee34e0
 "/": "e5f9ce99e5267af42a49be43708622d9",
 "flutter.js": "4b2350e14c6650ba82871f60906437ea",
 "favicon.png": "5baeaea3c5c07c388b038b2e2378e60c",
-"flutter_bootstrap.js": "b2e9356efa3c0d2c6f65eef5dcfe750b",
+"flutter_bootstrap.js": "d6e3479073c988a07d700ad5f9683e64",
 ".well-known/apple-app-site-association": "c7217b3ae7dc490f17caab24cb912bf6",
 ".well-known/assetlinks.json": "e39ffa12fd6ca02da0856d19f2ae992d",
 "main.dart.js": "2485b5a16a49ab2fc02b2096c54cfb36"};
