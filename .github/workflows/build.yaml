@@ -13,6 +13,7 @@ on:
 jobs:
   flutter:
     runs-on: ubuntu-latest
+
     permissions:
       contents: write
     steps:
@@ -45,6 +46,15 @@ jobs:
         run: |
           supabase status -o json > supabase/config/localhost.json
           flutter test
+
+      - name: Deploy to Supabase
+        run: |
+          supabase link --project-ref
+          supabase db push
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_PROD_DB_PASSWORD }}
+          SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROD_PROJECT_ID }}
 
       - name: Compare pubspec version and git tag
         id: pubspec_tag
