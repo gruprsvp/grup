@@ -49,7 +49,7 @@ jobs:
 
       - name: Deploy to Supabase
         run: |
-          supabase link --project-ref
+          supabase link --project-ref "$SUPABASE_PROJECT_ID"
           supabase db push
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
