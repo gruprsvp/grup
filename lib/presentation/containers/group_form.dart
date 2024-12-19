@@ -2,11 +2,11 @@ import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:parousia/actions/actions.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
-import 'package:redux_entity/redux_entity.dart';
 
 part 'group_form.freezed.dart';
 
@@ -35,7 +35,7 @@ class GroupFormContainer extends StatelessWidget {
 sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required bool loading,
-    required ValueSetter<Group> onSave,
+    required OnGroupSaveCallback onSave,
     Group? group,
   }) = __ViewModel;
 
@@ -49,7 +49,7 @@ sealed class _ViewModel with _$ViewModel {
           (store.state.groups.loadingIds[groupId] ?? false),
       // TODO unique action per source
       onSave: (group) => store.dispatch(
-        RequestUpdateOne<Group>(group),
+        UpdateGroupAction(group: group.$1, image: group.$2),
       ),
     );
   }

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:parousia/models/group.dart';
+import 'package:parousia/presentation/presentation.dart';
+
+typedef OnGroupSaveCallback = ValueSetter<(Group group, XFile? image)>;
 
 class GroupForm extends StatefulWidget {
-  final ValueSetter<Group> onSave;
+  final OnGroupSaveCallback onSave;
   final Group? group;
 
   const GroupForm({
@@ -19,14 +22,16 @@ class GroupForm extends StatefulWidget {
 }
 
 class _GroupFormState extends State<GroupForm> {
-  final _formKey = GlobalKey<FormBuilderState>();
+  final _formKey = GlobalKey<FormState>();
 
+  late ImageController _imageController;
   late TextEditingController _nameController;
   late TextEditingController _descriptionController;
 
   @override
   void initState() {
     super.initState();
+    _imageController = ImageController();
     _nameController = TextEditingController(text: widget.group?.displayName);
     _descriptionController =
         TextEditingController(text: widget.group?.description);
@@ -34,6 +39,7 @@ class _GroupFormState extends State<GroupForm> {
 
   @override
   void dispose() {
+    _imageController.dispose();
     _descriptionController.dispose();
     _nameController.dispose();
     super.dispose();
@@ -43,7 +49,7 @@ class _GroupFormState extends State<GroupForm> {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return FormBuilder(
+    return Form(
       key: _formKey,
       child: Column(
         children: [
@@ -52,8 +58,18 @@ class _GroupFormState extends State<GroupForm> {
               padding: const EdgeInsets.all(16),
               child: Column(
                 children: [
-                  FormBuilderTextField(
-                    name: 'name',
+                  ListenableBuilder(
+                    listenable: _nameController,
+                    builder: (context, child) => ImageFormField(
+                      radius: 64,
+                      icon: Icons.group,
+                      controller: _imageController,
+                      initialImage: widget.group?.picture != null
+                          ? NetworkImage(widget.group!.picture!)
+                          : null,
+                    ),
+                  ),
+                  TextFormField(
                     controller: _nameController,
                     decoration: InputDecoration(
                       labelText: l10n.enterGroupName,
@@ -68,8 +84,7 @@ class _GroupFormState extends State<GroupForm> {
                       return null;
                     },
                   ),
-                  FormBuilderTextField(
-                    name: 'description',
+                  TextFormField(
                     controller: _descriptionController,
                     minLines: 2,
                     maxLines: 5,
@@ -93,14 +108,16 @@ class _GroupFormState extends State<GroupForm> {
                 if (_formKey.currentState!.validate()) {
                   final displayName = _nameController.text.trim();
                   final description = _descriptionController.text.trim();
-                  const picture = null; // TODO
+                  final picture = _imageController.value;
 
                   _formKey.currentState!.save();
-                  widget.onSave(Group(
-                    id: widget.group?.id ?? '',
-                    displayName: displayName,
-                    description: description.isNotEmpty ? description : null,
-                    picture: picture,
+                  widget.onSave((
+                    Group(
+                      id: widget.group?.id ?? '',
+                      displayName: displayName,
+                      description: description.isNotEmpty ? description : null,
+                    ),
+                    picture
                   ));
                 }
               },

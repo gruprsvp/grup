@@ -17,7 +17,7 @@ final _privateConstructorUsedError = UnsupportedError(
 /// @nodoc
 mixin _$ViewModel {
   bool get loading => throw _privateConstructorUsedError;
-  ValueSetter<Group> get onSave => throw _privateConstructorUsedError;
+  OnGroupSaveCallback get onSave => throw _privateConstructorUsedError;
   Group? get group => throw _privateConstructorUsedError;
 
   /// Create a copy of _ViewModel
@@ -33,7 +33,7 @@ abstract class _$ViewModelCopyWith<$Res> {
           _ViewModel value, $Res Function(_ViewModel) then) =
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call({bool loading, ValueSetter<Group> onSave, Group? group});
+  $Res call({bool loading, OnGroupSaveCallback onSave, Group? group});
 
   $GroupCopyWith<$Res>? get group;
 }
@@ -65,7 +65,7 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
       onSave: null == onSave
           ? _value.onSave
           : onSave // ignore: cast_nullable_to_non_nullable
-              as ValueSetter<Group>,
+              as OnGroupSaveCallback,
       group: freezed == group
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
@@ -96,7 +96,7 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call({bool loading, ValueSetter<Group> onSave, Group? group});
+  $Res call({bool loading, OnGroupSaveCallback onSave, Group? group});
 
   @override
   $GroupCopyWith<$Res>? get group;
@@ -127,7 +127,7 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
       onSave: null == onSave
           ? _value.onSave
           : onSave // ignore: cast_nullable_to_non_nullable
-              as ValueSetter<Group>,
+              as OnGroupSaveCallback,
       group: freezed == group
           ? _value.group
           : group // ignore: cast_nullable_to_non_nullable
@@ -145,7 +145,7 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   @override
   final bool loading;
   @override
-  final ValueSetter<Group> onSave;
+  final OnGroupSaveCallback onSave;
   @override
   final Group? group;
 
@@ -189,13 +189,13 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 abstract class __ViewModel implements _ViewModel {
   const factory __ViewModel(
       {required final bool loading,
-      required final ValueSetter<Group> onSave,
+      required final OnGroupSaveCallback onSave,
       final Group? group}) = _$_ViewModelImpl;
 
   @override
   bool get loading;
   @override
-  ValueSetter<Group> get onSave;
+  OnGroupSaveCallback get onSave;
   @override
   Group? get group;
 

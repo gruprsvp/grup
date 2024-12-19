@@ -7,12 +7,14 @@ import 'package:redux_entity/redux_entity.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 import 'package:supabase/supabase.dart';
+import 'package:uuid/uuid.dart';
 
-createGroupsEpics(GroupsRepository groups) => combineEpics<AppState>([
+createGroupsEpics(GroupsRepository groups, StorageRepository storage) =>
+    combineEpics<AppState>([
       _createRetrieveAllGroupsEpic(groups),
       _createRetrieveOneGroupEpic(groups),
-      _createCreateOneGroupEpic(groups),
-      _createUpdateOneGroupEpic(groups),
+      _createCreateOneGroupEpic(groups, storage),
+      _createUpdateOneGroupEpic(groups, storage),
       _createDeleteOneGroupEpic(groups),
       _reloadGroupOnScheduleDateChange,
       _loadGroupsOnSignInEpic,
@@ -103,28 +105,46 @@ Epic<AppState> _createRetrieveOneGroupEpic(GroupsRepository groups) {
 }
 
 /// Create a group
-Epic<AppState> _createCreateOneGroupEpic(GroupsRepository groups) {
-  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
-      .whereType<RequestCreateOne<Group>>()
-      .asyncMap(
-        (action) => groups
-            .createGroup(action.entity)
-            .then<dynamic>((group) => SuccessCreateOne(group))
-            .catchError(
-                (error) => FailCreateOne(entity: action.entity, error: error)),
+Epic<AppState> _createCreateOneGroupEpic(
+    GroupsRepository groups, StorageRepository storage) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) =>
+      actions.whereType<CreateGroupAction>().asyncMap(
+        (action) async {
+          final picture = action.image != null
+              ? await storage.uploadPublicXFile(
+                  const Uuid().v7(), action.image!)
+              : null;
+
+          final group = action.group.copyWith(picture: picture);
+
+          return groups
+              .createGroup(group)
+              .then<dynamic>((group) => SuccessCreateOne(group))
+              .catchError(
+                  (error) => FailCreateOne(entity: group, error: error));
+        },
       );
 }
 
 /// Update a group
-Epic<AppState> _createUpdateOneGroupEpic(GroupsRepository groups) {
-  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
-      .whereType<RequestUpdateOne<Group>>()
-      .asyncMap(
-        (action) => groups
-            .updateGroup(action.entity)
-            .then<dynamic>((group) => SuccessUpdateOne(group))
-            .catchError(
-                (error) => FailUpdateOne(entity: action.entity, error: error)),
+Epic<AppState> _createUpdateOneGroupEpic(
+    GroupsRepository groups, StorageRepository storage) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) =>
+      actions.whereType<UpdateGroupAction>().asyncMap(
+        (action) async {
+          final picture = action.image != null
+              ? await storage.uploadPublicXFile(
+                  const Uuid().v7(), action.image!)
+              : null;
+
+          final group = action.group.copyWith(picture: picture);
+
+          return groups
+              .updateGroup(group)
+              .then<dynamic>((group) => SuccessUpdateOne(group))
+              .catchError(
+                  (error) => FailUpdateOne(entity: group, error: error));
+        },
       );
 }
 
