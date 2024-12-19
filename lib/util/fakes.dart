@@ -8,21 +8,21 @@ class Fake {
   static Profile profile() => Profile(
         id: const Uuid().v4(),
         displayName: faker.person.name(),
-        picture: faker.image.image(height: 128, width: 128),
+        picture: faker.image.loremPicsum(height: 128, width: 128),
       );
 
   static Group group() => Group(
         id: const Uuid().v7(),
         displayName: faker.company.name(),
         description: faker.lorem.sentence(),
-        picture: faker.image.image(height: 128, width: 128),
+        picture: faker.image.loremPicsum(height: 512, width: 512),
       );
 
-  static Schedule schedule() => Schedule(
+  static Schedule schedule({String? groupId}) => Schedule(
         id: const Uuid().v7(),
-        groupId: const Uuid().v7(),
+        groupId: groupId ?? const Uuid().v7(),
         displayName: faker.lorem.sentence(),
-        recurrenceRule: CommonRecurrenceRules.monthly,
+        recurrenceRule: CommonRecurrenceRules.daily,
         startDate: DateTime.now(),
       );
 }

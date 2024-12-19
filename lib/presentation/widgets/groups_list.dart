@@ -10,15 +10,37 @@ class GroupsList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
+    final theme = Theme.of(context);
+    return ListView.separated(
+      separatorBuilder: (context, index) => const SizedBox(height: 8),
       itemBuilder: (context, index) {
         final group = groups!.elementAt(index);
+        final picture = group.picture;
+        final displayName = group.displayName;
+        final description = group.description ?? '';
+
         return ListTile(
-          // TODO avatar and description
-          title: Text(group.displayName),
-          subtitle: group.description != null
-              ? Text(group.description!.split('\n').first)
-              : null,
+          leading: Hero(
+            tag: picture ?? group.hashCode,
+            child: CircleAvatar(
+              radius: 32,
+              foregroundImage: picture != null ? NetworkImage(picture) : null,
+              child: Icon(
+                Icons.group,
+                size: 32,
+                color: Colors.white,
+              ),
+            ),
+          ),
+          title: Hero(
+              tag: displayName,
+              child: Text(displayName, style: theme.textTheme.headlineMedium)),
+          subtitle: Text(
+            description,
+            overflow: TextOverflow.fade,
+            softWrap: false,
+            maxLines: 1,
+          ),
           onTap: () =>
               GroupDetailsRoute(groupId: group.id.toString()).push(context),
         );
