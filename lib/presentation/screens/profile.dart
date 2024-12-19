@@ -1,6 +1,3 @@
-import 'dart:io';
-
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
@@ -27,100 +24,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
   final _formKey = GlobalKey<FormState>();
   final _nameFocusNode = FocusNode();
 
+  late ImageController _imageController;
   late TextEditingController _nameController;
 
   bool _enableSaveButton = false;
-  XFile? _tempImageFile;
 
   @override
   void initState() {
     super.initState();
+    _imageController = ImageController();
     _nameController = TextEditingController(text: widget.profile?.displayName);
   }
 
   @override
   void dispose() {
+    _imageController.dispose();
     _nameFocusNode.dispose();
     _nameController.dispose();
     super.dispose();
   }
 
-  ImageProvider? _profilePicture() {
-    if (_tempImageFile != null) {
-      if (kIsWeb) {
-        return NetworkImage(_tempImageFile!.path);
-      } else {
-        return FileImage(File(_tempImageFile!.path));
-      }
-    } else if (widget.profile?.picture != null) {
-      return NetworkImage(widget.profile!.picture!);
-    }
-    return null;
-  }
-
-  // TODO: move to a widget and make it reusable
-  _changeImage() async {
-    final source = await showAdaptiveDialog<ImageSource>(
-      context: context,
-      builder: (context) {
-        final l10n = AppLocalizations.of(context)!;
-
-        return SimpleDialog(
-          title: Text(l10n.chooseNewProfilePicture),
-          children: [
-            SimpleDialogOption(
-              onPressed: () => Navigator.pop(context, ImageSource.camera),
-              child: Row(
-                children: [
-                  const Icon(Icons.camera_alt),
-                  const SizedBox(width: 8),
-                  Text(l10n.camera),
-                ],
-              ),
-            ),
-            SimpleDialogOption(
-              onPressed: () => Navigator.pop(context, ImageSource.gallery),
-              child: Row(
-                children: [
-                  const Icon(Icons.photo_library),
-                  const SizedBox(width: 8),
-                  Text(l10n.gallery),
-                ],
-              ),
-            ),
-          ],
-        );
-      },
-    );
-
-    if (source != null) {
-      _pickImageTemp(source);
-    }
-  }
-
-  Future<void> _pickImageTemp(ImageSource source) async {
-    final picker = ImagePicker();
-    final imageFile = await picker.pickImage(
-      source: source,
-      preferredCameraDevice: CameraDevice.front,
-      maxWidth: 512,
-      maxHeight: 512,
-      requestFullMetadata: false,
-    );
-    if (imageFile == null) {
-      return;
-    }
-
-    setState(() {
-      _tempImageFile = imageFile;
-      _enableSaveButton = true;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final profilePicture = _profilePicture();
 
     return Scaffold(
       appBar: AppBar(
@@ -135,6 +61,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
       ),
       body: Form(
         key: _formKey,
+        autovalidateMode: AutovalidateMode.onUserInteraction,
+        onChanged: () {
+          setState(() {
+            if (_formKey.currentState!.validate()) {
+              _enableSaveButton = true;
+            } else {
+              _enableSaveButton = false;
+            }
+          });
+        },
         child: Column(
           children: [
             Expanded(
@@ -142,10 +78,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 padding: const EdgeInsets.all(16),
                 child: Column(
                   children: [
-                    ProfilePicture(
-                      onPressed: () => _changeImage(),
-                      image: profilePicture,
-                      name: _nameController.value.text,
+                    ImageFormField(
+                      controller: _imageController,
+                      initialImage: widget.profile?.picture != null
+                          ? NetworkImage(widget.profile!.picture!)
+                          : null,
                       radius: 64,
                     ),
                     TextFormField(
@@ -159,15 +96,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           return l10n.enterYourNamePlease;
                         }
                         return null;
-                      },
-                      onChanged: (value) {
-                        setState(() {
-                          if (_formKey.currentState!.validate()) {
-                            _enableSaveButton = true;
-                          } else {
-                            _enableSaveButton = false;
-                          }
-                        });
                       },
                     ),
                     // TODO(borgoat): options to link additional auth providers
@@ -186,8 +114,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             });
                             _formKey.currentState!.save();
                             _nameFocusNode.unfocus();
-                            widget.onSave(
-                                (_nameController.text.trim(), _tempImageFile));
+                            widget.onSave((
+                              _nameController.text.trim(),
+                              _imageController.value,
+                            ));
 
                             if (!(widget.userNavigated ?? false)) {
                               Navigator.of(context).pop(context);

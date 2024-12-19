@@ -9,6 +9,7 @@ export 'group_form.dart';
 export 'group_join.dart';
 export 'group_members.dart';
 export 'groups_list.dart';
+export 'image_form_field.dart';
 export 'invite_modal.dart';
 export 'profile_picture.dart';
 export 'reply_button.dart';

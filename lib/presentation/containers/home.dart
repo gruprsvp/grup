@@ -7,7 +7,6 @@ import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
-import 'package:redux_entity/redux_entity.dart';
 
 part 'home.freezed.dart';
 
@@ -47,8 +46,8 @@ sealed class _ViewModel with _$ViewModel {
       groups: store.state.groups.entities.values,
       onGroupCreate: (value) => store.dispatch(
         switch (value) {
-          GroupCreateResultNew(group: final group) =>
-            RequestCreateOne<Group>(group),
+          GroupCreateResultNew(group: final group, image: final image) =>
+            CreateGroupAction(group: group, image: image),
           GroupCreateResultJoin(code: final code) =>
             JoinWithInviteCodeAction(code),
         },

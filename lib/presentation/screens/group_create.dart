@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 
@@ -8,8 +9,9 @@ sealed class GroupCreateResult {}
 
 class GroupCreateResultNew extends GroupCreateResult {
   final Group group;
+  final XFile? image;
 
-  GroupCreateResultNew(this.group);
+  GroupCreateResultNew(this.group, this.image);
 }
 
 class GroupCreateResultJoin extends GroupCreateResult {
@@ -47,8 +49,8 @@ class GroupCreateScreen extends StatelessWidget {
                 onJoin: (code) => context
                     .pop<GroupCreateResult>(GroupCreateResultJoin(code))),
             GroupForm(
-                onSave: (group) => context
-                    .pop<GroupCreateResult>(GroupCreateResultNew(group))),
+                onSave: (group) => context.pop<GroupCreateResult>(
+                    GroupCreateResultNew(group.$1, group.$2))),
           ],
         ),
       ),

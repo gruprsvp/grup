@@ -8,12 +8,16 @@ class ProfilePicture extends StatelessWidget {
     this.image,
     this.name,
     this.radius,
+    this.loadingValue = 1,
+    this.icon = Icons.person,
   });
 
   final VoidCallback? onPressed;
   final ImageProvider? image;
   final String? name;
   final double? radius;
+  final double? loadingValue;
+  final IconData? icon;
 
   @override
   Widget build(BuildContext context) {
@@ -21,30 +25,27 @@ class ProfilePicture extends StatelessWidget {
     final nameInitials = getNameInitials(name);
     final padding = radius != null ? radius! / 8.0 : 1.0;
 
-    return OutlinedButton(
+    return ElevatedButton(
       onPressed: onPressed,
-      style: OutlinedButton.styleFrom(
-        shape: const CircleBorder(),
-        padding: EdgeInsets.all(padding),
-        side: BorderSide(
-          color: theme.colorScheme.primary,
-          width: padding,
-        ),
-      ),
-      child: CircleAvatar(
-        radius: radius,
-        backgroundColor: theme.colorScheme.primary.withOpacity(0.3),
-        foregroundImage: image,
-        child: nameInitials != null && nameInitials.isNotEmpty
-            ? Text(
-                nameInitials,
-                // style: theme.textTheme.headlineLarge,
-              )
-            : Icon(
-                Icons.person,
-                size: radius,
-                color: theme.colorScheme.primary,
-              ),
+      style: OutlinedButton.styleFrom(shape: CircleBorder()),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          CircleAvatar(
+            radius: radius,
+            backgroundColor: theme.colorScheme.primary.withValues(alpha: 0.3),
+            foregroundImage: image,
+            child: nameInitials != null && nameInitials.isNotEmpty
+                ? Text(nameInitials)
+                : Icon(icon, size: radius, color: theme.colorScheme.primary),
+          ),
+          Positioned.fill(
+            child: CircularProgressIndicator(
+              strokeWidth: padding,
+              value: loadingValue,
+            ),
+          ),
+        ],
       ),
     );
   }

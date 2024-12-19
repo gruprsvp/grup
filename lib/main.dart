@@ -83,7 +83,7 @@ Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
     createRouterEpics(router),
     createAuthEpics(),
     createDefaultRulesEpics(defaultRulesRepository),
-    createGroupsEpics(groupsRepository),
+    createGroupsEpics(groupsRepository, storageRepository),
     createMembersEpic(membersRepository),
     createInvitesEpics(invitesRepository),
     createProfileEpics(profilesRepository, storageRepository),
