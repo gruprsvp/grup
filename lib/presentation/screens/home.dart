@@ -66,7 +66,6 @@ class HomeScreen extends StatelessWidget {
           style: GoogleFonts.sniglet(
             color: theme.colorScheme.primary,
             textStyle: theme.textTheme.headlineLarge,
-            fontWeight: FontWeight.bold,
           ),
         ),
         bottom: loading
