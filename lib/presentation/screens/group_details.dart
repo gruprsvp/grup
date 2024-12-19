@@ -19,25 +19,52 @@ class GroupDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final textTheme = Theme.of(context).textTheme;
+
     final groupId = group?.id;
     final groupIdStr = groupId?.toString();
+    final groupImage = group?.picture;
+    final groupName = group?.displayName ?? groupIdStr ?? '';
     final groupDescription = group?.description;
 
     return Scaffold(
-        appBar: AppBar(
-          title: Text(group?.displayName ?? l10n.loading),
-        ),
-        body: Column(
-          children: [
-            const DateDropdownContainer(),
-            if (groupDescription != null)
-              Padding(
-                padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                child: Text(groupDescription),
-              ),
-            Expanded(child: SchedulesListContainer(groupId: groupIdStr)),
-          ],
-        ),
+        body: NestedScrollView(
+            headerSliverBuilder: (context, innerBoxIsScrolled) => [
+                  SliverAppBar(
+                    pinned: true,
+                    expandedHeight: groupImage != null ? 256 : 0,
+                    flexibleSpace: FlexibleSpaceBar(
+                        background: groupImage != null
+                            ? Hero(
+                                tag: groupImage,
+                                child: ClipRRect(
+                                  borderRadius: BorderRadius.vertical(
+                                      bottom: Radius.circular(24)),
+                                  child: AspectRatio(
+                                    aspectRatio: 1,
+                                    child: Image.network(groupImage,
+                                        fit: BoxFit.cover),
+                                  ),
+                                ),
+                              )
+                            : null,
+                        collapseMode: CollapseMode.pin,
+                        title: Hero(
+                          tag: groupName,
+                          child:
+                              Text(groupName, style: textTheme.headlineMedium),
+                        )),
+                  ),
+                  SliverToBoxAdapter(
+                    child: Column(
+                      children: [
+                        if (groupDescription != null) Text(groupDescription),
+                        const DateDropdownContainer(),
+                      ],
+                    ),
+                  ),
+                ],
+            body: SchedulesListContainer(groupId: groupIdStr)),
         floatingActionButton: isAdmin && groupIdStr != null
             ? FloatingActionButton.extended(
                 onPressed: () =>
