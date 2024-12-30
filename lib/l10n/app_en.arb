@@ -45,6 +45,8 @@
   "eventName": "Event name",
   "events": "Events",
   "eventsEmpty": "Time to bring your group to life!<br/>Tap the <newevent/> button to schedule your first activity.<br/>Choose a date, set a time, and add details to get everyone excited about coming together.",
+  "feedbackEmailSubject": "Feedback for GRUP",
+  "feedbackEmailBody": "Hi GRUP team,\n\nI have some feedback for you:\n\n",
   "feedbackPromptTitle": "How are we doing?",
   "feedbackPromptBody": "If you like <title>GRUP</title>, please leave us a positive review to reach more people!\nIf you have any feedback, please let us know so we can improve.",
   "feedbackStoreReview": "Rate us on {store}",
