@@ -2,6 +2,14 @@
 
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
+    <!--  https://pub.dev/packages/flutter_email_sender#android-setup  -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.SENDTO"/>
+            <data android:scheme="mailto"/>
+        </intent>
+    </queries>
+
     <application
             android:label="GRUP"
             android:name="${applicationName}"
