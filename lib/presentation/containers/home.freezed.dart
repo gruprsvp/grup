@@ -22,6 +22,8 @@ mixin _$ViewModel {
   ValueSetter<GroupCreateResult>? get onGroupCreate =>
       throw _privateConstructorUsedError;
   AsyncCallback? get onRefresh => throw _privateConstructorUsedError;
+  bool? get shouldShowFeedback => throw _privateConstructorUsedError;
+  VoidCallback? get onFeedbackDismiss => throw _privateConstructorUsedError;
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -41,7 +43,9 @@ abstract class _$ViewModelCopyWith<$Res> {
       Profile? profile,
       Iterable<Group>? groups,
       ValueSetter<GroupCreateResult>? onGroupCreate,
-      AsyncCallback? onRefresh});
+      AsyncCallback? onRefresh,
+      bool? shouldShowFeedback,
+      VoidCallback? onFeedbackDismiss});
 
   $ProfileCopyWith<$Res>? get profile;
 }
@@ -66,6 +70,8 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
     Object? groups = freezed,
     Object? onGroupCreate = freezed,
     Object? onRefresh = freezed,
+    Object? shouldShowFeedback = freezed,
+    Object? onFeedbackDismiss = freezed,
   }) {
     return _then(_value.copyWith(
       loading: null == loading
@@ -88,6 +94,14 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
           ? _value.onRefresh
           : onRefresh // ignore: cast_nullable_to_non_nullable
               as AsyncCallback?,
+      shouldShowFeedback: freezed == shouldShowFeedback
+          ? _value.shouldShowFeedback
+          : shouldShowFeedback // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      onFeedbackDismiss: freezed == onFeedbackDismiss
+          ? _value.onFeedbackDismiss
+          : onFeedbackDismiss // ignore: cast_nullable_to_non_nullable
+              as VoidCallback?,
     ) as $Val);
   }
 
@@ -119,7 +133,9 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       Profile? profile,
       Iterable<Group>? groups,
       ValueSetter<GroupCreateResult>? onGroupCreate,
-      AsyncCallback? onRefresh});
+      AsyncCallback? onRefresh,
+      bool? shouldShowFeedback,
+      VoidCallback? onFeedbackDismiss});
 
   @override
   $ProfileCopyWith<$Res>? get profile;
@@ -143,6 +159,8 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     Object? groups = freezed,
     Object? onGroupCreate = freezed,
     Object? onRefresh = freezed,
+    Object? shouldShowFeedback = freezed,
+    Object? onFeedbackDismiss = freezed,
   }) {
     return _then(_$_ViewModelImpl(
       loading: null == loading
@@ -165,6 +183,14 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
           ? _value.onRefresh
           : onRefresh // ignore: cast_nullable_to_non_nullable
               as AsyncCallback?,
+      shouldShowFeedback: freezed == shouldShowFeedback
+          ? _value.shouldShowFeedback
+          : shouldShowFeedback // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      onFeedbackDismiss: freezed == onFeedbackDismiss
+          ? _value.onFeedbackDismiss
+          : onFeedbackDismiss // ignore: cast_nullable_to_non_nullable
+              as VoidCallback?,
     ));
   }
 }
@@ -177,7 +203,9 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
       this.profile,
       this.groups,
       this.onGroupCreate,
-      this.onRefresh});
+      this.onRefresh,
+      this.shouldShowFeedback,
+      this.onFeedbackDismiss});
 
   @override
   final bool loading;
@@ -189,10 +217,14 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   final ValueSetter<GroupCreateResult>? onGroupCreate;
   @override
   final AsyncCallback? onRefresh;
+  @override
+  final bool? shouldShowFeedback;
+  @override
+  final VoidCallback? onFeedbackDismiss;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(loading: $loading, profile: $profile, groups: $groups, onGroupCreate: $onGroupCreate, onRefresh: $onRefresh)';
+    return '_ViewModel(loading: $loading, profile: $profile, groups: $groups, onGroupCreate: $onGroupCreate, onRefresh: $onRefresh, shouldShowFeedback: $shouldShowFeedback, onFeedbackDismiss: $onFeedbackDismiss)';
   }
 
   @override
@@ -204,7 +236,9 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
       ..add(DiagnosticsProperty('profile', profile))
       ..add(DiagnosticsProperty('groups', groups))
       ..add(DiagnosticsProperty('onGroupCreate', onGroupCreate))
-      ..add(DiagnosticsProperty('onRefresh', onRefresh));
+      ..add(DiagnosticsProperty('onRefresh', onRefresh))
+      ..add(DiagnosticsProperty('shouldShowFeedback', shouldShowFeedback))
+      ..add(DiagnosticsProperty('onFeedbackDismiss', onFeedbackDismiss));
   }
 
   @override
@@ -218,12 +252,23 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
             (identical(other.onGroupCreate, onGroupCreate) ||
                 other.onGroupCreate == onGroupCreate) &&
             (identical(other.onRefresh, onRefresh) ||
-                other.onRefresh == onRefresh));
+                other.onRefresh == onRefresh) &&
+            (identical(other.shouldShowFeedback, shouldShowFeedback) ||
+                other.shouldShowFeedback == shouldShowFeedback) &&
+            (identical(other.onFeedbackDismiss, onFeedbackDismiss) ||
+                other.onFeedbackDismiss == onFeedbackDismiss));
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, loading, profile,
-      const DeepCollectionEquality().hash(groups), onGroupCreate, onRefresh);
+  int get hashCode => Object.hash(
+      runtimeType,
+      loading,
+      profile,
+      const DeepCollectionEquality().hash(groups),
+      onGroupCreate,
+      onRefresh,
+      shouldShowFeedback,
+      onFeedbackDismiss);
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -240,7 +285,9 @@ abstract class __ViewModel implements _ViewModel {
       final Profile? profile,
       final Iterable<Group>? groups,
       final ValueSetter<GroupCreateResult>? onGroupCreate,
-      final AsyncCallback? onRefresh}) = _$_ViewModelImpl;
+      final AsyncCallback? onRefresh,
+      final bool? shouldShowFeedback,
+      final VoidCallback? onFeedbackDismiss}) = _$_ViewModelImpl;
 
   @override
   bool get loading;
@@ -252,6 +299,10 @@ abstract class __ViewModel implements _ViewModel {
   ValueSetter<GroupCreateResult>? get onGroupCreate;
   @override
   AsyncCallback? get onRefresh;
+  @override
+  bool? get shouldShowFeedback;
+  @override
+  VoidCallback? get onFeedbackDismiss;
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.

@@ -1,4 +1,5 @@
 import 'package:parousia/actions/actions.dart';
+import 'package:parousia/reducers/feedback.dart';
 import 'package:parousia/state/state.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
@@ -34,5 +35,6 @@ AppState rootReducer(AppState state, dynamic action) {
     selectedGroupId: selectedGroupIdReducer(state.selectedGroupId, action),
     selectedScheduleId:
         selectedScheduleIdReducer(state.selectedScheduleId, action),
+    hasSeenFeedbackCard: feedbackReducer(state.hasSeenFeedbackCard, action),
   );
 }

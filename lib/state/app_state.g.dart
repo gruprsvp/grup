@@ -54,6 +54,7 @@ _$AppStateImpl _$$AppStateImplFromJson(Map<String, dynamic> json) =>
       locale: json['locale'] == null
           ? null
           : LocaleState.fromJson(json['locale'] as Map<String, dynamic>),
+      hasSeenFeedbackCard: json['hasSeenFeedbackCard'] as bool?,
     );
 
 Map<String, dynamic> _$$AppStateImplToJson(_$AppStateImpl instance) =>
@@ -71,6 +72,7 @@ Map<String, dynamic> _$$AppStateImplToJson(_$AppStateImpl instance) =>
       'selectedGroupId': instance.selectedGroupId,
       'selectedScheduleId': instance.selectedScheduleId,
       'locale': instance.locale,
+      'hasSeenFeedbackCard': instance.hasSeenFeedbackCard,
     };
 
 const _$ThemeModeEnumMap = {

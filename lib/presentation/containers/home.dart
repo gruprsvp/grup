@@ -23,6 +23,8 @@ class HomeContainer extends StatelessWidget {
         loading: vm.loading,
         onGroupCreate: vm.onGroupCreate,
         onRefresh: vm.onRefresh,
+        shouldShowFeedback: vm.shouldShowFeedback,
+        onFeedbackDismiss: vm.onFeedbackDismiss,
       ),
       converter: _ViewModel.fromStore,
     );
@@ -37,6 +39,8 @@ sealed class _ViewModel with _$ViewModel {
     Iterable<Group>? groups,
     ValueSetter<GroupCreateResult>? onGroupCreate,
     AsyncCallback? onRefresh,
+    bool? shouldShowFeedback,
+    VoidCallback? onFeedbackDismiss,
   }) = __ViewModel;
 
   static _ViewModel fromStore(Store<AppState> store) {
@@ -57,6 +61,14 @@ sealed class _ViewModel with _$ViewModel {
         store.dispatch(action);
         await action.completer.future;
       },
+      shouldShowFeedback: !(store.state.hasSeenFeedbackCard ?? false) &&
+          store.state.auth.user != null &&
+          store.state.profiles.entities[store.state.auth.user!.id]?.createdAt
+                  ?.isBefore(
+                DateTime.now().subtract(const Duration(days: 3)),
+              ) ==
+              true,
+      onFeedbackDismiss: () => store.dispatch(InteractedWithFeedback()),
     );
   }
 }

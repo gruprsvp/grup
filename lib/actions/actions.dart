@@ -3,6 +3,7 @@ export 'auth.dart';
 export 'date.dart';
 export 'deeplinks.dart';
 export 'default_rules.dart';
+export 'feedback.dart';
 export 'groups.dart';
 export 'invites.dart';
 export 'locale.dart';
