@@ -60,30 +60,44 @@ class HomeScreen extends StatelessWidget {
         : GroupsList(groups: groups);
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          l10n.appName,
-          style: GoogleFonts.sniglet(
-            color: theme.colorScheme.primary,
-            textStyle: theme.textTheme.headlineLarge,
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverAppBar(
+            pinned: true,
+            title: Text(
+              l10n.appName,
+              style: GoogleFonts.sniglet(
+                color: theme.colorScheme.primary,
+                textStyle: theme.textTheme.headlineLarge,
+              ),
+            ),
+            bottom: loading
+                ? PreferredSize(
+                    preferredSize: Size(MediaQuery.of(context).size.width, 0),
+                    child: const LinearProgressIndicator())
+                : null,
+            actions: [
+              ProfilePicture(
+                onPressed: () =>
+                    ProfileRoute(userNavigated: true).push(context),
+                image: _profilePicture(),
+                name: profile?.displayName,
+              ),
+            ],
           ),
-        ),
-        bottom: loading
-            ? PreferredSize(
-                preferredSize: Size(MediaQuery.of(context).size.width, 0),
-                child: const LinearProgressIndicator())
-            : null,
-        actions: [
-          ProfilePicture(
-            onPressed: () => ProfileRoute(userNavigated: true).push(context),
-            image: _profilePicture(),
-            name: profile?.displayName,
-          ),
+          if (true)
+            SliverToBoxAdapter(
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                child: const FeedbackCard(),
+              ),
+            ),
         ],
-      ),
-      body: RefreshIndicator(
-        onRefresh: () async => onRefresh?.call(),
-        child: innerBody,
+        body: RefreshIndicator(
+          onRefresh: () async => onRefresh?.call(),
+          child: innerBody,
+        ),
       ),
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () => _onGroupCreate(context),
