@@ -8,7 +8,6 @@ import 'auth_state.dart';
 import 'locale_state.dart';
 
 part 'app_state.freezed.dart';
-
 part 'app_state.g.dart';
 
 @freezed
@@ -29,6 +28,7 @@ sealed class AppState with _$AppState {
     String? selectedGroupId,
     String? selectedScheduleId,
     LocaleState? locale,
+    bool? hasSeenFeedbackCard,
   }) = _AppState;
 
   factory AppState.initialState() => AppState(selectedDate: DateTime.now());

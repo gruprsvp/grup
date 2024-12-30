@@ -58,7 +58,12 @@ class GroupDetailsScreen extends StatelessWidget {
                   SliverToBoxAdapter(
                     child: Column(
                       children: [
-                        if (groupDescription != null) Text(groupDescription),
+                        if (groupDescription != null)
+                          Padding(
+                            padding:
+                                EdgeInsets.only(top: 32, left: 16, right: 16),
+                            child: Text(groupDescription),
+                          ),
                         const DateDropdownContainer(),
                       ],
                     ),

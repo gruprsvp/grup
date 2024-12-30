@@ -13,6 +13,8 @@ class HomeScreen extends StatelessWidget {
   final bool loading;
   final ValueSetter<GroupCreateResult>? onGroupCreate;
   final AsyncCallback? onRefresh;
+  final bool? shouldShowFeedback;
+  final VoidCallback? onFeedbackDismiss;
 
   const HomeScreen({
     super.key,
@@ -21,6 +23,8 @@ class HomeScreen extends StatelessWidget {
     this.groups,
     this.onGroupCreate,
     this.onRefresh,
+    this.shouldShowFeedback,
+    this.onFeedbackDismiss,
   });
 
   ImageProvider? _profilePicture() {
@@ -85,12 +89,16 @@ class HomeScreen extends StatelessWidget {
               ),
             ],
           ),
-          if (true)
+          if (shouldShowFeedback == true)
             SliverToBoxAdapter(
               child: Padding(
                 padding:
                     const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-                child: const FeedbackCard(),
+                child: Dismissible(
+                  key: ValueKey('feedbackCard'),
+                  child: const FeedbackCard(),
+                  onDismissed: (_) => onFeedbackDismiss?.call(),
+                ),
               ),
             ),
         ],
