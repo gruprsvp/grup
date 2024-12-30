@@ -19,3 +19,4 @@ export 'schedule_tile.dart';
 export 'schedules_list.dart';
 export 'sign_out_tile.dart';
 export 'theme_switcher_tile.dart';
+export 'feedback_card.dart';
