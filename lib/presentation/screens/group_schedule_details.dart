@@ -38,79 +38,87 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final groupName = group?.displayName ?? l10n.loading;
     final membersList = scheduleInstance?.membersList ?? [];
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(group?.displayName ?? l10n.loading),
-      ),
-      body: Column(
-        children: [
-          ListTile(
-            title: Text(scheduleInstance?.displayName ?? l10n.loading),
-            subtitle: scheduleInstance?.instanceDate != null
-                ? Text(datetimeFormat.format(scheduleInstance!.instanceDate))
-                : Text(l10n.loading),
-          ),
-          ScheduleMemberTile(
-            name: l10n.you,
-            reply: scheduleInstance?.myReply,
-            defaultReply: scheduleInstance?.myDefaultReply,
-            defaultRule: scheduleInstance?.myDefaultRule,
-            onReplyChanged: (reply) => onReplyChanged?.call(
-                scheduleInstance!, scheduleInstance!.targetMemberId!, reply),
-            onDefaultRuleChanged: (recurrenceRule, reply) =>
-                onDefaultRuleChanged?.call(
-                    recurrenceRule,
-                    scheduleInstance!.scheduleId,
-                    scheduleInstance!.targetMemberId!,
-                    reply),
-          ),
-          Expanded(
-            child: ListView.builder(
-              itemCount: membersList.length,
-              itemBuilder: (context, index) {
-                final el = membersList.elementAt(index);
-                if (el is ScheduleInstanceMemberSeparator) {
-                  return ListTile(
-                    dense: true,
-                    title: Text(
-                      el.reply == null
-                          ? l10n.unknown
-                          : el.reply == ReplyOptions.yes
-                              ? l10n.yes
-                              : l10n.no,
-                    ),
-                    trailing: Text('${el.count}'),
-                    subtitle: Divider(),
-                  );
-                } else if (el is ScheduleInstanceMemberReply) {
-                  final member = el.member;
-                  final profile = el.profile;
-                  final reply = el.reply;
-                  final defaultReply = el.defaultReply;
-                  final defaultRule = el.defaultRule;
-
-                  final name = member.displayNameOverride ??
-                      profile?.displayName ??
-                      l10n.unknown;
-
-                  return ScheduleMemberTile(
-                    name: name,
-                    reply: reply,
-                    defaultReply: defaultReply,
-                    defaultRule: defaultRule,
-                    onReplyChanged: (reply) => onReplyChanged?.call(
-                        scheduleInstance!, member.id, reply),
-                    onDefaultRuleChanged: (recurrenceRule, reply) =>
-                        onDefaultRuleChanged?.call(recurrenceRule,
-                            scheduleInstance!.scheduleId, member.id, reply),
-                  );
-                }
-                throw Exception('Unknown member type: $el');
-              },
+      body: CustomScrollView(
+        slivers: [
+          SliverAppBar(
+            title: Text(groupName),
+            floating: true,
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(80),
+              child: ListTile(
+                title: Text(scheduleInstance?.displayName ?? l10n.loading),
+                subtitle: scheduleInstance?.instanceDate != null
+                    ? Text(
+                        datetimeFormat.format(scheduleInstance!.instanceDate),
+                        textAlign: TextAlign.end,
+                      )
+                    : Text(l10n.loading),
+              ),
             ),
           ),
+          SliverToBoxAdapter(
+            child: ScheduleMemberTile(
+              name: l10n.you,
+              reply: scheduleInstance?.myReply,
+              defaultReply: scheduleInstance?.myDefaultReply,
+              defaultRule: scheduleInstance?.myDefaultRule,
+              onReplyChanged: (reply) => onReplyChanged?.call(
+                  scheduleInstance!, scheduleInstance!.targetMemberId!, reply),
+              onDefaultRuleChanged: (recurrenceRule, reply) =>
+                  onDefaultRuleChanged?.call(
+                      recurrenceRule,
+                      scheduleInstance!.scheduleId,
+                      scheduleInstance!.targetMemberId!,
+                      reply),
+            ),
+          ),
+          SliverList.builder(
+            itemCount: membersList.length,
+            itemBuilder: (context, index) {
+              final el = membersList.elementAt(index);
+              if (el is ScheduleInstanceMemberSeparator) {
+                return ListTile(
+                  dense: true,
+                  title: Text(
+                    el.reply == null
+                        ? l10n.unknown
+                        : el.reply == ReplyOptions.yes
+                            ? l10n.yes
+                            : l10n.no,
+                  ),
+                  trailing: Text('${el.count}'),
+                  subtitle: Divider(),
+                );
+              } else if (el is ScheduleInstanceMemberReply) {
+                final member = el.member;
+                final profile = el.profile;
+                final reply = el.reply;
+                final defaultReply = el.defaultReply;
+                final defaultRule = el.defaultRule;
+
+                final name = member.displayNameOverride ??
+                    profile?.displayName ??
+                    l10n.unknown;
+
+                return ScheduleMemberTile(
+                  name: name,
+                  reply: reply,
+                  defaultReply: defaultReply,
+                  defaultRule: defaultRule,
+                  onReplyChanged: (reply) =>
+                      onReplyChanged?.call(scheduleInstance!, member.id, reply),
+                  onDefaultRuleChanged: (recurrenceRule, reply) =>
+                      onDefaultRuleChanged?.call(recurrenceRule,
+                          scheduleInstance!.scheduleId, member.id, reply),
+                );
+              }
+              throw Exception('Unknown member type: $el');
+            },
+          )
         ],
       ),
     );
