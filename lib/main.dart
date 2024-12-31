@@ -36,8 +36,8 @@ Future<void> main() async {
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
 
-  // Initialize analytics
-  await initAnalytics();
+  // Initialize PostHog
+  await initPostHog();
 
   final configService = ConfigService();
   await configService.initialize();
@@ -64,9 +64,7 @@ Future<void> main() async {
       .uriLinkStream
       .listen((uri) => store.dispatch(HandleDeeplinkAction(uri.path)));
 
-  runApp(
-    ParApp(store: store),
-  );
+  initSentry(() => runApp(ParApp(store: store)));
 }
 
 Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
