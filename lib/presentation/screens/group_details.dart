@@ -20,6 +20,7 @@ class GroupDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     final groupId = group?.id;
     final groupIdStr = groupId?.toString();
@@ -42,8 +43,27 @@ class GroupDetailsScreen extends StatelessWidget {
                                       bottom: Radius.circular(24)),
                                   child: AspectRatio(
                                     aspectRatio: 1,
-                                    child: Image.network(groupImage,
-                                        fit: BoxFit.cover),
+                                    child: Stack(
+                                      fit: StackFit.expand,
+                                      children: [
+                                        Image.network(groupImage,
+                                            fit: BoxFit.cover),
+                                        DecoratedBox(
+                                          decoration: BoxDecoration(
+                                            gradient: LinearGradient(
+                                              begin: Alignment.topCenter,
+                                              end: Alignment.bottomCenter,
+                                              colors: [
+                                                colorScheme.surface
+                                                    .withValues(alpha: 0.1),
+                                                colorScheme.secondaryContainer
+                                                    .withValues(alpha: 0.8),
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               )

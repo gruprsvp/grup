@@ -17,7 +17,7 @@ class GroupsList extends StatelessWidget {
         final group = groups!.elementAt(index);
         final picture = group.picture;
         final displayName = group.displayName;
-        final description = group.description ?? '';
+        final description = group.description;
 
         return ListTile(
           leading: Hero(
@@ -35,12 +35,10 @@ class GroupsList extends StatelessWidget {
           title: Hero(
               tag: displayName,
               child: Text(displayName, style: theme.textTheme.headlineMedium)),
-          subtitle: Text(
-            description,
-            overflow: TextOverflow.fade,
-            softWrap: false,
-            maxLines: 1,
-          ),
+          subtitle: description != null
+              ? Text(description,
+                  overflow: TextOverflow.fade, softWrap: false, maxLines: 1)
+              : null,
           onTap: () =>
               GroupDetailsRoute(groupId: group.id.toString()).push(context),
         );
