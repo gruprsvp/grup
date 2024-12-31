@@ -1,3 +1,4 @@
+export 'analytics.dart';
 export 'auth.dart';
 export 'default_rules.dart';
 export 'groups.dart';

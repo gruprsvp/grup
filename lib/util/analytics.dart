@@ -10,3 +10,9 @@ Future<void> initAnalytics() async {
   final posthog = Posthog();
   await posthog.setup(config);
 }
+
+/// Identify user in PostHog
+Future<void> identifyUser(
+    String userId, Map<String, Object>? userProperties) async {
+  await Posthog().identify(userId: userId, userProperties: userProperties);
+}

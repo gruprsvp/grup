@@ -82,6 +82,7 @@ Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
   final epics = combineEpics<AppState>([
     createRouterEpics(router),
     createAuthEpics(),
+    createAnalyticsEpics(),
     createDefaultRulesEpics(defaultRulesRepository),
     createGroupsEpics(groupsRepository),
     createMembersEpic(membersRepository),
