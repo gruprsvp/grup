@@ -33,5 +33,4 @@ Map<String, dynamic> _$$ReplyImplToJson(_$ReplyImpl instance) =>
 const _$ReplyOptionsEnumMap = {
   ReplyOptions.yes: 'yes',
   ReplyOptions.no: 'no',
-  ReplyOptions.maybe: 'maybe',
 };
