@@ -36,6 +36,9 @@ Future<void> main() async {
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
 
+  // Initialize analytics
+  await initAnalytics();
+
   final configService = ConfigService();
   await configService.initialize();
 

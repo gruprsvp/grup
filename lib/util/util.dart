@@ -1,3 +1,4 @@
+export 'analytics.dart';
 export 'base32.dart';
 export 'colors.dart';
 export 'datetime.dart';
