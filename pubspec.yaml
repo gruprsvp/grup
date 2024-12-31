@@ -91,10 +91,11 @@ dependencies:
   mime: ^1.0.4
   memoized: ^2.2.6
   posthog_flutter: ^4.9.0
-  universal_html: ^2.2.4
-  uuid: ^4.1.0
+  sentry_flutter: ^8.12.0
   share_plus: ^10.1.2
   styled_text: ^8.1.0
+  universal_html: ^2.2.4
+  uuid: ^4.1.0
 
 
 dev_dependencies:
@@ -123,6 +124,7 @@ dev_dependencies:
 
   # Utilities
   flutter_launcher_icons: ^0.14.1
+  sentry_dart_plugin: ^2.2.1
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
@@ -183,3 +185,13 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+sentry:
+  upload_debug_symbols: true
+  upload_source_maps: true
+  upload_sources: true
+  project: flutter
+  org: sealambda
+  log_level: error
+  commits: auto
+  ignore_missing: true
