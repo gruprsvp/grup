@@ -129,7 +129,7 @@ final selectScheduleInstanceForDate = createSelector3(
 
   final groupedMembers = members
       .map(
-        (m) => ScheduleInstanceMember.reply(
+        (m) => ScheduleInstanceMember(
           member: m.$1,
           reply: instance.memberReplies[m.$1.id],
           defaultReply: instance.memberDefaultReplies[m.$1.id],
@@ -137,9 +137,7 @@ final selectScheduleInstanceForDate = createSelector3(
           profile: m.$2,
         ),
       )
-      .whereNot((m) =>
-          (m as ScheduleInstanceMemberReply).member.id ==
-          instance.targetMemberId)
+      .whereNot((m) => m.member.id == instance.targetMemberId)
       .groupListsBy((m) => m.reply ?? m.defaultReply);
 
   // This is ugly but I needed an easy way to count the user's reply,
@@ -149,28 +147,25 @@ final selectScheduleInstanceForDate = createSelector3(
   final userRepliedNo = ownReply == ReplyOptions.no ? 1 : 0;
   final userRepliedUnknown = ownReply == null ? 1 : 0;
 
-  final membersList = [
-    if (groupedMembers.containsKey(ReplyOptions.yes)) ...[
-      ScheduleInstanceMember.separator(
+  final repliesGroups = [
+    if (groupedMembers.containsKey(ReplyOptions.yes))
+      ScheduleInstanceRepliesGroup(
         reply: ReplyOptions.yes,
         count: groupedMembers[ReplyOptions.yes]!.length + userRepliedYes,
+        members: groupedMembers[ReplyOptions.yes]!,
       ),
-      ...groupedMembers[ReplyOptions.yes]!,
-    ],
-    if (groupedMembers.containsKey(ReplyOptions.no)) ...[
-      ScheduleInstanceMember.separator(
+    if (groupedMembers.containsKey(ReplyOptions.no))
+      ScheduleInstanceRepliesGroup(
         reply: ReplyOptions.no,
         count: groupedMembers[ReplyOptions.no]!.length + userRepliedNo,
+        members: groupedMembers[ReplyOptions.no]!,
       ),
-      ...groupedMembers[ReplyOptions.no]!,
-    ],
-    if (groupedMembers.containsKey(null)) ...[
-      ScheduleInstanceMember.separator(
+    if (groupedMembers.containsKey(null))
+      ScheduleInstanceRepliesGroup(
         reply: null,
         count: groupedMembers[null]!.length + userRepliedUnknown,
+        members: groupedMembers[null]!,
       ),
-      ...groupedMembers[null]!,
-    ],
   ];
 
   return ScheduleInstanceDetails(
@@ -178,8 +173,7 @@ final selectScheduleInstanceForDate = createSelector3(
     groupId: instance.groupId,
     displayName: instance.displayName,
     instanceDate: instance.instanceDate,
-    membersList: membersList,
-    yesCount: instance.yesCount,
+    repliesGroups: repliesGroups,
     myReply: instance.myReply,
     myDefaultReply: instance.myDefaultReply,
     myDefaultRule: instance.myDefaultRule,

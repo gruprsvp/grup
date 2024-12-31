@@ -33,8 +33,7 @@ sealed class ScheduleInstanceDetails with _$ScheduleInstanceDetails {
     required String groupId,
     required String displayName,
     required DateTime instanceDate,
-    required List<ScheduleInstanceMember> membersList,
-    required int yesCount,
+    required List<ScheduleInstanceRepliesGroup> repliesGroups,
     ReplyOptions? myReply,
     ReplyOptions? myDefaultReply,
     DefaultRule? myDefaultRule,
@@ -44,18 +43,21 @@ sealed class ScheduleInstanceDetails with _$ScheduleInstanceDetails {
 }
 
 @freezed
+sealed class ScheduleInstanceRepliesGroup with _$ScheduleInstanceRepliesGroup {
+  const factory ScheduleInstanceRepliesGroup({
+    required ReplyOptions? reply,
+    required int count,
+    required List<ScheduleInstanceMember> members,
+  }) = _ScheduleInstanceRepliesGroup;
+}
+
+@freezed
 sealed class ScheduleInstanceMember with _$ScheduleInstanceMember {
-  const factory ScheduleInstanceMember.reply({
+  const factory ScheduleInstanceMember({
     required Member member,
     ReplyOptions? reply,
     ReplyOptions? defaultReply,
     DefaultRule? defaultRule,
     Profile? profile,
-  }) = ScheduleInstanceMemberReply;
-
-  const factory ScheduleInstanceMember.separator({
-    ReplyOptions? reply,
-    ReplyOptions? defaultReply,
-    int? count,
-  }) = ScheduleInstanceMemberSeparator;
+  }) = _ScheduleInstanceMemberReply;
 }
