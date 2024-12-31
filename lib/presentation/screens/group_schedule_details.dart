@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
@@ -18,7 +20,8 @@ typedef OnDetailsDefaultRuleChangedCallback = void Function(
     RecurrenceRule?, String, String, ReplyOptions?);
 
 class GroupScheduleDetailsScreen extends StatelessWidget {
-  final datetimeFormat = DateFormat.yMMMd()..add_jm();
+  final dateFormat = DateFormat.yMMMd();
+  final timeFormat = DateFormat.jm();
 
   final bool loading;
   final Group? group;
@@ -39,7 +42,9 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final groupName = group?.displayName ?? l10n.loading;
-    final membersList = scheduleInstance?.membersList ?? [];
+    final scheduleName = scheduleInstance?.displayName ?? l10n.loading;
+    final instanceDate = scheduleInstance?.instanceDate;
+    final repliesGroups = scheduleInstance?.repliesGroups ?? [];
 
     return Scaffold(
       body: CustomScrollView(
@@ -47,16 +52,30 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
           SliverAppBar(
             title: Text(groupName),
             floating: true,
+            pinned: true,
             bottom: PreferredSize(
               preferredSize: Size.fromHeight(80),
-              child: ListTile(
-                title: Text(scheduleInstance?.displayName ?? l10n.loading),
-                subtitle: scheduleInstance?.instanceDate != null
-                    ? Text(
-                        datetimeFormat.format(scheduleInstance!.instanceDate),
-                        textAlign: TextAlign.end,
-                      )
-                    : Text(l10n.loading),
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: Text(
+                        scheduleName,
+                        maxLines: 2,
+                        overflow: TextOverflow.fade,
+                      ),
+                    ),
+                    if (instanceDate != null)
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.end,
+                        children: [
+                          Text(dateFormat.format(instanceDate)),
+                          Text(timeFormat.format(instanceDate)),
+                        ],
+                      ),
+                  ],
+                ),
               ),
             ),
           ),
@@ -76,24 +95,21 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
                       reply),
             ),
           ),
-          SliverList.builder(
-            itemCount: membersList.length,
-            itemBuilder: (context, index) {
-              final el = membersList.elementAt(index);
-              if (el is ScheduleInstanceMemberSeparator) {
-                return ListTile(
-                  dense: true,
-                  title: Text(
-                    el.reply == null
-                        ? l10n.unknown
-                        : el.reply == ReplyOptions.yes
-                            ? l10n.yes
-                            : l10n.no,
-                  ),
-                  trailing: Text('${el.count}'),
-                  subtitle: Divider(),
-                );
-              } else if (el is ScheduleInstanceMemberReply) {
+          for (final replyGroup in repliesGroups) ...[
+            SliverPadding(
+              padding: EdgeInsets.only(top: 32, bottom: 16),
+              sliver: SliverPersistentHeader(
+                pinned: true,
+                delegate: _SliverPersistentHeaderDelegate(
+                  maxHeight: kToolbarHeight,
+                  replyGroup: replyGroup,
+                ),
+              ),
+            ),
+            SliverList.builder(
+              itemCount: replyGroup.members.length,
+              itemBuilder: (context, index) {
+                final el = replyGroup.members.elementAt(index);
                 final member = el.member;
                 final profile = el.profile;
                 final reply = el.reply;
@@ -115,12 +131,72 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
                       onDefaultRuleChanged?.call(recurrenceRule,
                           scheduleInstance!.scheduleId, member.id, reply),
                 );
-              }
-              throw Exception('Unknown member type: $el');
-            },
-          )
+              },
+            )
+          ],
         ],
       ),
     );
+  }
+}
+
+class _SliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
+  _SliverPersistentHeaderDelegate({
+    required this.replyGroup,
+    required this.maxHeight,
+    this.minHeight = kToolbarHeight,
+  });
+
+  final double minHeight;
+  final double maxHeight;
+  final ScheduleInstanceRepliesGroup replyGroup;
+
+  @override
+  double get minExtent => minHeight;
+
+  @override
+  double get maxExtent => max(maxHeight, minHeight);
+
+  @override
+  Widget build(
+      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final colorScheme = theme.colorScheme;
+
+    surfaceColorByReply(ReplyOptions? reply) {
+      switch (reply) {
+        case ReplyOptions.yes:
+          return colorScheme.surfaceContainerHighest;
+        case ReplyOptions.no:
+          return colorScheme.surfaceContainerHigh;
+        default:
+          return colorScheme.surfaceContainer;
+      }
+    }
+
+    return SizedBox.expand(
+      child: Container(
+        color: surfaceColorByReply(replyGroup.reply),
+        child: ListTile(
+          dense: overlapsContent,
+          title: Text(
+            replyGroup.reply == null
+                ? l10n.unknown
+                : replyGroup.reply == ReplyOptions.yes
+                    ? l10n.yes
+                    : l10n.no,
+          ),
+          trailing: Text('${replyGroup.count}'),
+        ),
+      ),
+    );
+  }
+
+  @override
+  bool shouldRebuild(_SliverPersistentHeaderDelegate oldDelegate) {
+    return maxHeight != oldDelegate.maxHeight ||
+        minHeight != oldDelegate.minHeight ||
+        replyGroup != oldDelegate.replyGroup;
   }
 }
