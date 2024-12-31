@@ -35,5 +35,4 @@ Map<String, dynamic> _$$DefaultRuleImplToJson(_$DefaultRuleImpl instance) =>
 const _$ReplyOptionsEnumMap = {
   ReplyOptions.yes: 'yes',
   ReplyOptions.no: 'no',
-  ReplyOptions.maybe: 'maybe',
 };
