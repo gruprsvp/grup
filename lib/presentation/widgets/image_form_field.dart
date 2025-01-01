@@ -85,6 +85,9 @@ class _ImageFormFieldState extends FormFieldState<XFile> {
   }
 
   Widget builder() {
+    final radius = widget.radius ?? 20.0;
+    final cameraIconDistance = radius / 5;
+
     return Stack(
       children: [
         ProfilePicture(
@@ -98,8 +101,8 @@ class _ImageFormFieldState extends FormFieldState<XFile> {
         ),
         Positioned.directional(
           textDirection: Directionality.of(context),
-          end: 0,
-          bottom: 0,
+          end: cameraIconDistance,
+          bottom: cameraIconDistance,
           child: IconButton.filledTonal(
             icon: const Icon(Icons.camera_alt_outlined),
             tooltip: AppLocalizations.of(context)!.chooseNewProfilePicture,
