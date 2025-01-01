@@ -11,6 +11,7 @@ export PATH="$PATH:$HOME/flutter/bin"
 
 # https://docs.sentry.io/platforms/flutter/configuration/options/#dist
 # The dist parameter is used to separate different versions of the app in Sentry.
+export SENTRY_RELEASE="is.giorgio.app.parousia@$(grep '^version:' pubspec.yaml | awk '{print $2}')"
 export SENTRY_DIST="$CI_BUILD_NUMBER"
 
 # Run Sentry Dart plugin to upload source maps and debug symbols to Sentry.
