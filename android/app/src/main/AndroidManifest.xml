@@ -42,14 +42,6 @@
             </intent-filter>
 
             <meta-data android:name="flutter_deeplinking_enabled" android:value="true"/>
-            <!-- Deprecated -->
-            <intent-filter android:autoVerify="true">
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="http" android:host="appfor.it"/>
-                <data android:scheme="https"/>
-            </intent-filter>
 
             <intent-filter android:autoVerify="true">
                 <action android:name="android.intent.action.VIEW"/>
@@ -57,14 +49,6 @@
                 <category android:name="android.intent.category.BROWSABLE"/>
                 <data android:scheme="http" android:host="grup.rsvp"/>
                 <data android:scheme="https"/>
-            </intent-filter>
-
-            <!-- Deprecated -->
-            <intent-filter>
-                <action android:name="android.intent.action.VIEW"/>
-                <category android:name="android.intent.category.DEFAULT"/>
-                <category android:name="android.intent.category.BROWSABLE"/>
-                <data android:scheme="appforit"/>
             </intent-filter>
 
             <intent-filter>
