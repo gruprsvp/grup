@@ -115,5 +115,6 @@ jobs:
       - name: Upload to Sentry
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_RELEASE: "is.giorgio.app.parousia@$(grep '^version:' pubspec.yaml | awk '{print $2}')"
           SENTRY_DIST: ${{ github.run_number }}
         run: dart run sentry_dart_plugin
