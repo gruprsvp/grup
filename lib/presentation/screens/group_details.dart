@@ -35,45 +35,47 @@ class GroupDetailsScreen extends StatelessWidget {
                     pinned: true,
                     expandedHeight: groupImage != null ? 256 : 0,
                     flexibleSpace: FlexibleSpaceBar(
-                        background: groupImage != null
-                            ? Hero(
-                                tag: groupImage,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.vertical(
-                                      bottom: Radius.circular(24)),
-                                  child: AspectRatio(
-                                    aspectRatio: 1,
-                                    child: Stack(
-                                      fit: StackFit.expand,
-                                      children: [
-                                        Image.network(groupImage,
-                                            fit: BoxFit.cover),
-                                        DecoratedBox(
-                                          decoration: BoxDecoration(
-                                            gradient: LinearGradient(
-                                              begin: Alignment.topCenter,
-                                              end: Alignment.bottomCenter,
-                                              colors: [
-                                                colorScheme.surface
-                                                    .withValues(alpha: 0.1),
-                                                colorScheme.secondaryContainer
-                                                    .withValues(alpha: 0.8),
-                                              ],
-                                            ),
+                      background: groupImage != null
+                          ? Hero(
+                              tag: groupImage,
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.vertical(
+                                    bottom: Radius.circular(24)),
+                                child: AspectRatio(
+                                  aspectRatio: 1,
+                                  child: Stack(
+                                    fit: StackFit.expand,
+                                    children: [
+                                      Image.network(groupImage,
+                                          fit: BoxFit.cover),
+                                      DecoratedBox(
+                                        decoration: BoxDecoration(
+                                          gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: [
+                                              colorScheme.surface
+                                                  .withValues(alpha: 0.1),
+                                              colorScheme.secondaryContainer
+                                                  .withValues(alpha: 0.8),
+                                            ],
                                           ),
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ),
-                              )
-                            : null,
-                        collapseMode: CollapseMode.pin,
-                        title: Hero(
-                          tag: groupName,
-                          child:
-                              Text(groupName, style: textTheme.headlineMedium),
-                        )),
+                              ),
+                            )
+                          : null,
+                      collapseMode: CollapseMode.pin,
+                      title: group != null
+                          ? Hero(
+                              tag: group!,
+                              child: Text(groupName,
+                                  style: textTheme.headlineMedium))
+                          : null,
+                    ),
                   ),
                   SliverToBoxAdapter(
                     child: Column(

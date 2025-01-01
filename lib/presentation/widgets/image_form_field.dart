@@ -89,11 +89,11 @@ class _ImageFormFieldState extends FormFieldState<XFile> {
     final radius = widget.radius ?? 20.0;
     final cameraIconDistance = radius / 5;
 
-    final ImageProvider image = value != null
+    final ImageProvider? image = value != null
         ? kIsWeb
             ? NetworkImage(value!.path) as ImageProvider
             : FileImage(File(value!.path)) as ImageProvider
-        : widget.initialImage as ImageProvider;
+        : widget.initialImage;
 
     return Stack(
       children: [
