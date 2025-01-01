@@ -1,5 +1,10 @@
-import 'package:parousia/models/models.dart';
-import 'package:rrule/rrule.dart';
+part of 'selectors.dart';
+
+Iterable<Schedule> selectScheduleEntities(AppState state) =>
+    state.schedules.entities.values;
+
+final selectSchedulesIds =
+    createSelector1(selectSchedules, (schedules) => schedules.map((s) => s.id));
 
 ScheduleInstanceSummary repliesForScheduleInstance({
   required DateTime instanceDate,

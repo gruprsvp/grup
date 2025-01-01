@@ -1,16 +1,8 @@
-import 'package:collection/collection.dart';
-import 'package:parousia/models/models.dart';
-import 'package:parousia/state/state.dart';
-import 'package:redux_entity/redux_entity.dart';
-import 'package:reselect/reselect.dart';
+part of 'selectors.dart';
 
 RemoteEntityState<Member> membersSelector(AppState state) => state.members;
 
-RemoteEntityState<Profile> profilesSelector(AppState state) => state.profiles;
-
 String? selectGroupId(AppState state) => state.selectedGroupId;
-
-String? selectAuthUserId(AppState state) => state.auth.user?.id;
 
 final groupMembersSelector = createSelector2(
     membersSelector,

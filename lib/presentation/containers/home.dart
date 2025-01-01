@@ -5,6 +5,7 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:parousia/actions/actions.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
+import 'package:parousia/selectors/selectors.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
 
@@ -61,13 +62,7 @@ sealed class _ViewModel with _$ViewModel {
         store.dispatch(action);
         await action.completer.future;
       },
-      shouldShowFeedback: !(store.state.hasSeenFeedbackCard ?? false) &&
-          store.state.auth.user != null &&
-          store.state.profiles.entities[store.state.auth.user!.id]?.createdAt
-                  ?.isBefore(
-                DateTime.now().subtract(const Duration(days: 3)),
-              ) ==
-              true,
+      shouldShowFeedback: selectShouldShowFeedbackCard(store.state),
       onFeedbackDismiss: () => store.dispatch(InteractedWithFeedback()),
     );
   }
