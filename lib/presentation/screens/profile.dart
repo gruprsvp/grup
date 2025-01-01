@@ -84,6 +84,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           ? NetworkImage(widget.profile!.picture!)
                           : null,
                       radius: 64,
+                      icon: Icons.person,
                     ),
                     TextFormField(
                       focusNode: _nameFocusNode,
