@@ -64,7 +64,9 @@ Future<void> main() async {
       .uriLinkStream
       .listen((uri) => store.dispatch(HandleDeeplinkAction(uri.path)));
 
-  initSentry(() => runApp(ParApp(store: store)));
+  kReleaseMode
+      ? initSentry(() => runApp(ParApp(store: store)))
+      : runApp(ParApp(store: store));
 }
 
 Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
