@@ -9,7 +9,7 @@ class ProfilePicture extends StatelessWidget {
     this.name,
     this.radius,
     this.loadingValue = 1,
-    this.icon = Icons.person,
+    this.icon,
   });
 
   final VoidCallback? onPressed;

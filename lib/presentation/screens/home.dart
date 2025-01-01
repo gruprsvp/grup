@@ -86,6 +86,7 @@ class HomeScreen extends StatelessWidget {
                     ProfileRoute(userNavigated: true).push(context),
                 image: _profilePicture(),
                 name: profile?.displayName,
+                icon: Icons.person,
               ),
             ],
           ),
