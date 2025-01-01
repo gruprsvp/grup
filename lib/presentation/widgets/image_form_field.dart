@@ -1,6 +1,7 @@
 import 'dart:developer' as developer;
 import 'dart:io';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -88,13 +89,17 @@ class _ImageFormFieldState extends FormFieldState<XFile> {
     final radius = widget.radius ?? 20.0;
     final cameraIconDistance = radius / 5;
 
+    final ImageProvider image = value != null
+        ? kIsWeb
+            ? NetworkImage(value!.path) as ImageProvider
+            : FileImage(File(value!.path)) as ImageProvider
+        : widget.initialImage as ImageProvider;
+
     return Stack(
       children: [
         ProfilePicture(
           onPressed: _changeImage,
-          image: value != null
-              ? FileImage(File(value!.path))
-              : widget.initialImage,
+          image: image,
           radius: widget.radius,
           icon: widget.icon,
           // loadingValue: // TODO This should show a loading indicator when the image is being uploaded.
@@ -136,12 +141,12 @@ class _ImageFormFieldState extends FormFieldState<XFile> {
 
     try {
       final cropped = await _imageCropper.cropImage(
-        sourcePath: imageFile.path,
-        aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
-        compressFormat: ImageCompressFormat.jpg,
-        maxHeight: 512,
-        maxWidth: 512,
-      );
+          sourcePath: imageFile.path,
+          aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+          compressFormat: ImageCompressFormat.jpg,
+          maxHeight: 512,
+          maxWidth: 512,
+          uiSettings: [if (context.mounted) WebUiSettings(context: context)]);
       if (cropped == null) return null;
       return XFile(cropped.path);
     } catch (e) {
