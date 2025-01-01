@@ -115,5 +115,5 @@ jobs:
       - name: Upload to Sentry
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-        run: |
-          dart run sentry_dart_plugin
+          SENTRY_DIST: ${{ github.run_number }}
+        run: dart run sentry_dart_plugin
