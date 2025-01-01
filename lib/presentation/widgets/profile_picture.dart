@@ -23,7 +23,7 @@ class ProfilePicture extends StatelessWidget {
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final nameInitials = getNameInitials(name);
-    final padding = radius != null ? radius! / 8.0 : 1.0;
+    final padding = radius != null ? radius! / 12.0 : 1.0;
 
     return ElevatedButton(
       onPressed: onPressed,
