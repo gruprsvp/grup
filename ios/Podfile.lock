@@ -10,8 +10,6 @@ PODS:
   - Flutter (1.0.0)
   - flutter_contacts (0.0.1):
     - Flutter
-  - flutter_email_sender (0.0.1):
-    - Flutter
   - flutter_native_splash (2.4.3):
     - Flutter
   - google_sign_in_ios (0.0.1):
@@ -59,7 +57,6 @@ DEPENDENCIES:
   - app_links (from `.symlinks/plugins/app_links/ios`)
   - Flutter (from `Flutter`)
   - flutter_contacts (from `.symlinks/plugins/flutter_contacts/ios`)
-  - flutter_email_sender (from `.symlinks/plugins/flutter_email_sender/ios`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
   - google_sign_in_ios (from `.symlinks/plugins/google_sign_in_ios/darwin`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
@@ -87,8 +84,6 @@ EXTERNAL SOURCES:
     :path: Flutter
   flutter_contacts:
     :path: ".symlinks/plugins/flutter_contacts/ios"
-  flutter_email_sender:
-    :path: ".symlinks/plugins/flutter_email_sender/ios"
   flutter_native_splash:
     :path: ".symlinks/plugins/flutter_native_splash/ios"
   google_sign_in_ios:
@@ -117,7 +112,6 @@ SPEC CHECKSUMS:
   AppAuth: d4f13a8fe0baf391b2108511793e4b479691fb73
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_contacts: 5383945387e7ca37cf963d4be57c21f2fc15ca9f
-  flutter_email_sender: 2397f5e84aaacfb61af569637a963e7c687858d8
   flutter_native_splash: 576fbd69b830a63594ae678396fa17e43abbc5f8
   google_sign_in_ios: 0ab078e60da6dfe23cbc55c83502b52bba1aad63
   GoogleSignIn: d4281ab6cf21542b1cfaff85c191f230b399d2db

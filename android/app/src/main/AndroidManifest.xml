@@ -2,10 +2,10 @@
 
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
 
-    <!--  https://pub.dev/packages/flutter_email_sender#android-setup  -->
+    <!--  https://pub.dev/packages/url_launcher#android  -->
     <queries>
         <intent>
-            <action android:name="android.intent.action.SENDTO"/>
+            <action android:name="android.intent.action.VIEW"/>
             <data android:scheme="mailto"/>
         </intent>
     </queries>
