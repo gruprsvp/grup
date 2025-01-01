@@ -162,7 +162,7 @@ class _ImageFormFieldState extends FormFieldState<XFile> {
       return ImageSource.gallery;
     }
 
-    return showAdaptiveDialog<ImageSource>(
+    return showDialog<ImageSource>(
       context: context,
       builder: (context) {
         final l10n = AppLocalizations.of(context)!;
