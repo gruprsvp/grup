@@ -49,7 +49,7 @@
   "feedbackEmailBody": "Hola equipo de GRUP,\n\nTengo algunos comentarios para vosotros:\n\n",
   "feedbackPromptTitle": "¿Cómo lo estamos haciendo?",
   "feedbackPromptBody": "Si te gusta <title>GRUP</title>, por favor déjanos una reseña positiva para llegar a más personas.\nSi tienes algún comentario, por favor háznoslo saber para que podamos mejorar.",
-  "feedbackStoreReview": "Califícanos en {store}",
+  "feedbackStoreReview": "Déjanos una reseña en {store}",
   "feedbackTellUs": "Envíanos un mensaje",
   "gallery": "Galería",
   "groupDismissAdmin": "Descarta como admin",
