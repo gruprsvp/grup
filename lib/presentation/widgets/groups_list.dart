@@ -33,7 +33,7 @@ class GroupsList extends StatelessWidget {
             ),
           ),
           title: Hero(
-              tag: displayName,
+              tag: group,
               child: Text(displayName, style: theme.textTheme.headlineMedium)),
           subtitle: description != null
               ? Text(description,
