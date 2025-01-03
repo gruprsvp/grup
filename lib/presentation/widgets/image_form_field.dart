@@ -141,12 +141,24 @@ class _ImageFormFieldState extends FormFieldState<XFile> {
 
     try {
       final cropped = await _imageCropper.cropImage(
-          sourcePath: imageFile.path,
-          aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
-          compressFormat: ImageCompressFormat.jpg,
-          maxHeight: 512,
-          maxWidth: 512,
-          uiSettings: [if (context.mounted) WebUiSettings(context: context)]);
+        sourcePath: imageFile.path,
+        aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
+        compressFormat: ImageCompressFormat.jpg,
+        maxHeight: 512,
+        maxWidth: 512,
+        uiSettings: [
+          if (context.mounted)
+            WebUiSettings(
+              context: context,
+              // https://github.com/hnvn/flutter_image_cropper/issues/529
+              // Hack to avoid the cropper being too big on the web, at least
+              // initially, as resizing the window won't resize the cropper.
+              size: CropperSize(
+                height: MediaQuery.of(context).size.height ~/ 2,
+              ),
+            ),
+        ],
+      );
       if (cropped == null) return null;
       return XFile(cropped.path);
     } catch (e) {
