@@ -17,7 +17,7 @@ Future<void> initSentry(AppRunner? appRunner) async {
   await SentryFlutter.init(
     (options) {
       options.dsn =
-          'https://1b0aa021dcaeef223fe5ee6105969fe4@o4508562988597248.ingest.de.sentry.io/4508562990039120';
+          'https://377e317b8978ea82dfbc3980ba960339@o4508580592484352.ingest.de.sentry.io/4508580610572368';
       options.tracesSampleRate = 0.5;
       options.profilesSampleRate = 0.5;
     },
