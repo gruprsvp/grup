@@ -191,7 +191,7 @@ sentry:
   upload_source_maps: true
   upload_sources: true
   project: grup
-  org: sealambda
+  org: sealambda-3q
   log_level: error
   commits: auto
   ignore_missing: true
