@@ -57,11 +57,11 @@ jobs:
           SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROD_PROJECT_ID }}
 
       - name: Compare pubspec version and git tag
-        id: pubspec_tag
+        id: parse_pubspec
         run: |
           PUBSPEC_VERSION=v$(grep -oP '^version:\s*\K[0-9]+\.[0-9]+\.[0-9]+' pubspec.yaml)
           echo "Found version in pubspec.yaml: $PUBSPEC_VERSION"      
-          echo "tag_name=$PUBSPEC_VERSION" >> $GITHUB_OUTPUT
+          echo "pubspec_version=$PUBSPEC_VERSION" >> $GITHUB_OUTPUT
 
       # This step prepares a draft release with the release notes generated from the commit messages,
       # and the tag name from the pubspec.yaml file. It will only update the release if it is a draft
@@ -70,8 +70,8 @@ jobs:
       - name: Create or update draft release
         uses: ncipollo/release-action@v1
         with:
-          name: ${{ steps.pubspec_tag.outputs.tag_name }}
-          tag: ${{ steps.pubspec_tag.outputs.tag_name }}
+          name: "v${{ steps.parse_pubspec.outputs.pubspec_version }}"
+          tag: "v${{ steps.parse_pubspec.outputs.pubspec_version }}"
           generateReleaseNotes: true
           makeLatest: true
           draft: true
@@ -115,6 +115,8 @@ jobs:
       - name: Upload to Sentry
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          SENTRY_RELEASE: "is.giorgio.app.parousia@${{ steps.pubspec_tag.outputs.tag_name }}"
+          # The +1 is explicitly provided for consistency with the Xcode Cloud build: since we set SENTRY_DIST below,
+          # Sentry will automatically pick that as build number anyway.
+          SENTRY_RELEASE: "is.giorgio.app.parousia@${{ steps.parse_pubspec.outputs.pubspec_version }}+1"
           SENTRY_DIST: ${{ github.run_number }}
         run: dart run sentry_dart_plugin
