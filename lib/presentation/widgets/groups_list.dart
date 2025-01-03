@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/presentation/presentation.dart';
 
 /// A widget to display a list of groups and route to their details.
 class GroupsList extends StatelessWidget {
@@ -22,14 +23,11 @@ class GroupsList extends StatelessWidget {
         return ListTile(
           leading: Hero(
             tag: picture ?? group.hashCode,
-            child: CircleAvatar(
-              radius: 32,
-              foregroundImage: picture != null ? NetworkImage(picture) : null,
-              child: Icon(
-                Icons.group,
-                size: 32,
-                color: Colors.white,
-              ),
+            child: ProfilePicture(
+              image: picture != null ? NetworkImage(picture) : null,
+              icon: Icons.group,
+              radius: 24,
+              color: theme.colorScheme.secondary,
             ),
           ),
           title: Hero(

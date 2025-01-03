@@ -21,6 +21,7 @@ class ImageFormField extends FormField<XFile> {
     this.initialImage,
     this.icon,
     this.radius,
+    this.color,
   }) : super(builder: (state) => (state as _ImageFormFieldState).builder());
 
   /// Controls the state of the image.
@@ -37,6 +38,9 @@ class ImageFormField extends FormField<XFile> {
 
   /// The radius of the image.
   final double? radius;
+
+  /// The color of the icon.
+  final Color? color;
 
   @override
   FormFieldState<XFile> createState() => _ImageFormFieldState();
@@ -102,6 +106,7 @@ class _ImageFormFieldState extends FormFieldState<XFile> {
           image: image,
           radius: widget.radius,
           icon: widget.icon,
+          color: widget.color,
           // loadingValue: // TODO This should show a loading indicator when the image is being uploaded.
         ),
         Positioned.directional(

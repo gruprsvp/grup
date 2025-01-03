@@ -25,71 +25,48 @@ class GroupDetailsScreen extends StatelessWidget {
     final groupId = group?.id;
     final groupIdStr = groupId?.toString();
     final groupImage = group?.picture;
-    final groupName = group?.displayName ?? groupIdStr ?? '';
+    final groupName = group?.displayName ?? l10n.loading;
     final groupDescription = group?.description;
+
+    final imageOrDescriptionToShow =
+        groupImage != null || groupDescription != null;
 
     return Scaffold(
         body: NestedScrollView(
             headerSliverBuilder: (context, innerBoxIsScrolled) => [
                   SliverAppBar(
                     pinned: true,
-                    expandedHeight: groupImage != null ? 256 : 0,
-                    flexibleSpace: FlexibleSpaceBar(
-                      background: groupImage != null
-                          ? Hero(
-                              tag: groupImage,
-                              child: ClipRRect(
-                                borderRadius: BorderRadius.vertical(
-                                    bottom: Radius.circular(24)),
-                                child: AspectRatio(
-                                  aspectRatio: 1,
-                                  child: Stack(
-                                    fit: StackFit.expand,
-                                    children: [
-                                      Image.network(groupImage,
-                                          fit: BoxFit.cover),
-                                      DecoratedBox(
-                                        decoration: BoxDecoration(
-                                          gradient: LinearGradient(
-                                            begin: Alignment.topCenter,
-                                            end: Alignment.bottomCenter,
-                                            colors: [
-                                              colorScheme.surface
-                                                  .withValues(alpha: 0.1),
-                                              colorScheme.secondaryContainer
-                                                  .withValues(alpha: 0.8),
-                                            ],
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
+                    title: Text(groupName),
+                    bottom: PreferredSize(
+                      preferredSize: Size.fromHeight(60),
+                      child: const DateDropdownContainer(),
+                    ),
+                  ),
+                  if (imageOrDescriptionToShow)
+                    SliverToBoxAdapter(
+                      child: Column(
+                        children: [
+                          if (groupImage != null)
+                            Padding(
+                              padding: EdgeInsets.all(16),
+                              child: Hero(
+                                tag: groupImage,
+                                child: ProfilePicture(
+                                  image: NetworkImage(groupImage),
+                                  icon: Icons.group,
+                                  radius: 128,
+                                  color: colorScheme.secondary,
                                 ),
                               ),
+                            ),
+                          if (groupDescription != null)
+                            Padding(
+                              padding: EdgeInsets.all(16),
+                              child: Text(groupDescription),
                             )
-                          : null,
-                      collapseMode: CollapseMode.pin,
-                      title: group != null
-                          ? Hero(
-                              tag: group!,
-                              child: Text(groupName,
-                                  style: textTheme.headlineMedium))
-                          : null,
+                        ],
+                      ),
                     ),
-                  ),
-                  SliverToBoxAdapter(
-                    child: Column(
-                      children: [
-                        if (groupDescription != null)
-                          Padding(
-                            padding:
-                                EdgeInsets.only(top: 32, left: 16, right: 16),
-                            child: Text(groupDescription),
-                          ),
-                        const DateDropdownContainer(),
-                      ],
-                    ),
-                  ),
                 ],
             body: SchedulesListContainer(groupId: groupIdStr)),
         floatingActionButton: isAdmin && groupIdStr != null
