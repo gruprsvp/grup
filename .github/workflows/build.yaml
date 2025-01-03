@@ -59,7 +59,7 @@ jobs:
       - name: Compare pubspec version and git tag
         id: parse_pubspec
         run: |
-          PUBSPEC_VERSION=v$(grep -oP '^version:\s*\K[0-9]+\.[0-9]+\.[0-9]+' pubspec.yaml)
+          PUBSPEC_VERSION=$(grep -oP '^version:\s*\K[0-9]+\.[0-9]+\.[0-9]+' pubspec.yaml)
           echo "Found version in pubspec.yaml: $PUBSPEC_VERSION"      
           echo "pubspec_version=$PUBSPEC_VERSION" >> $GITHUB_OUTPUT
 
