@@ -117,6 +117,6 @@ jobs:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
           # The +1 is explicitly provided for consistency with the Xcode Cloud build: since we set SENTRY_DIST below,
           # Sentry will automatically pick that as build number anyway.
-          SENTRY_RELEASE: "is.giorgio.app.parousia@${{ steps.parse_pubspec.outputs.pubspec_version }}+1"
+          SENTRY_RELEASE: "is.giorgio.app.parousia@${{ steps.parse_pubspec.outputs.pubspec_version }}"
           SENTRY_DIST: ${{ github.run_number }}
         run: dart run sentry_dart_plugin
