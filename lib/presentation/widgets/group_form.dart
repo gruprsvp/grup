@@ -48,6 +48,7 @@ class _GroupFormState extends State<GroupForm> {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Form(
       key: _formKey,
@@ -63,6 +64,7 @@ class _GroupFormState extends State<GroupForm> {
                     builder: (context, child) => ImageFormField(
                       radius: 64,
                       icon: Icons.group,
+                      color: colorScheme.secondary,
                       controller: _imageController,
                       initialImage: widget.group?.picture != null
                           ? NetworkImage(widget.group!.picture!)
