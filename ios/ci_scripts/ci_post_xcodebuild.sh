@@ -13,7 +13,7 @@ export PATH="$PATH:$HOME/flutter/bin"
 # This command gets the version from the pubspec.yaml file - without the +1 part.
 # SENTRY_DIST below will be the CI_BUILD_NUMBER.
 # This grep command is different from the one in GitHub Actions because here we are on macOS.
-SENTRY_RELEASE="is.giorgio.app.parousia@$(grep '^version:' pubspec.yaml | awk -F'[ +]' '{print $2}')"
+SENTRY_RELEASE="is.giorgio.app.parousia@$(grep '^version:' pubspec.yaml | awk -F'[ +]' '{print $2 "+" $3}')"
 export SENTRY_RELEASE
 
 # https://docs.sentry.io/platforms/flutter/configuration/options/#dist

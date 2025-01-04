@@ -85,6 +85,10 @@ jobs:
           git fetch origin gh-pages:gh-pages
 
       - name: Compile web and put in gh-pages branch
+        env:
+          # This should ensure that the web build has the same settings as mobile apps to configure Sentry consistently
+          SENTRY_RELEASE: "is.giorgio.app.parousia@${{ steps.parse_pubspec.outputs.pubspec_version }}+${{ github.run_number }}"
+          SENTRY_DIST: ${{ github.run_number }}
         run: dart run peanut
 
       - name: Push gh-pages
@@ -115,8 +119,6 @@ jobs:
       - name: Upload to Sentry
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
-          # The +1 is explicitly provided for consistency with the Xcode Cloud build: since we set SENTRY_DIST below,
-          # Sentry will automatically pick that as build number anyway.
-          SENTRY_RELEASE: "is.giorgio.app.parousia@${{ steps.parse_pubspec.outputs.pubspec_version }}"
+          SENTRY_RELEASE: "is.giorgio.app.parousia@${{ steps.parse_pubspec.outputs.pubspec_version }}+${{ github.run_number }}"
           SENTRY_DIST: ${{ github.run_number }}
         run: dart run sentry_dart_plugin
