@@ -18,6 +18,13 @@ class GroupsRepository extends SupabaseRepository {
     );
   }
 
+  Future<Group> getGroup(String groupId) async {
+    final list = await repository.get<Group>(
+      query: Query.where('id', groupId),
+    );
+    return list.first;
+  }
+
   Future<Group> createGroup(Group group) async {
     return repository.upsert(group);
   }

@@ -89,7 +89,7 @@ class GroupEvents extends StatelessWidget {
       return;
     }
 
-    final newSchedule = result.copyWith(groupId: group!.id);
+    final newSchedule = result.copyWith(group: group);
     onCreate?.call(newSchedule);
   }
 

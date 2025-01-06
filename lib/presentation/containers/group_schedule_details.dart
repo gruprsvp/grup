@@ -63,33 +63,25 @@ sealed class _ViewModel with _$ViewModel {
           (store.state.groups.loadingIds[groupId] ?? false),
       group: group,
       scheduleInstance: selectScheduleInstanceForDate(store.state),
-      onReplyChanged: (schedule, targetMemberId, reply) {
-        if (reply == null) {
-          store.dispatch(RequestDeleteReplyAction(
-            memberId: targetMemberId,
-            scheduleId: schedule.scheduleId,
-            instanceDate: schedule.instanceDate,
-          ));
+      onReplyChanged: (reply, replyOption) {
+        if (reply == null) return;
+        if (replyOption == null) {
+          store.dispatch(RequestDeleteReplyAction(reply: reply));
         } else {
-          store.dispatch(RequestUpdateOne(Reply(
-              memberId: targetMemberId,
-              scheduleId: schedule.scheduleId,
-              instanceDate: schedule.instanceDate,
-              selectedOption: reply)));
+          store.dispatch(
+              RequestUpdateOne(reply.copyWith(selectedOption: replyOption)));
         }
       },
-      onDefaultRuleChanged: (defaultRule, scheduleId, targetMemberId, reply) {
-        if (reply == null || defaultRule == null) {
-          store.dispatch(RequestDeleteDefaultRuleAction(
-            memberId: targetMemberId,
-            scheduleId: scheduleId,
-          ));
+      onDefaultRuleChanged: (defaultRule, recurrenceRule, replyOptions) {
+        if (defaultRule == null) return;
+        if (replyOptions == null || recurrenceRule == null) {
+          store.dispatch(
+              RequestDeleteDefaultRuleAction(defaultRule: defaultRule));
         } else {
-          store.dispatch(RequestUpdateOne(DefaultRule(
-              memberId: targetMemberId,
-              scheduleId: scheduleId,
-              selectedOption: reply,
-              recurrenceRule: defaultRule)));
+          store.dispatch(RequestUpdateOne(defaultRule.copyWith(
+            recurrenceRule: recurrenceRule,
+            selectedOption: replyOptions,
+          )));
         }
       },
     );

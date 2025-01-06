@@ -1,14 +1,18 @@
 // GENERATED CODE DO NOT EDIT
 // This file should be version controlled
 import 'package:brick_sqlite/db.dart';
-part '20241212094318.migration.dart';
+part '20241218183840.migration.dart';
+part '20241219192007.migration.dart';
 
 /// All intelligently-generated migrations from all `@Migratable` classes on disk
-final migrations = <Migration>{const Migration20241212094318()};
+final migrations = <Migration>{
+  const Migration20241218183840(),
+  const Migration20241219192007()
+};
 
 /// A consumable database structure including the latest generated migration.
 final schema =
-    Schema(20241212094318, generatorVersion: 1, tables: <SchemaTable>{
+    Schema(20241219192007, generatorVersion: 1, tables: <SchemaTable>{
   SchemaTable('Group', columns: <SchemaColumn>{
     SchemaColumn('_brick_id', Column.integer,
         autoincrement: true, nullable: false, isPrimaryKey: true),
@@ -21,6 +25,24 @@ final schema =
   }, indices: <SchemaIndex>{
     SchemaIndex(columns: ['id'], unique: true)
   }),
+  SchemaTable('DefaultRule', columns: <SchemaColumn>{
+    SchemaColumn('_brick_id', Column.integer,
+        autoincrement: true, nullable: false, isPrimaryKey: true),
+    SchemaColumn('member_Member_brick_id', Column.integer,
+        isForeignKey: true,
+        foreignTableName: 'Member',
+        onDeleteCascade: false,
+        onDeleteSetDefault: false),
+    SchemaColumn('schedule_Schedule_brick_id', Column.integer,
+        isForeignKey: true,
+        foreignTableName: 'Schedule',
+        onDeleteCascade: false,
+        onDeleteSetDefault: false),
+    SchemaColumn('selected_option', Column.integer),
+    SchemaColumn('recurrence_rule', Column.varchar),
+    SchemaColumn('created_at', Column.datetime),
+    SchemaColumn('updated_at', Column.datetime)
+  }, indices: <SchemaIndex>{}),
   SchemaTable('Invite', columns: <SchemaColumn>{
     SchemaColumn('_brick_id', Column.integer,
         autoincrement: true, nullable: false, isPrimaryKey: true),
@@ -75,24 +97,6 @@ final schema =
   }, indices: <SchemaIndex>{
     SchemaIndex(columns: ['id'], unique: true)
   }),
-  SchemaTable('DefaultReply', columns: <SchemaColumn>{
-    SchemaColumn('_brick_id', Column.integer,
-        autoincrement: true, nullable: false, isPrimaryKey: true),
-    SchemaColumn('member_Member_brick_id', Column.integer,
-        isForeignKey: true,
-        foreignTableName: 'Member',
-        onDeleteCascade: false,
-        onDeleteSetDefault: false),
-    SchemaColumn('schedule_Schedule_brick_id', Column.integer,
-        isForeignKey: true,
-        foreignTableName: 'Schedule',
-        onDeleteCascade: false,
-        onDeleteSetDefault: false),
-    SchemaColumn('selected_option', Column.integer),
-    SchemaColumn('recurrence_rule', Column.varchar),
-    SchemaColumn('created_at', Column.datetime),
-    SchemaColumn('updated_at', Column.datetime)
-  }, indices: <SchemaIndex>{}),
   SchemaTable('Profile', columns: <SchemaColumn>{
     SchemaColumn('_brick_id', Column.integer,
         autoincrement: true, nullable: false, isPrimaryKey: true),
@@ -115,9 +119,11 @@ final schema =
         foreignTableName: 'Schedule',
         onDeleteCascade: false,
         onDeleteSetDefault: false),
-    SchemaColumn('instance_date', Column.datetime),
+    SchemaColumn('instance_date', Column.datetime, unique: true),
     SchemaColumn('selected_option', Column.integer),
     SchemaColumn('created_at', Column.datetime),
     SchemaColumn('updated_at', Column.datetime)
-  }, indices: <SchemaIndex>{})
+  }, indices: <SchemaIndex>{
+    SchemaIndex(columns: ['instance_date'], unique: true)
+  })
 });

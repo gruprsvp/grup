@@ -50,7 +50,7 @@ Future<void> main() async {
   await repo.initialize();
   final supabaseClient = repo.remoteProvider.client;
 
-  final store = await _initStore(supabaseClient);
+  final store = await _initStore(repo);
 
   // Propagate auth state changes to the store
   supabaseClient.auth.onAuthStateChange
@@ -66,15 +66,15 @@ Future<void> main() async {
   );
 }
 
-Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
-  final defaultRulesRepository = DefaultRulesRepository(supabase: supabase);
-  final groupsRepository = GroupsRepository(supabase: supabase);
-  final membersRepository = MembersRepository(supabase: supabase);
-  final invitesRepository = InvitesRepository(supabase: supabase);
-  final profilesRepository = ProfilesRepository(supabase: supabase);
-  final repliesRepository = RepliesRepository(supabase: supabase);
-  final schedulesRepository = SchedulesRepository(supabase: supabase);
-  final storageRepository = StorageRepository(supabase: supabase);
+Future<Store<AppState>> _initStore(ParRepository repository) async {
+  final defaultRulesRepository = DefaultRulesRepository(repository: repository);
+  final groupsRepository = GroupsRepository(repository: repository);
+  final membersRepository = MembersRepository(repository: repository);
+  final invitesRepository = InvitesRepository(repository: repository);
+  final profilesRepository = ProfilesRepository(repository: repository);
+  final repliesRepository = RepliesRepository(repository: repository);
+  final schedulesRepository = SchedulesRepository(repository: repository);
+  final storageRepository = StorageRepository(repository: repository);
 
   final epics = combineEpics<AppState>([
     createRouterEpics(router),

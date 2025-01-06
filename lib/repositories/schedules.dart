@@ -1,36 +1,26 @@
-import 'package:parousia/models/models.dart';
+import 'package:brick_core/core.dart';
 import 'package:parousia/brick/brick.dart';
-import 'package:uuid/uuid.dart';
 
-import 'const.dart';
 import 'supabase.dart';
 
-class SchedulesRepository extends SupabaseRepository with Postgrest {
-  const SchedulesRepository({required super.supabase})
-      : super(tableName: Tables.schedules);
+class SchedulesRepository extends SupabaseRepository {
+  const SchedulesRepository({required super.repository});
 
   Future<Schedule> createSchedule(Schedule schedule) async {
-    return table()
-        .insert({
-          'id': const Uuid().v7(),
-          'group_id': schedule.groupId,
-          'display_name': schedule.displayName,
-          'start_date': schedule.startDate.toIso8601String(),
-          'recurrence_rule': schedule.recurrenceRule,
-        })
-        .select()
-        .single()
-        .withConverter((data) => Schedule.fromJson(data));
+    return repository.upsert(schedule);
   }
 
   Future<Iterable<Schedule>> getGroupSchedules(String groupId) async {
-    return table()
-        .select('*,replies(*),default_rules(*)')
-        .eq('group_id', groupId)
-        .withConverter((data) => data.map(Schedule.fromJson));
+    return repository.get<Schedule>(
+      query: Query(
+        where: [
+          Where('groups.id').isExactly(groupId),
+        ],
+      ),
+    );
   }
 
-  Future<void> deleteSchedule(String scheduleId) async {
-    return table().delete().eq('id', scheduleId);
+  Future<bool> deleteSchedule(Schedule schedule) async {
+    return repository.delete(schedule);
   }
 }

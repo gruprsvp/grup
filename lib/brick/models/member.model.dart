@@ -1,16 +1,20 @@
 import 'package:brick_offline_first_with_supabase/brick_offline_first_with_supabase.dart';
 import 'package:brick_sqlite/brick_sqlite.dart';
 import 'package:brick_supabase/brick_supabase.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:parousia/brick/brick.dart';
 import 'package:parousia/models/models.dart';
 import 'package:uuid/v7.dart';
+
+part 'member.model.mapper.dart';
 
 @ConnectOfflineFirstWithSupabase(
   supabaseConfig: SupabaseSerializable(
     tableName: 'members',
   ),
 )
-class Member extends OfflineFirstWithSupabaseModel {
+@MappableClass()
+class Member extends OfflineFirstWithSupabaseModel with MemberMappable {
   @Supabase(unique: true)
   @Sqlite(unique: true, index: true)
   final String id;

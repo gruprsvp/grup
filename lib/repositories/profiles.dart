@@ -1,20 +1,16 @@
-import 'package:parousia/models/models.dart';
+import 'package:brick_core/core.dart';
 import 'package:parousia/brick/brick.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supabase/supabase.dart';
 
-import 'const.dart';
 import 'supabase.dart';
 
-class ProfilesRepository extends SupabaseRepository with Postgrest {
-  const ProfilesRepository({required super.supabase})
-      : super(tableName: Tables.profiles);
+class ProfilesRepository extends SupabaseRepository {
+  const ProfilesRepository({required super.repository});
 
-  Future<Profile> getProfileById(String id) async {
-    return table()
-        .select()
-        .eq('id', id)
-        .single()
-        .withConverter(Profile.fromJson);
+  Future<Profile> getProfile(String profileId) async {
+    return repository
+        .get<Profile>(query: Query.where('id', profileId))
+        .then((profiles) => profiles.first);
   }
 
   Future<UserResponse> updateProfile({
@@ -22,16 +18,20 @@ class ProfilesRepository extends SupabaseRepository with Postgrest {
     String? displayName,
     String? pictureUrl,
   }) async {
-    return supabase.auth.updateUser(UserAttributes(data: {
+    final supabaseClient = repository.remoteProvider.client;
+    return await supabaseClient.auth.updateUser(UserAttributes(data: {
       if (displayName != null) 'full_name': displayName,
       if (pictureUrl != null) 'avatar_url': pictureUrl,
     }));
   }
 
   Future<void> deleteProfile() async {
-    await supabase.functions.invoke('delete_user_account');
+    final supabaseClient = repository.remoteProvider.client;
+    await supabaseClient.functions.invoke('delete_user_account');
   }
 
-  Future<void> signOut() async =>
-      await supabase.auth.signOut(scope: SignOutScope.global);
+  Future<void> signOut() async {
+    final supabaseClient = repository.remoteProvider.client;
+    await supabaseClient.auth.signOut(scope: SignOutScope.global);
+  }
 }

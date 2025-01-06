@@ -1,16 +1,20 @@
 import 'package:brick_offline_first_with_supabase/brick_offline_first_with_supabase.dart';
 import 'package:brick_sqlite/brick_sqlite.dart';
 import 'package:brick_supabase/brick_supabase.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:parousia/brick/models/group.model.dart';
 import 'package:rrule/rrule.dart';
 import 'package:uuid/v7.dart';
+
+part 'schedule.model.mapper.dart';
 
 @ConnectOfflineFirstWithSupabase(
   supabaseConfig: SupabaseSerializable(
     tableName: 'schedules',
   ),
 )
-class Schedule extends OfflineFirstWithSupabaseModel {
+@MappableClass()
+class Schedule extends OfflineFirstWithSupabaseModel with ScheduleMappable {
   @Supabase(unique: true)
   @Sqlite(unique: true, index: true)
   final String? id;

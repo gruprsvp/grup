@@ -1,12 +1,11 @@
 import 'package:flutter/foundation.dart';
+import 'package:parousia/brick/brick.dart';
 
 @immutable
 class RequestDeleteDefaultRuleAction {
-  final String memberId;
-  final String scheduleId;
+  final DefaultRule defaultRule;
 
   const RequestDeleteDefaultRuleAction({
-    required this.memberId,
-    required this.scheduleId,
+    required this.defaultRule,
   });
 }

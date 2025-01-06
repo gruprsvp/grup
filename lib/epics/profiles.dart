@@ -13,6 +13,7 @@ import 'package:uuid/uuid.dart';
 createProfileEpics(ProfilesRepository profiles, StorageRepository storage) =>
     combineEpics<AppState>([
       _createRetrieveOneProfileEpic(profiles),
+      _createRetrieveMembersEpic(profiles),
       _createSignOutEpic(profiles),
       _createUpdateProfileEpic(profiles, storage),
       _createUpdateOneProfileEpic(profiles),
@@ -45,11 +46,18 @@ Epic<AppState> _createRetrieveOneProfileEpic(ProfilesRepository profiles) {
       .whereType<RequestRetrieveOne<Profile>>()
       .asyncMap(
         (action) => profiles
-            .getProfileById(action.id)
+            .getProfile(action.id)
             .then<dynamic>((profile) => SuccessRetrieveOne<Profile>(profile))
             .catchError((error) =>
                 FailRetrieveOne<Profile>(id: action.id, error: error)),
       );
+}
+
+Epic<AppState> _createRetrieveMembersEpic(ProfilesRepository profiles) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
+      .whereType<SuccessRetrieveMany<Member>>()
+      .asyncMap((action) => action.entities.map((member) =>
+          member.profile ?? SuccessRetrieveOne<Profile>(member.profile!)));
 }
 
 /// Redirect to the profile page when the user profile is loaded and has no name

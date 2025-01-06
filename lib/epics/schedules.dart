@@ -41,12 +41,14 @@ Epic<AppState> _createCreateOneScheduleEpic(SchedulesRepository schedules) {
 
 /// When the user requests to delete one schedule
 Epic<AppState> _createDeleteOneScheduleEpic(SchedulesRepository schedules) {
-  return (Stream<dynamic> actions, EpicStore<AppState> store) =>
-      actions.whereType<RequestDeleteOne<Schedule>>().asyncMap(
-            (action) => schedules
-                .deleteSchedule(action.id)
-                .then<dynamic>((_) => SuccessDeleteOne<Schedule>(action.id))
-                .catchError((error) =>
-                    FailDeleteOne<Schedule>(id: action.id, error: error)),
-          );
+  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
+      .whereType<GroupScheduleDeleteAction>()
+      .asyncMap(
+        (action) => schedules
+            .deleteSchedule(action.schedule)
+            .then<dynamic>(
+                (_) => SuccessDeleteOne<Schedule>(action.schedule.id!))
+            .catchError((error) =>
+                FailDeleteOne<Schedule>(id: action.schedule.id!, error: error)),
+      );
 }

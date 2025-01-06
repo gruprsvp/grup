@@ -20,7 +20,7 @@ class Fake {
 
   static Schedule schedule() => Schedule(
         id: const Uuid().v7(),
-        groupId: const Uuid().v7(),
+        group: group(),
         displayName: faker.lorem.sentence(),
         recurrenceRule: CommonRecurrenceRules.monthly,
         startDate: DateTime.now(),

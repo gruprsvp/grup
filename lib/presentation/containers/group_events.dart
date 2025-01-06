@@ -62,7 +62,7 @@ sealed class _ViewModel with _$ViewModel {
         RequestCreateOne<Schedule>(schedule),
       ),
       onScheduleDelete: (schedule) => store.dispatch(
-        RequestDeleteOne<Schedule>(schedule.id.toString()),
+        RequestDeleteOne<Schedule>(schedule.id!),
       ),
       rrulel10n: rruleL10nSelector(store.state),
     );

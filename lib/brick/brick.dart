@@ -1,5 +1,5 @@
 export 'brick.g.dart';
-export 'models/default_reply.model.dart';
+export 'models/default_rule.model.dart';
 export 'models/group.model.dart';
 export 'models/invite.model.dart';
 export 'models/member.model.dart';

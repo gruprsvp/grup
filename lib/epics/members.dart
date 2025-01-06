@@ -13,6 +13,7 @@ createMembersEpic(MembersRepository members) => combineEpics<AppState>([
       _onNewMembersCreated,
       _createRetrieveOwnMemberByGroupIdEpic(members),
       _createDeleteOneMember(members),
+      _createRetrieveMembersByGroupIdEpic(members)
     ]);
 
 Epic<AppState> _createAddMembersToGroupEpic(MembersRepository members) {
@@ -37,11 +38,7 @@ Epic<AppState> _createUpdateMemberEpic(MembersRepository members) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestUpdateOne<Member>>().asyncMap(
             (action) => members
-                .updateMember(
-                  memberId: action.entity.id,
-                  displayNameOverride: action.entity.displayNameOverride,
-                  role: action.entity.role,
-                )
+                .updateMember(action.entity)
                 .then<dynamic>((member) => SuccessUpdateOne<Member>(member))
                 .onError((error, stackTrace) =>
                     FailUpdateOne<Member>(entity: action.entity, error: error)),
@@ -66,6 +63,18 @@ Epic<AppState> _createRetrieveOwnMemberByGroupIdEpic(
         return members
             .getOwnMemberByGroupId(groupId)
             .then<dynamic>((member) => SuccessRetrieveOne(member))
+            .catchError((error) => FailRetrieveOne(id: groupId, error: error));
+      });
+}
+
+Epic<AppState> _createRetrieveMembersByGroupIdEpic(MembersRepository members) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) =>
+      actions.whereType<SuccessRetrieveOne<Group>>().asyncMap((action) {
+        final groupId = action.entity.id;
+        return members
+            .getMembersByGroupId(groupId)
+            .then<dynamic>(
+                (members) => SuccessRetrieveMany<Member>(members.toList()))
             .catchError((error) => FailRetrieveOne(id: groupId, error: error));
       });
 }

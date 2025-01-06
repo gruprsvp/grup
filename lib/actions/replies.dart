@@ -1,14 +1,12 @@
 import 'package:flutter/foundation.dart';
 
+import 'package:parousia/brick/brick.dart';
+
 @immutable
 class RequestDeleteReplyAction {
-  final String memberId;
-  final String scheduleId;
-  final DateTime instanceDate;
+  final Reply reply;
 
   const RequestDeleteReplyAction({
-    required this.memberId,
-    required this.scheduleId,
-    required this.instanceDate,
+    required this.reply,
   });
 }

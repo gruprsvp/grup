@@ -11,13 +11,13 @@ ScheduleInstanceSummary repliesForScheduleInstance({
   Iterable<Reply>? replies,
   String? targetMemberId,
 }) {
-  final allReplies = <String, ReplyOptions>{};
-  final memberReplies = <String, ReplyOptions>{};
-  final memberDefaultReplies = <String, ReplyOptions>{};
+  final allReplies = <String, Reply>{};
+  final memberReplies = <String, Reply>{};
+  final memberDefaultReplies = <String, Reply>{};
   final memberDefaultRules = <String, DefaultRule>{};
 
-  ReplyOptions? myReply;
-  ReplyOptions? myDefaultReply;
+  Reply? myReply;
+  Reply? myDefaultReply;
   DefaultRule? myDefaultRule;
 
   defaultRules?.forEach((defaultRule) {
@@ -36,18 +36,24 @@ ScheduleInstanceSummary repliesForScheduleInstance({
       before: endDate,
       includeAfter: true,
     )
-        .forEach((e) {
-      final isSameDay = e.copyWith(isUtc: true).isAtSameMomentAs(instanceDate);
+        .forEach((dateTime) {
+      final isSameDay =
+          dateTime.copyWith(isUtc: true).isAtSameMomentAs(instanceDate);
       final isSameSchedule = defaultRule.schedule.id == schedule.id;
 
       if (isSameDay && isSameSchedule) {
+        final defaultReply = Reply(
+          instanceDate: dateTime,
+          schedule: schedule,
+          member: defaultRule.member,
+          selectedOption: defaultRule.selectedOption,
+        );
         if (defaultRule.member.id == targetMemberId) {
-          myDefaultReply = defaultRule.selectedOption;
+          myDefaultReply = defaultReply;
         } else {
-          memberDefaultReplies[defaultRule.member.id] =
-              defaultRule.selectedOption;
+          memberDefaultReplies[defaultRule.member.id] = defaultReply;
         }
-        allReplies[defaultRule.member.id] = defaultRule.selectedOption;
+        allReplies[defaultRule.member.id] = defaultReply;
       }
     });
   });
@@ -60,20 +66,21 @@ ScheduleInstanceSummary repliesForScheduleInstance({
       final isSameSchedule = reply.schedule.id == schedule.id;
       if (isSameDay && isSameSchedule) {
         if (reply.member.id == targetMemberId) {
-          myReply = reply.selectedOption;
+          myReply = reply;
         } else {
-          memberReplies[reply.member.id] = reply.selectedOption;
+          memberReplies[reply.member.id] = reply;
         }
-        allReplies[reply.member.id] = reply.selectedOption;
+        allReplies[reply.member.id] = reply;
       }
     },
   );
 
-  final yesCount =
-      allReplies.entries.where((e) => e.value == ReplyOptions.yes).length;
+  final yesCount = allReplies.entries
+      .where((e) => e.value.selectedOption == ReplyOptions.yes)
+      .length;
 
   return ScheduleInstanceSummary(
-    scheduleId: schedule.id,
+    schedule: schedule,
     groupId: schedule.group.id,
     displayName: schedule.displayName,
     instanceDate: instanceDate,

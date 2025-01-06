@@ -3,10 +3,10 @@ import 'package:mime/mime.dart';
 import 'package:supabase/supabase.dart';
 
 import 'const.dart';
-import 'supabase.dart';
+import 'supabase.dart' as supabase;
 
 /// Repository for uploading files to Supabase Storage.
-class StorageRepository extends SupabaseRepository with Storage {
+class StorageRepository extends supabase.SupabaseRepository with Storage {
   const StorageRepository({required super.supabase})
       : super(bucketName: Buckets.public);
 

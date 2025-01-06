@@ -42,7 +42,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
 
           widget.onChanged?.call(Schedule(
             // TODO there's no group here
-            group: widget.schedule?.group,
+            group: widget.schedule!.group,
             displayName: displayName,
             startDate: startDate,
             recurrenceRule: recurrenceRule,

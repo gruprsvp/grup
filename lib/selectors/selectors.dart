@@ -110,8 +110,7 @@ String? selectScheduleId(AppState state) => state.selectedScheduleId;
 final selectScheduleInstanceSummary = createSelector2(
     selectScheduleInstancesForSelectedDate,
     selectScheduleId,
-    (instances, id) =>
-        instances.firstWhereOrNull((s) => s.scheduleId.toString() == id));
+    (instances, id) => instances.firstWhereOrNull((s) => s.schedule.id == id));
 
 final getMember = Memoized2((Member member, Map<String, Profile> profiles) {
   final profile = profiles[member.profile?.id.toString()];
@@ -142,11 +141,14 @@ final selectScheduleInstanceForDate = createSelector3(
       .whereNot((m) =>
           (m as ScheduleInstanceMemberReply).member.id ==
           instance.targetMemberId)
-      .groupListsBy((m) => m.reply ?? m.defaultReply);
+      .groupListsBy((m) =>
+          (m.reply as Reply?)?.selectedOption ??
+          (m.defaultReply as Reply?)?.selectedOption);
 
   // This is ugly but I needed an easy way to count the user's reply,
   // after grouping the members by their reply (where the user is not included).
-  final ownReply = instance.myReply ?? instance.myDefaultReply;
+  final ownReply = instance.myReply?.selectedOption ??
+      instance.myDefaultReply?.selectedOption;
   final userRepliedYes = ownReply == ReplyOptions.yes ? 1 : 0;
   final userRepliedNo = ownReply == ReplyOptions.no ? 1 : 0;
   final userRepliedUnknown = ownReply == null ? 1 : 0;
@@ -176,7 +178,7 @@ final selectScheduleInstanceForDate = createSelector3(
   ];
 
   return ScheduleInstanceDetails(
-    scheduleId: instance.scheduleId,
+    schedule: instance.schedule,
     groupId: instance.groupId,
     displayName: instance.displayName,
     instanceDate: instance.instanceDate,

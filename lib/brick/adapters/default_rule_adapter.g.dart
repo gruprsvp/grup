@@ -1,10 +1,10 @@
 // GENERATED CODE DO NOT EDIT
 part of '../brick.g.dart';
 
-Future<DefaultReply> _$DefaultReplyFromSupabase(Map<String, dynamic> data,
+Future<DefaultRule> _$DefaultRuleFromSupabase(Map<String, dynamic> data,
     {required SupabaseProvider provider,
     OfflineFirstWithSupabaseRepository? repository}) async {
-  return DefaultReply(
+  return DefaultRule(
       member: await MemberAdapter().fromSupabase(data['member'],
           provider: provider, repository: repository),
       schedule: await ScheduleAdapter().fromSupabase(data['schedule'],
@@ -20,7 +20,7 @@ Future<DefaultReply> _$DefaultReplyFromSupabase(Map<String, dynamic> data,
           : DateTime.tryParse(data['updated_at'] as String));
 }
 
-Future<Map<String, dynamic>> _$DefaultReplyToSupabase(DefaultReply instance,
+Future<Map<String, dynamic>> _$DefaultRuleToSupabase(DefaultRule instance,
     {required SupabaseProvider provider,
     OfflineFirstWithSupabaseRepository? repository}) async {
   return {
@@ -35,10 +35,10 @@ Future<Map<String, dynamic>> _$DefaultReplyToSupabase(DefaultReply instance,
   };
 }
 
-Future<DefaultReply> _$DefaultReplyFromSqlite(Map<String, dynamic> data,
+Future<DefaultRule> _$DefaultRuleFromSqlite(Map<String, dynamic> data,
     {required SqliteProvider provider,
     OfflineFirstWithSupabaseRepository? repository}) async {
-  return DefaultReply(
+  return DefaultRule(
       member: (await repository!.getAssociation<Member>(
         Query.where('primaryKey', data['member_Member_brick_id'] as int,
             limit1: true),
@@ -66,7 +66,7 @@ Future<DefaultReply> _$DefaultReplyFromSqlite(Map<String, dynamic> data,
     ..primaryKey = data['_brick_id'] as int;
 }
 
-Future<Map<String, dynamic>> _$DefaultReplyToSqlite(DefaultReply instance,
+Future<Map<String, dynamic>> _$DefaultRuleToSqlite(DefaultRule instance,
     {required SqliteProvider provider,
     OfflineFirstWithSupabaseRepository? repository}) async {
   return {
@@ -82,10 +82,9 @@ Future<Map<String, dynamic>> _$DefaultReplyToSqlite(DefaultReply instance,
   };
 }
 
-/// Construct a [DefaultReply]
-class DefaultReplyAdapter
-    extends OfflineFirstWithSupabaseAdapter<DefaultReply> {
-  DefaultReplyAdapter();
+/// Construct a [DefaultRule]
+class DefaultRuleAdapter extends OfflineFirstWithSupabaseAdapter<DefaultRule> {
+  DefaultRuleAdapter();
 
   @override
   final supabaseTableName = 'default_replies';
@@ -175,33 +174,33 @@ class DefaultReplyAdapter
   };
   @override
   Future<int?> primaryKeyByUniqueColumns(
-          DefaultReply instance, DatabaseExecutor executor) async =>
+          DefaultRule instance, DatabaseExecutor executor) async =>
       instance.primaryKey;
   @override
-  final String tableName = 'DefaultReply';
+  final String tableName = 'DefaultRule';
 
   @override
-  Future<DefaultReply> fromSupabase(Map<String, dynamic> input,
+  Future<DefaultRule> fromSupabase(Map<String, dynamic> input,
           {required provider,
           covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$DefaultReplyFromSupabase(input,
+      await _$DefaultRuleFromSupabase(input,
           provider: provider, repository: repository);
   @override
-  Future<Map<String, dynamic>> toSupabase(DefaultReply input,
+  Future<Map<String, dynamic>> toSupabase(DefaultRule input,
           {required provider,
           covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$DefaultReplyToSupabase(input,
+      await _$DefaultRuleToSupabase(input,
           provider: provider, repository: repository);
   @override
-  Future<DefaultReply> fromSqlite(Map<String, dynamic> input,
+  Future<DefaultRule> fromSqlite(Map<String, dynamic> input,
           {required provider,
           covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$DefaultReplyFromSqlite(input,
+      await _$DefaultRuleFromSqlite(input,
           provider: provider, repository: repository);
   @override
-  Future<Map<String, dynamic>> toSqlite(DefaultReply input,
+  Future<Map<String, dynamic>> toSqlite(DefaultRule input,
           {required provider,
           covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$DefaultReplyToSqlite(input,
+      await _$DefaultRuleToSqlite(input,
           provider: provider, repository: repository);
 }

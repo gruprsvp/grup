@@ -8,15 +8,14 @@ import 'package:rrule/rrule.dart';
 
 // The target member ID is the ID of the member that the user is replying for,
 // which is not necessarily the user's own ID in the details screen.
-typedef OnDetailsReplyChangedCallback = void Function(
-    ScheduleInstanceDetails, String, ReplyOptions?);
+typedef OnDetailsReplyChangedCallback = void Function(Reply?, ReplyOptions?);
 
 // ! This kind of function signature is super risky, as it's easy to mix up the
 // ! order of the arguments. It's better to use a data class or a map instead.
 //   TODO(giorgio): I actually just fixed a bug because of this!
 //   I should refactor this to use either branded types or a map.
 typedef OnDetailsDefaultRuleChangedCallback = void Function(
-    RecurrenceRule?, String, String, ReplyOptions?);
+    DefaultRule?, RecurrenceRule?, ReplyOptions?);
 
 class GroupScheduleDetailsScreen extends StatelessWidget {
   final datetimeFormat = DateFormat.yMMMd()..add_jm();
@@ -55,17 +54,14 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
           ),
           ScheduleMemberTile(
             name: l10n.you,
-            reply: scheduleInstance?.myReply,
-            defaultReply: scheduleInstance?.myDefaultReply,
-            defaultRule: scheduleInstance?.myDefaultRule,
-            onReplyChanged: (reply) => onReplyChanged?.call(
-                scheduleInstance!, scheduleInstance!.targetMemberId!, reply),
-            onDefaultRuleChanged: (recurrenceRule, reply) =>
-                onDefaultRuleChanged?.call(
-                    recurrenceRule,
-                    scheduleInstance!.scheduleId,
-                    scheduleInstance!.targetMemberId!,
-                    reply),
+            reply: scheduleInstance?.myReply?.selectedOption,
+            defaultReply: scheduleInstance?.myDefaultReply?.selectedOption,
+            defaultRule: scheduleInstance?.myDefaultRule?.recurrenceRule,
+            onReplyChanged: (replyOptions) =>
+                onReplyChanged?.call(scheduleInstance?.myReply, replyOptions),
+            onDefaultRuleChanged: (recurrenceRule, replyOptions) =>
+                onDefaultRuleChanged?.call(scheduleInstance?.myDefaultRule,
+                    recurrenceRule, replyOptions),
           ),
           Expanded(
             child: ListView.builder(
@@ -98,14 +94,14 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
 
                   return ScheduleMemberTile(
                     name: name,
-                    reply: reply,
-                    defaultReply: defaultReply,
-                    defaultRule: defaultRule,
-                    onReplyChanged: (reply) => onReplyChanged?.call(
-                        scheduleInstance!, member.id, reply),
-                    onDefaultRuleChanged: (recurrenceRule, reply) =>
-                        onDefaultRuleChanged?.call(recurrenceRule,
-                            scheduleInstance!.scheduleId, member.id, reply),
+                    reply: reply?.selectedOption,
+                    defaultReply: defaultReply?.selectedOption,
+                    defaultRule: defaultRule?.recurrenceRule,
+                    onReplyChanged: (replyOptions) =>
+                        onReplyChanged?.call(reply, replyOptions),
+                    onDefaultRuleChanged: (recurrenceRule, replyOptions) =>
+                        onDefaultRuleChanged?.call(
+                            defaultRule, recurrenceRule, replyOptions),
                   );
                 }
                 throw Exception('Unknown member type: $el');

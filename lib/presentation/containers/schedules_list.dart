@@ -52,7 +52,7 @@ class SchedulesListContainerState extends State<SchedulesListContainer> {
         itemBuilder: (context, index) {
           return SchedulesList(
             groupId: widget.groupId,
-            schedules: vm.schedules,
+            scheduleInstances: vm.schedules,
             isAdmin: vm.isAdmin,
             onReplyChanged: vm.onReplyChanged,
           );
@@ -79,22 +79,14 @@ sealed class _ViewModel with _$ViewModel {
       selectedDate: store.state.selectedDate,
       schedules: selectScheduleInstancesForSelectedDate(store.state),
       onDateChanged: (value) => store.dispatch(SelectDateAction(value)),
-      onReplyChanged: (schedule, reply) {
+      onReplyChanged: (schedule, reply, replyOption) {
         if (schedule.targetMemberId == null) {
           throw Exception('targetMemberId is null');
         }
-        if (reply == null) {
-          store.dispatch(RequestDeleteReplyAction(
-            memberId: schedule.targetMemberId!,
-            scheduleId: schedule.scheduleId,
-            instanceDate: schedule.instanceDate,
-          ));
+        if (reply != null && reply.selectedOption == null) {
+          store.dispatch(RequestDeleteReplyAction(reply: reply));
         } else {
-          store.dispatch(RequestUpdateOne(Reply(
-              memberId: schedule.targetMemberId!,
-              scheduleId: schedule.scheduleId,
-              instanceDate: schedule.instanceDate,
-              selectedOption: reply)));
+          store.dispatch(RequestUpdateOne(reply));
         }
       },
     );

@@ -81,12 +81,9 @@ Epic<AppState> _createRetrieveAllGroupsEpic(GroupsRepository groups) {
                 : null)
             .asStream() // TODO Would it be easier to dispatch 1 action here, and then rethink reducers?
             .expand(
-              (userGroups) => [
-                SuccessRetrieveAll(userGroups.groups.toList(growable: false)),
-                SuccessRetrieveAll(userGroups.members.toList(growable: false)),
-                // This is many to avoid overwriting the user own profile
-                SuccessRetrieveMany(userGroups.profiles.toList(growable: false))
-              ],
+              (userGroups) => userGroups.map(
+                (group) => SuccessRetrieveOne(group),
+              ),
             ),
       );
 }
@@ -96,7 +93,7 @@ Epic<AppState> _createRetrieveOneGroupEpic(GroupsRepository groups) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestRetrieveOne<Group>>().asyncMap(
             (action) => groups
-                .getGroupById(action.id)
+                .getGroup(action.id)
                 .then<dynamic>((group) => SuccessRetrieveOne(group))
                 .catchError(
                     (error) => FailRetrieveOne(id: action.id, error: error)),
@@ -131,15 +128,14 @@ Epic<AppState> _createUpdateOneGroupEpic(GroupsRepository groups) {
 
 /// Delete a group
 Epic<AppState> _createDeleteOneGroupEpic(GroupsRepository groups) {
-  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
-      .whereType<RequestDeleteOne<Group>>()
-      .asyncMap(
-        (action) => groups
-            .deleteGroup(action.id)
-            .then<dynamic>((_) => SuccessDeleteOne<Group>(action.id))
-            .catchError(
-                (error) => FailDeleteOne<Group>(id: action.id, error: error)),
-      );
+  return (Stream<dynamic> actions, EpicStore<AppState> store) =>
+      actions.whereType<GroupDeleteAction>().asyncMap(
+            (action) => groups
+                .deleteGroup(action.group)
+                .then<dynamic>((_) => SuccessDeleteOne<Group>(action.group.id))
+                .catchError((error) =>
+                    FailDeleteOne<Group>(id: action.group.id, error: error)),
+          );
 }
 
 /// When a group is deleted, redirect to the home page

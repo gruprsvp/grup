@@ -9,12 +9,12 @@ part of 'schema.g.dart';
 
 // The migration version must **always** mirror the file name
 
-const List<MigrationCommand> _migration_20241212094318_up = [
+const List<MigrationCommand> _migration_20241218183840_up = [
   InsertTable('Group'),
+  InsertTable('DefaultRule'),
   InsertTable('Invite'),
   InsertTable('Schedule'),
   InsertTable('Member'),
-  InsertTable('DefaultReply'),
   InsertTable('Profile'),
   InsertTable('Reply'),
   InsertColumn('id', Column.varchar, onTable: 'Group', unique: true),
@@ -23,6 +23,12 @@ const List<MigrationCommand> _migration_20241212094318_up = [
   InsertColumn('picture', Column.varchar, onTable: 'Group'),
   InsertColumn('created_at', Column.datetime, onTable: 'Group'),
   InsertColumn('updated_at', Column.datetime, onTable: 'Group'),
+  InsertForeignKey('DefaultRule', 'Member', foreignKeyColumn: 'member_Member_brick_id', onDeleteCascade: false, onDeleteSetDefault: false),
+  InsertForeignKey('DefaultRule', 'Schedule', foreignKeyColumn: 'schedule_Schedule_brick_id', onDeleteCascade: false, onDeleteSetDefault: false),
+  InsertColumn('selected_option', Column.integer, onTable: 'DefaultRule'),
+  InsertColumn('recurrence_rule', Column.varchar, onTable: 'DefaultRule'),
+  InsertColumn('created_at', Column.datetime, onTable: 'DefaultRule'),
+  InsertColumn('updated_at', Column.datetime, onTable: 'DefaultRule'),
   InsertColumn('id', Column.varchar, onTable: 'Invite', unique: true),
   InsertForeignKey('Invite', 'Member', foreignKeyColumn: 'member_Member_brick_id', onDeleteCascade: false, onDeleteSetDefault: false),
   InsertColumn('method', Column.integer, onTable: 'Invite'),
@@ -43,12 +49,6 @@ const List<MigrationCommand> _migration_20241212094318_up = [
   InsertColumn('display_name_override', Column.varchar, onTable: 'Member'),
   InsertColumn('created_at', Column.datetime, onTable: 'Member'),
   InsertColumn('updated_at', Column.datetime, onTable: 'Member'),
-  InsertForeignKey('DefaultReply', 'Member', foreignKeyColumn: 'member_Member_brick_id', onDeleteCascade: false, onDeleteSetDefault: false),
-  InsertForeignKey('DefaultReply', 'Schedule', foreignKeyColumn: 'schedule_Schedule_brick_id', onDeleteCascade: false, onDeleteSetDefault: false),
-  InsertColumn('selected_option', Column.integer, onTable: 'DefaultReply'),
-  InsertColumn('recurrence_rule', Column.varchar, onTable: 'DefaultReply'),
-  InsertColumn('created_at', Column.datetime, onTable: 'DefaultReply'),
-  InsertColumn('updated_at', Column.datetime, onTable: 'DefaultReply'),
   InsertColumn('id', Column.varchar, onTable: 'Profile'),
   InsertColumn('display_name', Column.varchar, onTable: 'Profile'),
   InsertColumn('picture', Column.varchar, onTable: 'Profile'),
@@ -66,12 +66,12 @@ const List<MigrationCommand> _migration_20241212094318_up = [
   CreateIndex(columns: ['id'], onTable: 'Member', unique: true)
 ];
 
-const List<MigrationCommand> _migration_20241212094318_down = [
+const List<MigrationCommand> _migration_20241218183840_down = [
   DropTable('Group'),
+  DropTable('DefaultRule'),
   DropTable('Invite'),
   DropTable('Schedule'),
   DropTable('Member'),
-  DropTable('DefaultReply'),
   DropTable('Profile'),
   DropTable('Reply'),
   DropColumn('id', onTable: 'Group'),
@@ -80,6 +80,12 @@ const List<MigrationCommand> _migration_20241212094318_down = [
   DropColumn('picture', onTable: 'Group'),
   DropColumn('created_at', onTable: 'Group'),
   DropColumn('updated_at', onTable: 'Group'),
+  DropColumn('member_Member_brick_id', onTable: 'DefaultRule'),
+  DropColumn('schedule_Schedule_brick_id', onTable: 'DefaultRule'),
+  DropColumn('selected_option', onTable: 'DefaultRule'),
+  DropColumn('recurrence_rule', onTable: 'DefaultRule'),
+  DropColumn('created_at', onTable: 'DefaultRule'),
+  DropColumn('updated_at', onTable: 'DefaultRule'),
   DropColumn('id', onTable: 'Invite'),
   DropColumn('member_Member_brick_id', onTable: 'Invite'),
   DropColumn('method', onTable: 'Invite'),
@@ -100,12 +106,6 @@ const List<MigrationCommand> _migration_20241212094318_down = [
   DropColumn('display_name_override', onTable: 'Member'),
   DropColumn('created_at', onTable: 'Member'),
   DropColumn('updated_at', onTable: 'Member'),
-  DropColumn('member_Member_brick_id', onTable: 'DefaultReply'),
-  DropColumn('schedule_Schedule_brick_id', onTable: 'DefaultReply'),
-  DropColumn('selected_option', onTable: 'DefaultReply'),
-  DropColumn('recurrence_rule', onTable: 'DefaultReply'),
-  DropColumn('created_at', onTable: 'DefaultReply'),
-  DropColumn('updated_at', onTable: 'DefaultReply'),
   DropColumn('id', onTable: 'Profile'),
   DropColumn('display_name', onTable: 'Profile'),
   DropColumn('picture', onTable: 'Profile'),
@@ -128,15 +128,15 @@ const List<MigrationCommand> _migration_20241212094318_down = [
 //
 
 @Migratable(
-  version: '20241212094318',
-  up: _migration_20241212094318_up,
-  down: _migration_20241212094318_down,
+  version: '20241218183840',
+  up: _migration_20241218183840_up,
+  down: _migration_20241218183840_down,
 )
-class Migration20241212094318 extends Migration {
-  const Migration20241212094318()
+class Migration20241218183840 extends Migration {
+  const Migration20241218183840()
     : super(
-        version: 20241212094318,
-        up: _migration_20241212094318_up,
-        down: _migration_20241212094318_down,
+        version: 20241218183840,
+        up: _migration_20241218183840_up,
+        down: _migration_20241218183840_down,
       );
 }

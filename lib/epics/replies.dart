@@ -43,16 +43,17 @@ Epic<AppState> _createRequestUpdateOneReplyEpic(RepliesRepository replies) {
 Epic<AppState> _createRequestDeleteReplyEpic(RepliesRepository replies) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestDeleteReplyAction>().asyncMap(
-            (action) => replies
-                .deleteReply(
-                  memberId: action.memberId,
-                  scheduleId: action.scheduleId,
-                  instanceDate: action.instanceDate,
-                )
-                .then<dynamic>((_) => SuccessDeleteOne<Reply>(
-                    "${action.memberId}-${action.scheduleId}-${action.instanceDate}"))
-                .catchError((error) => FailDeleteOne<Reply>(
-                    id: "${action.memberId}-${action.scheduleId}-${action.instanceDate}",
-                    error: error)),
-          );
+        (action) {
+          final reply = action.reply;
+          final scheduleId = reply.schedule.id;
+          final instanceDate = reply.instanceDate;
+          final memberId = reply.member.id;
+          return replies
+              .deleteReply(reply: action.reply)
+              .then<dynamic>((_) => SuccessDeleteOne<Reply>(
+                  "$memberId-$scheduleId-$instanceDate"))
+              .catchError((error) => FailDeleteOne<Reply>(
+                  id: "$memberId-$scheduleId-$instanceDate", error: error));
+        },
+      );
 }
