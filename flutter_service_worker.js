@@ -43,9 +43,9 @@ const RESOURCES = {"icons/Icon-maskable-192.png": "d6b38224216460f33e50a8cee34e0
 "assets/assets/env/local.json": "282a03b11c2a67305d73e707f7cc4b1b",
 "assets/assets/env/supabase.json": "acec4626a9fd86ecd48ff16919e06160",
 "assets/AssetManifest.bin": "a0df659faf23fb60d1a21f54a11f5aa0",
-"assets/NOTICES": "aaccfdd1803055b673aaa0d90be111d0",
+"assets/NOTICES": "93afc40372be11bb642f9c3008ef77a2",
 "assets/AssetManifest.json": "ba78b4d51b51fb83120abdc76f118cb2",
-"assets/fonts/MaterialIcons-Regular.otf": "2b30054509bfe286e9fdc8a137e9fe9c",
+"assets/fonts/MaterialIcons-Regular.otf": "13507fadef857bddc72db155e4d7e797",
 "assets/packages/circle_flags/assets/svg/ac.svg": "de8950014e78f337c31085c8d8060d08",
 "assets/packages/circle_flags/assets/svg/ag.svg": "f6b94a14908089d1b31c735263b0d974",
 "assets/packages/circle_flags/assets/svg/yt.svg": "226d5728915c117e646d8c96bf0ee908",
@@ -343,14 +343,14 @@ const RESOURCES = {"icons/Icon-maskable-192.png": "d6b38224216460f33e50a8cee34e0
 "splash/img/light-3x.png": "9d375965605d825d75d059876b946e61",
 "splash/img/light-1x.png": "37d80e666133e7b4b409ca0b60fa3cd1",
 "splash/img/light-4x.png": "b389b09e072064ad718bf395f0fc9d27",
-"index.html": "52f6e1ac5090dc98898d7d1f5ebcb246",
-"/": "52f6e1ac5090dc98898d7d1f5ebcb246",
+"index.html": "8032c808694f325d6a01b92d4d780566",
+"/": "8032c808694f325d6a01b92d4d780566",
 "flutter.js": "4b2350e14c6650ba82871f60906437ea",
 "favicon.png": "5baeaea3c5c07c388b038b2e2378e60c",
-"flutter_bootstrap.js": "82af87146f2f7a7f3eb76773a4e75add",
+"flutter_bootstrap.js": "26ecaa38eb2957b0485d368f7f3b8cdf",
 ".well-known/apple-app-site-association": "c7217b3ae7dc490f17caab24cb912bf6",
 ".well-known/assetlinks.json": "e39ffa12fd6ca02da0856d19f2ae992d",
-"main.dart.js": "d379b091a87e1c6deac096116d4f386a"};
+"main.dart.js": "d832458e033825c1ffe41c82cffd5d76"};
 // The application shell files that are downloaded before a service worker can
 // start.
 const CORE = ["main.dart.js",
