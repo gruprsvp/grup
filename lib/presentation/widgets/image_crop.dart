@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 class ImageCrop extends StatefulWidget {
   final Uint8List imageData;
-  final ValueSetter<Uint8List>? onCrop;
+  final ValueSetter<Uint8List?>? onCrop;
 
   const ImageCrop({super.key, required this.imageData, this.onCrop});
 
@@ -35,13 +35,16 @@ class ImageCropState extends State<ImageCrop> {
         controller: _controller,
         image: imageData,
         aspectRatio: 1,
-        initialSize: 0.7,
+        radius: 20,
         interactive: true,
         withCircleUi: true,
-        progressIndicator: const Center(child: CircularProgressIndicator()),
+        progressIndicator: const CircularProgressIndicator(),
         onCropped: (result) {
-          if (widget.onCrop != null) {
-            widget.onCrop!(result);
+          switch (result) {
+            case CropSuccess(:final croppedImage):
+              widget.onCrop?.call(croppedImage);
+            case CropFailure():
+              widget.onCrop?.call(null);
           }
         },
       ),
