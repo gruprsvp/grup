@@ -14,11 +14,6 @@
             android:label="GRUP"
             android:name="${applicationName}"
             android:icon="@mipmap/ic_launcher">
-        <!-- Required by image cropper: https://pub.dev/packages/image_cropper -->
-        <activity
-                android:name="com.yalantis.ucrop.UCropActivity"
-                android:screenOrientation="portrait"
-                android:theme="@style/Ucrop.CropTheme"/>
 
         <activity
                 android:name=".MainActivity"
