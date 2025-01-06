@@ -523,10 +523,10 @@ packages:
     dependency: "direct main"
     description:
       name: form_builder_validators
-      sha256: c61ed7b1deecf0e1ebe49e2fa79e3283937c5a21c7e48e3ed9856a4a14e1191a
+      sha256: "517fb884183fff7a0ef3db7d375981011da26ee452f20fb3d2e788ad527ad01d"
       url: "https://pub.dev"
     source: hosted
-    version: "11.0.0"
+    version: "11.1.1"
   freezed:
     dependency: "direct dev"
     description:

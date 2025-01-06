@@ -75,7 +75,7 @@ dependencies:
 
   # Forms and validators
   flutter_form_builder: ^9.1.1 # TODO Can we remove this?
-  form_builder_validators: ^11.0.0
+  form_builder_validators: ^11.1.1
   phone_form_field: ^10.0.1
 
   # To send emails
