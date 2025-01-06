@@ -1,10 +1,8 @@
-import 'dart:developer' as developer;
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:parousia/presentation/presentation.dart';
 
@@ -50,7 +48,6 @@ class _ImageFormFieldState extends FormFieldState<XFile> {
   late final ImageController controller;
 
   final _imagePicker = ImagePicker();
-  final _imageCropper = ImageCropper();
 
   @override
   ImageFormField get widget => super.widget as ImageFormField;
@@ -127,49 +124,36 @@ class _ImageFormFieldState extends FormFieldState<XFile> {
     final source = await _getImageSource();
     if (source == null) return;
 
-    final image = await _getImageAndCrop(source);
+    final image = await _getImage(source);
     if (image == null) return;
 
-    didChange(image);
+    final imageData = await image.readAsBytes();
+    final croppedImage = await _getImageCropped(imageData);
+    if (croppedImage == null) return;
+
+    didChange(croppedImage);
   }
 
-  /// Get an image from the camera or gallery and crop it, if possible.
-  Future<XFile?> _getImageAndCrop(ImageSource source) async {
-    final imageFile = await _imagePicker.pickImage(
+  /// Get an image from the camera or gallery.
+  Future<XFile?> _getImage(ImageSource source) async {
+    return await _imagePicker.pickImage(
       source: source,
       preferredCameraDevice: CameraDevice.front,
       maxWidth: 512,
       maxHeight: 512,
       requestFullMetadata: false,
     );
-    if (imageFile == null) return null;
+  }
 
-    try {
-      final cropped = await _imageCropper.cropImage(
-        sourcePath: imageFile.path,
-        aspectRatio: CropAspectRatio(ratioX: 1, ratioY: 1),
-        compressFormat: ImageCompressFormat.jpg,
-        maxHeight: 512,
-        maxWidth: 512,
-        uiSettings: [
-          if (context.mounted)
-            WebUiSettings(
-              context: context,
-              // https://github.com/hnvn/flutter_image_cropper/issues/529
-              // Hack to avoid the cropper being too big on the web, at least
-              // initially, as resizing the window won't resize the cropper.
-              size: CropperSize(
-                height: MediaQuery.of(context).size.height ~/ 2,
-              ),
-            ),
-        ],
-      );
-      if (cropped == null) return null;
-      return XFile(cropped.path);
-    } catch (e) {
-      developer.log('Failed to crop image', error: e);
-      return XFile(imageFile.path);
-    }
+  /// Show a dialog to crop the image.
+  Future<XFile?> _getImageCropped(Uint8List imageData) async {
+    return showDialog(
+        context: context,
+        builder: (BuildContext context) => Dialog.fullscreen(
+                child: ImageCrop(
+              imageData: imageData,
+              onCrop: (value) => Navigator.pop(context, XFile.fromData(value)),
+            )));
   }
 
   /// Show a dialog to choose the image source.
