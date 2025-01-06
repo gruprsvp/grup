@@ -152,7 +152,8 @@ class _ImageFormFieldState extends FormFieldState<XFile> {
         builder: (BuildContext context) => Dialog.fullscreen(
                 child: ImageCrop(
               imageData: imageData,
-              onCrop: (value) => Navigator.pop(context, XFile.fromData(value)),
+              onCrop: (value) => Navigator.pop(
+                  context, value != null ? XFile.fromData(value) : null),
             )));
   }
 
