@@ -11,9 +11,8 @@ on:
       - main
 
 jobs:
-  flutter:
+  build:
     runs-on: ubuntu-latest
-
     permissions:
       contents: write
     steps:
