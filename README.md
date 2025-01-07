@@ -1,71 +1,113 @@
+<div align="center">
+
 # GRUP
 
-Event Scheduling for Groups
+**Event Scheduling for Groups**
 
-[Access it here](https://grup.rsvp)
+> With GRUP, you can create recurring events, invite friends, and keep track of their RSVPs.
+>
+> The app is built with Flutter[^flutter] and Supabase[^supabase] - and is available on Android, iOS, and web.
 
-## Getting started
+[![AGPL-3.0](https://img.shields.io/github/license/gruprsvp/grup?style=flat-square)](./LICENSE)
 
-### Requirements
+<picture>
+<source srcset="https://www.grup.rsvp/images/logo-darkmode.png" media="(prefers-color-scheme: dark)"/>
+<img src="https://www.grup.rsvp/images/logo.png" alt="GRUP Logo"/>
+</picture>
 
-1. Flutter[^flutter-get-started]
-2. Supabase CLI[^supabase-cli]
-3. Docker or another compatible runtime
+### Download the app
 
-### Local development
+[![Apple App Store](https://img.shields.io/itunes/v/6473851276?style=for-the-badge&logo=appstore&label=Apple%20App%20Store&color=%230D96F6)](https://apps.apple.com/us/app/shared-calendar-events-grup/id6473851276)
+[![Google Play](https://img.shields.io/itunes/v/6473851276?style=for-the-badge&logo=googleplay&label=Play%20Store&color=%23000000)](https://play.google.com/store/apps/details?id=is.giorgio.app.parousia)
 
-Make sure Docker is running.
+**Or access it on web**
 
-From the root of the project, run the following command to start the Supabase server:
+[![Web App](https://img.shields.io/website?url=https%3A%2F%2Fgrup.rsvp&style=for-the-badge&logo=flutter&logoColor=%2302569B&label=Web%20App&labelColor=%23FAFAFA)](https://grup.rsvp/)
 
-```sh
-supabase start
-```
+</div>
 
-Export the Supabase URL and API key (this is only needed once):
+<picture>
+<source srcset="https://www.grup.rsvp/images/service-1-darkmode.png" media="(prefers-color-scheme: dark)"/>
+<img src="https://www.grup.rsvp/images/service-1.png" alt="Screenshot showing groups"/>
+</picture>
 
-```sh
-supabase status -o json > supabase/config/localhost.json
-```
+## :question: FAQ
 
-And change the app configuration in `lib/main.dart` (`supabaseConfigFile`) to point to it when running locally.
+### What is GRUP?
 
-While making changes, run `build_runner` in watch mode for code generation:
+GRUP is an event scheduling app that allows you to create recurring events, invite friends,
+and keep track of their RSVPs.
 
-```sh
-dart run build_runner watch --delete-conflicting-outputs
-```
+### How is it different from other calendar apps?
 
-Tests can be run with the following command:
+One of the core tenets of GRUP is simplicity. As there are many calendar apps out there,
+we wanted to create a tool that is easy to use and focused on group events.
 
-```sh
-flutter test
-```
+GRUP (as the name suggests) is all about groups. First, you create a group (or join one),
+then you can create events that are shared with the group members.
 
-Tests are configure to run against a local Supabase server.
-If you want to run tests against a different server,
-you can configure a different file in `supabase/config/`
-and set it accordingly in the test file.
+It also has a particular focus on recurring events, so that you can set them up once and forget.
 
-The app can similarly be configured to run on local or remote servers.
+### How do I invite friends?
 
-## Release
+Once you create a group, you have 3 options to invite friends:
 
-Any changes to `main` will trigger both GitHub Actions and Xcode Cloud workflows.
+1. Share a single-use invite code;
+2. Add a friend by email;
+3. Add a friend by phone number.
 
-These workflows will build and upload the app to the Play Store and App Store respectively.
-Upon upload, the will be available for internal testing in both stores.
+### Do I need an account to use GRUP?
 
-Additionally, the GitHub Action will create a new release with the app's version and changelog, marking it as a draft.
-It will also deploy the app to Cloudflare Pages.
+Yes, you need an account to use GRUP. We are investigating ways to allow anonymous users to join groups
+in discussion #148 - feel free to join the conversation!
 
-Once we decide to release the app, we manually request a review from the Play Store and App Store.
-Then, we can publish the release on GitHub.
+### What if my friends don't have the app?
 
-Finally, on the next PR we bump the version on `pubspec.yaml` to prepare for the next release.
-Only the `build-name` part - before the plus sign(+) - should be updated:
-the `build-number` is incremented automatically by the CI (GitHub Actions and Xcode Cloud).
+If your friends don't want to install the app, they can still access the event on the web.
 
-[^flutter-get-started]: https://docs.flutter.dev/get-started/install
+If they don't want to sign up at all, admins can still track their RSVPs in the app.
 
-[^supabase-cli]: https://supabase.com/docs/guides/cli/getting-started
+### I have a recurring event, and users have a default RSVP. How does that work?
+
+When you create a recurring event, each user can set a default RSVP for that event.
+
+For example, if you have a daily event (including weekends), and you always attend during the week,
+you can set your "default reply" to "weekdays" and be marked as attending for all weekdays.
+
+### I need a recurring event that doesn't follow a simple pattern. Can I do that?
+
+Not yet, but we are working on it! Check out https://github.com/gruprsvp/grup/discussions/154 for more information.
+
+### I have a feature request. How can I submit it?
+
+Check out the [discussions](https://github.com/gruprsvp/grup/discussions) section.
+If you don't see a topic that matches your idea or question,
+feel free to start a new one!
+
+## :computer: Contributing
+
+If you want to contribute to the project, please read the [CONTRIBUTING.md](./CONTRIBUTING.md) file.
+
+It contains information on how to set up your development environment, submit issues, and create pull requests.
+
+## :scroll: License
+
+This project is licensed under the [AGPL-3.0](./LICENSE) license.
+
+You are free to use, modify, and distribute the code as long as you keep the same license,
+and you distribute the source code along with the web publication.
+
+> The AGPL license differs from the other GNU licenses in that it was built for network software.
+> You can distribute modified versions if you keep track of the changes and the date you made them.
+> As per usual with GNU licenses, you must license derivatives under AGPL.
+> It provides the same restrictions and freedoms as the GPLv3 but with an additional clause which
+> makes it so that source code must be distributed along with web publication.
+> Since web sites and services are never distributed in the traditional sense,
+> the AGPL is the GPL of the web. [^tldr-legal]
+
+
+[^flutter]: https://flutter.dev
+
+[^supabase]: https://supabase.com
+
+[^tldr-legal]: https://www.tldrlegal.com/license/gnu-affero-general-public-license-v3-agpl-3-0
