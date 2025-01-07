@@ -2,6 +2,13 @@ name: Verify
 
 on:
   pull_request:
+  merge_group:
+
+# We only care about the latest version: stop old jobs if a new commit is pushed.
+# The fallback on github.ref is for when the workflow is for a merge queue.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
 
 jobs:
   flutter:
