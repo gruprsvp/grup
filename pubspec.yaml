@@ -84,7 +84,7 @@ dependencies:
 
   # Widgetbook
   widgetbook_annotation: ^3.1.0
-  widgetbook: ^3.6.0
+  widgetbook: ^3.10.2
 
   # Utilities
   app_links: ^6.3.2
