@@ -7,6 +7,8 @@ PODS:
   - AppAuth/Core (1.7.6)
   - AppAuth/ExternalUserAgent (1.7.6):
     - AppAuth/Core
+  - device_info_plus (0.0.1):
+    - Flutter
   - Flutter (1.0.0)
   - flutter_contacts (0.0.1):
     - Flutter
@@ -45,7 +47,7 @@ PODS:
   - posthog_flutter (0.0.1):
     - Flutter
     - FlutterMacOS
-    - PostHog (~> 3.0)
+    - PostHog (= 3.18.0)
   - Sentry/HybridSDK (8.42.0)
   - sentry_flutter (8.12.0):
     - Flutter
@@ -63,6 +65,7 @@ PODS:
 
 DEPENDENCIES:
   - app_links (from `.symlinks/plugins/app_links/ios`)
+  - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - Flutter (from `Flutter`)
   - flutter_contacts (from `.symlinks/plugins/flutter_contacts/ios`)
   - flutter_native_splash (from `.symlinks/plugins/flutter_native_splash/ios`)
@@ -91,6 +94,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   app_links:
     :path: ".symlinks/plugins/app_links/ios"
+  device_info_plus:
+    :path: ".symlinks/plugins/device_info_plus/ios"
   Flutter:
     :path: Flutter
   flutter_contacts:
@@ -125,9 +130,10 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   app_links: 3da4c36b46cac3bf24eb897f1a6ce80bda109874
   AppAuth: d4f13a8fe0baf391b2108511793e4b479691fb73
+  device_info_plus: 21fcca2080fbcd348be798aa36c3e5ed849eefbe
   Flutter: e0871f40cf51350855a761d2e70bf5af5b9b5de7
   flutter_contacts: 5383945387e7ca37cf963d4be57c21f2fc15ca9f
-  flutter_native_splash: 576fbd69b830a63594ae678396fa17e43abbc5f8
+  flutter_native_splash: 6cad9122ea0fad137d23137dd14b937f3e90b145
   google_sign_in_ios: 0ab078e60da6dfe23cbc55c83502b52bba1aad63
   GoogleSignIn: d4281ab6cf21542b1cfaff85c191f230b399d2db
   GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
@@ -138,7 +144,7 @@ SPEC CHECKSUMS:
   package_info_plus: af8e2ca6888548050f16fa2f1938db7b5a5df499
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
   PostHog: 6ce18b57e7de83868707dec4a0c35ebbc866e88b
-  posthog_flutter: 37053225347313fb5385539b300a8237fae24e34
+  posthog_flutter: c708a6cdd2557be394f3d0e0533c94a68c9ee71d
   Sentry: 38ed8bf38eab5812787274bf591e528074c19e02
   sentry_flutter: a72ca0eb6e78335db7c4ddcddd1b9f6c8ed5b764
   share_plus: 50da8cb520a8f0f65671c6c6a99b3617ed10a58a
