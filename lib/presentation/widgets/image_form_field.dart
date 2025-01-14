@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:parousia/presentation/presentation.dart';
+import 'package:path_provider/path_provider.dart';
 
 class ImageController extends ValueNotifier<XFile?> {
   ImageController() : super(null);
@@ -152,9 +153,25 @@ class _ImageFormFieldState extends FormFieldState<XFile> {
         builder: (BuildContext context) => Dialog.fullscreen(
                 child: ImageCrop(
               imageData: imageData,
-              onCrop: (value) => Navigator.pop(
-                  context, value != null ? XFile.fromData(value) : null),
+              onCrop: (value) async {
+                final savedImage =
+                    value != null ? await _saveImage(value) : null;
+                if (context.mounted) {
+                  Navigator.pop(context, savedImage);
+                }
+              },
             )));
+  }
+
+  /// Save temporary image to a file.
+  Future<XFile?> _saveImage(Uint8List imageData) async {
+    if (kIsWeb) return XFile.fromData(imageData);
+
+    final tempDir = await getTemporaryDirectory();
+    final tempFile = File(
+        '${tempDir.path}/temp_image_${DateTime.now().millisecondsSinceEpoch}.jpg');
+    await tempFile.writeAsBytes(imageData);
+    return XFile(tempFile.path);
   }
 
   /// Show a dialog to choose the image source.
