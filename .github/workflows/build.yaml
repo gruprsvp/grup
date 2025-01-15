@@ -88,7 +88,7 @@ jobs:
           # This should ensure that the web build has the same settings as mobile apps to configure Sentry consistently
           SENTRY_RELEASE: "is.giorgio.app.parousia@${{ steps.parse_pubspec.outputs.pubspec_version }}+${{ github.run_number }}"
           SENTRY_DIST: ${{ github.run_number }}
-        run: dart run peanut --extra-args "--dart-define=SENTRY_RELEASE=$SENTRY_RELEASE" --extra-args "--dart-define=SENTRY_DIST=$SENTRY_DIST"
+        run: dart run peanut --extra-args "--dart-define=SENTRY_RELEASE=$SENTRY_RELEASE --dart-define=SENTRY_DIST=$SENTRY_DIST"
 
       - name: Push gh-pages
         run: git push origin gh-pages
