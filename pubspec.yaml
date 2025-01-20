@@ -133,7 +133,7 @@ dev_dependencies:
 
   # Utilities
   flutter_launcher_icons: ^0.14.1
-  sentry_dart_plugin: ^2.2.1
+  sentry_dart_plugin: ^2.3.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
