@@ -1,59 +1,70 @@
+import 'package:brick_core/core.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/models/models.dart';
-import 'package:uuid/uuid.dart';
 
-import 'const.dart';
 import 'supabase.dart';
 
-class MembersRepository extends SupabaseRepository with Postgrest {
-  const MembersRepository({required super.supabase})
-      : super(tableName: Tables.members);
+class MembersRepository extends SupabaseRepository {
+  const MembersRepository({required super.repository});
 
-  Future<Member> addMemberToGroup(String groupId,
-      {String? displayName, String? profileId}) async {
+  Future<Member> addMemberToGroup(Group group,
+      {String? displayName, String? profileId, GroupRoles? role}) async {
     if ((displayName == null || displayName.isEmpty) &&
         (profileId == null || profileId.isEmpty)) {
       throw ArgumentError(
           'Either displayName or profileId must be provided to addMemberToGroup');
     }
 
-    return table()
-        .insert({
-          'id': const Uuid().v7(),
-          'group_id': groupId,
-          'profile_id': profileId,
-          'display_name_override': displayName,
-        })
-        .select()
-        .single()
-        .withConverter((data) => Member.fromJson(data));
+    final profile = profileId != null
+        ? await repository
+            .get<Profile>(
+              query: Query.where('id', profileId),
+            )
+            .then((profiles) => profiles.first)
+        : null;
+
+    return repository.upsert(
+      Member(
+        group: group,
+        displayNameOverride: displayName,
+        profile: profile,
+        role: role ?? GroupRoles.member,
+      ),
+    );
   }
 
-  Future<Member> updateMember(
-      {required String memberId,
-      String? displayNameOverride,
-      GroupRoles? role}) async {
-    return table()
-        .update({
-          if (displayNameOverride != null && displayNameOverride.isNotEmpty)
-            'display_name_override': displayNameOverride,
-          if (role != null) 'role': role.name,
-        })
-        .eq('id', memberId)
-        .select()
-        .single()
-        .withConverter(Member.fromJson);
+  Future<Member> updateMember(Member member) async {
+    return repository.upsert(member);
   }
 
-  Future<void> deleteMember(String memberId) async {
-    return table().delete().eq('id', memberId);
+  Future<bool> deleteMember(Member member) async {
+    return repository.delete<Member>(member,
+        query: Query.where('id', member.id));
   }
+
+  Future<Member> getMember(String memberId) async {
+    return repository
+        .get<Member>(
+          query: Query.where('id', memberId),
+        )
+        .then((members) => members.first);
+  }
+
+  Future<Iterable<Member>> getMembersByGroupId(String groupId) async =>
+      repository.get<Member>(
+          query: Query.where('group', Where.exact('id', groupId)));
 
   Future<Member> getOwnMemberByGroupId(String groupId) async {
-    return table()
-        .select('*')
-        .eq('group_id', groupId)
-        .eq('profile_id', supabase.auth.currentUser!.id)
-        .single()
-        .withConverter(Member.fromJson);
+    final currentUserId = repository.remoteProvider.client.auth.currentUser!.id;
+    return repository
+        .get<Member>(
+          query: Query(
+            where: [
+              Where.exact('group', Where.exact('id', groupId)),
+              Where.exact('profile', Where.exact('id', currentUserId)),
+            ],
+          ),
+        )
+        .then((members) => members.first);
   }
 }

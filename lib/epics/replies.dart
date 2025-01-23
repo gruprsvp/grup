@@ -1,5 +1,5 @@
 import 'package:parousia/actions/actions.dart';
-import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/state/state.dart';
 import 'package:parousia/util/util.dart';
@@ -31,7 +31,7 @@ Epic<AppState> _createRequestUpdateOneReplyEpic(RepliesRepository replies) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestUpdateOne<Reply>>().asyncMap(
             (action) => replies
-                .createReply(action.entity)
+                .upsertReply(action.entity)
                 .then<dynamic>((reply) => SuccessUpdateOne(reply))
                 .catchError((error) =>
                     FailUpdateOne<Reply>(entity: action.entity, error: error)),
@@ -42,16 +42,22 @@ Epic<AppState> _createRequestUpdateOneReplyEpic(RepliesRepository replies) {
 Epic<AppState> _createRequestDeleteReplyEpic(RepliesRepository replies) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestDeleteReplyAction>().asyncMap(
-            (action) => replies
-                .deleteReply(
-                  memberId: action.memberId,
-                  scheduleId: action.scheduleId,
-                  instanceDate: action.instanceDate,
-                )
-                .then<dynamic>((_) => SuccessDeleteOne<Reply>(
-                    "${action.memberId}-${action.scheduleId}-${action.instanceDate}"))
-                .catchError((error) => FailDeleteOne<Reply>(
-                    id: "${action.memberId}-${action.scheduleId}-${action.instanceDate}",
-                    error: error)),
-          );
+        (action) {
+          print("state: ${store.state}");
+          final reply = action.reply;
+          final replyId = reply.id;
+          final scheduleId = reply.schedule.id;
+          final instanceDate = reply.instanceDate;
+          final memberId = reply.member.id;
+          if (replyId == null) {
+            return FailDeleteOne<Reply>(
+                id: "$memberId-$scheduleId-$instanceDate", error: "No ID");
+          }
+          return replies
+              .deleteReply(reply: action.reply)
+              .then<dynamic>((_) => SuccessDeleteOne<Reply>(replyId))
+              .catchError(
+                  (error) => FailDeleteOne<Reply>(id: replyId, error: error));
+        },
+      );
 }

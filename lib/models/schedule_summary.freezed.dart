@@ -16,22 +16,20 @@ final _privateConstructorUsedError = UnsupportedError(
 
 /// @nodoc
 mixin _$ScheduleInstanceSummary {
-  String get scheduleId => throw _privateConstructorUsedError;
+  Schedule get schedule => throw _privateConstructorUsedError;
   String get groupId => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   DateTime get instanceDate => throw _privateConstructorUsedError;
-  Map<String, ReplyOptions> get memberReplies =>
-      throw _privateConstructorUsedError;
-  Map<String, ReplyOptions> get memberDefaultReplies =>
+  Map<String, Reply> get memberReplies => throw _privateConstructorUsedError;
+  Map<String, Reply> get memberDefaultReplies =>
       throw _privateConstructorUsedError;
   Map<String, DefaultRule> get memberDefaultRules =>
       throw _privateConstructorUsedError;
   int get yesCount => throw _privateConstructorUsedError;
-  String get timezone => throw _privateConstructorUsedError;
-  ReplyOptions? get myReply => throw _privateConstructorUsedError;
-  ReplyOptions? get myDefaultReply => throw _privateConstructorUsedError;
+  Reply? get myReply => throw _privateConstructorUsedError;
+  Reply? get myDefaultReply => throw _privateConstructorUsedError;
   DefaultRule? get myDefaultRule => throw _privateConstructorUsedError;
-  String? get targetMemberId => throw _privateConstructorUsedError;
+  Member? get targetMember => throw _privateConstructorUsedError;
 
   /// Create a copy of ScheduleInstanceSummary
   /// with the given fields replaced by the non-null parameter values.
@@ -47,21 +45,18 @@ abstract class $ScheduleInstanceSummaryCopyWith<$Res> {
       _$ScheduleInstanceSummaryCopyWithImpl<$Res, ScheduleInstanceSummary>;
   @useResult
   $Res call(
-      {String scheduleId,
+      {Schedule schedule,
       String groupId,
       String displayName,
       DateTime instanceDate,
-      Map<String, ReplyOptions> memberReplies,
-      Map<String, ReplyOptions> memberDefaultReplies,
+      Map<String, Reply> memberReplies,
+      Map<String, Reply> memberDefaultReplies,
       Map<String, DefaultRule> memberDefaultRules,
       int yesCount,
-      String timezone,
-      ReplyOptions? myReply,
-      ReplyOptions? myDefaultReply,
+      Reply? myReply,
+      Reply? myDefaultReply,
       DefaultRule? myDefaultRule,
-      String? targetMemberId});
-
-  $DefaultRuleCopyWith<$Res>? get myDefaultRule;
+      Member? targetMember});
 }
 
 /// @nodoc
@@ -80,7 +75,7 @@ class _$ScheduleInstanceSummaryCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? scheduleId = null,
+    Object? schedule = null,
     Object? groupId = null,
     Object? displayName = null,
     Object? instanceDate = null,
@@ -88,17 +83,16 @@ class _$ScheduleInstanceSummaryCopyWithImpl<$Res,
     Object? memberDefaultReplies = null,
     Object? memberDefaultRules = null,
     Object? yesCount = null,
-    Object? timezone = null,
     Object? myReply = freezed,
     Object? myDefaultReply = freezed,
     Object? myDefaultRule = freezed,
-    Object? targetMemberId = freezed,
+    Object? targetMember = freezed,
   }) {
     return _then(_value.copyWith(
-      scheduleId: null == scheduleId
-          ? _value.scheduleId
-          : scheduleId // ignore: cast_nullable_to_non_nullable
-              as String,
+      schedule: null == schedule
+          ? _value.schedule
+          : schedule // ignore: cast_nullable_to_non_nullable
+              as Schedule,
       groupId: null == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
@@ -114,11 +108,11 @@ class _$ScheduleInstanceSummaryCopyWithImpl<$Res,
       memberReplies: null == memberReplies
           ? _value.memberReplies
           : memberReplies // ignore: cast_nullable_to_non_nullable
-              as Map<String, ReplyOptions>,
+              as Map<String, Reply>,
       memberDefaultReplies: null == memberDefaultReplies
           ? _value.memberDefaultReplies
           : memberDefaultReplies // ignore: cast_nullable_to_non_nullable
-              as Map<String, ReplyOptions>,
+              as Map<String, Reply>,
       memberDefaultRules: null == memberDefaultRules
           ? _value.memberDefaultRules
           : memberDefaultRules // ignore: cast_nullable_to_non_nullable
@@ -127,41 +121,23 @@ class _$ScheduleInstanceSummaryCopyWithImpl<$Res,
           ? _value.yesCount
           : yesCount // ignore: cast_nullable_to_non_nullable
               as int,
-      timezone: null == timezone
-          ? _value.timezone
-          : timezone // ignore: cast_nullable_to_non_nullable
-              as String,
       myReply: freezed == myReply
           ? _value.myReply
           : myReply // ignore: cast_nullable_to_non_nullable
-              as ReplyOptions?,
+              as Reply?,
       myDefaultReply: freezed == myDefaultReply
           ? _value.myDefaultReply
           : myDefaultReply // ignore: cast_nullable_to_non_nullable
-              as ReplyOptions?,
+              as Reply?,
       myDefaultRule: freezed == myDefaultRule
           ? _value.myDefaultRule
           : myDefaultRule // ignore: cast_nullable_to_non_nullable
               as DefaultRule?,
-      targetMemberId: freezed == targetMemberId
-          ? _value.targetMemberId
-          : targetMemberId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      targetMember: freezed == targetMember
+          ? _value.targetMember
+          : targetMember // ignore: cast_nullable_to_non_nullable
+              as Member?,
     ) as $Val);
-  }
-
-  /// Create a copy of ScheduleInstanceSummary
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $DefaultRuleCopyWith<$Res>? get myDefaultRule {
-    if (_value.myDefaultRule == null) {
-      return null;
-    }
-
-    return $DefaultRuleCopyWith<$Res>(_value.myDefaultRule!, (value) {
-      return _then(_value.copyWith(myDefaultRule: value) as $Val);
-    });
   }
 }
 
@@ -175,22 +151,18 @@ abstract class _$$ScheduleInstanceSummaryImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String scheduleId,
+      {Schedule schedule,
       String groupId,
       String displayName,
       DateTime instanceDate,
-      Map<String, ReplyOptions> memberReplies,
-      Map<String, ReplyOptions> memberDefaultReplies,
+      Map<String, Reply> memberReplies,
+      Map<String, Reply> memberDefaultReplies,
       Map<String, DefaultRule> memberDefaultRules,
       int yesCount,
-      String timezone,
-      ReplyOptions? myReply,
-      ReplyOptions? myDefaultReply,
+      Reply? myReply,
+      Reply? myDefaultReply,
       DefaultRule? myDefaultRule,
-      String? targetMemberId});
-
-  @override
-  $DefaultRuleCopyWith<$Res>? get myDefaultRule;
+      Member? targetMember});
 }
 
 /// @nodoc
@@ -208,7 +180,7 @@ class __$$ScheduleInstanceSummaryImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? scheduleId = null,
+    Object? schedule = null,
     Object? groupId = null,
     Object? displayName = null,
     Object? instanceDate = null,
@@ -216,17 +188,16 @@ class __$$ScheduleInstanceSummaryImplCopyWithImpl<$Res>
     Object? memberDefaultReplies = null,
     Object? memberDefaultRules = null,
     Object? yesCount = null,
-    Object? timezone = null,
     Object? myReply = freezed,
     Object? myDefaultReply = freezed,
     Object? myDefaultRule = freezed,
-    Object? targetMemberId = freezed,
+    Object? targetMember = freezed,
   }) {
     return _then(_$ScheduleInstanceSummaryImpl(
-      scheduleId: null == scheduleId
-          ? _value.scheduleId
-          : scheduleId // ignore: cast_nullable_to_non_nullable
-              as String,
+      schedule: null == schedule
+          ? _value.schedule
+          : schedule // ignore: cast_nullable_to_non_nullable
+              as Schedule,
       groupId: null == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
@@ -242,11 +213,11 @@ class __$$ScheduleInstanceSummaryImplCopyWithImpl<$Res>
       memberReplies: null == memberReplies
           ? _value._memberReplies
           : memberReplies // ignore: cast_nullable_to_non_nullable
-              as Map<String, ReplyOptions>,
+              as Map<String, Reply>,
       memberDefaultReplies: null == memberDefaultReplies
           ? _value._memberDefaultReplies
           : memberDefaultReplies // ignore: cast_nullable_to_non_nullable
-              as Map<String, ReplyOptions>,
+              as Map<String, Reply>,
       memberDefaultRules: null == memberDefaultRules
           ? _value._memberDefaultRules
           : memberDefaultRules // ignore: cast_nullable_to_non_nullable
@@ -255,26 +226,22 @@ class __$$ScheduleInstanceSummaryImplCopyWithImpl<$Res>
           ? _value.yesCount
           : yesCount // ignore: cast_nullable_to_non_nullable
               as int,
-      timezone: null == timezone
-          ? _value.timezone
-          : timezone // ignore: cast_nullable_to_non_nullable
-              as String,
       myReply: freezed == myReply
           ? _value.myReply
           : myReply // ignore: cast_nullable_to_non_nullable
-              as ReplyOptions?,
+              as Reply?,
       myDefaultReply: freezed == myDefaultReply
           ? _value.myDefaultReply
           : myDefaultReply // ignore: cast_nullable_to_non_nullable
-              as ReplyOptions?,
+              as Reply?,
       myDefaultRule: freezed == myDefaultRule
           ? _value.myDefaultRule
           : myDefaultRule // ignore: cast_nullable_to_non_nullable
               as DefaultRule?,
-      targetMemberId: freezed == targetMemberId
-          ? _value.targetMemberId
-          : targetMemberId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      targetMember: freezed == targetMember
+          ? _value.targetMember
+          : targetMember // ignore: cast_nullable_to_non_nullable
+              as Member?,
     ));
   }
 }
@@ -285,42 +252,41 @@ class _$ScheduleInstanceSummaryImpl
     with DiagnosticableTreeMixin
     implements _ScheduleInstanceSummary {
   const _$ScheduleInstanceSummaryImpl(
-      {required this.scheduleId,
+      {required this.schedule,
       required this.groupId,
       required this.displayName,
       required this.instanceDate,
-      required final Map<String, ReplyOptions> memberReplies,
-      required final Map<String, ReplyOptions> memberDefaultReplies,
+      required final Map<String, Reply> memberReplies,
+      required final Map<String, Reply> memberDefaultReplies,
       required final Map<String, DefaultRule> memberDefaultRules,
       required this.yesCount,
-      required this.timezone,
       this.myReply,
       this.myDefaultReply,
       this.myDefaultRule,
-      this.targetMemberId})
+      this.targetMember})
       : _memberReplies = memberReplies,
         _memberDefaultReplies = memberDefaultReplies,
         _memberDefaultRules = memberDefaultRules;
 
   @override
-  final String scheduleId;
+  final Schedule schedule;
   @override
   final String groupId;
   @override
   final String displayName;
   @override
   final DateTime instanceDate;
-  final Map<String, ReplyOptions> _memberReplies;
+  final Map<String, Reply> _memberReplies;
   @override
-  Map<String, ReplyOptions> get memberReplies {
+  Map<String, Reply> get memberReplies {
     if (_memberReplies is EqualUnmodifiableMapView) return _memberReplies;
     // ignore: implicit_dynamic_type
     return EqualUnmodifiableMapView(_memberReplies);
   }
 
-  final Map<String, ReplyOptions> _memberDefaultReplies;
+  final Map<String, Reply> _memberDefaultReplies;
   @override
-  Map<String, ReplyOptions> get memberDefaultReplies {
+  Map<String, Reply> get memberDefaultReplies {
     if (_memberDefaultReplies is EqualUnmodifiableMapView)
       return _memberDefaultReplies;
     // ignore: implicit_dynamic_type
@@ -339,19 +305,17 @@ class _$ScheduleInstanceSummaryImpl
   @override
   final int yesCount;
   @override
-  final String timezone;
+  final Reply? myReply;
   @override
-  final ReplyOptions? myReply;
-  @override
-  final ReplyOptions? myDefaultReply;
+  final Reply? myDefaultReply;
   @override
   final DefaultRule? myDefaultRule;
   @override
-  final String? targetMemberId;
+  final Member? targetMember;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ScheduleInstanceSummary(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, memberReplies: $memberReplies, memberDefaultReplies: $memberDefaultReplies, memberDefaultRules: $memberDefaultRules, yesCount: $yesCount, timezone: $timezone, myReply: $myReply, myDefaultReply: $myDefaultReply, myDefaultRule: $myDefaultRule, targetMemberId: $targetMemberId)';
+    return 'ScheduleInstanceSummary(schedule: $schedule, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, memberReplies: $memberReplies, memberDefaultReplies: $memberDefaultReplies, memberDefaultRules: $memberDefaultRules, yesCount: $yesCount, myReply: $myReply, myDefaultReply: $myDefaultReply, myDefaultRule: $myDefaultRule, targetMember: $targetMember)';
   }
 
   @override
@@ -359,7 +323,7 @@ class _$ScheduleInstanceSummaryImpl
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ScheduleInstanceSummary'))
-      ..add(DiagnosticsProperty('scheduleId', scheduleId))
+      ..add(DiagnosticsProperty('schedule', schedule))
       ..add(DiagnosticsProperty('groupId', groupId))
       ..add(DiagnosticsProperty('displayName', displayName))
       ..add(DiagnosticsProperty('instanceDate', instanceDate))
@@ -367,11 +331,10 @@ class _$ScheduleInstanceSummaryImpl
       ..add(DiagnosticsProperty('memberDefaultReplies', memberDefaultReplies))
       ..add(DiagnosticsProperty('memberDefaultRules', memberDefaultRules))
       ..add(DiagnosticsProperty('yesCount', yesCount))
-      ..add(DiagnosticsProperty('timezone', timezone))
       ..add(DiagnosticsProperty('myReply', myReply))
       ..add(DiagnosticsProperty('myDefaultReply', myDefaultReply))
       ..add(DiagnosticsProperty('myDefaultRule', myDefaultRule))
-      ..add(DiagnosticsProperty('targetMemberId', targetMemberId));
+      ..add(DiagnosticsProperty('targetMember', targetMember));
   }
 
   @override
@@ -379,8 +342,8 @@ class _$ScheduleInstanceSummaryImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ScheduleInstanceSummaryImpl &&
-            (identical(other.scheduleId, scheduleId) ||
-                other.scheduleId == scheduleId) &&
+            (identical(other.schedule, schedule) ||
+                other.schedule == schedule) &&
             (identical(other.groupId, groupId) || other.groupId == groupId) &&
             (identical(other.displayName, displayName) ||
                 other.displayName == displayName) &&
@@ -394,21 +357,19 @@ class _$ScheduleInstanceSummaryImpl
                 .equals(other._memberDefaultRules, _memberDefaultRules) &&
             (identical(other.yesCount, yesCount) ||
                 other.yesCount == yesCount) &&
-            (identical(other.timezone, timezone) ||
-                other.timezone == timezone) &&
             (identical(other.myReply, myReply) || other.myReply == myReply) &&
             (identical(other.myDefaultReply, myDefaultReply) ||
                 other.myDefaultReply == myDefaultReply) &&
             (identical(other.myDefaultRule, myDefaultRule) ||
                 other.myDefaultRule == myDefaultRule) &&
-            (identical(other.targetMemberId, targetMemberId) ||
-                other.targetMemberId == targetMemberId));
+            (identical(other.targetMember, targetMember) ||
+                other.targetMember == targetMember));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      scheduleId,
+      schedule,
       groupId,
       displayName,
       instanceDate,
@@ -416,11 +377,10 @@ class _$ScheduleInstanceSummaryImpl
       const DeepCollectionEquality().hash(_memberDefaultReplies),
       const DeepCollectionEquality().hash(_memberDefaultRules),
       yesCount,
-      timezone,
       myReply,
       myDefaultReply,
       myDefaultRule,
-      targetMemberId);
+      targetMember);
 
   /// Create a copy of ScheduleInstanceSummary
   /// with the given fields replaced by the non-null parameter values.
@@ -434,22 +394,21 @@ class _$ScheduleInstanceSummaryImpl
 
 abstract class _ScheduleInstanceSummary implements ScheduleInstanceSummary {
   const factory _ScheduleInstanceSummary(
-      {required final String scheduleId,
+      {required final Schedule schedule,
       required final String groupId,
       required final String displayName,
       required final DateTime instanceDate,
-      required final Map<String, ReplyOptions> memberReplies,
-      required final Map<String, ReplyOptions> memberDefaultReplies,
+      required final Map<String, Reply> memberReplies,
+      required final Map<String, Reply> memberDefaultReplies,
       required final Map<String, DefaultRule> memberDefaultRules,
       required final int yesCount,
-      required final String timezone,
-      final ReplyOptions? myReply,
-      final ReplyOptions? myDefaultReply,
+      final Reply? myReply,
+      final Reply? myDefaultReply,
       final DefaultRule? myDefaultRule,
-      final String? targetMemberId}) = _$ScheduleInstanceSummaryImpl;
+      final Member? targetMember}) = _$ScheduleInstanceSummaryImpl;
 
   @override
-  String get scheduleId;
+  Schedule get schedule;
   @override
   String get groupId;
   @override
@@ -457,23 +416,21 @@ abstract class _ScheduleInstanceSummary implements ScheduleInstanceSummary {
   @override
   DateTime get instanceDate;
   @override
-  Map<String, ReplyOptions> get memberReplies;
+  Map<String, Reply> get memberReplies;
   @override
-  Map<String, ReplyOptions> get memberDefaultReplies;
+  Map<String, Reply> get memberDefaultReplies;
   @override
   Map<String, DefaultRule> get memberDefaultRules;
   @override
   int get yesCount;
   @override
-  String get timezone;
+  Reply? get myReply;
   @override
-  ReplyOptions? get myReply;
-  @override
-  ReplyOptions? get myDefaultReply;
+  Reply? get myDefaultReply;
   @override
   DefaultRule? get myDefaultRule;
   @override
-  String? get targetMemberId;
+  Member? get targetMember;
 
   /// Create a copy of ScheduleInstanceSummary
   /// with the given fields replaced by the non-null parameter values.
@@ -485,17 +442,16 @@ abstract class _ScheduleInstanceSummary implements ScheduleInstanceSummary {
 
 /// @nodoc
 mixin _$ScheduleInstanceDetails {
-  String get scheduleId => throw _privateConstructorUsedError;
+  Schedule get schedule => throw _privateConstructorUsedError;
   String get groupId => throw _privateConstructorUsedError;
   String get displayName => throw _privateConstructorUsedError;
   DateTime get instanceDate => throw _privateConstructorUsedError;
   List<ScheduleInstanceRepliesGroup> get repliesGroups =>
       throw _privateConstructorUsedError;
-  String get timezone => throw _privateConstructorUsedError;
-  ReplyOptions? get myReply => throw _privateConstructorUsedError;
-  ReplyOptions? get myDefaultReply => throw _privateConstructorUsedError;
+  Reply? get myReply => throw _privateConstructorUsedError;
+  Reply? get myDefaultReply => throw _privateConstructorUsedError;
   DefaultRule? get myDefaultRule => throw _privateConstructorUsedError;
-  String? get targetMemberId => throw _privateConstructorUsedError;
+  Member? get targetMember => throw _privateConstructorUsedError;
   bool? get canEditOthers => throw _privateConstructorUsedError;
 
   /// Create a copy of ScheduleInstanceDetails
@@ -512,19 +468,16 @@ abstract class $ScheduleInstanceDetailsCopyWith<$Res> {
       _$ScheduleInstanceDetailsCopyWithImpl<$Res, ScheduleInstanceDetails>;
   @useResult
   $Res call(
-      {String scheduleId,
+      {Schedule schedule,
       String groupId,
       String displayName,
       DateTime instanceDate,
       List<ScheduleInstanceRepliesGroup> repliesGroups,
-      String timezone,
-      ReplyOptions? myReply,
-      ReplyOptions? myDefaultReply,
+      Reply? myReply,
+      Reply? myDefaultReply,
       DefaultRule? myDefaultRule,
-      String? targetMemberId,
+      Member? targetMember,
       bool? canEditOthers});
-
-  $DefaultRuleCopyWith<$Res>? get myDefaultRule;
 }
 
 /// @nodoc
@@ -543,23 +496,22 @@ class _$ScheduleInstanceDetailsCopyWithImpl<$Res,
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? scheduleId = null,
+    Object? schedule = null,
     Object? groupId = null,
     Object? displayName = null,
     Object? instanceDate = null,
     Object? repliesGroups = null,
-    Object? timezone = null,
     Object? myReply = freezed,
     Object? myDefaultReply = freezed,
     Object? myDefaultRule = freezed,
-    Object? targetMemberId = freezed,
+    Object? targetMember = freezed,
     Object? canEditOthers = freezed,
   }) {
     return _then(_value.copyWith(
-      scheduleId: null == scheduleId
-          ? _value.scheduleId
-          : scheduleId // ignore: cast_nullable_to_non_nullable
-              as String,
+      schedule: null == schedule
+          ? _value.schedule
+          : schedule // ignore: cast_nullable_to_non_nullable
+              as Schedule,
       groupId: null == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
@@ -576,45 +528,27 @@ class _$ScheduleInstanceDetailsCopyWithImpl<$Res,
           ? _value.repliesGroups
           : repliesGroups // ignore: cast_nullable_to_non_nullable
               as List<ScheduleInstanceRepliesGroup>,
-      timezone: null == timezone
-          ? _value.timezone
-          : timezone // ignore: cast_nullable_to_non_nullable
-              as String,
       myReply: freezed == myReply
           ? _value.myReply
           : myReply // ignore: cast_nullable_to_non_nullable
-              as ReplyOptions?,
+              as Reply?,
       myDefaultReply: freezed == myDefaultReply
           ? _value.myDefaultReply
           : myDefaultReply // ignore: cast_nullable_to_non_nullable
-              as ReplyOptions?,
+              as Reply?,
       myDefaultRule: freezed == myDefaultRule
           ? _value.myDefaultRule
           : myDefaultRule // ignore: cast_nullable_to_non_nullable
               as DefaultRule?,
-      targetMemberId: freezed == targetMemberId
-          ? _value.targetMemberId
-          : targetMemberId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      targetMember: freezed == targetMember
+          ? _value.targetMember
+          : targetMember // ignore: cast_nullable_to_non_nullable
+              as Member?,
       canEditOthers: freezed == canEditOthers
           ? _value.canEditOthers
           : canEditOthers // ignore: cast_nullable_to_non_nullable
               as bool?,
     ) as $Val);
-  }
-
-  /// Create a copy of ScheduleInstanceDetails
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $DefaultRuleCopyWith<$Res>? get myDefaultRule {
-    if (_value.myDefaultRule == null) {
-      return null;
-    }
-
-    return $DefaultRuleCopyWith<$Res>(_value.myDefaultRule!, (value) {
-      return _then(_value.copyWith(myDefaultRule: value) as $Val);
-    });
   }
 }
 
@@ -628,20 +562,16 @@ abstract class _$$ScheduleInstanceDetailsImplCopyWith<$Res>
   @override
   @useResult
   $Res call(
-      {String scheduleId,
+      {Schedule schedule,
       String groupId,
       String displayName,
       DateTime instanceDate,
       List<ScheduleInstanceRepliesGroup> repliesGroups,
-      String timezone,
-      ReplyOptions? myReply,
-      ReplyOptions? myDefaultReply,
+      Reply? myReply,
+      Reply? myDefaultReply,
       DefaultRule? myDefaultRule,
-      String? targetMemberId,
+      Member? targetMember,
       bool? canEditOthers});
-
-  @override
-  $DefaultRuleCopyWith<$Res>? get myDefaultRule;
 }
 
 /// @nodoc
@@ -659,23 +589,22 @@ class __$$ScheduleInstanceDetailsImplCopyWithImpl<$Res>
   @pragma('vm:prefer-inline')
   @override
   $Res call({
-    Object? scheduleId = null,
+    Object? schedule = null,
     Object? groupId = null,
     Object? displayName = null,
     Object? instanceDate = null,
     Object? repliesGroups = null,
-    Object? timezone = null,
     Object? myReply = freezed,
     Object? myDefaultReply = freezed,
     Object? myDefaultRule = freezed,
-    Object? targetMemberId = freezed,
+    Object? targetMember = freezed,
     Object? canEditOthers = freezed,
   }) {
     return _then(_$ScheduleInstanceDetailsImpl(
-      scheduleId: null == scheduleId
-          ? _value.scheduleId
-          : scheduleId // ignore: cast_nullable_to_non_nullable
-              as String,
+      schedule: null == schedule
+          ? _value.schedule
+          : schedule // ignore: cast_nullable_to_non_nullable
+              as Schedule,
       groupId: null == groupId
           ? _value.groupId
           : groupId // ignore: cast_nullable_to_non_nullable
@@ -692,26 +621,22 @@ class __$$ScheduleInstanceDetailsImplCopyWithImpl<$Res>
           ? _value._repliesGroups
           : repliesGroups // ignore: cast_nullable_to_non_nullable
               as List<ScheduleInstanceRepliesGroup>,
-      timezone: null == timezone
-          ? _value.timezone
-          : timezone // ignore: cast_nullable_to_non_nullable
-              as String,
       myReply: freezed == myReply
           ? _value.myReply
           : myReply // ignore: cast_nullable_to_non_nullable
-              as ReplyOptions?,
+              as Reply?,
       myDefaultReply: freezed == myDefaultReply
           ? _value.myDefaultReply
           : myDefaultReply // ignore: cast_nullable_to_non_nullable
-              as ReplyOptions?,
+              as Reply?,
       myDefaultRule: freezed == myDefaultRule
           ? _value.myDefaultRule
           : myDefaultRule // ignore: cast_nullable_to_non_nullable
               as DefaultRule?,
-      targetMemberId: freezed == targetMemberId
-          ? _value.targetMemberId
-          : targetMemberId // ignore: cast_nullable_to_non_nullable
-              as String?,
+      targetMember: freezed == targetMember
+          ? _value.targetMember
+          : targetMember // ignore: cast_nullable_to_non_nullable
+              as Member?,
       canEditOthers: freezed == canEditOthers
           ? _value.canEditOthers
           : canEditOthers // ignore: cast_nullable_to_non_nullable
@@ -726,21 +651,20 @@ class _$ScheduleInstanceDetailsImpl
     with DiagnosticableTreeMixin
     implements _ScheduleInstanceDetails {
   const _$ScheduleInstanceDetailsImpl(
-      {required this.scheduleId,
+      {required this.schedule,
       required this.groupId,
       required this.displayName,
       required this.instanceDate,
       required final List<ScheduleInstanceRepliesGroup> repliesGroups,
-      required this.timezone,
       this.myReply,
       this.myDefaultReply,
       this.myDefaultRule,
-      this.targetMemberId,
+      this.targetMember,
       this.canEditOthers})
       : _repliesGroups = repliesGroups;
 
   @override
-  final String scheduleId;
+  final Schedule schedule;
   @override
   final String groupId;
   @override
@@ -756,21 +680,19 @@ class _$ScheduleInstanceDetailsImpl
   }
 
   @override
-  final String timezone;
+  final Reply? myReply;
   @override
-  final ReplyOptions? myReply;
-  @override
-  final ReplyOptions? myDefaultReply;
+  final Reply? myDefaultReply;
   @override
   final DefaultRule? myDefaultRule;
   @override
-  final String? targetMemberId;
+  final Member? targetMember;
   @override
   final bool? canEditOthers;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ScheduleInstanceDetails(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, repliesGroups: $repliesGroups, timezone: $timezone, myReply: $myReply, myDefaultReply: $myDefaultReply, myDefaultRule: $myDefaultRule, targetMemberId: $targetMemberId, canEditOthers: $canEditOthers)';
+    return 'ScheduleInstanceDetails(schedule: $schedule, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, repliesGroups: $repliesGroups, myReply: $myReply, myDefaultReply: $myDefaultReply, myDefaultRule: $myDefaultRule, targetMember: $targetMember, canEditOthers: $canEditOthers)';
   }
 
   @override
@@ -778,16 +700,15 @@ class _$ScheduleInstanceDetailsImpl
     super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'ScheduleInstanceDetails'))
-      ..add(DiagnosticsProperty('scheduleId', scheduleId))
+      ..add(DiagnosticsProperty('schedule', schedule))
       ..add(DiagnosticsProperty('groupId', groupId))
       ..add(DiagnosticsProperty('displayName', displayName))
       ..add(DiagnosticsProperty('instanceDate', instanceDate))
       ..add(DiagnosticsProperty('repliesGroups', repliesGroups))
-      ..add(DiagnosticsProperty('timezone', timezone))
       ..add(DiagnosticsProperty('myReply', myReply))
       ..add(DiagnosticsProperty('myDefaultReply', myDefaultReply))
       ..add(DiagnosticsProperty('myDefaultRule', myDefaultRule))
-      ..add(DiagnosticsProperty('targetMemberId', targetMemberId))
+      ..add(DiagnosticsProperty('targetMember', targetMember))
       ..add(DiagnosticsProperty('canEditOthers', canEditOthers));
   }
 
@@ -796,8 +717,8 @@ class _$ScheduleInstanceDetailsImpl
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
             other is _$ScheduleInstanceDetailsImpl &&
-            (identical(other.scheduleId, scheduleId) ||
-                other.scheduleId == scheduleId) &&
+            (identical(other.schedule, schedule) ||
+                other.schedule == schedule) &&
             (identical(other.groupId, groupId) || other.groupId == groupId) &&
             (identical(other.displayName, displayName) ||
                 other.displayName == displayName) &&
@@ -805,15 +726,13 @@ class _$ScheduleInstanceDetailsImpl
                 other.instanceDate == instanceDate) &&
             const DeepCollectionEquality()
                 .equals(other._repliesGroups, _repliesGroups) &&
-            (identical(other.timezone, timezone) ||
-                other.timezone == timezone) &&
             (identical(other.myReply, myReply) || other.myReply == myReply) &&
             (identical(other.myDefaultReply, myDefaultReply) ||
                 other.myDefaultReply == myDefaultReply) &&
             (identical(other.myDefaultRule, myDefaultRule) ||
                 other.myDefaultRule == myDefaultRule) &&
-            (identical(other.targetMemberId, targetMemberId) ||
-                other.targetMemberId == targetMemberId) &&
+            (identical(other.targetMember, targetMember) ||
+                other.targetMember == targetMember) &&
             (identical(other.canEditOthers, canEditOthers) ||
                 other.canEditOthers == canEditOthers));
   }
@@ -821,16 +740,15 @@ class _$ScheduleInstanceDetailsImpl
   @override
   int get hashCode => Object.hash(
       runtimeType,
-      scheduleId,
+      schedule,
       groupId,
       displayName,
       instanceDate,
       const DeepCollectionEquality().hash(_repliesGroups),
-      timezone,
       myReply,
       myDefaultReply,
       myDefaultRule,
-      targetMemberId,
+      targetMember,
       canEditOthers);
 
   /// Create a copy of ScheduleInstanceDetails
@@ -845,20 +763,19 @@ class _$ScheduleInstanceDetailsImpl
 
 abstract class _ScheduleInstanceDetails implements ScheduleInstanceDetails {
   const factory _ScheduleInstanceDetails(
-      {required final String scheduleId,
+      {required final Schedule schedule,
       required final String groupId,
       required final String displayName,
       required final DateTime instanceDate,
       required final List<ScheduleInstanceRepliesGroup> repliesGroups,
-      required final String timezone,
-      final ReplyOptions? myReply,
-      final ReplyOptions? myDefaultReply,
+      final Reply? myReply,
+      final Reply? myDefaultReply,
       final DefaultRule? myDefaultRule,
-      final String? targetMemberId,
+      final Member? targetMember,
       final bool? canEditOthers}) = _$ScheduleInstanceDetailsImpl;
 
   @override
-  String get scheduleId;
+  Schedule get schedule;
   @override
   String get groupId;
   @override
@@ -868,15 +785,13 @@ abstract class _ScheduleInstanceDetails implements ScheduleInstanceDetails {
   @override
   List<ScheduleInstanceRepliesGroup> get repliesGroups;
   @override
-  String get timezone;
+  Reply? get myReply;
   @override
-  ReplyOptions? get myReply;
-  @override
-  ReplyOptions? get myDefaultReply;
+  Reply? get myDefaultReply;
   @override
   DefaultRule? get myDefaultRule;
   @override
-  String? get targetMemberId;
+  Member? get targetMember;
   @override
   bool? get canEditOthers;
 
@@ -1090,8 +1005,8 @@ abstract class _ScheduleInstanceRepliesGroup
 /// @nodoc
 mixin _$ScheduleInstanceMember {
   Member get member => throw _privateConstructorUsedError;
-  ReplyOptions? get reply => throw _privateConstructorUsedError;
-  ReplyOptions? get defaultReply => throw _privateConstructorUsedError;
+  Reply? get reply => throw _privateConstructorUsedError;
+  Reply? get defaultReply => throw _privateConstructorUsedError;
   DefaultRule? get defaultRule => throw _privateConstructorUsedError;
   Profile? get profile => throw _privateConstructorUsedError;
 
@@ -1110,14 +1025,10 @@ abstract class $ScheduleInstanceMemberCopyWith<$Res> {
   @useResult
   $Res call(
       {Member member,
-      ReplyOptions? reply,
-      ReplyOptions? defaultReply,
+      Reply? reply,
+      Reply? defaultReply,
       DefaultRule? defaultRule,
       Profile? profile});
-
-  $MemberCopyWith<$Res> get member;
-  $DefaultRuleCopyWith<$Res>? get defaultRule;
-  $ProfileCopyWith<$Res>? get profile;
 }
 
 /// @nodoc
@@ -1150,11 +1061,11 @@ class _$ScheduleInstanceMemberCopyWithImpl<$Res,
       reply: freezed == reply
           ? _value.reply
           : reply // ignore: cast_nullable_to_non_nullable
-              as ReplyOptions?,
+              as Reply?,
       defaultReply: freezed == defaultReply
           ? _value.defaultReply
           : defaultReply // ignore: cast_nullable_to_non_nullable
-              as ReplyOptions?,
+              as Reply?,
       defaultRule: freezed == defaultRule
           ? _value.defaultRule
           : defaultRule // ignore: cast_nullable_to_non_nullable
@@ -1164,44 +1075,6 @@ class _$ScheduleInstanceMemberCopyWithImpl<$Res,
           : profile // ignore: cast_nullable_to_non_nullable
               as Profile?,
     ) as $Val);
-  }
-
-  /// Create a copy of ScheduleInstanceMember
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $MemberCopyWith<$Res> get member {
-    return $MemberCopyWith<$Res>(_value.member, (value) {
-      return _then(_value.copyWith(member: value) as $Val);
-    });
-  }
-
-  /// Create a copy of ScheduleInstanceMember
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $DefaultRuleCopyWith<$Res>? get defaultRule {
-    if (_value.defaultRule == null) {
-      return null;
-    }
-
-    return $DefaultRuleCopyWith<$Res>(_value.defaultRule!, (value) {
-      return _then(_value.copyWith(defaultRule: value) as $Val);
-    });
-  }
-
-  /// Create a copy of ScheduleInstanceMember
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $ProfileCopyWith<$Res>? get profile {
-    if (_value.profile == null) {
-      return null;
-    }
-
-    return $ProfileCopyWith<$Res>(_value.profile!, (value) {
-      return _then(_value.copyWith(profile: value) as $Val);
-    });
   }
 }
 
@@ -1216,17 +1089,10 @@ abstract class _$$ScheduleInstanceMemberReplyImplCopyWith<$Res>
   @useResult
   $Res call(
       {Member member,
-      ReplyOptions? reply,
-      ReplyOptions? defaultReply,
+      Reply? reply,
+      Reply? defaultReply,
       DefaultRule? defaultRule,
       Profile? profile});
-
-  @override
-  $MemberCopyWith<$Res> get member;
-  @override
-  $DefaultRuleCopyWith<$Res>? get defaultRule;
-  @override
-  $ProfileCopyWith<$Res>? get profile;
 }
 
 /// @nodoc
@@ -1258,11 +1124,11 @@ class __$$ScheduleInstanceMemberReplyImplCopyWithImpl<$Res>
       reply: freezed == reply
           ? _value.reply
           : reply // ignore: cast_nullable_to_non_nullable
-              as ReplyOptions?,
+              as Reply?,
       defaultReply: freezed == defaultReply
           ? _value.defaultReply
           : defaultReply // ignore: cast_nullable_to_non_nullable
-              as ReplyOptions?,
+              as Reply?,
       defaultRule: freezed == defaultRule
           ? _value.defaultRule
           : defaultRule // ignore: cast_nullable_to_non_nullable
@@ -1290,9 +1156,9 @@ class _$ScheduleInstanceMemberReplyImpl
   @override
   final Member member;
   @override
-  final ReplyOptions? reply;
+  final Reply? reply;
   @override
-  final ReplyOptions? defaultReply;
+  final Reply? defaultReply;
   @override
   final DefaultRule? defaultRule;
   @override
@@ -1346,17 +1212,17 @@ class _$ScheduleInstanceMemberReplyImpl
 abstract class _ScheduleInstanceMemberReply implements ScheduleInstanceMember {
   const factory _ScheduleInstanceMemberReply(
       {required final Member member,
-      final ReplyOptions? reply,
-      final ReplyOptions? defaultReply,
+      final Reply? reply,
+      final Reply? defaultReply,
       final DefaultRule? defaultRule,
       final Profile? profile}) = _$ScheduleInstanceMemberReplyImpl;
 
   @override
   Member get member;
   @override
-  ReplyOptions? get reply;
+  Reply? get reply;
   @override
-  ReplyOptions? get defaultReply;
+  Reply? get defaultReply;
   @override
   DefaultRule? get defaultRule;
   @override

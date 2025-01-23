@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parousia/actions/actions.dart';
 import 'package:parousia/app.dart';
+import 'package:parousia/brick/repository.dart';
 import 'package:parousia/epics/epics.dart';
 import 'package:parousia/reducers/reducers.dart';
 import 'package:parousia/repositories/repositories.dart';
@@ -52,15 +53,18 @@ Future<void> main() async {
 
   final supabaseConfig = SupabaseConfig.fromString(supabaseConfigFile);
 
-  final supabase = await Supabase.initialize(
-    anonKey: supabaseConfig.anonKey,
-    url: supabaseConfig.apiUrl,
-  );
+  await ParRepository.configure(
+      supabaseUrl: supabaseConfig.apiUrl,
+      supabaseAnonKey: supabaseConfig.anonKey);
 
-  final store = await _initStore(supabase.client);
+  final repo = ParRepository();
+  await repo.initialize();
+  final supabaseClient = repo.remoteProvider.client;
+
+  final store = await _initStore(repo);
 
   // Propagate auth state changes to the store
-  supabase.client.auth.onAuthStateChange
+  supabaseClient.auth.onAuthStateChange
       .listen((authState) => store.dispatch(AuthStateChangedAction(authState)));
 
   // Propagate received deeplinks to the store
@@ -73,15 +77,16 @@ Future<void> main() async {
       : runApp(ParApp(store: store));
 }
 
-Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
-  final defaultRulesRepository = DefaultRulesRepository(supabase: supabase);
-  final groupsRepository = GroupsRepository(supabase: supabase);
-  final membersRepository = MembersRepository(supabase: supabase);
-  final invitesRepository = InvitesRepository(supabase: supabase);
-  final profilesRepository = ProfilesRepository(supabase: supabase);
-  final repliesRepository = RepliesRepository(supabase: supabase);
-  final schedulesRepository = SchedulesRepository(supabase: supabase);
-  final storageRepository = StorageRepository(supabase: supabase);
+Future<Store<AppState>> _initStore(ParRepository repository) async {
+  final defaultRulesRepository = DefaultRulesRepository(repository: repository);
+  final groupsRepository = GroupsRepository(repository: repository);
+  final membersRepository = MembersRepository(repository: repository);
+  final invitesRepository = InvitesRepository(repository: repository);
+  final profilesRepository = ProfilesRepository(repository: repository);
+  final repliesRepository = RepliesRepository(repository: repository);
+  final schedulesRepository = SchedulesRepository(repository: repository);
+  final storageRepository =
+      StorageRepository(supabase: repository.remoteProvider.client);
 
   final epics = combineEpics<AppState>([
     createRouterEpics(router),

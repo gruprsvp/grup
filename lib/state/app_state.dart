@@ -1,35 +1,47 @@
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:flutter/material.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:redux_entity/redux_entity.dart';
 
 import 'auth_state.dart';
 import 'locale_state.dart';
 
-part 'app_state.freezed.dart';
-part 'app_state.g.dart';
+part 'app_state.mapper.dart';
 
-@freezed
-sealed class AppState with _$AppState {
-  const factory AppState({
-    @Default(RemoteEntityState<Profile>()) RemoteEntityState<Profile> profiles,
-    @Default(RemoteEntityState<Group>()) RemoteEntityState<Group> groups,
-    @Default(RemoteEntityState<Member>()) RemoteEntityState<Member> members,
-    @Default(RemoteEntityState<Invite>()) RemoteEntityState<Invite> invites,
-    @Default(RemoteEntityState<Schedule>())
-    RemoteEntityState<Schedule> schedules,
-    @Default(RemoteEntityState<DefaultRule>())
-    RemoteEntityState<DefaultRule> defaultRules,
-    @Default(RemoteEntityState<Reply>()) RemoteEntityState<Reply> replies,
-    @Default(AuthState(status: AuthStatus.initial)) AuthState auth,
-    @Default(ThemeMode.system) ThemeMode themeMode,
-    required DateTime selectedDate,
-    String? selectedGroupId,
-    String? selectedScheduleId,
-    LocaleState? locale,
-    bool? hasSeenFeedbackCard,
-  }) = _AppState;
+@MappableClass()
+class AppState with AppStateMappable {
+  final RemoteEntityState<Profile> profiles;
+  final RemoteEntityState<Group> groups;
+  final RemoteEntityState<Member> members;
+  final RemoteEntityState<Invite> invites;
+  final RemoteEntityState<Schedule> schedules;
+  final RemoteEntityState<DefaultRule> defaultRules;
+  final RemoteEntityState<Reply> replies;
+  final AuthState auth;
+  final ThemeMode themeMode;
+  final DateTime selectedDate;
+  final String? selectedGroupId;
+  final String? selectedScheduleId;
+  final LocaleState? locale;
+  final bool? hasSeenFeedbackCard;
+
+  AppState({
+    this.profiles = const RemoteEntityState<Profile>(),
+    this.groups = const RemoteEntityState<Group>(),
+    this.members = const RemoteEntityState<Member>(),
+    this.invites = const RemoteEntityState<Invite>(),
+    this.schedules = const RemoteEntityState<Schedule>(),
+    this.defaultRules = const RemoteEntityState<DefaultRule>(),
+    this.replies = const RemoteEntityState<Reply>(),
+    this.auth = const AuthState(status: AuthStatus.initial),
+    this.themeMode = ThemeMode.system,
+    required this.selectedDate,
+    this.selectedGroupId,
+    this.selectedScheduleId,
+    this.locale,
+    this.hasSeenFeedbackCard,
+  });
 
   factory AppState.initialState() => AppState(selectedDate: DateTime.now());
 
@@ -49,6 +61,5 @@ sealed class AppState with _$AppState {
       ) ??
       AppState.initialState();
 
-  factory AppState.fromJson(Map<String, dynamic> json) =>
-      _$AppStateFromJson(json);
+  static final fromJson = AppStateMapper.fromJson;
 }

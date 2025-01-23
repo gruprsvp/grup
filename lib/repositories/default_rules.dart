@@ -1,37 +1,45 @@
-import 'package:parousia/models/models.dart';
+import 'package:brick_core/core.dart';
+import 'package:parousia/brick/brick.dart';
 
-import 'const.dart';
 import 'supabase.dart';
 
-class DefaultRulesRepository extends SupabaseRepository with Postgrest {
-  DefaultRulesRepository({required super.supabase})
-      : super(tableName: Tables.default_rules);
+class DefaultRulesRepository extends SupabaseRepository {
+  DefaultRulesRepository({required super.repository});
 
-  Future<Iterable<DefaultRule>> getDefaultRules(String groupId) async {
-    return table()
-        .select('*,members!inner(*)')
-        .eq('members.group_id', groupId)
-        .withConverter((data) => data.map(DefaultRule.fromJson));
-  }
+  Future<Iterable<DefaultRule>> getDefaultRules(String groupId) async =>
+      repository
+          .get<DefaultRule>(
+        query: Query.where('member.group', Where.exact('id', groupId)),
+      )
+          .then((replies) {
+        print(replies.length);
+        return replies;
+      });
 
-  Future<DefaultRule> createDefaultRule(DefaultRule reply) async {
-    return table()
-        .upsert({
-          'schedule_id': reply.scheduleId,
-          'member_id': reply.memberId,
-          'selected_option': reply.selectedOption.name,
-          'recurrence_rule': reply.recurrenceRule,
-        })
-        .select()
-        .single()
-        .withConverter((data) => DefaultRule.fromJson(data));
-  }
+  Future<DefaultRule> createDefaultRule(DefaultRule reply) async =>
+      repository.upsert<DefaultRule>(reply);
 
-  Future<void> deleteDefaultRule(
+  Future<DefaultRule> getDefaultRule(
       {required String memberId, required String scheduleId}) async {
-    return table()
-        .delete()
-        .eq('member_id', memberId)
-        .eq('schedule_id', scheduleId);
+    final list = await repository.get<DefaultRule>(
+      query: Query(
+        where: [
+          Where.exact('member', Where.exact('id', memberId)),
+          Where.exact('schedule', Where.exact('id', scheduleId)),
+        ],
+      ),
+    );
+    return list.first;
   }
+
+  Future<bool> deleteDefaultRule(DefaultRule rule) =>
+      repository.delete<DefaultRule>(
+        rule,
+        query: Query(
+          where: [
+            Where.exact('member', Where.exact('id', rule.memberId)),
+            Where.exact('schedule', Where.exact('id', rule.scheduleId)),
+          ],
+        ),
+      );
 }

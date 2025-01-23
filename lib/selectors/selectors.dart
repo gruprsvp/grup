@@ -3,6 +3,7 @@ import 'dart:core';
 import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:memoized/memoized.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/state/state.dart';
 import 'package:parousia/util/util.dart';
@@ -30,7 +31,7 @@ final selectSchedules = createSelector3(
     selectGroupId,
     selectedDateRangeSelector,
     (schedules, groupId, range) => schedules.where((s) =>
-        s.groupId.toString() == groupId &&
+        s.group.id.toString() == groupId &&
         (s.startDate.isBefore(range.start) ||
             (s.startDate.compareTo(range.start) >= 0 &&
                 s.startDate.compareTo(range.end) <= 0))));
@@ -39,14 +40,14 @@ final selectDefaultRules = createSelector2(
     selectAllDefaultRules,
     selectSchedulesIds,
     (replies, scheduleIds) =>
-        replies.where((r) => scheduleIds.contains(r.scheduleId)));
+        replies.where((r) => scheduleIds.contains(r.schedule.id)));
 
 final selectReplies = createSelector3(
     selectAllReplies,
     selectSchedulesIds,
     selectedDateRangeSelector,
     (replies, scheduleIds, range) => replies.where((r) =>
-        scheduleIds.contains(r.scheduleId) && range.contains(r.instanceDate)));
+        scheduleIds.contains(r.schedule.id) && range.contains(r.instanceDate)));
 
 // TODO This selector and selectScheduleInstanceForDate are very similar,
 // however, this one is used in the list view and the other in the detail view.
@@ -68,7 +69,7 @@ final selectScheduleInstancesForSelectedDate = createSelector6(
               endDate: range.end,
               replies: replies,
               members: members,
-              targetMemberId: myMember?.$1.id,
+              targetMember: myMember?.$1,
             )));
 
 String? selectScheduleId(AppState state) => state.selectedScheduleId;
@@ -76,11 +77,10 @@ String? selectScheduleId(AppState state) => state.selectedScheduleId;
 final selectScheduleInstanceSummary = createSelector2(
     selectScheduleInstancesForSelectedDate,
     selectScheduleId,
-    (instances, id) =>
-        instances.firstWhereOrNull((s) => s.scheduleId.toString() == id));
+    (instances, id) => instances.firstWhereOrNull((s) => s.schedule.id == id));
 
 final getMember = Memoized2((Member member, Map<String, Profile> profiles) {
-  final profile = profiles[member.profileId.toString()];
+  final profile = profiles[member.profile?.id.toString()];
 
   return member.copyWith(
       displayNameOverride: member.displayNameOverride ?? profile?.displayName);
@@ -105,12 +105,14 @@ final selectScheduleInstanceForDate = createSelector3(
           profile: m.$2,
         ),
       )
-      .whereNot((m) => m.member.id == instance.targetMemberId)
-      .groupListsBy((m) => m.reply ?? m.defaultReply);
+      .whereNot((m) => m.member.id == instance.targetMember?.id)
+      .groupListsBy(
+          (m) => (m.reply)?.selectedOption ?? (m.defaultReply)?.selectedOption);
 
   // This is ugly but I needed an easy way to count the user's reply,
   // after grouping the members by their reply (where the user is not included).
-  final ownReply = instance.myReply ?? instance.myDefaultReply;
+  final ownReply = instance.myReply?.selectedOption ??
+      instance.myDefaultReply?.selectedOption;
   final userRepliedYes = ownReply == ReplyOptions.yes ? 1 : 0;
   final userRepliedNo = ownReply == ReplyOptions.no ? 1 : 0;
   final userRepliedUnknown = ownReply == null ? 1 : 0;
@@ -137,7 +139,7 @@ final selectScheduleInstanceForDate = createSelector3(
   ];
 
   return ScheduleInstanceDetails(
-    scheduleId: instance.scheduleId,
+    schedule: instance.schedule,
     groupId: instance.groupId,
     displayName: instance.displayName,
     instanceDate: instance.instanceDate,
@@ -146,7 +148,7 @@ final selectScheduleInstanceForDate = createSelector3(
     myReply: instance.myReply,
     myDefaultReply: instance.myDefaultReply,
     myDefaultRule: instance.myDefaultRule,
-    targetMemberId: instance.targetMemberId,
+    targetMember: instance.targetMember,
     canEditOthers: canEditOthers,
   );
 });

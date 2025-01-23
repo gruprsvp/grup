@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/models/models.dart';
 
 part 'schedule_summary.freezed.dart';
@@ -9,19 +10,18 @@ part 'schedule_summary.freezed.dart';
 @freezed
 sealed class ScheduleInstanceSummary with _$ScheduleInstanceSummary {
   const factory ScheduleInstanceSummary({
-    required String scheduleId,
+    required Schedule schedule,
     required String groupId,
     required String displayName,
     required DateTime instanceDate,
-    required Map<String, ReplyOptions> memberReplies,
-    required Map<String, ReplyOptions> memberDefaultReplies,
+    required Map<String, Reply> memberReplies,
+    required Map<String, Reply> memberDefaultReplies,
     required Map<String, DefaultRule> memberDefaultRules,
     required int yesCount,
-    required String timezone,
-    ReplyOptions? myReply,
-    ReplyOptions? myDefaultReply,
+    Reply? myReply,
+    Reply? myDefaultReply,
     DefaultRule? myDefaultRule,
-    String? targetMemberId,
+    Member? targetMember,
   }) = _ScheduleInstanceSummary;
 }
 
@@ -30,16 +30,15 @@ sealed class ScheduleInstanceSummary with _$ScheduleInstanceSummary {
 @freezed
 sealed class ScheduleInstanceDetails with _$ScheduleInstanceDetails {
   const factory ScheduleInstanceDetails({
-    required String scheduleId,
+    required Schedule schedule,
     required String groupId,
     required String displayName,
     required DateTime instanceDate,
     required List<ScheduleInstanceRepliesGroup> repliesGroups,
-    required String timezone,
-    ReplyOptions? myReply,
-    ReplyOptions? myDefaultReply,
+    Reply? myReply,
+    Reply? myDefaultReply,
     DefaultRule? myDefaultRule,
-    String? targetMemberId,
+    Member? targetMember,
     bool? canEditOthers,
   }) = _ScheduleInstanceDetails;
 }
@@ -57,8 +56,8 @@ sealed class ScheduleInstanceRepliesGroup with _$ScheduleInstanceRepliesGroup {
 sealed class ScheduleInstanceMember with _$ScheduleInstanceMember {
   const factory ScheduleInstanceMember({
     required Member member,
-    ReplyOptions? reply,
-    ReplyOptions? defaultReply,
+    Reply? reply,
+    Reply? defaultReply,
     DefaultRule? defaultRule,
     Profile? profile,
   }) = _ScheduleInstanceMemberReply;

@@ -2,21 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:styled_text/styled_text.dart';
 
 typedef OnReplyChangedCallback = void Function(
-    ScheduleInstanceSummary, ReplyOptions?);
+    ScheduleInstanceSummary, Reply?, ReplyOptions?);
 
 class SchedulesList extends StatelessWidget {
-  final Iterable<ScheduleInstanceSummary>? schedules;
+  final Iterable<ScheduleInstanceSummary>? scheduleInstances;
   final OnReplyChangedCallback? onReplyChanged;
   final String? groupId;
   final bool isAdmin;
 
   const SchedulesList({
     super.key,
-    this.schedules,
+    this.scheduleInstances,
     this.onReplyChanged,
     this.groupId,
     required this.isAdmin,
@@ -27,20 +28,20 @@ class SchedulesList extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
-    if (schedules == null) {
+    if (scheduleInstances == null) {
       return const Center(child: CircularProgressIndicator.adaptive());
     }
 
-    return schedules?.isNotEmpty ?? false
+    return scheduleInstances?.isNotEmpty ?? false
         ? ListView.builder(
-            itemCount: schedules!.length,
+            itemCount: scheduleInstances!.length,
             itemBuilder: (context, index) => ScheduleTile(
-              schedule: schedules!.elementAt(index),
-              onReplyChanged: (reply) =>
-                  onReplyChanged?.call(schedules!.elementAt(index), reply),
+              scheduleInstance: scheduleInstances!.elementAt(index),
+              onReplyChanged: (reply, replyOption) => onReplyChanged?.call(
+                  scheduleInstances!.elementAt(index), reply, replyOption),
               onScheduleTapped: (schedule) => GroupScheduleDetailsRoute(
-                      groupId: schedule.groupId.toString(),
-                      scheduleId: schedule.scheduleId.toString())
+                      groupId: schedule.groupId,
+                      scheduleId: schedule.schedule.id!)
                   .push(context),
             ),
           )

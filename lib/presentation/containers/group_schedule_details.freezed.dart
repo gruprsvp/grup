@@ -45,7 +45,6 @@ abstract class _$ViewModelCopyWith<$Res> {
       OnDetailsReplyChangedCallback? onReplyChanged,
       OnDetailsDefaultRuleChangedCallback? onDefaultRuleChanged});
 
-  $GroupCopyWith<$Res>? get group;
   $ScheduleInstanceDetailsCopyWith<$Res>? get scheduleInstance;
 }
 
@@ -98,20 +97,6 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   /// with the given fields replaced by the non-null parameter values.
   @override
   @pragma('vm:prefer-inline')
-  $GroupCopyWith<$Res>? get group {
-    if (_value.group == null) {
-      return null;
-    }
-
-    return $GroupCopyWith<$Res>(_value.group!, (value) {
-      return _then(_value.copyWith(group: value) as $Val);
-    });
-  }
-
-  /// Create a copy of _ViewModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
   $ScheduleInstanceDetailsCopyWith<$Res>? get scheduleInstance {
     if (_value.scheduleInstance == null) {
       return null;
@@ -139,8 +124,6 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       OnDetailsReplyChangedCallback? onReplyChanged,
       OnDetailsDefaultRuleChangedCallback? onDefaultRuleChanged});
 
-  @override
-  $GroupCopyWith<$Res>? get group;
   @override
   $ScheduleInstanceDetailsCopyWith<$Res>? get scheduleInstance;
 }

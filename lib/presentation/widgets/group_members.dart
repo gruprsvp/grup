@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
@@ -48,7 +49,7 @@ class GroupMembers extends StatelessWidget {
                   subtitle: Text(l10n.groupRoles(member.role.name)),
                   onTap: () {
                     GroupMemberDetailsRoute(
-                            groupId: member.groupId.toString(),
+                            groupId: member.group.id.toString(),
                             memberId: member.id.toString())
                         .push(context);
                   });

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:parousia/actions/actions.dart';
-import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
@@ -63,9 +63,9 @@ sealed class _ViewModel with _$ViewModel {
 
     // TODO: should use selectors
     final member = store.state.members.entities[memberId];
-    final profile = store.state.profiles.entities[member?.profileId];
+    final profile = store.state.profiles.entities[member?.profile?.id];
     final invites = store.state.invites.entities.values
-        .where((invite) => invite.memberId.toString() == memberId)
+        .where((invite) => invite.member.id.toString() == memberId)
         .toList();
 
     return _ViewModel(
@@ -78,7 +78,7 @@ sealed class _ViewModel with _$ViewModel {
       invites: invites,
       onUpdate: (member) => store.dispatch(RequestUpdateOne<Member>(member)),
       onRemove: (member) =>
-          store.dispatch(RequestDeleteOne<Member>(member.id.toString())),
+          store.dispatch(RequestDeleteMemberAction(member: member)),
     );
   }
 }

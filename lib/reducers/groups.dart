@@ -1,5 +1,6 @@
 import 'package:parousia/actions/actions.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_entity/redux_entity.dart';
 

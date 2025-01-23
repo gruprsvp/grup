@@ -1,23 +1,9 @@
-import 'package:supabase_flutter/supabase_flutter.dart';
-
-import 'const.dart';
+import 'package:parousia/brick/repository.dart';
 
 abstract class SupabaseRepository {
-  final SupabaseClient supabase;
-  final Tables? tableName;
-  final Buckets? bucketName;
+  final ParRepository repository;
 
   const SupabaseRepository({
-    required this.supabase,
-    this.tableName,
-    this.bucketName,
+    required this.repository,
   });
-}
-
-mixin Postgrest on SupabaseRepository {
-  PostgrestQueryBuilder<void> table() => supabase.rest.from(tableName!.name);
-}
-
-mixin Storage on SupabaseRepository {
-  StorageFileApi bucket() => supabase.storage.from(bucketName!.name);
 }
