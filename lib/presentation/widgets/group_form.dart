@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:parousia/models/group.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/presentation/presentation.dart';
 
 typedef OnGroupSaveCallback = ValueSetter<(Group group, XFile? image)>;
@@ -115,9 +115,8 @@ class _GroupFormState extends State<GroupForm> {
                   _formKey.currentState!.save();
                   widget.onSave((
                     Group(
-                      id: widget.group?.id ?? '',
                       displayName: displayName,
-                      description: description.isNotEmpty ? description : null,
+                    description: description.isNotEmpty ? description : null,
                     ),
                     picture
                   ));

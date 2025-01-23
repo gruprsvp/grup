@@ -1,5 +1,5 @@
 import 'package:parousia/actions/actions.dart';
-import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux_entity/redux_entity.dart';
@@ -46,14 +46,11 @@ Epic<AppState> _createRequestDeleteDefaultRuleEpic(
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestDeleteDefaultRuleAction>().asyncMap(
             (action) => defaultRules
-                .deleteDefaultRule(
-                  memberId: action.memberId,
-                  scheduleId: action.scheduleId,
-                )
+                .deleteDefaultRule(action.defaultRule)
                 .then<dynamic>((_) => SuccessDeleteOne<DefaultRule>(
-                    "${action.memberId}-${action.scheduleId}"))
+                    "${action.defaultRule.member.id}-${action.defaultRule.schedule.id}"))
                 .catchError((error) => FailDeleteOne<DefaultRule>(
-                    id: "${action.memberId}-${action.scheduleId}",
+                    id: "${action.defaultRule.member.id}-${action.defaultRule.schedule.id}",
                     error: error)),
           );
 }

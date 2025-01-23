@@ -3,12 +3,20 @@ import 'package:mime/mime.dart';
 import 'package:supabase/supabase.dart';
 
 import 'const.dart';
-import 'supabase.dart';
 
 /// Repository for uploading files to Supabase Storage.
-class StorageRepository extends SupabaseRepository with Storage {
-  const StorageRepository({required super.supabase})
-      : super(bucketName: Buckets.public);
+class StorageRepository {
+  final SupabaseClient supabase;
+  final Tables? tableName;
+  final Buckets? bucketName;
+
+  const StorageRepository({
+    required this.supabase,
+    this.tableName,
+    this.bucketName = Buckets.public,
+  });
+
+  StorageFileApi bucket() => supabase.storage.from(bucketName!.name);
 
   /// Uploads a file to the public bucket.
   Future<String> uploadPublicXFile(String key, XFile file) async {

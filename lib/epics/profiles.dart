@@ -1,6 +1,6 @@
 import 'package:parousia/actions/actions.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/go_router_builder.dart';
-import 'package:parousia/models/models.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux_entity/redux_entity.dart';
@@ -12,6 +12,7 @@ import 'package:uuid/uuid.dart';
 createProfileEpics(ProfilesRepository profiles, StorageRepository storage) =>
     combineEpics<AppState>([
       _createRetrieveOneProfileEpic(profiles),
+      _createRetrieveMembersEpic(profiles),
       _createSignOutEpic(profiles),
       _createUpdateProfileEpic(profiles, storage),
       _createUpdateOneProfileEpic(profiles),
@@ -35,8 +36,8 @@ Stream<dynamic> _loadOwnProfileOnSignInEpic(
             action.authState.event == AuthChangeEvent.userUpdated ||
             action.authState.event == AuthChangeEvent.initialSession)
         .where((action) => action.authState.session != null)
-        .map((action) => RequestRetrieveOne<Profile>(
-            action.authState.session!.user.id.toString()));
+        .map((action) =>
+            RequestRetrieveOne<Profile>(action.authState.session!.user.id));
 
 /// Fetch 1 user profile from the database
 Epic<AppState> _createRetrieveOneProfileEpic(ProfilesRepository profiles) {
@@ -44,11 +45,18 @@ Epic<AppState> _createRetrieveOneProfileEpic(ProfilesRepository profiles) {
       .whereType<RequestRetrieveOne<Profile>>()
       .asyncMap(
         (action) => profiles
-            .getProfileById(action.id)
+            .getProfile(action.id)
             .then<dynamic>((profile) => SuccessRetrieveOne<Profile>(profile))
             .catchError((error) =>
                 FailRetrieveOne<Profile>(id: action.id, error: error)),
       );
+}
+
+Epic<AppState> _createRetrieveMembersEpic(ProfilesRepository profiles) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
+      .whereType<SuccessRetrieveMany<Member>>()
+      .asyncMap((action) => action.entities.map((member) =>
+          member.profile ?? SuccessRetrieveOne<Profile>(member.profile!)));
 }
 
 /// Redirect to the profile page when the user profile is loaded and has no name
@@ -91,11 +99,8 @@ Epic<AppState> _createUpdateOneProfileEpic(ProfilesRepository profiles) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
       .whereType<UpdateOne<Profile>>()
       .asyncMap((action) => profiles
-          .updateProfile(
-              id: action.entity.id,
-              displayName: action.entity.displayName,
-              pictureUrl: action.entity.picture)
-          .then<dynamic>((profile) => SuccessUpdateOne<Profile>(action.entity))
+          .updateProfile(action.entity)
+          .then<dynamic>((profile) => SuccessUpdateOne<Profile>(profile))
           .catchError((error) => FailUpdateOne<Profile>(
               entity: action.entity, error: error as Object)));
 }

@@ -9,80 +9,89 @@ final selectSchedulesIds =
 ScheduleInstanceSummary repliesForScheduleInstance({
   required DateTime instanceDate,
   required Schedule schedule,
-  required DateTime startDate,
-  required DateTime endDate,
+  required DateTime start,
+  required DateTime after,
+  required DateTime before,
   required Iterable<Member> members,
   Iterable<DefaultRule>? defaultRules,
   Iterable<Reply>? replies,
-  String? targetMemberId,
+  Member? targetMember,
 }) {
-  final allReplies = <String, ReplyOptions>{};
-  final memberReplies = <String, ReplyOptions>{};
-  final memberDefaultReplies = <String, ReplyOptions>{};
+  final allReplies = <String, Reply>{};
+  final memberReplies = <String, Reply>{};
+  final memberDefaultReplies = <String, Reply>{};
   final memberDefaultRules = <String, DefaultRule>{};
   final membersSet = members.map((m) => m.id).toSet();
 
-  ReplyOptions? myReply;
-  ReplyOptions? myDefaultReply;
+  Reply? myReply;
+  Reply? myDefaultReply;
   DefaultRule? myDefaultRule;
 
   defaultRules?.forEach((defaultRule) {
-    if (defaultRule.scheduleId == schedule.id) {
-      if (defaultRule.memberId == targetMemberId) {
-        myDefaultRule = defaultRule;
-      } else {
-        memberDefaultRules[defaultRule.memberId] = defaultRule;
-      }
+    if (defaultRule.schedule.id != schedule.id) return;
+
+    if (defaultRule.member.id == targetMember?.id) {
+      myDefaultRule = defaultRule;
+    } else {
+      memberDefaultRules[defaultRule.member.id] = defaultRule;
     }
 
     defaultRule.recurrenceRule
-        .getInstances(
-      start: schedule.startDate,
-      after: startDate,
-      before: endDate,
+        ?.getInstances(
+      start: start,
+      after: after,
+      before: before,
       includeAfter: true,
     )
-        .forEach((e) {
-      final isSameDay = e.copyWith(isUtc: true).isAtSameMomentAs(instanceDate);
-      final isSameSchedule = defaultRule.scheduleId == schedule.id;
+        .forEach((dateTime) {
+      final defaultReplyDate = dateTime.copyWith(isUtc: false);
+      final isSameDay = defaultReplyDate.isAtSameMomentAs(instanceDate);
+      final memberExists = membersSet.contains(defaultRule.member.id);
 
-      if (isSameDay &&
-          isSameSchedule &&
-          membersSet.contains(defaultRule.memberId)) {
-        if (defaultRule.memberId == targetMemberId) {
-          myDefaultReply = defaultRule.selectedOption;
-        } else {
-          memberDefaultReplies[defaultRule.memberId] =
-              defaultRule.selectedOption;
-        }
-        allReplies[defaultRule.memberId] = defaultRule.selectedOption;
+      if (!isSameDay || !memberExists) return;
+
+      final defaultReply = Reply(
+        instanceDate: instanceDate,
+        schedule: schedule,
+        member: defaultRule.member,
+        selectedOption: defaultRule.selectedOption,
+      );
+      if (defaultRule.member.id == targetMember?.id) {
+        myDefaultReply = defaultReply;
+      } else {
+        memberDefaultReplies[defaultRule.member.id] = defaultReply;
       }
+      allReplies[defaultRule.member.id] = defaultReply;
     });
   });
 
   replies?.forEach(
     (reply) {
+      if (reply.schedule.id != schedule.id) return;
+
       final isSameDay = reply.instanceDate
-          .copyWith(isUtc: true)
+          .copyWith(isUtc: false)
           .isAtSameMomentAs(instanceDate);
-      final isSameSchedule = reply.scheduleId == schedule.id;
-      if (isSameDay && isSameSchedule && membersSet.contains(reply.memberId)) {
-        if (reply.memberId == targetMemberId) {
-          myReply = reply.selectedOption;
-        } else {
-          memberReplies[reply.memberId] = reply.selectedOption;
-        }
-        allReplies[reply.memberId] = reply.selectedOption;
+      final memberExists = membersSet.contains(reply.member.id);
+
+      if (!isSameDay || !memberExists) return;
+
+      if (reply.member.id == targetMember?.id) {
+        myReply = reply;
+      } else {
+        memberReplies[reply.member.id] = reply;
       }
+      allReplies[reply.member.id] = reply;
     },
   );
 
-  final yesCount =
-      allReplies.entries.where((e) => e.value == ReplyOptions.yes).length;
+  final yesCount = allReplies.entries
+      .where((e) => e.value.selectedOption == ReplyOptions.yes)
+      .length;
 
   return ScheduleInstanceSummary(
-    scheduleId: schedule.id,
-    groupId: schedule.groupId,
+    schedule: schedule,
+    groupId: schedule.group.id,
     displayName: schedule.displayName,
     instanceDate: instanceDate,
     memberReplies: memberReplies,
@@ -92,7 +101,7 @@ ScheduleInstanceSummary repliesForScheduleInstance({
     myReply: myReply,
     myDefaultReply: myDefaultReply,
     myDefaultRule: myDefaultRule,
-    targetMemberId: targetMemberId,
+    targetMember: targetMember,
   );
 }
 
@@ -103,27 +112,30 @@ Iterable<ScheduleInstanceSummary> getScheduleInstances({
   required Iterable<Member> members,
   Iterable<DefaultRule>? defaultRules,
   Iterable<Reply>? replies,
-  String? targetMemberId,
+  Member? targetMember,
 }) {
+  final start = schedule.startDate.copyWith(isUtc: true);
   final after =
-      startDate.isAfter(schedule.startDate) ? startDate : schedule.startDate;
+      startDate.isAfter(start) ? startDate.copyWith(isUtc: true) : start;
+  final before = endDate.copyWith(isUtc: true);
   return schedule.recurrenceRule
       .getInstances(
-        start: schedule.startDate,
+        start: start,
         after: after,
-        before: endDate,
+        before: before,
         includeAfter: true,
       )
       .map(
-        (e) => repliesForScheduleInstance(
-          instanceDate: e,
+        (instanceDate) => repliesForScheduleInstance(
+          instanceDate: instanceDate.copyWith(isUtc: false),
           schedule: schedule,
           defaultRules: defaultRules,
           replies: replies,
-          startDate: after,
-          endDate: endDate,
+          start: start,
+          after: after,
+          before: before,
           members: members,
-          targetMemberId: targetMemberId,
+          targetMember: targetMember,
         ),
       );
 }

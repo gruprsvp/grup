@@ -93,6 +93,7 @@
   "signOut": "Déconnecte-toi",
   "signOutConfirmation": "Tu es sûr de vouloir te déconnecter?",
   "systemLanguage": "Langue du système",
+  "timezone": "Fuseau horaire",
   "themeDark": "Sombre",
   "themeLight": "Clair",
   "themeSystem": "Système",

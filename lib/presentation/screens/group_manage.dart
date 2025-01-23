@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/presentation/presentation.dart';
 
 class GroupManageScreen extends StatelessWidget {
   final Group? group;
   final bool loading;
-  final ValueSetter<String>? onDelete;
+  final ValueSetter<Group>? onDelete;
 
   const GroupManageScreen({
     super.key,
@@ -38,7 +38,7 @@ class GroupManageScreen extends StatelessWidget {
               ],
               onSelected: (value) async {
                 if (value == 'delete') {
-                  await _confirmDelete(context, group!.id);
+                  await _confirmDelete(context, group!);
                 }
               },
             )
@@ -76,7 +76,7 @@ class GroupManageScreen extends StatelessWidget {
   }
 
   /// Shows a confirmation dialog and deletes the group if confirmed.
-  _confirmDelete(BuildContext context, String groupId) async {
+  _confirmDelete(BuildContext context, Group group) async {
     final doDelete = await showAdaptiveDialog<bool>(
         context: context,
         builder: (context) {
@@ -105,6 +105,6 @@ class GroupManageScreen extends StatelessWidget {
         });
 
     if (doDelete == null || !doDelete) return;
-    onDelete?.call(groupId);
+    onDelete?.call(group);
   }
 }

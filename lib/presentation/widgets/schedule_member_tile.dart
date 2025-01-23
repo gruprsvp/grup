@@ -7,7 +7,7 @@ class ScheduleMemberTile extends StatelessWidget {
   final String name;
   final ReplyOptions? reply;
   final ReplyOptions? defaultReply;
-  final DefaultRule? defaultRule;
+  final RecurrenceRule? defaultRule;
   final Function(ReplyOptions?)? onReplyChanged;
   final Function(RecurrenceRule?, ReplyOptions?)? onDefaultRuleChanged;
 
@@ -36,8 +36,8 @@ class ScheduleMemberTile extends StatelessWidget {
 
   /// Shows a confirmation action sheet to define the default reply.
   _confirmDefaultRule(BuildContext context) async {
-    RecurrenceRule? selectedRecurrenceRule = defaultRule?.recurrenceRule;
-    ReplyOptions? selectedOption = defaultRule?.selectedOption;
+    RecurrenceRule? selectedRecurrenceRule = defaultRule;
+    ReplyOptions? selectedOption = defaultReply;
     final response = await _confirmDefaultRuleActionSheet(
       context,
       (BuildContext context) => DefaultRuleActionSheet(

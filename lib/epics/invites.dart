@@ -1,5 +1,5 @@
 import 'package:parousia/actions/actions.dart';
-import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux_entity/redux_entity.dart';
@@ -28,10 +28,11 @@ Epic<AppState> _createCreateInvitesOnNewMembersCreatedEpic(
       actions.whereType<NewMembersCreatedAction>().asyncMap((action) async {
         final createInvitesPromise = [
           for (final member in action.members)
-            invites.inviteWithGeneratedCode(member.$1.id),
+            invites.inviteWithGeneratedCode(member.$1),
           for (final member in action.members)
             for (final invite in member.$2.invites)
-              invites.inviteMember(member.$1.id, invite.$1, invite.$2)
+              invites.inviteMember(Invite(
+                  member: member.$1, method: invite.$1, value: invite.$2))
         ];
 
         final allInvites = await Future.wait(createInvitesPromise);

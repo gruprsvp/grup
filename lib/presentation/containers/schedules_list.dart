@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:parousia/actions/actions.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/selectors/selectors.dart';
@@ -50,7 +51,7 @@ class SchedulesListContainerState extends State<SchedulesListContainer> {
         itemBuilder: (context, index) {
           return SchedulesList(
             groupId: widget.groupId,
-            schedules: vm.schedules,
+            scheduleInstances: vm.schedules,
             isAdmin: vm.isAdmin,
             onReplyChanged: vm.onReplyChanged,
           );
@@ -77,22 +78,19 @@ sealed class _ViewModel with _$ViewModel {
       selectedDate: store.state.selectedDate,
       schedules: selectScheduleInstancesForSelectedDate(store.state),
       onDateChanged: (value) => store.dispatch(SelectDateAction(value)),
-      onReplyChanged: (schedule, reply) {
-        if (schedule.targetMemberId == null) {
+      onReplyChanged: (schedule, reply, replyOption) {
+        if (schedule.targetMember?.id == null) {
           throw Exception('targetMemberId is null');
         }
-        if (reply == null) {
-          store.dispatch(RequestDeleteReplyAction(
-            memberId: schedule.targetMemberId!,
-            scheduleId: schedule.scheduleId,
+        if (reply != null && replyOption == null) {
+          store.dispatch(RequestDeleteReplyAction(reply: reply));
+        } else if (replyOption != null) {
+          store.dispatch(RequestUpdateOne<Reply>(Reply(
             instanceDate: schedule.instanceDate,
-          ));
-        } else {
-          store.dispatch(RequestUpdateOne(Reply(
-              memberId: schedule.targetMemberId!,
-              scheduleId: schedule.scheduleId,
-              instanceDate: schedule.instanceDate,
-              selectedOption: reply)));
+            schedule: schedule.schedule,
+            member: store.state.members.entities[schedule.targetMember?.id]!,
+            selectedOption: replyOption,
+          )));
         }
       },
     );

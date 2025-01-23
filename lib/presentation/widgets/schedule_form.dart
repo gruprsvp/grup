@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_form_builder/flutter_form_builder.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:intl/intl.dart';
-import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:rrule/rrule.dart';
 
 import 'form_builder_recurrence_rule.dart';
@@ -39,13 +40,16 @@ class _ScheduleFormState extends State<ScheduleForm> {
               _formKey.currentState?.fields['startDate']?.value as DateTime;
           final recurrenceRule = _formKey
               .currentState?.fields['recurrenceRule']?.value as RecurrenceRule;
+          final timezone =
+              _formKey.currentState?.fields['timezone']?.value as String;
 
           widget.onChanged?.call(Schedule(
-            id: '',
-            groupId: '',
+            // TODO there's no group here
+            group: Group(displayName: 'temp'),
             displayName: displayName,
-            startDate: startDate,
             recurrenceRule: recurrenceRule,
+            startDate: startDate,
+            timezone: timezone,
           ));
         }
       },
@@ -88,6 +92,33 @@ class _ScheduleFormState extends State<ScheduleForm> {
                   )
                 : const CircularProgressIndicator.adaptive(),
           ),
+          FutureBuilder(
+              future: (
+                FlutterTimezone.getLocalTimezone(),
+                FlutterTimezone.getAvailableTimezones(),
+              ).wait,
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return const CircularProgressIndicator.adaptive();
+                }
+                final (localTimezone, timezones) =
+                    snapshot.data as (String, List<String>);
+
+                return FormBuilderDropdown(
+                  name: 'timezone',
+                  initialValue: localTimezone,
+                  decoration: InputDecoration(
+                    labelText: l10n.timezone,
+                  ),
+                  validator: FormBuilderValidators.required(),
+                  items: timezones
+                      .map((String location) => DropdownMenuItem(
+                            value: location,
+                            child: Text(location),
+                          ))
+                      .toList(),
+                );
+              }),
         ],
       ),
     );
