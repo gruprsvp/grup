@@ -1,0 +1,1 @@
+alter table if exists schedules add column if not exists timezone text not null default 'Europe/Zurich';

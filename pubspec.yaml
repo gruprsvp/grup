@@ -103,6 +103,8 @@ dependencies:
   sentry_flutter: ^8.13.0
   share_plus: ^10.1.4
   styled_text: ^8.1.0
+  sugar: ^3.1.0
+  timezone: ^0.10.0
   universal_html: ^2.2.4
   uuid: ^4.1.0
 
