@@ -45,8 +45,6 @@ abstract class _$ViewModelCopyWith<$Res> {
       ValueSetter<Schedule>? onScheduleCreate,
       ValueSetter<Schedule>? onScheduleDelete,
       Future<RruleL10n>? rrulel10n});
-
-  $GroupCopyWith<$Res>? get group;
 }
 
 /// @nodoc
@@ -98,20 +96,6 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
               as Future<RruleL10n>?,
     ) as $Val);
   }
-
-  /// Create a copy of _ViewModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $GroupCopyWith<$Res>? get group {
-    if (_value.group == null) {
-      return null;
-    }
-
-    return $GroupCopyWith<$Res>(_value.group!, (value) {
-      return _then(_value.copyWith(group: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -129,9 +113,6 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
       ValueSetter<Schedule>? onScheduleCreate,
       ValueSetter<Schedule>? onScheduleDelete,
       Future<RruleL10n>? rrulel10n});
-
-  @override
-  $GroupCopyWith<$Res>? get group;
 }
 
 /// @nodoc

@@ -34,8 +34,6 @@ abstract class _$ViewModelCopyWith<$Res> {
       __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
   $Res call({bool loading, OnGroupSaveCallback onSave, Group? group});
-
-  $GroupCopyWith<$Res>? get group;
 }
 
 /// @nodoc
@@ -72,20 +70,6 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
               as Group?,
     ) as $Val);
   }
-
-  /// Create a copy of _ViewModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $GroupCopyWith<$Res>? get group {
-    if (_value.group == null) {
-      return null;
-    }
-
-    return $GroupCopyWith<$Res>(_value.group!, (value) {
-      return _then(_value.copyWith(group: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -97,9 +81,6 @@ abstract class _$$_ViewModelImplCopyWith<$Res>
   @override
   @useResult
   $Res call({bool loading, OnGroupSaveCallback onSave, Group? group});
-
-  @override
-  $GroupCopyWith<$Res>? get group;
 }
 
 /// @nodoc

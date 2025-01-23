@@ -2,7 +2,9 @@ import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:flutter/material.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:parousia/actions/actions.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
@@ -37,7 +39,7 @@ sealed class _ViewModel with _$ViewModel {
   const factory _ViewModel({
     required bool loading,
     Group? group,
-    required ValueSetter<String> onDelete,
+    required ValueSetter<Group> onDelete,
   }) = __ViewModel;
 
   static _ViewModel fromStore(Store<AppState> store, String groupId) {
@@ -48,7 +50,7 @@ sealed class _ViewModel with _$ViewModel {
       loading: store.state.groups.creating ||
           store.state.groups.loadingAll ||
           (store.state.groups.loadingIds[groupId] ?? false),
-      onDelete: (groupId) => store.dispatch(RequestDeleteOne<Group>(groupId)),
+      onDelete: (group) => store.dispatch(GroupDeleteAction(group)),
     );
   }
 }

@@ -98,7 +98,7 @@ void main() {
         final profilesRepository = ProfilesRepository(supabase: supabase);
 
         final id = user.user!.id;
-        final profile = await profilesRepository.getProfileById(id);
+        final profile = await profilesRepository.getProfile(id);
 
         final displayName = faker.person.name();
         final pictureUrl = faker.image.image(height: 128, width: 128);
@@ -108,7 +108,7 @@ void main() {
           displayName: displayName,
           pictureUrl: pictureUrl,
         );
-        final updatedProfile = await profilesRepository.getProfileById(id);
+        final updatedProfile = await profilesRepository.getProfile(id);
 
         expect(
             updatedProfile,
@@ -641,7 +641,7 @@ void main() {
 
           await Future.wait(
             recurrenceRule.getInstances(start: startDate).take(5).map(
-                  (s) => repliesRepository.createReply(
+                  (s) => repliesRepository.upsertReply(
                     Reply(
                       scheduleId: schedule.id,
                       memberId: member.id,

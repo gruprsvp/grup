@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import 'package:parousia/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:share_plus/share_plus.dart';
 
 typedef OnRemoveFromGroupCallback = void Function(Member);

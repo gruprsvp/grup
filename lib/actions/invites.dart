@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/models/models.dart';
 
 /// Dispatched when the user entered an invite code to join a group.
@@ -27,11 +28,11 @@ class FailUseInviteCode {
 @immutable
 class InviteGroupMembersAction {
   const InviteGroupMembersAction({
-    required this.groupId,
+    required this.group,
     required this.contacts,
   });
 
-  final String groupId;
+  final Group group;
   final List<ContactInvite> contacts;
 }
 

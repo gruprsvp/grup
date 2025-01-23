@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:parousia/l10n/app_localizations.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/presentation/presentation.dart';
 
 class GroupDetailsScreen extends StatelessWidget {
