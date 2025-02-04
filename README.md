@@ -59,7 +59,7 @@ Once you create a group, you have 3 options to invite friends:
 ### Do I need an account to use GRUP?
 
 Yes, you need an account to use GRUP. We are investigating ways to allow anonymous users to join groups
-in discussion #148 - feel free to join the conversation!
+in discussion https://github.com/gruprsvp/grup/discussions/148 - feel free to join the conversation!
 
 ### What if my friends don't have the app?
 
