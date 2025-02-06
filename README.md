@@ -4,6 +4,8 @@
 
 **Event Scheduling for Groups**
 
+*[by Sealambda](https://www.sealambda.com/)*
+
 With GRUP, you can create recurring events, invite friends, and keep track of their RSVPs.
 
 The app is built with Flutter[^flutter] and Supabase[^supabase] - and is available on Android, iOS, and web.
@@ -67,7 +69,7 @@ If your friends don't want to install the app, they can still access the event o
 
 If they don't want to interact at all, admins can still track their RSVPs in the app.
 
-We are discussing how to allow users to reply to single events without having to sign up here: ttps://github.com/gruprsvp/grup/discussions/148
+We are discussing how to allow users to reply to single events without having to sign up here: https://github.com/gruprsvp/grup/discussions/148
 
 ### I have a recurring event, and users have a default RSVP. How does that work?
 
@@ -79,6 +81,17 @@ you can set your "default reply" to "weekdays" and be marked as attending for al
 ### I need a recurring event that doesn't follow a simple pattern. Can I do that?
 
 Not yet, but we are working on it! Check out https://github.com/gruprsvp/grup/discussions/154 for more information.
+
+### Are you VC backed?
+
+No! [We're just a team](http://sealambda.com/about/) of passionate engineers who like to make good products, and solve real problems.
+As we try to figure out some way to bring food on the table, we *may* have to introduce some paid subscriptions, but:
+
+1. We won't make the core, free tier deliberately worse.
+2. We won't sell your data.
+
+As you can see, this is open source software, and if you feel like we aren't doing a good job, you may fork and/or self-host.
+
 
 ### I have a feature request. How can I submit it?
 
