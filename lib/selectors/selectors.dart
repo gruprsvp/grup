@@ -48,6 +48,11 @@ final selectReplies = createSelector3(
     (replies, scheduleIds, range) => replies.where((r) =>
         scheduleIds.contains(r.scheduleId) && range.contains(r.instanceDate)));
 
+// TODO This selector and selectScheduleInstanceForDate are very similar,
+// however, this one is used in the list view and the other in the detail view.
+// This one is simpler because it doesn't need to group the members by their reply,
+// however, by doing so, there is a mismatch as some replies may still be counted,
+// even if a member is no longer part of the group.
 final selectScheduleInstancesForSelectedDate = createSelector5(
     selectedDateRangeSelector,
     selectMyMember,
