@@ -7,6 +7,8 @@ PODS:
   - AppAuth/Core (1.7.6)
   - AppAuth/ExternalUserAgent (1.7.6):
     - AppAuth/Core
+  - device_info_plus (0.0.1):
+    - FlutterMacOS
   - file_selector_macos (0.0.1):
     - FlutterMacOS
   - FlutterMacOS (1.0.0)
@@ -39,7 +41,7 @@ PODS:
   - posthog_flutter (0.0.1):
     - Flutter
     - FlutterMacOS
-    - PostHog (~> 3.0)
+    - PostHog (= 3.18.0)
   - Sentry/HybridSDK (8.42.0)
   - sentry_flutter (8.12.0):
     - Flutter
@@ -57,6 +59,7 @@ PODS:
 
 DEPENDENCIES:
   - app_links (from `Flutter/ephemeral/.symlinks/plugins/app_links/macos`)
+  - device_info_plus (from `Flutter/ephemeral/.symlinks/plugins/device_info_plus/macos`)
   - file_selector_macos (from `Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos`)
   - FlutterMacOS (from `Flutter/ephemeral`)
   - google_sign_in_ios (from `Flutter/ephemeral/.symlinks/plugins/google_sign_in_ios/darwin`)
@@ -82,6 +85,8 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   app_links:
     :path: Flutter/ephemeral/.symlinks/plugins/app_links/macos
+  device_info_plus:
+    :path: Flutter/ephemeral/.symlinks/plugins/device_info_plus/macos
   file_selector_macos:
     :path: Flutter/ephemeral/.symlinks/plugins/file_selector_macos/macos
   FlutterMacOS:
@@ -110,6 +115,7 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   app_links: 9028728e32c83a0831d9db8cf91c526d16cc5468
   AppAuth: d4f13a8fe0baf391b2108511793e4b479691fb73
+  device_info_plus: 4fb280989f669696856f8b129e4a5e3cd6c48f76
   file_selector_macos: 6280b52b459ae6c590af5d78fc35c7267a3c4b31
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
   google_sign_in_ios: 0ab078e60da6dfe23cbc55c83502b52bba1aad63
@@ -120,7 +126,7 @@ SPEC CHECKSUMS:
   package_info_plus: f0052d280d17aa382b932f399edf32507174e870
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
   PostHog: 6ce18b57e7de83868707dec4a0c35ebbc866e88b
-  posthog_flutter: 37053225347313fb5385539b300a8237fae24e34
+  posthog_flutter: c708a6cdd2557be394f3d0e0533c94a68c9ee71d
   Sentry: 38ed8bf38eab5812787274bf591e528074c19e02
   sentry_flutter: a72ca0eb6e78335db7c4ddcddd1b9f6c8ed5b764
   share_plus: 510bf0af1a42cd602274b4629920c9649c52f4cc

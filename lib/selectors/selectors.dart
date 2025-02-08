@@ -53,19 +53,21 @@ final selectReplies = createSelector3(
 // This one is simpler because it doesn't need to group the members by their reply,
 // however, by doing so, there is a mismatch as some replies may still be counted,
 // even if a member is no longer part of the group.
-final selectScheduleInstancesForSelectedDate = createSelector5(
+final selectScheduleInstancesForSelectedDate = createSelector6(
     selectedDateRangeSelector,
     selectMyMember,
     selectSchedules,
     selectDefaultRules,
     selectReplies,
-    (range, myMember, schedules, defaultRules, replies) =>
+    groupMembersSelector,
+    (range, myMember, schedules, defaultRules, replies, members) =>
         schedules.expand((schedule) => getScheduleInstances(
               schedule: schedule,
               defaultRules: defaultRules,
-              replies: replies,
               startDate: range.start,
               endDate: range.end,
+              replies: replies,
+              members: members,
               targetMemberId: myMember?.$1.id,
             )));
 

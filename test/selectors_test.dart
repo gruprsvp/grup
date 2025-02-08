@@ -14,7 +14,7 @@ void main() {
     test('mismatch between detail and list view in yes count', () {
       final uuid = Uuid();
 
-      final date = DateTime(2022, 1, 1).toUtc();
+      final date = DateTime.utc(2022, 1, 1, 12);
 
       final authUser = User(
         id: uuid.v4(),

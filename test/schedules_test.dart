@@ -80,10 +80,16 @@ void main() {
             selectedOption: ReplyOptions.yes),
       ];
 
+      final members = [
+        Member(id: member1Id, groupId: groupId, role: GroupRoles.member),
+        Member(id: member2Id, groupId: groupId, role: GroupRoles.member),
+      ];
+
       final result = getScheduleInstances(
         schedule: dailySchedule,
         defaultRules: defaultRules,
         replies: replies,
+        members: members,
         startDate: startDate.subtract(const Duration(days: 10)),
         endDate: endDate,
         targetMemberId: member1Id,

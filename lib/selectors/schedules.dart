@@ -11,6 +11,7 @@ ScheduleInstanceSummary repliesForScheduleInstance({
   required Schedule schedule,
   required DateTime startDate,
   required DateTime endDate,
+  required Iterable<Member> members,
   Iterable<DefaultRule>? defaultRules,
   Iterable<Reply>? replies,
   String? targetMemberId,
@@ -19,6 +20,7 @@ ScheduleInstanceSummary repliesForScheduleInstance({
   final memberReplies = <String, ReplyOptions>{};
   final memberDefaultReplies = <String, ReplyOptions>{};
   final memberDefaultRules = <String, DefaultRule>{};
+  final membersSet = members.map((m) => m.id).toSet();
 
   ReplyOptions? myReply;
   ReplyOptions? myDefaultReply;
@@ -44,7 +46,9 @@ ScheduleInstanceSummary repliesForScheduleInstance({
       final isSameDay = e.copyWith(isUtc: true).isAtSameMomentAs(instanceDate);
       final isSameSchedule = defaultRule.scheduleId == schedule.id;
 
-      if (isSameDay && isSameSchedule) {
+      if (isSameDay &&
+          isSameSchedule &&
+          membersSet.contains(defaultRule.memberId)) {
         if (defaultRule.memberId == targetMemberId) {
           myDefaultReply = defaultRule.selectedOption;
         } else {
@@ -62,7 +66,7 @@ ScheduleInstanceSummary repliesForScheduleInstance({
           .copyWith(isUtc: true)
           .isAtSameMomentAs(instanceDate);
       final isSameSchedule = reply.scheduleId == schedule.id;
-      if (isSameDay && isSameSchedule) {
+      if (isSameDay && isSameSchedule && membersSet.contains(reply.memberId)) {
         if (reply.memberId == targetMemberId) {
           myReply = reply.selectedOption;
         } else {
@@ -96,6 +100,7 @@ Iterable<ScheduleInstanceSummary> getScheduleInstances({
   required Schedule schedule,
   required DateTime startDate,
   required DateTime endDate,
+  required Iterable<Member> members,
   Iterable<DefaultRule>? defaultRules,
   Iterable<Reply>? replies,
   String? targetMemberId,
@@ -117,6 +122,7 @@ Iterable<ScheduleInstanceSummary> getScheduleInstances({
           replies: replies,
           startDate: after,
           endDate: endDate,
+          members: members,
           targetMemberId: targetMemberId,
         ),
       );
