@@ -79,7 +79,7 @@ dependencies:
   phone_form_field: ^10.0.3
 
   # To send feedback and report bugs
-  device_info_plus: ^11.2.2
+  device_info_plus: ^11.3.0
   mailto: ^2.0.0
   package_info_plus: ^8.1.4
   url_launcher: ^6.3.1
