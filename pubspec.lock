@@ -306,10 +306,10 @@ packages:
     dependency: transitive
     description:
       name: dart_style
-      sha256: "7856d364b589d1f08986e140938578ed36ed948581fbc3bc9aef1805039ac5ab"
+      sha256: "7306ab8a2359a48d22310ad823521d723acfed60ee1f7e37388e8986853b6820"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.7"
+    version: "2.3.8"
   device_frame:
     dependency: transitive
     description:
@@ -584,18 +584,18 @@ packages:
     dependency: transitive
     description:
       name: git
-      sha256: daea03e7471607e7ed942bccd4814cfc7e4fa8ca5d3dd6ad4fb170e44423d1a0
+      sha256: de678c6f0d5e2761c2c3643d31b1010883cc4d3e352949ef7c15f98f27d676ea
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.0"
+    version: "2.3.1"
   glob:
     dependency: transitive
     description:
       name: glob
-      sha256: "0e7014b3b7d4dac1ca4d6114f82bf1782ee86745b9b42a92c9289c23d8a0ab63"
+      sha256: c3f1ee72c96f8f78935e18aa8cecced9ab132419e8625dc187e1c2408efc20de
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.2"
+    version: "2.1.3"
   globbing:
     dependency: transitive
     description:
@@ -608,10 +608,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: "9b736a9fa879d8ad6df7932cbdcc58237c173ab004ef90d8377923d7ad731eaa"
+      sha256: "04539267a740931c6d4479a10d466717ca5901c6fdfd3fcda09391bbb8ebd651"
       url: "https://pub.dev"
     source: hosted
-    version: "14.7.2"
+    version: "14.8.0"
   go_router_builder:
     dependency: "direct dev"
     description:
@@ -712,10 +712,10 @@ packages:
     dependency: transitive
     description:
       name: http
-      sha256: b9c29a161230ee03d3ccf545097fccd9b87a5264228c5d348202e0f0c28f9010
+      sha256: fe7ab022b76f3034adc518fb6ea04a82387620e19977665ea18d30a1cf43442f
       url: "https://pub.dev"
     source: hosted
-    version: "1.2.2"
+    version: "1.3.0"
   http_multi_server:
     dependency: transitive
     description:
@@ -784,10 +784,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_macos
-      sha256: "3f5ad1e8112a9a6111c46d0b57a7be2286a9a07fc6e1976fdf5be2bd31d4ff62"
+      sha256: "1b90ebbd9dcf98fb6c1d01427e49a55bd96b5d67b8c67cf955d60a5de74207c1"
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.1+1"
+    version: "0.2.1+2"
   image_picker_platform_interface:
     dependency: transitive
     description:
@@ -1349,18 +1349,18 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences
-      sha256: a752ce92ea7540fc35a0d19722816e04d0e72828a4200e83a98cf1a1eb524c9a
+      sha256: "846849e3e9b68f3ef4b60c60cf4b3e02e9321bc7f4d8c4692cf87ffa82fc8a3a"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.5"
+    version: "2.5.2"
   shared_preferences_android:
     dependency: transitive
     description:
       name: shared_preferences_android
-      sha256: bf808be89fe9dc467475e982c1db6c2faf3d2acf54d526cd5ec37d86c99dbd84
+      sha256: ea86be7b7114f9e94fddfbb52649e59a03d6627ccd2387ebddcd6624719e9f16
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.1"
+    version: "2.4.5"
   shared_preferences_foundation:
     dependency: transitive
     description:
@@ -1755,10 +1755,10 @@ packages:
     dependency: transitive
     description:
       name: vector_graphics
-      sha256: "27d5fefe86fb9aace4a9f8375b56b3c292b64d8c04510df230f849850d912cb7"
+      sha256: "44cc7104ff32563122a929e4620cf3efd584194eec6d1d913eb5ba593dbcf6de"
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.15"
+    version: "1.1.18"
   vector_graphics_codec:
     dependency: transitive
     description:
@@ -1819,10 +1819,10 @@ packages:
     dependency: transitive
     description:
       name: web_socket_channel
-      sha256: "9f187088ed104edd8662ca07af4b124465893caf063ba29758f97af57e61da8f"
+      sha256: "0b8e2457400d8a859b7b2030786835a28a8e80836ef64402abef392ff4f1d0e5"
       url: "https://pub.dev"
     source: hosted
-    version: "3.0.1"
+    version: "3.0.2"
   webdriver:
     dependency: transitive
     description:
@@ -1867,10 +1867,10 @@ packages:
     dependency: transitive
     description:
       name: win32
-      sha256: "154360849a56b7b67331c21f09a386562d88903f90a1099c5987afc1912e1f29"
+      sha256: daf97c9d80197ed7b619040e86c8ab9a9dad285e7671ee7390f9180cc828a51e
       url: "https://pub.dev"
     source: hosted
-    version: "5.10.0"
+    version: "5.10.1"
   win32_registry:
     dependency: transitive
     description:
