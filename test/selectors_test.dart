@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/selectors/selectors.dart';
 import 'package:parousia/state/state.dart';
@@ -41,31 +42,28 @@ void main() {
         displayName: 'group',
       );
 
-      Member createMember(Profile profile) => Member(
-            id: uuid.v7(),
-            groupId: group.id,
-            profileId: profile.id,
+      Member createMember({Profile? profile}) => Member(
+            group: group,
+            profile: profile,
             role: GroupRoles.member,
           );
       final members = [
-        for (final profile in profiles) createMember(profile),
+        for (final profile in profiles) createMember(profile: profile),
       ];
 
       final schedules = [
         Schedule(
-          id: uuid.v7(),
-          groupId: group.id,
-          displayName: 'schedule 1',
-          startDate: date,
-          recurrenceRule: CommonRecurrenceRules.daily,
-          timezone: 'Europe/Zurich',
-        ),
+            group: group,
+            displayName: 'schedule 1',
+            startDate: date,
+            recurrenceRule: CommonRecurrenceRules.daily,
+            timezone: 'Europe/Zurich'),
       ];
 
       Reply createReply(Member member, Schedule schedule, DateTime date) =>
           Reply(
-            memberId: member.id,
-            scheduleId: schedule.id,
+            member: member,
+            schedule: schedule,
             instanceDate: date,
             selectedOption:
                 Random().nextBool() ? ReplyOptions.yes : ReplyOptions.no,
@@ -74,8 +72,8 @@ void main() {
         for (final schedule in schedules) ...[
           // create a reply for a member that no longer exists
           Reply(
-            memberId: 'non-existent',
-            scheduleId: schedule.id,
+            member: createMember(),
+            schedule: schedule,
             instanceDate: date,
             selectedOption: ReplyOptions.yes,
           ),
@@ -111,7 +109,7 @@ void main() {
       final result = selectScheduleInstancesForSelectedDate(state);
 
       for (final instance in result) {
-        final state2 = state.copyWith(selectedScheduleId: instance.scheduleId);
+        final state2 = state.copyWith(selectedScheduleId: instance.schedule.id);
         final instance2 = selectScheduleInstanceForDate(state2);
 
         expect(
