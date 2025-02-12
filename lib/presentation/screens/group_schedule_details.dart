@@ -2,20 +2,15 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:flutter_timezone/flutter_timezone.dart';
 import 'package:intl/intl.dart';
 import 'package:parousia/brick/brick.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:rrule/rrule.dart';
+import 'package:timezone/timezone.dart';
 
-// The target member ID is the ID of the member that the user is replying for,
-// which is not necessarily the user's own ID in the details screen.
 typedef OnDetailsReplyChangedCallback = void Function(Reply, ReplyOptions?);
-
-// ! This kind of function signature is super risky, as it's easy to mix up the
-// ! order of the arguments. It's better to use a data class or a map instead.
-//   TODO(giorgio): I actually just fixed a bug because of this!
-//   I should refactor this to use either branded types or a map.
 typedef OnDetailsDefaultRuleChangedCallback = void Function(
     DefaultRule, RecurrenceRule?, ReplyOptions?);
 
@@ -38,12 +33,29 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
     this.onDefaultRuleChanged,
   });
 
+  Future<List<String>> _getFormatedDateTime() async {
+    final localTimeZone = await FlutterTimezone.getLocalTimezone();
+    if (scheduleInstance.schedule.timezone == localTimeZone) {
+      return [
+        dateFormat.format(scheduleInstance.instanceDate),
+        timeFormat.format(scheduleInstance.instanceDate)
+      ];
+    }
+
+    final date = scheduleInstance.instanceDate;
+    final remoteLocation = getLocation(scheduleInstance.schedule.timezone);
+    final remoteTime = TZDateTime(remoteLocation, date.year, date.month,
+        date.day, date.hour, date.minute);
+    final localTime =
+        TZDateTime.from(remoteTime.toUtc(), getLocation(localTimeZone));
+    return [dateFormat.format(localTime), timeFormat.format(localTime)];
+  }
+
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final groupName = group.displayName;
     final scheduleName = scheduleInstance.displayName;
-    final instanceDate = scheduleInstance.instanceDate;
     final repliesGroups = scheduleInstance.repliesGroups ?? [];
 
     return Scaffold(
@@ -69,8 +81,27 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.end,
                       children: [
-                        Text(dateFormat.format(instanceDate)),
-                        Text(timeFormat.format(instanceDate)),
+                        FutureBuilder<List<String>>(
+                            future: _getFormatedDateTime(),
+                            builder: (context, snapshot) {
+                              if (snapshot.connectionState ==
+                                  ConnectionState.waiting) {
+                                return CircularProgressIndicator();
+                              } else if (snapshot.hasError) {
+                                return Text('Error: ${snapshot.error}');
+                              } else if (!snapshot.hasData ||
+                                  snapshot.data!.isEmpty) {
+                                return Text('No data');
+                              } else {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.end,
+                                  children: [
+                                    Text(snapshot.data![0]),
+                                    Text(snapshot.data![1]),
+                                  ],
+                                );
+                              }
+                            })
                       ],
                     ),
                   ],
