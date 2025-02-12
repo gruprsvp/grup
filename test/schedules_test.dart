@@ -3,7 +3,6 @@ import 'package:parousia/models/models.dart';
 import 'package:parousia/selectors/selectors.dart';
 import 'package:parousia/util/util.dart';
 import 'package:test/test.dart';
-import 'package:uuid/uuid.dart';
 
 DateTime _findSunday(DateTime date) {
   return date.add(Duration(days: DateTime.daysPerWeek - date.weekday));
@@ -16,27 +15,18 @@ void main() {
       final startDate = DateTime(2000, 1, 1);
       final endDate = startDate.add(const Duration(days: testDays));
 
-      final dailyScheduleId = const Uuid().v7();
-      final weekendScheduleId = const Uuid().v7();
-      final member1Id = const Uuid().v7();
-      final member2Id = const Uuid().v7();
-      final groupId = const Uuid().v7();
-
-      final group = Group(id: groupId, displayName: 'Group');
+      final group = Group(displayName: 'Group');
       final member1 = Member(
-        id: member1Id,
         group: group,
         role: GroupRoles.admin,
       );
       final member2 = Member(
-        id: member2Id,
         group: group,
         role: GroupRoles.admin,
       );
 
       final dailyRecurrenceRule = CommonRecurrenceRules.daily;
       final dailySchedule = Schedule(
-          id: dailyScheduleId,
           group: group,
           displayName: 'Daily schedule',
           startDate: startDate,
@@ -44,7 +34,6 @@ void main() {
           timezone: 'Europe/Zurich');
       final weekendRecurrenceRule = CommonRecurrenceRules.weekends;
       final weekendSchedule = Schedule(
-          id: weekendScheduleId,
           group: group,
           displayName: 'Weekend schedule',
           startDate: startDate,
@@ -95,10 +84,7 @@ void main() {
             selectedOption: ReplyOptions.yes),
       ];
 
-      final members = [
-        Member(id: member1Id, groupId: groupId, role: GroupRoles.member),
-        Member(id: member2Id, groupId: groupId, role: GroupRoles.member),
-      ];
+      final members = [member1, member2];
 
       final result = getScheduleInstances(
         schedule: dailySchedule,
@@ -107,7 +93,7 @@ void main() {
         members: members,
         startDate: startDate.subtract(const Duration(days: 10)),
         endDate: endDate,
-        targetMemberId: member1Id,
+        targetMember: member1,
       );
 
       expect(result, isNotNull);
