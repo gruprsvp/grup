@@ -1,4 +1,4 @@
-import 'package:parousia/models/models.dart';
+import 'package:parousia/brick/brick.dart';
 import 'package:parousia/reducers/remote_entities.dart';
 import 'package:parousia/util/util.dart';
 import 'package:redux_entity/redux_entity.dart';
