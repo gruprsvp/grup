@@ -93,6 +93,7 @@
   "signOut": "Cierra sesión",
   "signOutConfirmation": "¿Seguro que quieres cerrar sesión?",
   "systemLanguage": "Idioma del sistema",
+  "timezone": "Zona horaria",
   "themeDark": "Oscuro",
   "themeLight": "Claro",
   "themeSystem": "Sistema",

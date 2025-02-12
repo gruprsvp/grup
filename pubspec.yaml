@@ -94,6 +94,7 @@ dependencies:
   collection: ^1.18.0
   flutter_native_splash: ^2.4.4
   font_awesome_flutter: ^10.6.0
+  flutter_timezone: ^4.0.0
   google_fonts: ^6.2.1
   in_app_review: ^2.0.10
   memoized: ^2.2.6
@@ -103,9 +104,9 @@ dependencies:
   sentry_flutter: ^8.13.0
   share_plus: ^10.1.4
   styled_text: ^8.1.0
+  timezone: ^0.10.0
   universal_html: ^2.2.4
   uuid: ^4.1.0
-
 
 dev_dependencies:
   flutter_test:

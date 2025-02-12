@@ -3,7 +3,6 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:rrule/rrule.dart';
 
 part 'schedule.freezed.dart';
-
 part 'schedule.g.dart';
 
 @freezed
@@ -15,6 +14,7 @@ sealed class Schedule with _$Schedule {
     required String displayName,
     required DateTime startDate,
     required RecurrenceRule recurrenceRule,
+    required String timezone,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _Schedule;

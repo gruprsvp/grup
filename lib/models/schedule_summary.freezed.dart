@@ -27,6 +27,7 @@ mixin _$ScheduleInstanceSummary {
   Map<String, DefaultRule> get memberDefaultRules =>
       throw _privateConstructorUsedError;
   int get yesCount => throw _privateConstructorUsedError;
+  String get timezone => throw _privateConstructorUsedError;
   ReplyOptions? get myReply => throw _privateConstructorUsedError;
   ReplyOptions? get myDefaultReply => throw _privateConstructorUsedError;
   DefaultRule? get myDefaultRule => throw _privateConstructorUsedError;
@@ -54,6 +55,7 @@ abstract class $ScheduleInstanceSummaryCopyWith<$Res> {
       Map<String, ReplyOptions> memberDefaultReplies,
       Map<String, DefaultRule> memberDefaultRules,
       int yesCount,
+      String timezone,
       ReplyOptions? myReply,
       ReplyOptions? myDefaultReply,
       DefaultRule? myDefaultRule,
@@ -86,6 +88,7 @@ class _$ScheduleInstanceSummaryCopyWithImpl<$Res,
     Object? memberDefaultReplies = null,
     Object? memberDefaultRules = null,
     Object? yesCount = null,
+    Object? timezone = null,
     Object? myReply = freezed,
     Object? myDefaultReply = freezed,
     Object? myDefaultRule = freezed,
@@ -124,6 +127,10 @@ class _$ScheduleInstanceSummaryCopyWithImpl<$Res,
           ? _value.yesCount
           : yesCount // ignore: cast_nullable_to_non_nullable
               as int,
+      timezone: null == timezone
+          ? _value.timezone
+          : timezone // ignore: cast_nullable_to_non_nullable
+              as String,
       myReply: freezed == myReply
           ? _value.myReply
           : myReply // ignore: cast_nullable_to_non_nullable
@@ -176,6 +183,7 @@ abstract class _$$ScheduleInstanceSummaryImplCopyWith<$Res>
       Map<String, ReplyOptions> memberDefaultReplies,
       Map<String, DefaultRule> memberDefaultRules,
       int yesCount,
+      String timezone,
       ReplyOptions? myReply,
       ReplyOptions? myDefaultReply,
       DefaultRule? myDefaultRule,
@@ -208,6 +216,7 @@ class __$$ScheduleInstanceSummaryImplCopyWithImpl<$Res>
     Object? memberDefaultReplies = null,
     Object? memberDefaultRules = null,
     Object? yesCount = null,
+    Object? timezone = null,
     Object? myReply = freezed,
     Object? myDefaultReply = freezed,
     Object? myDefaultRule = freezed,
@@ -246,6 +255,10 @@ class __$$ScheduleInstanceSummaryImplCopyWithImpl<$Res>
           ? _value.yesCount
           : yesCount // ignore: cast_nullable_to_non_nullable
               as int,
+      timezone: null == timezone
+          ? _value.timezone
+          : timezone // ignore: cast_nullable_to_non_nullable
+              as String,
       myReply: freezed == myReply
           ? _value.myReply
           : myReply // ignore: cast_nullable_to_non_nullable
@@ -280,6 +293,7 @@ class _$ScheduleInstanceSummaryImpl
       required final Map<String, ReplyOptions> memberDefaultReplies,
       required final Map<String, DefaultRule> memberDefaultRules,
       required this.yesCount,
+      required this.timezone,
       this.myReply,
       this.myDefaultReply,
       this.myDefaultRule,
@@ -325,6 +339,8 @@ class _$ScheduleInstanceSummaryImpl
   @override
   final int yesCount;
   @override
+  final String timezone;
+  @override
   final ReplyOptions? myReply;
   @override
   final ReplyOptions? myDefaultReply;
@@ -335,7 +351,7 @@ class _$ScheduleInstanceSummaryImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ScheduleInstanceSummary(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, memberReplies: $memberReplies, memberDefaultReplies: $memberDefaultReplies, memberDefaultRules: $memberDefaultRules, yesCount: $yesCount, myReply: $myReply, myDefaultReply: $myDefaultReply, myDefaultRule: $myDefaultRule, targetMemberId: $targetMemberId)';
+    return 'ScheduleInstanceSummary(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, memberReplies: $memberReplies, memberDefaultReplies: $memberDefaultReplies, memberDefaultRules: $memberDefaultRules, yesCount: $yesCount, timezone: $timezone, myReply: $myReply, myDefaultReply: $myDefaultReply, myDefaultRule: $myDefaultRule, targetMemberId: $targetMemberId)';
   }
 
   @override
@@ -351,6 +367,7 @@ class _$ScheduleInstanceSummaryImpl
       ..add(DiagnosticsProperty('memberDefaultReplies', memberDefaultReplies))
       ..add(DiagnosticsProperty('memberDefaultRules', memberDefaultRules))
       ..add(DiagnosticsProperty('yesCount', yesCount))
+      ..add(DiagnosticsProperty('timezone', timezone))
       ..add(DiagnosticsProperty('myReply', myReply))
       ..add(DiagnosticsProperty('myDefaultReply', myDefaultReply))
       ..add(DiagnosticsProperty('myDefaultRule', myDefaultRule))
@@ -377,6 +394,8 @@ class _$ScheduleInstanceSummaryImpl
                 .equals(other._memberDefaultRules, _memberDefaultRules) &&
             (identical(other.yesCount, yesCount) ||
                 other.yesCount == yesCount) &&
+            (identical(other.timezone, timezone) ||
+                other.timezone == timezone) &&
             (identical(other.myReply, myReply) || other.myReply == myReply) &&
             (identical(other.myDefaultReply, myDefaultReply) ||
                 other.myDefaultReply == myDefaultReply) &&
@@ -397,6 +416,7 @@ class _$ScheduleInstanceSummaryImpl
       const DeepCollectionEquality().hash(_memberDefaultReplies),
       const DeepCollectionEquality().hash(_memberDefaultRules),
       yesCount,
+      timezone,
       myReply,
       myDefaultReply,
       myDefaultRule,
@@ -422,6 +442,7 @@ abstract class _ScheduleInstanceSummary implements ScheduleInstanceSummary {
       required final Map<String, ReplyOptions> memberDefaultReplies,
       required final Map<String, DefaultRule> memberDefaultRules,
       required final int yesCount,
+      required final String timezone,
       final ReplyOptions? myReply,
       final ReplyOptions? myDefaultReply,
       final DefaultRule? myDefaultRule,
@@ -443,6 +464,8 @@ abstract class _ScheduleInstanceSummary implements ScheduleInstanceSummary {
   Map<String, DefaultRule> get memberDefaultRules;
   @override
   int get yesCount;
+  @override
+  String get timezone;
   @override
   ReplyOptions? get myReply;
   @override
@@ -468,6 +491,7 @@ mixin _$ScheduleInstanceDetails {
   DateTime get instanceDate => throw _privateConstructorUsedError;
   List<ScheduleInstanceRepliesGroup> get repliesGroups =>
       throw _privateConstructorUsedError;
+  String get timezone => throw _privateConstructorUsedError;
   ReplyOptions? get myReply => throw _privateConstructorUsedError;
   ReplyOptions? get myDefaultReply => throw _privateConstructorUsedError;
   DefaultRule? get myDefaultRule => throw _privateConstructorUsedError;
@@ -493,6 +517,7 @@ abstract class $ScheduleInstanceDetailsCopyWith<$Res> {
       String displayName,
       DateTime instanceDate,
       List<ScheduleInstanceRepliesGroup> repliesGroups,
+      String timezone,
       ReplyOptions? myReply,
       ReplyOptions? myDefaultReply,
       DefaultRule? myDefaultRule,
@@ -523,6 +548,7 @@ class _$ScheduleInstanceDetailsCopyWithImpl<$Res,
     Object? displayName = null,
     Object? instanceDate = null,
     Object? repliesGroups = null,
+    Object? timezone = null,
     Object? myReply = freezed,
     Object? myDefaultReply = freezed,
     Object? myDefaultRule = freezed,
@@ -550,6 +576,10 @@ class _$ScheduleInstanceDetailsCopyWithImpl<$Res,
           ? _value.repliesGroups
           : repliesGroups // ignore: cast_nullable_to_non_nullable
               as List<ScheduleInstanceRepliesGroup>,
+      timezone: null == timezone
+          ? _value.timezone
+          : timezone // ignore: cast_nullable_to_non_nullable
+              as String,
       myReply: freezed == myReply
           ? _value.myReply
           : myReply // ignore: cast_nullable_to_non_nullable
@@ -603,6 +633,7 @@ abstract class _$$ScheduleInstanceDetailsImplCopyWith<$Res>
       String displayName,
       DateTime instanceDate,
       List<ScheduleInstanceRepliesGroup> repliesGroups,
+      String timezone,
       ReplyOptions? myReply,
       ReplyOptions? myDefaultReply,
       DefaultRule? myDefaultRule,
@@ -633,6 +664,7 @@ class __$$ScheduleInstanceDetailsImplCopyWithImpl<$Res>
     Object? displayName = null,
     Object? instanceDate = null,
     Object? repliesGroups = null,
+    Object? timezone = null,
     Object? myReply = freezed,
     Object? myDefaultReply = freezed,
     Object? myDefaultRule = freezed,
@@ -660,6 +692,10 @@ class __$$ScheduleInstanceDetailsImplCopyWithImpl<$Res>
           ? _value._repliesGroups
           : repliesGroups // ignore: cast_nullable_to_non_nullable
               as List<ScheduleInstanceRepliesGroup>,
+      timezone: null == timezone
+          ? _value.timezone
+          : timezone // ignore: cast_nullable_to_non_nullable
+              as String,
       myReply: freezed == myReply
           ? _value.myReply
           : myReply // ignore: cast_nullable_to_non_nullable
@@ -695,6 +731,7 @@ class _$ScheduleInstanceDetailsImpl
       required this.displayName,
       required this.instanceDate,
       required final List<ScheduleInstanceRepliesGroup> repliesGroups,
+      required this.timezone,
       this.myReply,
       this.myDefaultReply,
       this.myDefaultRule,
@@ -719,6 +756,8 @@ class _$ScheduleInstanceDetailsImpl
   }
 
   @override
+  final String timezone;
+  @override
   final ReplyOptions? myReply;
   @override
   final ReplyOptions? myDefaultReply;
@@ -731,7 +770,7 @@ class _$ScheduleInstanceDetailsImpl
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'ScheduleInstanceDetails(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, repliesGroups: $repliesGroups, myReply: $myReply, myDefaultReply: $myDefaultReply, myDefaultRule: $myDefaultRule, targetMemberId: $targetMemberId, canEditOthers: $canEditOthers)';
+    return 'ScheduleInstanceDetails(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, repliesGroups: $repliesGroups, timezone: $timezone, myReply: $myReply, myDefaultReply: $myDefaultReply, myDefaultRule: $myDefaultRule, targetMemberId: $targetMemberId, canEditOthers: $canEditOthers)';
   }
 
   @override
@@ -744,6 +783,7 @@ class _$ScheduleInstanceDetailsImpl
       ..add(DiagnosticsProperty('displayName', displayName))
       ..add(DiagnosticsProperty('instanceDate', instanceDate))
       ..add(DiagnosticsProperty('repliesGroups', repliesGroups))
+      ..add(DiagnosticsProperty('timezone', timezone))
       ..add(DiagnosticsProperty('myReply', myReply))
       ..add(DiagnosticsProperty('myDefaultReply', myDefaultReply))
       ..add(DiagnosticsProperty('myDefaultRule', myDefaultRule))
@@ -765,6 +805,8 @@ class _$ScheduleInstanceDetailsImpl
                 other.instanceDate == instanceDate) &&
             const DeepCollectionEquality()
                 .equals(other._repliesGroups, _repliesGroups) &&
+            (identical(other.timezone, timezone) ||
+                other.timezone == timezone) &&
             (identical(other.myReply, myReply) || other.myReply == myReply) &&
             (identical(other.myDefaultReply, myDefaultReply) ||
                 other.myDefaultReply == myDefaultReply) &&
@@ -784,6 +826,7 @@ class _$ScheduleInstanceDetailsImpl
       displayName,
       instanceDate,
       const DeepCollectionEquality().hash(_repliesGroups),
+      timezone,
       myReply,
       myDefaultReply,
       myDefaultRule,
@@ -807,6 +850,7 @@ abstract class _ScheduleInstanceDetails implements ScheduleInstanceDetails {
       required final String displayName,
       required final DateTime instanceDate,
       required final List<ScheduleInstanceRepliesGroup> repliesGroups,
+      required final String timezone,
       final ReplyOptions? myReply,
       final ReplyOptions? myDefaultReply,
       final DefaultRule? myDefaultRule,
@@ -823,6 +867,8 @@ abstract class _ScheduleInstanceDetails implements ScheduleInstanceDetails {
   DateTime get instanceDate;
   @override
   List<ScheduleInstanceRepliesGroup> get repliesGroups;
+  @override
+  String get timezone;
   @override
   ReplyOptions? get myReply;
   @override

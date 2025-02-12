@@ -58,6 +58,7 @@ void main() {
           displayName: 'schedule 1',
           startDate: date,
           recurrenceRule: CommonRecurrenceRules.daily,
+          timezone: 'Europe/Zurich',
         ),
       ];
 

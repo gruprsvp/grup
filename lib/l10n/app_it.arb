@@ -93,6 +93,7 @@
   "signOut": "Esci",
   "signOutConfirmation": "Sei sicuro di voler uscire?",
   "systemLanguage": "Lingua del sistema",
+  "timezone": "Fuso orario",
   "themeDark": "Scuro",
   "themeLight": "Chiaro",
   "themeSystem": "Sistema",

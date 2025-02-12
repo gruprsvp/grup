@@ -506,6 +506,7 @@ void main() {
                 frequency: Frequency.daily,
                 interval: 1,
               ),
+              timezone: 'Europe/Zurich',
             ),
           );
 
@@ -534,7 +535,8 @@ void main() {
                   groupId: group.id,
                   displayName: r.toString(),
                   startDate: DateTime.now(),
-                  recurrenceRule: r))
+                  recurrenceRule: r,
+                  timezone: 'Europe/Zurich'))
               .map((s) => schedulesRepository.createSchedule(s)));
 
           final schedules =
@@ -582,6 +584,7 @@ void main() {
               displayName: 'A schedule',
               startDate: startDate,
               recurrenceRule: recurrenceRule,
+              timezone: 'Europe/Zurich',
             ),
           );
 
@@ -632,6 +635,7 @@ void main() {
               displayName: 'A schedule',
               startDate: startDate,
               recurrenceRule: recurrenceRule,
+              timezone: 'Europe/Zurich',
             ),
           );
 

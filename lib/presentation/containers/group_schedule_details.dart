@@ -25,18 +25,24 @@ class GroupScheduleDetailsContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
-      distinct: true,
-      converter: (store) => _ViewModel.fromStore(store, groupId),
-      onInit: (store) =>
-          store.dispatch(GroupScheduleDetailsOpenAction(scheduleId)),
-      builder: (context, vm) => GroupScheduleDetailsScreen(
-        loading: vm.loading,
-        group: vm.group,
-        scheduleInstance: vm.scheduleInstance,
-        onReplyChanged: vm.onReplyChanged,
-        onDefaultRuleChanged: vm.onDefaultRuleChanged,
-      ),
-    );
+        distinct: true,
+        converter: (store) => _ViewModel.fromStore(store, groupId),
+        onInit: (store) =>
+            store.dispatch(GroupScheduleDetailsOpenAction(scheduleId)),
+        builder: (context, vm) {
+          final scheduleInstance = vm.scheduleInstance;
+          if (scheduleInstance == null) {
+            return Container();
+          }
+
+          return GroupScheduleDetailsScreen(
+            loading: vm.loading,
+            group: vm.group,
+            scheduleInstance: scheduleInstance,
+            onReplyChanged: vm.onReplyChanged,
+            onDefaultRuleChanged: vm.onDefaultRuleChanged,
+          );
+        });
   }
 }
 
