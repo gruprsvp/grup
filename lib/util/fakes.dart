@@ -19,10 +19,10 @@ class Fake {
       );
 
   static Schedule schedule({String? groupId}) => Schedule(
-        id: const Uuid().v7(),
-        groupId: groupId ?? const Uuid().v7(),
-        displayName: faker.lorem.sentence(),
-        recurrenceRule: CommonRecurrenceRules.daily,
-        startDate: DateTime.now(),
-      );
+      id: const Uuid().v7(),
+      groupId: groupId ?? const Uuid().v7(),
+      displayName: faker.lorem.sentence(),
+      recurrenceRule: CommonRecurrenceRules.daily,
+      startDate: DateTime.now(),
+      timezone: 'Europe/Zurich');
 }
