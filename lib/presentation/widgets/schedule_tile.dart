@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:parousia/brick/brick.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/widgets/widgets.dart';
-import 'package:timezone/browser.dart';
+import 'package:timezone/timezone.dart';
 
 class ScheduleTile extends StatelessWidget {
   final timeFormat = DateFormat.jm();
