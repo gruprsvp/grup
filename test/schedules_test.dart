@@ -2,7 +2,6 @@ import 'package:parousia/models/models.dart';
 import 'package:parousia/selectors/selectors.dart';
 import 'package:parousia/util/util.dart';
 import 'package:test/test.dart';
-import 'package:timezone/data/latest.dart';
 import 'package:uuid/uuid.dart';
 
 DateTime _findSunday(DateTime date) {
@@ -12,10 +11,8 @@ DateTime _findSunday(DateTime date) {
 void main() {
   group('schedules instances', () {
     test('basic setup with default replies and overrides', () {
-      initializeTimeZones();
-
       const testDays = 10;
-      final startDate = DateTime(2000, 1, 1).toUtc();
+      final startDate = DateTime(2000, 1, 1);
       final endDate = startDate.add(const Duration(days: testDays));
 
       final dailyScheduleId = const Uuid().v7();
@@ -103,13 +100,13 @@ void main() {
       expect(result, isNotNull);
       expect(result, hasLength(testDays));
 
-      final sundayInstance = result.singleWhere(
-          (element) => element.instanceDate.copyWith(isUtc: true) == sunday);
+      final sundayInstance =
+          result.singleWhere((element) => element.instanceDate == sunday);
       expect(sundayInstance.myReply, ReplyOptions.no);
       expect(sundayInstance.yesCount, 0);
 
-      final saturdayInstance = result.singleWhere(
-          (element) => element.instanceDate.copyWith(isUtc: true) == saturday);
+      final saturdayInstance =
+          result.singleWhere((element) => element.instanceDate == saturday);
       expect(saturdayInstance.myReply, ReplyOptions.no);
       expect(saturdayInstance.yesCount, 1);
     });
