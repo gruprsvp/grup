@@ -12,13 +12,13 @@ import 'package:parousia/reducers/reducers.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/state/state.dart';
 import 'package:parousia/util/config.dart';
-import 'package:parousia/util/timezone/timezone.dart' as tz;
 import 'package:parousia/util/util.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:redux_persist/redux_persist.dart';
 import 'package:redux_persist_flutter/redux_persist_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 import 'router.dart';
 
@@ -40,7 +40,8 @@ Future<void> main() async {
   // Initialize PostHog
   await initPostHog();
 
-  await tz.initializeTimeZone();
+  final path = 'packages/timezone/data/latest.tzf';
+  tz.initializeDatabase(Uint8List.sublistView(await rootBundle.load(path)));
 
   final configService = ConfigService();
   await configService.initialize();
