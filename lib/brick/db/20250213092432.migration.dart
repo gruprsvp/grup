@@ -9,7 +9,7 @@ part of 'schema.g.dart';
 
 // The migration version must **always** mirror the file name
 
-const List<MigrationCommand> _migration_20250211231434_up = [
+const List<MigrationCommand> _migration_20250213092432_up = [
   InsertTable('Group'),
   InsertTable('DefaultRule'),
   InsertTable('Invite'),
@@ -58,7 +58,7 @@ const List<MigrationCommand> _migration_20250211231434_up = [
   CreateIndex(columns: ['id'], onTable: 'Reply', unique: true)
 ];
 
-const List<MigrationCommand> _migration_20250211231434_down = [
+const List<MigrationCommand> _migration_20250213092432_down = [
   DropTable('Group'),
   DropTable('DefaultRule'),
   DropTable('Invite'),
@@ -112,15 +112,15 @@ const List<MigrationCommand> _migration_20250211231434_down = [
 //
 
 @Migratable(
-  version: '20250211231434',
-  up: _migration_20250211231434_up,
-  down: _migration_20250211231434_down,
+  version: '20250213092432',
+  up: _migration_20250213092432_up,
+  down: _migration_20250213092432_down,
 )
-class Migration20250211231434 extends Migration {
-  const Migration20250211231434()
+class Migration20250213092432 extends Migration {
+  const Migration20250213092432()
     : super(
-        version: 20250211231434,
-        up: _migration_20250211231434_up,
-        down: _migration_20250211231434_down,
+        version: 20250213092432,
+        up: _migration_20250213092432_up,
+        down: _migration_20250213092432_down,
       );
 }
