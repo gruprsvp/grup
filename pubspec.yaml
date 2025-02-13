@@ -168,6 +168,7 @@ flutter:
     - assets/images/
     - assets/env/
     - assets/google_fonts/
+    - packages/timezone/data/latest.tzf
     - supabase/config/
 
   # An image asset can refer to one or more resolution-specific "variants", see
