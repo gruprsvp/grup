@@ -18,6 +18,7 @@ import 'package:redux_epics/redux_epics.dart';
 import 'package:redux_persist/redux_persist.dart';
 import 'package:redux_persist_flutter/redux_persist_flutter.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:timezone/timezone.dart' as tz;
 
 import 'router.dart';
 
@@ -38,6 +39,9 @@ Future<void> main() async {
 
   // Initialize PostHog
   await initPostHog();
+
+  final path = 'packages/timezone/data/latest.tzf';
+  tz.initializeDatabase(Uint8List.sublistView(await rootBundle.load(path)));
 
   final configService = ConfigService();
   await configService.initialize();
@@ -109,6 +113,7 @@ Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
     log('failed to load persisted state: $e');
     return null;
   });
+
   final initialState = localPersistedState ?? AppState.initialState();
   final middleware = [
     persistor.createMiddleware(),

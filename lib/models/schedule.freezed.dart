@@ -25,6 +25,7 @@ mixin _$Schedule {
   String get displayName => throw _privateConstructorUsedError;
   DateTime get startDate => throw _privateConstructorUsedError;
   RecurrenceRule get recurrenceRule => throw _privateConstructorUsedError;
+  String get timezone => throw _privateConstructorUsedError;
   DateTime? get createdAt => throw _privateConstructorUsedError;
   DateTime? get updatedAt => throw _privateConstructorUsedError;
 
@@ -49,6 +50,7 @@ abstract class $ScheduleCopyWith<$Res> {
       String displayName,
       DateTime startDate,
       RecurrenceRule recurrenceRule,
+      String timezone,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
@@ -73,6 +75,7 @@ class _$ScheduleCopyWithImpl<$Res, $Val extends Schedule>
     Object? displayName = null,
     Object? startDate = null,
     Object? recurrenceRule = null,
+    Object? timezone = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -97,6 +100,10 @@ class _$ScheduleCopyWithImpl<$Res, $Val extends Schedule>
           ? _value.recurrenceRule
           : recurrenceRule // ignore: cast_nullable_to_non_nullable
               as RecurrenceRule,
+      timezone: null == timezone
+          ? _value.timezone
+          : timezone // ignore: cast_nullable_to_non_nullable
+              as String,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -123,6 +130,7 @@ abstract class _$$ScheduleImplCopyWith<$Res>
       String displayName,
       DateTime startDate,
       RecurrenceRule recurrenceRule,
+      String timezone,
       DateTime? createdAt,
       DateTime? updatedAt});
 }
@@ -145,6 +153,7 @@ class __$$ScheduleImplCopyWithImpl<$Res>
     Object? displayName = null,
     Object? startDate = null,
     Object? recurrenceRule = null,
+    Object? timezone = null,
     Object? createdAt = freezed,
     Object? updatedAt = freezed,
   }) {
@@ -169,6 +178,10 @@ class __$$ScheduleImplCopyWithImpl<$Res>
           ? _value.recurrenceRule
           : recurrenceRule // ignore: cast_nullable_to_non_nullable
               as RecurrenceRule,
+      timezone: null == timezone
+          ? _value.timezone
+          : timezone // ignore: cast_nullable_to_non_nullable
+              as String,
       createdAt: freezed == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -191,6 +204,7 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
       required this.displayName,
       required this.startDate,
       required this.recurrenceRule,
+      required this.timezone,
       this.createdAt,
       this.updatedAt});
 
@@ -208,13 +222,15 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
   @override
   final RecurrenceRule recurrenceRule;
   @override
+  final String timezone;
+  @override
   final DateTime? createdAt;
   @override
   final DateTime? updatedAt;
 
   @override
   String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Schedule(id: $id, groupId: $groupId, displayName: $displayName, startDate: $startDate, recurrenceRule: $recurrenceRule, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Schedule(id: $id, groupId: $groupId, displayName: $displayName, startDate: $startDate, recurrenceRule: $recurrenceRule, timezone: $timezone, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 
   @override
@@ -227,6 +243,7 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
       ..add(DiagnosticsProperty('displayName', displayName))
       ..add(DiagnosticsProperty('startDate', startDate))
       ..add(DiagnosticsProperty('recurrenceRule', recurrenceRule))
+      ..add(DiagnosticsProperty('timezone', timezone))
       ..add(DiagnosticsProperty('createdAt', createdAt))
       ..add(DiagnosticsProperty('updatedAt', updatedAt));
   }
@@ -244,6 +261,8 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
                 other.startDate == startDate) &&
             (identical(other.recurrenceRule, recurrenceRule) ||
                 other.recurrenceRule == recurrenceRule) &&
+            (identical(other.timezone, timezone) ||
+                other.timezone == timezone) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -253,7 +272,7 @@ class _$ScheduleImpl with DiagnosticableTreeMixin implements _Schedule {
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   int get hashCode => Object.hash(runtimeType, id, groupId, displayName,
-      startDate, recurrenceRule, createdAt, updatedAt);
+      startDate, recurrenceRule, timezone, createdAt, updatedAt);
 
   /// Create a copy of Schedule
   /// with the given fields replaced by the non-null parameter values.
@@ -278,6 +297,7 @@ abstract class _Schedule implements Schedule {
       required final String displayName,
       required final DateTime startDate,
       required final RecurrenceRule recurrenceRule,
+      required final String timezone,
       final DateTime? createdAt,
       final DateTime? updatedAt}) = _$ScheduleImpl;
 
@@ -294,6 +314,8 @@ abstract class _Schedule implements Schedule {
   DateTime get startDate;
   @override
   RecurrenceRule get recurrenceRule;
+  @override
+  String get timezone;
   @override
   DateTime? get createdAt;
   @override
