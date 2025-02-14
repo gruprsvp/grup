@@ -13,12 +13,15 @@ class AppStateMapper extends ClassMapperBase<AppState> {
   static AppStateMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = AppStateMapper._());
+      MapperContainer.globals
+          .useAll([ThemeModeMapper(), RemoteEntityStateMapper()]);
       ProfileMapper.ensureInitialized();
       GroupMapper.ensureInitialized();
       MemberMapper.ensureInitialized();
       ScheduleMapper.ensureInitialized();
       DefaultRuleMapper.ensureInitialized();
       ReplyMapper.ensureInitialized();
+      AuthStateMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -162,6 +165,7 @@ extension AppStateValueCopy<$R, $Out> on ObjectCopyWith<$R, AppState, $Out> {
 
 abstract class AppStateCopyWith<$R, $In extends AppState, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
+  AuthStateCopyWith<$R, AuthState, AuthState> get auth;
   $R call(
       {RemoteEntityState<Profile>? profiles,
       RemoteEntityState<Group>? groups,
@@ -188,6 +192,9 @@ class _AppStateCopyWithImpl<$R, $Out>
   @override
   late final ClassMapperBase<AppState> $mapper =
       AppStateMapper.ensureInitialized();
+  @override
+  AuthStateCopyWith<$R, AuthState, AuthState> get auth =>
+      $value.auth.copyWith.$chain((v) => call(auth: v));
   @override
   $R call(
           {RemoteEntityState<Profile>? profiles,

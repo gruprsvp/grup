@@ -1,31 +1,30 @@
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flutter/foundation.dart'; // ignore: unused_import
-import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:supabase/supabase.dart';
 
-part 'auth_state.freezed.dart';
-part 'auth_state.g.dart';
+part 'auth_state.mapper.dart';
 
+@MappableEnum()
 enum AuthStatus { initial, authenticated, unauthenticated }
 
-@freezed
-sealed class AuthState with _$AuthState {
-  const factory AuthState({
-    required AuthStatus status,
-    @UserJsonConverter() User? user,
-    String? lastRoute,
-  }) = _AuthState;
+@MappableClass(includeCustomMappers: [UserMapper()])
+class AuthState with AuthStateMappable {
+  final AuthStatus status;
+  final User? user;
+  final String? lastRoute;
 
-  factory AuthState.fromJson(Map<String, dynamic> json) =>
-      _$AuthStateFromJson(json);
+  const AuthState({required this.status, this.user, this.lastRoute});
+
+  static final fromJson = AuthStateMapper.fromJson;
 }
 
 /// Converts a [User] object to and from JSON.
-class UserJsonConverter implements JsonConverter<User, Map<String, dynamic>> {
-  const UserJsonConverter();
+class UserMapper extends SimpleMapper<User> {
+  const UserMapper();
 
   @override
-  User fromJson(Map<String, dynamic> json) {
-    final user = User.fromJson(json);
+  User decode(dynamic value) {
+    final user = User.fromJson(value);
     if (user == null) {
       throw const FormatException('invalid user');
     }
@@ -33,5 +32,7 @@ class UserJsonConverter implements JsonConverter<User, Map<String, dynamic>> {
   }
 
   @override
-  Map<String, dynamic> toJson(User object) => object.toJson();
+  dynamic encode(User self) {
+    return self.toJson();
+  }
 }
