@@ -14,6 +14,7 @@ class MemberMapper extends ClassMapperBase<Member> {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = MemberMapper._());
       GroupMapper.ensureInitialized();
+      GroupRolesMapper.ensureInitialized();
       ProfileMapper.ensureInitialized();
     }
     return _instance!;

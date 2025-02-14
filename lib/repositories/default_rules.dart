@@ -7,20 +7,15 @@ class DefaultRulesRepository extends SupabaseRepository {
   DefaultRulesRepository({required super.repository});
 
   Future<Iterable<DefaultRule>> getDefaultRules(String groupId) async =>
-      repository
-          .get<DefaultRule>(
-        query: Query.where('member.group', Where.exact('id', groupId)),
-      )
-          .then((replies) {
-        print(replies.length);
-        return replies;
-      });
+      repository.get<DefaultRule>();
 
   Future<DefaultRule> createDefaultRule(DefaultRule reply) async =>
       repository.upsert<DefaultRule>(reply);
 
-  Future<DefaultRule> getDefaultRule(
-      {required String memberId, required String scheduleId}) async {
+  Future<DefaultRule> getDefaultRule({
+    required String memberId,
+    required String scheduleId,
+  }) async {
     final list = await repository.get<DefaultRule>(
       query: Query(
         where: [

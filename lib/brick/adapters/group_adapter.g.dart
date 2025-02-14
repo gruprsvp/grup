@@ -1,48 +1,57 @@
 // GENERATED CODE DO NOT EDIT
 part of '../brick.g.dart';
 
-Future<Group> _$GroupFromSupabase(Map<String, dynamic> data,
-    {required SupabaseProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Group> _$GroupFromSupabase(
+  Map<String, dynamic> data, {
+  required SupabaseProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return Group(
-      id: data['id'] as String?,
-      displayName: data['display_name'] as String,
-      description:
-          data['description'] == null ? null : data['description'] as String?,
-      picture: data['picture'] == null ? null : data['picture'] as String?);
+    id: data['id'] as String?,
+    displayName: data['display_name'] as String,
+    description:
+        data['description'] == null ? null : data['description'] as String?,
+    picture: data['picture'] == null ? null : data['picture'] as String?,
+  );
 }
 
-Future<Map<String, dynamic>> _$GroupToSupabase(Group instance,
-    {required SupabaseProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Map<String, dynamic>> _$GroupToSupabase(
+  Group instance, {
+  required SupabaseProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return {
     'id': instance.id,
     'display_name': instance.displayName,
     'description': instance.description,
-    'picture': instance.picture
+    'picture': instance.picture,
   };
 }
 
-Future<Group> _$GroupFromSqlite(Map<String, dynamic> data,
-    {required SqliteProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Group> _$GroupFromSqlite(
+  Map<String, dynamic> data, {
+  required SqliteProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return Group(
-      id: data['id'] as String,
-      displayName: data['display_name'] as String,
-      description:
-          data['description'] == null ? null : data['description'] as String?,
-      picture: data['picture'] == null ? null : data['picture'] as String?)
-    ..primaryKey = data['_brick_id'] as int;
+    id: data['id'] as String,
+    displayName: data['display_name'] as String,
+    description:
+        data['description'] == null ? null : data['description'] as String?,
+    picture: data['picture'] == null ? null : data['picture'] as String?,
+  )..primaryKey = data['_brick_id'] as int;
 }
 
-Future<Map<String, dynamic>> _$GroupToSqlite(Group instance,
-    {required SqliteProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Map<String, dynamic>> _$GroupToSqlite(
+  Group instance, {
+  required SqliteProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return {
     'id': instance.id,
     'display_name': instance.displayName,
     'description': instance.description,
-    'picture': instance.picture
+    'picture': instance.picture,
   };
 }
 
@@ -71,7 +80,7 @@ class GroupAdapter extends OfflineFirstWithSupabaseAdapter<Group> {
     'picture': const RuntimeSupabaseColumnDefinition(
       association: false,
       columnName: 'picture',
-    )
+    ),
   };
   @override
   final ignoreDuplicates = false;
@@ -108,13 +117,18 @@ class GroupAdapter extends OfflineFirstWithSupabaseAdapter<Group> {
       columnName: 'picture',
       iterable: false,
       type: String,
-    )
+    ),
   };
   @override
   Future<int?> primaryKeyByUniqueColumns(
-      Group instance, DatabaseExecutor executor) async {
-    final results = await executor.rawQuery('''
-        SELECT * FROM `Group` WHERE id = ? LIMIT 1''', [instance.id]);
+    Group instance,
+    DatabaseExecutor executor,
+  ) async {
+    final results = await executor.rawQuery(
+      '''
+        SELECT * FROM `Group` WHERE id = ? LIMIT 1''',
+      [instance.id],
+    );
 
     // SQFlite returns [{}] when no results are found
     if (results.isEmpty || (results.length == 1 && results.first.isEmpty)) {
@@ -128,26 +142,40 @@ class GroupAdapter extends OfflineFirstWithSupabaseAdapter<Group> {
   final String tableName = 'Group';
 
   @override
-  Future<Group> fromSupabase(Map<String, dynamic> input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$GroupFromSupabase(input,
-          provider: provider, repository: repository);
+  Future<Group> fromSupabase(
+    Map<String, dynamic> input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async => await _$GroupFromSupabase(
+    input,
+    provider: provider,
+    repository: repository,
+  );
   @override
-  Future<Map<String, dynamic>> toSupabase(Group input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$GroupToSupabase(input,
-          provider: provider, repository: repository);
+  Future<Map<String, dynamic>> toSupabase(
+    Group input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async => await _$GroupToSupabase(
+    input,
+    provider: provider,
+    repository: repository,
+  );
   @override
-  Future<Group> fromSqlite(Map<String, dynamic> input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$GroupFromSqlite(input,
-          provider: provider, repository: repository);
+  Future<Group> fromSqlite(
+    Map<String, dynamic> input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async => await _$GroupFromSqlite(
+    input,
+    provider: provider,
+    repository: repository,
+  );
   @override
-  Future<Map<String, dynamic>> toSqlite(Group input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
+  Future<Map<String, dynamic>> toSqlite(
+    Group input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async =>
       await _$GroupToSqlite(input, provider: provider, repository: repository);
 }

@@ -1,44 +1,53 @@
 // GENERATED CODE DO NOT EDIT
 part of '../brick.g.dart';
 
-Future<Profile> _$ProfileFromSupabase(Map<String, dynamic> data,
-    {required SupabaseProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Profile> _$ProfileFromSupabase(
+  Map<String, dynamic> data, {
+  required SupabaseProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return Profile(
-      id: data['id'] as String,
-      displayName:
-          data['display_name'] == null ? null : data['display_name'] as String?,
-      picture: data['picture'] == null ? null : data['picture'] as String?);
+    id: data['id'] as String,
+    displayName:
+        data['display_name'] == null ? null : data['display_name'] as String?,
+    picture: data['picture'] == null ? null : data['picture'] as String?,
+  );
 }
 
-Future<Map<String, dynamic>> _$ProfileToSupabase(Profile instance,
-    {required SupabaseProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Map<String, dynamic>> _$ProfileToSupabase(
+  Profile instance, {
+  required SupabaseProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return {
     'id': instance.id,
     'display_name': instance.displayName,
-    'picture': instance.picture
+    'picture': instance.picture,
   };
 }
 
-Future<Profile> _$ProfileFromSqlite(Map<String, dynamic> data,
-    {required SqliteProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Profile> _$ProfileFromSqlite(
+  Map<String, dynamic> data, {
+  required SqliteProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return Profile(
-      id: data['id'] as String,
-      displayName:
-          data['display_name'] == null ? null : data['display_name'] as String?,
-      picture: data['picture'] == null ? null : data['picture'] as String?)
-    ..primaryKey = data['_brick_id'] as int;
+    id: data['id'] as String,
+    displayName:
+        data['display_name'] == null ? null : data['display_name'] as String?,
+    picture: data['picture'] == null ? null : data['picture'] as String?,
+  )..primaryKey = data['_brick_id'] as int;
 }
 
-Future<Map<String, dynamic>> _$ProfileToSqlite(Profile instance,
-    {required SqliteProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Map<String, dynamic>> _$ProfileToSqlite(
+  Profile instance, {
+  required SqliteProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return {
     'id': instance.id,
     'display_name': instance.displayName,
-    'picture': instance.picture
+    'picture': instance.picture,
   };
 }
 
@@ -63,7 +72,7 @@ class ProfileAdapter extends OfflineFirstWithSupabaseAdapter<Profile> {
     'picture': const RuntimeSupabaseColumnDefinition(
       association: false,
       columnName: 'picture',
-    )
+    ),
   };
   @override
   final ignoreDuplicates = false;
@@ -94,13 +103,18 @@ class ProfileAdapter extends OfflineFirstWithSupabaseAdapter<Profile> {
       columnName: 'picture',
       iterable: false,
       type: String,
-    )
+    ),
   };
   @override
   Future<int?> primaryKeyByUniqueColumns(
-      Profile instance, DatabaseExecutor executor) async {
-    final results = await executor.rawQuery('''
-        SELECT * FROM `Profile` WHERE id = ? LIMIT 1''', [instance.id]);
+    Profile instance,
+    DatabaseExecutor executor,
+  ) async {
+    final results = await executor.rawQuery(
+      '''
+        SELECT * FROM `Profile` WHERE id = ? LIMIT 1''',
+      [instance.id],
+    );
 
     // SQFlite returns [{}] when no results are found
     if (results.isEmpty || (results.length == 1 && results.first.isEmpty)) {
@@ -114,27 +128,43 @@ class ProfileAdapter extends OfflineFirstWithSupabaseAdapter<Profile> {
   final String tableName = 'Profile';
 
   @override
-  Future<Profile> fromSupabase(Map<String, dynamic> input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$ProfileFromSupabase(input,
-          provider: provider, repository: repository);
+  Future<Profile> fromSupabase(
+    Map<String, dynamic> input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async => await _$ProfileFromSupabase(
+    input,
+    provider: provider,
+    repository: repository,
+  );
   @override
-  Future<Map<String, dynamic>> toSupabase(Profile input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$ProfileToSupabase(input,
-          provider: provider, repository: repository);
+  Future<Map<String, dynamic>> toSupabase(
+    Profile input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async => await _$ProfileToSupabase(
+    input,
+    provider: provider,
+    repository: repository,
+  );
   @override
-  Future<Profile> fromSqlite(Map<String, dynamic> input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$ProfileFromSqlite(input,
-          provider: provider, repository: repository);
+  Future<Profile> fromSqlite(
+    Map<String, dynamic> input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async => await _$ProfileFromSqlite(
+    input,
+    provider: provider,
+    repository: repository,
+  );
   @override
-  Future<Map<String, dynamic>> toSqlite(Profile input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$ProfileToSqlite(input,
-          provider: provider, repository: repository);
+  Future<Map<String, dynamic>> toSqlite(
+    Profile input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async => await _$ProfileToSqlite(
+    input,
+    provider: provider,
+    repository: repository,
+  );
 }

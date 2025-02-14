@@ -39,16 +39,16 @@ PODS:
   - path_provider_foundation (0.0.1):
     - Flutter
     - FlutterMacOS
-  - PostHog (3.18.0)
+  - PostHog (3.19.5)
   - posthog_flutter (0.0.1):
     - Flutter
     - FlutterMacOS
-    - PostHog (= 3.18.0)
-  - Sentry/HybridSDK (8.42.0)
-  - sentry_flutter (8.12.0):
+    - PostHog (~> 3.19)
+  - Sentry/HybridSDK (8.44.0)
+  - sentry_flutter (8.13.2):
     - Flutter
     - FlutterMacOS
-    - Sentry/HybridSDK (= 8.42.0)
+    - Sentry/HybridSDK (= 8.44.0)
   - share_plus (0.0.1):
     - FlutterMacOS
   - shared_preferences_foundation (0.0.1):
@@ -124,23 +124,23 @@ EXTERNAL SOURCES:
     :path: Flutter/ephemeral/.symlinks/plugins/url_launcher_macos/macos
 
 SPEC CHECKSUMS:
-  app_links: 9028728e32c83a0831d9db8cf91c526d16cc5468
+  app_links: afe860c55c7ef176cea7fb630a2b7d7736de591d
   AppAuth: d4f13a8fe0baf391b2108511793e4b479691fb73
   device_info_plus: 4fb280989f669696856f8b129e4a5e3cd6c48f76
   file_selector_macos: 6280b52b459ae6c590af5d78fc35c7267a3c4b31
-  flutter_timezone: bed4b9a391e5727a612e722d7f518882c5da205d
+  flutter_timezone: d59eea86178cbd7943cd2431cc2eaa9850f935d8
   FlutterMacOS: 8f6f14fa908a6fb3fba0cd85dbd81ec4b251fb24
-  google_sign_in_ios: 0ab078e60da6dfe23cbc55c83502b52bba1aad63
+  google_sign_in_ios: 19297361f2c51d7d8ac0201b866ef1fa5d1f94a8
   GoogleSignIn: d4281ab6cf21542b1cfaff85c191f230b399d2db
   GTMAppAuth: f69bd07d68cd3b766125f7e072c45d7340dea0de
   GTMSessionFetcher: 5aea5ba6bd522a239e236100971f10cb71b96ab6
   in_app_review: 0599bccaed5e02f6bed2b0d30d16f86b63ed8638
   package_info_plus: f0052d280d17aa382b932f399edf32507174e870
   path_provider_foundation: 080d55be775b7414fd5a5ef3ac137b97b097e564
-  PostHog: 6ce18b57e7de83868707dec4a0c35ebbc866e88b
-  posthog_flutter: c708a6cdd2557be394f3d0e0533c94a68c9ee71d
-  Sentry: 38ed8bf38eab5812787274bf591e528074c19e02
-  sentry_flutter: a72ca0eb6e78335db7c4ddcddd1b9f6c8ed5b764
+  PostHog: 2b7809b229fc923f3597e04f53d8c2549463ddfc
+  posthog_flutter: c7cc14a5f1b0759dfdfd63dd31a9a9a1af5caf96
+  Sentry: 0f9bc9adfc0b960e7f3bb5ec67e9a3d8193f3bdb
+  sentry_flutter: f4a0466dc8855998ffd59378ec33507c7dc32d7b
   share_plus: 510bf0af1a42cd602274b4629920c9649c52f4cc
   shared_preferences_foundation: 9e1978ff2562383bd5676f64ec4e9aa8fa06a6f7
   sign_in_with_apple: 6673c03c9e3643f6c8d33601943fbfa9ae99f94e

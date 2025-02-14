@@ -1,17 +1,19 @@
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:flutter/foundation.dart'; // ignore: unused_import
-import 'package:freezed_annotation/freezed_annotation.dart';
 
-part 'locale_state.freezed.dart';
-part 'locale_state.g.dart';
+part 'locale_state.mapper.dart';
 
-@freezed
-sealed class LocaleState with _$LocaleState {
-  const factory LocaleState({
-    required String languageCode,
-    String? scriptCode,
-    String? countryCode,
-  }) = _LocaleState;
+@MappableClass()
+class LocaleState with LocaleStateMappable {
+  final String languageCode;
+  final String? scriptCode;
+  final String? countryCode;
 
-  factory LocaleState.fromJson(Map<String, dynamic> json) =>
-      _$LocaleStateFromJson(json);
+  const LocaleState({
+    required this.languageCode,
+    this.scriptCode,
+    this.countryCode,
+  });
+
+  static final fromJson = LocaleStateMapper.fromJson;
 }

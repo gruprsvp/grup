@@ -6,79 +6,85 @@ part of 'go_router_builder.dart';
 // GoRouterGenerator
 // **************************************************************************
 
-List<RouteBase> get $appRoutes => [
-      $homeScreenRoute,
-    ];
+List<RouteBase> get $appRoutes => [$homeScreenRoute];
 
 RouteBase get $homeScreenRoute => GoRouteData.$route(
-      path: '/',
-      factory: $HomeScreenRouteExtension._fromState,
+  path: '/',
+
+  factory: $HomeScreenRouteExtension._fromState,
+  routes: [
+    GoRouteData.$route(path: 'auth', factory: $AuthRouteExtension._fromState),
+    GoRouteData.$route(
+      path: 'profile',
+
+      factory: $ProfileRouteExtension._fromState,
+    ),
+    GoRouteData.$route(
+      path: 'contacts-select',
+
+      factory: $SelectContactsRouteExtension._fromState,
+    ),
+    GoRouteData.$route(
+      path: 'group-create',
+
+      factory: $GroupCreateRouteExtension._fromState,
+    ),
+    GoRouteData.$route(
+      path: 'groups/:groupId',
+
+      factory: $GroupDetailsRouteExtension._fromState,
       routes: [
         GoRouteData.$route(
-          path: 'auth',
-          factory: $AuthRouteExtension._fromState,
+          path: 'manage',
+
+          factory: $GroupManageRouteExtension._fromState,
         ),
         GoRouteData.$route(
-          path: 'profile',
-          factory: $ProfileRouteExtension._fromState,
+          path: 'schedule-create',
+
+          factory: $GroupScheduleCreateRouteExtension._fromState,
         ),
         GoRouteData.$route(
-          path: 'contacts-select',
-          factory: $SelectContactsRouteExtension._fromState,
+          path: 'schedules/:scheduleId',
+
+          factory: $GroupScheduleDetailsRouteExtension._fromState,
         ),
         GoRouteData.$route(
-          path: 'group-create',
-          factory: $GroupCreateRouteExtension._fromState,
-        ),
-        GoRouteData.$route(
-          path: 'groups/:groupId',
-          factory: $GroupDetailsRouteExtension._fromState,
-          routes: [
-            GoRouteData.$route(
-              path: 'manage',
-              factory: $GroupManageRouteExtension._fromState,
-            ),
-            GoRouteData.$route(
-              path: 'schedule-create',
-              factory: $GroupScheduleCreateRouteExtension._fromState,
-            ),
-            GoRouteData.$route(
-              path: 'schedules/:scheduleId',
-              factory: $GroupScheduleDetailsRouteExtension._fromState,
-            ),
-            GoRouteData.$route(
-              path: 'members/:memberId',
-              factory: $GroupMemberDetailsRouteExtension._fromState,
-            ),
-          ],
-        ),
-        GoRouteData.$route(
-          path: 'settings',
-          factory: $SettingsRouteExtension._fromState,
-          routes: [
-            GoRouteData.$route(
-              path: 'locale',
-              factory: $LocaleRouteExtension._fromState,
-            ),
-            GoRouteData.$route(
-              path: 'more',
-              factory: $SettingsMoreRouteExtension._fromState,
-            ),
-            GoRouteData.$route(
-              path: 'licenses',
-              factory: $LicensesRouteExtension._fromState,
-            ),
-          ],
+          path: 'members/:memberId',
+
+          factory: $GroupMemberDetailsRouteExtension._fromState,
         ),
       ],
-    );
+    ),
+    GoRouteData.$route(
+      path: 'settings',
+
+      factory: $SettingsRouteExtension._fromState,
+      routes: [
+        GoRouteData.$route(
+          path: 'locale',
+
+          factory: $LocaleRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'more',
+
+          factory: $SettingsMoreRouteExtension._fromState,
+        ),
+        GoRouteData.$route(
+          path: 'licenses',
+
+          factory: $LicensesRouteExtension._fromState,
+        ),
+      ],
+    ),
+  ],
+);
 
 extension $HomeScreenRouteExtension on HomeScreenRoute {
   static HomeScreenRoute _fromState(GoRouterState state) => HomeScreenRoute();
 
-  String get location => GoRouteData.$location(
-        '/',
-      );
+  String get location => GoRouteData.$location('/');
 
   void go(BuildContext context) => context.go(location);
 
@@ -93,9 +99,7 @@ extension $HomeScreenRouteExtension on HomeScreenRoute {
 extension $AuthRouteExtension on AuthRoute {
   static AuthRoute _fromState(GoRouterState state) => AuthRoute();
 
-  String get location => GoRouteData.$location(
-        '/auth',
-      );
+  String get location => GoRouteData.$location('/auth');
 
   void go(BuildContext context) => context.go(location);
 
@@ -109,17 +113,19 @@ extension $AuthRouteExtension on AuthRoute {
 
 extension $ProfileRouteExtension on ProfileRoute {
   static ProfileRoute _fromState(GoRouterState state) => ProfileRoute(
-        userNavigated: _$convertMapValue(
-            'user-navigated', state.uri.queryParameters, _$boolConverter),
-      );
+    userNavigated: _$convertMapValue(
+      'user-navigated',
+      state.uri.queryParameters,
+      _$boolConverter,
+    ),
+  );
 
   String get location => GoRouteData.$location(
-        '/profile',
-        queryParams: {
-          if (userNavigated != null)
-            'user-navigated': userNavigated!.toString(),
-        },
-      );
+    '/profile',
+    queryParams: {
+      if (userNavigated != null) 'user-navigated': userNavigated!.toString(),
+    },
+  );
 
   void go(BuildContext context) => context.go(location);
 
@@ -135,9 +141,7 @@ extension $SelectContactsRouteExtension on SelectContactsRoute {
   static SelectContactsRoute _fromState(GoRouterState state) =>
       SelectContactsRoute();
 
-  String get location => GoRouteData.$location(
-        '/contacts-select',
-      );
+  String get location => GoRouteData.$location('/contacts-select');
 
   void go(BuildContext context) => context.go(location);
 
@@ -152,9 +156,7 @@ extension $SelectContactsRouteExtension on SelectContactsRoute {
 extension $GroupCreateRouteExtension on GroupCreateRoute {
   static GroupCreateRoute _fromState(GoRouterState state) => GroupCreateRoute();
 
-  String get location => GoRouteData.$location(
-        '/group-create',
-      );
+  String get location => GoRouteData.$location('/group-create');
 
   void go(BuildContext context) => context.go(location);
 
@@ -167,13 +169,11 @@ extension $GroupCreateRouteExtension on GroupCreateRoute {
 }
 
 extension $GroupDetailsRouteExtension on GroupDetailsRoute {
-  static GroupDetailsRoute _fromState(GoRouterState state) => GroupDetailsRoute(
-        groupId: state.pathParameters['groupId']!,
-      );
+  static GroupDetailsRoute _fromState(GoRouterState state) =>
+      GroupDetailsRoute(groupId: state.pathParameters['groupId']!);
 
-  String get location => GoRouteData.$location(
-        '/groups/${Uri.encodeComponent(groupId)}',
-      );
+  String get location =>
+      GoRouteData.$location('/groups/${Uri.encodeComponent(groupId)}');
 
   void go(BuildContext context) => context.go(location);
 
@@ -186,13 +186,11 @@ extension $GroupDetailsRouteExtension on GroupDetailsRoute {
 }
 
 extension $GroupManageRouteExtension on GroupManageRoute {
-  static GroupManageRoute _fromState(GoRouterState state) => GroupManageRoute(
-        groupId: state.pathParameters['groupId']!,
-      );
+  static GroupManageRoute _fromState(GoRouterState state) =>
+      GroupManageRoute(groupId: state.pathParameters['groupId']!);
 
-  String get location => GoRouteData.$location(
-        '/groups/${Uri.encodeComponent(groupId)}/manage',
-      );
+  String get location =>
+      GoRouteData.$location('/groups/${Uri.encodeComponent(groupId)}/manage');
 
   void go(BuildContext context) => context.go(location);
 
@@ -206,13 +204,11 @@ extension $GroupManageRouteExtension on GroupManageRoute {
 
 extension $GroupScheduleCreateRouteExtension on GroupScheduleCreateRoute {
   static GroupScheduleCreateRoute _fromState(GoRouterState state) =>
-      GroupScheduleCreateRoute(
-        groupId: state.pathParameters['groupId']!,
-      );
+      GroupScheduleCreateRoute(groupId: state.pathParameters['groupId']!);
 
   String get location => GoRouteData.$location(
-        '/groups/${Uri.encodeComponent(groupId)}/schedule-create',
-      );
+    '/groups/${Uri.encodeComponent(groupId)}/schedule-create',
+  );
 
   void go(BuildContext context) => context.go(location);
 
@@ -232,8 +228,8 @@ extension $GroupScheduleDetailsRouteExtension on GroupScheduleDetailsRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/groups/${Uri.encodeComponent(groupId)}/schedules/${Uri.encodeComponent(scheduleId)}',
-      );
+    '/groups/${Uri.encodeComponent(groupId)}/schedules/${Uri.encodeComponent(scheduleId)}',
+  );
 
   void go(BuildContext context) => context.go(location);
 
@@ -253,8 +249,8 @@ extension $GroupMemberDetailsRouteExtension on GroupMemberDetailsRoute {
       );
 
   String get location => GoRouteData.$location(
-        '/groups/${Uri.encodeComponent(groupId)}/members/${Uri.encodeComponent(memberId)}',
-      );
+    '/groups/${Uri.encodeComponent(groupId)}/members/${Uri.encodeComponent(memberId)}',
+  );
 
   void go(BuildContext context) => context.go(location);
 
@@ -269,9 +265,7 @@ extension $GroupMemberDetailsRouteExtension on GroupMemberDetailsRoute {
 extension $SettingsRouteExtension on SettingsRoute {
   static SettingsRoute _fromState(GoRouterState state) => SettingsRoute();
 
-  String get location => GoRouteData.$location(
-        '/settings',
-      );
+  String get location => GoRouteData.$location('/settings');
 
   void go(BuildContext context) => context.go(location);
 
@@ -286,9 +280,7 @@ extension $SettingsRouteExtension on SettingsRoute {
 extension $LocaleRouteExtension on LocaleRoute {
   static LocaleRoute _fromState(GoRouterState state) => LocaleRoute();
 
-  String get location => GoRouteData.$location(
-        '/settings/locale',
-      );
+  String get location => GoRouteData.$location('/settings/locale');
 
   void go(BuildContext context) => context.go(location);
 
@@ -304,9 +296,7 @@ extension $SettingsMoreRouteExtension on SettingsMoreRoute {
   static SettingsMoreRoute _fromState(GoRouterState state) =>
       SettingsMoreRoute();
 
-  String get location => GoRouteData.$location(
-        '/settings/more',
-      );
+  String get location => GoRouteData.$location('/settings/more');
 
   void go(BuildContext context) => context.go(location);
 
@@ -321,9 +311,7 @@ extension $SettingsMoreRouteExtension on SettingsMoreRoute {
 extension $LicensesRouteExtension on LicensesRoute {
   static LicensesRoute _fromState(GoRouterState state) => LicensesRoute();
 
-  String get location => GoRouteData.$location(
-        '/settings/licenses',
-      );
+  String get location => GoRouteData.$location('/settings/licenses');
 
   void go(BuildContext context) => context.go(location);
 
@@ -338,7 +326,7 @@ extension $LicensesRouteExtension on LicensesRoute {
 T? _$convertMapValue<T>(
   String key,
   Map<String, String> map,
-  T Function(String) converter,
+  T? Function(String) converter,
 ) {
   final value = map[key];
   return value == null ? null : converter(value);

@@ -1,71 +1,99 @@
 // GENERATED CODE DO NOT EDIT
 part of '../brick.g.dart';
 
-Future<Reply> _$ReplyFromSupabase(Map<String, dynamic> data,
-    {required SupabaseProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Reply> _$ReplyFromSupabase(
+  Map<String, dynamic> data, {
+  required SupabaseProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return Reply(
-      id: data['id'] as String?,
-      member: await MemberAdapter().fromSupabase(data['member'],
-          provider: provider, repository: repository),
-      schedule: await ScheduleAdapter().fromSupabase(data['schedule'],
-          provider: provider, repository: repository),
-      instanceDate: DateTime.parse(data['instance_date'] as String),
-      selectedOption: data['selected_option'] == null
-          ? null
-          : ReplyOptions.values.byName(data['selected_option']));
+    id: data['id'] as String?,
+    member: await MemberAdapter().fromSupabase(
+      data['member'],
+      provider: provider,
+      repository: repository,
+    ),
+    schedule: await ScheduleAdapter().fromSupabase(
+      data['schedule'],
+      provider: provider,
+      repository: repository,
+    ),
+    instanceDate: DateTime.parse(data['instance_date'] as String),
+    selectedOption:
+        data['selected_option'] == null
+            ? null
+            : ReplyOptions.values.byName(data['selected_option']),
+  );
 }
 
-Future<Map<String, dynamic>> _$ReplyToSupabase(Reply instance,
-    {required SupabaseProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Map<String, dynamic>> _$ReplyToSupabase(
+  Reply instance, {
+  required SupabaseProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return {
     'id': instance.id,
     'member_id': instance.memberId,
     'schedule_id': instance.scheduleId,
     'instance_date': instance.instanceDate.toIso8601String(),
-    'selected_option': instance.selectedOption?.name
+    'selected_option': instance.selectedOption?.name,
   };
 }
 
-Future<Reply> _$ReplyFromSqlite(Map<String, dynamic> data,
-    {required SqliteProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Reply> _$ReplyFromSqlite(
+  Map<String, dynamic> data, {
+  required SqliteProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return Reply(
-      id: data['id'] as String,
-      member: (await repository!.getAssociation<Member>(
-        Query.where('primaryKey', data['member_Member_brick_id'] as int,
-            limit1: true),
-      ))!
-          .first,
-      schedule: (await repository.getAssociation<Schedule>(
-        Query.where('primaryKey', data['schedule_Schedule_brick_id'] as int,
-            limit1: true),
-      ))!
-          .first,
-      instanceDate: DateTime.parse(data['instance_date'] as String),
-      selectedOption: data['selected_option'] == null
-          ? null
-          : (data['selected_option'] > -1
-              ? ReplyOptions.values[data['selected_option'] as int]
-              : null))
-    ..primaryKey = data['_brick_id'] as int;
+    id: data['id'] as String,
+    member:
+        (await repository!.getAssociation<Member>(
+          Query.where(
+            'primaryKey',
+            data['member_Member_brick_id'] as int,
+            limit1: true,
+          ),
+        ))!.first,
+    schedule:
+        (await repository.getAssociation<Schedule>(
+          Query.where(
+            'primaryKey',
+            data['schedule_Schedule_brick_id'] as int,
+            limit1: true,
+          ),
+        ))!.first,
+    instanceDate: DateTime.parse(data['instance_date'] as String),
+    selectedOption:
+        data['selected_option'] == null
+            ? null
+            : (data['selected_option'] > -1
+                ? ReplyOptions.values[data['selected_option'] as int]
+                : null),
+  )..primaryKey = data['_brick_id'] as int;
 }
 
-Future<Map<String, dynamic>> _$ReplyToSqlite(Reply instance,
-    {required SqliteProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Map<String, dynamic>> _$ReplyToSqlite(
+  Reply instance, {
+  required SqliteProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return {
     'id': instance.id,
-    'member_Member_brick_id': instance.member.primaryKey ??
+    'member_Member_brick_id':
+        instance.member.primaryKey ??
         await provider.upsert<Member>(instance.member, repository: repository),
-    'schedule_Schedule_brick_id': instance.schedule.primaryKey ??
-        await provider.upsert<Schedule>(instance.schedule,
-            repository: repository),
+    'schedule_Schedule_brick_id':
+        instance.schedule.primaryKey ??
+        await provider.upsert<Schedule>(
+          instance.schedule,
+          repository: repository,
+        ),
     'instance_date': instance.instanceDate.toIso8601String(),
-    'selected_option': instance.selectedOption != null
-        ? ReplyOptions.values.indexOf(instance.selectedOption!)
-        : null
+    'selected_option':
+        instance.selectedOption != null
+            ? ReplyOptions.values.indexOf(instance.selectedOption!)
+            : null,
   };
 }
 
@@ -112,7 +140,7 @@ class ReplyAdapter extends OfflineFirstWithSupabaseAdapter<Reply> {
     'selectedOption': const RuntimeSupabaseColumnDefinition(
       association: false,
       columnName: 'selected_option',
-    )
+    ),
   };
   @override
   final ignoreDuplicates = false;
@@ -155,13 +183,18 @@ class ReplyAdapter extends OfflineFirstWithSupabaseAdapter<Reply> {
       columnName: 'selected_option',
       iterable: false,
       type: ReplyOptions,
-    )
+    ),
   };
   @override
   Future<int?> primaryKeyByUniqueColumns(
-      Reply instance, DatabaseExecutor executor) async {
-    final results = await executor.rawQuery('''
-        SELECT * FROM `Reply` WHERE id = ? LIMIT 1''', [instance.id]);
+    Reply instance,
+    DatabaseExecutor executor,
+  ) async {
+    final results = await executor.rawQuery(
+      '''
+        SELECT * FROM `Reply` WHERE id = ? LIMIT 1''',
+      [instance.id],
+    );
 
     // SQFlite returns [{}] when no results are found
     if (results.isEmpty || (results.length == 1 && results.first.isEmpty)) {
@@ -175,26 +208,40 @@ class ReplyAdapter extends OfflineFirstWithSupabaseAdapter<Reply> {
   final String tableName = 'Reply';
 
   @override
-  Future<Reply> fromSupabase(Map<String, dynamic> input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$ReplyFromSupabase(input,
-          provider: provider, repository: repository);
+  Future<Reply> fromSupabase(
+    Map<String, dynamic> input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async => await _$ReplyFromSupabase(
+    input,
+    provider: provider,
+    repository: repository,
+  );
   @override
-  Future<Map<String, dynamic>> toSupabase(Reply input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$ReplyToSupabase(input,
-          provider: provider, repository: repository);
+  Future<Map<String, dynamic>> toSupabase(
+    Reply input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async => await _$ReplyToSupabase(
+    input,
+    provider: provider,
+    repository: repository,
+  );
   @override
-  Future<Reply> fromSqlite(Map<String, dynamic> input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$ReplyFromSqlite(input,
-          provider: provider, repository: repository);
+  Future<Reply> fromSqlite(
+    Map<String, dynamic> input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async => await _$ReplyFromSqlite(
+    input,
+    provider: provider,
+    repository: repository,
+  );
   @override
-  Future<Map<String, dynamic>> toSqlite(Reply input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
+  Future<Map<String, dynamic>> toSqlite(
+    Reply input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async =>
       await _$ReplyToSqlite(input, provider: provider, repository: repository);
 }

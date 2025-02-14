@@ -12,7 +12,8 @@ part of 'group_members.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ViewModel {
@@ -31,13 +32,15 @@ mixin _$ViewModel {
 /// @nodoc
 abstract class _$ViewModelCopyWith<$Res> {
   factory _$ViewModelCopyWith(
-          _ViewModel value, $Res Function(_ViewModel) then) =
-      __$ViewModelCopyWithImpl<$Res, _ViewModel>;
+    _ViewModel value,
+    $Res Function(_ViewModel) then,
+  ) = __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call(
-      {bool loading,
-      OnInviteCallback onInvite,
-      Iterable<(Member, Profile?)>? members});
+  $Res call({
+    bool loading,
+    OnInviteCallback onInvite,
+    Iterable<(Member, Profile?)>? members,
+  });
 }
 
 /// @nodoc
@@ -59,20 +62,26 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
     Object? onInvite = null,
     Object? members = freezed,
   }) {
-    return _then(_value.copyWith(
-      loading: null == loading
-          ? _value.loading
-          : loading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      onInvite: null == onInvite
-          ? _value.onInvite
-          : onInvite // ignore: cast_nullable_to_non_nullable
-              as OnInviteCallback,
-      members: freezed == members
-          ? _value.members
-          : members // ignore: cast_nullable_to_non_nullable
-              as Iterable<(Member, Profile?)>?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            loading:
+                null == loading
+                    ? _value.loading
+                    : loading // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            onInvite:
+                null == onInvite
+                    ? _value.onInvite
+                    : onInvite // ignore: cast_nullable_to_non_nullable
+                        as OnInviteCallback,
+            members:
+                freezed == members
+                    ? _value.members
+                    : members // ignore: cast_nullable_to_non_nullable
+                        as Iterable<(Member, Profile?)>?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -80,14 +89,16 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
 abstract class _$$_ViewModelImplCopyWith<$Res>
     implements _$ViewModelCopyWith<$Res> {
   factory _$$_ViewModelImplCopyWith(
-          _$_ViewModelImpl value, $Res Function(_$_ViewModelImpl) then) =
-      __$$_ViewModelImplCopyWithImpl<$Res>;
+    _$_ViewModelImpl value,
+    $Res Function(_$_ViewModelImpl) then,
+  ) = __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {bool loading,
-      OnInviteCallback onInvite,
-      Iterable<(Member, Profile?)>? members});
+  $Res call({
+    bool loading,
+    OnInviteCallback onInvite,
+    Iterable<(Member, Profile?)>? members,
+  });
 }
 
 /// @nodoc
@@ -95,8 +106,9 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     extends __$ViewModelCopyWithImpl<$Res, _$_ViewModelImpl>
     implements _$$_ViewModelImplCopyWith<$Res> {
   __$$_ViewModelImplCopyWithImpl(
-      _$_ViewModelImpl _value, $Res Function(_$_ViewModelImpl) _then)
-      : super(_value, _then);
+    _$_ViewModelImpl _value,
+    $Res Function(_$_ViewModelImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -107,28 +119,36 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     Object? onInvite = null,
     Object? members = freezed,
   }) {
-    return _then(_$_ViewModelImpl(
-      loading: null == loading
-          ? _value.loading
-          : loading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      onInvite: null == onInvite
-          ? _value.onInvite
-          : onInvite // ignore: cast_nullable_to_non_nullable
-              as OnInviteCallback,
-      members: freezed == members
-          ? _value.members
-          : members // ignore: cast_nullable_to_non_nullable
-              as Iterable<(Member, Profile?)>?,
-    ));
+    return _then(
+      _$_ViewModelImpl(
+        loading:
+            null == loading
+                ? _value.loading
+                : loading // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        onInvite:
+            null == onInvite
+                ? _value.onInvite
+                : onInvite // ignore: cast_nullable_to_non_nullable
+                    as OnInviteCallback,
+        members:
+            freezed == members
+                ? _value.members
+                : members // ignore: cast_nullable_to_non_nullable
+                    as Iterable<(Member, Profile?)>?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
-  const _$_ViewModelImpl(
-      {required this.loading, required this.onInvite, this.members});
+  const _$_ViewModelImpl({
+    required this.loading,
+    required this.onInvite,
+    this.members,
+  });
 
   @override
   final bool loading;
@@ -164,8 +184,12 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
   }
 
   @override
-  int get hashCode => Object.hash(runtimeType, loading, onInvite,
-      const DeepCollectionEquality().hash(members));
+  int get hashCode => Object.hash(
+    runtimeType,
+    loading,
+    onInvite,
+    const DeepCollectionEquality().hash(members),
+  );
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -177,10 +201,11 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 }
 
 abstract class __ViewModel implements _ViewModel {
-  const factory __ViewModel(
-      {required final bool loading,
-      required final OnInviteCallback onInvite,
-      final Iterable<(Member, Profile?)>? members}) = _$_ViewModelImpl;
+  const factory __ViewModel({
+    required final bool loading,
+    required final OnInviteCallback onInvite,
+    final Iterable<(Member, Profile?)>? members,
+  }) = _$_ViewModelImpl;
 
   @override
   bool get loading;

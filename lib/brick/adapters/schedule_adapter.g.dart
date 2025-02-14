@@ -1,63 +1,80 @@
 // GENERATED CODE DO NOT EDIT
 part of '../brick.g.dart';
 
-Future<Schedule> _$ScheduleFromSupabase(Map<String, dynamic> data,
-    {required SupabaseProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Schedule> _$ScheduleFromSupabase(
+  Map<String, dynamic> data, {
+  required SupabaseProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return Schedule(
-      id: data['id'] as String?,
-      group: await GroupAdapter().fromSupabase(data['group'],
-          provider: provider, repository: repository),
-      displayName: data['display_name'] as String,
-      recurrenceRule: RecurrenceRule.fromJson(
-          data['recurrence_rule'] as Map<String, dynamic>),
-      startDate: DateTime.parse(data['start_date'] as String),
-      timezone: data['timezone'] as String);
+    id: data['id'] as String?,
+    group: await GroupAdapter().fromSupabase(
+      data['group'],
+      provider: provider,
+      repository: repository,
+    ),
+    displayName: data['display_name'] as String,
+    recurrenceRule: RecurrenceRule.fromJson(
+      data['recurrence_rule'] as Map<String, dynamic>,
+    ),
+    startDate: DateTime.parse(data['start_date'] as String),
+    timezone: data['timezone'] as String,
+  );
 }
 
-Future<Map<String, dynamic>> _$ScheduleToSupabase(Schedule instance,
-    {required SupabaseProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Map<String, dynamic>> _$ScheduleToSupabase(
+  Schedule instance, {
+  required SupabaseProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return {
     'id': instance.id,
     'group_id': instance.groupId,
     'display_name': instance.displayName,
     'recurrence_rule': instance.recurrenceRule.toJson(),
     'start_date': instance.startDate.toIso8601String(),
-    'timezone': instance.timezone
+    'timezone': instance.timezone,
   };
 }
 
-Future<Schedule> _$ScheduleFromSqlite(Map<String, dynamic> data,
-    {required SqliteProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Schedule> _$ScheduleFromSqlite(
+  Map<String, dynamic> data, {
+  required SqliteProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return Schedule(
-      id: data['id'] as String,
-      group: (await repository!.getAssociation<Group>(
-        Query.where('primaryKey', data['group_Group_brick_id'] as int,
-            limit1: true),
-      ))!
-          .first,
-      displayName: data['display_name'] as String,
-      recurrenceRule: RecurrenceRule.fromJson(
-          jsonDecode(data['recurrence_rule'] as String)
-              as Map<String, dynamic>),
-      startDate: DateTime.parse(data['start_date'] as String),
-      timezone: data['timezone'] as String)
-    ..primaryKey = data['_brick_id'] as int;
+    id: data['id'] as String,
+    group:
+        (await repository!.getAssociation<Group>(
+          Query.where(
+            'primaryKey',
+            data['group_Group_brick_id'] as int,
+            limit1: true,
+          ),
+        ))!.first,
+    displayName: data['display_name'] as String,
+    recurrenceRule: RecurrenceRule.fromJson(
+      jsonDecode(data['recurrence_rule'] as String) as Map<String, dynamic>,
+    ),
+    startDate: DateTime.parse(data['start_date'] as String),
+    timezone: data['timezone'] as String,
+  )..primaryKey = data['_brick_id'] as int;
 }
 
-Future<Map<String, dynamic>> _$ScheduleToSqlite(Schedule instance,
-    {required SqliteProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Map<String, dynamic>> _$ScheduleToSqlite(
+  Schedule instance, {
+  required SqliteProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return {
     'id': instance.id,
-    'group_Group_brick_id': instance.group.primaryKey ??
+    'group_Group_brick_id':
+        instance.group.primaryKey ??
         await provider.upsert<Group>(instance.group, repository: repository),
     'display_name': instance.displayName,
     'recurrence_rule': jsonEncode(instance.recurrenceRule.toJson()),
     'start_date': instance.startDate.toIso8601String(),
-    'timezone': instance.timezone
+    'timezone': instance.timezone,
   };
 }
 
@@ -101,7 +118,7 @@ class ScheduleAdapter extends OfflineFirstWithSupabaseAdapter<Schedule> {
     'timezone': const RuntimeSupabaseColumnDefinition(
       association: false,
       columnName: 'timezone',
-    )
+    ),
   };
   @override
   final ignoreDuplicates = false;
@@ -150,13 +167,18 @@ class ScheduleAdapter extends OfflineFirstWithSupabaseAdapter<Schedule> {
       columnName: 'timezone',
       iterable: false,
       type: String,
-    )
+    ),
   };
   @override
   Future<int?> primaryKeyByUniqueColumns(
-      Schedule instance, DatabaseExecutor executor) async {
-    final results = await executor.rawQuery('''
-        SELECT * FROM `Schedule` WHERE id = ? LIMIT 1''', [instance.id]);
+    Schedule instance,
+    DatabaseExecutor executor,
+  ) async {
+    final results = await executor.rawQuery(
+      '''
+        SELECT * FROM `Schedule` WHERE id = ? LIMIT 1''',
+      [instance.id],
+    );
 
     // SQFlite returns [{}] when no results are found
     if (results.isEmpty || (results.length == 1 && results.first.isEmpty)) {
@@ -170,27 +192,43 @@ class ScheduleAdapter extends OfflineFirstWithSupabaseAdapter<Schedule> {
   final String tableName = 'Schedule';
 
   @override
-  Future<Schedule> fromSupabase(Map<String, dynamic> input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$ScheduleFromSupabase(input,
-          provider: provider, repository: repository);
+  Future<Schedule> fromSupabase(
+    Map<String, dynamic> input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async => await _$ScheduleFromSupabase(
+    input,
+    provider: provider,
+    repository: repository,
+  );
   @override
-  Future<Map<String, dynamic>> toSupabase(Schedule input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$ScheduleToSupabase(input,
-          provider: provider, repository: repository);
+  Future<Map<String, dynamic>> toSupabase(
+    Schedule input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async => await _$ScheduleToSupabase(
+    input,
+    provider: provider,
+    repository: repository,
+  );
   @override
-  Future<Schedule> fromSqlite(Map<String, dynamic> input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$ScheduleFromSqlite(input,
-          provider: provider, repository: repository);
+  Future<Schedule> fromSqlite(
+    Map<String, dynamic> input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async => await _$ScheduleFromSqlite(
+    input,
+    provider: provider,
+    repository: repository,
+  );
   @override
-  Future<Map<String, dynamic>> toSqlite(Schedule input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$ScheduleToSqlite(input,
-          provider: provider, repository: repository);
+  Future<Map<String, dynamic>> toSqlite(
+    Schedule input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async => await _$ScheduleToSqlite(
+    input,
+    provider: provider,
+    repository: repository,
+  );
 }

@@ -7,13 +7,13 @@ import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 
 createMembersEpic(MembersRepository members) => combineEpics<AppState>([
-      _createAddMembersToGroupEpic(members),
-      _createUpdateMemberEpic(members),
-      _onNewMembersCreated,
-      _createRetrieveOwnMemberByGroupIdEpic(members),
-      _createDeleteOneMember(members),
-      _createRetrieveMembersByGroupIdEpic(members),
-    ]);
+  _createAddMembersToGroupEpic(members),
+  _createUpdateMemberEpic(members),
+  _onNewMembersCreated,
+  _createRetrieveOwnMemberByGroupIdEpic(members),
+  _createDeleteOneMember(members),
+  _createRetrieveMembersByGroupIdEpic(members),
+]);
 
 Epic<AppState> _createAddMembersToGroupEpic(MembersRepository members) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
@@ -21,10 +21,12 @@ Epic<AppState> _createAddMembersToGroupEpic(MembersRepository members) {
         final createMembersPromise = [
           for (final contact in action.contacts)
             (() async => (
-                  await members.addMemberToGroup(action.group,
-                      displayName: contact.displayNameOverride),
-                  contact
-                ))()
+              await members.addMemberToGroup(
+                action.group,
+                displayName: contact.displayNameOverride,
+              ),
+              contact,
+            ))(),
         ];
 
         final allMembers = await Future.wait(createMembersPromise);
@@ -36,26 +38,27 @@ Epic<AppState> _createAddMembersToGroupEpic(MembersRepository members) {
 Epic<AppState> _createUpdateMemberEpic(MembersRepository members) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestUpdateOne<Member>>().asyncMap(
-            (action) => members
-                .updateMember(action.entity)
-                .then<dynamic>((member) => SuccessUpdateOne<Member>(member))
-                .onError((error, stackTrace) =>
-                    FailUpdateOne<Member>(entity: action.entity, error: error)),
-          );
+        (action) => members
+            .updateMember(action.entity)
+            .then<dynamic>((member) => SuccessUpdateOne<Member>(member))
+            .onError(
+              (error, stackTrace) =>
+                  FailUpdateOne<Member>(entity: action.entity, error: error),
+            ),
+      );
 }
 
 Stream<dynamic> _onNewMembersCreated(
-        Stream<dynamic> actions, EpicStore<AppState> store) =>
-    actions
-        .whereType<NewMembersCreatedAction>()
-        .map((action) => SuccessCreateMany<Member>(action.members
-            .map(
-              (e) => e.$1,
-            )
-            .toList()));
+  Stream<dynamic> actions,
+  EpicStore<AppState> store,
+) => actions.whereType<NewMembersCreatedAction>().map(
+  (action) =>
+      SuccessCreateMany<Member>(action.members.map((e) => e.$1).toList()),
+);
 
 Epic<AppState> _createRetrieveOwnMemberByGroupIdEpic(
-    MembersRepository members) {
+  MembersRepository members,
+) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<SuccessCreateOne<Group>>().asyncMap((action) {
         final group = action.entity;
@@ -73,8 +76,11 @@ Epic<AppState> _createRetrieveMembersByGroupIdEpic(MembersRepository members) {
         return members
             .getMembersByGroupId(groupId)
             .then<dynamic>(
-                (members) => SuccessRetrieveMany<Member>(members.toList()))
-            .catchError((error) => FailRetrieveOne(id: groupId, error: error));
+              (members) => SuccessRetrieveMany<Member>(members.toList()),
+            )
+            .catchError((error) {
+              return FailRetrieveOne(id: groupId, error: error);
+            });
       });
 }
 
@@ -84,7 +90,9 @@ Epic<AppState> _createDeleteOneMember(MembersRepository members) {
         return members
             .deleteMember(action.member)
             .then<dynamic>((_) => SuccessDeleteOne<Member>(action.member.id))
-            .catchError((error) =>
-                FailDeleteOne<Member>(id: action.member.id, error: error));
+            .catchError(
+              (error) =>
+                  FailDeleteOne<Member>(id: action.member.id, error: error),
+            );
       });
 }

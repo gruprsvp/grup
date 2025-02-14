@@ -12,7 +12,8 @@ part of 'group_events.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ViewModel {
@@ -35,16 +36,18 @@ mixin _$ViewModel {
 /// @nodoc
 abstract class _$ViewModelCopyWith<$Res> {
   factory _$ViewModelCopyWith(
-          _ViewModel value, $Res Function(_ViewModel) then) =
-      __$ViewModelCopyWithImpl<$Res, _ViewModel>;
+    _ViewModel value,
+    $Res Function(_ViewModel) then,
+  ) = __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call(
-      {bool loading,
-      Group? group,
-      Iterable<Schedule>? schedules,
-      ValueSetter<Schedule>? onScheduleCreate,
-      ValueSetter<Schedule>? onScheduleDelete,
-      Future<RruleL10n>? rrulel10n});
+  $Res call({
+    bool loading,
+    Group? group,
+    Iterable<Schedule>? schedules,
+    ValueSetter<Schedule>? onScheduleCreate,
+    ValueSetter<Schedule>? onScheduleDelete,
+    Future<RruleL10n>? rrulel10n,
+  });
 }
 
 /// @nodoc
@@ -69,32 +72,41 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
     Object? onScheduleDelete = freezed,
     Object? rrulel10n = freezed,
   }) {
-    return _then(_value.copyWith(
-      loading: null == loading
-          ? _value.loading
-          : loading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      group: freezed == group
-          ? _value.group
-          : group // ignore: cast_nullable_to_non_nullable
-              as Group?,
-      schedules: freezed == schedules
-          ? _value.schedules
-          : schedules // ignore: cast_nullable_to_non_nullable
-              as Iterable<Schedule>?,
-      onScheduleCreate: freezed == onScheduleCreate
-          ? _value.onScheduleCreate
-          : onScheduleCreate // ignore: cast_nullable_to_non_nullable
-              as ValueSetter<Schedule>?,
-      onScheduleDelete: freezed == onScheduleDelete
-          ? _value.onScheduleDelete
-          : onScheduleDelete // ignore: cast_nullable_to_non_nullable
-              as ValueSetter<Schedule>?,
-      rrulel10n: freezed == rrulel10n
-          ? _value.rrulel10n
-          : rrulel10n // ignore: cast_nullable_to_non_nullable
-              as Future<RruleL10n>?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            loading:
+                null == loading
+                    ? _value.loading
+                    : loading // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            group:
+                freezed == group
+                    ? _value.group
+                    : group // ignore: cast_nullable_to_non_nullable
+                        as Group?,
+            schedules:
+                freezed == schedules
+                    ? _value.schedules
+                    : schedules // ignore: cast_nullable_to_non_nullable
+                        as Iterable<Schedule>?,
+            onScheduleCreate:
+                freezed == onScheduleCreate
+                    ? _value.onScheduleCreate
+                    : onScheduleCreate // ignore: cast_nullable_to_non_nullable
+                        as ValueSetter<Schedule>?,
+            onScheduleDelete:
+                freezed == onScheduleDelete
+                    ? _value.onScheduleDelete
+                    : onScheduleDelete // ignore: cast_nullable_to_non_nullable
+                        as ValueSetter<Schedule>?,
+            rrulel10n:
+                freezed == rrulel10n
+                    ? _value.rrulel10n
+                    : rrulel10n // ignore: cast_nullable_to_non_nullable
+                        as Future<RruleL10n>?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -102,17 +114,19 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
 abstract class _$$_ViewModelImplCopyWith<$Res>
     implements _$ViewModelCopyWith<$Res> {
   factory _$$_ViewModelImplCopyWith(
-          _$_ViewModelImpl value, $Res Function(_$_ViewModelImpl) then) =
-      __$$_ViewModelImplCopyWithImpl<$Res>;
+    _$_ViewModelImpl value,
+    $Res Function(_$_ViewModelImpl) then,
+  ) = __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {bool loading,
-      Group? group,
-      Iterable<Schedule>? schedules,
-      ValueSetter<Schedule>? onScheduleCreate,
-      ValueSetter<Schedule>? onScheduleDelete,
-      Future<RruleL10n>? rrulel10n});
+  $Res call({
+    bool loading,
+    Group? group,
+    Iterable<Schedule>? schedules,
+    ValueSetter<Schedule>? onScheduleCreate,
+    ValueSetter<Schedule>? onScheduleDelete,
+    Future<RruleL10n>? rrulel10n,
+  });
 }
 
 /// @nodoc
@@ -120,8 +134,9 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     extends __$ViewModelCopyWithImpl<$Res, _$_ViewModelImpl>
     implements _$$_ViewModelImplCopyWith<$Res> {
   __$$_ViewModelImplCopyWithImpl(
-      _$_ViewModelImpl _value, $Res Function(_$_ViewModelImpl) _then)
-      : super(_value, _then);
+    _$_ViewModelImpl _value,
+    $Res Function(_$_ViewModelImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -135,45 +150,54 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     Object? onScheduleDelete = freezed,
     Object? rrulel10n = freezed,
   }) {
-    return _then(_$_ViewModelImpl(
-      loading: null == loading
-          ? _value.loading
-          : loading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      group: freezed == group
-          ? _value.group
-          : group // ignore: cast_nullable_to_non_nullable
-              as Group?,
-      schedules: freezed == schedules
-          ? _value.schedules
-          : schedules // ignore: cast_nullable_to_non_nullable
-              as Iterable<Schedule>?,
-      onScheduleCreate: freezed == onScheduleCreate
-          ? _value.onScheduleCreate
-          : onScheduleCreate // ignore: cast_nullable_to_non_nullable
-              as ValueSetter<Schedule>?,
-      onScheduleDelete: freezed == onScheduleDelete
-          ? _value.onScheduleDelete
-          : onScheduleDelete // ignore: cast_nullable_to_non_nullable
-              as ValueSetter<Schedule>?,
-      rrulel10n: freezed == rrulel10n
-          ? _value.rrulel10n
-          : rrulel10n // ignore: cast_nullable_to_non_nullable
-              as Future<RruleL10n>?,
-    ));
+    return _then(
+      _$_ViewModelImpl(
+        loading:
+            null == loading
+                ? _value.loading
+                : loading // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        group:
+            freezed == group
+                ? _value.group
+                : group // ignore: cast_nullable_to_non_nullable
+                    as Group?,
+        schedules:
+            freezed == schedules
+                ? _value.schedules
+                : schedules // ignore: cast_nullable_to_non_nullable
+                    as Iterable<Schedule>?,
+        onScheduleCreate:
+            freezed == onScheduleCreate
+                ? _value.onScheduleCreate
+                : onScheduleCreate // ignore: cast_nullable_to_non_nullable
+                    as ValueSetter<Schedule>?,
+        onScheduleDelete:
+            freezed == onScheduleDelete
+                ? _value.onScheduleDelete
+                : onScheduleDelete // ignore: cast_nullable_to_non_nullable
+                    as ValueSetter<Schedule>?,
+        rrulel10n:
+            freezed == rrulel10n
+                ? _value.rrulel10n
+                : rrulel10n // ignore: cast_nullable_to_non_nullable
+                    as Future<RruleL10n>?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$_ViewModelImpl implements __ViewModel {
-  const _$_ViewModelImpl(
-      {required this.loading,
-      this.group,
-      this.schedules,
-      this.onScheduleCreate,
-      this.onScheduleDelete,
-      this.rrulel10n});
+  const _$_ViewModelImpl({
+    required this.loading,
+    this.group,
+    this.schedules,
+    this.onScheduleCreate,
+    this.onScheduleDelete,
+    this.rrulel10n,
+  });
 
   @override
   final bool loading;
@@ -211,13 +235,14 @@ class _$_ViewModelImpl implements __ViewModel {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      loading,
-      group,
-      const DeepCollectionEquality().hash(schedules),
-      onScheduleCreate,
-      onScheduleDelete,
-      rrulel10n);
+    runtimeType,
+    loading,
+    group,
+    const DeepCollectionEquality().hash(schedules),
+    onScheduleCreate,
+    onScheduleDelete,
+    rrulel10n,
+  );
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -229,13 +254,14 @@ class _$_ViewModelImpl implements __ViewModel {
 }
 
 abstract class __ViewModel implements _ViewModel {
-  const factory __ViewModel(
-      {required final bool loading,
-      final Group? group,
-      final Iterable<Schedule>? schedules,
-      final ValueSetter<Schedule>? onScheduleCreate,
-      final ValueSetter<Schedule>? onScheduleDelete,
-      final Future<RruleL10n>? rrulel10n}) = _$_ViewModelImpl;
+  const factory __ViewModel({
+    required final bool loading,
+    final Group? group,
+    final Iterable<Schedule>? schedules,
+    final ValueSetter<Schedule>? onScheduleCreate,
+    final ValueSetter<Schedule>? onScheduleDelete,
+    final Future<RruleL10n>? rrulel10n,
+  }) = _$_ViewModelImpl;
 
   @override
   bool get loading;

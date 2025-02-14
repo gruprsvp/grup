@@ -15,6 +15,7 @@ class DefaultRuleMapper extends ClassMapperBase<DefaultRule> {
       MapperContainer.globals.use(_instance = DefaultRuleMapper._());
       MemberMapper.ensureInitialized();
       ScheduleMapper.ensureInitialized();
+      ReplyOptionsMapper.ensureInitialized();
     }
     return _instance!;
   }

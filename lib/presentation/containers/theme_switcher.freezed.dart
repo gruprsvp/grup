@@ -12,7 +12,8 @@ part of 'theme_switcher.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ViewModel {
@@ -29,8 +30,9 @@ mixin _$ViewModel {
 /// @nodoc
 abstract class _$ViewModelCopyWith<$Res> {
   factory _$ViewModelCopyWith(
-          _ViewModel value, $Res Function(_ViewModel) then) =
-      __$ViewModelCopyWithImpl<$Res, _ViewModel>;
+    _ViewModel value,
+    $Res Function(_ViewModel) then,
+  ) = __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
   $Res call({ThemeMode themeMode, VoidCallback nextTheme});
 }
@@ -49,20 +51,22 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? themeMode = null,
-    Object? nextTheme = null,
-  }) {
-    return _then(_value.copyWith(
-      themeMode: null == themeMode
-          ? _value.themeMode
-          : themeMode // ignore: cast_nullable_to_non_nullable
-              as ThemeMode,
-      nextTheme: null == nextTheme
-          ? _value.nextTheme
-          : nextTheme // ignore: cast_nullable_to_non_nullable
-              as VoidCallback,
-    ) as $Val);
+  $Res call({Object? themeMode = null, Object? nextTheme = null}) {
+    return _then(
+      _value.copyWith(
+            themeMode:
+                null == themeMode
+                    ? _value.themeMode
+                    : themeMode // ignore: cast_nullable_to_non_nullable
+                        as ThemeMode,
+            nextTheme:
+                null == nextTheme
+                    ? _value.nextTheme
+                    : nextTheme // ignore: cast_nullable_to_non_nullable
+                        as VoidCallback,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -70,8 +74,9 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
 abstract class _$$_ViewModelImplCopyWith<$Res>
     implements _$ViewModelCopyWith<$Res> {
   factory _$$_ViewModelImplCopyWith(
-          _$_ViewModelImpl value, $Res Function(_$_ViewModelImpl) then) =
-      __$$_ViewModelImplCopyWithImpl<$Res>;
+    _$_ViewModelImpl value,
+    $Res Function(_$_ViewModelImpl) then,
+  ) = __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({ThemeMode themeMode, VoidCallback nextTheme});
@@ -82,27 +87,29 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     extends __$ViewModelCopyWithImpl<$Res, _$_ViewModelImpl>
     implements _$$_ViewModelImplCopyWith<$Res> {
   __$$_ViewModelImplCopyWithImpl(
-      _$_ViewModelImpl _value, $Res Function(_$_ViewModelImpl) _then)
-      : super(_value, _then);
+    _$_ViewModelImpl _value,
+    $Res Function(_$_ViewModelImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? themeMode = null,
-    Object? nextTheme = null,
-  }) {
-    return _then(_$_ViewModelImpl(
-      themeMode: null == themeMode
-          ? _value.themeMode
-          : themeMode // ignore: cast_nullable_to_non_nullable
-              as ThemeMode,
-      nextTheme: null == nextTheme
-          ? _value.nextTheme
-          : nextTheme // ignore: cast_nullable_to_non_nullable
-              as VoidCallback,
-    ));
+  $Res call({Object? themeMode = null, Object? nextTheme = null}) {
+    return _then(
+      _$_ViewModelImpl(
+        themeMode:
+            null == themeMode
+                ? _value.themeMode
+                : themeMode // ignore: cast_nullable_to_non_nullable
+                    as ThemeMode,
+        nextTheme:
+            null == nextTheme
+                ? _value.nextTheme
+                : nextTheme // ignore: cast_nullable_to_non_nullable
+                    as VoidCallback,
+      ),
+    );
   }
 }
 
@@ -154,9 +161,10 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 }
 
 abstract class __ViewModel implements _ViewModel {
-  const factory __ViewModel(
-      {required final ThemeMode themeMode,
-      required final VoidCallback nextTheme}) = _$_ViewModelImpl;
+  const factory __ViewModel({
+    required final ThemeMode themeMode,
+    required final VoidCallback nextTheme,
+  }) = _$_ViewModelImpl;
 
   @override
   ThemeMode get themeMode;

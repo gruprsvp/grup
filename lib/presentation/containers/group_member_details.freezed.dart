@@ -12,7 +12,8 @@ part of 'group_member_details.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ViewModel {
@@ -35,18 +36,20 @@ mixin _$ViewModel {
 /// @nodoc
 abstract class _$ViewModelCopyWith<$Res> {
   factory _$ViewModelCopyWith(
-          _ViewModel value, $Res Function(_ViewModel) then) =
-      __$ViewModelCopyWithImpl<$Res, _ViewModel>;
+    _ViewModel value,
+    $Res Function(_ViewModel) then,
+  ) = __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call(
-      {bool loading,
-      bool isCurrentUser,
-      Group? group,
-      Member? member,
-      Profile? profile,
-      List<Invite>? invites,
-      ValueSetter<Member>? onUpdate,
-      OnRemoveFromGroupCallback? onRemove});
+  $Res call({
+    bool loading,
+    bool isCurrentUser,
+    Group? group,
+    Member? member,
+    Profile? profile,
+    List<Invite>? invites,
+    ValueSetter<Member>? onUpdate,
+    OnRemoveFromGroupCallback? onRemove,
+  });
 }
 
 /// @nodoc
@@ -73,40 +76,51 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
     Object? onUpdate = freezed,
     Object? onRemove = freezed,
   }) {
-    return _then(_value.copyWith(
-      loading: null == loading
-          ? _value.loading
-          : loading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isCurrentUser: null == isCurrentUser
-          ? _value.isCurrentUser
-          : isCurrentUser // ignore: cast_nullable_to_non_nullable
-              as bool,
-      group: freezed == group
-          ? _value.group
-          : group // ignore: cast_nullable_to_non_nullable
-              as Group?,
-      member: freezed == member
-          ? _value.member
-          : member // ignore: cast_nullable_to_non_nullable
-              as Member?,
-      profile: freezed == profile
-          ? _value.profile
-          : profile // ignore: cast_nullable_to_non_nullable
-              as Profile?,
-      invites: freezed == invites
-          ? _value.invites
-          : invites // ignore: cast_nullable_to_non_nullable
-              as List<Invite>?,
-      onUpdate: freezed == onUpdate
-          ? _value.onUpdate
-          : onUpdate // ignore: cast_nullable_to_non_nullable
-              as ValueSetter<Member>?,
-      onRemove: freezed == onRemove
-          ? _value.onRemove
-          : onRemove // ignore: cast_nullable_to_non_nullable
-              as OnRemoveFromGroupCallback?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            loading:
+                null == loading
+                    ? _value.loading
+                    : loading // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            isCurrentUser:
+                null == isCurrentUser
+                    ? _value.isCurrentUser
+                    : isCurrentUser // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            group:
+                freezed == group
+                    ? _value.group
+                    : group // ignore: cast_nullable_to_non_nullable
+                        as Group?,
+            member:
+                freezed == member
+                    ? _value.member
+                    : member // ignore: cast_nullable_to_non_nullable
+                        as Member?,
+            profile:
+                freezed == profile
+                    ? _value.profile
+                    : profile // ignore: cast_nullable_to_non_nullable
+                        as Profile?,
+            invites:
+                freezed == invites
+                    ? _value.invites
+                    : invites // ignore: cast_nullable_to_non_nullable
+                        as List<Invite>?,
+            onUpdate:
+                freezed == onUpdate
+                    ? _value.onUpdate
+                    : onUpdate // ignore: cast_nullable_to_non_nullable
+                        as ValueSetter<Member>?,
+            onRemove:
+                freezed == onRemove
+                    ? _value.onRemove
+                    : onRemove // ignore: cast_nullable_to_non_nullable
+                        as OnRemoveFromGroupCallback?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -114,19 +128,21 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
 abstract class _$$_ViewModelImplCopyWith<$Res>
     implements _$ViewModelCopyWith<$Res> {
   factory _$$_ViewModelImplCopyWith(
-          _$_ViewModelImpl value, $Res Function(_$_ViewModelImpl) then) =
-      __$$_ViewModelImplCopyWithImpl<$Res>;
+    _$_ViewModelImpl value,
+    $Res Function(_$_ViewModelImpl) then,
+  ) = __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {bool loading,
-      bool isCurrentUser,
-      Group? group,
-      Member? member,
-      Profile? profile,
-      List<Invite>? invites,
-      ValueSetter<Member>? onUpdate,
-      OnRemoveFromGroupCallback? onRemove});
+  $Res call({
+    bool loading,
+    bool isCurrentUser,
+    Group? group,
+    Member? member,
+    Profile? profile,
+    List<Invite>? invites,
+    ValueSetter<Member>? onUpdate,
+    OnRemoveFromGroupCallback? onRemove,
+  });
 }
 
 /// @nodoc
@@ -134,8 +150,9 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     extends __$ViewModelCopyWithImpl<$Res, _$_ViewModelImpl>
     implements _$$_ViewModelImplCopyWith<$Res> {
   __$$_ViewModelImplCopyWithImpl(
-      _$_ViewModelImpl _value, $Res Function(_$_ViewModelImpl) _then)
-      : super(_value, _then);
+    _$_ViewModelImpl _value,
+    $Res Function(_$_ViewModelImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -151,56 +168,66 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     Object? onUpdate = freezed,
     Object? onRemove = freezed,
   }) {
-    return _then(_$_ViewModelImpl(
-      loading: null == loading
-          ? _value.loading
-          : loading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isCurrentUser: null == isCurrentUser
-          ? _value.isCurrentUser
-          : isCurrentUser // ignore: cast_nullable_to_non_nullable
-              as bool,
-      group: freezed == group
-          ? _value.group
-          : group // ignore: cast_nullable_to_non_nullable
-              as Group?,
-      member: freezed == member
-          ? _value.member
-          : member // ignore: cast_nullable_to_non_nullable
-              as Member?,
-      profile: freezed == profile
-          ? _value.profile
-          : profile // ignore: cast_nullable_to_non_nullable
-              as Profile?,
-      invites: freezed == invites
-          ? _value._invites
-          : invites // ignore: cast_nullable_to_non_nullable
-              as List<Invite>?,
-      onUpdate: freezed == onUpdate
-          ? _value.onUpdate
-          : onUpdate // ignore: cast_nullable_to_non_nullable
-              as ValueSetter<Member>?,
-      onRemove: freezed == onRemove
-          ? _value.onRemove
-          : onRemove // ignore: cast_nullable_to_non_nullable
-              as OnRemoveFromGroupCallback?,
-    ));
+    return _then(
+      _$_ViewModelImpl(
+        loading:
+            null == loading
+                ? _value.loading
+                : loading // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        isCurrentUser:
+            null == isCurrentUser
+                ? _value.isCurrentUser
+                : isCurrentUser // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        group:
+            freezed == group
+                ? _value.group
+                : group // ignore: cast_nullable_to_non_nullable
+                    as Group?,
+        member:
+            freezed == member
+                ? _value.member
+                : member // ignore: cast_nullable_to_non_nullable
+                    as Member?,
+        profile:
+            freezed == profile
+                ? _value.profile
+                : profile // ignore: cast_nullable_to_non_nullable
+                    as Profile?,
+        invites:
+            freezed == invites
+                ? _value._invites
+                : invites // ignore: cast_nullable_to_non_nullable
+                    as List<Invite>?,
+        onUpdate:
+            freezed == onUpdate
+                ? _value.onUpdate
+                : onUpdate // ignore: cast_nullable_to_non_nullable
+                    as ValueSetter<Member>?,
+        onRemove:
+            freezed == onRemove
+                ? _value.onRemove
+                : onRemove // ignore: cast_nullable_to_non_nullable
+                    as OnRemoveFromGroupCallback?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$_ViewModelImpl implements __ViewModel {
-  const _$_ViewModelImpl(
-      {required this.loading,
-      required this.isCurrentUser,
-      this.group,
-      this.member,
-      this.profile,
-      final List<Invite>? invites,
-      this.onUpdate,
-      this.onRemove})
-      : _invites = invites;
+  const _$_ViewModelImpl({
+    required this.loading,
+    required this.isCurrentUser,
+    this.group,
+    this.member,
+    this.profile,
+    final List<Invite>? invites,
+    this.onUpdate,
+    this.onRemove,
+  }) : _invites = invites;
 
   @override
   final bool loading;
@@ -252,15 +279,16 @@ class _$_ViewModelImpl implements __ViewModel {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      loading,
-      isCurrentUser,
-      group,
-      member,
-      profile,
-      const DeepCollectionEquality().hash(_invites),
-      onUpdate,
-      onRemove);
+    runtimeType,
+    loading,
+    isCurrentUser,
+    group,
+    member,
+    profile,
+    const DeepCollectionEquality().hash(_invites),
+    onUpdate,
+    onRemove,
+  );
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -272,15 +300,16 @@ class _$_ViewModelImpl implements __ViewModel {
 }
 
 abstract class __ViewModel implements _ViewModel {
-  const factory __ViewModel(
-      {required final bool loading,
-      required final bool isCurrentUser,
-      final Group? group,
-      final Member? member,
-      final Profile? profile,
-      final List<Invite>? invites,
-      final ValueSetter<Member>? onUpdate,
-      final OnRemoveFromGroupCallback? onRemove}) = _$_ViewModelImpl;
+  const factory __ViewModel({
+    required final bool loading,
+    required final bool isCurrentUser,
+    final Group? group,
+    final Member? member,
+    final Profile? profile,
+    final List<Invite>? invites,
+    final ValueSetter<Member>? onUpdate,
+    final OnRemoveFromGroupCallback? onRemove,
+  }) = _$_ViewModelImpl;
 
   @override
   bool get loading;

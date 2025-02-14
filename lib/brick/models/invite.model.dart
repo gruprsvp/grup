@@ -1,17 +1,19 @@
 import 'package:brick_offline_first_with_supabase/brick_offline_first_with_supabase.dart';
 import 'package:brick_sqlite/brick_sqlite.dart';
 import 'package:brick_supabase/brick_supabase.dart';
+import 'package:dart_mappable/dart_mappable.dart';
 import 'package:parousia/brick/brick.dart';
 import 'package:parousia/brick/models/member.model.dart';
 import 'package:parousia/models/models.dart';
 import 'package:uuid/v7.dart';
 
+part 'invite.model.mapper.dart';
+
 @ConnectOfflineFirstWithSupabase(
-  supabaseConfig: SupabaseSerializable(
-    tableName: 'invites',
-  ),
+  supabaseConfig: SupabaseSerializable(tableName: 'invites'),
 )
-class Invite extends OfflineFirstWithSupabaseModel {
+@MappableClass()
+class Invite extends OfflineFirstWithSupabaseModel with InviteMappable {
   @Supabase(unique: true)
   @Sqlite(unique: true, index: true)
   final String id;
@@ -32,4 +34,6 @@ class Invite extends OfflineFirstWithSupabaseModel {
     required this.value,
     String? id,
   }) : id = id ?? const UuidV7().generate();
+
+  static final fromJson = InviteMapper.fromJson;
 }

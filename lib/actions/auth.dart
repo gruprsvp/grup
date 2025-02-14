@@ -8,3 +8,6 @@ class AuthStateChangedAction {
 
   final AuthState authState;
 }
+
+@immutable
+class SignOutSuccessAction {}

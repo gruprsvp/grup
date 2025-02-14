@@ -1,18 +1,15 @@
+import 'package:dart_mappable/dart_mappable.dart';
+
+part 'enum.mapper.dart';
+
 /// Defines the different methods of inviting a user to a group.
-enum InviteMethods {
-  email,
-  phone,
-  code,
-}
+@MappableEnum()
+enum InviteMethods { email, phone, code }
 
 /// Reply options for the user to choose from
-enum ReplyOptions {
-  yes,
-  no,
-}
+@MappableEnum()
+enum ReplyOptions { yes, no }
 
 /// The different roles a user can have in a group
-enum GroupRoles {
-  admin,
-  member,
-}
+@MappableEnum()
+enum GroupRoles { admin, member }

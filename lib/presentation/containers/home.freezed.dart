@@ -12,7 +12,8 @@ part of 'home.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ViewModel {
@@ -35,17 +36,19 @@ mixin _$ViewModel {
 /// @nodoc
 abstract class _$ViewModelCopyWith<$Res> {
   factory _$ViewModelCopyWith(
-          _ViewModel value, $Res Function(_ViewModel) then) =
-      __$ViewModelCopyWithImpl<$Res, _ViewModel>;
+    _ViewModel value,
+    $Res Function(_ViewModel) then,
+  ) = __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
-  $Res call(
-      {bool loading,
-      Profile? profile,
-      Iterable<Group>? groups,
-      ValueSetter<GroupCreateResult>? onGroupCreate,
-      AsyncCallback? onRefresh,
-      bool? shouldShowFeedback,
-      VoidCallback? onFeedbackDismiss});
+  $Res call({
+    bool loading,
+    Profile? profile,
+    Iterable<Group>? groups,
+    ValueSetter<GroupCreateResult>? onGroupCreate,
+    AsyncCallback? onRefresh,
+    bool? shouldShowFeedback,
+    VoidCallback? onFeedbackDismiss,
+  });
 }
 
 /// @nodoc
@@ -71,36 +74,46 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
     Object? shouldShowFeedback = freezed,
     Object? onFeedbackDismiss = freezed,
   }) {
-    return _then(_value.copyWith(
-      loading: null == loading
-          ? _value.loading
-          : loading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      profile: freezed == profile
-          ? _value.profile
-          : profile // ignore: cast_nullable_to_non_nullable
-              as Profile?,
-      groups: freezed == groups
-          ? _value.groups
-          : groups // ignore: cast_nullable_to_non_nullable
-              as Iterable<Group>?,
-      onGroupCreate: freezed == onGroupCreate
-          ? _value.onGroupCreate
-          : onGroupCreate // ignore: cast_nullable_to_non_nullable
-              as ValueSetter<GroupCreateResult>?,
-      onRefresh: freezed == onRefresh
-          ? _value.onRefresh
-          : onRefresh // ignore: cast_nullable_to_non_nullable
-              as AsyncCallback?,
-      shouldShowFeedback: freezed == shouldShowFeedback
-          ? _value.shouldShowFeedback
-          : shouldShowFeedback // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      onFeedbackDismiss: freezed == onFeedbackDismiss
-          ? _value.onFeedbackDismiss
-          : onFeedbackDismiss // ignore: cast_nullable_to_non_nullable
-              as VoidCallback?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            loading:
+                null == loading
+                    ? _value.loading
+                    : loading // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            profile:
+                freezed == profile
+                    ? _value.profile
+                    : profile // ignore: cast_nullable_to_non_nullable
+                        as Profile?,
+            groups:
+                freezed == groups
+                    ? _value.groups
+                    : groups // ignore: cast_nullable_to_non_nullable
+                        as Iterable<Group>?,
+            onGroupCreate:
+                freezed == onGroupCreate
+                    ? _value.onGroupCreate
+                    : onGroupCreate // ignore: cast_nullable_to_non_nullable
+                        as ValueSetter<GroupCreateResult>?,
+            onRefresh:
+                freezed == onRefresh
+                    ? _value.onRefresh
+                    : onRefresh // ignore: cast_nullable_to_non_nullable
+                        as AsyncCallback?,
+            shouldShowFeedback:
+                freezed == shouldShowFeedback
+                    ? _value.shouldShowFeedback
+                    : shouldShowFeedback // ignore: cast_nullable_to_non_nullable
+                        as bool?,
+            onFeedbackDismiss:
+                freezed == onFeedbackDismiss
+                    ? _value.onFeedbackDismiss
+                    : onFeedbackDismiss // ignore: cast_nullable_to_non_nullable
+                        as VoidCallback?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -108,18 +121,20 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
 abstract class _$$_ViewModelImplCopyWith<$Res>
     implements _$ViewModelCopyWith<$Res> {
   factory _$$_ViewModelImplCopyWith(
-          _$_ViewModelImpl value, $Res Function(_$_ViewModelImpl) then) =
-      __$$_ViewModelImplCopyWithImpl<$Res>;
+    _$_ViewModelImpl value,
+    $Res Function(_$_ViewModelImpl) then,
+  ) = __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {bool loading,
-      Profile? profile,
-      Iterable<Group>? groups,
-      ValueSetter<GroupCreateResult>? onGroupCreate,
-      AsyncCallback? onRefresh,
-      bool? shouldShowFeedback,
-      VoidCallback? onFeedbackDismiss});
+  $Res call({
+    bool loading,
+    Profile? profile,
+    Iterable<Group>? groups,
+    ValueSetter<GroupCreateResult>? onGroupCreate,
+    AsyncCallback? onRefresh,
+    bool? shouldShowFeedback,
+    VoidCallback? onFeedbackDismiss,
+  });
 }
 
 /// @nodoc
@@ -127,8 +142,9 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     extends __$ViewModelCopyWithImpl<$Res, _$_ViewModelImpl>
     implements _$$_ViewModelImplCopyWith<$Res> {
   __$$_ViewModelImplCopyWithImpl(
-      _$_ViewModelImpl _value, $Res Function(_$_ViewModelImpl) _then)
-      : super(_value, _then);
+    _$_ViewModelImpl _value,
+    $Res Function(_$_ViewModelImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -143,50 +159,60 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     Object? shouldShowFeedback = freezed,
     Object? onFeedbackDismiss = freezed,
   }) {
-    return _then(_$_ViewModelImpl(
-      loading: null == loading
-          ? _value.loading
-          : loading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      profile: freezed == profile
-          ? _value.profile
-          : profile // ignore: cast_nullable_to_non_nullable
-              as Profile?,
-      groups: freezed == groups
-          ? _value.groups
-          : groups // ignore: cast_nullable_to_non_nullable
-              as Iterable<Group>?,
-      onGroupCreate: freezed == onGroupCreate
-          ? _value.onGroupCreate
-          : onGroupCreate // ignore: cast_nullable_to_non_nullable
-              as ValueSetter<GroupCreateResult>?,
-      onRefresh: freezed == onRefresh
-          ? _value.onRefresh
-          : onRefresh // ignore: cast_nullable_to_non_nullable
-              as AsyncCallback?,
-      shouldShowFeedback: freezed == shouldShowFeedback
-          ? _value.shouldShowFeedback
-          : shouldShowFeedback // ignore: cast_nullable_to_non_nullable
-              as bool?,
-      onFeedbackDismiss: freezed == onFeedbackDismiss
-          ? _value.onFeedbackDismiss
-          : onFeedbackDismiss // ignore: cast_nullable_to_non_nullable
-              as VoidCallback?,
-    ));
+    return _then(
+      _$_ViewModelImpl(
+        loading:
+            null == loading
+                ? _value.loading
+                : loading // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        profile:
+            freezed == profile
+                ? _value.profile
+                : profile // ignore: cast_nullable_to_non_nullable
+                    as Profile?,
+        groups:
+            freezed == groups
+                ? _value.groups
+                : groups // ignore: cast_nullable_to_non_nullable
+                    as Iterable<Group>?,
+        onGroupCreate:
+            freezed == onGroupCreate
+                ? _value.onGroupCreate
+                : onGroupCreate // ignore: cast_nullable_to_non_nullable
+                    as ValueSetter<GroupCreateResult>?,
+        onRefresh:
+            freezed == onRefresh
+                ? _value.onRefresh
+                : onRefresh // ignore: cast_nullable_to_non_nullable
+                    as AsyncCallback?,
+        shouldShowFeedback:
+            freezed == shouldShowFeedback
+                ? _value.shouldShowFeedback
+                : shouldShowFeedback // ignore: cast_nullable_to_non_nullable
+                    as bool?,
+        onFeedbackDismiss:
+            freezed == onFeedbackDismiss
+                ? _value.onFeedbackDismiss
+                : onFeedbackDismiss // ignore: cast_nullable_to_non_nullable
+                    as VoidCallback?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
-  const _$_ViewModelImpl(
-      {required this.loading,
-      this.profile,
-      this.groups,
-      this.onGroupCreate,
-      this.onRefresh,
-      this.shouldShowFeedback,
-      this.onFeedbackDismiss});
+  const _$_ViewModelImpl({
+    required this.loading,
+    this.profile,
+    this.groups,
+    this.onGroupCreate,
+    this.onRefresh,
+    this.shouldShowFeedback,
+    this.onFeedbackDismiss,
+  });
 
   @override
   final bool loading;
@@ -242,14 +268,15 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 
   @override
   int get hashCode => Object.hash(
-      runtimeType,
-      loading,
-      profile,
-      const DeepCollectionEquality().hash(groups),
-      onGroupCreate,
-      onRefresh,
-      shouldShowFeedback,
-      onFeedbackDismiss);
+    runtimeType,
+    loading,
+    profile,
+    const DeepCollectionEquality().hash(groups),
+    onGroupCreate,
+    onRefresh,
+    shouldShowFeedback,
+    onFeedbackDismiss,
+  );
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -261,14 +288,15 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 }
 
 abstract class __ViewModel implements _ViewModel {
-  const factory __ViewModel(
-      {required final bool loading,
-      final Profile? profile,
-      final Iterable<Group>? groups,
-      final ValueSetter<GroupCreateResult>? onGroupCreate,
-      final AsyncCallback? onRefresh,
-      final bool? shouldShowFeedback,
-      final VoidCallback? onFeedbackDismiss}) = _$_ViewModelImpl;
+  const factory __ViewModel({
+    required final bool loading,
+    final Profile? profile,
+    final Iterable<Group>? groups,
+    final ValueSetter<GroupCreateResult>? onGroupCreate,
+    final AsyncCallback? onRefresh,
+    final bool? shouldShowFeedback,
+    final VoidCallback? onFeedbackDismiss,
+  }) = _$_ViewModelImpl;
 
   @override
   bool get loading;

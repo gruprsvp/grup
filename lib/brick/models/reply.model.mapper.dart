@@ -15,6 +15,7 @@ class ReplyMapper extends ClassMapperBase<Reply> {
       MapperContainer.globals.use(_instance = ReplyMapper._());
       MemberMapper.ensureInitialized();
       ScheduleMapper.ensureInitialized();
+      ReplyOptionsMapper.ensureInitialized();
     }
     return _instance!;
   }

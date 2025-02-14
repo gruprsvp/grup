@@ -12,7 +12,8 @@ part of 'date_fab.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ViewModel {
@@ -30,8 +31,9 @@ mixin _$ViewModel {
 /// @nodoc
 abstract class _$ViewModelCopyWith<$Res> {
   factory _$ViewModelCopyWith(
-          _ViewModel value, $Res Function(_ViewModel) then) =
-      __$ViewModelCopyWithImpl<$Res, _ViewModel>;
+    _ViewModel value,
+    $Res Function(_ViewModel) then,
+  ) = __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
   $Res call({DateTime selectedDate, ValueChanged<DateTime> onDateChanged});
 }
@@ -50,20 +52,22 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? selectedDate = null,
-    Object? onDateChanged = null,
-  }) {
-    return _then(_value.copyWith(
-      selectedDate: null == selectedDate
-          ? _value.selectedDate
-          : selectedDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      onDateChanged: null == onDateChanged
-          ? _value.onDateChanged
-          : onDateChanged // ignore: cast_nullable_to_non_nullable
-              as ValueChanged<DateTime>,
-    ) as $Val);
+  $Res call({Object? selectedDate = null, Object? onDateChanged = null}) {
+    return _then(
+      _value.copyWith(
+            selectedDate:
+                null == selectedDate
+                    ? _value.selectedDate
+                    : selectedDate // ignore: cast_nullable_to_non_nullable
+                        as DateTime,
+            onDateChanged:
+                null == onDateChanged
+                    ? _value.onDateChanged
+                    : onDateChanged // ignore: cast_nullable_to_non_nullable
+                        as ValueChanged<DateTime>,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -71,8 +75,9 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
 abstract class _$$_ViewModelImplCopyWith<$Res>
     implements _$ViewModelCopyWith<$Res> {
   factory _$$_ViewModelImplCopyWith(
-          _$_ViewModelImpl value, $Res Function(_$_ViewModelImpl) then) =
-      __$$_ViewModelImplCopyWithImpl<$Res>;
+    _$_ViewModelImpl value,
+    $Res Function(_$_ViewModelImpl) then,
+  ) = __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({DateTime selectedDate, ValueChanged<DateTime> onDateChanged});
@@ -83,35 +88,39 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     extends __$ViewModelCopyWithImpl<$Res, _$_ViewModelImpl>
     implements _$$_ViewModelImplCopyWith<$Res> {
   __$$_ViewModelImplCopyWithImpl(
-      _$_ViewModelImpl _value, $Res Function(_$_ViewModelImpl) _then)
-      : super(_value, _then);
+    _$_ViewModelImpl _value,
+    $Res Function(_$_ViewModelImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? selectedDate = null,
-    Object? onDateChanged = null,
-  }) {
-    return _then(_$_ViewModelImpl(
-      selectedDate: null == selectedDate
-          ? _value.selectedDate
-          : selectedDate // ignore: cast_nullable_to_non_nullable
-              as DateTime,
-      onDateChanged: null == onDateChanged
-          ? _value.onDateChanged
-          : onDateChanged // ignore: cast_nullable_to_non_nullable
-              as ValueChanged<DateTime>,
-    ));
+  $Res call({Object? selectedDate = null, Object? onDateChanged = null}) {
+    return _then(
+      _$_ViewModelImpl(
+        selectedDate:
+            null == selectedDate
+                ? _value.selectedDate
+                : selectedDate // ignore: cast_nullable_to_non_nullable
+                    as DateTime,
+        onDateChanged:
+            null == onDateChanged
+                ? _value.onDateChanged
+                : onDateChanged // ignore: cast_nullable_to_non_nullable
+                    as ValueChanged<DateTime>,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$_ViewModelImpl implements __ViewModel {
-  const _$_ViewModelImpl(
-      {required this.selectedDate, required this.onDateChanged});
+  const _$_ViewModelImpl({
+    required this.selectedDate,
+    required this.onDateChanged,
+  });
 
   @override
   final DateTime selectedDate;
@@ -147,9 +156,10 @@ class _$_ViewModelImpl implements __ViewModel {
 }
 
 abstract class __ViewModel implements _ViewModel {
-  const factory __ViewModel(
-      {required final DateTime selectedDate,
-      required final ValueChanged<DateTime> onDateChanged}) = _$_ViewModelImpl;
+  const factory __ViewModel({
+    required final DateTime selectedDate,
+    required final ValueChanged<DateTime> onDateChanged,
+  }) = _$_ViewModelImpl;
 
   @override
   DateTime get selectedDate;

@@ -12,7 +12,8 @@ part of 'locale.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ViewModel {
@@ -29,8 +30,9 @@ mixin _$ViewModel {
 /// @nodoc
 abstract class _$ViewModelCopyWith<$Res> {
   factory _$ViewModelCopyWith(
-          _ViewModel value, $Res Function(_ViewModel) then) =
-      __$ViewModelCopyWithImpl<$Res, _ViewModel>;
+    _ViewModel value,
+    $Res Function(_ViewModel) then,
+  ) = __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
   $Res call({Locale? locale, ValueChanged<Locale?> changeLocale});
 }
@@ -49,20 +51,22 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? locale = freezed,
-    Object? changeLocale = null,
-  }) {
-    return _then(_value.copyWith(
-      locale: freezed == locale
-          ? _value.locale
-          : locale // ignore: cast_nullable_to_non_nullable
-              as Locale?,
-      changeLocale: null == changeLocale
-          ? _value.changeLocale
-          : changeLocale // ignore: cast_nullable_to_non_nullable
-              as ValueChanged<Locale?>,
-    ) as $Val);
+  $Res call({Object? locale = freezed, Object? changeLocale = null}) {
+    return _then(
+      _value.copyWith(
+            locale:
+                freezed == locale
+                    ? _value.locale
+                    : locale // ignore: cast_nullable_to_non_nullable
+                        as Locale?,
+            changeLocale:
+                null == changeLocale
+                    ? _value.changeLocale
+                    : changeLocale // ignore: cast_nullable_to_non_nullable
+                        as ValueChanged<Locale?>,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -70,8 +74,9 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
 abstract class _$$_ViewModelImplCopyWith<$Res>
     implements _$ViewModelCopyWith<$Res> {
   factory _$$_ViewModelImplCopyWith(
-          _$_ViewModelImpl value, $Res Function(_$_ViewModelImpl) then) =
-      __$$_ViewModelImplCopyWithImpl<$Res>;
+    _$_ViewModelImpl value,
+    $Res Function(_$_ViewModelImpl) then,
+  ) = __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({Locale? locale, ValueChanged<Locale?> changeLocale});
@@ -82,27 +87,29 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     extends __$ViewModelCopyWithImpl<$Res, _$_ViewModelImpl>
     implements _$$_ViewModelImplCopyWith<$Res> {
   __$$_ViewModelImplCopyWithImpl(
-      _$_ViewModelImpl _value, $Res Function(_$_ViewModelImpl) _then)
-      : super(_value, _then);
+    _$_ViewModelImpl _value,
+    $Res Function(_$_ViewModelImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
   @override
-  $Res call({
-    Object? locale = freezed,
-    Object? changeLocale = null,
-  }) {
-    return _then(_$_ViewModelImpl(
-      locale: freezed == locale
-          ? _value.locale
-          : locale // ignore: cast_nullable_to_non_nullable
-              as Locale?,
-      changeLocale: null == changeLocale
-          ? _value.changeLocale
-          : changeLocale // ignore: cast_nullable_to_non_nullable
-              as ValueChanged<Locale?>,
-    ));
+  $Res call({Object? locale = freezed, Object? changeLocale = null}) {
+    return _then(
+      _$_ViewModelImpl(
+        locale:
+            freezed == locale
+                ? _value.locale
+                : locale // ignore: cast_nullable_to_non_nullable
+                    as Locale?,
+        changeLocale:
+            null == changeLocale
+                ? _value.changeLocale
+                : changeLocale // ignore: cast_nullable_to_non_nullable
+                    as ValueChanged<Locale?>,
+      ),
+    );
   }
 }
 
@@ -153,9 +160,10 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 }
 
 abstract class __ViewModel implements _ViewModel {
-  const factory __ViewModel(
-      {final Locale? locale,
-      required final ValueChanged<Locale?> changeLocale}) = _$_ViewModelImpl;
+  const factory __ViewModel({
+    final Locale? locale,
+    required final ValueChanged<Locale?> changeLocale,
+  }) = _$_ViewModelImpl;
 
   @override
   Locale? get locale;

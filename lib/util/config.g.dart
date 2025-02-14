@@ -7,10 +7,10 @@ part of 'config.dart';
 // **************************************************************************
 
 _$ConfigImpl _$$ConfigImplFromJson(Map<String, dynamic> json) => _$ConfigImpl(
-      supabaseConfigPath: json['supabaseConfigPath'] as String,
-      socialAuthWebClientId: json['socialAuthWebClientId'] as String,
-      socialAuthIosClientId: json['socialAuthIosClientId'] as String,
-    );
+  supabaseConfigPath: json['supabaseConfigPath'] as String,
+  socialAuthWebClientId: json['socialAuthWebClientId'] as String,
+  socialAuthIosClientId: json['socialAuthIosClientId'] as String,
+);
 
 Map<String, dynamic> _$$ConfigImplToJson(_$ConfigImpl instance) =>
     <String, dynamic>{

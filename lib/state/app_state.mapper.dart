@@ -13,12 +13,20 @@ class AppStateMapper extends ClassMapperBase<AppState> {
   static AppStateMapper ensureInitialized() {
     if (_instance == null) {
       MapperContainer.globals.use(_instance = AppStateMapper._());
+      MapperContainer.globals.useAll([
+        ThemeModeMapper(),
+        RemoteEntityStateMapper(),
+        RecurrenceRuleMapper()
+      ]);
       ProfileMapper.ensureInitialized();
       GroupMapper.ensureInitialized();
       MemberMapper.ensureInitialized();
+      InviteMapper.ensureInitialized();
       ScheduleMapper.ensureInitialized();
       DefaultRuleMapper.ensureInitialized();
       ReplyMapper.ensureInitialized();
+      AuthStateMapper.ensureInitialized();
+      LocaleStateMapper.ensureInitialized();
     }
     return _instance!;
   }
@@ -162,6 +170,8 @@ extension AppStateValueCopy<$R, $Out> on ObjectCopyWith<$R, AppState, $Out> {
 
 abstract class AppStateCopyWith<$R, $In extends AppState, $Out>
     implements ClassCopyWith<$R, $In, $Out> {
+  AuthStateCopyWith<$R, AuthState, AuthState> get auth;
+  LocaleStateCopyWith<$R, LocaleState, LocaleState>? get locale;
   $R call(
       {RemoteEntityState<Profile>? profiles,
       RemoteEntityState<Group>? groups,
@@ -188,6 +198,12 @@ class _AppStateCopyWithImpl<$R, $Out>
   @override
   late final ClassMapperBase<AppState> $mapper =
       AppStateMapper.ensureInitialized();
+  @override
+  AuthStateCopyWith<$R, AuthState, AuthState> get auth =>
+      $value.auth.copyWith.$chain((v) => call(auth: v));
+  @override
+  LocaleStateCopyWith<$R, LocaleState, LocaleState>? get locale =>
+      $value.locale?.copyWith.$chain((v) => call(locale: v));
   @override
   $R call(
           {RemoteEntityState<Profile>? profiles,

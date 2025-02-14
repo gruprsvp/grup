@@ -12,7 +12,8 @@ part of 'group_details.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 /// @nodoc
 mixin _$ViewModel {
@@ -30,8 +31,9 @@ mixin _$ViewModel {
 /// @nodoc
 abstract class _$ViewModelCopyWith<$Res> {
   factory _$ViewModelCopyWith(
-          _ViewModel value, $Res Function(_ViewModel) then) =
-      __$ViewModelCopyWithImpl<$Res, _ViewModel>;
+    _ViewModel value,
+    $Res Function(_ViewModel) then,
+  ) = __$ViewModelCopyWithImpl<$Res, _ViewModel>;
   @useResult
   $Res call({bool loading, bool isAdmin, Group? group});
 }
@@ -55,20 +57,26 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
     Object? isAdmin = null,
     Object? group = freezed,
   }) {
-    return _then(_value.copyWith(
-      loading: null == loading
-          ? _value.loading
-          : loading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isAdmin: null == isAdmin
-          ? _value.isAdmin
-          : isAdmin // ignore: cast_nullable_to_non_nullable
-              as bool,
-      group: freezed == group
-          ? _value.group
-          : group // ignore: cast_nullable_to_non_nullable
-              as Group?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            loading:
+                null == loading
+                    ? _value.loading
+                    : loading // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            isAdmin:
+                null == isAdmin
+                    ? _value.isAdmin
+                    : isAdmin // ignore: cast_nullable_to_non_nullable
+                        as bool,
+            group:
+                freezed == group
+                    ? _value.group
+                    : group // ignore: cast_nullable_to_non_nullable
+                        as Group?,
+          )
+          as $Val,
+    );
   }
 }
 
@@ -76,8 +84,9 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
 abstract class _$$_ViewModelImplCopyWith<$Res>
     implements _$ViewModelCopyWith<$Res> {
   factory _$$_ViewModelImplCopyWith(
-          _$_ViewModelImpl value, $Res Function(_$_ViewModelImpl) then) =
-      __$$_ViewModelImplCopyWithImpl<$Res>;
+    _$_ViewModelImpl value,
+    $Res Function(_$_ViewModelImpl) then,
+  ) = __$$_ViewModelImplCopyWithImpl<$Res>;
   @override
   @useResult
   $Res call({bool loading, bool isAdmin, Group? group});
@@ -88,8 +97,9 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     extends __$ViewModelCopyWithImpl<$Res, _$_ViewModelImpl>
     implements _$$_ViewModelImplCopyWith<$Res> {
   __$$_ViewModelImplCopyWithImpl(
-      _$_ViewModelImpl _value, $Res Function(_$_ViewModelImpl) _then)
-      : super(_value, _then);
+    _$_ViewModelImpl _value,
+    $Res Function(_$_ViewModelImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -100,28 +110,36 @@ class __$$_ViewModelImplCopyWithImpl<$Res>
     Object? isAdmin = null,
     Object? group = freezed,
   }) {
-    return _then(_$_ViewModelImpl(
-      loading: null == loading
-          ? _value.loading
-          : loading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isAdmin: null == isAdmin
-          ? _value.isAdmin
-          : isAdmin // ignore: cast_nullable_to_non_nullable
-              as bool,
-      group: freezed == group
-          ? _value.group
-          : group // ignore: cast_nullable_to_non_nullable
-              as Group?,
-    ));
+    return _then(
+      _$_ViewModelImpl(
+        loading:
+            null == loading
+                ? _value.loading
+                : loading // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        isAdmin:
+            null == isAdmin
+                ? _value.isAdmin
+                : isAdmin // ignore: cast_nullable_to_non_nullable
+                    as bool,
+        group:
+            freezed == group
+                ? _value.group
+                : group // ignore: cast_nullable_to_non_nullable
+                    as Group?,
+      ),
+    );
   }
 }
 
 /// @nodoc
 
 class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
-  const _$_ViewModelImpl(
-      {required this.loading, required this.isAdmin, this.group});
+  const _$_ViewModelImpl({
+    required this.loading,
+    required this.isAdmin,
+    this.group,
+  });
 
   @override
   final bool loading;
@@ -168,10 +186,11 @@ class _$_ViewModelImpl with DiagnosticableTreeMixin implements __ViewModel {
 }
 
 abstract class __ViewModel implements _ViewModel {
-  const factory __ViewModel(
-      {required final bool loading,
-      required final bool isAdmin,
-      final Group? group}) = _$_ViewModelImpl;
+  const factory __ViewModel({
+    required final bool loading,
+    required final bool isAdmin,
+    final Group? group,
+  }) = _$_ViewModelImpl;
 
   @override
   bool get loading;

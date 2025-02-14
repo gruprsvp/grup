@@ -1,76 +1,103 @@
 // GENERATED CODE DO NOT EDIT
 part of '../brick.g.dart';
 
-Future<Member> _$MemberFromSupabase(Map<String, dynamic> data,
-    {required SupabaseProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Member> _$MemberFromSupabase(
+  Map<String, dynamic> data, {
+  required SupabaseProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return Member(
-      id: data['id'] as String?,
-      group: await GroupAdapter().fromSupabase(data['group'],
-          provider: provider, repository: repository),
-      profile: data['profile'] == null
-          ? null
-          : await ProfileAdapter().fromSupabase(data['profile'],
-              provider: provider, repository: repository),
-      role: GroupRoles.values.byName(data['role']),
-      displayNameOverride: data['display_name_override'] == null
-          ? null
-          : data['display_name_override'] as String?);
+    id: data['id'] as String?,
+    group: await GroupAdapter().fromSupabase(
+      data['group'],
+      provider: provider,
+      repository: repository,
+    ),
+    profile:
+        data['profile'] == null
+            ? null
+            : await ProfileAdapter().fromSupabase(
+              data['profile'],
+              provider: provider,
+              repository: repository,
+            ),
+    role: GroupRoles.values.byName(data['role']),
+    displayNameOverride:
+        data['display_name_override'] == null
+            ? null
+            : data['display_name_override'] as String?,
+  );
 }
 
-Future<Map<String, dynamic>> _$MemberToSupabase(Member instance,
-    {required SupabaseProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Map<String, dynamic>> _$MemberToSupabase(
+  Member instance, {
+  required SupabaseProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return {
     'id': instance.id,
     'group_id': instance.groupId,
     'profile_id': instance.profileId,
     'role': instance.role.name,
-    'display_name_override': instance.displayNameOverride
+    'display_name_override': instance.displayNameOverride,
   };
 }
 
-Future<Member> _$MemberFromSqlite(Map<String, dynamic> data,
-    {required SqliteProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Member> _$MemberFromSqlite(
+  Map<String, dynamic> data, {
+  required SqliteProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return Member(
-      id: data['id'] as String,
-      group: (await repository!.getAssociation<Group>(
-        Query.where('primaryKey', data['group_Group_brick_id'] as int,
-            limit1: true),
-      ))!
-          .first,
-      profile: data['profile_Profile_brick_id'] == null
-          ? null
-          : (data['profile_Profile_brick_id'] > -1
-              ? (await repository.getAssociation<Profile>(
+    id: data['id'] as String,
+    group:
+        (await repository!.getAssociation<Group>(
+          Query.where(
+            'primaryKey',
+            data['group_Group_brick_id'] as int,
+            limit1: true,
+          ),
+        ))!.first,
+    profile:
+        data['profile_Profile_brick_id'] == null
+            ? null
+            : (data['profile_Profile_brick_id'] > -1
+                ? (await repository.getAssociation<Profile>(
                   Query.where(
-                      'primaryKey', data['profile_Profile_brick_id'] as int,
-                      limit1: true),
-                ))
-                  ?.first
-              : null),
-      role: GroupRoles.values[data['role'] as int],
-      displayNameOverride: data['display_name_override'] == null
-          ? null
-          : data['display_name_override'] as String?)
-    ..primaryKey = data['_brick_id'] as int;
+                    'primaryKey',
+                    data['profile_Profile_brick_id'] as int,
+                    limit1: true,
+                  ),
+                ))?.first
+                : null),
+    role: GroupRoles.values[data['role'] as int],
+    displayNameOverride:
+        data['display_name_override'] == null
+            ? null
+            : data['display_name_override'] as String?,
+  )..primaryKey = data['_brick_id'] as int;
 }
 
-Future<Map<String, dynamic>> _$MemberToSqlite(Member instance,
-    {required SqliteProvider provider,
-    OfflineFirstWithSupabaseRepository? repository}) async {
+Future<Map<String, dynamic>> _$MemberToSqlite(
+  Member instance, {
+  required SqliteProvider provider,
+  OfflineFirstWithSupabaseRepository? repository,
+}) async {
   return {
     'id': instance.id,
-    'group_Group_brick_id': instance.group.primaryKey ??
+    'group_Group_brick_id':
+        instance.group.primaryKey ??
         await provider.upsert<Group>(instance.group, repository: repository),
-    'profile_Profile_brick_id': instance.profile != null
-        ? instance.profile!.primaryKey ??
-            await provider.upsert<Profile>(instance.profile!,
-                repository: repository)
-        : null,
+    'profile_Profile_brick_id':
+        instance.profile != null
+            ? instance.profile!.primaryKey ??
+                await provider.upsert<Profile>(
+                  instance.profile!,
+                  repository: repository,
+                )
+            : null,
     'role': GroupRoles.values.indexOf(instance.role),
-    'display_name_override': instance.displayNameOverride
+    'display_name_override': instance.displayNameOverride,
   };
 }
 
@@ -117,7 +144,7 @@ class MemberAdapter extends OfflineFirstWithSupabaseAdapter<Member> {
     'displayNameOverride': const RuntimeSupabaseColumnDefinition(
       association: false,
       columnName: 'display_name_override',
-    )
+    ),
   };
   @override
   final ignoreDuplicates = false;
@@ -160,13 +187,18 @@ class MemberAdapter extends OfflineFirstWithSupabaseAdapter<Member> {
       columnName: 'display_name_override',
       iterable: false,
       type: String,
-    )
+    ),
   };
   @override
   Future<int?> primaryKeyByUniqueColumns(
-      Member instance, DatabaseExecutor executor) async {
-    final results = await executor.rawQuery('''
-        SELECT * FROM `Member` WHERE id = ? LIMIT 1''', [instance.id]);
+    Member instance,
+    DatabaseExecutor executor,
+  ) async {
+    final results = await executor.rawQuery(
+      '''
+        SELECT * FROM `Member` WHERE id = ? LIMIT 1''',
+      [instance.id],
+    );
 
     // SQFlite returns [{}] when no results are found
     if (results.isEmpty || (results.length == 1 && results.first.isEmpty)) {
@@ -180,26 +212,40 @@ class MemberAdapter extends OfflineFirstWithSupabaseAdapter<Member> {
   final String tableName = 'Member';
 
   @override
-  Future<Member> fromSupabase(Map<String, dynamic> input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$MemberFromSupabase(input,
-          provider: provider, repository: repository);
+  Future<Member> fromSupabase(
+    Map<String, dynamic> input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async => await _$MemberFromSupabase(
+    input,
+    provider: provider,
+    repository: repository,
+  );
   @override
-  Future<Map<String, dynamic>> toSupabase(Member input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$MemberToSupabase(input,
-          provider: provider, repository: repository);
+  Future<Map<String, dynamic>> toSupabase(
+    Member input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async => await _$MemberToSupabase(
+    input,
+    provider: provider,
+    repository: repository,
+  );
   @override
-  Future<Member> fromSqlite(Map<String, dynamic> input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
-      await _$MemberFromSqlite(input,
-          provider: provider, repository: repository);
+  Future<Member> fromSqlite(
+    Map<String, dynamic> input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async => await _$MemberFromSqlite(
+    input,
+    provider: provider,
+    repository: repository,
+  );
   @override
-  Future<Map<String, dynamic>> toSqlite(Member input,
-          {required provider,
-          covariant OfflineFirstWithSupabaseRepository? repository}) async =>
+  Future<Map<String, dynamic>> toSqlite(
+    Member input, {
+    required provider,
+    covariant OfflineFirstWithSupabaseRepository? repository,
+  }) async =>
       await _$MemberToSqlite(input, provider: provider, repository: repository);
 }

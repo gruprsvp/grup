@@ -12,7 +12,8 @@ part of 'supabase_config.dart';
 T _$identity<T>(T value) => value;
 
 final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
+  'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models',
+);
 
 SupabaseConfig _$SupabaseConfigFromJson(Map<String, dynamic> json) {
   return _SupabaseConfig.fromJson(json);
@@ -42,18 +43,20 @@ mixin _$SupabaseConfig {
 /// @nodoc
 abstract class $SupabaseConfigCopyWith<$Res> {
   factory $SupabaseConfigCopyWith(
-          SupabaseConfig value, $Res Function(SupabaseConfig) then) =
-      _$SupabaseConfigCopyWithImpl<$Res, SupabaseConfig>;
+    SupabaseConfig value,
+    $Res Function(SupabaseConfig) then,
+  ) = _$SupabaseConfigCopyWithImpl<$Res, SupabaseConfig>;
   @useResult
-  $Res call(
-      {String anonKey,
-      String apiUrl,
-      String? dbUrl,
-      String? graphqlUrl,
-      String? inbucketUrl,
-      String? jwtSecret,
-      String? serviceRoleKey,
-      String? studioUrl});
+  $Res call({
+    String anonKey,
+    String apiUrl,
+    String? dbUrl,
+    String? graphqlUrl,
+    String? inbucketUrl,
+    String? jwtSecret,
+    String? serviceRoleKey,
+    String? studioUrl,
+  });
 }
 
 /// @nodoc
@@ -80,60 +83,73 @@ class _$SupabaseConfigCopyWithImpl<$Res, $Val extends SupabaseConfig>
     Object? serviceRoleKey = freezed,
     Object? studioUrl = freezed,
   }) {
-    return _then(_value.copyWith(
-      anonKey: null == anonKey
-          ? _value.anonKey
-          : anonKey // ignore: cast_nullable_to_non_nullable
-              as String,
-      apiUrl: null == apiUrl
-          ? _value.apiUrl
-          : apiUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      dbUrl: freezed == dbUrl
-          ? _value.dbUrl
-          : dbUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      graphqlUrl: freezed == graphqlUrl
-          ? _value.graphqlUrl
-          : graphqlUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      inbucketUrl: freezed == inbucketUrl
-          ? _value.inbucketUrl
-          : inbucketUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      jwtSecret: freezed == jwtSecret
-          ? _value.jwtSecret
-          : jwtSecret // ignore: cast_nullable_to_non_nullable
-              as String?,
-      serviceRoleKey: freezed == serviceRoleKey
-          ? _value.serviceRoleKey
-          : serviceRoleKey // ignore: cast_nullable_to_non_nullable
-              as String?,
-      studioUrl: freezed == studioUrl
-          ? _value.studioUrl
-          : studioUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ) as $Val);
+    return _then(
+      _value.copyWith(
+            anonKey:
+                null == anonKey
+                    ? _value.anonKey
+                    : anonKey // ignore: cast_nullable_to_non_nullable
+                        as String,
+            apiUrl:
+                null == apiUrl
+                    ? _value.apiUrl
+                    : apiUrl // ignore: cast_nullable_to_non_nullable
+                        as String,
+            dbUrl:
+                freezed == dbUrl
+                    ? _value.dbUrl
+                    : dbUrl // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            graphqlUrl:
+                freezed == graphqlUrl
+                    ? _value.graphqlUrl
+                    : graphqlUrl // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            inbucketUrl:
+                freezed == inbucketUrl
+                    ? _value.inbucketUrl
+                    : inbucketUrl // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            jwtSecret:
+                freezed == jwtSecret
+                    ? _value.jwtSecret
+                    : jwtSecret // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            serviceRoleKey:
+                freezed == serviceRoleKey
+                    ? _value.serviceRoleKey
+                    : serviceRoleKey // ignore: cast_nullable_to_non_nullable
+                        as String?,
+            studioUrl:
+                freezed == studioUrl
+                    ? _value.studioUrl
+                    : studioUrl // ignore: cast_nullable_to_non_nullable
+                        as String?,
+          )
+          as $Val,
+    );
   }
 }
 
 /// @nodoc
 abstract class _$$SupabaseConfigImplCopyWith<$Res>
     implements $SupabaseConfigCopyWith<$Res> {
-  factory _$$SupabaseConfigImplCopyWith(_$SupabaseConfigImpl value,
-          $Res Function(_$SupabaseConfigImpl) then) =
-      __$$SupabaseConfigImplCopyWithImpl<$Res>;
+  factory _$$SupabaseConfigImplCopyWith(
+    _$SupabaseConfigImpl value,
+    $Res Function(_$SupabaseConfigImpl) then,
+  ) = __$$SupabaseConfigImplCopyWithImpl<$Res>;
   @override
   @useResult
-  $Res call(
-      {String anonKey,
-      String apiUrl,
-      String? dbUrl,
-      String? graphqlUrl,
-      String? inbucketUrl,
-      String? jwtSecret,
-      String? serviceRoleKey,
-      String? studioUrl});
+  $Res call({
+    String anonKey,
+    String apiUrl,
+    String? dbUrl,
+    String? graphqlUrl,
+    String? inbucketUrl,
+    String? jwtSecret,
+    String? serviceRoleKey,
+    String? studioUrl,
+  });
 }
 
 /// @nodoc
@@ -141,8 +157,9 @@ class __$$SupabaseConfigImplCopyWithImpl<$Res>
     extends _$SupabaseConfigCopyWithImpl<$Res, _$SupabaseConfigImpl>
     implements _$$SupabaseConfigImplCopyWith<$Res> {
   __$$SupabaseConfigImplCopyWithImpl(
-      _$SupabaseConfigImpl _value, $Res Function(_$SupabaseConfigImpl) _then)
-      : super(_value, _then);
+    _$SupabaseConfigImpl _value,
+    $Res Function(_$SupabaseConfigImpl) _then,
+  ) : super(_value, _then);
 
   /// Create a copy of SupabaseConfig
   /// with the given fields replaced by the non-null parameter values.
@@ -158,40 +175,50 @@ class __$$SupabaseConfigImplCopyWithImpl<$Res>
     Object? serviceRoleKey = freezed,
     Object? studioUrl = freezed,
   }) {
-    return _then(_$SupabaseConfigImpl(
-      anonKey: null == anonKey
-          ? _value.anonKey
-          : anonKey // ignore: cast_nullable_to_non_nullable
-              as String,
-      apiUrl: null == apiUrl
-          ? _value.apiUrl
-          : apiUrl // ignore: cast_nullable_to_non_nullable
-              as String,
-      dbUrl: freezed == dbUrl
-          ? _value.dbUrl
-          : dbUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      graphqlUrl: freezed == graphqlUrl
-          ? _value.graphqlUrl
-          : graphqlUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      inbucketUrl: freezed == inbucketUrl
-          ? _value.inbucketUrl
-          : inbucketUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-      jwtSecret: freezed == jwtSecret
-          ? _value.jwtSecret
-          : jwtSecret // ignore: cast_nullable_to_non_nullable
-              as String?,
-      serviceRoleKey: freezed == serviceRoleKey
-          ? _value.serviceRoleKey
-          : serviceRoleKey // ignore: cast_nullable_to_non_nullable
-              as String?,
-      studioUrl: freezed == studioUrl
-          ? _value.studioUrl
-          : studioUrl // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
+    return _then(
+      _$SupabaseConfigImpl(
+        anonKey:
+            null == anonKey
+                ? _value.anonKey
+                : anonKey // ignore: cast_nullable_to_non_nullable
+                    as String,
+        apiUrl:
+            null == apiUrl
+                ? _value.apiUrl
+                : apiUrl // ignore: cast_nullable_to_non_nullable
+                    as String,
+        dbUrl:
+            freezed == dbUrl
+                ? _value.dbUrl
+                : dbUrl // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        graphqlUrl:
+            freezed == graphqlUrl
+                ? _value.graphqlUrl
+                : graphqlUrl // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        inbucketUrl:
+            freezed == inbucketUrl
+                ? _value.inbucketUrl
+                : inbucketUrl // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        jwtSecret:
+            freezed == jwtSecret
+                ? _value.jwtSecret
+                : jwtSecret // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        serviceRoleKey:
+            freezed == serviceRoleKey
+                ? _value.serviceRoleKey
+                : serviceRoleKey // ignore: cast_nullable_to_non_nullable
+                    as String?,
+        studioUrl:
+            freezed == studioUrl
+                ? _value.studioUrl
+                : studioUrl // ignore: cast_nullable_to_non_nullable
+                    as String?,
+      ),
+    );
   }
 }
 
@@ -201,15 +228,16 @@ class __$$SupabaseConfigImplCopyWithImpl<$Res>
 class _$SupabaseConfigImpl
     with DiagnosticableTreeMixin
     implements _SupabaseConfig {
-  const _$SupabaseConfigImpl(
-      {required this.anonKey,
-      required this.apiUrl,
-      this.dbUrl,
-      this.graphqlUrl,
-      this.inbucketUrl,
-      this.jwtSecret,
-      this.serviceRoleKey,
-      this.studioUrl});
+  const _$SupabaseConfigImpl({
+    required this.anonKey,
+    required this.apiUrl,
+    this.dbUrl,
+    this.graphqlUrl,
+    this.inbucketUrl,
+    this.jwtSecret,
+    this.serviceRoleKey,
+    this.studioUrl,
+  });
 
   factory _$SupabaseConfigImpl.fromJson(Map<String, dynamic> json) =>
       _$$SupabaseConfigImplFromJson(json);
@@ -273,8 +301,17 @@ class _$SupabaseConfigImpl
 
   @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  int get hashCode => Object.hash(runtimeType, anonKey, apiUrl, dbUrl,
-      graphqlUrl, inbucketUrl, jwtSecret, serviceRoleKey, studioUrl);
+  int get hashCode => Object.hash(
+    runtimeType,
+    anonKey,
+    apiUrl,
+    dbUrl,
+    graphqlUrl,
+    inbucketUrl,
+    jwtSecret,
+    serviceRoleKey,
+    studioUrl,
+  );
 
   /// Create a copy of SupabaseConfig
   /// with the given fields replaced by the non-null parameter values.
@@ -283,26 +320,27 @@ class _$SupabaseConfigImpl
   @pragma('vm:prefer-inline')
   _$$SupabaseConfigImplCopyWith<_$SupabaseConfigImpl> get copyWith =>
       __$$SupabaseConfigImplCopyWithImpl<_$SupabaseConfigImpl>(
-          this, _$identity);
+        this,
+        _$identity,
+      );
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$SupabaseConfigImplToJson(
-      this,
-    );
+    return _$$SupabaseConfigImplToJson(this);
   }
 }
 
 abstract class _SupabaseConfig implements SupabaseConfig {
-  const factory _SupabaseConfig(
-      {required final String anonKey,
-      required final String apiUrl,
-      final String? dbUrl,
-      final String? graphqlUrl,
-      final String? inbucketUrl,
-      final String? jwtSecret,
-      final String? serviceRoleKey,
-      final String? studioUrl}) = _$SupabaseConfigImpl;
+  const factory _SupabaseConfig({
+    required final String anonKey,
+    required final String apiUrl,
+    final String? dbUrl,
+    final String? graphqlUrl,
+    final String? inbucketUrl,
+    final String? jwtSecret,
+    final String? serviceRoleKey,
+    final String? studioUrl,
+  }) = _$SupabaseConfigImpl;
 
   factory _SupabaseConfig.fromJson(Map<String, dynamic> json) =
       _$SupabaseConfigImpl.fromJson;

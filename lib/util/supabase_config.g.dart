@@ -19,14 +19,14 @@ _$SupabaseConfigImpl _$$SupabaseConfigImplFromJson(Map<String, dynamic> json) =>
     );
 
 Map<String, dynamic> _$$SupabaseConfigImplToJson(
-        _$SupabaseConfigImpl instance) =>
-    <String, dynamic>{
-      'ANON_KEY': instance.anonKey,
-      'API_URL': instance.apiUrl,
-      'DB_URL': instance.dbUrl,
-      'GRAPHQL_URL': instance.graphqlUrl,
-      'INBUCKET_URL': instance.inbucketUrl,
-      'JWT_SECRET': instance.jwtSecret,
-      'SERVICE_ROLE_KEY': instance.serviceRoleKey,
-      'STUDIO_URL': instance.studioUrl,
-    };
+  _$SupabaseConfigImpl instance,
+) => <String, dynamic>{
+  'ANON_KEY': instance.anonKey,
+  'API_URL': instance.apiUrl,
+  'DB_URL': instance.dbUrl,
+  'GRAPHQL_URL': instance.graphqlUrl,
+  'INBUCKET_URL': instance.inbucketUrl,
+  'JWT_SECRET': instance.jwtSecret,
+  'SERVICE_ROLE_KEY': instance.serviceRoleKey,
+  'STUDIO_URL': instance.studioUrl,
+};

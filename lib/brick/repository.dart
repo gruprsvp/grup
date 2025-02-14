@@ -23,7 +23,7 @@ class ParRepository extends OfflineFirstWithSupabaseRepository {
 
   factory ParRepository() => _singleton!;
 
-  static Future<void> configure({
+  static Future<void> initializeSupabaseAndConfigure({
     required String supabaseUrl,
     required String supabaseAnonKey,
   }) async {
@@ -36,14 +36,14 @@ class ParRepository extends OfflineFirstWithSupabaseRepository {
       databaseFactory: databaseFactory,
     );
 
-    await Supabase.initialize(
+    final supabase = await Supabase.initialize(
       url: supabaseUrl,
       anonKey: supabaseAnonKey,
       httpClient: client,
     );
 
     final provider = SupabaseProvider(
-      SupabaseClient(supabaseUrl, supabaseAnonKey, httpClient: client),
+      supabase.client,
       modelDictionary: supabaseModelDictionary,
     );
 
@@ -59,5 +59,14 @@ class ParRepository extends OfflineFirstWithSupabaseRepository {
       offlineRequestQueue: queue,
       memoryCacheProvider: MemoryCacheProvider(),
     );
+  }
+
+  Future<void> resetDatabase() async {
+    if (_singleton == null) {
+      throw Exception('Repository not initialized');
+    }
+
+    await ParRepository().reset();
+    await ParRepository().initialize();
   }
 }

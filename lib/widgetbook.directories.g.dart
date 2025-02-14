@@ -23,18 +23,15 @@ final directories = <_i1.WidgetbookNode>[
           _i1.WidgetbookComponent(
             name: 'GroupForm',
             useCases: [
-              _i1.WidgetbookUseCase(
-                name: 'empty',
-                builder: _i2.emptyUseCase,
-              ),
+              _i1.WidgetbookUseCase(name: 'empty', builder: _i2.emptyUseCase),
               _i1.WidgetbookUseCase(
                 name: 'with data',
                 builder: _i2.withDataUseCase,
               ),
             ],
-          )
+          ),
         ],
-      )
+      ),
     ],
-  )
+  ),
 ];
