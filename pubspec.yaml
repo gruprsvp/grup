@@ -40,7 +40,7 @@ dependencies:
   go_router: ^14.7.2
 
   # Redux
-  rxdart: ^0.27.7
+  rxdart: ^0.28.0
   redux: ^5.0.0
   flutter_redux: ^0.10.0
   redux_logging: ^0.5.1
