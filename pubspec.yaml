@@ -124,7 +124,7 @@ dev_dependencies:
   # For code generation
   build_runner: ^2.4.7
   freezed: ^2.4.5
-  json_serializable: ^6.7.1
+  json_serializable: ^6.9.4
   go_router_builder: ^2.7.5
   widgetbook_generator: ^3.5.0
 
