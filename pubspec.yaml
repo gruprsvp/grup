@@ -89,7 +89,7 @@ dependencies:
   widgetbook: ^3.10.2
 
   # Utilities
-  app_links: ^6.3.2
+  app_links: ^6.4.0
   base32: ^2.1.3
   collection: ^1.18.0
   flutter_native_splash: ^2.4.4
