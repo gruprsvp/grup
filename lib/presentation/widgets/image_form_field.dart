@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parousia/l10n/app_localizations.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:path_provider/path_provider.dart';
