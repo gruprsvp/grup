@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:parousia/l10n/app_localizations.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 

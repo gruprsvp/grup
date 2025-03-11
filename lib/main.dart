@@ -12,6 +12,7 @@ import 'package:parousia/reducers/reducers.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/state/state.dart';
 import 'package:parousia/util/config.dart';
+import 'package:parousia/util/timezone/timezone.dart' as tz;
 import 'package:parousia/util/util.dart';
 import 'package:redux/redux.dart';
 import 'package:redux_epics/redux_epics.dart';
@@ -38,6 +39,8 @@ Future<void> main() async {
 
   // Initialize PostHog
   await initPostHog();
+
+  await tz.initializeTimeZone();
 
   final configService = ConfigService();
   await configService.initialize();
@@ -109,6 +112,7 @@ Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
     log('failed to load persisted state: $e');
     return null;
   });
+
   final initialState = localPersistedState ?? AppState.initialState();
   final middleware = [
     persistor.createMiddleware(),

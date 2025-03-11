@@ -14,6 +14,7 @@ _$ScheduleImpl _$$ScheduleImplFromJson(Map<String, dynamic> json) =>
       startDate: DateTime.parse(json['start_date'] as String),
       recurrenceRule: RecurrenceRule.fromJson(
           json['recurrence_rule'] as Map<String, dynamic>),
+      timezone: json['timezone'] as String,
       createdAt: json['created_at'] == null
           ? null
           : DateTime.parse(json['created_at'] as String),
@@ -29,6 +30,7 @@ Map<String, dynamic> _$$ScheduleImplToJson(_$ScheduleImpl instance) =>
       'display_name': instance.displayName,
       'start_date': instance.startDate.toIso8601String(),
       'recurrence_rule': instance.recurrenceRule,
+      'timezone': instance.timezone,
       'created_at': instance.createdAt?.toIso8601String(),
       'updated_at': instance.updatedAt?.toIso8601String(),
     };

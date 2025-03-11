@@ -142,6 +142,7 @@ final selectScheduleInstanceForDate = createSelector3(
     displayName: instance.displayName,
     instanceDate: instance.instanceDate,
     repliesGroups: repliesGroups,
+    timezone: instance.timezone,
     myReply: instance.myReply,
     myDefaultReply: instance.myDefaultReply,
     myDefaultRule: instance.myDefaultRule,

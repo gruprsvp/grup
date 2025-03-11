@@ -12,7 +12,7 @@ void main() {
   group('schedules instances', () {
     test('basic setup with default replies and overrides', () {
       const testDays = 10;
-      final startDate = DateTime(2000, 1, 1).toUtc();
+      final startDate = DateTime(2000, 1, 1);
       final endDate = startDate.add(const Duration(days: testDays));
 
       final dailyScheduleId = const Uuid().v7();
@@ -27,14 +27,16 @@ void main() {
           groupId: 'group',
           displayName: 'Daily schedule',
           startDate: startDate,
-          recurrenceRule: dailyRecurrenceRule);
+          recurrenceRule: dailyRecurrenceRule,
+          timezone: 'Europe/Zurich');
       final weekendRecurrenceRule = CommonRecurrenceRules.weekends;
       final weekendSchedule = Schedule(
           id: weekendScheduleId,
           groupId: groupId,
           displayName: 'Weekend schedule',
           startDate: startDate,
-          recurrenceRule: weekendRecurrenceRule);
+          recurrenceRule: weekendRecurrenceRule,
+          timezone: 'Europe/Zurich');
 
       final defaultRules = [
         DefaultRule(

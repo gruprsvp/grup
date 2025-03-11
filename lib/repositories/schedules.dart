@@ -16,6 +16,7 @@ class SchedulesRepository extends SupabaseRepository with Postgrest {
           'display_name': schedule.displayName,
           'start_date': schedule.startDate.toIso8601String(),
           'recurrence_rule': schedule.recurrenceRule,
+          'timezone': schedule.timezone,
         })
         .select()
         .single()

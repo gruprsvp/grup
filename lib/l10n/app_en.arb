@@ -123,6 +123,7 @@
   "signOut": "Sign out",
   "signOutConfirmation": "Are you sure you want to sign out?",
   "systemLanguage": "System language",
+  "timezone": "Timezone",
   "themeDark": "Dark",
   "themeLight": "Light",
   "themeSystem": "System",
