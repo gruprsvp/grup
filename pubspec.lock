@@ -571,10 +571,10 @@ packages:
     dependency: transitive
     description:
       name: functions_client
-      sha256: "61597ed93be197b1be6387855e4b760e6aac2355fcfc4df6d20d2b4579982158"
+      sha256: b410e4d609522357396cd84bb9a8f6e3a4561b5f7d3ce82267f6f1c2af42f16b
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.0"
+    version: "2.4.2"
   git:
     dependency: transitive
     description:
@@ -675,10 +675,10 @@ packages:
     dependency: transitive
     description:
       name: gotrue
-      sha256: d6362dff9a54f8c1c372bb137c858b4024c16407324d34e6473e59623c9b9f50
+      sha256: "04a6efacffd42773ed96dc752f19bb20a1fbc383e81ba82659072b775cf62912"
       url: "https://pub.dev"
     source: hosted
-    version: "2.11.1"
+    version: "2.12.0"
   graphs:
     dependency: transitive
     description:
@@ -1144,10 +1144,10 @@ packages:
     dependency: transitive
     description:
       name: postgrest
-      sha256: b74dc0f57b5dca5ce9f57a54b08110bf41d6fc8a0483c0fec10c79e9aa0fb2bb
+      sha256: "10b81a23b1c829ccadf68c626b4d66666453a1474d24c563f313f5ca7851d575"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.1"
+    version: "2.4.2"
   posthog_flutter:
     dependency: "direct main"
     description:
@@ -1200,10 +1200,10 @@ packages:
     dependency: transitive
     description:
       name: realtime_client
-      sha256: "1bfcb7455fdcf15953bf18ac2817634ea5b8f7f350c7e8c9873141a3ee2c3e9c"
+      sha256: "3a0a99b5bd0fc3b35e8ee846d9a22fa2c2117f7ef1cb73d1e5f08f6c3d09c4e9"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.1"
+    version: "2.5.0"
   redux:
     dependency: "direct main"
     description:
@@ -1509,10 +1509,10 @@ packages:
     dependency: transitive
     description:
       name: storage_client
-      sha256: d80d34f0aa60e5199646bc301f5750767ee37310c2ecfe8d4bbdd29351e09ab0
+      sha256: "09bac4d75eea58e8113ca928e6655a09cc8059e6d1b472ee801f01fde815bcfc"
       url: "https://pub.dev"
     source: hosted
-    version: "2.3.0"
+    version: "2.4.0"
   stream_channel:
     dependency: transitive
     description:
@@ -1549,10 +1549,10 @@ packages:
     dependency: "direct main"
     description:
       name: supabase
-      sha256: "270f63cd87a16578fee87e40cbf61062e8cdbce68d5e723e665f4651d70ddd8c"
+      sha256: f00172f5f0b2148ea1c573f52862d50cacb6f353f579f741fa35e51704845958
       url: "https://pub.dev"
     source: hosted
-    version: "2.6.2"
+    version: "2.7.0"
   supabase_auth_ui:
     dependency: "direct main"
     description:
@@ -1566,10 +1566,10 @@ packages:
     dependency: "direct main"
     description:
       name: supabase_flutter
-      sha256: ca8dfe3d4b109e7338cdf7778f3ec2c660a0178006876bfac343eb39b0f3d1e3
+      sha256: d88eccf9e46e57129725a08e72a3109b6f780921fdc27fe3d7669a11ae80906b
       url: "https://pub.dev"
     source: hosted
-    version: "2.8.3"
+    version: "2.9.0"
   sync_http:
     dependency: transitive
     description:
@@ -1902,10 +1902,10 @@ packages:
     dependency: transitive
     description:
       name: yet_another_json_isolate
-      sha256: "56155e9e0002cc51ea7112857bbcdc714d4c35e176d43e4d3ee233009ff410c9"
+      sha256: fe45897501fa156ccefbfb9359c9462ce5dec092f05e8a56109db30be864f01e
       url: "https://pub.dev"
     source: hosted
-    version: "2.0.3"
+    version: "2.1.0"
 sdks:
   dart: ">=3.6.0 <4.0.0"
   flutter: ">=3.27.0"
