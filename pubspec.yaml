@@ -34,10 +34,10 @@ dependencies:
   # Localization
   flutter_localizations:
     sdk: flutter
-  intl: ^0.19.0
+  intl: ^0.20.2
 
   # Routing
-  go_router: ^14.7.2
+  go_router: ^17.0.1
 
   # Redux
   rxdart: ^0.28.0
@@ -64,7 +64,7 @@ dependencies:
   cupertino_icons: ^1.0.2
 
   # For (de)serialisation
-  freezed_annotation: ^2.4.1
+  freezed_annotation: ^3.1.0
   json_annotation: ^4.8.1
 
   # Recurrence rules
@@ -74,14 +74,14 @@ dependencies:
   flutter_contacts: ^1.1.9+2
 
   # Forms and validators
-  flutter_form_builder: ^9.7.0 # TODO Can we remove this?
+  flutter_form_builder: ^10.2.0 # TODO Can we remove this?
   form_builder_validators: ^11.1.1
   phone_form_field: ^10.0.4
 
   # To send feedback and report bugs
-  device_info_plus: ^11.3.0
+  device_info_plus: ^12.3.0
   mailto: ^2.0.0
-  package_info_plus: ^8.2.1
+  package_info_plus: ^9.0.0
   url_launcher: ^6.3.1
 
   # Widgetbook
@@ -99,9 +99,9 @@ dependencies:
   memoized: ^2.2.6
   mime: ^2.0.0
   path_provider: ^2.1.5
-  posthog_flutter: ^4.10.2
-  sentry_flutter: ^8.13.0
-  share_plus: ^10.1.4
+  posthog_flutter: ^5.10.0
+  sentry_flutter: ^9.9.0
+  share_plus: ^12.0.1
   styled_text: ^8.1.0
   universal_html: ^2.2.4
   uuid: ^4.1.0
@@ -123,9 +123,9 @@ dev_dependencies:
 
   # For code generation
   build_runner: ^2.4.7
-  freezed: ^2.4.5
+  freezed: ^3.2.3
   json_serializable: ^6.9.4
-  go_router_builder: ^2.7.5
+  go_router_builder: ^4.1.3
   widgetbook_generator: ^3.5.0
 
   # Used in various tests to generate random data
@@ -133,14 +133,14 @@ dev_dependencies:
 
   # Utilities
   flutter_launcher_icons: ^0.14.3
-  sentry_dart_plugin: ^2.4.0
+  sentry_dart_plugin: ^3.2.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^5.0.0
+  flutter_lints: ^6.0.0
 
 dependency_overrides:
   supabase_auth_ui:
