@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,199 +9,30 @@ part of 'invite.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
 
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-Invite _$InviteFromJson(Map<String, dynamic> json) {
-  return _Invite.fromJson(json);
-}
-
 /// @nodoc
-mixin _$Invite {
-  String get id => throw _privateConstructorUsedError;
-  String get memberId => throw _privateConstructorUsedError;
-  InviteMethods get method => throw _privateConstructorUsedError;
-  String get value => throw _privateConstructorUsedError;
-  DateTime? get createdAt => throw _privateConstructorUsedError;
-  DateTime? get updatedAt => throw _privateConstructorUsedError;
-
-  /// Serializes this Invite to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+mixin _$Invite implements DiagnosticableTreeMixin {
+  String get id;
+  String get memberId;
+  InviteMethods get method;
+  String get value;
+  DateTime? get createdAt;
+  DateTime? get updatedAt;
 
   /// Create a copy of Invite
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $InviteCopyWith<Invite> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $InviteCopyWith<$Res> {
-  factory $InviteCopyWith(Invite value, $Res Function(Invite) then) =
-      _$InviteCopyWithImpl<$Res, Invite>;
-  @useResult
-  $Res call(
-      {String id,
-      String memberId,
-      InviteMethods method,
-      String value,
-      DateTime? createdAt,
-      DateTime? updatedAt});
-}
-
-/// @nodoc
-class _$InviteCopyWithImpl<$Res, $Val extends Invite>
-    implements $InviteCopyWith<$Res> {
-  _$InviteCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Invite
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? memberId = null,
-    Object? method = null,
-    Object? value = null,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      memberId: null == memberId
-          ? _value.memberId
-          : memberId // ignore: cast_nullable_to_non_nullable
-              as String,
-      method: null == method
-          ? _value.method
-          : method // ignore: cast_nullable_to_non_nullable
-              as InviteMethods,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ) as $Val);
-  }
-}
+  $InviteCopyWith<Invite> get copyWith =>
+      _$InviteCopyWithImpl<Invite>(this as Invite, _$identity);
 
-/// @nodoc
-abstract class _$$InviteImplCopyWith<$Res> implements $InviteCopyWith<$Res> {
-  factory _$$InviteImplCopyWith(
-          _$InviteImpl value, $Res Function(_$InviteImpl) then) =
-      __$$InviteImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String id,
-      String memberId,
-      InviteMethods method,
-      String value,
-      DateTime? createdAt,
-      DateTime? updatedAt});
-}
-
-/// @nodoc
-class __$$InviteImplCopyWithImpl<$Res>
-    extends _$InviteCopyWithImpl<$Res, _$InviteImpl>
-    implements _$$InviteImplCopyWith<$Res> {
-  __$$InviteImplCopyWithImpl(
-      _$InviteImpl _value, $Res Function(_$InviteImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of Invite
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? id = null,
-    Object? memberId = null,
-    Object? method = null,
-    Object? value = null,
-    Object? createdAt = freezed,
-    Object? updatedAt = freezed,
-  }) {
-    return _then(_$InviteImpl(
-      id: null == id
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as String,
-      memberId: null == memberId
-          ? _value.memberId
-          : memberId // ignore: cast_nullable_to_non_nullable
-              as String,
-      method: null == method
-          ? _value.method
-          : method // ignore: cast_nullable_to_non_nullable
-              as InviteMethods,
-      value: null == value
-          ? _value.value
-          : value // ignore: cast_nullable_to_non_nullable
-              as String,
-      createdAt: freezed == createdAt
-          ? _value.createdAt
-          : createdAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-      updatedAt: freezed == updatedAt
-          ? _value.updatedAt
-          : updatedAt // ignore: cast_nullable_to_non_nullable
-              as DateTime?,
-    ));
-  }
-}
-
-/// @nodoc
-
-@JsonSerializable(fieldRename: FieldRename.snake)
-class _$InviteImpl with DiagnosticableTreeMixin implements _Invite {
-  const _$InviteImpl(
-      {required this.id,
-      required this.memberId,
-      required this.method,
-      required this.value,
-      this.createdAt,
-      this.updatedAt});
-
-  factory _$InviteImpl.fromJson(Map<String, dynamic> json) =>
-      _$$InviteImplFromJson(json);
-
-  @override
-  final String id;
-  @override
-  final String memberId;
-  @override
-  final InviteMethods method;
-  @override
-  final String value;
-  @override
-  final DateTime? createdAt;
-  @override
-  final DateTime? updatedAt;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Invite(id: $id, memberId: $memberId, method: $method, value: $value, createdAt: $createdAt, updatedAt: $updatedAt)';
-  }
+  /// Serializes this Invite to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Invite'))
       ..add(DiagnosticsProperty('id', id))
@@ -216,7 +47,7 @@ class _$InviteImpl with DiagnosticableTreeMixin implements _Invite {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$InviteImpl &&
+            other is Invite &&
             (identical(other.id, id) || other.id == id) &&
             (identical(other.memberId, memberId) ||
                 other.memberId == memberId) &&
@@ -233,50 +64,377 @@ class _$InviteImpl with DiagnosticableTreeMixin implements _Invite {
   int get hashCode => Object.hash(
       runtimeType, id, memberId, method, value, createdAt, updatedAt);
 
-  /// Create a copy of Invite
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$InviteImplCopyWith<_$InviteImpl> get copyWith =>
-      __$$InviteImplCopyWithImpl<_$InviteImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$InviteImplToJson(
-      this,
-    );
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Invite(id: $id, memberId: $memberId, method: $method, value: $value, createdAt: $createdAt, updatedAt: $updatedAt)';
   }
 }
 
-abstract class _Invite implements Invite {
-  const factory _Invite(
-      {required final String id,
-      required final String memberId,
-      required final InviteMethods method,
-      required final String value,
-      final DateTime? createdAt,
-      final DateTime? updatedAt}) = _$InviteImpl;
+/// @nodoc
+abstract mixin class $InviteCopyWith<$Res> {
+  factory $InviteCopyWith(Invite value, $Res Function(Invite) _then) =
+      _$InviteCopyWithImpl;
+  @useResult
+  $Res call(
+      {String id,
+      String memberId,
+      InviteMethods method,
+      String value,
+      DateTime? createdAt,
+      DateTime? updatedAt});
+}
 
-  factory _Invite.fromJson(Map<String, dynamic> json) = _$InviteImpl.fromJson;
+/// @nodoc
+class _$InviteCopyWithImpl<$Res> implements $InviteCopyWith<$Res> {
+  _$InviteCopyWithImpl(this._self, this._then);
+
+  final Invite _self;
+  final $Res Function(Invite) _then;
+
+  /// Create a copy of Invite
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? id = null,
+    Object? memberId = null,
+    Object? method = null,
+    Object? value = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+  }) {
+    return _then(_self.copyWith(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      memberId: null == memberId
+          ? _self.memberId
+          : memberId // ignore: cast_nullable_to_non_nullable
+              as String,
+      method: null == method
+          ? _self.method
+          : method // ignore: cast_nullable_to_non_nullable
+              as InviteMethods,
+      value: null == value
+          ? _self.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: freezed == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _self.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [Invite].
+extension InvitePatterns on Invite {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_Invite value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Invite() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_Invite value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Invite():
+        return $default(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_Invite value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Invite() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String id, String memberId, InviteMethods method,
+            String value, DateTime? createdAt, DateTime? updatedAt)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Invite() when $default != null:
+        return $default(_that.id, _that.memberId, _that.method, _that.value,
+            _that.createdAt, _that.updatedAt);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String id, String memberId, InviteMethods method,
+            String value, DateTime? createdAt, DateTime? updatedAt)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Invite():
+        return $default(_that.id, _that.memberId, _that.method, _that.value,
+            _that.createdAt, _that.updatedAt);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String id, String memberId, InviteMethods method,
+            String value, DateTime? createdAt, DateTime? updatedAt)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Invite() when $default != null:
+        return $default(_that.id, _that.memberId, _that.method, _that.value,
+            _that.createdAt, _that.updatedAt);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+
+@JsonSerializable(fieldRename: FieldRename.snake)
+class _Invite with DiagnosticableTreeMixin implements Invite {
+  const _Invite(
+      {required this.id,
+      required this.memberId,
+      required this.method,
+      required this.value,
+      this.createdAt,
+      this.updatedAt});
+  factory _Invite.fromJson(Map<String, dynamic> json) => _$InviteFromJson(json);
 
   @override
-  String get id;
+  final String id;
   @override
-  String get memberId;
+  final String memberId;
   @override
-  InviteMethods get method;
+  final InviteMethods method;
   @override
-  String get value;
+  final String value;
   @override
-  DateTime? get createdAt;
+  final DateTime? createdAt;
   @override
-  DateTime? get updatedAt;
+  final DateTime? updatedAt;
 
   /// Create a copy of Invite
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$InviteImplCopyWith<_$InviteImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$InviteCopyWith<_Invite> get copyWith =>
+      __$InviteCopyWithImpl<_Invite>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$InviteToJson(
+      this,
+    );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(DiagnosticsProperty('type', 'Invite'))
+      ..add(DiagnosticsProperty('id', id))
+      ..add(DiagnosticsProperty('memberId', memberId))
+      ..add(DiagnosticsProperty('method', method))
+      ..add(DiagnosticsProperty('value', value))
+      ..add(DiagnosticsProperty('createdAt', createdAt))
+      ..add(DiagnosticsProperty('updatedAt', updatedAt));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Invite &&
+            (identical(other.id, id) || other.id == id) &&
+            (identical(other.memberId, memberId) ||
+                other.memberId == memberId) &&
+            (identical(other.method, method) || other.method == method) &&
+            (identical(other.value, value) || other.value == value) &&
+            (identical(other.createdAt, createdAt) ||
+                other.createdAt == createdAt) &&
+            (identical(other.updatedAt, updatedAt) ||
+                other.updatedAt == updatedAt));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(
+      runtimeType, id, memberId, method, value, createdAt, updatedAt);
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Invite(id: $id, memberId: $memberId, method: $method, value: $value, createdAt: $createdAt, updatedAt: $updatedAt)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$InviteCopyWith<$Res> implements $InviteCopyWith<$Res> {
+  factory _$InviteCopyWith(_Invite value, $Res Function(_Invite) _then) =
+      __$InviteCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String id,
+      String memberId,
+      InviteMethods method,
+      String value,
+      DateTime? createdAt,
+      DateTime? updatedAt});
+}
+
+/// @nodoc
+class __$InviteCopyWithImpl<$Res> implements _$InviteCopyWith<$Res> {
+  __$InviteCopyWithImpl(this._self, this._then);
+
+  final _Invite _self;
+  final $Res Function(_Invite) _then;
+
+  /// Create a copy of Invite
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? id = null,
+    Object? memberId = null,
+    Object? method = null,
+    Object? value = null,
+    Object? createdAt = freezed,
+    Object? updatedAt = freezed,
+  }) {
+    return _then(_Invite(
+      id: null == id
+          ? _self.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String,
+      memberId: null == memberId
+          ? _self.memberId
+          : memberId // ignore: cast_nullable_to_non_nullable
+              as String,
+      method: null == method
+          ? _self.method
+          : method // ignore: cast_nullable_to_non_nullable
+              as InviteMethods,
+      value: null == value
+          ? _self.value
+          : value // ignore: cast_nullable_to_non_nullable
+              as String,
+      createdAt: freezed == createdAt
+          ? _self.createdAt
+          : createdAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+      updatedAt: freezed == updatedAt
+          ? _self.updatedAt
+          : updatedAt // ignore: cast_nullable_to_non_nullable
+              as DateTime?,
+    ));
+  }
+}
+
+// dart format on

@@ -6,7 +6,7 @@ part of 'member.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$MemberImpl _$$MemberImplFromJson(Map<String, dynamic> json) => _$MemberImpl(
+_Member _$MemberFromJson(Map<String, dynamic> json) => _Member(
       id: json['id'] as String,
       groupId: json['group_id'] as String,
       role: $enumDecode(_$GroupRolesEnumMap, json['role']),
@@ -20,8 +20,7 @@ _$MemberImpl _$$MemberImplFromJson(Map<String, dynamic> json) => _$MemberImpl(
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$MemberImplToJson(_$MemberImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$MemberToJson(_Member instance) => <String, dynamic>{
       'id': instance.id,
       'group_id': instance.groupId,
       'role': _$GroupRolesEnumMap[instance.role]!,

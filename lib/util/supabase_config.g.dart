@@ -6,8 +6,8 @@ part of 'supabase_config.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$SupabaseConfigImpl _$$SupabaseConfigImplFromJson(Map<String, dynamic> json) =>
-    _$SupabaseConfigImpl(
+_SupabaseConfig _$SupabaseConfigFromJson(Map<String, dynamic> json) =>
+    _SupabaseConfig(
       anonKey: json['ANON_KEY'] as String,
       apiUrl: json['API_URL'] as String,
       dbUrl: json['DB_URL'] as String?,
@@ -18,8 +18,7 @@ _$SupabaseConfigImpl _$$SupabaseConfigImplFromJson(Map<String, dynamic> json) =>
       studioUrl: json['STUDIO_URL'] as String?,
     );
 
-Map<String, dynamic> _$$SupabaseConfigImplToJson(
-        _$SupabaseConfigImpl instance) =>
+Map<String, dynamic> _$SupabaseConfigToJson(_SupabaseConfig instance) =>
     <String, dynamic>{
       'ANON_KEY': instance.anonKey,
       'API_URL': instance.apiUrl,

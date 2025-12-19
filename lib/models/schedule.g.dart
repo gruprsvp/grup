@@ -6,8 +6,7 @@ part of 'schedule.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$ScheduleImpl _$$ScheduleImplFromJson(Map<String, dynamic> json) =>
-    _$ScheduleImpl(
+_Schedule _$ScheduleFromJson(Map<String, dynamic> json) => _Schedule(
       id: json['id'] as String,
       groupId: json['group_id'] as String,
       displayName: json['display_name'] as String,
@@ -22,8 +21,7 @@ _$ScheduleImpl _$$ScheduleImplFromJson(Map<String, dynamic> json) =>
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$ScheduleImplToJson(_$ScheduleImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$ScheduleToJson(_Schedule instance) => <String, dynamic>{
       'id': instance.id,
       'group_id': instance.groupId,
       'display_name': instance.displayName,

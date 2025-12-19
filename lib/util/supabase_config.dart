@@ -8,7 +8,7 @@ part 'supabase_config.freezed.dart';
 part 'supabase_config.g.dart';
 
 @freezed
-class SupabaseConfig with _$SupabaseConfig {
+sealed class SupabaseConfig with _$SupabaseConfig {
   @JsonSerializable(fieldRename: FieldRename.screamingSnake)
   const factory SupabaseConfig({
     required String anonKey,

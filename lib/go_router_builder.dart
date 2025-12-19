@@ -33,48 +33,52 @@ part 'go_router_builder.g.dart';
   ],
 )
 @immutable
-class HomeScreenRoute extends GoRouteData with AuthenticationGuard {
+class HomeScreenRoute extends GoRouteData
+    with AuthenticationGuard, $HomeScreenRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const HomeContainer();
 }
 
 @immutable
-class AuthRoute extends GoRouteData {
+class AuthRoute extends GoRouteData with $AuthRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) => const AuthScreen();
 }
 
 @immutable
-class SettingsRoute extends GoRouteData with AuthenticationGuard {
+class SettingsRoute extends GoRouteData
+    with AuthenticationGuard, $SettingsRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const SettingsScreen();
 }
 
 @immutable
-class LocaleRoute extends GoRouteData with AuthenticationGuard {
+class LocaleRoute extends GoRouteData with AuthenticationGuard, $LocaleRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const LocaleContainer();
 }
 
 @immutable
-class SettingsMoreRoute extends GoRouteData with AuthenticationGuard {
+class SettingsMoreRoute extends GoRouteData
+    with AuthenticationGuard, $SettingsMoreRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const SettingsMoreScreen();
 }
 
 @immutable
-class LicensesRoute extends GoRouteData with AuthenticationGuard {
+class LicensesRoute extends GoRouteData
+    with AuthenticationGuard, $LicensesRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const LicensePage();
 }
 
 @immutable
-class ProfileRoute extends GoRouteData with AuthenticationGuard {
+class ProfileRoute extends GoRouteData with AuthenticationGuard, $ProfileRoute {
   final bool? userNavigated;
 
   ProfileRoute({this.userNavigated});
@@ -85,14 +89,16 @@ class ProfileRoute extends GoRouteData with AuthenticationGuard {
 }
 
 @immutable
-class GroupCreateRoute extends GoRouteData with AuthenticationGuard {
+class GroupCreateRoute extends GoRouteData
+    with AuthenticationGuard, $GroupCreateRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const GroupCreateScreen();
 }
 
 @immutable
-class GroupDetailsRoute extends GoRouteData with AuthenticationGuard {
+class GroupDetailsRoute extends GoRouteData
+    with AuthenticationGuard, $GroupDetailsRoute {
   final String groupId;
 
   const GroupDetailsRoute({required this.groupId});
@@ -103,7 +109,8 @@ class GroupDetailsRoute extends GoRouteData with AuthenticationGuard {
 }
 
 @immutable
-class GroupManageRoute extends GoRouteData with AuthenticationGuard {
+class GroupManageRoute extends GoRouteData
+    with AuthenticationGuard, $GroupManageRoute {
   // TODO Should be for admins only, can this be checked here?
   //      Or should it be checked in the container?
 
@@ -117,7 +124,8 @@ class GroupManageRoute extends GoRouteData with AuthenticationGuard {
 }
 
 @immutable
-class GroupScheduleCreateRoute extends GoRouteData with AuthenticationGuard {
+class GroupScheduleCreateRoute extends GoRouteData
+    with AuthenticationGuard, $GroupScheduleCreateRoute {
   // TODO Does it actually need the group ID here?
   final String groupId;
 
@@ -129,7 +137,8 @@ class GroupScheduleCreateRoute extends GoRouteData with AuthenticationGuard {
 }
 
 @immutable
-class GroupScheduleDetailsRoute extends GoRouteData with AuthenticationGuard {
+class GroupScheduleDetailsRoute extends GoRouteData
+    with AuthenticationGuard, $GroupScheduleDetailsRoute {
   final String groupId;
   final String scheduleId;
 
@@ -142,7 +151,8 @@ class GroupScheduleDetailsRoute extends GoRouteData with AuthenticationGuard {
 }
 
 @immutable
-class GroupMemberDetailsRoute extends GoRouteData with AuthenticationGuard {
+class GroupMemberDetailsRoute extends GoRouteData
+    with AuthenticationGuard, $GroupMemberDetailsRoute {
   final String groupId;
   final String memberId;
 
@@ -155,7 +165,8 @@ class GroupMemberDetailsRoute extends GoRouteData with AuthenticationGuard {
 }
 
 @immutable
-class SelectContactsRoute extends GoRouteData with AuthenticationGuard {
+class SelectContactsRoute extends GoRouteData
+    with AuthenticationGuard, $SelectContactsRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const SelectContactsScreen();
