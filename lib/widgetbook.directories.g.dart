@@ -1,3 +1,4 @@
+// dart format width=80
 // coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_import, prefer_relative_imports, directives_ordering
@@ -9,26 +10,29 @@
 // **************************************************************************
 
 // ignore_for_file: no_leading_underscores_for_library_prefixes
-import 'package:parousia/presentation/widgets/group_form.stories.dart' as _i2;
-import 'package:widgetbook/widgetbook.dart' as _i1;
+import 'package:parousia/presentation/widgets/group_form.stories.dart'
+    as _parousia_presentation_widgets_group_form_stories;
+import 'package:widgetbook/widgetbook.dart' as _widgetbook;
 
-final directories = <_i1.WidgetbookNode>[
-  _i1.WidgetbookFolder(
+final directories = <_widgetbook.WidgetbookNode>[
+  _widgetbook.WidgetbookFolder(
     name: 'presentation',
     children: [
-      _i1.WidgetbookFolder(
+      _widgetbook.WidgetbookFolder(
         name: 'widgets',
         children: [
-          _i1.WidgetbookComponent(
+          _widgetbook.WidgetbookComponent(
             name: 'GroupForm',
             useCases: [
-              _i1.WidgetbookUseCase(
+              _widgetbook.WidgetbookUseCase(
                 name: 'empty',
-                builder: _i2.emptyUseCase,
+                builder: _parousia_presentation_widgets_group_form_stories
+                    .emptyUseCase,
               ),
-              _i1.WidgetbookUseCase(
+              _widgetbook.WidgetbookUseCase(
                 name: 'with data',
-                builder: _i2.withDataUseCase,
+                builder: _parousia_presentation_widgets_group_form_stories
+                    .withDataUseCase,
               ),
             ],
           )

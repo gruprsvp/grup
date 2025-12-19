@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,34 +9,68 @@ part of 'group_member_details.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
-
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
 
 /// @nodoc
 mixin _$ViewModel {
-  bool get loading => throw _privateConstructorUsedError;
-  bool get isCurrentUser => throw _privateConstructorUsedError;
-  Group? get group => throw _privateConstructorUsedError;
-  Member? get member => throw _privateConstructorUsedError;
-  Profile? get profile => throw _privateConstructorUsedError;
-  List<Invite>? get invites => throw _privateConstructorUsedError;
-  ValueSetter<Member>? get onUpdate => throw _privateConstructorUsedError;
-  OnRemoveFromGroupCallback? get onRemove => throw _privateConstructorUsedError;
+  bool get loading;
+  bool get isCurrentUser;
+  Group? get group;
+  Member? get member;
+  Profile? get profile;
+  List<Invite>? get invites;
+  ValueSetter<Member>? get onUpdate;
+  OnRemoveFromGroupCallback? get onRemove;
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
   _$ViewModelCopyWith<_ViewModel> get copyWith =>
-      throw _privateConstructorUsedError;
+      __$ViewModelCopyWithImpl<_ViewModel>(this as _ViewModel, _$identity);
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _ViewModel &&
+            (identical(other.loading, loading) || other.loading == loading) &&
+            (identical(other.isCurrentUser, isCurrentUser) ||
+                other.isCurrentUser == isCurrentUser) &&
+            (identical(other.group, group) || other.group == group) &&
+            (identical(other.member, member) || other.member == member) &&
+            (identical(other.profile, profile) || other.profile == profile) &&
+            const DeepCollectionEquality().equals(other.invites, invites) &&
+            (identical(other.onUpdate, onUpdate) ||
+                other.onUpdate == onUpdate) &&
+            (identical(other.onRemove, onRemove) ||
+                other.onRemove == onRemove));
+  }
+
+  @override
+  int get hashCode => Object.hash(
+      runtimeType,
+      loading,
+      isCurrentUser,
+      group,
+      member,
+      profile,
+      const DeepCollectionEquality().hash(invites),
+      onUpdate,
+      onRemove);
+
+  @override
+  String toString() {
+    return '_ViewModel(loading: $loading, isCurrentUser: $isCurrentUser, group: $group, member: $member, profile: $profile, invites: $invites, onUpdate: $onUpdate, onRemove: $onRemove)';
+  }
 }
 
 /// @nodoc
-abstract class _$ViewModelCopyWith<$Res> {
+abstract mixin class _$ViewModelCopyWith<$Res> {
   factory _$ViewModelCopyWith(
-          _ViewModel value, $Res Function(_ViewModel) then) =
-      __$ViewModelCopyWithImpl<$Res, _ViewModel>;
+          _ViewModel value, $Res Function(_ViewModel) _then) =
+      __$ViewModelCopyWithImpl;
   @useResult
   $Res call(
       {bool loading,
@@ -54,14 +88,11 @@ abstract class _$ViewModelCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
-    implements _$ViewModelCopyWith<$Res> {
-  __$ViewModelCopyWithImpl(this._value, this._then);
+class __$ViewModelCopyWithImpl<$Res> implements _$ViewModelCopyWith<$Res> {
+  __$ViewModelCopyWithImpl(this._self, this._then);
 
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
+  final _ViewModel _self;
+  final $Res Function(_ViewModel) _then;
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
@@ -77,40 +108,40 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
     Object? onUpdate = freezed,
     Object? onRemove = freezed,
   }) {
-    return _then(_value.copyWith(
+    return _then(_self.copyWith(
       loading: null == loading
-          ? _value.loading
+          ? _self.loading
           : loading // ignore: cast_nullable_to_non_nullable
               as bool,
       isCurrentUser: null == isCurrentUser
-          ? _value.isCurrentUser
+          ? _self.isCurrentUser
           : isCurrentUser // ignore: cast_nullable_to_non_nullable
               as bool,
       group: freezed == group
-          ? _value.group
+          ? _self.group
           : group // ignore: cast_nullable_to_non_nullable
               as Group?,
       member: freezed == member
-          ? _value.member
+          ? _self.member
           : member // ignore: cast_nullable_to_non_nullable
               as Member?,
       profile: freezed == profile
-          ? _value.profile
+          ? _self.profile
           : profile // ignore: cast_nullable_to_non_nullable
               as Profile?,
       invites: freezed == invites
-          ? _value.invites
+          ? _self.invites
           : invites // ignore: cast_nullable_to_non_nullable
               as List<Invite>?,
       onUpdate: freezed == onUpdate
-          ? _value.onUpdate
+          ? _self.onUpdate
           : onUpdate // ignore: cast_nullable_to_non_nullable
               as ValueSetter<Member>?,
       onRemove: freezed == onRemove
-          ? _value.onRemove
+          ? _self.onRemove
           : onRemove // ignore: cast_nullable_to_non_nullable
               as OnRemoveFromGroupCallback?,
-    ) as $Val);
+    ));
   }
 
   /// Create a copy of _ViewModel
@@ -118,12 +149,12 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   @override
   @pragma('vm:prefer-inline')
   $GroupCopyWith<$Res>? get group {
-    if (_value.group == null) {
+    if (_self.group == null) {
       return null;
     }
 
-    return $GroupCopyWith<$Res>(_value.group!, (value) {
-      return _then(_value.copyWith(group: value) as $Val);
+    return $GroupCopyWith<$Res>(_self.group!, (value) {
+      return _then(_self.copyWith(group: value));
     });
   }
 
@@ -132,12 +163,12 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   @override
   @pragma('vm:prefer-inline')
   $MemberCopyWith<$Res>? get member {
-    if (_value.member == null) {
+    if (_self.member == null) {
       return null;
     }
 
-    return $MemberCopyWith<$Res>(_value.member!, (value) {
-      return _then(_value.copyWith(member: value) as $Val);
+    return $MemberCopyWith<$Res>(_self.member!, (value) {
+      return _then(_self.copyWith(member: value));
     });
   }
 
@@ -146,105 +177,224 @@ class __$ViewModelCopyWithImpl<$Res, $Val extends _ViewModel>
   @override
   @pragma('vm:prefer-inline')
   $ProfileCopyWith<$Res>? get profile {
-    if (_value.profile == null) {
+    if (_self.profile == null) {
       return null;
     }
 
-    return $ProfileCopyWith<$Res>(_value.profile!, (value) {
-      return _then(_value.copyWith(profile: value) as $Val);
+    return $ProfileCopyWith<$Res>(_self.profile!, (value) {
+      return _then(_self.copyWith(profile: value));
     });
   }
 }
 
-/// @nodoc
-abstract class _$$_ViewModelImplCopyWith<$Res>
-    implements _$ViewModelCopyWith<$Res> {
-  factory _$$_ViewModelImplCopyWith(
-          _$_ViewModelImpl value, $Res Function(_$_ViewModelImpl) then) =
-      __$$_ViewModelImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {bool loading,
-      bool isCurrentUser,
-      Group? group,
-      Member? member,
-      Profile? profile,
-      List<Invite>? invites,
-      ValueSetter<Member>? onUpdate,
-      OnRemoveFromGroupCallback? onRemove});
+/// Adds pattern-matching-related methods to [_ViewModel].
+extension _ViewModelPatterns on _ViewModel {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
 
-  @override
-  $GroupCopyWith<$Res>? get group;
-  @override
-  $MemberCopyWith<$Res>? get member;
-  @override
-  $ProfileCopyWith<$Res>? get profile;
-}
-
-/// @nodoc
-class __$$_ViewModelImplCopyWithImpl<$Res>
-    extends __$ViewModelCopyWithImpl<$Res, _$_ViewModelImpl>
-    implements _$$_ViewModelImplCopyWith<$Res> {
-  __$$_ViewModelImplCopyWithImpl(
-      _$_ViewModelImpl _value, $Res Function(_$_ViewModelImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of _ViewModel
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? loading = null,
-    Object? isCurrentUser = null,
-    Object? group = freezed,
-    Object? member = freezed,
-    Object? profile = freezed,
-    Object? invites = freezed,
-    Object? onUpdate = freezed,
-    Object? onRemove = freezed,
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(__ViewModel value)? $default, {
+    required TResult orElse(),
   }) {
-    return _then(_$_ViewModelImpl(
-      loading: null == loading
-          ? _value.loading
-          : loading // ignore: cast_nullable_to_non_nullable
-              as bool,
-      isCurrentUser: null == isCurrentUser
-          ? _value.isCurrentUser
-          : isCurrentUser // ignore: cast_nullable_to_non_nullable
-              as bool,
-      group: freezed == group
-          ? _value.group
-          : group // ignore: cast_nullable_to_non_nullable
-              as Group?,
-      member: freezed == member
-          ? _value.member
-          : member // ignore: cast_nullable_to_non_nullable
-              as Member?,
-      profile: freezed == profile
-          ? _value.profile
-          : profile // ignore: cast_nullable_to_non_nullable
-              as Profile?,
-      invites: freezed == invites
-          ? _value._invites
-          : invites // ignore: cast_nullable_to_non_nullable
-              as List<Invite>?,
-      onUpdate: freezed == onUpdate
-          ? _value.onUpdate
-          : onUpdate // ignore: cast_nullable_to_non_nullable
-              as ValueSetter<Member>?,
-      onRemove: freezed == onRemove
-          ? _value.onRemove
-          : onRemove // ignore: cast_nullable_to_non_nullable
-              as OnRemoveFromGroupCallback?,
-    ));
+    final _that = this;
+    switch (_that) {
+      case __ViewModel() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(__ViewModel value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case __ViewModel():
+        return $default(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(__ViewModel value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case __ViewModel() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(
+            bool loading,
+            bool isCurrentUser,
+            Group? group,
+            Member? member,
+            Profile? profile,
+            List<Invite>? invites,
+            ValueSetter<Member>? onUpdate,
+            OnRemoveFromGroupCallback? onRemove)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case __ViewModel() when $default != null:
+        return $default(
+            _that.loading,
+            _that.isCurrentUser,
+            _that.group,
+            _that.member,
+            _that.profile,
+            _that.invites,
+            _that.onUpdate,
+            _that.onRemove);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(
+            bool loading,
+            bool isCurrentUser,
+            Group? group,
+            Member? member,
+            Profile? profile,
+            List<Invite>? invites,
+            ValueSetter<Member>? onUpdate,
+            OnRemoveFromGroupCallback? onRemove)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case __ViewModel():
+        return $default(
+            _that.loading,
+            _that.isCurrentUser,
+            _that.group,
+            _that.member,
+            _that.profile,
+            _that.invites,
+            _that.onUpdate,
+            _that.onRemove);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(
+            bool loading,
+            bool isCurrentUser,
+            Group? group,
+            Member? member,
+            Profile? profile,
+            List<Invite>? invites,
+            ValueSetter<Member>? onUpdate,
+            OnRemoveFromGroupCallback? onRemove)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case __ViewModel() when $default != null:
+        return $default(
+            _that.loading,
+            _that.isCurrentUser,
+            _that.group,
+            _that.member,
+            _that.profile,
+            _that.invites,
+            _that.onUpdate,
+            _that.onRemove);
+      case _:
+        return null;
+    }
   }
 }
 
 /// @nodoc
 
-class _$_ViewModelImpl implements __ViewModel {
-  const _$_ViewModelImpl(
+class __ViewModel implements _ViewModel {
+  const __ViewModel(
       {required this.loading,
       required this.isCurrentUser,
       this.group,
@@ -280,16 +430,19 @@ class _$_ViewModelImpl implements __ViewModel {
   @override
   final OnRemoveFromGroupCallback? onRemove;
 
+  /// Create a copy of _ViewModel
+  /// with the given fields replaced by the non-null parameter values.
   @override
-  String toString() {
-    return '_ViewModel(loading: $loading, isCurrentUser: $isCurrentUser, group: $group, member: $member, profile: $profile, invites: $invites, onUpdate: $onUpdate, onRemove: $onRemove)';
-  }
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @pragma('vm:prefer-inline')
+  _$_ViewModelCopyWith<__ViewModel> get copyWith =>
+      __$_ViewModelCopyWithImpl<__ViewModel>(this, _$identity);
 
   @override
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_ViewModelImpl &&
+            other is __ViewModel &&
             (identical(other.loading, loading) || other.loading == loading) &&
             (identical(other.isCurrentUser, isCurrentUser) ||
                 other.isCurrentUser == isCurrentUser) &&
@@ -315,47 +468,136 @@ class _$_ViewModelImpl implements __ViewModel {
       onUpdate,
       onRemove);
 
+  @override
+  String toString() {
+    return '_ViewModel(loading: $loading, isCurrentUser: $isCurrentUser, group: $group, member: $member, profile: $profile, invites: $invites, onUpdate: $onUpdate, onRemove: $onRemove)';
+  }
+}
+
+/// @nodoc
+abstract mixin class _$_ViewModelCopyWith<$Res>
+    implements _$ViewModelCopyWith<$Res> {
+  factory _$_ViewModelCopyWith(
+          __ViewModel value, $Res Function(__ViewModel) _then) =
+      __$_ViewModelCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {bool loading,
+      bool isCurrentUser,
+      Group? group,
+      Member? member,
+      Profile? profile,
+      List<Invite>? invites,
+      ValueSetter<Member>? onUpdate,
+      OnRemoveFromGroupCallback? onRemove});
+
+  @override
+  $GroupCopyWith<$Res>? get group;
+  @override
+  $MemberCopyWith<$Res>? get member;
+  @override
+  $ProfileCopyWith<$Res>? get profile;
+}
+
+/// @nodoc
+class __$_ViewModelCopyWithImpl<$Res> implements _$_ViewModelCopyWith<$Res> {
+  __$_ViewModelCopyWithImpl(this._self, this._then);
+
+  final __ViewModel _self;
+  final $Res Function(__ViewModel) _then;
+
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
   @pragma('vm:prefer-inline')
-  _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>
-      __$$_ViewModelImplCopyWithImpl<_$_ViewModelImpl>(this, _$identity);
-}
-
-abstract class __ViewModel implements _ViewModel {
-  const factory __ViewModel(
-      {required final bool loading,
-      required final bool isCurrentUser,
-      final Group? group,
-      final Member? member,
-      final Profile? profile,
-      final List<Invite>? invites,
-      final ValueSetter<Member>? onUpdate,
-      final OnRemoveFromGroupCallback? onRemove}) = _$_ViewModelImpl;
-
-  @override
-  bool get loading;
-  @override
-  bool get isCurrentUser;
-  @override
-  Group? get group;
-  @override
-  Member? get member;
-  @override
-  Profile? get profile;
-  @override
-  List<Invite>? get invites;
-  @override
-  ValueSetter<Member>? get onUpdate;
-  @override
-  OnRemoveFromGroupCallback? get onRemove;
+  $Res call({
+    Object? loading = null,
+    Object? isCurrentUser = null,
+    Object? group = freezed,
+    Object? member = freezed,
+    Object? profile = freezed,
+    Object? invites = freezed,
+    Object? onUpdate = freezed,
+    Object? onRemove = freezed,
+  }) {
+    return _then(__ViewModel(
+      loading: null == loading
+          ? _self.loading
+          : loading // ignore: cast_nullable_to_non_nullable
+              as bool,
+      isCurrentUser: null == isCurrentUser
+          ? _self.isCurrentUser
+          : isCurrentUser // ignore: cast_nullable_to_non_nullable
+              as bool,
+      group: freezed == group
+          ? _self.group
+          : group // ignore: cast_nullable_to_non_nullable
+              as Group?,
+      member: freezed == member
+          ? _self.member
+          : member // ignore: cast_nullable_to_non_nullable
+              as Member?,
+      profile: freezed == profile
+          ? _self.profile
+          : profile // ignore: cast_nullable_to_non_nullable
+              as Profile?,
+      invites: freezed == invites
+          ? _self._invites
+          : invites // ignore: cast_nullable_to_non_nullable
+              as List<Invite>?,
+      onUpdate: freezed == onUpdate
+          ? _self.onUpdate
+          : onUpdate // ignore: cast_nullable_to_non_nullable
+              as ValueSetter<Member>?,
+      onRemove: freezed == onRemove
+          ? _self.onRemove
+          : onRemove // ignore: cast_nullable_to_non_nullable
+              as OnRemoveFromGroupCallback?,
+    ));
+  }
 
   /// Create a copy of _ViewModel
   /// with the given fields replaced by the non-null parameter values.
   @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$_ViewModelImplCopyWith<_$_ViewModelImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  $GroupCopyWith<$Res>? get group {
+    if (_self.group == null) {
+      return null;
+    }
+
+    return $GroupCopyWith<$Res>(_self.group!, (value) {
+      return _then(_self.copyWith(group: value));
+    });
+  }
+
+  /// Create a copy of _ViewModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $MemberCopyWith<$Res>? get member {
+    if (_self.member == null) {
+      return null;
+    }
+
+    return $MemberCopyWith<$Res>(_self.member!, (value) {
+      return _then(_self.copyWith(member: value));
+    });
+  }
+
+  /// Create a copy of _ViewModel
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $ProfileCopyWith<$Res>? get profile {
+    if (_self.profile == null) {
+      return null;
+    }
+
+    return $ProfileCopyWith<$Res>(_self.profile!, (value) {
+      return _then(_self.copyWith(profile: value));
+    });
+  }
 }
+
+// dart format on

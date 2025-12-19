@@ -1,5 +1,5 @@
-// coverage:ignore-file
 // GENERATED CODE - DO NOT MODIFY BY HAND
+// coverage:ignore-file
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
@@ -9,150 +9,27 @@ part of 'config.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// dart format off
 T _$identity<T>(T value) => value;
 
-final _privateConstructorUsedError = UnsupportedError(
-    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#adding-getters-and-methods-to-our-models');
-
-Config _$ConfigFromJson(Map<String, dynamic> json) {
-  return _Config.fromJson(json);
-}
-
 /// @nodoc
-mixin _$Config {
-  String get supabaseConfigPath => throw _privateConstructorUsedError;
-  String get socialAuthWebClientId => throw _privateConstructorUsedError;
-  String get socialAuthIosClientId => throw _privateConstructorUsedError;
-
-  /// Serializes this Config to a JSON map.
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+mixin _$Config implements DiagnosticableTreeMixin {
+  String get supabaseConfigPath;
+  String get socialAuthWebClientId;
+  String get socialAuthIosClientId;
 
   /// Create a copy of Config
   /// with the given fields replaced by the non-null parameter values.
   @JsonKey(includeFromJson: false, includeToJson: false)
-  $ConfigCopyWith<Config> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $ConfigCopyWith<$Res> {
-  factory $ConfigCopyWith(Config value, $Res Function(Config) then) =
-      _$ConfigCopyWithImpl<$Res, Config>;
-  @useResult
-  $Res call(
-      {String supabaseConfigPath,
-      String socialAuthWebClientId,
-      String socialAuthIosClientId});
-}
-
-/// @nodoc
-class _$ConfigCopyWithImpl<$Res, $Val extends Config>
-    implements $ConfigCopyWith<$Res> {
-  _$ConfigCopyWithImpl(this._value, this._then);
-
-  // ignore: unused_field
-  final $Val _value;
-  // ignore: unused_field
-  final $Res Function($Val) _then;
-
-  /// Create a copy of Config
-  /// with the given fields replaced by the non-null parameter values.
   @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? supabaseConfigPath = null,
-    Object? socialAuthWebClientId = null,
-    Object? socialAuthIosClientId = null,
-  }) {
-    return _then(_value.copyWith(
-      supabaseConfigPath: null == supabaseConfigPath
-          ? _value.supabaseConfigPath
-          : supabaseConfigPath // ignore: cast_nullable_to_non_nullable
-              as String,
-      socialAuthWebClientId: null == socialAuthWebClientId
-          ? _value.socialAuthWebClientId
-          : socialAuthWebClientId // ignore: cast_nullable_to_non_nullable
-              as String,
-      socialAuthIosClientId: null == socialAuthIosClientId
-          ? _value.socialAuthIosClientId
-          : socialAuthIosClientId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ) as $Val);
-  }
-}
+  $ConfigCopyWith<Config> get copyWith =>
+      _$ConfigCopyWithImpl<Config>(this as Config, _$identity);
 
-/// @nodoc
-abstract class _$$ConfigImplCopyWith<$Res> implements $ConfigCopyWith<$Res> {
-  factory _$$ConfigImplCopyWith(
-          _$ConfigImpl value, $Res Function(_$ConfigImpl) then) =
-      __$$ConfigImplCopyWithImpl<$Res>;
-  @override
-  @useResult
-  $Res call(
-      {String supabaseConfigPath,
-      String socialAuthWebClientId,
-      String socialAuthIosClientId});
-}
-
-/// @nodoc
-class __$$ConfigImplCopyWithImpl<$Res>
-    extends _$ConfigCopyWithImpl<$Res, _$ConfigImpl>
-    implements _$$ConfigImplCopyWith<$Res> {
-  __$$ConfigImplCopyWithImpl(
-      _$ConfigImpl _value, $Res Function(_$ConfigImpl) _then)
-      : super(_value, _then);
-
-  /// Create a copy of Config
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? supabaseConfigPath = null,
-    Object? socialAuthWebClientId = null,
-    Object? socialAuthIosClientId = null,
-  }) {
-    return _then(_$ConfigImpl(
-      supabaseConfigPath: null == supabaseConfigPath
-          ? _value.supabaseConfigPath
-          : supabaseConfigPath // ignore: cast_nullable_to_non_nullable
-              as String,
-      socialAuthWebClientId: null == socialAuthWebClientId
-          ? _value.socialAuthWebClientId
-          : socialAuthWebClientId // ignore: cast_nullable_to_non_nullable
-              as String,
-      socialAuthIosClientId: null == socialAuthIosClientId
-          ? _value.socialAuthIosClientId
-          : socialAuthIosClientId // ignore: cast_nullable_to_non_nullable
-              as String,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$ConfigImpl with DiagnosticableTreeMixin implements _Config {
-  const _$ConfigImpl(
-      {required this.supabaseConfigPath,
-      required this.socialAuthWebClientId,
-      required this.socialAuthIosClientId});
-
-  factory _$ConfigImpl.fromJson(Map<String, dynamic> json) =>
-      _$$ConfigImplFromJson(json);
-
-  @override
-  final String supabaseConfigPath;
-  @override
-  final String socialAuthWebClientId;
-  @override
-  final String socialAuthIosClientId;
-
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return 'Config(supabaseConfigPath: $supabaseConfigPath, socialAuthWebClientId: $socialAuthWebClientId, socialAuthIosClientId: $socialAuthIosClientId)';
-  }
+  /// Serializes this Config to a JSON map.
+  Map<String, dynamic> toJson();
 
   @override
   void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    super.debugFillProperties(properties);
     properties
       ..add(DiagnosticsProperty('type', 'Config'))
       ..add(DiagnosticsProperty('supabaseConfigPath', supabaseConfigPath))
@@ -165,7 +42,7 @@ class _$ConfigImpl with DiagnosticableTreeMixin implements _Config {
   bool operator ==(Object other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$ConfigImpl &&
+            other is Config &&
             (identical(other.supabaseConfigPath, supabaseConfigPath) ||
                 other.supabaseConfigPath == supabaseConfigPath) &&
             (identical(other.socialAuthWebClientId, socialAuthWebClientId) ||
@@ -179,41 +56,326 @@ class _$ConfigImpl with DiagnosticableTreeMixin implements _Config {
   int get hashCode => Object.hash(runtimeType, supabaseConfigPath,
       socialAuthWebClientId, socialAuthIosClientId);
 
-  /// Create a copy of Config
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
   @override
-  @pragma('vm:prefer-inline')
-  _$$ConfigImplCopyWith<_$ConfigImpl> get copyWith =>
-      __$$ConfigImplCopyWithImpl<_$ConfigImpl>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$ConfigImplToJson(
-      this,
-    );
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Config(supabaseConfigPath: $supabaseConfigPath, socialAuthWebClientId: $socialAuthWebClientId, socialAuthIosClientId: $socialAuthIosClientId)';
   }
 }
 
-abstract class _Config implements Config {
-  const factory _Config(
-      {required final String supabaseConfigPath,
-      required final String socialAuthWebClientId,
-      required final String socialAuthIosClientId}) = _$ConfigImpl;
+/// @nodoc
+abstract mixin class $ConfigCopyWith<$Res> {
+  factory $ConfigCopyWith(Config value, $Res Function(Config) _then) =
+      _$ConfigCopyWithImpl;
+  @useResult
+  $Res call(
+      {String supabaseConfigPath,
+      String socialAuthWebClientId,
+      String socialAuthIosClientId});
+}
 
-  factory _Config.fromJson(Map<String, dynamic> json) = _$ConfigImpl.fromJson;
+/// @nodoc
+class _$ConfigCopyWithImpl<$Res> implements $ConfigCopyWith<$Res> {
+  _$ConfigCopyWithImpl(this._self, this._then);
+
+  final Config _self;
+  final $Res Function(Config) _then;
+
+  /// Create a copy of Config
+  /// with the given fields replaced by the non-null parameter values.
+  @pragma('vm:prefer-inline')
+  @override
+  $Res call({
+    Object? supabaseConfigPath = null,
+    Object? socialAuthWebClientId = null,
+    Object? socialAuthIosClientId = null,
+  }) {
+    return _then(_self.copyWith(
+      supabaseConfigPath: null == supabaseConfigPath
+          ? _self.supabaseConfigPath
+          : supabaseConfigPath // ignore: cast_nullable_to_non_nullable
+              as String,
+      socialAuthWebClientId: null == socialAuthWebClientId
+          ? _self.socialAuthWebClientId
+          : socialAuthWebClientId // ignore: cast_nullable_to_non_nullable
+              as String,
+      socialAuthIosClientId: null == socialAuthIosClientId
+          ? _self.socialAuthIosClientId
+          : socialAuthIosClientId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+/// Adds pattern-matching-related methods to [Config].
+extension ConfigPatterns on Config {
+  /// A variant of `map` that fallback to returning `orElse`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeMap<TResult extends Object?>(
+    TResult Function(_Config value)? $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Config() when $default != null:
+        return $default(_that);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// Callbacks receives the raw object, upcasted.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case final Subclass2 value:
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult map<TResult extends Object?>(
+    TResult Function(_Config value) $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Config():
+        return $default(_that);
+    }
+  }
+
+  /// A variant of `map` that fallback to returning `null`.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case final Subclass value:
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? mapOrNull<TResult extends Object?>(
+    TResult? Function(_Config value)? $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Config() when $default != null:
+        return $default(_that);
+      case _:
+        return null;
+    }
+  }
+
+  /// A variant of `when` that fallback to an `orElse` callback.
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return orElse();
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult maybeWhen<TResult extends Object?>(
+    TResult Function(String supabaseConfigPath, String socialAuthWebClientId,
+            String socialAuthIosClientId)?
+        $default, {
+    required TResult orElse(),
+  }) {
+    final _that = this;
+    switch (_that) {
+      case _Config() when $default != null:
+        return $default(_that.supabaseConfigPath, _that.socialAuthWebClientId,
+            _that.socialAuthIosClientId);
+      case _:
+        return orElse();
+    }
+  }
+
+  /// A `switch`-like method, using callbacks.
+  ///
+  /// As opposed to `map`, this offers destructuring.
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case Subclass2(:final field2):
+  ///     return ...;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult when<TResult extends Object?>(
+    TResult Function(String supabaseConfigPath, String socialAuthWebClientId,
+            String socialAuthIosClientId)
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Config():
+        return $default(_that.supabaseConfigPath, _that.socialAuthWebClientId,
+            _that.socialAuthIosClientId);
+    }
+  }
+
+  /// A variant of `when` that fallback to returning `null`
+  ///
+  /// It is equivalent to doing:
+  /// ```dart
+  /// switch (sealedClass) {
+  ///   case Subclass(:final field):
+  ///     return ...;
+  ///   case _:
+  ///     return null;
+  /// }
+  /// ```
+
+  @optionalTypeArgs
+  TResult? whenOrNull<TResult extends Object?>(
+    TResult? Function(String supabaseConfigPath, String socialAuthWebClientId,
+            String socialAuthIosClientId)?
+        $default,
+  ) {
+    final _that = this;
+    switch (_that) {
+      case _Config() when $default != null:
+        return $default(_that.supabaseConfigPath, _that.socialAuthWebClientId,
+            _that.socialAuthIosClientId);
+      case _:
+        return null;
+    }
+  }
+}
+
+/// @nodoc
+@JsonSerializable()
+class _Config with DiagnosticableTreeMixin implements Config {
+  const _Config(
+      {required this.supabaseConfigPath,
+      required this.socialAuthWebClientId,
+      required this.socialAuthIosClientId});
+  factory _Config.fromJson(Map<String, dynamic> json) => _$ConfigFromJson(json);
 
   @override
-  String get supabaseConfigPath;
+  final String supabaseConfigPath;
   @override
-  String get socialAuthWebClientId;
+  final String socialAuthWebClientId;
   @override
-  String get socialAuthIosClientId;
+  final String socialAuthIosClientId;
 
   /// Create a copy of Config
   /// with the given fields replaced by the non-null parameter values.
   @override
   @JsonKey(includeFromJson: false, includeToJson: false)
-  _$$ConfigImplCopyWith<_$ConfigImpl> get copyWith =>
-      throw _privateConstructorUsedError;
+  @pragma('vm:prefer-inline')
+  _$ConfigCopyWith<_Config> get copyWith =>
+      __$ConfigCopyWithImpl<_Config>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$ConfigToJson(
+      this,
+    );
+  }
+
+  @override
+  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+    properties
+      ..add(DiagnosticsProperty('type', 'Config'))
+      ..add(DiagnosticsProperty('supabaseConfigPath', supabaseConfigPath))
+      ..add(DiagnosticsProperty('socialAuthWebClientId', socialAuthWebClientId))
+      ..add(
+          DiagnosticsProperty('socialAuthIosClientId', socialAuthIosClientId));
+  }
+
+  @override
+  bool operator ==(Object other) {
+    return identical(this, other) ||
+        (other.runtimeType == runtimeType &&
+            other is _Config &&
+            (identical(other.supabaseConfigPath, supabaseConfigPath) ||
+                other.supabaseConfigPath == supabaseConfigPath) &&
+            (identical(other.socialAuthWebClientId, socialAuthWebClientId) ||
+                other.socialAuthWebClientId == socialAuthWebClientId) &&
+            (identical(other.socialAuthIosClientId, socialAuthIosClientId) ||
+                other.socialAuthIosClientId == socialAuthIosClientId));
+  }
+
+  @JsonKey(includeFromJson: false, includeToJson: false)
+  @override
+  int get hashCode => Object.hash(runtimeType, supabaseConfigPath,
+      socialAuthWebClientId, socialAuthIosClientId);
+
+  @override
+  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
+    return 'Config(supabaseConfigPath: $supabaseConfigPath, socialAuthWebClientId: $socialAuthWebClientId, socialAuthIosClientId: $socialAuthIosClientId)';
+  }
 }
+
+/// @nodoc
+abstract mixin class _$ConfigCopyWith<$Res> implements $ConfigCopyWith<$Res> {
+  factory _$ConfigCopyWith(_Config value, $Res Function(_Config) _then) =
+      __$ConfigCopyWithImpl;
+  @override
+  @useResult
+  $Res call(
+      {String supabaseConfigPath,
+      String socialAuthWebClientId,
+      String socialAuthIosClientId});
+}
+
+/// @nodoc
+class __$ConfigCopyWithImpl<$Res> implements _$ConfigCopyWith<$Res> {
+  __$ConfigCopyWithImpl(this._self, this._then);
+
+  final _Config _self;
+  final $Res Function(_Config) _then;
+
+  /// Create a copy of Config
+  /// with the given fields replaced by the non-null parameter values.
+  @override
+  @pragma('vm:prefer-inline')
+  $Res call({
+    Object? supabaseConfigPath = null,
+    Object? socialAuthWebClientId = null,
+    Object? socialAuthIosClientId = null,
+  }) {
+    return _then(_Config(
+      supabaseConfigPath: null == supabaseConfigPath
+          ? _self.supabaseConfigPath
+          : supabaseConfigPath // ignore: cast_nullable_to_non_nullable
+              as String,
+      socialAuthWebClientId: null == socialAuthWebClientId
+          ? _self.socialAuthWebClientId
+          : socialAuthWebClientId // ignore: cast_nullable_to_non_nullable
+              as String,
+      socialAuthIosClientId: null == socialAuthIosClientId
+          ? _self.socialAuthIosClientId
+          : socialAuthIosClientId // ignore: cast_nullable_to_non_nullable
+              as String,
+    ));
+  }
+}
+
+// dart format on

@@ -6,7 +6,7 @@ part of 'invite.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$InviteImpl _$$InviteImplFromJson(Map<String, dynamic> json) => _$InviteImpl(
+_Invite _$InviteFromJson(Map<String, dynamic> json) => _Invite(
       id: json['id'] as String,
       memberId: json['member_id'] as String,
       method: $enumDecode(_$InviteMethodsEnumMap, json['method']),
@@ -19,8 +19,7 @@ _$InviteImpl _$$InviteImplFromJson(Map<String, dynamic> json) => _$InviteImpl(
           : DateTime.parse(json['updated_at'] as String),
     );
 
-Map<String, dynamic> _$$InviteImplToJson(_$InviteImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$InviteToJson(_Invite instance) => <String, dynamic>{
       'id': instance.id,
       'member_id': instance.memberId,
       'method': _$InviteMethodsEnumMap[instance.method]!,

@@ -6,8 +6,7 @@ part of 'app_state.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-_$AppStateImpl _$$AppStateImplFromJson(Map<String, dynamic> json) =>
-    _$AppStateImpl(
+_AppState _$AppStateFromJson(Map<String, dynamic> json) => _AppState(
       profiles: json['profiles'] == null
           ? const RemoteEntityState<Profile>()
           : RemoteEntityState<Profile>.fromJson(
@@ -57,8 +56,7 @@ _$AppStateImpl _$$AppStateImplFromJson(Map<String, dynamic> json) =>
       hasSeenFeedbackCard: json['hasSeenFeedbackCard'] as bool?,
     );
 
-Map<String, dynamic> _$$AppStateImplToJson(_$AppStateImpl instance) =>
-    <String, dynamic>{
+Map<String, dynamic> _$AppStateToJson(_AppState instance) => <String, dynamic>{
       'profiles': instance.profiles,
       'groups': instance.groups,
       'members': instance.members,
