@@ -450,10 +450,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_country_selector
-      sha256: "79b7457224c025c1de2007fafe8a84605af3e6b0b8744d2a3225c296b66d31c1"
+      sha256: "92d7ae9092ba492bfb0ffe5cd6b38c941261b56e81941d73a0a963fdf5fcf8f6"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.18"
+    version: "1.0.19"
   flutter_driver:
     dependency: transitive
     description: flutter
@@ -1136,10 +1136,10 @@ packages:
     dependency: "direct main"
     description:
       name: phone_form_field
-      sha256: c4adcf1f5f1927ac190524522cd97fb166f01fdcff9eec0eac2b452e66f96ca2
+      sha256: "9d1776041a7657a37c69c7d3c8e262c91fee8c202b81a80fac61ce0dc6bdbe98"
       url: "https://pub.dev"
     source: hosted
-    version: "10.0.15"
+    version: "10.0.17"
   phone_numbers_parser:
     dependency: transitive
     description:
