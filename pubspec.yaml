@@ -94,7 +94,7 @@ dependencies:
   collection: ^1.18.0
   flutter_native_splash: ^2.4.4
   font_awesome_flutter: ^10.6.0
-  google_fonts: ^6.2.1
+  google_fonts: ^7.0.0
   in_app_review: ^2.0.10
   memoized: ^2.2.6
   mime: ^2.0.0
