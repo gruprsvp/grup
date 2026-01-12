@@ -1328,10 +1328,10 @@ packages:
     dependency: "direct main"
     description:
       name: rrule
-      sha256: b7425410c594d4b6717c9f17ec8ef83c9d1ff2e513c428a135b5924fc2e8e045
+      sha256: f6f6ad5bf7b19d218d4c985d6055d3c9717f1d6efd5d1c0127b1146f1eb3640c
       url: "https://pub.dev"
     source: hosted
-    version: "0.2.17"
+    version: "0.2.18"
   rxdart:
     dependency: "direct main"
     description:
