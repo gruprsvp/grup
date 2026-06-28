@@ -59,7 +59,9 @@ create or replace trigger on_auth_user_updated
     on auth.users
     for each row
 execute function public.handle_upsert_user();
-comment on trigger on_auth_user_updated on auth.users is 'Upserts a profile whenever a user is created or updated';
+-- NOTE: `comment on trigger ... on auth.users` is intentionally omitted: it requires
+-- ownership of auth.users, which the migration role lacks on current Supabase stacks
+-- (fails with "must be owner of relation users"), breaking `supabase start` / CI.
 
 create or replace function public.handle_delete_user()
     returns trigger
@@ -104,7 +106,8 @@ create or replace trigger on_auth_user_deleted
     on auth.users
     for each row
 execute function public.handle_delete_user();
-comment on trigger on_auth_user_deleted on auth.users is 'Trigger to delete a profile when a user is deleted';
+-- NOTE: `comment on trigger ... on auth.users` intentionally omitted (see note above —
+-- requires ownership of auth.users that the migration role lacks).
 
 -- TODO(borgoat): add a trigger to manage a phone number/email being added after sign up instead
 
