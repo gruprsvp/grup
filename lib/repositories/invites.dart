@@ -12,7 +12,7 @@ import 'supabase.dart';
 
 class InvitesRepository extends SupabaseRepository with Postgrest {
   const InvitesRepository({required super.supabase})
-      : super(tableName: Tables.invites);
+    : super(tableName: Tables.invites);
 
   Future<Invite> inviteMember(
     String memberId,
@@ -33,8 +33,9 @@ class InvitesRepository extends SupabaseRepository with Postgrest {
 
   Future<Invite> inviteWithGeneratedCode(String memberId) async {
     final code = base32.encode(
-        Uint8List.fromList(List.generate(5, (_) => Random().nextInt(256))),
-        encoding: Encoding.crockford);
+      Uint8List.fromList(List.generate(5, (_) => Random().nextInt(256))),
+      encoding: Encoding.crockford,
+    );
     final formatted = formatBase32Code(code);
     return inviteMember(memberId, InviteMethods.code, formatted);
   }

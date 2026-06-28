@@ -14,19 +14,14 @@ part 'group_members.freezed.dart';
 class GroupMembersContainer extends StatelessWidget {
   final String groupId;
 
-  const GroupMembersContainer({
-    super.key,
-    required this.groupId,
-  });
+  const GroupMembersContainer({super.key, required this.groupId});
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
       distinct: true,
-      builder: (context, vm) => GroupMembers(
-        members: vm.members,
-        onInvite: vm.onInvite,
-      ),
+      builder: (context, vm) =>
+          GroupMembers(members: vm.members, onInvite: vm.onInvite),
       converter: (store) => _ViewModel.fromStore(store, groupId),
     );
   }
@@ -42,13 +37,13 @@ sealed class _ViewModel with _$ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store, String groupId) =>
       _ViewModel(
-        loading: store.state.groups.creating ||
+        loading:
+            store.state.groups.creating ||
             store.state.groups.loadingAll ||
             (store.state.groups.loadingIds[groupId] ?? false),
         members: groupMembersWithProfilesSelector(store.state),
-        onInvite: (contacts) => store.dispatch(InviteGroupMembersAction(
-          groupId: groupId,
-          contacts: contacts,
-        )),
+        onInvite: (contacts) => store.dispatch(
+          InviteGroupMembersAction(groupId: groupId, contacts: contacts),
+        ),
       );
 }

@@ -142,8 +142,10 @@ class GroupScheduleDetailsRoute extends GoRouteData
   final String groupId;
   final String scheduleId;
 
-  const GroupScheduleDetailsRoute(
-      {required this.groupId, required this.scheduleId});
+  const GroupScheduleDetailsRoute({
+    required this.groupId,
+    required this.scheduleId,
+  });
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
@@ -156,8 +158,10 @@ class GroupMemberDetailsRoute extends GoRouteData
   final String groupId;
   final String memberId;
 
-  const GroupMemberDetailsRoute(
-      {required this.groupId, required this.memberId});
+  const GroupMemberDetailsRoute({
+    required this.groupId,
+    required this.memberId,
+  });
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
@@ -180,8 +184,8 @@ mixin AuthenticationGuard on GoRouteData {
   @override
   redirect(BuildContext context, GoRouterState state) =>
       _isAuthenticated() ? null : AuthRoute().location;
-// TODO(borgoat): This redirect keeps the previous route in the stack,
-//                It should replace the current route, to prevent the user
-//                from navigating back to the home page while signed out.
-//                Investigate whether to use a "splashscreen" route instead.
+  // TODO(borgoat): This redirect keeps the previous route in the stack,
+  //                It should replace the current route, to prevent the user
+  //                from navigating back to the home page while signed out.
+  //                Investigate whether to use a "splashscreen" route instead.
 }

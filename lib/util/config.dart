@@ -20,8 +20,9 @@ class ConfigService {
   Future<void> initialize() async {
     const env = kReleaseMode ? 'supabase' : 'local';
     final envConfigFile = await rootBundle.loadString('assets/env/$env.json');
-    final config =
-        Config.fromJson(json.decode(envConfigFile) as Map<String, dynamic>);
+    final config = Config.fromJson(
+      json.decode(envConfigFile) as Map<String, dynamic>,
+    );
     this.config = config;
   }
 }

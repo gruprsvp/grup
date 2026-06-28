@@ -6,6 +6,8 @@ final selectedScheduleIdReducer = combineReducers<String?>([
 ]);
 
 String _changeSchedule(
-    String? currentScheduleId, GroupScheduleDetailsOpenAction action) {
+  String? currentScheduleId,
+  GroupScheduleDetailsOpenAction action,
+) {
   return action.scheduleId;
 }

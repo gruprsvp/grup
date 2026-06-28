@@ -6,14 +6,16 @@ import 'supabase.dart';
 
 class RepliesRepository extends SupabaseRepository with Postgrest {
   const RepliesRepository({required super.supabase})
-      : super(tableName: Tables.replies);
+    : super(tableName: Tables.replies);
 
   Future<Iterable<Reply>> getRepliesForDay(String groupId, DateTime day) async {
     return getRepliesForDateRange(groupId, day.toUtc().getDayRange());
   }
 
   Future<Iterable<Reply>> getRepliesForDateRange(
-      String groupId, DateTimeRange dateRange) async {
+    String groupId,
+    DateTimeRange dateRange,
+  ) async {
     return table()
         .select('*,members!inner(*)')
         .eq('members.group_id', groupId)

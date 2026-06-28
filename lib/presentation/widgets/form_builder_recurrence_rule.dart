@@ -94,51 +94,57 @@ class FormBuilderRecurrenceRule
     this.textCapitalization = TextCapitalization.none,
     this.textDirection,
     this.textInputAction,
-  }) : super(builder: (FormFieldState<RecurrenceRule?> field) {
-          final state = field as _RecurrenceRulePickerState;
+  }) : super(
+         builder: (FormFieldState<RecurrenceRule?> field) {
+           final state = field as _RecurrenceRulePickerState;
 
-          return TextField(
-            autocorrect: autocorrect,
-            autofocus: autofocus,
-            buildCounter: buildCounter,
-            controller: state._textFieldController,
-            cursorColor: cursorColor,
-            cursorRadius: cursorRadius,
-            cursorWidth: cursorWidth,
-            decoration: state.decoration,
-            enableInteractiveSelection: enableInteractiveSelection,
-            enabled: state.enabled,
-            expands: expands,
-            focusNode: state.effectiveFocusNode,
-            inputFormatters: inputFormatters,
-            keyboardAppearance: keyboardAppearance,
-            keyboardType: keyboardType,
-            maxLength: maxLength,
-            maxLengthEnforcement: maxLengthEnforcement,
-            maxLines: maxLines,
-            minLines: minLines,
-            mouseCursor: mouseCursor,
-            obscureText: obscureText,
-            onEditingComplete: onEditingComplete,
-            readOnly: true,
-            scrollPadding: scrollPadding,
-            showCursor: showCursor,
-            style: style,
-            textAlign: textAlign,
-            textAlignVertical: textAlignVertical,
-            textCapitalization: textCapitalization,
-            textDirection: textDirection,
-            textInputAction: textInputAction,
-          );
-        });
+           return TextField(
+             autocorrect: autocorrect,
+             autofocus: autofocus,
+             buildCounter: buildCounter,
+             controller: state._textFieldController,
+             cursorColor: cursorColor,
+             cursorRadius: cursorRadius,
+             cursorWidth: cursorWidth,
+             decoration: state.decoration,
+             enableInteractiveSelection: enableInteractiveSelection,
+             enabled: state.enabled,
+             expands: expands,
+             focusNode: state.effectiveFocusNode,
+             inputFormatters: inputFormatters,
+             keyboardAppearance: keyboardAppearance,
+             keyboardType: keyboardType,
+             maxLength: maxLength,
+             maxLengthEnforcement: maxLengthEnforcement,
+             maxLines: maxLines,
+             minLines: minLines,
+             mouseCursor: mouseCursor,
+             obscureText: obscureText,
+             onEditingComplete: onEditingComplete,
+             readOnly: true,
+             scrollPadding: scrollPadding,
+             showCursor: showCursor,
+             style: style,
+             textAlign: textAlign,
+             textAlignVertical: textAlignVertical,
+             textCapitalization: textCapitalization,
+             textDirection: textDirection,
+             textInputAction: textInputAction,
+           );
+         },
+       );
 
   @override
   FormBuilderFieldDecorationState<FormBuilderRecurrenceRule, RecurrenceRule>
-      createState() => _RecurrenceRulePickerState();
+  createState() => _RecurrenceRulePickerState();
 }
 
-class _RecurrenceRulePickerState extends FormBuilderFieldDecorationState<
-    FormBuilderRecurrenceRule, RecurrenceRule> {
+class _RecurrenceRulePickerState
+    extends
+        FormBuilderFieldDecorationState<
+          FormBuilderRecurrenceRule,
+          RecurrenceRule
+        > {
   late TextEditingController _textFieldController;
 
   @override
@@ -147,8 +153,9 @@ class _RecurrenceRulePickerState extends FormBuilderFieldDecorationState<
     _textFieldController = widget.controller ?? TextEditingController();
     //setting this to value instead of initialValue here is OK since we handle initial value in the parent class
     final initVal = value;
-    _textFieldController.text =
-        initVal == null ? '' : initVal.toText(l10n: widget.rruleL10n);
+    _textFieldController.text = initVal == null
+        ? ''
+        : initVal.toText(l10n: widget.rruleL10n);
     effectiveFocusNode.addListener(_handleFocus);
   }
 
@@ -170,7 +177,9 @@ class _RecurrenceRulePickerState extends FormBuilderFieldDecorationState<
   }
 
   Future<RecurrenceRule?> onShowSelector(
-      BuildContext context, RecurrenceRule? currentValue) async {
+    BuildContext context,
+    RecurrenceRule? currentValue,
+  ) async {
     final newValue = await showAdaptiveDialog(
       context: context,
       builder: (context) {
@@ -178,23 +187,24 @@ class _RecurrenceRulePickerState extends FormBuilderFieldDecorationState<
 
         return SimpleDialog(
           title: Text(l10n.recurrenceRule),
-          children: [
-            (CommonRecurrenceRules.daily, Icons.today),
-            (CommonRecurrenceRules.weekly, Icons.date_range),
-            (CommonRecurrenceRules.monthly, Icons.calendar_month),
-            (CommonRecurrenceRules.yearly, Icons.cake),
-            (CommonRecurrenceRules.weekdays, Icons.work),
-            (CommonRecurrenceRules.weekends, Icons.beach_access),
-            (CommonRecurrenceRules.once, Icons.one_x_mobiledata),
-          ]
-              .map<ListTile>(
-                (r) => ListTile(
-                  leading: Icon(r.$2),
-                  title: Text(r.$1.toText(l10n: widget.rruleL10n)),
-                  onTap: () => Navigator.pop(context, r.$1),
-                ),
-              )
-              .toList(growable: false),
+          children:
+              [
+                    (CommonRecurrenceRules.daily, Icons.today),
+                    (CommonRecurrenceRules.weekly, Icons.date_range),
+                    (CommonRecurrenceRules.monthly, Icons.calendar_month),
+                    (CommonRecurrenceRules.yearly, Icons.cake),
+                    (CommonRecurrenceRules.weekdays, Icons.work),
+                    (CommonRecurrenceRules.weekends, Icons.beach_access),
+                    (CommonRecurrenceRules.once, Icons.one_x_mobiledata),
+                  ]
+                  .map<ListTile>(
+                    (r) => ListTile(
+                      leading: Icon(r.$2),
+                      title: Text(r.$1.toText(l10n: widget.rruleL10n)),
+                      onTap: () => Navigator.pop(context, r.$1),
+                    ),
+                  )
+                  .toList(growable: false),
           // TODO: custom recurrence rule
         );
       },
@@ -209,7 +219,8 @@ class _RecurrenceRulePickerState extends FormBuilderFieldDecorationState<
   @override
   void didChange(RecurrenceRule? value) {
     super.didChange(value);
-    _textFieldController.text =
-        (value == null) ? '' : value.toText(l10n: widget.rruleL10n);
+    _textFieldController.text = (value == null)
+        ? ''
+        : value.toText(l10n: widget.rruleL10n);
   }
 }

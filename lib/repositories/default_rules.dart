@@ -5,7 +5,7 @@ import 'supabase.dart';
 
 class DefaultRulesRepository extends SupabaseRepository with Postgrest {
   DefaultRulesRepository({required super.supabase})
-      : super(tableName: Tables.default_rules);
+    : super(tableName: Tables.default_rules);
 
   Future<Iterable<DefaultRule>> getDefaultRules(String groupId) async {
     return table()
@@ -27,8 +27,10 @@ class DefaultRulesRepository extends SupabaseRepository with Postgrest {
         .withConverter((data) => DefaultRule.fromJson(data));
   }
 
-  Future<void> deleteDefaultRule(
-      {required String memberId, required String scheduleId}) async {
+  Future<void> deleteDefaultRule({
+    required String memberId,
+    required String scheduleId,
+  }) async {
     return table()
         .delete()
         .eq('member_id', memberId)

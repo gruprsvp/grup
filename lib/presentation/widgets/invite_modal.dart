@@ -7,10 +7,7 @@ enum InviteOptions { email, phone, contacts, guest }
 class InviteModal extends StatelessWidget {
   final ValueChanged<InviteOptions>? onOptionSelected;
 
-  const InviteModal({
-    super.key,
-    this.onOptionSelected,
-  });
+  const InviteModal({super.key, this.onOptionSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -70,23 +67,19 @@ class InviteModal extends StatelessWidget {
     required IconData icon,
     required String label,
     required InviteOptions option,
-  }) =>
-      Column(
-        children: [
-          IconButton.filled(
-            onPressed: () {
-              Navigator.of(context).pop(); // Close the modal
-              onOptionSelected?.call(option); // Notify the selection
-            },
-            enableFeedback: true,
-            icon: Icon(icon),
-            iconSize: 32,
-          ),
-          const SizedBox(height: 8),
-          Text(
-            label,
-            style: Theme.of(context).textTheme.bodyMedium,
-          ),
-        ],
-      );
+  }) => Column(
+    children: [
+      IconButton.filled(
+        onPressed: () {
+          Navigator.of(context).pop(); // Close the modal
+          onOptionSelected?.call(option); // Notify the selection
+        },
+        enableFeedback: true,
+        icon: Icon(icon),
+        iconSize: 32,
+      ),
+      const SizedBox(height: 8),
+      Text(label, style: Theme.of(context).textTheme.bodyMedium),
+    ],
+  );
 }

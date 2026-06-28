@@ -13,10 +13,7 @@ part 'group_manage.freezed.dart';
 class GroupManageContainer extends StatelessWidget {
   final String groupId;
 
-  const GroupManageContainer({
-    super.key,
-    required this.groupId,
-  });
+  const GroupManageContainer({super.key, required this.groupId});
 
   @override
   Widget build(BuildContext context) {
@@ -45,7 +42,8 @@ sealed class _ViewModel with _$ViewModel {
 
     return _ViewModel(
       group: group,
-      loading: store.state.groups.creating ||
+      loading:
+          store.state.groups.creating ||
           store.state.groups.loadingAll ||
           (store.state.groups.loadingIds[groupId] ?? false),
       onDelete: (groupId) => store.dispatch(RequestDeleteOne<Group>(groupId)),

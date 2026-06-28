@@ -8,25 +8,24 @@ final authReducer = combineReducers<AuthState>([
 ]);
 
 AuthState _authStateChanged(
-    AuthState authState, AuthStateChangedAction action) {
+  AuthState authState,
+  AuthStateChangedAction action,
+) {
   final user = action.authState.session?.user;
   if (user != null) {
-    return authState.copyWith(
-      status: AuthStatus.authenticated,
-      user: user,
-    );
+    return authState.copyWith(status: AuthStatus.authenticated, user: user);
   }
 
   return authState;
 }
 
 AuthState _deeplinkUnauthenticated(
-    AuthState authState, HandleDeeplinkAction action) {
+  AuthState authState,
+  HandleDeeplinkAction action,
+) {
   final isLastRoute = action.route == authState.lastRoute;
   final user = authState.user;
   if (user != null && !isLastRoute) return authState;
 
-  return authState.copyWith(
-    lastRoute: isLastRoute ? null : action.route,
-  );
+  return authState.copyWith(lastRoute: isLastRoute ? null : action.route);
 }

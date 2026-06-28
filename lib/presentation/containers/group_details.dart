@@ -14,10 +14,7 @@ part 'group_details.freezed.dart';
 class GroupDetailsContainer extends StatelessWidget {
   final String groupId;
 
-  const GroupDetailsContainer({
-    super.key,
-    required this.groupId,
-  });
+  const GroupDetailsContainer({super.key, required this.groupId});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +41,8 @@ sealed class _ViewModel with _$ViewModel {
 
   static _ViewModel fromStore(Store<AppState> store, String groupId) {
     return _ViewModel(
-      loading: store.state.groups.loadingAll ||
+      loading:
+          store.state.groups.loadingAll ||
           (store.state.groups.loadingIds[groupId] ?? false),
       group: store.state.groups.entities[groupId],
       isAdmin: selectIsAdmin(store.state),

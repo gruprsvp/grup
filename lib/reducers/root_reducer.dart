@@ -33,8 +33,10 @@ AppState rootReducer(AppState state, dynamic action) {
     locale: localeReducer(state.locale, action),
     selectedDate: selectedDateReducer(state.selectedDate, action),
     selectedGroupId: selectedGroupIdReducer(state.selectedGroupId, action),
-    selectedScheduleId:
-        selectedScheduleIdReducer(state.selectedScheduleId, action),
+    selectedScheduleId: selectedScheduleIdReducer(
+      state.selectedScheduleId,
+      action,
+    ),
     hasSeenFeedbackCard: feedbackReducer(state.hasSeenFeedbackCard, action),
   );
 }

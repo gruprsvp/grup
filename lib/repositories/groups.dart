@@ -31,12 +31,15 @@ class GroupsRepository extends SupabaseRepository with Postgrest {
 
   Future<Group> createGroup(Group group) async {
     return supabase
-        .rpc('create_group', params: {
-          'id': const Uuid().v7(),
-          'display_name': group.displayName,
-          'description': group.description,
-          'picture': group.picture,
-        })
+        .rpc(
+          'create_group',
+          params: {
+            'id': const Uuid().v7(),
+            'display_name': group.displayName,
+            'description': group.description,
+            'picture': group.picture,
+          },
+        )
         .single()
         .withConverter((data) => Group.fromJson(data));
   }

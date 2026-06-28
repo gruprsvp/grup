@@ -23,35 +23,40 @@ void main() {
 
       final dailyRecurrenceRule = CommonRecurrenceRules.daily;
       final dailySchedule = Schedule(
-          id: dailyScheduleId,
-          groupId: 'group',
-          displayName: 'Daily schedule',
-          startDate: startDate,
-          recurrenceRule: dailyRecurrenceRule);
+        id: dailyScheduleId,
+        groupId: 'group',
+        displayName: 'Daily schedule',
+        startDate: startDate,
+        recurrenceRule: dailyRecurrenceRule,
+      );
       final weekendRecurrenceRule = CommonRecurrenceRules.weekends;
       final weekendSchedule = Schedule(
-          id: weekendScheduleId,
-          groupId: groupId,
-          displayName: 'Weekend schedule',
-          startDate: startDate,
-          recurrenceRule: weekendRecurrenceRule);
+        id: weekendScheduleId,
+        groupId: groupId,
+        displayName: 'Weekend schedule',
+        startDate: startDate,
+        recurrenceRule: weekendRecurrenceRule,
+      );
 
       final defaultRules = [
         DefaultRule(
-            memberId: member1Id,
-            scheduleId: dailySchedule.id,
-            selectedOption: ReplyOptions.yes,
-            recurrenceRule: dailyRecurrenceRule),
+          memberId: member1Id,
+          scheduleId: dailySchedule.id,
+          selectedOption: ReplyOptions.yes,
+          recurrenceRule: dailyRecurrenceRule,
+        ),
         DefaultRule(
-            memberId: member1Id,
-            scheduleId: weekendSchedule.id,
-            selectedOption: ReplyOptions.yes,
-            recurrenceRule: weekendRecurrenceRule),
+          memberId: member1Id,
+          scheduleId: weekendSchedule.id,
+          selectedOption: ReplyOptions.yes,
+          recurrenceRule: weekendRecurrenceRule,
+        ),
         DefaultRule(
-            memberId: member2Id,
-            scheduleId: dailySchedule.id,
-            selectedOption: ReplyOptions.yes,
-            recurrenceRule: weekendRecurrenceRule),
+          memberId: member2Id,
+          scheduleId: dailySchedule.id,
+          selectedOption: ReplyOptions.yes,
+          recurrenceRule: weekendRecurrenceRule,
+        ),
       ];
 
       // find next sunday (avoid today, start searching from tomorrow)
@@ -59,25 +64,29 @@ void main() {
       final saturday = sunday.add(const Duration(days: -1));
       final replies = [
         Reply(
-            memberId: member1Id,
-            scheduleId: dailySchedule.id,
-            instanceDate: sunday,
-            selectedOption: ReplyOptions.no),
+          memberId: member1Id,
+          scheduleId: dailySchedule.id,
+          instanceDate: sunday,
+          selectedOption: ReplyOptions.no,
+        ),
         Reply(
-            memberId: member2Id,
-            scheduleId: dailySchedule.id,
-            instanceDate: sunday,
-            selectedOption: ReplyOptions.no),
+          memberId: member2Id,
+          scheduleId: dailySchedule.id,
+          instanceDate: sunday,
+          selectedOption: ReplyOptions.no,
+        ),
         Reply(
-            memberId: member1Id,
-            scheduleId: dailySchedule.id,
-            instanceDate: saturday,
-            selectedOption: ReplyOptions.no),
+          memberId: member1Id,
+          scheduleId: dailySchedule.id,
+          instanceDate: saturday,
+          selectedOption: ReplyOptions.no,
+        ),
         Reply(
-            memberId: member1Id,
-            scheduleId: weekendSchedule.id,
-            instanceDate: sunday,
-            selectedOption: ReplyOptions.yes),
+          memberId: member1Id,
+          scheduleId: weekendSchedule.id,
+          instanceDate: sunday,
+          selectedOption: ReplyOptions.yes,
+        ),
       ];
 
       final members = [
@@ -98,13 +107,15 @@ void main() {
       expect(result, isNotNull);
       expect(result, hasLength(testDays));
 
-      final sundayInstance =
-          result.singleWhere((element) => element.instanceDate == sunday);
+      final sundayInstance = result.singleWhere(
+        (element) => element.instanceDate == sunday,
+      );
       expect(sundayInstance.myReply, ReplyOptions.no);
       expect(sundayInstance.yesCount, 0);
 
-      final saturdayInstance =
-          result.singleWhere((element) => element.instanceDate == saturday);
+      final saturdayInstance = result.singleWhere(
+        (element) => element.instanceDate == saturday,
+      );
       expect(saturdayInstance.myReply, ReplyOptions.no);
       expect(saturdayInstance.yesCount, 1);
     });

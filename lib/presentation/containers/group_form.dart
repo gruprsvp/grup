@@ -13,20 +13,14 @@ part 'group_form.freezed.dart';
 class GroupFormContainer extends StatelessWidget {
   final String groupId;
 
-  const GroupFormContainer({
-    super.key,
-    required this.groupId,
-  });
+  const GroupFormContainer({super.key, required this.groupId});
 
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
       distinct: true,
       converter: (store) => _ViewModel.fromStore(store, groupId),
-      builder: (context, vm) => GroupForm(
-        onSave: vm.onSave,
-        group: vm.group,
-      ),
+      builder: (context, vm) => GroupForm(onSave: vm.onSave, group: vm.group),
     );
   }
 }
@@ -44,13 +38,13 @@ sealed class _ViewModel with _$ViewModel {
 
     return _ViewModel(
       group: group,
-      loading: store.state.groups.creating ||
+      loading:
+          store.state.groups.creating ||
           store.state.groups.loadingAll ||
           (store.state.groups.loadingIds[groupId] ?? false),
       // TODO unique action per source
-      onSave: (group) => store.dispatch(
-        UpdateGroupAction(group: group.$1, image: group.$2),
-      ),
+      onSave: (group) =>
+          store.dispatch(UpdateGroupAction(group: group.$1, image: group.$2)),
     );
   }
 }

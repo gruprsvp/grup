@@ -51,7 +51,6 @@ class GroupMemberDetailsScreen extends StatelessWidget {
       body: ListView(
         children: [
           // TODO Should the default replies be set here?
-
           if (!isCurrentUser) ...[
             if (isNotPending)
               // Only members that already joined can become admins
@@ -84,23 +83,23 @@ class GroupMemberDetailsScreen extends StatelessWidget {
                 // TODO Should probably be its own widget
                 switch (invite.method) {
                   InviteMethods.email => ListTile(
-                      leading: const Icon(Icons.email),
-                      title: Text(invite.value),
-                    ),
+                    leading: const Icon(Icons.email),
+                    title: Text(invite.value),
+                  ),
                   InviteMethods.phone => ListTile(
-                      leading: const Icon(Icons.phone),
-                      title: Text(invite.value), // TODO Format phone number
-                    ),
+                    leading: const Icon(Icons.phone),
+                    title: Text(invite.value), // TODO Format phone number
+                  ),
                   InviteMethods.code => ListTile(
-                      leading: const Icon(Icons.copy),
-                      title: Text(invite.value),
-                      subtitle: Text(l10n.inviteCodeExplanation(displayName)),
-                      onTap: () => _copyInviteToClipboard(context, invite),
-                      trailing: IconButton(
-                        icon: Icon(Icons.adaptive.share),
-                        onPressed: () => _shareInvite(context, invite),
-                      ),
+                    leading: const Icon(Icons.copy),
+                    title: Text(invite.value),
+                    subtitle: Text(l10n.inviteCodeExplanation(displayName)),
+                    onTap: () => _copyInviteToClipboard(context, invite),
+                    trailing: IconButton(
+                      icon: Icon(Icons.adaptive.share),
+                      onPressed: () => _shareInvite(context, invite),
                     ),
+                  ),
                 },
 
               // TODO Create and remove invites
@@ -126,7 +125,7 @@ class GroupMemberDetailsScreen extends StatelessWidget {
               iconColor: theme.colorScheme.error,
               textColor: theme.colorScheme.error,
               onTap: () => _confirmRemoveMember(context, member!),
-            )
+            ),
           ],
         ],
       ),
@@ -135,14 +134,14 @@ class GroupMemberDetailsScreen extends StatelessWidget {
 
   /// Copies the [value] to the clipboard and shows a snackbar with a confirmation.
   Future<void> _copyInviteToClipboard(
-      BuildContext context, Invite invite) async {
+    BuildContext context,
+    Invite invite,
+  ) async {
     await Clipboard.setData(ClipboardData(text: invite.value));
 
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(
-        content: Text(AppLocalizations.of(context)!.copiedToClipboard),
-      ),
+      SnackBar(content: Text(AppLocalizations.of(context)!.copiedToClipboard)),
     );
   }
 
@@ -161,7 +160,10 @@ class GroupMemberDetailsScreen extends StatelessWidget {
 
   /// Shows a confirmation dialog before updating the role of a member.
   Future<void> _confirmUpdateRole(
-      BuildContext context, Member member, GroupRoles newRole) async {
+    BuildContext context,
+    Member member,
+    GroupRoles newRole,
+  ) async {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
@@ -190,9 +192,7 @@ class GroupMemberDetailsScreen extends StatelessWidget {
             ),
             TextButton(
               onPressed: () => context.pop(true),
-              style: TextButton.styleFrom(
-                foregroundColor: actionColor,
-              ),
+              style: TextButton.styleFrom(foregroundColor: actionColor),
               child: Text(l10n.yes),
             ),
           ],

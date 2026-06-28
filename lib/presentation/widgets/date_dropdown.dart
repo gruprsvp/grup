@@ -6,11 +6,7 @@ class DateDropdown extends StatelessWidget {
   final DateTime? date;
   final ValueChanged<DateTime>? onDateChanged;
 
-  DateDropdown({
-    super.key,
-    this.date,
-    this.onDateChanged,
-  });
+  DateDropdown({super.key, this.date, this.onDateChanged});
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? newDate = await showDatePicker(

@@ -6,10 +6,10 @@ import 'package:rxdart/rxdart.dart';
 
 /// All epics that handle the navigation
 Epic<AppState> createRouterEpics(GoRouter router) => combineEpics<AppState>([
-      _createRouterPushEpic(router),
-      _createRouterReplaceEpic(router),
-      // TODO(borgoat): create epics and actions for other router events
-    ]);
+  _createRouterPushEpic(router),
+  _createRouterReplaceEpic(router),
+  // TODO(borgoat): create epics and actions for other router events
+]);
 
 Epic<AppState> _createRouterPushEpic(GoRouter router) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) => actions

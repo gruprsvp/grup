@@ -31,11 +31,16 @@ class GroupsList extends StatelessWidget {
             ),
           ),
           title: Hero(
-              tag: group,
-              child: Text(displayName, style: theme.textTheme.headlineMedium)),
+            tag: group,
+            child: Text(displayName, style: theme.textTheme.headlineMedium),
+          ),
           subtitle: description != null
-              ? Text(description,
-                  overflow: TextOverflow.fade, softWrap: false, maxLines: 1)
+              ? Text(
+                  description,
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                  maxLines: 1,
+                )
               : null,
           onTap: () =>
               GroupDetailsRoute(groupId: group.id.toString()).push(context),

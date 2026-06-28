@@ -6,7 +6,7 @@ import 'supabase.dart';
 
 class SchedulesRepository extends SupabaseRepository with Postgrest {
   const SchedulesRepository({required super.supabase})
-      : super(tableName: Tables.schedules);
+    : super(tableName: Tables.schedules);
 
   Future<Schedule> createSchedule(Schedule schedule) async {
     return table()

@@ -43,8 +43,9 @@ Future<void> main() async {
   await configService.initialize();
 
   // TODO(borgoat): support more configuration files
-  final supabaseConfigFile =
-      await rootBundle.loadString(configService.config.supabaseConfigPath);
+  final supabaseConfigFile = await rootBundle.loadString(
+    configService.config.supabaseConfigPath,
+  );
 
   final supabaseConfig = SupabaseConfig.fromString(supabaseConfigFile);
 
@@ -56,13 +57,14 @@ Future<void> main() async {
   final store = await _initStore(supabase.client);
 
   // Propagate auth state changes to the store
-  supabase.client.auth.onAuthStateChange
-      .listen((authState) => store.dispatch(AuthStateChangedAction(authState)));
+  supabase.client.auth.onAuthStateChange.listen(
+    (authState) => store.dispatch(AuthStateChangedAction(authState)),
+  );
 
   // Propagate received deeplinks to the store
-  AppLinks()
-      .uriLinkStream
-      .listen((uri) => store.dispatch(HandleDeeplinkAction(uri.path)));
+  AppLinks().uriLinkStream.listen(
+    (uri) => store.dispatch(HandleDeeplinkAction(uri.path)),
+  );
 
   kReleaseMode
       ? initSentry(() => runApp(ParApp(store: store)))
@@ -97,8 +99,10 @@ Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
 
   final persistor = Persistor<AppState>(
     storage: FlutterStorage(location: storageLocation),
-    serializer: JsonSerializer((json) =>
-        json != null ? AppState.fromJson(json as Map<String, dynamic>) : null),
+    serializer: JsonSerializer(
+      (json) =>
+          json != null ? AppState.fromJson(json as Map<String, dynamic>) : null,
+    ),
     transforms: Transforms(
       onSave: [(state) => AppState.copyWithoutErrors(state)],
       onLoad: [(state) => AppState.copyWithSelectedDateToday(state)],

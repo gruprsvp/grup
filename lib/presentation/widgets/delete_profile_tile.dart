@@ -30,31 +30,32 @@ class DeleteProfileTile extends StatelessWidget {
   /// Shows a confirmation dialog and deletes the user profile if confirmed.
   _confirmDelete(BuildContext context) async {
     final doDelete = await showAdaptiveDialog<bool>(
-        context: context,
-        builder: (context) {
-          final l10n = AppLocalizations.of(context)!;
-          final theme = Theme.of(context);
-          final nav = Navigator.of(context);
+      context: context,
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        final theme = Theme.of(context);
+        final nav = Navigator.of(context);
 
-          return AlertDialog.adaptive(
-            icon: const Icon(Icons.logout),
-            title: Text(l10n.deleteProfile),
-            content: Text(l10n.deleteProfileConfirmation),
-            actions: [
-              TextButton(
-                onPressed: () => nav.pop(false),
-                child: Text(l10n.cancel),
+        return AlertDialog.adaptive(
+          icon: const Icon(Icons.logout),
+          title: Text(l10n.deleteProfile),
+          content: Text(l10n.deleteProfileConfirmation),
+          actions: [
+            TextButton(
+              onPressed: () => nav.pop(false),
+              child: Text(l10n.cancel),
+            ),
+            TextButton(
+              onPressed: () => nav.pop(true),
+              style: TextButton.styleFrom(
+                foregroundColor: theme.colorScheme.error,
               ),
-              TextButton(
-                onPressed: () => nav.pop(true),
-                style: TextButton.styleFrom(
-                  foregroundColor: theme.colorScheme.error,
-                ),
-                child: Text(l10n.delete),
-              ),
-            ],
-          );
-        });
+              child: Text(l10n.delete),
+            ),
+          ],
+        );
+      },
+    );
 
     if (doDelete == null || !doDelete) return;
 

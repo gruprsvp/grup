@@ -57,7 +57,7 @@ class HomeScreen extends StatelessWidget {
                     label: Text(l10n.createOrJoinGroup),
                     onPressed: () => _onGroupCreate(context),
                   ),
-                )
+                ),
               },
             ),
           )
@@ -78,7 +78,8 @@ class HomeScreen extends StatelessWidget {
             bottom: loading
                 ? PreferredSize(
                     preferredSize: Size(MediaQuery.of(context).size.width, 0),
-                    child: const LinearProgressIndicator())
+                    child: const LinearProgressIndicator(),
+                  )
                 : null,
             actions: [
               ProfilePicture(
@@ -93,8 +94,10 @@ class HomeScreen extends StatelessWidget {
           if (shouldShowFeedback == true)
             SliverToBoxAdapter(
               child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
                 child: Dismissible(
                   key: ValueKey('feedbackCard'),
                   child: const FeedbackCard(),

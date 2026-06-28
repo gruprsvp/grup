@@ -13,8 +13,8 @@ class JoinWithInviteCodeAction {
 class SuccessUseInviteCode {
   const SuccessUseInviteCode();
 
-// TODO Could this be used to navigate to the group?
-// final String groupId;
+  // TODO Could this be used to navigate to the group?
+  // final String groupId;
 }
 
 @immutable

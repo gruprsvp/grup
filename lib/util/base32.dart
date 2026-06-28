@@ -7,7 +7,9 @@ const _crockford = '0123456789ABCDEFGHJKMNPQRSTVWXYZ';
 class Base32TextInputFormatter implements TextInputFormatter {
   @override
   TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+    TextEditingValue oldValue,
+    TextEditingValue newValue,
+  ) {
     final normalised = cleanBase32Code(newValue.text);
     final formatted = formatBase32Code(normalised);
 

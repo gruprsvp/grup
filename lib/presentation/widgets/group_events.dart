@@ -35,15 +35,15 @@ class GroupEvents extends StatelessWidget {
               return ListTile(
                 title: Text(schedule.displayName),
                 subtitle: FutureBuilder(
-                    future: rrulel10n,
-                    builder: (context, snapshot) {
-                      if (snapshot.connectionState == ConnectionState.done) {
-                        final rrl10n = snapshot.data as RruleL10n;
-                        return Text(
-                            schedule.recurrenceRule.toText(l10n: rrl10n));
-                      }
-                      return Text(l10n.loading);
-                    }),
+                  future: rrulel10n,
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      final rrl10n = snapshot.data as RruleL10n;
+                      return Text(schedule.recurrenceRule.toText(l10n: rrl10n));
+                    }
+                    return Text(l10n.loading);
+                  },
+                ),
                 trailing: IconButton(
                   icon: Icon(Icons.delete),
                   onPressed: () => _deleteEvent(context, schedule),
@@ -58,10 +58,12 @@ class GroupEvents extends StatelessWidget {
               textAlign: TextAlign.center,
               style: theme.textTheme.bodyLarge,
               tags: {
-                'newevent': StyledTextWidgetTag(TextButton(
-                  onPressed: () => _createNewEvent(context),
-                  child: Text(l10n.createNewEvent),
-                ))
+                'newevent': StyledTextWidgetTag(
+                  TextButton(
+                    onPressed: () => _createNewEvent(context),
+                    child: Text(l10n.createNewEvent),
+                  ),
+                ),
               },
             ),
           );
@@ -81,8 +83,9 @@ class GroupEvents extends StatelessWidget {
   }
 
   _createNewEvent(BuildContext context) async {
-    final result = await GroupScheduleCreateRoute(groupId: group!.id.toString())
-        .push(context);
+    final result = await GroupScheduleCreateRoute(
+      groupId: group!.id.toString(),
+    ).push(context);
 
     if (result is! Schedule) {
       // TODO error handling
@@ -95,31 +98,32 @@ class GroupEvents extends StatelessWidget {
 
   _deleteEvent(BuildContext context, Schedule schedule) async {
     final doDelete = await showAdaptiveDialog<bool>(
-        context: context,
-        builder: (context) {
-          final l10n = AppLocalizations.of(context)!;
-          final theme = Theme.of(context);
-          final nav = Navigator.of(context);
+      context: context,
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        final theme = Theme.of(context);
+        final nav = Navigator.of(context);
 
-          return AlertDialog.adaptive(
-            icon: const Icon(Icons.logout),
-            title: Text(l10n.deleteSchedule),
-            content: Text(l10n.deleteScheduleConfirmation),
-            actions: [
-              TextButton(
-                onPressed: () => nav.pop(false),
-                child: Text(l10n.cancel),
+        return AlertDialog.adaptive(
+          icon: const Icon(Icons.logout),
+          title: Text(l10n.deleteSchedule),
+          content: Text(l10n.deleteScheduleConfirmation),
+          actions: [
+            TextButton(
+              onPressed: () => nav.pop(false),
+              child: Text(l10n.cancel),
+            ),
+            TextButton(
+              onPressed: () => nav.pop(true),
+              style: TextButton.styleFrom(
+                foregroundColor: theme.colorScheme.error,
               ),
-              TextButton(
-                onPressed: () => nav.pop(true),
-                style: TextButton.styleFrom(
-                  foregroundColor: theme.colorScheme.error,
-                ),
-                child: Text(l10n.delete),
-              ),
-            ],
-          );
-        });
+              child: Text(l10n.delete),
+            ),
+          ],
+        );
+      },
+    );
 
     if (doDelete == null || !doDelete) return;
 

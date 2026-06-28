@@ -11,11 +11,7 @@ class GroupForm extends StatefulWidget {
   final OnGroupSaveCallback onSave;
   final Group? group;
 
-  const GroupForm({
-    super.key,
-    required this.onSave,
-    this.group,
-  });
+  const GroupForm({super.key, required this.onSave, this.group});
 
   @override
   createState() => _GroupFormState();
@@ -33,8 +29,9 @@ class _GroupFormState extends State<GroupForm> {
     super.initState();
     _imageController = ImageController();
     _nameController = TextEditingController(text: widget.group?.displayName);
-    _descriptionController =
-        TextEditingController(text: widget.group?.description);
+    _descriptionController = TextEditingController(
+      text: widget.group?.description,
+    );
   }
 
   @override
@@ -119,12 +116,13 @@ class _GroupFormState extends State<GroupForm> {
                       displayName: displayName,
                       description: description.isNotEmpty ? description : null,
                     ),
-                    picture
+                    picture,
                   ));
                 }
               },
-              child:
-                  Text(widget.group != null ? l10n.save : l10n.createNewGroup),
+              child: Text(
+                widget.group != null ? l10n.save : l10n.createNewGroup,
+              ),
             ),
           ),
         ],

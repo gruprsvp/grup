@@ -32,25 +32,30 @@ class GroupCreateScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n.newGroup),
-          bottom: TabBar(tabs: [
-            Tab(
-              text: l10n.join,
-              icon: const Icon(Icons.waving_hand_outlined),
-            ),
-            Tab(
-              text: l10n.create,
-              icon: const Icon(Icons.group_add_outlined),
-            ),
-          ]),
+          bottom: TabBar(
+            tabs: [
+              Tab(
+                text: l10n.join,
+                icon: const Icon(Icons.waving_hand_outlined),
+              ),
+              Tab(
+                text: l10n.create,
+                icon: const Icon(Icons.group_add_outlined),
+              ),
+            ],
+          ),
         ),
         body: TabBarView(
           children: [
             GroupJoin(
-                onJoin: (code) => context
-                    .pop<GroupCreateResult>(GroupCreateResultJoin(code))),
+              onJoin: (code) =>
+                  context.pop<GroupCreateResult>(GroupCreateResultJoin(code)),
+            ),
             GroupForm(
-                onSave: (group) => context.pop<GroupCreateResult>(
-                    GroupCreateResultNew(group.$1, group.$2))),
+              onSave: (group) => context.pop<GroupCreateResult>(
+                GroupCreateResultNew(group.$1, group.$2),
+              ),
+            ),
           ],
         ),
       ),

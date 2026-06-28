@@ -20,9 +20,7 @@ class _ScheduleCreateScreenState extends State<ScheduleCreateScreen> {
     final l10n = AppLocalizations.of(context)!;
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.createNewEvent),
-      ),
+      appBar: AppBar(title: Text(l10n.createNewEvent)),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: ScheduleForm(

@@ -25,31 +25,20 @@ void main() {
       );
 
       final profiles = [
-        Profile(
-          id: authUser.id,
-          displayName: 'current user',
-        ),
+        Profile(id: authUser.id, displayName: 'current user'),
         for (var i = 0; i < 10; i++)
-          Profile(
-            id: uuid.v4(),
-            displayName: 'user $i',
-          ),
+          Profile(id: uuid.v4(), displayName: 'user $i'),
       ];
 
-      final group = Group(
-        id: 'group',
-        displayName: 'group',
-      );
+      final group = Group(id: 'group', displayName: 'group');
 
       Member createMember(Profile profile) => Member(
-            id: uuid.v7(),
-            groupId: group.id,
-            profileId: profile.id,
-            role: GroupRoles.member,
-          );
-      final members = [
-        for (final profile in profiles) createMember(profile),
-      ];
+        id: uuid.v7(),
+        groupId: group.id,
+        profileId: profile.id,
+        role: GroupRoles.member,
+      );
+      final members = [for (final profile in profiles) createMember(profile)];
 
       final schedules = [
         Schedule(
@@ -66,8 +55,9 @@ void main() {
             memberId: member.id,
             scheduleId: schedule.id,
             instanceDate: date,
-            selectedOption:
-                Random().nextBool() ? ReplyOptions.yes : ReplyOptions.no,
+            selectedOption: Random().nextBool()
+                ? ReplyOptions.yes
+                : ReplyOptions.no,
           );
       final replies = [
         for (final schedule in schedules) ...[
@@ -79,30 +69,34 @@ void main() {
             selectedOption: ReplyOptions.yes,
           ),
           for (final member in members) createReply(member, schedule, date),
-        ]
+        ],
       ];
 
       final state = AppState(
         selectedDate: date,
         auth: AuthState(status: AuthStatus.authenticated, user: authUser),
-        profiles: RemoteEntityState<Profile>(entities: {
-          for (final profile in profiles) profile.id: profile,
-        }),
+        profiles: RemoteEntityState<Profile>(
+          entities: {for (final profile in profiles) profile.id: profile},
+        ),
         groups: RemoteEntityState<Group>(entities: {group.id: group}),
-        members: RemoteEntityState<Member>(entities: {
-          for (final member in members) member.id: member,
-        }),
-        schedules: RemoteEntityState<Schedule>(entities: {
-          for (final schedule in schedules) schedule.id: schedule,
-        }),
-        defaultRules: RemoteEntityState<DefaultRule>(entities: {
-          // TODO Does it happen with default rules?
-        }),
-        replies: RemoteEntityState<Reply>(entities: {
-          for (final reply in replies)
-            "${reply.memberId}-${reply.scheduleId}-${reply.instanceDate}":
-                reply,
-        }),
+        members: RemoteEntityState<Member>(
+          entities: {for (final member in members) member.id: member},
+        ),
+        schedules: RemoteEntityState<Schedule>(
+          entities: {for (final schedule in schedules) schedule.id: schedule},
+        ),
+        defaultRules: RemoteEntityState<DefaultRule>(
+          entities: {
+            // TODO Does it happen with default rules?
+          },
+        ),
+        replies: RemoteEntityState<Reply>(
+          entities: {
+            for (final reply in replies)
+              "${reply.memberId}-${reply.scheduleId}-${reply.instanceDate}":
+                  reply,
+          },
+        ),
         selectedGroupId: group.id,
         // selectedScheduleId: // TODO
       );
@@ -114,10 +108,11 @@ void main() {
         final instance2 = selectScheduleInstanceForDate(state2);
 
         expect(
-            instance2?.repliesGroups
-                .firstWhere((e) => e.reply == ReplyOptions.yes)
-                .count,
-            equals(instance.yesCount));
+          instance2?.repliesGroups
+              .firstWhere((e) => e.reply == ReplyOptions.yes)
+              .count,
+          equals(instance.yesCount),
+        );
       }
     });
   });
