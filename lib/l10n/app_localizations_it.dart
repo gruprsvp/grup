@@ -228,14 +228,11 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String groupRoles(String role) {
-    String _temp0 = intl.Intl.selectLogic(
-      role,
-      {
-        'admin': 'Admin',
-        'member': 'Membro',
-        'other': 'Sconosciuto',
-      },
-    );
+    String _temp0 = intl.Intl.selectLogic(role, {
+      'admin': 'Admin',
+      'member': 'Membro',
+      'other': 'Sconosciuto',
+    });
     return '$_temp0';
   }
 
