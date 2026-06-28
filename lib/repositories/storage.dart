@@ -8,21 +8,20 @@ import 'supabase.dart';
 /// Repository for uploading files to Supabase Storage.
 class StorageRepository extends SupabaseRepository with Storage {
   const StorageRepository({required super.supabase})
-      : super(bucketName: Buckets.public);
+    : super(bucketName: Buckets.public);
 
   /// Uploads a file to the public bucket.
   Future<String> uploadPublicXFile(String key, XFile file) async {
-    final ext =
-        file.mimeType != null ? extensionFromMime(file.mimeType!) : 'jpg';
+    final ext = file.mimeType != null
+        ? extensionFromMime(file.mimeType!)
+        : 'jpg';
     final path = '${supabase.auth.currentUser!.id}/$key.$ext';
     final bytes = await file.readAsBytes();
 
-    final response = await bucket().uploadBinary(
+    await bucket().uploadBinary(
       path,
       bytes,
-      fileOptions: FileOptions(
-        contentType: file.mimeType,
-      ),
+      fileOptions: FileOptions(contentType: file.mimeType),
     );
 
     return bucket().getPublicUrl(path);

@@ -31,9 +31,7 @@ class FeedbackCard extends StatelessWidget {
       collapsedBackgroundColor: colorScheme.surfaceContainer,
       textColor: colorScheme.onSecondaryContainer,
       backgroundColor: colorScheme.secondaryContainer,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       title: Padding(
         padding: const EdgeInsets.symmetric(vertical: 16),
         child: Text(
@@ -59,10 +57,7 @@ class FeedbackCard extends StatelessWidget {
           padding: EdgeInsets.only(bottom: 16),
           child: Wrap(
             alignment: WrapAlignment.spaceEvenly,
-            children: [
-              const _EmailButton(),
-              const _StoreButton(),
-            ],
+            children: [const _EmailButton(), const _StoreButton()],
           ),
         ),
       ],
@@ -71,7 +66,7 @@ class FeedbackCard extends StatelessWidget {
 }
 
 class _EmailButton extends StatelessWidget {
-  const _EmailButton({super.key});
+  const _EmailButton();
 
   final _emailAddress = 'hello@grup.rsvp';
 
@@ -106,7 +101,9 @@ class _EmailButton extends StatelessWidget {
       SnackBar(
         content: Text(l10n.feedbackEmailCantSend(_emailAddress)),
         action: SnackBarAction(
-            label: l10n.copy, onPressed: () => _copyToClipboard(context)),
+          label: l10n.copy,
+          onPressed: () => _copyToClipboard(context),
+        ),
       ),
     );
   }
@@ -128,10 +125,13 @@ class _EmailButton extends StatelessWidget {
   Future<String> _prepareEmailUrl(BuildContext context) async {
     final l10n = AppLocalizations.of(context)!;
 
-    final (versionString, deviceString) =
-        await (_getVersionString(), _getDeviceString()).wait;
+    final (versionString, deviceString) = await (
+      _getVersionString(),
+      _getDeviceString(),
+    ).wait;
 
-    final info = '''
+    final info =
+        '''
 
 
 ---
@@ -177,7 +177,7 @@ $deviceString
 }
 
 class _StoreButton extends StatelessWidget {
-  const _StoreButton({super.key});
+  const _StoreButton();
 
   @override
   Widget build(BuildContext context) {
@@ -187,8 +187,8 @@ class _StoreButton extends StatelessWidget {
     final storeName = Platform.isIOS
         ? 'App Store'
         : Platform.isAndroid
-            ? 'Google Play'
-            : null;
+        ? 'Google Play'
+        : null;
 
     // If the platform is not supported, show nothing
     if (storeName == null) return const SizedBox.shrink();
@@ -203,8 +203,10 @@ class _StoreButton extends StatelessWidget {
 
     return FilledButton.icon(
       style: ButtonStyle(
-          backgroundColor:
-              WidgetStatePropertyAll(colorScheme.onSecondaryContainer)),
+        backgroundColor: WidgetStatePropertyAll(
+          colorScheme.onSecondaryContainer,
+        ),
+      ),
       icon: FaIcon(FontAwesomeIcons.solidHeart, color: colorScheme.error),
       label: Text(l10n.feedbackStoreReview(storeName)),
       onPressed: () => inAppReview.openStoreListing(appStoreId: appStoreId),

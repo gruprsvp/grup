@@ -19,7 +19,6 @@ class GroupDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
     final groupId = group?.id;
@@ -32,50 +31,52 @@ class GroupDetailsScreen extends StatelessWidget {
         groupImage != null || groupDescription != null;
 
     return Scaffold(
-        body: NestedScrollView(
-            headerSliverBuilder: (context, innerBoxIsScrolled) => [
-                  SliverAppBar(
-                    pinned: true,
-                    title: Text(groupName),
-                    bottom: PreferredSize(
-                      preferredSize: Size.fromHeight(60),
-                      child: const DateDropdownContainer(),
-                    ),
-                  ),
-                  if (imageOrDescriptionToShow)
-                    SliverToBoxAdapter(
-                      child: Column(
-                        children: [
-                          if (groupImage != null)
-                            Padding(
-                              padding: EdgeInsets.all(16),
-                              child: Hero(
-                                tag: groupImage,
-                                child: ProfilePicture(
-                                  image: NetworkImage(groupImage),
-                                  icon: Icons.group,
-                                  radius: 128,
-                                  color: colorScheme.secondary,
-                                ),
-                              ),
-                            ),
-                          if (groupDescription != null)
-                            Padding(
-                              padding: EdgeInsets.all(16),
-                              child: Text(groupDescription),
-                            )
-                        ],
+      body: NestedScrollView(
+        headerSliverBuilder: (context, innerBoxIsScrolled) => [
+          SliverAppBar(
+            pinned: true,
+            title: Text(groupName),
+            bottom: PreferredSize(
+              preferredSize: Size.fromHeight(60),
+              child: const DateDropdownContainer(),
+            ),
+          ),
+          if (imageOrDescriptionToShow)
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  if (groupImage != null)
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Hero(
+                        tag: groupImage,
+                        child: ProfilePicture(
+                          image: NetworkImage(groupImage),
+                          icon: Icons.group,
+                          radius: 128,
+                          color: colorScheme.secondary,
+                        ),
                       ),
                     ),
+                  if (groupDescription != null)
+                    Padding(
+                      padding: EdgeInsets.all(16),
+                      child: Text(groupDescription),
+                    ),
                 ],
-            body: SchedulesListContainer(groupId: groupIdStr)),
-        floatingActionButton: isAdmin && groupIdStr != null
-            ? FloatingActionButton.extended(
-                onPressed: () =>
-                    GroupManageRoute(groupId: groupIdStr).push(context),
-                label: Text(l10n.groupManage),
-                icon: const Icon(Icons.edit),
-              )
-            : null);
+              ),
+            ),
+        ],
+        body: SchedulesListContainer(groupId: groupIdStr),
+      ),
+      floatingActionButton: isAdmin && groupIdStr != null
+          ? FloatingActionButton.extended(
+              onPressed: () =>
+                  GroupManageRoute(groupId: groupIdStr).push(context),
+              label: Text(l10n.groupManage),
+              icon: const Icon(Icons.edit),
+            )
+          : null,
+    );
   }
 }
