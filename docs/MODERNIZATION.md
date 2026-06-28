@@ -160,10 +160,13 @@ Gated on D1/D2/D3 and Phase 0 being in place.
 
 Work done on branch `chore/phase-0-safety-net`. **All 180 local tests pass** (1 skipped — the pre-disabled phone test), including 12 new RSVP characterization tests and the full live-Supabase repository suite.
 
-### Completed
+### Completed (committed, all green — analyze exit 0, 180 Dart tests + 10 pgTAP tests pass, `flutter build web` succeeds)
 - **CI gate hardened** (`.github/workflows/verify.yaml`): split into a fast always-on `analyze` job (`dart format --set-exit-if-changed` + `flutter analyze --no-fatal-infos`, no Docker, runs on drafts too) and a `test` job with Flutter SDK caching, `flutter test --coverage` + coverage artifact, and `supabase test db`. Replaced the fragile title-based `Draft` skip with the native `draft` gate. _(Branch protection to make the check required is a manual GitHub step.)_
-- **Analyze is clean** (exit 0): excluded generated code from the analyzer (`analysis_options.yaml`) and fixed all ~14 warning-level issues (unused vars/params, dead null-aware, experimental API). 38 advisory infos remain (non-blocking).
-- **Characterization tests** (`test/schedules_characterization_test.dart`): 12 hermetic tests locking the RSVP/recurrence resolution (`selectors/schedules.dart`) — instance expansion (daily/once/weekly/weekends, window edges, startDate clamping), default-rule subset recurrence, reply-overrides-default, non-member filtering, `targetMemberId` split, `yesCount` aggregation.
+- **Analyze is clean** (exit 0): excluded generated code from the analyzer (`analysis_options.yaml`) and fixed all ~14 warning-level issues. 38 advisory infos remain (non-blocking).
+- **Repo-wide `dart format`** applied as an isolated commit + `.git-blame-ignore-revs` (run `git config blame.ignoreRevsFile .git-blame-ignore-revs` once to activate locally).
+- **RSVP characterization tests** (`test/schedules_characterization_test.dart`): 12 hermetic tests locking `selectors/schedules.dart` — instance expansion (daily/once/weekly/weekends, window edges, startDate clamping), default-rule subset recurrence, reply-overrides-default, non-member filtering, `targetMemberId` split, `yesCount` aggregation.
+- **Real RLS pgTAP tests** (`supabase/tests/`): rewrote the dead tests into self-contained policy tests (auth via role + JWT claims) asserting cross-tenant isolation; wired into CI via `supabase test db`.
+- **Auth-UI fork removed**: migrated to upstream `supabase_auth_ui` 0.6.1, dropping all `dependency_overrides` and the git fork.
 
 ### New findings (the app did not build/run on current stable Flutter)
 The team's recent "finalise upgrades" commits left the project **uncompilable on stable Flutter 3.44.4**. Fixing this was a prerequisite for any testing:
@@ -173,8 +176,11 @@ The team's recent "finalise upgrades" commits left the project **uncompilable on
 3. **font_awesome_flutter 10.x is incompatible with Flutter 3.44** — Flutter made `IconData` a `final` class; `font_awesome 10.x` extends it. **Fixed:** bumped to `^11.0.0` (override) and migrated `reply_button.dart` to the new `FaIconData` type.
 4. **The `supabase_auth_ui` fork blocks the web build** — it pins `font_awesome ^10.6.0` (blocking the bump) AND its `supa_socials_auth.dart` returns `FontAwesomeIcons.*` as `IconData`, which font_awesome 11 makes `FaIconData`. So the fork compiles under neither font_awesome 10 (final IconData) nor 11 (its own getter breaks). **This still blocks `flutter build web` and therefore full CI green.** Needs a decision (fix the fork — a one-line `IconData`→`FaIconData` change you own — or migrate to upstream `supabase_auth_ui` 0.6.1, re-basing the `SupaPasswordAuth`/l10n customizations). Local tests were unblocked by removing a redundant `supabase_auth_ui` import from `repositories_test.dart`.
 
-### Remaining Phase 0 (not yet done)
-- Repo-wide `dart format` (91/156 files differ — current Dart "tall style"); needed for the format gate to pass. Best applied as an isolated commit + `.git-blame-ignore-revs`.
-- Real RLS pgTAP tests (rewrite the dead `rls_test.sql`/`groups_test.sql`) — now runnable locally via `supabase test db`.
-- Split hermetic vs live-Supabase tests so `flutter test` runs Docker-free by default.
-- De-risk `build.yaml` (gate prod `db push`, add iOS) and the dbdev HTTP-fetch migration — both production-sensitive, propose before merging.
+### Remaining Phase 0
+- **Split hermetic vs live-Supabase tests** so `flutter test` runs Docker-free by default (tag the repository suite, run it explicitly in CI).
+- **De-risk `build.yaml`** (gate prod `db push`, add iOS build) — _production-sensitive, propose before merging._
+- **dbdev HTTP-fetch migration** (`20230706000000_dbdev.sql`): vendor/pin the extensions instead of fetching SQL over HTTP — _production-sensitive; the local stack currently depends on network at `supabase start`._
+- **Make the CI check required** in GitHub branch protection (manual step), and **activate blame-ignore** locally: `git config blame.ignoreRevsFile .git-blame-ignore-revs`.
+
+### Note on this branch and production
+`chore/phase-0-safety-net` includes two **new/edited migrations** (`functions.sql` comment removal, `20260628120000_grant_api_roles.sql`). They are safe for prod (idempotent; prod already has these privileges and never applied the removed comment), but they **will run on `supabase db push`** when merged — review accordingly. Nothing has been pushed or deployed.
