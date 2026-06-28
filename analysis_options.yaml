@@ -16,6 +16,13 @@ include: package:flutter_lints/flutter.yaml
 analyzer:
   errors:
     invalid_annotation_target: ignore
+  # Generated code is owned by its generators; don't lint or gate on it.
+  exclude:
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
+    - "lib/l10n/app_localizations*.dart"
+    - "lib/go_router_builder.g.dart"
+    - "lib/widgetbook.directories.g.dart"
 
 linter:
   # The lint rules applied to this project can be customized in the

@@ -11,9 +11,10 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  verify:
+  # Fast, hermetic static checks. No Docker, no Supabase — runs on EVERY PR
+  # (including drafts) so formatting/analysis protects 100% of changes cheaply.
+  analyze:
     runs-on: ubuntu-latest
-    if: github.event.pull_request.draft == false && startsWith(github.event.pull_request.title, 'Draft') == false
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -22,6 +23,35 @@ jobs:
         uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
+          cache: true
+
+      - name: Download dependencies
+        run: flutter pub get
+
+      - name: Verify formatting
+        # Generated code is excluded: it is formatted by its generators and is gitignored-by-convention noise here.
+        run: dart format --output=none --set-exit-if-changed $(find lib test -name '*.dart' -not -name '*.g.dart' -not -name '*.freezed.dart')
+
+      - name: Analyze
+        # Fail on warnings/errors; infos stay advisory (drive them to zero over time).
+        run: flutter analyze --no-fatal-infos
+
+  # Heavier suite: needs a local Supabase (Docker) for the repository/contract
+  # tests, then builds web. Skipped only for native draft PRs to save Docker
+  # spin-up on WIP; the merge queue (merge_group) always runs it, and branch
+  # protection should require this check before merge.
+  test:
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.draft != true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get Flutter
+        uses: subosito/flutter-action@v2
+        with:
+          channel: 'stable'
+          cache: true
 
       - name: Download dependencies
         run: flutter pub get
@@ -32,10 +62,21 @@ jobs:
       - name: Start Supabase local for tests
         run: supabase start
 
+      - name: Run database (pgTAP) tests
+        run: supabase test db
+
       - name: Run tests
         run: |
           supabase status -o json > supabase/config/localhost.json
-          flutter test
+          flutter test --coverage
+
+      - name: Upload coverage
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: coverage-lcov
+          path: coverage/lcov.info
+          if-no-files-found: warn
 
       - name: Compile web
         run: flutter build web
