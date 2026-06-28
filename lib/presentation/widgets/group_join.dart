@@ -7,10 +7,7 @@ import 'package:parousia/util/util.dart';
 class GroupJoin extends StatefulWidget {
   final ValueSetter<String> onJoin;
 
-  const GroupJoin({
-    super.key,
-    required this.onJoin,
-  });
+  const GroupJoin({super.key, required this.onJoin});
 
   @override
   createState() => _GroupJoinState();

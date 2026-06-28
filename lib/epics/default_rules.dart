@@ -15,45 +15,59 @@ createDefaultRulesEpics(DefaultRulesRepository defaultRules) =>
 
 /// Fetch all default replies for a group
 Epic<AppState> _createRetrieveGroupDefaultRulesEpic(
-    DefaultRulesRepository defaultRules) {
-  return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
-      .whereType<GroupDetailsOpenAction>()
-      .asyncMap(
+  DefaultRulesRepository defaultRules,
+) {
+  return (Stream<dynamic> actions, EpicStore<AppState> store) =>
+      actions.whereType<GroupDetailsOpenAction>().asyncMap(
         (action) => defaultRules
             .getDefaultRules(action.groupId)
-            .then<dynamic>((defaultRules) =>
-                SuccessRetrieveMany(defaultRules.toList(growable: false)))
+            .then<dynamic>(
+              (defaultRules) =>
+                  SuccessRetrieveMany(defaultRules.toList(growable: false)),
+            )
             .catchError((error) => FailRetrieveMany<DefaultRule>([], error)),
       );
 }
 
 /// Create a new default reply
 Epic<AppState> _createRequestUpdateOneDefaultRuleEpic(
-    DefaultRulesRepository defaultRules) {
+  DefaultRulesRepository defaultRules,
+) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestUpdateOne<DefaultRule>>().asyncMap(
-            (action) => defaultRules
-                .createDefaultRule(action.entity)
-                .then<dynamic>((defaultRule) => SuccessUpdateOne(defaultRule))
-                .catchError((error) => FailUpdateOne<DefaultRule>(
-                    entity: action.entity, error: error)),
-          );
+        (action) => defaultRules
+            .createDefaultRule(action.entity)
+            .then<dynamic>((defaultRule) => SuccessUpdateOne(defaultRule))
+            .catchError(
+              (error) => FailUpdateOne<DefaultRule>(
+                entity: action.entity,
+                error: error,
+              ),
+            ),
+      );
 }
 
 /// Delete a default reply
 Epic<AppState> _createRequestDeleteDefaultRuleEpic(
-    DefaultRulesRepository defaultRules) {
+  DefaultRulesRepository defaultRules,
+) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestDeleteDefaultRuleAction>().asyncMap(
-            (action) => defaultRules
-                .deleteDefaultRule(
-                  memberId: action.memberId,
-                  scheduleId: action.scheduleId,
-                )
-                .then<dynamic>((_) => SuccessDeleteOne<DefaultRule>(
-                    "${action.memberId}-${action.scheduleId}"))
-                .catchError((error) => FailDeleteOne<DefaultRule>(
-                    id: "${action.memberId}-${action.scheduleId}",
-                    error: error)),
-          );
+        (action) => defaultRules
+            .deleteDefaultRule(
+              memberId: action.memberId,
+              scheduleId: action.scheduleId,
+            )
+            .then<dynamic>(
+              (_) => SuccessDeleteOne<DefaultRule>(
+                "${action.memberId}-${action.scheduleId}",
+              ),
+            )
+            .catchError(
+              (error) => FailDeleteOne<DefaultRule>(
+                id: "${action.memberId}-${action.scheduleId}",
+                error: error,
+              ),
+            ),
+      );
 }

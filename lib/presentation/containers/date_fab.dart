@@ -15,10 +15,8 @@ class DateFabContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector(
       distinct: true,
-      builder: (context, vm) => DateFab(
-        date: vm.selectedDate,
-        onDateChanged: vm.onDateChanged,
-      ),
+      builder: (context, vm) =>
+          DateFab(date: vm.selectedDate, onDateChanged: vm.onDateChanged),
       converter: _ViewModel.fromStore,
     );
   }

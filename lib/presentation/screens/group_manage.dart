@@ -31,9 +31,10 @@ class GroupManageScreen extends StatelessWidget {
                 PopupMenuItem(
                   value: 'delete',
                   child: ListTile(
-                      leading: const Icon(Icons.delete),
-                      title: Text(l10n.delete),
-                      iconColor: Theme.of(context).colorScheme.error),
+                    leading: const Icon(Icons.delete),
+                    title: Text(l10n.delete),
+                    iconColor: Theme.of(context).colorScheme.error,
+                  ),
                 ),
               ],
               onSelected: (value) async {
@@ -41,22 +42,24 @@ class GroupManageScreen extends StatelessWidget {
                   await _confirmDelete(context, group!.id);
                 }
               },
-            )
+            ),
           ],
-          bottom: TabBar(tabs: [
-            Tab(
-              text: l10n.members,
-              icon: const FaIcon(FontAwesomeIcons.peopleGroup),
-            ),
-            Tab(
-              text: l10n.events,
-              icon: const FaIcon(FontAwesomeIcons.calendarDay),
-            ),
-            Tab(
-              text: l10n.details,
-              icon: const FaIcon(FontAwesomeIcons.quoteRight),
-            ),
-          ]),
+          bottom: TabBar(
+            tabs: [
+              Tab(
+                text: l10n.members,
+                icon: const FaIcon(FontAwesomeIcons.peopleGroup),
+              ),
+              Tab(
+                text: l10n.events,
+                icon: const FaIcon(FontAwesomeIcons.calendarDay),
+              ),
+              Tab(
+                text: l10n.details,
+                icon: const FaIcon(FontAwesomeIcons.quoteRight),
+              ),
+            ],
+          ),
         ),
         body: TabBarView(
           children: [
@@ -78,31 +81,32 @@ class GroupManageScreen extends StatelessWidget {
   /// Shows a confirmation dialog and deletes the group if confirmed.
   _confirmDelete(BuildContext context, String groupId) async {
     final doDelete = await showAdaptiveDialog<bool>(
-        context: context,
-        builder: (context) {
-          final l10n = AppLocalizations.of(context)!;
-          final theme = Theme.of(context);
-          final nav = Navigator.of(context);
+      context: context,
+      builder: (context) {
+        final l10n = AppLocalizations.of(context)!;
+        final theme = Theme.of(context);
+        final nav = Navigator.of(context);
 
-          return AlertDialog.adaptive(
-            icon: const Icon(Icons.logout),
-            title: Text(l10n.deleteGroup),
-            content: Text(l10n.deleteGroupConfirmation),
-            actions: [
-              TextButton(
-                onPressed: () => nav.pop(false),
-                child: Text(l10n.cancel),
+        return AlertDialog.adaptive(
+          icon: const Icon(Icons.logout),
+          title: Text(l10n.deleteGroup),
+          content: Text(l10n.deleteGroupConfirmation),
+          actions: [
+            TextButton(
+              onPressed: () => nav.pop(false),
+              child: Text(l10n.cancel),
+            ),
+            TextButton(
+              onPressed: () => nav.pop(true),
+              style: TextButton.styleFrom(
+                foregroundColor: theme.colorScheme.error,
               ),
-              TextButton(
-                onPressed: () => nav.pop(true),
-                style: TextButton.styleFrom(
-                  foregroundColor: theme.colorScheme.error,
-                ),
-                child: Text(l10n.delete),
-              ),
-            ],
-          );
-        });
+              child: Text(l10n.delete),
+            ),
+          ],
+        );
+      },
+    );
 
     if (doDelete == null || !doDelete) return;
     onDelete?.call(groupId);

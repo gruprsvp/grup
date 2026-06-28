@@ -14,10 +14,7 @@ part 'group_events.freezed.dart';
 class GroupEventsContainer extends StatelessWidget {
   final String groupId;
 
-  const GroupEventsContainer({
-    super.key,
-    required this.groupId,
-  });
+  const GroupEventsContainer({super.key, required this.groupId});
 
   @override
   Widget build(BuildContext context) {
@@ -55,15 +52,14 @@ sealed class _ViewModel with _$ViewModel {
           // TODO Should have a better data model to represent relationships
           .where((schedule) => schedule.groupId == group?.id)
           .toList(),
-      loading: store.state.groups.creating ||
+      loading:
+          store.state.groups.creating ||
           store.state.groups.loadingAll ||
           (store.state.groups.loadingIds[groupId] ?? false),
-      onScheduleCreate: (schedule) => store.dispatch(
-        RequestCreateOne<Schedule>(schedule),
-      ),
-      onScheduleDelete: (schedule) => store.dispatch(
-        RequestDeleteOne<Schedule>(schedule.id.toString()),
-      ),
+      onScheduleCreate: (schedule) =>
+          store.dispatch(RequestCreateOne<Schedule>(schedule)),
+      onScheduleDelete: (schedule) =>
+          store.dispatch(RequestDeleteOne<Schedule>(schedule.id.toString())),
       rrulel10n: rruleL10nSelector(store.state),
     );
   }

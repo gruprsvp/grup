@@ -3,8 +3,10 @@ part of 'selectors.dart';
 Iterable<Schedule> selectScheduleEntities(AppState state) =>
     state.schedules.entities.values;
 
-final selectSchedulesIds =
-    createSelector1(selectSchedules, (schedules) => schedules.map((s) => s.id));
+final selectSchedulesIds = createSelector1(
+  selectSchedules,
+  (schedules) => schedules.map((s) => s.id),
+);
 
 ScheduleInstanceSummary repliesForScheduleInstance({
   required DateTime instanceDate,
@@ -37,48 +39,49 @@ ScheduleInstanceSummary repliesForScheduleInstance({
 
     defaultRule.recurrenceRule
         .getInstances(
-      start: schedule.startDate,
-      after: startDate,
-      before: endDate,
-      includeAfter: true,
-    )
+          start: schedule.startDate,
+          after: startDate,
+          before: endDate,
+          includeAfter: true,
+        )
         .forEach((e) {
-      final isSameDay = e.copyWith(isUtc: true).isAtSameMomentAs(instanceDate);
-      final isSameSchedule = defaultRule.scheduleId == schedule.id;
+          final isSameDay = e
+              .copyWith(isUtc: true)
+              .isAtSameMomentAs(instanceDate);
+          final isSameSchedule = defaultRule.scheduleId == schedule.id;
 
-      if (isSameDay &&
-          isSameSchedule &&
-          membersSet.contains(defaultRule.memberId)) {
-        if (defaultRule.memberId == targetMemberId) {
-          myDefaultReply = defaultRule.selectedOption;
-        } else {
-          memberDefaultReplies[defaultRule.memberId] =
-              defaultRule.selectedOption;
-        }
-        allReplies[defaultRule.memberId] = defaultRule.selectedOption;
-      }
-    });
+          if (isSameDay &&
+              isSameSchedule &&
+              membersSet.contains(defaultRule.memberId)) {
+            if (defaultRule.memberId == targetMemberId) {
+              myDefaultReply = defaultRule.selectedOption;
+            } else {
+              memberDefaultReplies[defaultRule.memberId] =
+                  defaultRule.selectedOption;
+            }
+            allReplies[defaultRule.memberId] = defaultRule.selectedOption;
+          }
+        });
   });
 
-  replies?.forEach(
-    (reply) {
-      final isSameDay = reply.instanceDate
-          .copyWith(isUtc: true)
-          .isAtSameMomentAs(instanceDate);
-      final isSameSchedule = reply.scheduleId == schedule.id;
-      if (isSameDay && isSameSchedule && membersSet.contains(reply.memberId)) {
-        if (reply.memberId == targetMemberId) {
-          myReply = reply.selectedOption;
-        } else {
-          memberReplies[reply.memberId] = reply.selectedOption;
-        }
-        allReplies[reply.memberId] = reply.selectedOption;
+  replies?.forEach((reply) {
+    final isSameDay = reply.instanceDate
+        .copyWith(isUtc: true)
+        .isAtSameMomentAs(instanceDate);
+    final isSameSchedule = reply.scheduleId == schedule.id;
+    if (isSameDay && isSameSchedule && membersSet.contains(reply.memberId)) {
+      if (reply.memberId == targetMemberId) {
+        myReply = reply.selectedOption;
+      } else {
+        memberReplies[reply.memberId] = reply.selectedOption;
       }
-    },
-  );
+      allReplies[reply.memberId] = reply.selectedOption;
+    }
+  });
 
-  final yesCount =
-      allReplies.entries.where((e) => e.value == ReplyOptions.yes).length;
+  final yesCount = allReplies.entries
+      .where((e) => e.value == ReplyOptions.yes)
+      .length;
 
   return ScheduleInstanceSummary(
     scheduleId: schedule.id,
@@ -105,8 +108,9 @@ Iterable<ScheduleInstanceSummary> getScheduleInstances({
   Iterable<Reply>? replies,
   String? targetMemberId,
 }) {
-  final after =
-      startDate.isAfter(schedule.startDate) ? startDate : schedule.startDate;
+  final after = startDate.isAfter(schedule.startDate)
+      ? startDate
+      : schedule.startDate;
   return schedule.recurrenceRule
       .getInstances(
         start: schedule.startDate,

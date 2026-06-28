@@ -5,11 +5,12 @@ import 'package:parousia/models/models.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 
 class ContactForm extends StatefulWidget {
-  const ContactForm(
-      {super.key,
-      this.onChanged,
-      this.showEmail = true,
-      this.showPhone = true});
+  const ContactForm({
+    super.key,
+    this.onChanged,
+    this.showEmail = true,
+    this.showPhone = true,
+  });
 
   final Function(ContactInvite, bool)? onChanged;
   final bool showEmail;
@@ -38,7 +39,8 @@ class _ContactFormState extends State<ContactForm> {
         final phone = _phoneController.value.international;
 
         // Only consider phone if it was provided and is different from the initial value
-        final phoneWasProvided = widget.showPhone &&
+        final phoneWasProvided =
+            widget.showPhone &&
             phone.isNotEmpty &&
             _phoneController.value.isValid();
 
@@ -55,8 +57,9 @@ class _ContactFormState extends State<ContactForm> {
             formIsValid && (onlyNameRequired || emailIsValid || phoneIsValid);
 
         widget.onChanged?.call(
-            ContactInvite(displayNameOverride: name, invites: invites),
-            isValid);
+          ContactInvite(displayNameOverride: name, invites: invites),
+          isValid,
+        );
       },
       child: Column(
         children: [
@@ -64,9 +67,7 @@ class _ContactFormState extends State<ContactForm> {
             autofocus: true,
             controller: _nameController,
             validator: FormBuilderValidators.required(),
-            decoration: InputDecoration(
-              labelText: l10n.contactName,
-            ),
+            decoration: InputDecoration(labelText: l10n.contactName),
             textInputAction: widget.showPhone || widget.showEmail
                 ? TextInputAction.next
                 : TextInputAction.done,
@@ -76,9 +77,7 @@ class _ContactFormState extends State<ContactForm> {
               controller: _emailController,
               keyboardType: TextInputType.emailAddress,
               validator: FormBuilderValidators.email(),
-              decoration: InputDecoration(
-                labelText: l10n.contactEmail,
-              ),
+              decoration: InputDecoration(labelText: l10n.contactEmail),
               textInputAction: widget.showPhone
                   ? TextInputAction.next
                   : TextInputAction.done,
@@ -87,11 +86,9 @@ class _ContactFormState extends State<ContactForm> {
             PhoneFormField(
               controller: _phoneController,
               validator: PhoneValidator.valid(context),
-              decoration: InputDecoration(
-                labelText: l10n.contactPhone,
-              ),
+              decoration: InputDecoration(labelText: l10n.contactPhone),
               textInputAction: TextInputAction.done,
-            )
+            ),
         ],
       ),
     );

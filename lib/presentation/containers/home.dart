@@ -49,14 +49,13 @@ sealed class _ViewModel with _$ViewModel {
       loading: store.state.groups.loadingAll || store.state.groups.creating,
       profile: store.state.profiles.entities[store.state.auth.user?.id],
       groups: store.state.groups.entities.values,
-      onGroupCreate: (value) => store.dispatch(
-        switch (value) {
-          GroupCreateResultNew(group: final group, image: final image) =>
-            CreateGroupAction(group: group, image: image),
-          GroupCreateResultJoin(code: final code) =>
-            JoinWithInviteCodeAction(code),
-        },
-      ),
+      onGroupCreate: (value) => store.dispatch(switch (value) {
+        GroupCreateResultNew(group: final group, image: final image) =>
+          CreateGroupAction(group: group, image: image),
+        GroupCreateResultJoin(code: final code) => JoinWithInviteCodeAction(
+          code,
+        ),
+      }),
       onRefresh: () async {
         final action = GroupRefreshAllAction();
         store.dispatch(action);

@@ -12,10 +12,8 @@ class DateDropdownContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
       distinct: true,
-      builder: (context, vm) => DateDropdown(
-        date: vm.selectedDate,
-        onDateChanged: vm.onDateChanged,
-      ),
+      builder: (context, vm) =>
+          DateDropdown(date: vm.selectedDate, onDateChanged: vm.onDateChanged),
       converter: _ViewModel.fromStore,
     );
   }
@@ -25,10 +23,7 @@ class _ViewModel {
   final DateTime selectedDate;
   final ValueChanged<DateTime> onDateChanged;
 
-  _ViewModel({
-    required this.selectedDate,
-    required this.onDateChanged,
-  });
+  _ViewModel({required this.selectedDate, required this.onDateChanged});
 
   static _ViewModel fromStore(Store<AppState> store) {
     return _ViewModel(

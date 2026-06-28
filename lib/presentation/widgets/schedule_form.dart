@@ -12,11 +12,7 @@ class ScheduleForm extends StatefulWidget {
   final Schedule? schedule;
   final Function(Schedule)? onChanged;
 
-  const ScheduleForm({
-    super.key,
-    this.schedule,
-    this.onChanged,
-  });
+  const ScheduleForm({super.key, this.schedule, this.onChanged});
 
   @override
   State<ScheduleForm> createState() => _ScheduleFormState();
@@ -37,16 +33,19 @@ class _ScheduleFormState extends State<ScheduleForm> {
               _formKey.currentState?.fields['displayName']?.value as String;
           final startDate =
               _formKey.currentState?.fields['startDate']?.value as DateTime;
-          final recurrenceRule = _formKey
-              .currentState?.fields['recurrenceRule']?.value as RecurrenceRule;
+          final recurrenceRule =
+              _formKey.currentState?.fields['recurrenceRule']?.value
+                  as RecurrenceRule;
 
-          widget.onChanged?.call(Schedule(
-            id: '',
-            groupId: '',
-            displayName: displayName,
-            startDate: startDate,
-            recurrenceRule: recurrenceRule,
-          ));
+          widget.onChanged?.call(
+            Schedule(
+              id: '',
+              groupId: '',
+              displayName: displayName,
+              startDate: startDate,
+              recurrenceRule: recurrenceRule,
+            ),
+          );
         }
       },
       child: Column(
@@ -56,17 +55,13 @@ class _ScheduleFormState extends State<ScheduleForm> {
             autocorrect: true,
             initialValue: widget.schedule?.displayName,
             validator: FormBuilderValidators.required(),
-            decoration: InputDecoration(
-              labelText: l10n.eventName,
-            ),
+            decoration: InputDecoration(labelText: l10n.eventName),
           ),
           FormBuilderDateTimePicker(
             name: 'startDate',
             inputType: InputType.both,
             initialValue: widget.schedule?.startDate,
-            decoration: InputDecoration(
-              labelText: l10n.eventDatetime,
-            ),
+            decoration: InputDecoration(labelText: l10n.eventDatetime),
             validator: FormBuilderValidators.required(),
             format: DateFormat.yMMMMEEEEd().add_Hm(),
             initialDate: DateTime.now(),
@@ -80,9 +75,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
                 ? FormBuilderRecurrenceRule(
                     name: 'recurrenceRule',
                     initialValue: widget.schedule?.recurrenceRule,
-                    decoration: InputDecoration(
-                      labelText: l10n.recurrenceRule,
-                    ),
+                    decoration: InputDecoration(labelText: l10n.recurrenceRule),
                     validator: FormBuilderValidators.required(),
                     rruleL10n: snapshot.data as RruleL10n,
                   )

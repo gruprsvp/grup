@@ -5,8 +5,8 @@ import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:styled_text/styled_text.dart';
 
-typedef OnReplyChangedCallback = void Function(
-    ScheduleInstanceSummary, ReplyOptions?);
+typedef OnReplyChangedCallback =
+    void Function(ScheduleInstanceSummary, ReplyOptions?);
 
 class SchedulesList extends StatelessWidget {
   final Iterable<ScheduleInstanceSummary>? schedules;
@@ -39,9 +39,9 @@ class SchedulesList extends StatelessWidget {
               onReplyChanged: (reply) =>
                   onReplyChanged?.call(schedules!.elementAt(index), reply),
               onScheduleTapped: (schedule) => GroupScheduleDetailsRoute(
-                      groupId: schedule.groupId.toString(),
-                      scheduleId: schedule.scheduleId.toString())
-                  .push(context),
+                groupId: schedule.groupId.toString(),
+                scheduleId: schedule.scheduleId.toString(),
+              ).push(context),
             ),
           )
         : EmptyState(
@@ -61,7 +61,7 @@ class SchedulesList extends StatelessWidget {
                           onPressed: () =>
                               GroupManageRoute(groupId: groupId!).push(context),
                         ),
-                      )
+                      ),
                     }
                   : null,
             ),

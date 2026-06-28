@@ -11,7 +11,4 @@ enum Tables {
 }
 
 /// Enum with all bucket IDs in Supabase.
-enum Buckets {
-  public,
-  private,
-}
+enum Buckets { public, private }

@@ -7,6 +7,8 @@ final feedbackReducer = combineReducers<bool?>([
 
 /// Whenever the user interacts with the feedback, we should hide it.
 bool _interactedWithFeedback(
-    bool? shouldShowFeedback, InteractedWithFeedback action) {
+  bool? shouldShowFeedback,
+  InteractedWithFeedback action,
+) {
   return true;
 }

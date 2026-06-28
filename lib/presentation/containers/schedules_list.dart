@@ -15,10 +15,7 @@ part 'schedules_list.freezed.dart';
 class SchedulesListContainer extends StatefulWidget {
   final String? groupId;
 
-  const SchedulesListContainer({
-    super.key,
-    this.groupId,
-  });
+  const SchedulesListContainer({super.key, this.groupId});
 
   @override
   SchedulesListContainerState createState() => SchedulesListContainerState();
@@ -82,17 +79,24 @@ sealed class _ViewModel with _$ViewModel {
           throw Exception('targetMemberId is null');
         }
         if (reply == null) {
-          store.dispatch(RequestDeleteReplyAction(
-            memberId: schedule.targetMemberId!,
-            scheduleId: schedule.scheduleId,
-            instanceDate: schedule.instanceDate,
-          ));
-        } else {
-          store.dispatch(RequestUpdateOne(Reply(
+          store.dispatch(
+            RequestDeleteReplyAction(
               memberId: schedule.targetMemberId!,
               scheduleId: schedule.scheduleId,
               instanceDate: schedule.instanceDate,
-              selectedOption: reply)));
+            ),
+          );
+        } else {
+          store.dispatch(
+            RequestUpdateOne(
+              Reply(
+                memberId: schedule.targetMemberId!,
+                scheduleId: schedule.scheduleId,
+                instanceDate: schedule.instanceDate,
+                selectedOption: reply,
+              ),
+            ),
+          );
         }
       },
     );

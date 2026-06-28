@@ -6,14 +6,18 @@ import 'supabase.dart';
 
 class MembersRepository extends SupabaseRepository with Postgrest {
   const MembersRepository({required super.supabase})
-      : super(tableName: Tables.members);
+    : super(tableName: Tables.members);
 
-  Future<Member> addMemberToGroup(String groupId,
-      {String? displayName, String? profileId}) async {
+  Future<Member> addMemberToGroup(
+    String groupId, {
+    String? displayName,
+    String? profileId,
+  }) async {
     if ((displayName == null || displayName.isEmpty) &&
         (profileId == null || profileId.isEmpty)) {
       throw ArgumentError(
-          'Either displayName or profileId must be provided to addMemberToGroup');
+        'Either displayName or profileId must be provided to addMemberToGroup',
+      );
     }
 
     return table()
@@ -28,10 +32,11 @@ class MembersRepository extends SupabaseRepository with Postgrest {
         .withConverter((data) => Member.fromJson(data));
   }
 
-  Future<Member> updateMember(
-      {required String memberId,
-      String? displayNameOverride,
-      GroupRoles? role}) async {
+  Future<Member> updateMember({
+    required String memberId,
+    String? displayNameOverride,
+    GroupRoles? role,
+  }) async {
     return table()
         .update({
           if (displayNameOverride != null && displayNameOverride.isNotEmpty)

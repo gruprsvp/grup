@@ -18,14 +18,14 @@ final invitesReducer = RemoteEntityReducer<RemoteEntityState<Invite>, Invite>(
 
 final schedulesReducer =
     RemoteEntityReducer<RemoteEntityState<Schedule>, Schedule>(
-  selectId: (schedule) => schedule.id.toString(),
-);
+      selectId: (schedule) => schedule.id.toString(),
+    );
 
 final defaultRulesReducer =
     RemoteEntityReducer<RemoteEntityState<DefaultRule>, DefaultRule>(
-  selectId: (defaultRule) =>
-      "${defaultRule.memberId}-${defaultRule.scheduleId}",
-);
+      selectId: (defaultRule) =>
+          "${defaultRule.memberId}-${defaultRule.scheduleId}",
+    );
 
 final repliesReducer = RemoteEntityReducer<RemoteEntityState<Reply>, Reply>(
   selectId: (reply) =>

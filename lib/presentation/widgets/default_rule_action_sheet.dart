@@ -57,10 +57,11 @@ class DefaultRuleActionSheet extends StatelessWidget {
       children: [
         Padding(
           padding: EdgeInsets.only(
-              left: defaultPadding,
-              right: defaultPadding,
-              top: defaultPadding,
-              bottom: betweenPadding),
+            left: defaultPadding,
+            right: defaultPadding,
+            top: defaultPadding,
+            bottom: betweenPadding,
+          ),
           child: DefaultTextStyle(
             style: Theme.of(context).textTheme.titleLarge!,
             textAlign: textAlign,
@@ -69,10 +70,11 @@ class DefaultRuleActionSheet extends StatelessWidget {
         ),
         Padding(
           padding: EdgeInsets.only(
-              left: defaultPadding,
-              right: defaultPadding,
-              top: betweenPadding,
-              bottom: defaultPadding),
+            left: defaultPadding,
+            right: defaultPadding,
+            top: betweenPadding,
+            bottom: defaultPadding,
+          ),
           child: DefaultTextStyle(
             style: Theme.of(context).textTheme.titleMedium!,
             textAlign: textAlign,

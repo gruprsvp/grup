@@ -58,37 +58,52 @@ sealed class _ViewModel with _$ViewModel {
     }
 
     return _ViewModel(
-      loading: store.state.groups.loadingAll ||
+      loading:
+          store.state.groups.loadingAll ||
           (store.state.groups.loadingIds[groupId] ?? false),
       group: group,
       scheduleInstance: selectScheduleInstanceForDate(store.state),
       onReplyChanged: (schedule, targetMemberId, reply) {
         if (reply == null) {
-          store.dispatch(RequestDeleteReplyAction(
-            memberId: targetMemberId,
-            scheduleId: schedule.scheduleId,
-            instanceDate: schedule.instanceDate,
-          ));
-        } else {
-          store.dispatch(RequestUpdateOne(Reply(
+          store.dispatch(
+            RequestDeleteReplyAction(
               memberId: targetMemberId,
               scheduleId: schedule.scheduleId,
               instanceDate: schedule.instanceDate,
-              selectedOption: reply)));
+            ),
+          );
+        } else {
+          store.dispatch(
+            RequestUpdateOne(
+              Reply(
+                memberId: targetMemberId,
+                scheduleId: schedule.scheduleId,
+                instanceDate: schedule.instanceDate,
+                selectedOption: reply,
+              ),
+            ),
+          );
         }
       },
       onDefaultRuleChanged: (defaultRule, scheduleId, targetMemberId, reply) {
         if (reply == null || defaultRule == null) {
-          store.dispatch(RequestDeleteDefaultRuleAction(
-            memberId: targetMemberId,
-            scheduleId: scheduleId,
-          ));
-        } else {
-          store.dispatch(RequestUpdateOne(DefaultRule(
+          store.dispatch(
+            RequestDeleteDefaultRuleAction(
               memberId: targetMemberId,
               scheduleId: scheduleId,
-              selectedOption: reply,
-              recurrenceRule: defaultRule)));
+            ),
+          );
+        } else {
+          store.dispatch(
+            RequestUpdateOne(
+              DefaultRule(
+                memberId: targetMemberId,
+                scheduleId: scheduleId,
+                selectedOption: reply,
+                recurrenceRule: defaultRule,
+              ),
+            ),
+          );
         }
       },
     );

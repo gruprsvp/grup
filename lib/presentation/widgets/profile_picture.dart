@@ -27,8 +27,9 @@ class ProfilePicture extends StatelessWidget {
     final nameInitials = getNameInitials(name);
     final padding = radius != null ? radius! / 12.0 : 1.0;
     final color = this.color ?? theme.colorScheme.primary;
-    final backgroundColor =
-        HSLColor.fromColor(color).withLightness(0.9).toColor();
+    final backgroundColor = HSLColor.fromColor(
+      color,
+    ).withLightness(0.9).toColor();
 
     return ElevatedButton(
       onPressed: onPressed,

@@ -54,7 +54,10 @@ sealed class _ViewModel with _$ViewModel {
   }) = __ViewModel;
 
   static _ViewModel fromStore(
-      Store<AppState> store, String groupId, String memberId) {
+    Store<AppState> store,
+    String groupId,
+    String memberId,
+  ) {
     final group = store.state.groups.entities[groupId];
 
     if (group == null) {
@@ -69,7 +72,8 @@ sealed class _ViewModel with _$ViewModel {
         .toList();
 
     return _ViewModel(
-      loading: store.state.groups.loadingAll ||
+      loading:
+          store.state.groups.loadingAll ||
           (store.state.groups.loadingIds[groupId] ?? false),
       isCurrentUser: store.state.auth.user?.id == profile?.id,
       group: group,

@@ -93,8 +93,8 @@ class _ImageFormFieldState extends FormFieldState<XFile> {
 
     final ImageProvider? image = value != null
         ? kIsWeb
-            ? NetworkImage(value!.path) as ImageProvider
-            : FileImage(File(value!.path)) as ImageProvider
+              ? NetworkImage(value!.path) as ImageProvider
+              : FileImage(File(value!.path)) as ImageProvider
         : widget.initialImage;
 
     return Stack(
@@ -149,18 +149,19 @@ class _ImageFormFieldState extends FormFieldState<XFile> {
   /// Show a dialog to crop the image.
   Future<XFile?> _getImageCropped(Uint8List imageData) async {
     return showDialog(
-        context: context,
-        builder: (BuildContext context) => Dialog.fullscreen(
-                child: ImageCrop(
-              imageData: imageData,
-              onCrop: (value) async {
-                final savedImage =
-                    value != null ? await _saveImage(value) : null;
-                if (context.mounted) {
-                  Navigator.pop(context, savedImage);
-                }
-              },
-            )));
+      context: context,
+      builder: (BuildContext context) => Dialog.fullscreen(
+        child: ImageCrop(
+          imageData: imageData,
+          onCrop: (value) async {
+            final savedImage = value != null ? await _saveImage(value) : null;
+            if (context.mounted) {
+              Navigator.pop(context, savedImage);
+            }
+          },
+        ),
+      ),
+    );
   }
 
   /// Save temporary image to a file.
@@ -169,7 +170,8 @@ class _ImageFormFieldState extends FormFieldState<XFile> {
 
     final tempDir = await getTemporaryDirectory();
     final tempFile = File(
-        '${tempDir.path}/temp_image_${DateTime.now().millisecondsSinceEpoch}.jpg');
+      '${tempDir.path}/temp_image_${DateTime.now().millisecondsSinceEpoch}.jpg',
+    );
     await tempFile.writeAsBytes(imageData);
     return XFile(tempFile.path);
   }

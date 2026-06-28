@@ -6,7 +6,7 @@ import 'supabase.dart';
 
 class ProfilesRepository extends SupabaseRepository with Postgrest {
   const ProfilesRepository({required super.supabase})
-      : super(tableName: Tables.profiles);
+    : super(tableName: Tables.profiles);
 
   Future<Profile> getProfileById(String id) async {
     return table()
@@ -21,10 +21,14 @@ class ProfilesRepository extends SupabaseRepository with Postgrest {
     String? displayName,
     String? pictureUrl,
   }) async {
-    return supabase.auth.updateUser(UserAttributes(data: {
-      if (displayName != null) 'full_name': displayName,
-      if (pictureUrl != null) 'avatar_url': pictureUrl,
-    }));
+    return supabase.auth.updateUser(
+      UserAttributes(
+        data: {
+          if (displayName != null) 'full_name': displayName,
+          if (pictureUrl != null) 'avatar_url': pictureUrl,
+        },
+      ),
+    );
   }
 
   Future<void> deleteProfile() async {

@@ -16,10 +16,11 @@ class ThemeSwitcherContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return StoreConnector<AppState, _ViewModel>(
-        distinct: true,
-        converter: _ViewModel.fromStore,
-        builder: (context, vm) =>
-            ThemeSwitcherTile(themeMode: vm.themeMode, onTap: vm.nextTheme));
+      distinct: true,
+      converter: _ViewModel.fromStore,
+      builder: (context, vm) =>
+          ThemeSwitcherTile(themeMode: vm.themeMode, onTap: vm.nextTheme),
+    );
   }
 }
 

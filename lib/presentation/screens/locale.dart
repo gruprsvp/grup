@@ -35,9 +35,7 @@ class LocaleScreen extends StatelessWidget {
     );
 
     return Scaffold(
-      appBar: AppBar(
-        title: Text(l10n.language),
-      ),
+      appBar: AppBar(title: Text(l10n.language)),
       body: Column(
         children: [
           RadioListTile.adaptive(

@@ -13,8 +13,12 @@ class ProfileScreen extends StatefulWidget {
   final bool? userNavigated;
   final OnProfileSaveCallback onSave;
 
-  const ProfileScreen(
-      {super.key, this.profile, this.userNavigated, required this.onSave});
+  const ProfileScreen({
+    super.key,
+    this.profile,
+    this.userNavigated,
+    required this.onSave,
+  });
 
   @override
   createState() => _ProfileScreenState();
@@ -105,29 +109,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
             ),
             Padding(
-                padding: const EdgeInsets.all(16),
-                child: FilledButton(
-                  onPressed: _enableSaveButton
-                      ? () {
-                          if (_formKey.currentState!.validate()) {
-                            setState(() {
-                              _enableSaveButton = false;
-                            });
-                            _formKey.currentState!.save();
-                            _nameFocusNode.unfocus();
-                            widget.onSave((
-                              _nameController.text.trim(),
-                              _imageController.value,
-                            ));
+              padding: const EdgeInsets.all(16),
+              child: FilledButton(
+                onPressed: _enableSaveButton
+                    ? () {
+                        if (_formKey.currentState!.validate()) {
+                          setState(() {
+                            _enableSaveButton = false;
+                          });
+                          _formKey.currentState!.save();
+                          _nameFocusNode.unfocus();
+                          widget.onSave((
+                            _nameController.text.trim(),
+                            _imageController.value,
+                          ));
 
-                            if (!(widget.userNavigated ?? false)) {
-                              Navigator.of(context).pop(context);
-                            }
+                          if (!(widget.userNavigated ?? false)) {
+                            Navigator.of(context).pop(context);
                           }
                         }
-                      : null,
-                  child: Text(l10n.save),
-                )),
+                      }
+                    : null,
+                child: Text(l10n.save),
+              ),
+            ),
           ],
         ),
       ),
