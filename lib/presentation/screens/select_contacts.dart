@@ -21,10 +21,8 @@ class _SelectContactsScreenState extends State<SelectContactsScreen> {
   }
 
   Future<List<Contact>> _getContacts() async {
-    final permissionGranted =
-        await FlutterContacts.requestPermission(readonly: true);
-
     // TODO handle permissions not granted with error
+    await FlutterContacts.requestPermission(readonly: true);
 
     return FlutterContacts.getContacts(
       withAccounts: true,
@@ -49,8 +47,9 @@ class _SelectContactsScreenState extends State<SelectContactsScreen> {
               onPressed: selected.isNotEmpty
                   ? () async {
                       final c = await contacts;
-                      final selectedContacts =
-                          selected.map((i) => c[i]).toList();
+                      final selectedContacts = selected
+                          .map((i) => c[i])
+                          .toList();
                       if (!context.mounted) {
                         // TODO: how can we avoid this?
                         return;
@@ -85,10 +84,11 @@ class _SelectContactsScreenState extends State<SelectContactsScreen> {
                         ? null
                         : Text(getNameInitials(contact.displayName) ?? ''),
                   ),
-                  title: Text(contact.displayName ?? ''),
+                  title: Text(contact.displayName),
                   value: selected.contains(index),
-                  onChanged: (value) => setState(() =>
-                      value! ? selected.add(index) : selected.remove(index)),
+                  onChanged: (value) => setState(
+                    () => value! ? selected.add(index) : selected.remove(index),
+                  ),
                 );
               },
             );

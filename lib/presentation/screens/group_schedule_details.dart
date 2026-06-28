@@ -9,15 +9,15 @@ import 'package:rrule/rrule.dart';
 
 // The target member ID is the ID of the member that the user is replying for,
 // which is not necessarily the user's own ID in the details screen.
-typedef OnDetailsReplyChangedCallback = void Function(
-    ScheduleInstanceDetails, String, ReplyOptions?);
+typedef OnDetailsReplyChangedCallback =
+    void Function(ScheduleInstanceDetails, String, ReplyOptions?);
 
 // ! This kind of function signature is super risky, as it's easy to mix up the
 // ! order of the arguments. It's better to use a data class or a map instead.
 //   TODO(giorgio): I actually just fixed a bug because of this!
 //   I should refactor this to use either branded types or a map.
-typedef OnDetailsDefaultRuleChangedCallback = void Function(
-    RecurrenceRule?, String, String, ReplyOptions?);
+typedef OnDetailsDefaultRuleChangedCallback =
+    void Function(RecurrenceRule?, String, String, ReplyOptions?);
 
 class GroupScheduleDetailsScreen extends StatelessWidget {
   final dateFormat = DateFormat.yMMMd();
@@ -86,13 +86,17 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
               defaultReply: scheduleInstance?.myDefaultReply,
               defaultRule: scheduleInstance?.myDefaultRule,
               onReplyChanged: (reply) => onReplyChanged?.call(
-                  scheduleInstance!, scheduleInstance!.targetMemberId!, reply),
+                scheduleInstance!,
+                scheduleInstance!.targetMemberId!,
+                reply,
+              ),
               onDefaultRuleChanged: (recurrenceRule, reply) =>
                   onDefaultRuleChanged?.call(
-                      recurrenceRule,
-                      scheduleInstance!.scheduleId,
-                      scheduleInstance!.targetMemberId!,
-                      reply),
+                    recurrenceRule,
+                    scheduleInstance!.scheduleId,
+                    scheduleInstance!.targetMemberId!,
+                    reply,
+                  ),
             ),
           ),
           for (final replyGroup in repliesGroups) ...[
@@ -116,7 +120,8 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
                 final defaultReply = el.defaultReply;
                 final defaultRule = el.defaultRule;
 
-                final name = member.displayNameOverride ??
+                final name =
+                    member.displayNameOverride ??
                     profile?.displayName ??
                     l10n.unknown;
 
@@ -128,11 +133,15 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
                   onReplyChanged: (reply) =>
                       onReplyChanged?.call(scheduleInstance!, member.id, reply),
                   onDefaultRuleChanged: (recurrenceRule, reply) =>
-                      onDefaultRuleChanged?.call(recurrenceRule,
-                          scheduleInstance!.scheduleId, member.id, reply),
+                      onDefaultRuleChanged?.call(
+                        recurrenceRule,
+                        scheduleInstance!.scheduleId,
+                        member.id,
+                        reply,
+                      ),
                 );
               },
-            )
+            ),
           ],
         ],
       ),
@@ -144,10 +153,9 @@ class _SliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   _SliverPersistentHeaderDelegate({
     required this.replyGroup,
     required this.maxHeight,
-    this.minHeight = kToolbarHeight,
   });
 
-  final double minHeight;
+  final double minHeight = kToolbarHeight;
   final double maxHeight;
   final ScheduleInstanceRepliesGroup replyGroup;
 
@@ -159,7 +167,10 @@ class _SliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
 
   @override
   Widget build(
-      BuildContext context, double shrinkOffset, bool overlapsContent) {
+    BuildContext context,
+    double shrinkOffset,
+    bool overlapsContent,
+  ) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
@@ -184,8 +195,8 @@ class _SliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
             replyGroup.reply == null
                 ? l10n.unknown
                 : replyGroup.reply == ReplyOptions.yes
-                    ? l10n.yes
-                    : l10n.no,
+                ? l10n.yes
+                : l10n.no,
           ),
           trailing: Text('${replyGroup.count}'),
         ),
