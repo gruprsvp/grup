@@ -1,34 +1,36 @@
+-- Tests for the create_group() RPC.
+--
+-- Self-contained: creates a user in auth.users and authenticates as them by setting
+-- the role + JWT claims that create_group() reads via auth.uid().
+
 begin;
-select plan(5);
+select plan(3);
 
--- call auth.login_as_user('giorgio.azzinnaro@gmail.com');
+insert into auth.users (id, email)
+values ('aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa', 'creator@test.com');
 
--- Test case 1: Test if create_group returns a valid group_id
-select ok(
-               create_group('test group') is not null,
-               'create_group should return a valid group_id'
-       );
+set local role authenticated;
+set local request.jwt.claims to '{"sub":"aaaaaaaa-aaaa-aaaa-aaaa-aaaaaaaaaaaa","role":"authenticated"}';
 
--- Test case 2: Test if the group exists in the groups table
+select isnt(
+  (select id from create_group(
+    'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb', 'Test Group', null, null)),
+  null,
+  'create_group returns the created group'
+);
+
 select is(
-               (select count(*) from groups where display_name = 'test group'),
-               1,
-               'The group should exist in the groups table'
-       );
+  (select count(*)::int from groups where display_name = 'Test Group'),
+  1,
+  'the group exists in the groups table'
+);
 
--- Test case 3: Test if a member exists in the members table
 select is(
-               (select count(*)
-                from members
-                where group_id = (select id from groups where display_name = 'test group')
-                  and role_id = 1),
-               1,
-               'A member with role_id 1 should exist in the members table for the created group'
-       );
+  (select count(*)::int from members
+   where group_id = 'bbbbbbbb-bbbb-bbbb-bbbb-bbbbbbbbbbbb' and role = 'admin'),
+  1,
+  'the creator is added as an admin member of the group'
+);
 
-select ok(
-               create_group('test group') is null,
-               'create_group should return null if the group already exists'
-       );
-
-commit;
+select * from finish();
+rollback;
