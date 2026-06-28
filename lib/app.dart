@@ -10,7 +10,6 @@ import 'package:parousia/router.dart';
 import 'package:parousia/selectors/selectors.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux/redux.dart';
-import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 
 part 'app.freezed.dart';
 
@@ -62,7 +61,10 @@ class ParApp extends StatelessWidget {
             localizationsDelegates: const [
               ...AppLocalizations.localizationsDelegates,
               FormBuilderLocalizations.delegate,
-              SupabaseAuthUILocalizations.delegate,
+              // NOTE: upstream supabase_auth_ui (0.6.1) has no unified localizations
+              // delegate; auth-component strings are localized per-component instead.
+              // The forked package's SupabaseAuthUILocalizations was dropped in the
+              // migration. TODO: re-base the custom auth translations (en/fr/de/es/it).
             ],
             supportedLocales: AppLocalizations.supportedLocales,
             themeMode: vm.themeMode,
@@ -85,10 +87,8 @@ class ParApp extends StatelessWidget {
 
 @freezed
 sealed class _ViewModel with _$ViewModel {
-  const factory _ViewModel({
-    required ThemeMode themeMode,
-    Locale? locale,
-  }) = __ViewModel;
+  const factory _ViewModel({required ThemeMode themeMode, Locale? locale}) =
+      __ViewModel;
 
   factory _ViewModel.fromStore(Store<AppState> store) {
     return _ViewModel(
