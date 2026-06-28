@@ -31,22 +31,31 @@ class AuthScreen extends StatelessWidget {
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Column(children: [
-          SupaPasswordAuth(
-            redirectTo: _getRedirectUrl(),
-          ),
-          Divider(height: 64),
-          SupaSocialsAuth(
-            socialProviders: [OAuthProvider.apple, OAuthProvider.google],
-            nativeGoogleAuthConfig: NativeGoogleAuthConfig(
-              webClientId: config.socialAuthWebClientId,
-              iosClientId: config.socialAuthIosClientId,
+        child: Column(
+          children: [
+            SupaEmailAuth(
+              redirectTo: _getRedirectUrl(),
+              // The Redux auth listener (main.dart) also reacts to sign-in, but upstream
+              // supabase_auth_ui requires these callbacks; navigate home to match
+              // SupaSocialsAuth.onSuccess below.
+              onSignInComplete: (response) => HomeScreenRoute().go(context),
+              // Email confirmation is disabled, so sign-up yields a session immediately.
+              // TODO: if confirmations get enabled, show a "check your email" state instead.
+              onSignUpComplete: (response) => HomeScreenRoute().go(context),
             ),
-            enableNativeAppleAuth: true,
-            redirectUrl: _getRedirectUrl(),
-            onSuccess: (session) => HomeScreenRoute().go(context),
-          ),
-        ]),
+            Divider(height: 64),
+            SupaSocialsAuth(
+              socialProviders: [OAuthProvider.apple, OAuthProvider.google],
+              nativeGoogleAuthConfig: NativeGoogleAuthConfig(
+                webClientId: config.socialAuthWebClientId,
+                iosClientId: config.socialAuthIosClientId,
+              ),
+              enableNativeAppleAuth: true,
+              redirectUrl: _getRedirectUrl(),
+              onSuccess: (session) => HomeScreenRoute().go(context),
+            ),
+          ],
+        ),
       ),
     );
   }

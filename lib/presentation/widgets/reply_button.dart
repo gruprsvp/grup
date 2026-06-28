@@ -41,8 +41,8 @@ class ReplyButton extends StatelessWidget {
   final ReplyOptions? reply;
   final ReplyOptions? defaultReply;
   final ValueChanged<ReplyOptions?>? onReplyChanged;
-  final IconData activeIcon;
-  final IconData inactiveIcon;
+  final FaIconData activeIcon;
+  final FaIconData inactiveIcon;
   final String tooltip;
   final Color activeColor;
 
