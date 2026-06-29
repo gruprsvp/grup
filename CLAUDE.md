@@ -22,8 +22,10 @@ dart run build_runner build  --delete-conflicting-outputs  # one-shot
 supabase start
 supabase status -o json > supabase/config/localhost.json   # app + tests read this file
 
-flutter analyze
-flutter test                              # whole suite (needs Supabase running, see below)
+flutter analyze --no-fatal-infos           # CI gate (warnings/errors fail; infos advisory)
+flutter test                              # whole suite (live tests self-skip if no Supabase)
+flutter test --exclude-tags live          # hermetic only — no Docker/Supabase needed
+flutter test --tags live                  # only the live-Supabase repository suite
 flutter test test/selectors_test.dart     # a single file
 flutter test --plain-name "substring"     # a single test/group by name
 
@@ -32,7 +34,7 @@ flutter run -t lib/widgetbook.dart        # the Widgetbook component catalog
 flutter gen-l10n                           # regenerate localizations from lib/l10n/*.arb
 ```
 
-**Tests require a running local Supabase.** `repositories_test.dart` and others hit the DB. CI (`.github/workflows/verify.yaml`) runs `supabase start` → writes `supabase/config/localhost.json` → `flutter test` → `flutter build web`. Reproduce that locally if a test fails only for you.
+**Live vs hermetic tests.** Most tests are hermetic. The `repositories_test.dart` suite is tagged `live` and hits a real local Supabase; it **self-skips** when `supabase/config/localhost.json` is absent, so a plain `flutter test` works without Docker. To run the live suite, bring up Supabase first (see below). CI's `verify.yaml` has two jobs: a Docker-free `analyze` job (format + analyze) on every PR, and a `test` job that runs `supabase start` → `supabase test db` (pgTAP) → `flutter test --coverage` → `flutter build web`.
 
 ## Code generation
 

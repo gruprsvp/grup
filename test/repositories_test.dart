@@ -1,4 +1,8 @@
+@Tags(['live'])
+library;
+
 import 'dart:async';
+import 'dart:io';
 
 import 'package:faker/faker.dart';
 import 'package:parousia/models/models.dart';
@@ -103,6 +107,20 @@ Future<T?> runWithTemporaryGroup<T>(RunWithGroupCallback<T> callback) {
 }
 
 void main() {
+  // These tests run against a live local Supabase. Skip cleanly (instead of
+  // erroring) when it isn't configured, so a plain `flutter test` works without
+  // Docker. To run them: `supabase start` then
+  // `supabase status -o json > supabase/config/localhost.json` — or target them
+  // explicitly with `flutter test --tags live` (and exclude with `--exclude-tags live`).
+  if (!File('supabase/config/localhost.json').existsSync()) {
+    test(
+      'repository (live Supabase) tests skipped',
+      () {},
+      skip: 'No supabase/config/localhost.json — run `supabase start` first.',
+    );
+    return;
+  }
+
   group('profiles', () {
     test(
       'users should be able to sign up and delete their profile',
