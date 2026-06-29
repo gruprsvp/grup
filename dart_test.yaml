@@ -1,0 +1,14 @@
+# Test configuration. See https://pub.dev/packages/test#configuring-tags
+#
+# The `live` tag marks tests that require a running local Supabase (Docker):
+#   supabase start
+#   supabase status -o json > supabase/config/localhost.json
+#
+# Run only hermetic tests (no Docker):   flutter test --exclude-tags live
+# Run only the live suite:               flutter test --tags live
+# CI runs everything (Supabase is up).   flutter test
+#
+# (The live suite also self-skips when supabase/config/localhost.json is absent,
+#  so a plain `flutter test` is safe without Docker.)
+tags:
+  live:
