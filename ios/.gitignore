@@ -12,6 +12,7 @@
 Icon?
 **/Pods/
 **/.symlinks/
+**/xcshareddata/swiftpm/
 profile
 xcuserdata
 **/.generated/
