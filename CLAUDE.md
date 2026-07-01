@@ -29,10 +29,20 @@ flutter test --tags live                  # only the live-Supabase repository su
 flutter test test/selectors_test.dart     # a single file
 flutter test --plain-name "substring"     # a single test/group by name
 
-flutter run                               # the app
+flutter run                               # the app (web/Chrome needs no extra setup)
 flutter run -t lib/widgetbook.dart        # the Widgetbook component catalog
 flutter gen-l10n                           # regenerate localizations from lib/l10n/*.arb
 ```
+
+**iOS / macOS local builds** need one-time setup, because several plugins
+(`flutter_contacts`, `posthog_flutter`, `sign_in_with_apple`) are CocoaPods-only:
+```sh
+brew install cocoapods                              # required for iOS/macOS pods
+flutter config --no-enable-swift-package-manager   # use pure CocoaPods; the SPM hybrid
+                                                   # breaks module resolution ("Module 'X' not found")
+```
+Minimum OS (raised for the transitive `passkeys` dependency): **iOS 16**, **macOS 13.5**.
+Web and Android need none of this. CI only builds web + Android, so it's a local-dev concern.
 
 **Live vs hermetic tests.** Most tests are hermetic. The `repositories_test.dart` suite is tagged `live` and hits a real local Supabase; it **self-skips** when `supabase/config/localhost.json` is absent, so a plain `flutter test` works without Docker. To run the live suite, bring up Supabase first (see below). CI's `verify.yaml` has two jobs: a Docker-free `analyze` job (format + analyze) on every PR, and a `test` job that runs `supabase start` → `supabase test db` (pgTAP) → `flutter test --coverage` → `flutter build web`.
 
