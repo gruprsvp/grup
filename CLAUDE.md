@@ -34,13 +34,16 @@ flutter run -t lib/widgetbook.dart        # the Widgetbook component catalog
 flutter gen-l10n                           # regenerate localizations from lib/l10n/*.arb
 ```
 
-**iOS / macOS local builds** need one-time setup, because several plugins
-(`flutter_contacts`, `posthog_flutter`, `sign_in_with_apple`) are CocoaPods-only:
+**iOS / macOS local builds** need CocoaPods installed (some plugins —
+`flutter_contacts`, `posthog_flutter`, `sign_in_with_apple` — are CocoaPods-only and
+build via the SPM+CocoaPods hybrid):
 ```sh
-brew install cocoapods                              # required for iOS/macOS pods
-flutter config --no-enable-swift-package-manager   # use pure CocoaPods; the SPM hybrid
-                                                   # breaks module resolution ("Module 'X' not found")
+brew install cocoapods
 ```
+Swift Package Manager (Flutter's default) is left **enabled** — it works here. If a
+build ever fails with `Module 'X' not found`, it's almost always a broken `pod install`
+(CocoaPods missing, or a stale `ios/Podfile.lock`) — fix with `brew install cocoapods`
+and/or `cd ios && pod install --repo-update`, not by disabling SPM.
 Minimum OS (raised for the transitive `passkeys` dependency): **iOS 16**, **macOS 13.5**.
 Web and Android need none of this. CI only builds web + Android, so it's a local-dev concern.
 
