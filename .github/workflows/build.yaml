@@ -10,10 +10,23 @@ on:
     branches:
       - main
 
+# Deploys must be serialized, not raced: two quick merges to main would
+# otherwise run prod `db push`, the gh-pages force-push, and the Play upload
+# concurrently. Never cancel a deploy mid-flight — queue the next one.
+concurrency:
+  group: build-deploy
+  cancel-in-progress: false
+
+# Default-deny; the build job opts back into what it needs.
+permissions:
+  contents: read
+
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
     permissions:
+      # Pushes gh-pages and creates the draft release.
       contents: write
     steps:
       - name: Checkout
@@ -22,7 +35,7 @@ jobs:
           fetch-depth: 0
 
       - name: Get Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
           channel: 'stable'
 
@@ -36,7 +49,7 @@ jobs:
         run: flutter pub get
 
       - name: Setup Supabase
-        uses: supabase/setup-cli@v1
+        uses: supabase/setup-cli@ab058987d8d6c725971f6cf9d0b5c98467e30bd1 # v1.7.1
 
       - name: Start Supabase local for tests
         run: supabase start
@@ -45,15 +58,6 @@ jobs:
         run: |
           supabase status -o json > supabase/config/localhost.json
           flutter test
-
-      - name: Deploy to Supabase
-        run: |
-          supabase link --project-ref "$SUPABASE_PROJECT_ID"
-          supabase db push
-        env:
-          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
-          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_PROD_DB_PASSWORD }}
-          SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROD_PROJECT_ID }}
 
       - name: Compare pubspec version and git tag
         id: parse_pubspec
@@ -67,7 +71,7 @@ jobs:
       # and has not been published yet. If the release is already published, it will not be updated and fail.
       # Once a version is published to the app store, the release should be marked as published.
       - name: Create or update draft release
-        uses: ncipollo/release-action@v1
+        uses: ncipollo/release-action@339a81892b84b4eeb0f6e744e4574d79d0d9b8dd # v1.21.0
         with:
           name: "v${{ steps.parse_pubspec.outputs.pubspec_version }}"
           tag: "v${{ steps.parse_pubspec.outputs.pubspec_version }}"
@@ -76,6 +80,18 @@ jobs:
           draft: true
           allowUpdates: true
           updateOnlyUnreleased: true
+
+      # Runs AFTER the draft-release step so a forgotten pubspec version bump
+      # (which makes that step fail) blocks the schema migration too — instead
+      # of migrating prod and then failing every app deploy (schema/app skew).
+      - name: Deploy to Supabase
+        run: |
+          supabase link --project-ref "$SUPABASE_PROJECT_ID"
+          supabase db push
+        env:
+          SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
+          SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_PROD_DB_PASSWORD }}
+          SUPABASE_PROJECT_ID: ${{ secrets.SUPABASE_PROD_PROJECT_ID }}
 
       - name: Configure git
         run: |
@@ -105,7 +121,9 @@ jobs:
         run: flutter build appbundle --build-number ${{ github.run_number }}
 
       - name: Upload Android app to Play Store
-        uses: r0adkll/upload-google-play@v1
+        # SHA-pinned: this action receives the Play service-account JSON; a
+        # movable tag would let a compromised upstream exfiltrate it.
+        uses: r0adkll/upload-google-play@e738b9dd8f2476ea806d921b64aacd24f34515a5 # v1.1.5
         with:
           serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
           packageName: is.giorgio.app.parousia
