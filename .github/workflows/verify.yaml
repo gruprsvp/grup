@@ -15,17 +15,21 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 jobs:
   # Fast, hermetic static checks. No Docker, no Supabase — runs on EVERY PR
   # (including drafts) so formatting/analysis protects 100% of changes cheaply.
   analyze:
     runs-on: ubuntu-latest
+    timeout-minutes: 15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Get Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
           channel: 'stable'
           cache: true
@@ -47,13 +51,14 @@ jobs:
   # protection should require this check before merge.
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     if: github.event.pull_request.draft != true
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
       - name: Get Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
         with:
           channel: 'stable'
           cache: true
@@ -62,7 +67,7 @@ jobs:
         run: flutter pub get
 
       - name: Setup Supabase
-        uses: supabase/setup-cli@v1
+        uses: supabase/setup-cli@ab058987d8d6c725971f6cf9d0b5c98467e30bd1 # v1.7.1
 
       - name: Start Supabase local for tests
         run: supabase start
