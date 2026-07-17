@@ -2,6 +2,11 @@ name: Verify
 
 on:
   pull_request:
+    # ready_for_review is NOT in the default set. Without it, a PR opened as a
+    # draft (test job skipped) and then marked ready gets no new run — and a
+    # skipped required check satisfies branch protection, letting untested code
+    # merge. Listing types explicitly closes that bypass.
+    types: [opened, synchronize, reopened, ready_for_review]
   merge_group:
 
 # We only care about the latest version: stop old jobs if a new commit is pushed.
