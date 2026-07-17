@@ -310,6 +310,145 @@ void main() {
     });
   });
 
+  group('clock-time semantics — the copyWith(isUtc: true) reinterpretation', () {
+    // Reply/default-rule dates are matched to instances via
+    // `copyWith(isUtc: true).isAtSameMomentAs(instanceDate)` — a WALL-CLOCK
+    // relabeling, not an epoch conversion. These tests pin that semantic; it is
+    // exactly the hack a refactor (or the repository `toUtc()` inconsistency
+    // fix) could silently change.
+
+    test('a local-time (non-UTC) reply matches by wall-clock relabeling', () {
+      final s = schedule(CommonRecurrenceRules.daily);
+      final summary = repliesForScheduleInstance(
+        instanceDate: day(0), // 2024-01-01T00:00Z
+        schedule: s,
+        startDate: monday,
+        endDate: day(1),
+        members: [member(memberA)],
+        // Local midnight: a DIFFERENT moment than UTC midnight on any machine
+        // not running in UTC — but the relabeling makes it match regardless.
+        replies: [reply(memberA, s.id, DateTime(2024, 1, 1), ReplyOptions.yes)],
+      );
+
+      expect(summary.memberReplies[memberA], ReplyOptions.yes);
+      expect(summary.yesCount, 1);
+    });
+
+    test('matching is by exact moment, not by day', () {
+      final s = schedule(CommonRecurrenceRules.daily);
+      final summary = repliesForScheduleInstance(
+        instanceDate: day(0), // midnight
+        schedule: s,
+        startDate: monday,
+        endDate: day(1),
+        members: [member(memberA)],
+        // Same day, 01:00 — does NOT match the midnight instance.
+        replies: [
+          reply(memberA, s.id, DateTime.utc(2024, 1, 1, 1), ReplyOptions.yes),
+        ],
+      );
+
+      expect(summary.memberReplies, isEmpty);
+      expect(summary.yesCount, 0);
+    });
+
+    test('instances inherit the startDate time-of-day', () {
+      // A schedule created at 10:00 produces 10:00 instances, and a midnight
+      // reply for the same calendar day is IGNORED. This is the sharp edge of
+      // moment-based matching once startDate carries a time-of-day.
+      final s = schedule(
+        CommonRecurrenceRules.daily,
+        start: DateTime.utc(2024, 1, 1, 10),
+      );
+      final result = getScheduleInstances(
+        schedule: s,
+        members: [member(memberA)],
+        startDate: monday,
+        endDate: day(3),
+        replies: [reply(memberA, s.id, day(1), ReplyOptions.yes)],
+      ).toList();
+
+      // All 10:00 instances before the exclusive window end (day 3 midnight).
+      expect(result.map((e) => e.instanceDate), [
+        DateTime.utc(2024, 1, 1, 10),
+        DateTime.utc(2024, 1, 2, 10),
+        DateTime.utc(2024, 1, 3, 10),
+      ]);
+      // The midnight reply matched no 10:00 instance.
+      expect(result.every((e) => e.memberReplies.isEmpty), isTrue);
+    });
+  });
+
+  group('rrule edges — month boundaries, UNTIL, interval', () {
+    test('monthly on the 31st skips months without a 31st', () {
+      final s = schedule(
+        CommonRecurrenceRules.monthly,
+        start: DateTime.utc(2024, 1, 31),
+      );
+      final result = getScheduleInstances(
+        schedule: s,
+        members: [member(memberA)],
+        startDate: DateTime.utc(2024, 1, 1),
+        endDate: DateTime.utc(2024, 6, 1),
+      );
+      // Feb (29 days) and Apr (30 days) have no 31st and are skipped.
+      expect(result.map((e) => e.instanceDate), [
+        DateTime.utc(2024, 1, 31),
+        DateTime.utc(2024, 3, 31),
+        DateTime.utc(2024, 5, 31),
+      ]);
+    });
+
+    test('monthly on the 29th includes leap-year Feb 29', () {
+      final s = schedule(
+        CommonRecurrenceRules.monthly,
+        start: DateTime.utc(2024, 1, 29),
+      );
+      final result = getScheduleInstances(
+        schedule: s,
+        members: [member(memberA)],
+        startDate: DateTime.utc(2024, 1, 1),
+        endDate: DateTime.utc(2024, 4, 1),
+      );
+      expect(result.map((e) => e.instanceDate), [
+        DateTime.utc(2024, 1, 29),
+        DateTime.utc(2024, 2, 29), // 2024 is a leap year
+        DateTime.utc(2024, 3, 29),
+      ]);
+    });
+
+    test('UNTIL bounds the expansion (inclusive)', () {
+      final s = schedule(
+        RecurrenceRule(frequency: Frequency.daily, until: day(3)),
+      );
+      final result = getScheduleInstances(
+        schedule: s,
+        members: [member(memberA)],
+        startDate: monday,
+        endDate: day(30), // window is wider than UNTIL
+      );
+      expect(result.map((e) => e.instanceDate), [
+        day(0),
+        day(1),
+        day(2),
+        day(3), // UNTIL is inclusive
+      ]);
+    });
+
+    test('interval > 1 expands every Nth period', () {
+      final s = schedule(
+        RecurrenceRule(frequency: Frequency.weekly, interval: 2),
+      );
+      final result = getScheduleInstances(
+        schedule: s,
+        members: [member(memberA)],
+        startDate: monday,
+        endDate: day(35), // 5 weeks
+      );
+      expect(result.map((e) => e.instanceDate), [day(0), day(14), day(28)]);
+    });
+  });
+
   group('end-to-end via getScheduleInstances', () {
     test('default yes every day, with a single "no" override on one day', () {
       final s = schedule(CommonRecurrenceRules.daily);
