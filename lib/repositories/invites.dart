@@ -14,6 +14,10 @@ class InvitesRepository extends SupabaseRepository with Postgrest {
   const InvitesRepository({required super.supabase})
     : super(tableName: Tables.invites);
 
+  // Invite codes are bearer credentials that grant group membership — they
+  // must come from a CSPRNG, not the time-seeded default Random().
+  static final _codeRandom = Random.secure();
+
   Future<Invite> inviteMember(
     String memberId,
     InviteMethods method,
@@ -33,7 +37,7 @@ class InvitesRepository extends SupabaseRepository with Postgrest {
 
   Future<Invite> inviteWithGeneratedCode(String memberId) async {
     final code = base32.encode(
-      Uint8List.fromList(List.generate(5, (_) => Random().nextInt(256))),
+      Uint8List.fromList(List.generate(5, (_) => _codeRandom.nextInt(256))),
       encoding: Encoding.crockford,
     );
     final formatted = formatBase32Code(code);
