@@ -7,10 +7,10 @@ part of 'locale_state.dart';
 // **************************************************************************
 
 _LocaleState _$LocaleStateFromJson(Map<String, dynamic> json) => _LocaleState(
-      languageCode: json['languageCode'] as String,
-      scriptCode: json['scriptCode'] as String?,
-      countryCode: json['countryCode'] as String?,
-    );
+  languageCode: json['languageCode'] as String,
+  scriptCode: json['scriptCode'] as String?,
+  countryCode: json['countryCode'] as String?,
+);
 
 Map<String, dynamic> _$LocaleStateToJson(_LocaleState instance) =>
     <String, dynamic>{

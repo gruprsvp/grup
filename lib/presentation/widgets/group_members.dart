@@ -172,7 +172,10 @@ class GroupMembers extends StatelessWidget {
           displayNameOverride: contact.displayName,
           invites: [
             for (final e in contact.emails) (InviteMethods.email, e.address),
-            for (final p in contact.phones) (InviteMethods.phone, p.number),
+            // Prefer the E.164 normalized number (the canonical invite
+            // format; Android-only, null elsewhere) over the raw one.
+            for (final p in contact.phones)
+              (InviteMethods.phone, p.normalizedNumber ?? p.number),
           ],
         ),
     ];
