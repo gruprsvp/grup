@@ -12,7 +12,12 @@
 Icon?
 **/Pods/
 **/.symlinks/
-**/xcshareddata/swiftpm/
+# Ignore SPM workspace state but keep the workspace-level Package.resolved:
+# Xcode Cloud runs with automatic dependency resolution disabled and requires
+# it in the repository. The xcodeproj-level copy stays ignored (local artifact).
+# (`/*` not `/` — git cannot re-include files inside a fully ignored directory.)
+**/xcshareddata/swiftpm/*
+!Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved
 profile
 xcuserdata
 **/.generated/

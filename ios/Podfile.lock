@@ -1,42 +1,22 @@
 PODS:
   - Flutter (1.0.0)
-  - flutter_contacts (0.0.1):
-    - Flutter
-  - PostHog (3.62.5)
-  - posthog_flutter (0.0.1):
-    - Flutter
-    - FlutterMacOS
-    - PostHog (< 4.0.0, >= 3.32.0)
   - sign_in_with_apple (0.0.1):
     - Flutter
 
 DEPENDENCIES:
   - Flutter (from `Flutter`)
-  - flutter_contacts (from `.symlinks/plugins/flutter_contacts/ios`)
-  - posthog_flutter (from `.symlinks/plugins/posthog_flutter/ios`)
   - sign_in_with_apple (from `.symlinks/plugins/sign_in_with_apple/ios`)
-
-SPEC REPOS:
-  trunk:
-    - PostHog
 
 EXTERNAL SOURCES:
   Flutter:
     :path: Flutter
-  flutter_contacts:
-    :path: ".symlinks/plugins/flutter_contacts/ios"
-  posthog_flutter:
-    :path: ".symlinks/plugins/posthog_flutter/ios"
   sign_in_with_apple:
     :path: ".symlinks/plugins/sign_in_with_apple/ios"
 
 SPEC CHECKSUMS:
   Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
-  flutter_contacts: 5383945387e7ca37cf963d4be57c21f2fc15ca9f
-  PostHog: 3ef88b8cec6e42fc3dbffc036e49cded2b82d5e5
-  posthog_flutter: 9535ac2d4ab65ccb9ace3886dcc0b3105198bad5
   sign_in_with_apple: c5dcc141574c8c54d5ac99dd2163c0c72ad22418
 
 PODFILE CHECKSUM: 4c438addb11b6da45ed7ae408823d68256222460
 
-COCOAPODS: 1.16.2
+COCOAPODS: 1.17.0
