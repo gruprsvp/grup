@@ -50,7 +50,7 @@ Future<void> main() async {
   final supabaseConfig = SupabaseConfig.fromString(supabaseConfigFile);
 
   final supabase = await Supabase.initialize(
-    anonKey: supabaseConfig.anonKey,
+    publishableKey: supabaseConfig.anonKey,
     url: supabaseConfig.apiUrl,
   );
 

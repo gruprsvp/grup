@@ -22,12 +22,15 @@ class _SelectContactsScreenState extends State<SelectContactsScreen> {
 
   Future<List<Contact>> _getContacts() async {
     // TODO handle permissions not granted with error
-    await FlutterContacts.requestPermission(readonly: true);
+    await FlutterContacts.permissions.request(PermissionType.read);
 
-    return FlutterContacts.getContacts(
-      withAccounts: true,
-      withPhoto: true,
-      withProperties: true,
+    return FlutterContacts.getAll(
+      properties: {
+        ContactProperty.name,
+        ContactProperty.phone,
+        ContactProperty.email,
+        ContactProperty.photoThumbnail,
+      },
     );
   }
 
@@ -72,19 +75,21 @@ class _SelectContactsScreenState extends State<SelectContactsScreen> {
               itemCount: contacts.length,
               itemBuilder: (context, index) {
                 final contact = contacts[index];
-                bool hasPicture = contact.photoOrThumbnail != null;
+                final displayName = contact.displayName ?? '';
+                final picture =
+                    contact.photo?.thumbnail ?? contact.photo?.fullSize;
 
                 return CheckboxListTile.adaptive(
                   secondary: CircleAvatar(
-                    backgroundColor: getColorFromHashCode(contact.displayName),
-                    backgroundImage: hasPicture
-                        ? MemoryImage(contact.photoOrThumbnail!)
+                    backgroundColor: getColorFromHashCode(displayName),
+                    backgroundImage: picture != null
+                        ? MemoryImage(picture)
                         : null,
-                    child: hasPicture
+                    child: picture != null
                         ? null
-                        : Text(getNameInitials(contact.displayName) ?? ''),
+                        : Text(getNameInitials(displayName) ?? ''),
                   ),
-                  title: Text(contact.displayName),
+                  title: Text(displayName),
                   value: selected.contains(index),
                   onChanged: (value) => setState(
                     () => value! ? selected.add(index) : selected.remove(index),

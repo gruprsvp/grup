@@ -7,17 +7,21 @@ part of 'auth_state.dart';
 // **************************************************************************
 
 _AuthState _$AuthStateFromJson(Map<String, dynamic> json) => _AuthState(
-      status: $enumDecode(_$AuthStatusEnumMap, json['status']),
-      user: _$JsonConverterFromJson<Map<String, dynamic>, User>(
-          json['user'], const UserJsonConverter().fromJson),
-      lastRoute: json['lastRoute'] as String?,
-    );
+  status: $enumDecode(_$AuthStatusEnumMap, json['status']),
+  user: _$JsonConverterFromJson<Map<String, dynamic>, User>(
+    json['user'],
+    const UserJsonConverter().fromJson,
+  ),
+  lastRoute: json['lastRoute'] as String?,
+);
 
 Map<String, dynamic> _$AuthStateToJson(_AuthState instance) =>
     <String, dynamic>{
       'status': _$AuthStatusEnumMap[instance.status]!,
       'user': _$JsonConverterToJson<Map<String, dynamic>, User>(
-          instance.user, const UserJsonConverter().toJson),
+        instance.user,
+        const UserJsonConverter().toJson,
+      ),
       'lastRoute': instance.lastRoute,
     };
 
@@ -30,11 +34,9 @@ const _$AuthStatusEnumMap = {
 Value? _$JsonConverterFromJson<Json, Value>(
   Object? json,
   Value? Function(Json json) fromJson,
-) =>
-    json == null ? null : fromJson(json as Json);
+) => json == null ? null : fromJson(json as Json);
 
 Json? _$JsonConverterToJson<Json, Value>(
   Value? value,
   Json? Function(Value value) toJson,
-) =>
-    value == null ? null : toJson(value);
+) => value == null ? null : toJson(value);

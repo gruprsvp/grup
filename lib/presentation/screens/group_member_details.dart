@@ -155,7 +155,9 @@ class GroupMemberDetailsScreen extends StatelessWidget {
     final code = invite.value;
     final deeplink = Uri.https('grup.rsvp', '/join/$code').toString();
 
-    return Share.share(l10n.inviteMessage(code, deeplink));
+    return SharePlus.instance.share(
+      ShareParams(text: l10n.inviteMessage(code, deeplink)),
+    );
   }
 
   /// Shows a confirmation dialog before updating the role of a member.

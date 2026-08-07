@@ -11,320 +11,270 @@ part of 'theme_switcher.dart';
 
 // dart format off
 T _$identity<T>(T value) => value;
-
 /// @nodoc
 mixin _$ViewModel implements DiagnosticableTreeMixin {
-  ThemeMode get themeMode;
-  VoidCallback get nextTheme;
 
-  /// Create a copy of _ViewModel
-  /// with the given fields replaced by the non-null parameter values.
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$ViewModelCopyWith<_ViewModel> get copyWith =>
-      __$ViewModelCopyWithImpl<_ViewModel>(this as _ViewModel, _$identity);
+ ThemeMode get themeMode; VoidCallback get nextTheme;
+/// Create a copy of _ViewModel
+/// with the given fields replaced by the non-null parameter values.
+@JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$ViewModelCopyWith<_ViewModel> get copyWith => __$ViewModelCopyWithImpl<_ViewModel>(this as _ViewModel, _$identity);
 
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties
-      ..add(DiagnosticsProperty('type', '_ViewModel'))
-      ..add(DiagnosticsProperty('themeMode', themeMode))
-      ..add(DiagnosticsProperty('nextTheme', nextTheme));
-  }
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _ViewModel &&
-            (identical(other.themeMode, themeMode) ||
-                other.themeMode == themeMode) &&
-            (identical(other.nextTheme, nextTheme) ||
-                other.nextTheme == nextTheme));
-  }
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', '_ViewModel'))
+    ..add(DiagnosticsProperty('themeMode', themeMode))..add(DiagnosticsProperty('nextTheme', nextTheme));
+}
 
-  @override
-  int get hashCode => Object.hash(runtimeType, themeMode, nextTheme);
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ViewModel&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.nextTheme, nextTheme) || other.nextTheme == nextTheme));
+}
 
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(themeMode: $themeMode, nextTheme: $nextTheme)';
-  }
+
+@override
+int get hashCode => Object.hash(runtimeType,themeMode,nextTheme);
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return '_ViewModel(themeMode: $themeMode, nextTheme: $nextTheme)';
+}
+
+
 }
 
 /// @nodoc
-abstract mixin class _$ViewModelCopyWith<$Res> {
-  factory _$ViewModelCopyWith(
-          _ViewModel value, $Res Function(_ViewModel) _then) =
-      __$ViewModelCopyWithImpl;
-  @useResult
-  $Res call({ThemeMode themeMode, VoidCallback nextTheme});
-}
+abstract mixin class _$ViewModelCopyWith<$Res>  {
+  factory _$ViewModelCopyWith(_ViewModel value, $Res Function(_ViewModel) _then) = __$ViewModelCopyWithImpl;
+@useResult
+$Res call({
+ ThemeMode themeMode, VoidCallback nextTheme
+});
 
+
+
+
+}
 /// @nodoc
-class __$ViewModelCopyWithImpl<$Res> implements _$ViewModelCopyWith<$Res> {
+class __$ViewModelCopyWithImpl<$Res>
+    implements _$ViewModelCopyWith<$Res> {
   __$ViewModelCopyWithImpl(this._self, this._then);
 
   final _ViewModel _self;
   final $Res Function(_ViewModel) _then;
 
-  /// Create a copy of _ViewModel
-  /// with the given fields replaced by the non-null parameter values.
-  @pragma('vm:prefer-inline')
-  @override
-  $Res call({
-    Object? themeMode = null,
-    Object? nextTheme = null,
-  }) {
-    return _then(_self.copyWith(
-      themeMode: null == themeMode
-          ? _self.themeMode
-          : themeMode // ignore: cast_nullable_to_non_nullable
-              as ThemeMode,
-      nextTheme: null == nextTheme
-          ? _self.nextTheme
-          : nextTheme // ignore: cast_nullable_to_non_nullable
-              as VoidCallback,
-    ));
-  }
+/// Create a copy of _ViewModel
+/// with the given fields replaced by the non-null parameter values.
+@pragma('vm:prefer-inline') @override $Res call({Object? themeMode = null,Object? nextTheme = null,}) {
+  return _then(_self.copyWith(
+themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
+as ThemeMode,nextTheme: null == nextTheme ? _self.nextTheme : nextTheme // ignore: cast_nullable_to_non_nullable
+as VoidCallback,
+  ));
 }
+
+}
+
 
 /// Adds pattern-matching-related methods to [_ViewModel].
 extension _ViewModelPatterns on _ViewModel {
-  /// A variant of `map` that fallback to returning `orElse`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
+/// A variant of `map` that fallback to returning `orElse`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
 
-  @optionalTypeArgs
-  TResult maybeMap<TResult extends Object?>(
-    TResult Function(__ViewModel value)? $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case __ViewModel() when $default != null:
-        return $default(_that);
-      case _:
-        return orElse();
-    }
-  }
+@optionalTypeArgs TResult maybeMap<TResult extends Object?>(TResult Function( __ViewModel value)?  $default,{required TResult orElse(),}){
+final _that = this;
+switch (_that) {
+case __ViewModel() when $default != null:
+return $default(_that);case _:
+  return orElse();
 
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// Callbacks receives the raw object, upcasted.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case final Subclass2 value:
-  ///     return ...;
-  /// }
-  /// ```
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// Callbacks receives the raw object, upcasted.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case final Subclass2 value:
+///     return ...;
+/// }
+/// ```
 
-  @optionalTypeArgs
-  TResult map<TResult extends Object?>(
-    TResult Function(__ViewModel value) $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case __ViewModel():
-        return $default(_that);
-    }
-  }
+@optionalTypeArgs TResult map<TResult extends Object?>(TResult Function( __ViewModel value)  $default,){
+final _that = this;
+switch (_that) {
+case __ViewModel():
+return $default(_that);}
+}
+/// A variant of `map` that fallback to returning `null`.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case final Subclass value:
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
 
-  /// A variant of `map` that fallback to returning `null`.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case final Subclass value:
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
+@optionalTypeArgs TResult? mapOrNull<TResult extends Object?>(TResult? Function( __ViewModel value)?  $default,){
+final _that = this;
+switch (_that) {
+case __ViewModel() when $default != null:
+return $default(_that);case _:
+  return null;
 
-  @optionalTypeArgs
-  TResult? mapOrNull<TResult extends Object?>(
-    TResult? Function(__ViewModel value)? $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case __ViewModel() when $default != null:
-        return $default(_that);
-      case _:
-        return null;
-    }
-  }
+}
+}
+/// A variant of `when` that fallback to an `orElse` callback.
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return orElse();
+/// }
+/// ```
 
-  /// A variant of `when` that fallback to an `orElse` callback.
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return orElse();
-  /// }
-  /// ```
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( ThemeMode themeMode,  VoidCallback nextTheme)?  $default,{required TResult orElse(),}) {final _that = this;
+switch (_that) {
+case __ViewModel() when $default != null:
+return $default(_that.themeMode,_that.nextTheme);case _:
+  return orElse();
 
-  @optionalTypeArgs
-  TResult maybeWhen<TResult extends Object?>(
-    TResult Function(ThemeMode themeMode, VoidCallback nextTheme)? $default, {
-    required TResult orElse(),
-  }) {
-    final _that = this;
-    switch (_that) {
-      case __ViewModel() when $default != null:
-        return $default(_that.themeMode, _that.nextTheme);
-      case _:
-        return orElse();
-    }
-  }
+}
+}
+/// A `switch`-like method, using callbacks.
+///
+/// As opposed to `map`, this offers destructuring.
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case Subclass2(:final field2):
+///     return ...;
+/// }
+/// ```
 
-  /// A `switch`-like method, using callbacks.
-  ///
-  /// As opposed to `map`, this offers destructuring.
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case Subclass2(:final field2):
-  ///     return ...;
-  /// }
-  /// ```
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( ThemeMode themeMode,  VoidCallback nextTheme)  $default,) {final _that = this;
+switch (_that) {
+case __ViewModel():
+return $default(_that.themeMode,_that.nextTheme);}
+}
+/// A variant of `when` that fallback to returning `null`
+///
+/// It is equivalent to doing:
+/// ```dart
+/// switch (sealedClass) {
+///   case Subclass(:final field):
+///     return ...;
+///   case _:
+///     return null;
+/// }
+/// ```
 
-  @optionalTypeArgs
-  TResult when<TResult extends Object?>(
-    TResult Function(ThemeMode themeMode, VoidCallback nextTheme) $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case __ViewModel():
-        return $default(_that.themeMode, _that.nextTheme);
-    }
-  }
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( ThemeMode themeMode,  VoidCallback nextTheme)?  $default,) {final _that = this;
+switch (_that) {
+case __ViewModel() when $default != null:
+return $default(_that.themeMode,_that.nextTheme);case _:
+  return null;
 
-  /// A variant of `when` that fallback to returning `null`
-  ///
-  /// It is equivalent to doing:
-  /// ```dart
-  /// switch (sealedClass) {
-  ///   case Subclass(:final field):
-  ///     return ...;
-  ///   case _:
-  ///     return null;
-  /// }
-  /// ```
+}
+}
 
-  @optionalTypeArgs
-  TResult? whenOrNull<TResult extends Object?>(
-    TResult? Function(ThemeMode themeMode, VoidCallback nextTheme)? $default,
-  ) {
-    final _that = this;
-    switch (_that) {
-      case __ViewModel() when $default != null:
-        return $default(_that.themeMode, _that.nextTheme);
-      case _:
-        return null;
-    }
-  }
 }
 
 /// @nodoc
+
 
 class __ViewModel with DiagnosticableTreeMixin implements _ViewModel {
   const __ViewModel({required this.themeMode, required this.nextTheme});
+  
 
-  @override
-  final ThemeMode themeMode;
-  @override
-  final VoidCallback nextTheme;
+@override final  ThemeMode themeMode;
+@override final  VoidCallback nextTheme;
 
-  /// Create a copy of _ViewModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @JsonKey(includeFromJson: false, includeToJson: false)
-  @pragma('vm:prefer-inline')
-  _$_ViewModelCopyWith<__ViewModel> get copyWith =>
-      __$_ViewModelCopyWithImpl<__ViewModel>(this, _$identity);
+/// Create a copy of _ViewModel
+/// with the given fields replaced by the non-null parameter values.
+@override @JsonKey(includeFromJson: false, includeToJson: false)
+@pragma('vm:prefer-inline')
+_$_ViewModelCopyWith<__ViewModel> get copyWith => __$_ViewModelCopyWithImpl<__ViewModel>(this, _$identity);
 
-  @override
-  void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-    properties
-      ..add(DiagnosticsProperty('type', '_ViewModel'))
-      ..add(DiagnosticsProperty('themeMode', themeMode))
-      ..add(DiagnosticsProperty('nextTheme', nextTheme));
-  }
 
-  @override
-  bool operator ==(Object other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is __ViewModel &&
-            (identical(other.themeMode, themeMode) ||
-                other.themeMode == themeMode) &&
-            (identical(other.nextTheme, nextTheme) ||
-                other.nextTheme == nextTheme));
-  }
+@override
+void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  properties
+    ..add(DiagnosticsProperty('type', '_ViewModel'))
+    ..add(DiagnosticsProperty('themeMode', themeMode))..add(DiagnosticsProperty('nextTheme', nextTheme));
+}
 
-  @override
-  int get hashCode => Object.hash(runtimeType, themeMode, nextTheme);
+@override
+bool operator ==(Object other) {
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is __ViewModel&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.nextTheme, nextTheme) || other.nextTheme == nextTheme));
+}
 
-  @override
-  String toString({DiagnosticLevel minLevel = DiagnosticLevel.info}) {
-    return '_ViewModel(themeMode: $themeMode, nextTheme: $nextTheme)';
-  }
+
+@override
+int get hashCode => Object.hash(runtimeType,themeMode,nextTheme);
+
+@override
+String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
+  return '_ViewModel(themeMode: $themeMode, nextTheme: $nextTheme)';
+}
+
+
 }
 
 /// @nodoc
-abstract mixin class _$_ViewModelCopyWith<$Res>
-    implements _$ViewModelCopyWith<$Res> {
-  factory _$_ViewModelCopyWith(
-          __ViewModel value, $Res Function(__ViewModel) _then) =
-      __$_ViewModelCopyWithImpl;
-  @override
-  @useResult
-  $Res call({ThemeMode themeMode, VoidCallback nextTheme});
-}
+abstract mixin class _$_ViewModelCopyWith<$Res> implements _$ViewModelCopyWith<$Res> {
+  factory _$_ViewModelCopyWith(__ViewModel value, $Res Function(__ViewModel) _then) = __$_ViewModelCopyWithImpl;
+@override @useResult
+$Res call({
+ ThemeMode themeMode, VoidCallback nextTheme
+});
 
+
+
+
+}
 /// @nodoc
-class __$_ViewModelCopyWithImpl<$Res> implements _$_ViewModelCopyWith<$Res> {
+class __$_ViewModelCopyWithImpl<$Res>
+    implements _$_ViewModelCopyWith<$Res> {
   __$_ViewModelCopyWithImpl(this._self, this._then);
 
   final __ViewModel _self;
   final $Res Function(__ViewModel) _then;
 
-  /// Create a copy of _ViewModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $Res call({
-    Object? themeMode = null,
-    Object? nextTheme = null,
-  }) {
-    return _then(__ViewModel(
-      themeMode: null == themeMode
-          ? _self.themeMode
-          : themeMode // ignore: cast_nullable_to_non_nullable
-              as ThemeMode,
-      nextTheme: null == nextTheme
-          ? _self.nextTheme
-          : nextTheme // ignore: cast_nullable_to_non_nullable
-              as VoidCallback,
-    ));
-  }
+/// Create a copy of _ViewModel
+/// with the given fields replaced by the non-null parameter values.
+@override @pragma('vm:prefer-inline') $Res call({Object? themeMode = null,Object? nextTheme = null,}) {
+  return _then(__ViewModel(
+themeMode: null == themeMode ? _self.themeMode : themeMode // ignore: cast_nullable_to_non_nullable
+as ThemeMode,nextTheme: null == nextTheme ? _self.nextTheme : nextTheme // ignore: cast_nullable_to_non_nullable
+as VoidCallback,
+  ));
+}
+
+
 }
 
 // dart format on

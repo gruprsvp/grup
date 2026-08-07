@@ -35,9 +35,9 @@ final directories = <_widgetbook.WidgetbookNode>[
                     .withDataUseCase,
               ),
             ],
-          )
+          ),
         ],
-      )
+      ),
     ],
-  )
+  ),
 ];
