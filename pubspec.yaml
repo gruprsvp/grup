@@ -100,7 +100,7 @@ dependencies:
   mime: ^2.0.0
   path_provider: ^2.1.5
   posthog_flutter: ^5.10.0
-  sentry_flutter: ^9.9.0
+  sentry_flutter: ^10.0.0-alpha.3
   share_plus: ^12.0.1
   styled_text: ^8.1.0
   universal_html: ^2.2.4
