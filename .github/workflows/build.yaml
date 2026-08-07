@@ -49,7 +49,7 @@ jobs:
         run: flutter pub get
 
       - name: Setup Supabase
-        uses: supabase/setup-cli@ab058987d8d6c725971f6cf9d0b5c98467e30bd1 # v1.7.1
+        uses: supabase/setup-cli@46f7f98c7f948ad727d22c1e67fab04c223a0520 # v3.0.0
 
       - name: Start Supabase local for tests
         run: supabase start
