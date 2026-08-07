@@ -14,7 +14,7 @@
 -- treats 0-row deletes as success (see MODERNIZATION.md Phase 1.5 item 3).
 
 begin;
-select plan(20);
+select plan(29);
 
 -- ── Setup (superuser, bypasses RLS) ────────────────────────────────────────
 insert into auth.users (id, email) values
@@ -28,6 +28,12 @@ set local request.jwt.claims to '{"sub":"11111111-1111-1111-1111-111111111111","
 select lives_ok(
   $$ select create_group('33333333-3333-3333-3333-333333333333', 'Test Group', null, null) $$,
   'setup: Alice creates a group'
+);
+
+-- A second group Bob is NOT a member of, used for the group-hop negative below.
+select lives_ok(
+  $$ select create_group('66666666-6666-6666-6666-666666666666', 'Other Group', null, null) $$,
+  'setup: Alice creates a second group'
 );
 
 -- groups has SELECT/UPDATE/DELETE policies but no INSERT policy: direct
@@ -107,29 +113,53 @@ select throws_ok(
   'a plain member cannot add a member'
 );
 
--- members_all, negative: a plain member cannot promote themselves.
-select lives_ok(
+-- members_update_self WITH CHECK, negative: self-promotion now *errors*
+-- (USING matches Bob's own row, WITH CHECK role = 'member' rejects 'admin').
+select throws_ok(
   $$ update members set role = 'admin'
      where id = '44444444-4444-4444-4444-444444444444' $$,
-  'a self-promotion UPDATE does not error'
+  '42501', null,
+  'a plain member cannot promote themselves (WITH CHECK rejects the row)'
 );
 select is(
   (select role::text from members where id = '44444444-4444-4444-4444-444444444444'),
   'member',
-  'a plain member cannot change their own role (0 rows matched)'
+  'Bob is still a plain member after the escalation attempt'
 );
 
--- Documents current behavior: members has no self-service policy, so a plain
--- member cannot even leave the group (see MODERNIZATION.md Phase 1 item 15 —
--- update this assertion when that lands).
+-- members_update_self, positive: a member can set their own display name.
 select lives_ok(
-  $$ delete from members where id = '44444444-4444-4444-4444-444444444444' $$,
-  'a leave-group DELETE does not error'
+  $$ update members set display_name_override = 'Bobby'
+     where id = '44444444-4444-4444-4444-444444444444' $$,
+  'a member can update their own display_name_override'
 );
 select is(
-  (select count(*)::int from members where id = '44444444-4444-4444-4444-444444444444'),
-  1,
-  'a plain member cannot delete their own membership (no self-service policy yet)'
+  (select display_name_override from members
+   where id = '44444444-4444-4444-4444-444444444444'),
+  'Bobby',
+  'the display_name_override update stuck'
+);
+
+-- members_update_self, negative: another member's row matches no rows.
+select lives_ok(
+  $$ update members set display_name_override = 'Hacked'
+     where profile_id = '11111111-1111-1111-1111-111111111111' $$,
+  'an update of another member''s row does not error'
+);
+select is(
+  (select display_name_override from members
+   where profile_id = '11111111-1111-1111-1111-111111111111'),
+  null,
+  'another member''s row is untouched (0 rows matched)'
+);
+
+-- members_update_self WITH CHECK, negative: a member cannot re-point their
+-- own row at a group they don't belong to (arbitrary-group join).
+select throws_ok(
+  $$ update members set group_id = '66666666-6666-6666-6666-666666666666'
+     where id = '44444444-4444-4444-4444-444444444444' $$,
+  '42501', null,
+  'a member cannot move their membership into a group they are not in'
 );
 
 -- replies_all_self, positive: Bob manages his own reply.
@@ -187,6 +217,50 @@ select throws_ok(
        and m.profile_id = '11111111-1111-1111-1111-111111111111' $$,
   '42501', null,
   'a member cannot set a default rule for another member'
+);
+
+-- ── Leaving a group (members_delete_self + handle_member_left) ─────────────
+-- Alice (the sole admin) leaves first: the trigger must hand the group to
+-- Bob, the longest-standing remaining member with a claimed profile.
+set local request.jwt.claims to '{"sub":"11111111-1111-1111-1111-111111111111","role":"authenticated"}';
+
+select lives_ok(
+  $$ delete from members
+     where group_id = '33333333-3333-3333-3333-333333333333'
+       and profile_id = '11111111-1111-1111-1111-111111111111' $$,
+  'a member (here: the sole admin) can leave the group'
+);
+
+reset role;
+select is(
+  (select count(*)::int from members
+   where group_id = '33333333-3333-3333-3333-333333333333'
+     and profile_id = '11111111-1111-1111-1111-111111111111'),
+  0,
+  'Alice''s membership row is gone'
+);
+select is(
+  (select role::text from members where id = '44444444-4444-4444-4444-444444444444'),
+  'admin',
+  'Bob was promoted to admin when the last admin left'
+);
+
+-- Bob, now the sole member, leaves too: nobody with a profile remains, so the
+-- group (and its schedules/replies, via cascade) must be deleted.
+set local role authenticated;
+set local request.jwt.claims to '{"sub":"22222222-2222-2222-2222-222222222222","role":"authenticated"}';
+
+select lives_ok(
+  $$ delete from members where id = '44444444-4444-4444-4444-444444444444' $$,
+  'the last member can leave the group'
+);
+
+reset role;
+select is(
+  (select count(*)::int from groups
+   where id = '33333333-3333-3333-3333-333333333333'),
+  0,
+  'the group is deleted when the last member leaves'
 );
 
 select * from finish();

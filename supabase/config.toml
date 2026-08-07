@@ -59,6 +59,22 @@ double_confirm_changes = true
 # TODO Setting this to true will break our tests, so we need to fix that first.
 enable_confirmations = false
 
+[auth.sms]
+# Phone signups are used by the live phone-invite test (repositories_test.dart).
+# No SMS is ever sent locally: confirmations are off, so signUp(phone:, password:)
+# auto-confirms. The Twilio block below is a dummy — the CLI refuses to enable
+# phone signup without *some* provider configured, but it is never called.
+enable_signup = true
+enable_confirmations = false
+
+[auth.sms.twilio]
+enabled = true
+account_sid = "local-dev-dummy"
+message_service_sid = "local-dev-dummy"
+# Never used locally (autoconfirm is on); real value only needed if
+# confirmations are ever enabled.
+auth_token = "local-dev-dummy"
+
 # Use an external OAuth provider. The full list of providers are: `apple`, `azure`, `bitbucket`,
 # `discord`, `facebook`, `github`, `gitlab`, `google`, `keycloak`, `linkedin`, `notion`, `twitch`,
 # `twitter`, `slack`, `spotify`, `workos`, `zoom`.

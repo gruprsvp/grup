@@ -429,37 +429,39 @@ void main() {
     test(
       'an user invited via phone becomes a member on sign up',
       () => runWithTemporaryUser(
-        (supabase, user) =>
-            runWithTemporaryGroup((supabase, group, groupsRepository) async {
-              final membersRepository = MembersRepository(supabase: supabase);
-              final invitesRepository = InvitesRepository(supabase: supabase);
+        (supabase, user) => runWithTemporaryGroup((
+          supabase,
+          group,
+          groupsRepository,
+        ) async {
+          final membersRepository = MembersRepository(supabase: supabase);
+          final invitesRepository = InvitesRepository(supabase: supabase);
 
-              final member = await membersRepository.addMemberToGroup(
-                group.id,
-                displayName: 'Member invited with phone',
-              );
+          final member = await membersRepository.addMemberToGroup(
+            group.id,
+            displayName: 'Member invited with phone',
+          );
 
-              // TODO convert numbers to E.164 format
-              final invitedUserPhone =
-                  "+1${faker.randomGenerator.integer(999999999)}";
+          // Canonical invite format: E.164 with the leading '+'
+          // (auth.users.phone stores the digits without it).
+          final invitedUserPhone =
+              "+1${faker.randomGenerator.integer(999999999, min: 100000000)}";
 
-              await invitesRepository.inviteMember(
-                member.id,
-                InviteMethods.phone,
-                invitedUserPhone,
-              );
+          await invitesRepository.inviteMember(
+            member.id,
+            InviteMethods.phone,
+            invitedUserPhone,
+          );
 
-              await runWithTemporaryUser((supabase2, user2) async {
-                final groupsRepository2 = GroupsRepository(supabase: supabase2);
-                final userGroups = await groupsRepository2.getUserGroups();
+          await runWithTemporaryUser((supabase2, user2) async {
+            final groupsRepository2 = GroupsRepository(supabase: supabase2);
+            final userGroups = await groupsRepository2.getUserGroups();
 
-                expect(userGroups.groups, hasLength(1));
-                expect(userGroups.groups.first.id, equals(group.id));
-              }, phone: invitedUserPhone);
-            }),
+            expect(userGroups.groups, hasLength(1));
+            expect(userGroups.groups.first.id, equals(group.id));
+          }, phone: invitedUserPhone);
+        }),
       ),
-      // TODO: fix this test, it seems phone auth is now disabled in the test environment
-      skip: true,
     );
 
     test(
