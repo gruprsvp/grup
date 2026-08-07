@@ -126,6 +126,14 @@
 </picture>
 
 
+<!--
+  Passkeys Web SDK. Required by the `passkeys_web` plugin (a transitive dependency
+  of supabase_flutter >= 2.15): its web plugin registers during Flutter bootstrap and
+  throws if this global isn't present. Loaded synchronously BEFORE the async
+  flutter_bootstrap.js so the SDK is ready in time. See https://pub.dev/packages/passkeys
+-->
+<script src="https://github.com/corbado/flutter-passkeys/releases/download/2.4.0/bundle.js" type="application/javascript"></script>
+
 <script async="" src="flutter_bootstrap.js"></script>
 
 
