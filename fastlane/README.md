@@ -31,6 +31,10 @@ App Store side must use deliver's names (`it`, not `it-IT` — deliver errors ou
 listing the valid names if you get one wrong). The app itself ships
 en/de/es/fr/it (`lib/l10n/`) — keep listing locales in step.
 
+**No emoji in App Store text** — the ASC API rejects them in `description` (and
+friends) with "invalid characters". Play descriptions may use emoji, so the
+`android/` and `ios/` copies of the same text intentionally differ there.
+
 ## Release notes flow
 
 `android/<locale>/changelogs/default.txt` is the canonical user-facing note for
