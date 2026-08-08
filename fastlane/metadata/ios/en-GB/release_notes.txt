@@ -1,0 +1,1 @@
+We fixed a few bugs and polished the app.

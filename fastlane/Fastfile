@@ -1,0 +1,37 @@
+# Store metadata is code: fastlane/metadata/{android,ios}/<locale>/ is the
+# source of truth for both store listings. These lanes push it; nothing here
+# uploads binaries (builds ship via build.yaml / Xcode Cloud).
+
+opt_out_usage
+
+platform :android do
+  desc "Sync the Play Store listing (text, screenshots, graphics) from fastlane/metadata/android"
+  lane :sync_metadata do
+    upload_to_play_store(
+      skip_upload_apk: true,
+      skip_upload_aab: true,
+      skip_upload_changelogs: true, # release notes ride with each build upload in build.yaml
+      # Checksum-based image sync: only changed images are re-uploaded,
+      # removed ones are deleted — the store mirrors the repo.
+      sync_image_upload: true,
+    )
+  end
+end
+
+platform :ios do
+  desc "Sync the App Store listing (name, subtitle, description, keywords, release notes) from fastlane/metadata/ios"
+  lane :sync_metadata do
+    app_store_connect_api_key(
+      key_id: ENV.fetch("ASC_KEY_ID"),
+      issuer_id: ENV.fetch("ASC_ISSUER_ID"),
+      key_content: ENV.fetch("ASC_KEY_CONTENT"),
+    )
+    upload_to_app_store(
+      metadata_path: "./fastlane/metadata/ios",
+      skip_binary_upload: true,
+      skip_screenshots: true, # App Store screenshots are still managed in ASC directly
+      force: true,            # no interactive HTML preview in CI
+      run_precheck_before_submit: false, # precheck needs Spaceship auth beyond the API key
+    )
+  end
+end
