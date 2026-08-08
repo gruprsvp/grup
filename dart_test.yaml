@@ -12,3 +12,7 @@
 #  so a plain `flutter test` is safe without Docker.)
 tags:
   live:
+  # Store-screenshot generation (test/store_screenshots/) — self-skips unless
+  # STORE_SCREENSHOTS=true; run with:
+  #   STORE_SCREENSHOTS=true flutter test --tags screenshots --update-goldens
+  screenshots:
