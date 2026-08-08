@@ -7,7 +7,14 @@ opt_out_usage
 platform :android do
   desc "Sync the Play Store listing (text, screenshots, graphics) from fastlane/metadata/android"
   lane :sync_metadata do
+    # supply insists on resolving exactly one release even for metadata-only
+    # syncs, so it fails whenever production holds both a completed release and
+    # a draft (mid-promotion). Pinning version_code to the newest code in the
+    # track keeps the resolution unambiguous.
+    codes = google_play_track_version_codes(track: "production")
     upload_to_play_store(
+      track: "production",
+      version_code: codes.max,
       skip_upload_apk: true,
       skip_upload_aab: true,
       skip_upload_changelogs: true, # release notes ride with each build upload in build.yaml
