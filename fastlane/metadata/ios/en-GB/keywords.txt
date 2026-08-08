@@ -1,1 +1,1 @@
-schedule,planner,shared,calendar,family,couple,friend,coliving,community,events,invite,guests
+rsvp,friends,couple,schedule,organizer,meetup,party,team,club,reunion,availability,attendance
