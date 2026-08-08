@@ -87,6 +87,15 @@ Layers under `lib/` (each has a barrel file that re-exports the folder):
 - `functions/` — Deno edge functions (e.g. `delete_user_account`).
 - `tests/` — pgTAP SQL tests for RLS and group logic (`supabase test db`).
 
+## Store listings & release notes
+
+`fastlane/metadata/{android,ios}/<locale>/` is the source of truth for both store
+listings (see `fastlane/README.md`). Merging changes there triggers
+`store-metadata.yaml` which pushes them to the stores. User-facing release notes
+for the next release live in `fastlane/metadata/android/<locale>/changelogs/default.txt`
+(mirrored in `ios/<locale>/release_notes.txt`) and flow into the GitHub draft
+release, the Play "What's new", and TestFlight "What to Test".
+
 ## Release
 
 Merging to `main` runs `build.yaml`: tests → push DB migrations → deploy web to the `gh-pages` branch via `peanut` → build & upload the Android bundle → upload symbols/sources to Sentry → create/update a draft GitHub release tagged from the `version:` in `pubspec.yaml`. Analytics is PostHog; error reporting is Sentry (release builds only).

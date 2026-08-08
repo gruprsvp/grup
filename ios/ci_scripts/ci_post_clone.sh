@@ -19,6 +19,12 @@ flutter precache --ios
 # Install Flutter dependencies.
 flutter pub get
 
+# TestFlight "What to Test" notes: Xcode Cloud picks up ios/TestFlight/WhatToTest.<locale>.txt
+# automatically. Source them from the repo's canonical release notes (fastlane metadata).
+mkdir -p ios/TestFlight
+cp fastlane/metadata/ios/en-GB/release_notes.txt ios/TestFlight/WhatToTest.en-GB.txt
+cp fastlane/metadata/ios/en-GB/release_notes.txt ios/TestFlight/WhatToTest.en-US.txt
+
 # Install CocoaPods using Homebrew.
 export HOMEBREW_NO_AUTO_UPDATE=1 # disable homebrew's automatic updates.
 brew install cocoapods

@@ -1,0 +1,3 @@
+# Same id on both stores.
+app_identifier("is.giorgio.app.parousia") # App Store
+package_name("is.giorgio.app.parousia")   # Play Store

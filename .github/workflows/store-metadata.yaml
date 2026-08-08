@@ -1,0 +1,62 @@
+name: Store metadata
+
+# Syncs the store listings from fastlane/metadata/** — the repo is the source
+# of truth for both stores. Binaries are NOT touched here (build.yaml / Xcode
+# Cloud own those).
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+    paths:
+      - "fastlane/**"
+      - "Gemfile*"
+
+# Store edits must not race each other (both jobs are per-store, so they can
+# run in parallel; but two pushes must queue).
+concurrency:
+  group: store-metadata
+  cancel-in-progress: false
+
+permissions:
+  contents: read
+
+jobs:
+  play-store:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1.321.0
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+
+      - name: Sync Play Store listing
+        run: bundle exec fastlane android sync_metadata
+        env:
+          SUPPLY_JSON_KEY_DATA: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+
+  app-store:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@95ef2b042f9d7a56d8268cba8559e2842e2ad01b # v1.321.0
+        with:
+          ruby-version: "3.4"
+          bundler-cache: true
+
+      - name: Sync App Store listing
+        run: bundle exec fastlane ios sync_metadata
+        env:
+          ASC_KEY_ID: ${{ secrets.ASC_KEY_ID }}
+          ASC_ISSUER_ID: ${{ secrets.ASC_ISSUER_ID }}
+          ASC_KEY_CONTENT: ${{ secrets.ASC_KEY_CONTENT }}

@@ -66,6 +66,20 @@ jobs:
           echo "Found version in pubspec.yaml: $PUBSPEC_VERSION"      
           echo "pubspec_version=$PUBSPEC_VERSION" >> $GITHUB_OUTPUT
 
+      # The user-facing release notes live in the repo (single source of truth,
+      # also shipped to the stores). They lead the GitHub release body; the
+      # commit-generated notes are appended after them by GitHub.
+      - name: Read user-facing release notes
+        id: release_notes
+        run: |
+          {
+            echo "body<<EOF"
+            cat fastlane/metadata/android/en-GB/changelogs/default.txt
+            echo ""
+            echo "---"
+            echo "EOF"
+          } >> $GITHUB_OUTPUT
+
       # This step prepares a draft release with the release notes generated from the commit messages,
       # and the tag name from the pubspec.yaml file. It will only update the release if it is a draft
       # and has not been published yet. If the release is already published, it will not be updated and fail.
@@ -75,6 +89,7 @@ jobs:
         with:
           name: "v${{ steps.parse_pubspec.outputs.pubspec_version }}"
           tag: "v${{ steps.parse_pubspec.outputs.pubspec_version }}"
+          body: ${{ toJSON(steps.release_notes.outputs.body) }}
           generateReleaseNotes: true
           makeLatest: true
           draft: true
@@ -120,6 +135,21 @@ jobs:
       - name: Compile Android app
         run: flutter build appbundle --build-number ${{ github.run_number }}
 
+      # The Play "What's new" text comes from the per-locale changelogs in
+      # fastlane/metadata (the same files that lead the GitHub release body).
+      # upload-google-play expects files named whatsnew-<locale>.
+      - name: Assemble Play release notes
+        run: |
+          mkdir -p build/whatsnew
+          for dir in fastlane/metadata/android/*/; do
+            locale=$(basename "$dir")
+            notes="$dir/changelogs/default.txt"
+            if [ -f "$notes" ]; then
+              cp "$notes" "build/whatsnew/whatsnew-$locale"
+            fi
+          done
+          ls build/whatsnew
+
       - name: Upload Android app to Play Store
         # SHA-pinned: this action receives the Play service-account JSON; a
         # movable tag would let a compromised upstream exfiltrate it.
@@ -130,6 +160,7 @@ jobs:
           releaseFiles: build/app/outputs/bundle/release/app-release.aab
           track: internal
           status: completed
+          whatsNewDirectory: build/whatsnew
           mappingFile: build/app/outputs/mapping/release/mapping.txt
           debugSymbols: build/app/intermediates/merged_native_libs/release/mergeReleaseNativeLibs/out/lib
 
