@@ -26,8 +26,10 @@ metadata/
     marketing_url.txt / support_url.txt / privacy_url.txt
 ```
 
-Play locales use `en-GB`, `de-DE`, … ; the iOS listing currently only has `en-GB`.
-The app itself ships en/de/es/fr/it (`lib/l10n/`) — keep listing locales in step.
+Locale names differ per store: Play uses `en-GB`, `de-DE`, `it-IT`, … while the
+App Store side must use deliver's names (`it`, not `it-IT` — deliver errors out
+listing the valid names if you get one wrong). The app itself ships
+en/de/es/fr/it (`lib/l10n/`) — keep listing locales in step.
 
 ## Release notes flow
 
