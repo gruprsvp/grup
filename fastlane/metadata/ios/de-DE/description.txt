@@ -3,14 +3,14 @@ Genug von endlosen „Wann können alle?“-Nachrichten? GRUP ist der gemeinsame
 Erstelle eine Gruppe, teile den Kalender, plane ein Event und sammle Zu- und Absagen in Sekunden. Perfekt für Familien mit vollem Terminkalender, Paare, die ihre Pläne abstimmen, und Freundeskreise, die sich öfter sehen wollen.
 
 WARUM GRUP?
-• 🗓️ Gemeinsamer Kalender — alle Pläne deiner Gruppe an einem Ort
-• ✅ Zusagen auf einen Blick — sieh sofort, wer dabei ist und wer nicht
-• 🔁 Wiederkehrende Termine — wöchentliches Essen, Training, Spieleabend: einmal planen
-• ⭐ Standardantworten — „Dienstags bin ich immer dabei“: einmal antworten, GRUP übernimmt den Rest
-• 👥 Mehrere Gruppen — Familie, Freunde, Team, Verein: alles organisiert
-• 📨 Einfache Einladungen — hol alle mit einer Einladung dazu
-• 🔔 Benachrichtigungen — bleib auf dem Laufenden, wenn sich Pläne ändern
-• 🆓 Kostenlos — keine versteckten Kosten, keine Überraschungen
+• Gemeinsamer Kalender — alle Pläne deiner Gruppe an einem Ort
+• Zusagen auf einen Blick — sieh sofort, wer dabei ist und wer nicht
+• Wiederkehrende Termine — wöchentliches Essen, Training, Spieleabend: einmal planen
+• Standardantworten — „Dienstags bin ich immer dabei“: einmal antworten, GRUP übernimmt den Rest
+• Mehrere Gruppen — Familie, Freunde, Team, Verein: alles organisiert
+• Einfache Einladungen — hol alle mit einer Einladung dazu
+• Benachrichtigungen — bleib auf dem Laufenden, wenn sich Pläne ändern
+• Kostenlos — keine versteckten Kosten, keine Überraschungen
 
 GEMACHT FÜR
 • Familien — Treffen, Essen und Alltagsorganisation
