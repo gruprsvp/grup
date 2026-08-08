@@ -77,8 +77,9 @@ Future<void> _loadRealFonts() async {
     };
     if (family == null) continue;
     final bytes = file.readAsBytesSync();
-    (loaders[family] ??= FontLoader(family))
-        .addFont(Future.value(bytes.buffer.asByteData()));
+    (loaders[family] ??= FontLoader(
+      family,
+    )).addFont(Future.value(bytes.buffer.asByteData()));
   }
   await Future.wait(loaders.values.map((l) => l.load()));
 }
@@ -92,25 +93,31 @@ void main() {
     'home': HomeScreen(profile: _demoProfile, groups: _demoGroups),
   };
 
-  group('store screenshots', skip: enabled ? false : 'STORE_SCREENSHOTS not set', () {
-    for (final MapEntry(key: profileName, value: profile) in _profiles.entries) {
-      for (final locale in AppLocalizations.supportedLocales) {
-        for (final MapEntry(key: screenName, value: screen) in screens.entries) {
-          testWidgets('$profileName $locale $screenName', (tester) async {
-            tester.view.physicalSize = profile.logical * profile.dpr;
-            tester.view.devicePixelRatio = profile.dpr;
-            addTearDown(tester.view.reset);
+  group(
+    'store screenshots',
+    skip: enabled ? false : 'STORE_SCREENSHOTS not set',
+    () {
+      for (final MapEntry(key: profileName, value: profile)
+          in _profiles.entries) {
+        for (final locale in AppLocalizations.supportedLocales) {
+          for (final MapEntry(key: screenName, value: screen)
+              in screens.entries) {
+            testWidgets('$profileName $locale $screenName', (tester) async {
+              tester.view.physicalSize = profile.logical * profile.dpr;
+              tester.view.devicePixelRatio = profile.dpr;
+              addTearDown(tester.view.reset);
 
-            await tester.pumpWidget(_wrap(screen, locale));
-            await tester.pumpAndSettle();
+              await tester.pumpWidget(_wrap(screen, locale));
+              await tester.pumpAndSettle();
 
-            await expectLater(
-              find.byType(MaterialApp),
-              matchesGoldenFile('raw/$profileName/$locale/$screenName.png'),
-            );
-          });
+              await expectLater(
+                find.byType(MaterialApp),
+                matchesGoldenFile('raw/$profileName/$locale/$screenName.png'),
+              );
+            });
+          }
         }
       }
-    }
-  });
+    },
+  );
 }
