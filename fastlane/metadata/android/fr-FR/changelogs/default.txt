@@ -1,1 +1,1 @@
-Nous avons corrigé quelques bugs et peaufiné l’application.
+Les boutons et le contenu ne sont plus masqués par la barre système en bas de l’écran. Et quelques petites améliorations de l’interface.
