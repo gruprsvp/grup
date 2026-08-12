@@ -68,16 +68,19 @@ class GroupEvents extends StatelessWidget {
             ),
           );
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: Column(
-        children: [
-          Expanded(child: topWidget),
-          FilledButton(
-            onPressed: () => _createNewEvent(context),
-            child: Text(l10n.createNewEvent),
-          ),
-        ],
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: Column(
+          children: [
+            Expanded(child: topWidget),
+            FilledButton(
+              onPressed: () => _createNewEvent(context),
+              child: Text(l10n.createNewEvent),
+            ),
+          ],
+        ),
       ),
     );
   }

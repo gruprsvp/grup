@@ -112,7 +112,7 @@ class GroupMemberDetailsScreen extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.group_remove_outlined),
               title: Text(l10n.groupRemoveMember),
-              splashColor: theme.colorScheme.error.withOpacity(0.3),
+              splashColor: theme.colorScheme.error.withValues(alpha: 0.3),
               iconColor: theme.colorScheme.error,
               textColor: theme.colorScheme.error,
               onTap: () => _confirmRemoveMember(context, member!),
@@ -121,7 +121,7 @@ class GroupMemberDetailsScreen extends StatelessWidget {
             ListTile(
               leading: const Icon(Icons.waving_hand),
               title: Text(l10n.groupLeave),
-              splashColor: theme.colorScheme.error.withOpacity(0.3),
+              splashColor: theme.colorScheme.error.withValues(alpha: 0.3),
               iconColor: theme.colorScheme.error,
               textColor: theme.colorScheme.error,
               onTap: () => _confirmRemoveMember(context, member!),

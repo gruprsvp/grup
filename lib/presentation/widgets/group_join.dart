@@ -36,52 +36,55 @@ class _GroupJoinState extends State<GroupJoin> {
 
     return Form(
       key: _formKey,
-      child: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  FormBuilderTextField(
-                    name: 'code',
-                    valueTransformer: (value) => value?.toUpperCase(),
-                    controller: _codeController,
-                    decoration: InputDecoration(
-                      labelText: l10n.enterInviteCode,
-                      suffixIcon: const Icon(Icons.confirmation_num_outlined),
-                      hintText: 'ABCD-1234',
+      child: SafeArea(
+        top: false,
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    FormBuilderTextField(
+                      name: 'code',
+                      valueTransformer: (value) => value?.toUpperCase(),
+                      controller: _codeController,
+                      decoration: InputDecoration(
+                        labelText: l10n.enterInviteCode,
+                        suffixIcon: const Icon(Icons.confirmation_num_outlined),
+                        hintText: 'ABCD-1234',
+                      ),
+                      inputFormatters: [
+                        Base32TextInputFormatter(),
+                        LengthLimitingTextInputFormatter(9),
+                      ],
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return l10n.enterInviteCodePlease;
+                        }
+                        return null;
+                      },
                     ),
-                    inputFormatters: [
-                      Base32TextInputFormatter(),
-                      LengthLimitingTextInputFormatter(9),
-                    ],
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return l10n.enterInviteCodePlease;
-                      }
-                      return null;
-                    },
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: ValueListenableBuilder(
-              valueListenable: _codeController,
-              builder: (context, value, child) => FilledButton(
-                onPressed: () {
-                  if (_formKey.currentState!.validate()) {
-                    widget.onJoin(_codeController.text);
-                  }
-                },
-                child: Text(l10n.joinGroup),
+            Padding(
+              padding: const EdgeInsets.all(16),
+              child: ValueListenableBuilder(
+                valueListenable: _codeController,
+                builder: (context, value, child) => FilledButton(
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      widget.onJoin(_codeController.text);
+                    }
+                  },
+                  child: Text(l10n.joinGroup),
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

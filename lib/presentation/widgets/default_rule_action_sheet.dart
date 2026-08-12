@@ -38,12 +38,15 @@ class DefaultRuleActionSheet extends StatelessWidget {
         ),
     ];
 
-    return Wrap(
-      children: [
-        _buildActionSheetHeader(context),
-        ...actions,
-        _buildExplanationWidget(context),
-      ],
+    return SafeArea(
+      top: false,
+      child: Wrap(
+        children: [
+          _buildActionSheetHeader(context),
+          ...actions,
+          _buildExplanationWidget(context),
+        ],
+      ),
     );
   }
 

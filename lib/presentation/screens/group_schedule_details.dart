@@ -143,6 +143,13 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
               },
             ),
           ],
+          // CustomScrollView slivers don't apply the bottom view inset
+          // automatically (unlike ListView), so pad past the system nav bar.
+          SliverPadding(
+            padding: EdgeInsets.only(
+              bottom: MediaQuery.paddingOf(context).bottom,
+            ),
+          ),
         ],
       ),
     );

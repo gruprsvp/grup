@@ -63,77 +63,80 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ],
       ),
-      body: Form(
-        key: _formKey,
-        autovalidateMode: AutovalidateMode.onUserInteraction,
-        onChanged: () {
-          setState(() {
-            if (_formKey.currentState!.validate()) {
-              _enableSaveButton = true;
-            } else {
-              _enableSaveButton = false;
-            }
-          });
-        },
-        child: Column(
-          children: [
-            Expanded(
-              child: SingleChildScrollView(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                  children: [
-                    ImageFormField(
-                      controller: _imageController,
-                      initialImage: widget.profile?.picture != null
-                          ? NetworkImage(widget.profile!.picture!)
-                          : null,
-                      radius: 64,
-                      icon: Icons.person,
-                    ),
-                    TextFormField(
-                      focusNode: _nameFocusNode,
-                      controller: _nameController,
-                      decoration: InputDecoration(
-                        labelText: l10n.enterYourName,
+      body: SafeArea(
+        top: false,
+        child: Form(
+          key: _formKey,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
+          onChanged: () {
+            setState(() {
+              if (_formKey.currentState!.validate()) {
+                _enableSaveButton = true;
+              } else {
+                _enableSaveButton = false;
+              }
+            });
+          },
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  padding: const EdgeInsets.all(16),
+                  child: Column(
+                    children: [
+                      ImageFormField(
+                        controller: _imageController,
+                        initialImage: widget.profile?.picture != null
+                            ? NetworkImage(widget.profile!.picture!)
+                            : null,
+                        radius: 64,
+                        icon: Icons.person,
                       ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return l10n.enterYourNamePlease;
-                        }
-                        return null;
-                      },
-                    ),
-                    // TODO(borgoat): options to link additional auth providers
-                  ],
+                      TextFormField(
+                        focusNode: _nameFocusNode,
+                        controller: _nameController,
+                        decoration: InputDecoration(
+                          labelText: l10n.enterYourName,
+                        ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return l10n.enterYourNamePlease;
+                          }
+                          return null;
+                        },
+                      ),
+                      // TODO(borgoat): options to link additional auth providers
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Padding(
-              padding: const EdgeInsets.all(16),
-              child: FilledButton(
-                onPressed: _enableSaveButton
-                    ? () {
-                        if (_formKey.currentState!.validate()) {
-                          setState(() {
-                            _enableSaveButton = false;
-                          });
-                          _formKey.currentState!.save();
-                          _nameFocusNode.unfocus();
-                          widget.onSave((
-                            _nameController.text.trim(),
-                            _imageController.value,
-                          ));
+              Padding(
+                padding: const EdgeInsets.all(16),
+                child: FilledButton(
+                  onPressed: _enableSaveButton
+                      ? () {
+                          if (_formKey.currentState!.validate()) {
+                            setState(() {
+                              _enableSaveButton = false;
+                            });
+                            _formKey.currentState!.save();
+                            _nameFocusNode.unfocus();
+                            widget.onSave((
+                              _nameController.text.trim(),
+                              _imageController.value,
+                            ));
 
-                          if (!(widget.userNavigated ?? false)) {
-                            Navigator.of(context).pop(context);
+                            if (!(widget.userNavigated ?? false)) {
+                              Navigator.of(context).pop(context);
+                            }
                           }
                         }
-                      }
-                    : null,
-                child: Text(l10n.save),
+                      : null,
+                  child: Text(l10n.save),
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

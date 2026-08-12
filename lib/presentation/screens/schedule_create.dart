@@ -21,15 +21,18 @@ class _ScheduleCreateScreenState extends State<ScheduleCreateScreen> {
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.createNewEvent)),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16.0),
-        child: ScheduleForm(
-          onChanged: (schedule) {
-            setState(() {
-              _showSaveButton = true;
-            });
-            _schedule = schedule;
-          },
+      body: SafeArea(
+        top: false,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16.0),
+          child: ScheduleForm(
+            onChanged: (schedule) {
+              setState(() {
+                _showSaveButton = true;
+              });
+              _schedule = schedule;
+            },
+          ),
         ),
       ),
       floatingActionButton: _showSaveButton
