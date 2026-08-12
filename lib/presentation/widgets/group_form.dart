@@ -49,83 +49,88 @@ class _GroupFormState extends State<GroupForm> {
 
     return Form(
       key: _formKey,
-      child: Column(
-        children: [
-          Expanded(
-            child: SingleChildScrollView(
+      child: SafeArea(
+        top: false,
+        child: Column(
+          children: [
+            Expanded(
+              child: SingleChildScrollView(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    ListenableBuilder(
+                      listenable: _nameController,
+                      builder: (context, child) => ImageFormField(
+                        radius: 64,
+                        icon: Icons.group,
+                        color: colorScheme.secondary,
+                        controller: _imageController,
+                        initialImage: widget.group?.picture != null
+                            ? NetworkImage(widget.group!.picture!)
+                            : null,
+                      ),
+                    ),
+                    TextFormField(
+                      controller: _nameController,
+                      decoration: InputDecoration(
+                        labelText: l10n.enterGroupName,
+                        suffixIcon: const Icon(Icons.mood),
+                      ),
+                      maxLength: 32,
+                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                      validator: (value) {
+                        if (value == null || value.isEmpty) {
+                          return l10n.enterGroupNamePlease;
+                        }
+                        return null;
+                      },
+                    ),
+                    TextFormField(
+                      controller: _descriptionController,
+                      minLines: 2,
+                      maxLines: 5,
+                      maxLength: 256,
+                      maxLengthEnforcement: MaxLengthEnforcement.enforced,
+                      autocorrect: true,
+                      decoration: InputDecoration(
+                        suffixIcon: const Icon(Icons.description_outlined),
+                        hintText: l10n.enterGroupDescription,
+                        border: const OutlineInputBorder(),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            Padding(
               padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
-                  ListenableBuilder(
-                    listenable: _nameController,
-                    builder: (context, child) => ImageFormField(
-                      radius: 64,
-                      icon: Icons.group,
-                      color: colorScheme.secondary,
-                      controller: _imageController,
-                      initialImage: widget.group?.picture != null
-                          ? NetworkImage(widget.group!.picture!)
-                          : null,
-                    ),
-                  ),
-                  TextFormField(
-                    controller: _nameController,
-                    decoration: InputDecoration(
-                      labelText: l10n.enterGroupName,
-                      suffixIcon: const Icon(Icons.mood),
-                    ),
-                    maxLength: 32,
-                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return l10n.enterGroupNamePlease;
-                      }
-                      return null;
-                    },
-                  ),
-                  TextFormField(
-                    controller: _descriptionController,
-                    minLines: 2,
-                    maxLines: 5,
-                    maxLength: 256,
-                    maxLengthEnforcement: MaxLengthEnforcement.enforced,
-                    autocorrect: true,
-                    decoration: InputDecoration(
-                      suffixIcon: const Icon(Icons.description_outlined),
-                      hintText: l10n.enterGroupDescription,
-                      border: const OutlineInputBorder(),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: FilledButton(
-              onPressed: () {
-                if (_formKey.currentState!.validate()) {
-                  final displayName = _nameController.text.trim();
-                  final description = _descriptionController.text.trim();
-                  final picture = _imageController.value;
+              child: FilledButton(
+                onPressed: () {
+                  if (_formKey.currentState!.validate()) {
+                    final displayName = _nameController.text.trim();
+                    final description = _descriptionController.text.trim();
+                    final picture = _imageController.value;
 
-                  _formKey.currentState!.save();
-                  widget.onSave((
-                    Group(
-                      id: widget.group?.id ?? '',
-                      displayName: displayName,
-                      description: description.isNotEmpty ? description : null,
-                    ),
-                    picture,
-                  ));
-                }
-              },
-              child: Text(
-                widget.group != null ? l10n.save : l10n.createNewGroup,
+                    _formKey.currentState!.save();
+                    widget.onSave((
+                      Group(
+                        id: widget.group?.id ?? '',
+                        displayName: displayName,
+                        description: description.isNotEmpty
+                            ? description
+                            : null,
+                      ),
+                      picture,
+                    ));
+                  }
+                },
+                child: Text(
+                  widget.group != null ? l10n.save : l10n.createNewGroup,
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

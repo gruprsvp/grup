@@ -13,52 +13,55 @@ class InviteModal extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Text(
-            l10n.invite,
-            style: Theme.of(context).textTheme.titleLarge,
-            textAlign: TextAlign.center,
+    return SafeArea(
+      top: false,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Text(
+              l10n.invite,
+              style: Theme.of(context).textTheme.titleLarge,
+              textAlign: TextAlign.center,
+            ),
           ),
-        ),
-        const Divider(height: 1),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 16.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _buildOption(
-                context,
-                icon: Icons.email,
-                label: l10n.contactEmail,
-                option: InviteOptions.email,
-              ),
-              _buildOption(
-                context,
-                icon: Icons.phone,
-                label: l10n.contactPhone,
-                option: InviteOptions.phone,
-              ),
-              if (!kIsWeb)
+          const Divider(height: 1),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
                 _buildOption(
                   context,
-                  icon: Icons.contacts,
-                  label: l10n.contacts,
-                  option: InviteOptions.contacts,
+                  icon: Icons.email,
+                  label: l10n.contactEmail,
+                  option: InviteOptions.email,
                 ),
-              _buildOption(
-                context,
-                icon: Icons.person_outline,
-                label: l10n.guest,
-                option: InviteOptions.guest,
-              ),
-            ],
+                _buildOption(
+                  context,
+                  icon: Icons.phone,
+                  label: l10n.contactPhone,
+                  option: InviteOptions.phone,
+                ),
+                if (!kIsWeb)
+                  _buildOption(
+                    context,
+                    icon: Icons.contacts,
+                    label: l10n.contacts,
+                    option: InviteOptions.contacts,
+                  ),
+                _buildOption(
+                  context,
+                  icon: Icons.person_outline,
+                  label: l10n.guest,
+                  option: InviteOptions.guest,
+                ),
+              ],
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 

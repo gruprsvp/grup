@@ -72,16 +72,19 @@ class GroupMembers extends StatelessWidget {
             ),
           );
 
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16.0),
-      child: Column(
-        children: [
-          Expanded(child: topWidget),
-          FilledButton(
-            onPressed: () => _showInviteModal(context),
-            child: Text(l10n.inviteMembersCTA),
-          ),
-        ],
+    return SafeArea(
+      top: false,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 16.0),
+        child: Column(
+          children: [
+            Expanded(child: topWidget),
+            FilledButton(
+              onPressed: () => _showInviteModal(context),
+              child: Text(l10n.inviteMembersCTA),
+            ),
+          ],
+        ),
       ),
     );
   }

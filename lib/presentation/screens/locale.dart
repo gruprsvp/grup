@@ -26,26 +26,26 @@ class LocaleScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
 
     final radioButtons = AppLocalizations.supportedLocales.map(
-      (l) => RadioListTile<Locale>.adaptive(
+      (l) => RadioListTile<Locale?>.adaptive(
         title: Text(localeNames[l.languageCode] ?? l.languageCode),
-        groupValue: selectedLocale,
         value: l,
-        onChanged: (l) => onLocaleChanged(l!),
       ),
     );
 
     return Scaffold(
       appBar: AppBar(title: Text(l10n.language)),
-      body: Column(
-        children: [
-          RadioListTile.adaptive(
-            title: Text(l10n.systemLanguage),
-            groupValue: selectedLocale,
-            value: null,
-            onChanged: (l) => onLocaleChanged(null),
-          ),
-          ...radioButtons,
-        ],
+      body: RadioGroup<Locale?>(
+        groupValue: selectedLocale,
+        onChanged: onLocaleChanged,
+        child: ListView(
+          children: [
+            RadioListTile<Locale?>.adaptive(
+              title: Text(l10n.systemLanguage),
+              value: null,
+            ),
+            ...radioButtons,
+          ],
+        ),
       ),
     );
   }
