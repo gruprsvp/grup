@@ -1,1 +1,1 @@
-Abbiamo corretto alcuni errori e migliorato l’app.
+I pulsanti e i contenuti non sono più nascosti dalla barra di sistema nella parte inferiore dello schermo. Inoltre, piccoli miglioramenti all’interfaccia.

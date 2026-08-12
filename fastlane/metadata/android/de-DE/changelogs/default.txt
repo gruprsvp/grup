@@ -1,1 +1,1 @@
-Wir haben einige Fehler behoben und die App verbessert.
+Schaltflächen und Inhalte werden nicht mehr von der Systemleiste am unteren Bildschirmrand verdeckt. Dazu kleinere Verbesserungen an der Oberfläche.
