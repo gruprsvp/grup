@@ -33,7 +33,15 @@ platform :ios do
       issuer_id: ENV.fetch("ASC_ISSUER_ID"),
       key_content: ENV.fetch("ASC_KEY_CONTENT"),
     )
+    # Version-level metadata (release notes, promotional text) can only be
+    # written to an editable ("Prepare for Submission") version. Without
+    # app_version, deliver polls for one to appear and burns the job timeout
+    # whenever ASC has none (e.g. the previous version just went into review).
+    # Pinning the pubspec version makes deliver create the version if missing
+    # and fail fast with a real error otherwise.
+    pubspec_version = YAML.load_file("../pubspec.yaml")["version"].split("+").first
     upload_to_app_store(
+      app_version: pubspec_version,
       metadata_path: "./fastlane/metadata/ios",
       skip_binary_upload: true,
       skip_screenshots: true, # App Store screenshots are still managed in ASC directly
