@@ -34,7 +34,7 @@ dependencies:
   # Localization
   flutter_localizations:
     sdk: flutter
-  intl: ^0.20.2
+  intl: ^0.20.3
 
   # Routing
   go_router: ^17.0.1
