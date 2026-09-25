@@ -55,13 +55,20 @@ these are temporary opt-outs because `in_app_review`, `posthog_flutter`, `sentry
 `sign_in_with_apple` still apply KGP (the build prints them). Flip both to `true` once those
 plugins migrate; Flutter will eventually drop the opt-out.
 
-**Material decoupling (Flutter 3.47).** Packages that moved to `package:material_ui` —
-currently `go_router` ≥ 18, `flutter_form_builder` ≥ 11, `phone_form_field` ≥ 11 — are
-**held** at their previous majors (see the `HELD` comments in `pubspec.yaml`). The app still
-uses `package:flutter/material.dart`, and mixing the two passes analyze, tests and build but
-breaks at runtime (go_router silently drops all page transitions; form fields miss the app's
-theme/localizations). Don't merge those Dependabot majors; they unhold with the app's
-`material_ui` migration (`docs/MODERNIZATION.md`).
+**Material is `package:material_ui`.** Since Flutter 3.47 Material ships as the `material_ui`
+pub package; app code imports `package:material_ui/material_ui.dart`, never
+`package:flutter/material.dart`. The two define distinct types (`MaterialApp`, `Theme`,
+`MaterialLocalizations`, …), and mixing them usually fails at runtime, not at compile time:
+go_router silently drops page transitions, and framework widgets miss their Theme,
+localizations or `ScaffoldMessenger`. Third-party widgets still built on framework Material
+live in **legacy islands**. Today there is one, `lib/presentation/screens/auth.dart`
+(`supabase_auth_ui`), which rebuilds the framework ancestor chain under
+`MaterialUiCompatibilityBridge`. The `analyze` CI job fails on framework-Material imports
+outside that allowlist; a new island needs an allowlist entry in `verify.yaml` and a widget
+test like `test/auth_screen_test.dart`. In tests, use `appTheme()`,
+`appLocalizationsDelegates` and `appSupportedLocales` from `lib/app.dart` (plus
+`test/support/fake_supabase.dart`), not `AppLocalizations.localizationsDelegates`: gen-l10n
+lists the framework Material delegates, which `material_ui` widgets don't read.
 
 **`dart fix` gotcha:** `dart fix --apply`, even with `--code=...`, also applies the pubspec
 `missing_dependency` fix, which moves `faker` (dev-only, imported by `lib/util/fakes.dart`)
