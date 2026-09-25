@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'member.dart';
@@ -9,6 +9,7 @@ part of 'member.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -27,23 +28,29 @@ $MemberCopyWith<Member> get copyWith => _$MemberCopyWithImpl<Member>(this as Mem
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as Member;
   properties
     ..add(DiagnosticsProperty('type', 'Member'))
-    ..add(DiagnosticsProperty('id', id))..add(DiagnosticsProperty('groupId', groupId))..add(DiagnosticsProperty('role', role))..add(DiagnosticsProperty('profileId', profileId))..add(DiagnosticsProperty('displayNameOverride', displayNameOverride))..add(DiagnosticsProperty('createdAt', createdAt))..add(DiagnosticsProperty('updatedAt', updatedAt));
+    ..add(DiagnosticsProperty('id', _this.id))..add(DiagnosticsProperty('groupId', _this.groupId))..add(DiagnosticsProperty('role', _this.role))..add(DiagnosticsProperty('profileId', _this.profileId))..add(DiagnosticsProperty('displayNameOverride', _this.displayNameOverride))..add(DiagnosticsProperty('createdAt', _this.createdAt))..add(DiagnosticsProperty('updatedAt', _this.updatedAt));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Member&&(identical(other.id, id) || other.id == id)&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.role, role) || other.role == role)&&(identical(other.profileId, profileId) || other.profileId == profileId)&&(identical(other.displayNameOverride, displayNameOverride) || other.displayNameOverride == displayNameOverride)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  final _this = this as Member;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Member&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.groupId, _this.groupId) || other.groupId == _this.groupId)&&(identical(other.role, _this.role) || other.role == _this.role)&&(identical(other.profileId, _this.profileId) || other.profileId == _this.profileId)&&(identical(other.displayNameOverride, _this.displayNameOverride) || other.displayNameOverride == _this.displayNameOverride)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,groupId,role,profileId,displayNameOverride,createdAt,updatedAt);
+int get hashCode {
+  final _this = this as Member;
+  return Object.hash(runtimeType,_this.id,_this.groupId,_this.role,_this.profileId,_this.displayNameOverride,_this.createdAt,_this.updatedAt);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'Member(id: $id, groupId: $groupId, role: $role, profileId: $profileId, displayNameOverride: $displayNameOverride, createdAt: $createdAt, updatedAt: $updatedAt)';
+  final _this = this as Member;
+  return 'Member(id: ${_this.id}, groupId: ${_this.groupId}, role: ${_this.role}, profileId: ${_this.profileId}, displayNameOverride: ${_this.displayNameOverride}, createdAt: ${_this.createdAt}, updatedAt: ${_this.updatedAt})';
 }
 
 
@@ -72,7 +79,7 @@ class _$MemberCopyWithImpl<$Res>
 /// Create a copy of Member
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? groupId = null,Object? role = null,Object? profileId = freezed,Object? displayNameOverride = freezed,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(Member(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,groupId: null == groupId ? _self.groupId : groupId // ignore: cast_nullable_to_non_nullable
 as String,role: null == role ? _self.role : role // ignore: cast_nullable_to_non_nullable
@@ -238,23 +245,25 @@ Map<String, dynamic> toJson() {
 }
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'Member'))
     ..add(DiagnosticsProperty('id', id))..add(DiagnosticsProperty('groupId', groupId))..add(DiagnosticsProperty('role', role))..add(DiagnosticsProperty('profileId', profileId))..add(DiagnosticsProperty('displayNameOverride', displayNameOverride))..add(DiagnosticsProperty('createdAt', createdAt))..add(DiagnosticsProperty('updatedAt', updatedAt));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Member&&(identical(other.id, id) || other.id == id)&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.role, role) || other.role == role)&&(identical(other.profileId, profileId) || other.profileId == profileId)&&(identical(other.displayNameOverride, displayNameOverride) || other.displayNameOverride == displayNameOverride)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Member&&(identical(other.id, id) || other.id == id)&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.role, role) || other.role == role)&&(identical(other.profileId, profileId) || other.profileId == profileId)&&(identical(other.displayNameOverride, displayNameOverride) || other.displayNameOverride == displayNameOverride)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,groupId,role,profileId,displayNameOverride,createdAt,updatedAt);
+int get hashCode {
+    return Object.hash(runtimeType,id,groupId,role,profileId,displayNameOverride,createdAt,updatedAt);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'Member(id: $id, groupId: $groupId, role: $role, profileId: $profileId, displayNameOverride: $displayNameOverride, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Member(id: $id, groupId: $groupId, role: $role, profileId: $profileId, displayNameOverride: $displayNameOverride, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 

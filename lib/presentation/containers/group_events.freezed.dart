@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'group_events.dart';
@@ -9,6 +9,7 @@ part of 'group_events.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ _$ViewModelCopyWith<_ViewModel> get copyWith => __$ViewModelCopyWithImpl<_ViewMo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ViewModel&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.group, group) || other.group == group)&&const DeepCollectionEquality().equals(other.schedules, schedules)&&(identical(other.onScheduleCreate, onScheduleCreate) || other.onScheduleCreate == onScheduleCreate)&&(identical(other.onScheduleDelete, onScheduleDelete) || other.onScheduleDelete == onScheduleDelete)&&(identical(other.rrulel10n, rrulel10n) || other.rrulel10n == rrulel10n));
+  final _this = this as _ViewModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ViewModel&&(identical(other.loading, _this.loading) || other.loading == _this.loading)&&(identical(other.group, _this.group) || other.group == _this.group)&&const DeepCollectionEquality().equals(other.schedules, _this.schedules)&&(identical(other.onScheduleCreate, _this.onScheduleCreate) || other.onScheduleCreate == _this.onScheduleCreate)&&(identical(other.onScheduleDelete, _this.onScheduleDelete) || other.onScheduleDelete == _this.onScheduleDelete)&&(identical(other.rrulel10n, _this.rrulel10n) || other.rrulel10n == _this.rrulel10n));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,loading,group,const DeepCollectionEquality().hash(schedules),onScheduleCreate,onScheduleDelete,rrulel10n);
+int get hashCode {
+  final _this = this as _ViewModel;
+  return Object.hash(runtimeType,_this.loading,_this.group,const DeepCollectionEquality().hash(_this.schedules),_this.onScheduleCreate,_this.onScheduleDelete,_this.rrulel10n);
+}
 
 @override
 String toString() {
-  return '_ViewModel(loading: $loading, group: $group, schedules: $schedules, onScheduleCreate: $onScheduleCreate, onScheduleDelete: $onScheduleDelete, rrulel10n: $rrulel10n)';
+  final _this = this as _ViewModel;
+  return '_ViewModel(loading: ${_this.loading}, group: ${_this.group}, schedules: ${_this.schedules}, onScheduleCreate: ${_this.onScheduleCreate}, onScheduleDelete: ${_this.onScheduleDelete}, rrulel10n: ${_this.rrulel10n})';
 }
 
 
@@ -63,7 +69,7 @@ class __$ViewModelCopyWithImpl<$Res>
 /// Create a copy of _ViewModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? loading = null,Object? group = freezed,Object? schedules = freezed,Object? onScheduleCreate = freezed,Object? onScheduleDelete = freezed,Object? rrulel10n = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(_ViewModel(
 loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,group: freezed == group ? _self.group : group // ignore: cast_nullable_to_non_nullable
 as Group?,schedules: freezed == schedules ? _self.schedules : schedules // ignore: cast_nullable_to_non_nullable
@@ -237,16 +243,18 @@ _$_ViewModelCopyWith<__ViewModel> get copyWith => __$_ViewModelCopyWithImpl<__Vi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is __ViewModel&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.group, group) || other.group == group)&&const DeepCollectionEquality().equals(other.schedules, schedules)&&(identical(other.onScheduleCreate, onScheduleCreate) || other.onScheduleCreate == onScheduleCreate)&&(identical(other.onScheduleDelete, onScheduleDelete) || other.onScheduleDelete == onScheduleDelete)&&(identical(other.rrulel10n, rrulel10n) || other.rrulel10n == rrulel10n));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is __ViewModel&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.group, group) || other.group == group)&&const DeepCollectionEquality().equals(other.schedules, schedules)&&(identical(other.onScheduleCreate, onScheduleCreate) || other.onScheduleCreate == onScheduleCreate)&&(identical(other.onScheduleDelete, onScheduleDelete) || other.onScheduleDelete == onScheduleDelete)&&(identical(other.rrulel10n, rrulel10n) || other.rrulel10n == rrulel10n));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,loading,group,const DeepCollectionEquality().hash(schedules),onScheduleCreate,onScheduleDelete,rrulel10n);
+int get hashCode {
+    return Object.hash(runtimeType,loading,group,const DeepCollectionEquality().hash(schedules),onScheduleCreate,onScheduleDelete,rrulel10n);
+}
 
 @override
 String toString() {
-  return '_ViewModel(loading: $loading, group: $group, schedules: $schedules, onScheduleCreate: $onScheduleCreate, onScheduleDelete: $onScheduleDelete, rrulel10n: $rrulel10n)';
+    return '_ViewModel(loading: $loading, group: $group, schedules: $schedules, onScheduleCreate: $onScheduleCreate, onScheduleDelete: $onScheduleDelete, rrulel10n: $rrulel10n)';
 }
 
 

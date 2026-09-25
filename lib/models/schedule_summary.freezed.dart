@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'schedule_summary.dart';
@@ -9,6 +9,7 @@ part of 'schedule_summary.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -24,23 +25,29 @@ $ScheduleInstanceSummaryCopyWith<ScheduleInstanceSummary> get copyWith => _$Sche
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as ScheduleInstanceSummary;
   properties
     ..add(DiagnosticsProperty('type', 'ScheduleInstanceSummary'))
-    ..add(DiagnosticsProperty('scheduleId', scheduleId))..add(DiagnosticsProperty('groupId', groupId))..add(DiagnosticsProperty('displayName', displayName))..add(DiagnosticsProperty('instanceDate', instanceDate))..add(DiagnosticsProperty('memberReplies', memberReplies))..add(DiagnosticsProperty('memberDefaultReplies', memberDefaultReplies))..add(DiagnosticsProperty('memberDefaultRules', memberDefaultRules))..add(DiagnosticsProperty('yesCount', yesCount))..add(DiagnosticsProperty('myReply', myReply))..add(DiagnosticsProperty('myDefaultReply', myDefaultReply))..add(DiagnosticsProperty('myDefaultRule', myDefaultRule))..add(DiagnosticsProperty('targetMemberId', targetMemberId));
+    ..add(DiagnosticsProperty('scheduleId', _this.scheduleId))..add(DiagnosticsProperty('groupId', _this.groupId))..add(DiagnosticsProperty('displayName', _this.displayName))..add(DiagnosticsProperty('instanceDate', _this.instanceDate))..add(DiagnosticsProperty('memberReplies', _this.memberReplies))..add(DiagnosticsProperty('memberDefaultReplies', _this.memberDefaultReplies))..add(DiagnosticsProperty('memberDefaultRules', _this.memberDefaultRules))..add(DiagnosticsProperty('yesCount', _this.yesCount))..add(DiagnosticsProperty('myReply', _this.myReply))..add(DiagnosticsProperty('myDefaultReply', _this.myDefaultReply))..add(DiagnosticsProperty('myDefaultRule', _this.myDefaultRule))..add(DiagnosticsProperty('targetMemberId', _this.targetMemberId));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ScheduleInstanceSummary&&(identical(other.scheduleId, scheduleId) || other.scheduleId == scheduleId)&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.instanceDate, instanceDate) || other.instanceDate == instanceDate)&&const DeepCollectionEquality().equals(other.memberReplies, memberReplies)&&const DeepCollectionEquality().equals(other.memberDefaultReplies, memberDefaultReplies)&&const DeepCollectionEquality().equals(other.memberDefaultRules, memberDefaultRules)&&(identical(other.yesCount, yesCount) || other.yesCount == yesCount)&&(identical(other.myReply, myReply) || other.myReply == myReply)&&(identical(other.myDefaultReply, myDefaultReply) || other.myDefaultReply == myDefaultReply)&&(identical(other.myDefaultRule, myDefaultRule) || other.myDefaultRule == myDefaultRule)&&(identical(other.targetMemberId, targetMemberId) || other.targetMemberId == targetMemberId));
+  final _this = this as ScheduleInstanceSummary;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ScheduleInstanceSummary&&(identical(other.scheduleId, _this.scheduleId) || other.scheduleId == _this.scheduleId)&&(identical(other.groupId, _this.groupId) || other.groupId == _this.groupId)&&(identical(other.displayName, _this.displayName) || other.displayName == _this.displayName)&&(identical(other.instanceDate, _this.instanceDate) || other.instanceDate == _this.instanceDate)&&const DeepCollectionEquality().equals(other.memberReplies, _this.memberReplies)&&const DeepCollectionEquality().equals(other.memberDefaultReplies, _this.memberDefaultReplies)&&const DeepCollectionEquality().equals(other.memberDefaultRules, _this.memberDefaultRules)&&(identical(other.yesCount, _this.yesCount) || other.yesCount == _this.yesCount)&&(identical(other.myReply, _this.myReply) || other.myReply == _this.myReply)&&(identical(other.myDefaultReply, _this.myDefaultReply) || other.myDefaultReply == _this.myDefaultReply)&&(identical(other.myDefaultRule, _this.myDefaultRule) || other.myDefaultRule == _this.myDefaultRule)&&(identical(other.targetMemberId, _this.targetMemberId) || other.targetMemberId == _this.targetMemberId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,scheduleId,groupId,displayName,instanceDate,const DeepCollectionEquality().hash(memberReplies),const DeepCollectionEquality().hash(memberDefaultReplies),const DeepCollectionEquality().hash(memberDefaultRules),yesCount,myReply,myDefaultReply,myDefaultRule,targetMemberId);
+int get hashCode {
+  final _this = this as ScheduleInstanceSummary;
+  return Object.hash(runtimeType,_this.scheduleId,_this.groupId,_this.displayName,_this.instanceDate,const DeepCollectionEquality().hash(_this.memberReplies),const DeepCollectionEquality().hash(_this.memberDefaultReplies),const DeepCollectionEquality().hash(_this.memberDefaultRules),_this.yesCount,_this.myReply,_this.myDefaultReply,_this.myDefaultRule,_this.targetMemberId);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'ScheduleInstanceSummary(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, memberReplies: $memberReplies, memberDefaultReplies: $memberDefaultReplies, memberDefaultRules: $memberDefaultRules, yesCount: $yesCount, myReply: $myReply, myDefaultReply: $myDefaultReply, myDefaultRule: $myDefaultRule, targetMemberId: $targetMemberId)';
+  final _this = this as ScheduleInstanceSummary;
+  return 'ScheduleInstanceSummary(scheduleId: ${_this.scheduleId}, groupId: ${_this.groupId}, displayName: ${_this.displayName}, instanceDate: ${_this.instanceDate}, memberReplies: ${_this.memberReplies}, memberDefaultReplies: ${_this.memberDefaultReplies}, memberDefaultRules: ${_this.memberDefaultRules}, yesCount: ${_this.yesCount}, myReply: ${_this.myReply}, myDefaultReply: ${_this.myDefaultReply}, myDefaultRule: ${_this.myDefaultRule}, targetMemberId: ${_this.targetMemberId})';
 }
 
 
@@ -69,7 +76,7 @@ class _$ScheduleInstanceSummaryCopyWithImpl<$Res>
 /// Create a copy of ScheduleInstanceSummary
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? scheduleId = null,Object? groupId = null,Object? displayName = null,Object? instanceDate = null,Object? memberReplies = null,Object? memberDefaultReplies = null,Object? memberDefaultRules = null,Object? yesCount = null,Object? myReply = freezed,Object? myDefaultReply = freezed,Object? myDefaultRule = freezed,Object? targetMemberId = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(ScheduleInstanceSummary(
 scheduleId: null == scheduleId ? _self.scheduleId : scheduleId // ignore: cast_nullable_to_non_nullable
 as String,groupId: null == groupId ? _self.groupId : groupId // ignore: cast_nullable_to_non_nullable
 as String,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
@@ -229,7 +236,7 @@ return $default(_that.scheduleId,_that.groupId,_that.displayName,_that.instanceD
 
 
 class _ScheduleInstanceSummary with DiagnosticableTreeMixin implements ScheduleInstanceSummary {
-  const _ScheduleInstanceSummary({required this.scheduleId, required this.groupId, required this.displayName, required this.instanceDate, required final  Map<String, ReplyOptions> memberReplies, required final  Map<String, ReplyOptions> memberDefaultReplies, required final  Map<String, DefaultRule> memberDefaultRules, required this.yesCount, this.myReply, this.myDefaultReply, this.myDefaultRule, this.targetMemberId}): _memberReplies = memberReplies,_memberDefaultReplies = memberDefaultReplies,_memberDefaultRules = memberDefaultRules;
+  const _ScheduleInstanceSummary({required this.scheduleId, required this.groupId, required this.displayName, required this.instanceDate, required  Map<String, ReplyOptions> memberReplies, required  Map<String, ReplyOptions> memberDefaultReplies, required  Map<String, DefaultRule> memberDefaultRules, required this.yesCount, this.myReply, this.myDefaultReply, this.myDefaultRule, this.targetMemberId}): _memberReplies = memberReplies,_memberDefaultReplies = memberDefaultReplies,_memberDefaultRules = memberDefaultRules;
   
 
 @override final  String scheduleId;
@@ -272,23 +279,25 @@ _$ScheduleInstanceSummaryCopyWith<_ScheduleInstanceSummary> get copyWith => __$S
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'ScheduleInstanceSummary'))
     ..add(DiagnosticsProperty('scheduleId', scheduleId))..add(DiagnosticsProperty('groupId', groupId))..add(DiagnosticsProperty('displayName', displayName))..add(DiagnosticsProperty('instanceDate', instanceDate))..add(DiagnosticsProperty('memberReplies', memberReplies))..add(DiagnosticsProperty('memberDefaultReplies', memberDefaultReplies))..add(DiagnosticsProperty('memberDefaultRules', memberDefaultRules))..add(DiagnosticsProperty('yesCount', yesCount))..add(DiagnosticsProperty('myReply', myReply))..add(DiagnosticsProperty('myDefaultReply', myDefaultReply))..add(DiagnosticsProperty('myDefaultRule', myDefaultRule))..add(DiagnosticsProperty('targetMemberId', targetMemberId));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ScheduleInstanceSummary&&(identical(other.scheduleId, scheduleId) || other.scheduleId == scheduleId)&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.instanceDate, instanceDate) || other.instanceDate == instanceDate)&&const DeepCollectionEquality().equals(other._memberReplies, _memberReplies)&&const DeepCollectionEquality().equals(other._memberDefaultReplies, _memberDefaultReplies)&&const DeepCollectionEquality().equals(other._memberDefaultRules, _memberDefaultRules)&&(identical(other.yesCount, yesCount) || other.yesCount == yesCount)&&(identical(other.myReply, myReply) || other.myReply == myReply)&&(identical(other.myDefaultReply, myDefaultReply) || other.myDefaultReply == myDefaultReply)&&(identical(other.myDefaultRule, myDefaultRule) || other.myDefaultRule == myDefaultRule)&&(identical(other.targetMemberId, targetMemberId) || other.targetMemberId == targetMemberId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ScheduleInstanceSummary&&(identical(other.scheduleId, scheduleId) || other.scheduleId == scheduleId)&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.instanceDate, instanceDate) || other.instanceDate == instanceDate)&&const DeepCollectionEquality().equals(other.memberReplies, _memberReplies)&&const DeepCollectionEquality().equals(other.memberDefaultReplies, _memberDefaultReplies)&&const DeepCollectionEquality().equals(other.memberDefaultRules, _memberDefaultRules)&&(identical(other.yesCount, yesCount) || other.yesCount == yesCount)&&(identical(other.myReply, myReply) || other.myReply == myReply)&&(identical(other.myDefaultReply, myDefaultReply) || other.myDefaultReply == myDefaultReply)&&(identical(other.myDefaultRule, myDefaultRule) || other.myDefaultRule == myDefaultRule)&&(identical(other.targetMemberId, targetMemberId) || other.targetMemberId == targetMemberId));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,scheduleId,groupId,displayName,instanceDate,const DeepCollectionEquality().hash(_memberReplies),const DeepCollectionEquality().hash(_memberDefaultReplies),const DeepCollectionEquality().hash(_memberDefaultRules),yesCount,myReply,myDefaultReply,myDefaultRule,targetMemberId);
+int get hashCode {
+    return Object.hash(runtimeType,scheduleId,groupId,displayName,instanceDate,const DeepCollectionEquality().hash(_memberReplies),const DeepCollectionEquality().hash(_memberDefaultReplies),const DeepCollectionEquality().hash(_memberDefaultRules),yesCount,myReply,myDefaultReply,myDefaultRule,targetMemberId);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'ScheduleInstanceSummary(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, memberReplies: $memberReplies, memberDefaultReplies: $memberDefaultReplies, memberDefaultRules: $memberDefaultRules, yesCount: $yesCount, myReply: $myReply, myDefaultReply: $myDefaultReply, myDefaultRule: $myDefaultRule, targetMemberId: $targetMemberId)';
+    return 'ScheduleInstanceSummary(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, memberReplies: $memberReplies, memberDefaultReplies: $memberDefaultReplies, memberDefaultRules: $memberDefaultRules, yesCount: $yesCount, myReply: $myReply, myDefaultReply: $myDefaultReply, myDefaultRule: $myDefaultRule, targetMemberId: $targetMemberId)';
 }
 
 
@@ -362,23 +371,29 @@ $ScheduleInstanceDetailsCopyWith<ScheduleInstanceDetails> get copyWith => _$Sche
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as ScheduleInstanceDetails;
   properties
     ..add(DiagnosticsProperty('type', 'ScheduleInstanceDetails'))
-    ..add(DiagnosticsProperty('scheduleId', scheduleId))..add(DiagnosticsProperty('groupId', groupId))..add(DiagnosticsProperty('displayName', displayName))..add(DiagnosticsProperty('instanceDate', instanceDate))..add(DiagnosticsProperty('repliesGroups', repliesGroups))..add(DiagnosticsProperty('myReply', myReply))..add(DiagnosticsProperty('myDefaultReply', myDefaultReply))..add(DiagnosticsProperty('myDefaultRule', myDefaultRule))..add(DiagnosticsProperty('targetMemberId', targetMemberId))..add(DiagnosticsProperty('canEditOthers', canEditOthers));
+    ..add(DiagnosticsProperty('scheduleId', _this.scheduleId))..add(DiagnosticsProperty('groupId', _this.groupId))..add(DiagnosticsProperty('displayName', _this.displayName))..add(DiagnosticsProperty('instanceDate', _this.instanceDate))..add(DiagnosticsProperty('repliesGroups', _this.repliesGroups))..add(DiagnosticsProperty('myReply', _this.myReply))..add(DiagnosticsProperty('myDefaultReply', _this.myDefaultReply))..add(DiagnosticsProperty('myDefaultRule', _this.myDefaultRule))..add(DiagnosticsProperty('targetMemberId', _this.targetMemberId))..add(DiagnosticsProperty('canEditOthers', _this.canEditOthers));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ScheduleInstanceDetails&&(identical(other.scheduleId, scheduleId) || other.scheduleId == scheduleId)&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.instanceDate, instanceDate) || other.instanceDate == instanceDate)&&const DeepCollectionEquality().equals(other.repliesGroups, repliesGroups)&&(identical(other.myReply, myReply) || other.myReply == myReply)&&(identical(other.myDefaultReply, myDefaultReply) || other.myDefaultReply == myDefaultReply)&&(identical(other.myDefaultRule, myDefaultRule) || other.myDefaultRule == myDefaultRule)&&(identical(other.targetMemberId, targetMemberId) || other.targetMemberId == targetMemberId)&&(identical(other.canEditOthers, canEditOthers) || other.canEditOthers == canEditOthers));
+  final _this = this as ScheduleInstanceDetails;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ScheduleInstanceDetails&&(identical(other.scheduleId, _this.scheduleId) || other.scheduleId == _this.scheduleId)&&(identical(other.groupId, _this.groupId) || other.groupId == _this.groupId)&&(identical(other.displayName, _this.displayName) || other.displayName == _this.displayName)&&(identical(other.instanceDate, _this.instanceDate) || other.instanceDate == _this.instanceDate)&&const DeepCollectionEquality().equals(other.repliesGroups, _this.repliesGroups)&&(identical(other.myReply, _this.myReply) || other.myReply == _this.myReply)&&(identical(other.myDefaultReply, _this.myDefaultReply) || other.myDefaultReply == _this.myDefaultReply)&&(identical(other.myDefaultRule, _this.myDefaultRule) || other.myDefaultRule == _this.myDefaultRule)&&(identical(other.targetMemberId, _this.targetMemberId) || other.targetMemberId == _this.targetMemberId)&&(identical(other.canEditOthers, _this.canEditOthers) || other.canEditOthers == _this.canEditOthers));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,scheduleId,groupId,displayName,instanceDate,const DeepCollectionEquality().hash(repliesGroups),myReply,myDefaultReply,myDefaultRule,targetMemberId,canEditOthers);
+int get hashCode {
+  final _this = this as ScheduleInstanceDetails;
+  return Object.hash(runtimeType,_this.scheduleId,_this.groupId,_this.displayName,_this.instanceDate,const DeepCollectionEquality().hash(_this.repliesGroups),_this.myReply,_this.myDefaultReply,_this.myDefaultRule,_this.targetMemberId,_this.canEditOthers);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'ScheduleInstanceDetails(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, repliesGroups: $repliesGroups, myReply: $myReply, myDefaultReply: $myDefaultReply, myDefaultRule: $myDefaultRule, targetMemberId: $targetMemberId, canEditOthers: $canEditOthers)';
+  final _this = this as ScheduleInstanceDetails;
+  return 'ScheduleInstanceDetails(scheduleId: ${_this.scheduleId}, groupId: ${_this.groupId}, displayName: ${_this.displayName}, instanceDate: ${_this.instanceDate}, repliesGroups: ${_this.repliesGroups}, myReply: ${_this.myReply}, myDefaultReply: ${_this.myDefaultReply}, myDefaultRule: ${_this.myDefaultRule}, targetMemberId: ${_this.targetMemberId}, canEditOthers: ${_this.canEditOthers})';
 }
 
 
@@ -407,7 +422,7 @@ class _$ScheduleInstanceDetailsCopyWithImpl<$Res>
 /// Create a copy of ScheduleInstanceDetails
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? scheduleId = null,Object? groupId = null,Object? displayName = null,Object? instanceDate = null,Object? repliesGroups = null,Object? myReply = freezed,Object? myDefaultReply = freezed,Object? myDefaultRule = freezed,Object? targetMemberId = freezed,Object? canEditOthers = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(ScheduleInstanceDetails(
 scheduleId: null == scheduleId ? _self.scheduleId : scheduleId // ignore: cast_nullable_to_non_nullable
 as String,groupId: null == groupId ? _self.groupId : groupId // ignore: cast_nullable_to_non_nullable
 as String,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
@@ -565,7 +580,7 @@ return $default(_that.scheduleId,_that.groupId,_that.displayName,_that.instanceD
 
 
 class _ScheduleInstanceDetails with DiagnosticableTreeMixin implements ScheduleInstanceDetails {
-  const _ScheduleInstanceDetails({required this.scheduleId, required this.groupId, required this.displayName, required this.instanceDate, required final  List<ScheduleInstanceRepliesGroup> repliesGroups, this.myReply, this.myDefaultReply, this.myDefaultRule, this.targetMemberId, this.canEditOthers}): _repliesGroups = repliesGroups;
+  const _ScheduleInstanceDetails({required this.scheduleId, required this.groupId, required this.displayName, required this.instanceDate, required  List<ScheduleInstanceRepliesGroup> repliesGroups, this.myReply, this.myDefaultReply, this.myDefaultRule, this.targetMemberId, this.canEditOthers}): _repliesGroups = repliesGroups;
   
 
 @override final  String scheduleId;
@@ -594,23 +609,25 @@ _$ScheduleInstanceDetailsCopyWith<_ScheduleInstanceDetails> get copyWith => __$S
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'ScheduleInstanceDetails'))
     ..add(DiagnosticsProperty('scheduleId', scheduleId))..add(DiagnosticsProperty('groupId', groupId))..add(DiagnosticsProperty('displayName', displayName))..add(DiagnosticsProperty('instanceDate', instanceDate))..add(DiagnosticsProperty('repliesGroups', repliesGroups))..add(DiagnosticsProperty('myReply', myReply))..add(DiagnosticsProperty('myDefaultReply', myDefaultReply))..add(DiagnosticsProperty('myDefaultRule', myDefaultRule))..add(DiagnosticsProperty('targetMemberId', targetMemberId))..add(DiagnosticsProperty('canEditOthers', canEditOthers));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ScheduleInstanceDetails&&(identical(other.scheduleId, scheduleId) || other.scheduleId == scheduleId)&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.instanceDate, instanceDate) || other.instanceDate == instanceDate)&&const DeepCollectionEquality().equals(other._repliesGroups, _repliesGroups)&&(identical(other.myReply, myReply) || other.myReply == myReply)&&(identical(other.myDefaultReply, myDefaultReply) || other.myDefaultReply == myDefaultReply)&&(identical(other.myDefaultRule, myDefaultRule) || other.myDefaultRule == myDefaultRule)&&(identical(other.targetMemberId, targetMemberId) || other.targetMemberId == targetMemberId)&&(identical(other.canEditOthers, canEditOthers) || other.canEditOthers == canEditOthers));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ScheduleInstanceDetails&&(identical(other.scheduleId, scheduleId) || other.scheduleId == scheduleId)&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.instanceDate, instanceDate) || other.instanceDate == instanceDate)&&const DeepCollectionEquality().equals(other.repliesGroups, _repliesGroups)&&(identical(other.myReply, myReply) || other.myReply == myReply)&&(identical(other.myDefaultReply, myDefaultReply) || other.myDefaultReply == myDefaultReply)&&(identical(other.myDefaultRule, myDefaultRule) || other.myDefaultRule == myDefaultRule)&&(identical(other.targetMemberId, targetMemberId) || other.targetMemberId == targetMemberId)&&(identical(other.canEditOthers, canEditOthers) || other.canEditOthers == canEditOthers));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,scheduleId,groupId,displayName,instanceDate,const DeepCollectionEquality().hash(_repliesGroups),myReply,myDefaultReply,myDefaultRule,targetMemberId,canEditOthers);
+int get hashCode {
+    return Object.hash(runtimeType,scheduleId,groupId,displayName,instanceDate,const DeepCollectionEquality().hash(_repliesGroups),myReply,myDefaultReply,myDefaultRule,targetMemberId,canEditOthers);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'ScheduleInstanceDetails(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, repliesGroups: $repliesGroups, myReply: $myReply, myDefaultReply: $myDefaultReply, myDefaultRule: $myDefaultRule, targetMemberId: $targetMemberId, canEditOthers: $canEditOthers)';
+    return 'ScheduleInstanceDetails(scheduleId: $scheduleId, groupId: $groupId, displayName: $displayName, instanceDate: $instanceDate, repliesGroups: $repliesGroups, myReply: $myReply, myDefaultReply: $myDefaultReply, myDefaultRule: $myDefaultRule, targetMemberId: $targetMemberId, canEditOthers: $canEditOthers)';
 }
 
 
@@ -682,23 +699,29 @@ $ScheduleInstanceRepliesGroupCopyWith<ScheduleInstanceRepliesGroup> get copyWith
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as ScheduleInstanceRepliesGroup;
   properties
     ..add(DiagnosticsProperty('type', 'ScheduleInstanceRepliesGroup'))
-    ..add(DiagnosticsProperty('reply', reply))..add(DiagnosticsProperty('count', count))..add(DiagnosticsProperty('members', members));
+    ..add(DiagnosticsProperty('reply', _this.reply))..add(DiagnosticsProperty('count', _this.count))..add(DiagnosticsProperty('members', _this.members));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ScheduleInstanceRepliesGroup&&(identical(other.reply, reply) || other.reply == reply)&&(identical(other.count, count) || other.count == count)&&const DeepCollectionEquality().equals(other.members, members));
+  final _this = this as ScheduleInstanceRepliesGroup;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ScheduleInstanceRepliesGroup&&(identical(other.reply, _this.reply) || other.reply == _this.reply)&&(identical(other.count, _this.count) || other.count == _this.count)&&const DeepCollectionEquality().equals(other.members, _this.members));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,reply,count,const DeepCollectionEquality().hash(members));
+int get hashCode {
+  final _this = this as ScheduleInstanceRepliesGroup;
+  return Object.hash(runtimeType,_this.reply,_this.count,const DeepCollectionEquality().hash(_this.members));
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'ScheduleInstanceRepliesGroup(reply: $reply, count: $count, members: $members)';
+  final _this = this as ScheduleInstanceRepliesGroup;
+  return 'ScheduleInstanceRepliesGroup(reply: ${_this.reply}, count: ${_this.count}, members: ${_this.members})';
 }
 
 
@@ -727,7 +750,7 @@ class _$ScheduleInstanceRepliesGroupCopyWithImpl<$Res>
 /// Create a copy of ScheduleInstanceRepliesGroup
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? reply = freezed,Object? count = null,Object? members = null,}) {
-  return _then(_self.copyWith(
+  return _then(ScheduleInstanceRepliesGroup(
 reply: freezed == reply ? _self.reply : reply // ignore: cast_nullable_to_non_nullable
 as ReplyOptions?,count: null == count ? _self.count : count // ignore: cast_nullable_to_non_nullable
 as int,members: null == members ? _self.members : members // ignore: cast_nullable_to_non_nullable
@@ -866,7 +889,7 @@ return $default(_that.reply,_that.count,_that.members);case _:
 
 
 class _ScheduleInstanceRepliesGroup with DiagnosticableTreeMixin implements ScheduleInstanceRepliesGroup {
-  const _ScheduleInstanceRepliesGroup({required this.reply, required this.count, required final  List<ScheduleInstanceMember> members}): _members = members;
+  const _ScheduleInstanceRepliesGroup({required this.reply, required this.count, required  List<ScheduleInstanceMember> members}): _members = members;
   
 
 @override final  ReplyOptions? reply;
@@ -888,23 +911,25 @@ _$ScheduleInstanceRepliesGroupCopyWith<_ScheduleInstanceRepliesGroup> get copyWi
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'ScheduleInstanceRepliesGroup'))
     ..add(DiagnosticsProperty('reply', reply))..add(DiagnosticsProperty('count', count))..add(DiagnosticsProperty('members', members));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ScheduleInstanceRepliesGroup&&(identical(other.reply, reply) || other.reply == reply)&&(identical(other.count, count) || other.count == count)&&const DeepCollectionEquality().equals(other._members, _members));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ScheduleInstanceRepliesGroup&&(identical(other.reply, reply) || other.reply == reply)&&(identical(other.count, count) || other.count == count)&&const DeepCollectionEquality().equals(other.members, _members));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,reply,count,const DeepCollectionEquality().hash(_members));
+int get hashCode {
+    return Object.hash(runtimeType,reply,count,const DeepCollectionEquality().hash(_members));
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'ScheduleInstanceRepliesGroup(reply: $reply, count: $count, members: $members)';
+    return 'ScheduleInstanceRepliesGroup(reply: $reply, count: $count, members: $members)';
 }
 
 
@@ -957,23 +982,29 @@ $ScheduleInstanceMemberCopyWith<ScheduleInstanceMember> get copyWith => _$Schedu
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as ScheduleInstanceMember;
   properties
     ..add(DiagnosticsProperty('type', 'ScheduleInstanceMember'))
-    ..add(DiagnosticsProperty('member', member))..add(DiagnosticsProperty('reply', reply))..add(DiagnosticsProperty('defaultReply', defaultReply))..add(DiagnosticsProperty('defaultRule', defaultRule))..add(DiagnosticsProperty('profile', profile));
+    ..add(DiagnosticsProperty('member', _this.member))..add(DiagnosticsProperty('reply', _this.reply))..add(DiagnosticsProperty('defaultReply', _this.defaultReply))..add(DiagnosticsProperty('defaultRule', _this.defaultRule))..add(DiagnosticsProperty('profile', _this.profile));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is ScheduleInstanceMember&&(identical(other.member, member) || other.member == member)&&(identical(other.reply, reply) || other.reply == reply)&&(identical(other.defaultReply, defaultReply) || other.defaultReply == defaultReply)&&(identical(other.defaultRule, defaultRule) || other.defaultRule == defaultRule)&&(identical(other.profile, profile) || other.profile == profile));
+  final _this = this as ScheduleInstanceMember;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is ScheduleInstanceMember&&(identical(other.member, _this.member) || other.member == _this.member)&&(identical(other.reply, _this.reply) || other.reply == _this.reply)&&(identical(other.defaultReply, _this.defaultReply) || other.defaultReply == _this.defaultReply)&&(identical(other.defaultRule, _this.defaultRule) || other.defaultRule == _this.defaultRule)&&(identical(other.profile, _this.profile) || other.profile == _this.profile));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,member,reply,defaultReply,defaultRule,profile);
+int get hashCode {
+  final _this = this as ScheduleInstanceMember;
+  return Object.hash(runtimeType,_this.member,_this.reply,_this.defaultReply,_this.defaultRule,_this.profile);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'ScheduleInstanceMember(member: $member, reply: $reply, defaultReply: $defaultReply, defaultRule: $defaultRule, profile: $profile)';
+  final _this = this as ScheduleInstanceMember;
+  return 'ScheduleInstanceMember(member: ${_this.member}, reply: ${_this.reply}, defaultReply: ${_this.defaultReply}, defaultRule: ${_this.defaultRule}, profile: ${_this.profile})';
 }
 
 
@@ -1002,7 +1033,7 @@ class _$ScheduleInstanceMemberCopyWithImpl<$Res>
 /// Create a copy of ScheduleInstanceMember
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? member = null,Object? reply = freezed,Object? defaultReply = freezed,Object? defaultRule = freezed,Object? profile = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(ScheduleInstanceMember(
 member: null == member ? _self.member : member // ignore: cast_nullable_to_non_nullable
 as Member,reply: freezed == reply ? _self.reply : reply // ignore: cast_nullable_to_non_nullable
 as ReplyOptions?,defaultReply: freezed == defaultReply ? _self.defaultReply : defaultReply // ignore: cast_nullable_to_non_nullable
@@ -1194,23 +1225,25 @@ _$ScheduleInstanceMemberReplyCopyWith<_ScheduleInstanceMemberReply> get copyWith
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'ScheduleInstanceMember'))
     ..add(DiagnosticsProperty('member', member))..add(DiagnosticsProperty('reply', reply))..add(DiagnosticsProperty('defaultReply', defaultReply))..add(DiagnosticsProperty('defaultRule', defaultRule))..add(DiagnosticsProperty('profile', profile));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ScheduleInstanceMemberReply&&(identical(other.member, member) || other.member == member)&&(identical(other.reply, reply) || other.reply == reply)&&(identical(other.defaultReply, defaultReply) || other.defaultReply == defaultReply)&&(identical(other.defaultRule, defaultRule) || other.defaultRule == defaultRule)&&(identical(other.profile, profile) || other.profile == profile));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _ScheduleInstanceMemberReply&&(identical(other.member, member) || other.member == member)&&(identical(other.reply, reply) || other.reply == reply)&&(identical(other.defaultReply, defaultReply) || other.defaultReply == defaultReply)&&(identical(other.defaultRule, defaultRule) || other.defaultRule == defaultRule)&&(identical(other.profile, profile) || other.profile == profile));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,member,reply,defaultReply,defaultRule,profile);
+int get hashCode {
+    return Object.hash(runtimeType,member,reply,defaultReply,defaultRule,profile);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'ScheduleInstanceMember(member: $member, reply: $reply, defaultReply: $defaultReply, defaultRule: $defaultRule, profile: $profile)';
+    return 'ScheduleInstanceMember(member: $member, reply: $reply, defaultReply: $defaultReply, defaultRule: $defaultRule, profile: $profile)';
 }
 
 

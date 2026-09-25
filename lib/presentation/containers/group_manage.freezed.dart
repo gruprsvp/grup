@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'group_manage.dart';
@@ -9,6 +9,7 @@ part of 'group_manage.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -24,23 +25,29 @@ _$ViewModelCopyWith<_ViewModel> get copyWith => __$ViewModelCopyWithImpl<_ViewMo
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as _ViewModel;
   properties
     ..add(DiagnosticsProperty('type', '_ViewModel'))
-    ..add(DiagnosticsProperty('loading', loading))..add(DiagnosticsProperty('group', group))..add(DiagnosticsProperty('onDelete', onDelete));
+    ..add(DiagnosticsProperty('loading', _this.loading))..add(DiagnosticsProperty('group', _this.group))..add(DiagnosticsProperty('onDelete', _this.onDelete));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ViewModel&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.group, group) || other.group == group)&&(identical(other.onDelete, onDelete) || other.onDelete == onDelete));
+  final _this = this as _ViewModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ViewModel&&(identical(other.loading, _this.loading) || other.loading == _this.loading)&&(identical(other.group, _this.group) || other.group == _this.group)&&(identical(other.onDelete, _this.onDelete) || other.onDelete == _this.onDelete));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,loading,group,onDelete);
+int get hashCode {
+  final _this = this as _ViewModel;
+  return Object.hash(runtimeType,_this.loading,_this.group,_this.onDelete);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return '_ViewModel(loading: $loading, group: $group, onDelete: $onDelete)';
+  final _this = this as _ViewModel;
+  return '_ViewModel(loading: ${_this.loading}, group: ${_this.group}, onDelete: ${_this.onDelete})';
 }
 
 
@@ -69,7 +76,7 @@ class __$ViewModelCopyWithImpl<$Res>
 /// Create a copy of _ViewModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? loading = null,Object? group = freezed,Object? onDelete = null,}) {
-  return _then(_self.copyWith(
+  return _then(_ViewModel(
 loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,group: freezed == group ? _self.group : group // ignore: cast_nullable_to_non_nullable
 as Group?,onDelete: null == onDelete ? _self.onDelete : onDelete // ignore: cast_nullable_to_non_nullable
@@ -236,23 +243,25 @@ _$_ViewModelCopyWith<__ViewModel> get copyWith => __$_ViewModelCopyWithImpl<__Vi
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', '_ViewModel'))
     ..add(DiagnosticsProperty('loading', loading))..add(DiagnosticsProperty('group', group))..add(DiagnosticsProperty('onDelete', onDelete));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is __ViewModel&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.group, group) || other.group == group)&&(identical(other.onDelete, onDelete) || other.onDelete == onDelete));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is __ViewModel&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.group, group) || other.group == group)&&(identical(other.onDelete, onDelete) || other.onDelete == onDelete));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,loading,group,onDelete);
+int get hashCode {
+    return Object.hash(runtimeType,loading,group,onDelete);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return '_ViewModel(loading: $loading, group: $group, onDelete: $onDelete)';
+    return '_ViewModel(loading: $loading, group: $group, onDelete: $onDelete)';
 }
 
 

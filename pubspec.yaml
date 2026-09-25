@@ -19,7 +19,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.7.3+1
 
 environment:
-  sdk: ^3.8.0
+  sdk: ^3.13.0
+  flutter: ">=3.47.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -34,103 +35,116 @@ dependencies:
   # Localization
   flutter_localizations:
     sdk: flutter
-  intl: ^0.20.2
+  intl: ^0.20.3
 
   # Routing
-  go_router: ^17.0.1
+  # HELD at 17.x: go_router 18+ targets package:material_ui (Flutter's decoupled
+  # Material). The app still uses package:flutter/material.dart, and mixing the two
+  # fails silently at runtime (go_router 18 stops detecting MaterialApp and drops
+  # every page transition). Unhold together with the app's material_ui
+  # migration — see docs/MODERNIZATION.md ("Material decoupling").
+  go_router: ^17.5.0
 
   # Redux
   rxdart: ^0.28.0
   redux: ^5.0.0
   flutter_redux: ^0.10.0
-  redux_logging: ^0.5.1
-  redux_epics: ^0.15.1
+  redux_epics: ^0.15.2
   redux_persist: ^0.9.0
   redux_persist_flutter: ^0.9.0
-  redux_entity: ^1.1.2
+  redux_entity: ^1.2.0
   reselect: ^0.5.0
 
   # Supabase
-  supabase: ^2.6.2
-  supabase_flutter: ^2.0.2
+  supabase: ^2.16.1
+  supabase_flutter: ^2.17.2
   supabase_auth_ui: ^0.7.0
 
   # Image picker to let users upload their profile picture
   crop_your_image: ^2.0.0
-  image_picker: ^1.0.4
+  image_picker: ^1.2.3
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
-  cupertino_icons: ^1.0.2
+  cupertino_icons: ^1.0.9
 
   # For (de)serialisation
   freezed_annotation: ^3.1.0
-  json_annotation: ^4.8.1
+  json_annotation: ^4.12.0
 
   # Recurrence rules
-  rrule: ^0.2.17
+  rrule: ^0.2.18
 
   # To invite contacts
-  flutter_contacts: ^2.3.1
+  flutter_contacts: ^2.5.0
 
   # Forms and validators
-  flutter_form_builder: ^10.2.0 # TODO Can we remove this?
-  form_builder_validators: ^11.1.1
-  phone_form_field: ^10.0.4
+  # HELD at 10.x: flutter_form_builder 11+ targets package:material_ui (Flutter's decoupled
+  # Material). The app still uses package:flutter/material.dart, and mixing the two
+  # fails silently at runtime (its fields resolve material_ui's Theme/localizations,
+  # which the app doesn't provide). Unhold together with the app's material_ui
+  # migration — see docs/MODERNIZATION.md ("Material decoupling").
+  flutter_form_builder: ^10.3.0+2 # TODO Can we remove this?
+  form_builder_validators: ^11.3.0
+  # HELD at 10.x: phone_form_field 11+ targets package:material_ui (Flutter's decoupled
+  # Material). The app still uses package:flutter/material.dart, and mixing the two
+  # fails silently at runtime (same as flutter_form_builder). Unhold together with the app's material_ui
+  # migration — see docs/MODERNIZATION.md ("Material decoupling").
+  phone_form_field: ^10.0.18
 
   # To send feedback and report bugs
   device_info_plus: ^13.2.0
   mailto: ^2.0.0
   package_info_plus: ^10.2.1
-  url_launcher: ^6.3.1
+  url_launcher: ^6.3.2
 
   # Widgetbook
-  widgetbook_annotation: ^3.3.0
-  widgetbook: ^3.10.2
+  widgetbook_annotation: ^3.11.0
+  widgetbook: ^3.25.0
 
   # Utilities
   app_links: ^7.2.1
-  base32: ^2.1.3
-  collection: ^1.18.0
-  flutter_native_splash: ^2.4.4
+  base32: ^2.2.0
+  collection: ^1.19.1
+  flutter_native_splash: ^2.4.8
   font_awesome_flutter: ^11.0.0
   google_fonts: ^8.2.1
-  in_app_review: ^2.0.10
+  in_app_review: ^2.0.12
   memoized: ^2.2.6
-  mime: ^2.0.0
-  path_provider: ^2.1.5
-  posthog_flutter: ^5.10.0
-  sentry_flutter: ^9.26.0
+  mime: ^2.1.0
+  path_provider: ^2.1.6
+  posthog_flutter: ^5.49.0
+  sentry_flutter: ^9.30.1
   share_plus: ^13.3.0
   styled_text: ^10.0.0
-  universal_html: ^2.2.4
-  uuid: ^4.1.0
+  universal_html: ^2.3.0
+  uuid: ^4.6.0
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
 
-  test: ^1.24.3
+  test: ^1.31.1
   integration_test:
     sdk: flutter
 
   # To deploy to CloudFlare Pages
-  peanut: ^6.0.0
+  peanut: ^6.0.1
 
   # For code generation
-  build_runner: ^2.4.7
-  freezed: ^3.2.3
-  json_serializable: ^6.9.4
-  go_router_builder: ^4.1.3
-  widgetbook_generator: ^3.5.0
+  build_runner: ^2.16.1
+  freezed: ^4.0.1
+  json_serializable: ^6.14.1
+  go_router_builder: ^4.5.0
+  widgetbook_generator: ^3.24.0
 
   # Used in various tests to generate random data
-  faker: ^2.1.0
+  faker: ^2.2.0
 
   # Utilities
-  flutter_launcher_icons: ^0.14.3
-  sentry_dart_plugin: ^3.2.0
+  flutter_launcher_icons: ^0.14.4
+  sentry_dart_plugin: ^3.4.0
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

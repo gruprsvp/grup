@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'profile.dart';
@@ -9,6 +9,7 @@ part of 'profile.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -24,23 +25,29 @@ _$ViewModelCopyWith<_ViewModel> get copyWith => __$ViewModelCopyWithImpl<_ViewMo
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as _ViewModel;
   properties
     ..add(DiagnosticsProperty('type', '_ViewModel'))
-    ..add(DiagnosticsProperty('profile', profile))..add(DiagnosticsProperty('onSave', onSave));
+    ..add(DiagnosticsProperty('profile', _this.profile))..add(DiagnosticsProperty('onSave', _this.onSave));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ViewModel&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.onSave, onSave) || other.onSave == onSave));
+  final _this = this as _ViewModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ViewModel&&(identical(other.profile, _this.profile) || other.profile == _this.profile)&&(identical(other.onSave, _this.onSave) || other.onSave == _this.onSave));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,profile,onSave);
+int get hashCode {
+  final _this = this as _ViewModel;
+  return Object.hash(runtimeType,_this.profile,_this.onSave);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return '_ViewModel(profile: $profile, onSave: $onSave)';
+  final _this = this as _ViewModel;
+  return '_ViewModel(profile: ${_this.profile}, onSave: ${_this.onSave})';
 }
 
 
@@ -69,7 +76,7 @@ class __$ViewModelCopyWithImpl<$Res>
 /// Create a copy of _ViewModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? profile = freezed,Object? onSave = null,}) {
-  return _then(_self.copyWith(
+  return _then(_ViewModel(
 profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
 as Profile?,onSave: null == onSave ? _self.onSave : onSave // ignore: cast_nullable_to_non_nullable
 as OnProfileSaveCallback,
@@ -234,23 +241,25 @@ _$_ViewModelCopyWith<__ViewModel> get copyWith => __$_ViewModelCopyWithImpl<__Vi
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', '_ViewModel'))
     ..add(DiagnosticsProperty('profile', profile))..add(DiagnosticsProperty('onSave', onSave));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is __ViewModel&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.onSave, onSave) || other.onSave == onSave));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is __ViewModel&&(identical(other.profile, profile) || other.profile == profile)&&(identical(other.onSave, onSave) || other.onSave == onSave));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,profile,onSave);
+int get hashCode {
+    return Object.hash(runtimeType,profile,onSave);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return '_ViewModel(profile: $profile, onSave: $onSave)';
+    return '_ViewModel(profile: $profile, onSave: $onSave)';
 }
 
 

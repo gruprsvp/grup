@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'supabase_config.dart';
@@ -9,6 +9,7 @@ part of 'supabase_config.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -27,23 +28,29 @@ $SupabaseConfigCopyWith<SupabaseConfig> get copyWith => _$SupabaseConfigCopyWith
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as SupabaseConfig;
   properties
     ..add(DiagnosticsProperty('type', 'SupabaseConfig'))
-    ..add(DiagnosticsProperty('anonKey', anonKey))..add(DiagnosticsProperty('apiUrl', apiUrl))..add(DiagnosticsProperty('dbUrl', dbUrl))..add(DiagnosticsProperty('graphqlUrl', graphqlUrl))..add(DiagnosticsProperty('inbucketUrl', inbucketUrl))..add(DiagnosticsProperty('jwtSecret', jwtSecret))..add(DiagnosticsProperty('serviceRoleKey', serviceRoleKey))..add(DiagnosticsProperty('studioUrl', studioUrl));
+    ..add(DiagnosticsProperty('anonKey', _this.anonKey))..add(DiagnosticsProperty('apiUrl', _this.apiUrl))..add(DiagnosticsProperty('dbUrl', _this.dbUrl))..add(DiagnosticsProperty('graphqlUrl', _this.graphqlUrl))..add(DiagnosticsProperty('inbucketUrl', _this.inbucketUrl))..add(DiagnosticsProperty('jwtSecret', _this.jwtSecret))..add(DiagnosticsProperty('serviceRoleKey', _this.serviceRoleKey))..add(DiagnosticsProperty('studioUrl', _this.studioUrl));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SupabaseConfig&&(identical(other.anonKey, anonKey) || other.anonKey == anonKey)&&(identical(other.apiUrl, apiUrl) || other.apiUrl == apiUrl)&&(identical(other.dbUrl, dbUrl) || other.dbUrl == dbUrl)&&(identical(other.graphqlUrl, graphqlUrl) || other.graphqlUrl == graphqlUrl)&&(identical(other.inbucketUrl, inbucketUrl) || other.inbucketUrl == inbucketUrl)&&(identical(other.jwtSecret, jwtSecret) || other.jwtSecret == jwtSecret)&&(identical(other.serviceRoleKey, serviceRoleKey) || other.serviceRoleKey == serviceRoleKey)&&(identical(other.studioUrl, studioUrl) || other.studioUrl == studioUrl));
+  final _this = this as SupabaseConfig;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SupabaseConfig&&(identical(other.anonKey, _this.anonKey) || other.anonKey == _this.anonKey)&&(identical(other.apiUrl, _this.apiUrl) || other.apiUrl == _this.apiUrl)&&(identical(other.dbUrl, _this.dbUrl) || other.dbUrl == _this.dbUrl)&&(identical(other.graphqlUrl, _this.graphqlUrl) || other.graphqlUrl == _this.graphqlUrl)&&(identical(other.inbucketUrl, _this.inbucketUrl) || other.inbucketUrl == _this.inbucketUrl)&&(identical(other.jwtSecret, _this.jwtSecret) || other.jwtSecret == _this.jwtSecret)&&(identical(other.serviceRoleKey, _this.serviceRoleKey) || other.serviceRoleKey == _this.serviceRoleKey)&&(identical(other.studioUrl, _this.studioUrl) || other.studioUrl == _this.studioUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,anonKey,apiUrl,dbUrl,graphqlUrl,inbucketUrl,jwtSecret,serviceRoleKey,studioUrl);
+int get hashCode {
+  final _this = this as SupabaseConfig;
+  return Object.hash(runtimeType,_this.anonKey,_this.apiUrl,_this.dbUrl,_this.graphqlUrl,_this.inbucketUrl,_this.jwtSecret,_this.serviceRoleKey,_this.studioUrl);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'SupabaseConfig(anonKey: $anonKey, apiUrl: $apiUrl, dbUrl: $dbUrl, graphqlUrl: $graphqlUrl, inbucketUrl: $inbucketUrl, jwtSecret: $jwtSecret, serviceRoleKey: $serviceRoleKey, studioUrl: $studioUrl)';
+  final _this = this as SupabaseConfig;
+  return 'SupabaseConfig(anonKey: ${_this.anonKey}, apiUrl: ${_this.apiUrl}, dbUrl: ${_this.dbUrl}, graphqlUrl: ${_this.graphqlUrl}, inbucketUrl: ${_this.inbucketUrl}, jwtSecret: ${_this.jwtSecret}, serviceRoleKey: ${_this.serviceRoleKey}, studioUrl: ${_this.studioUrl})';
 }
 
 
@@ -72,7 +79,7 @@ class _$SupabaseConfigCopyWithImpl<$Res>
 /// Create a copy of SupabaseConfig
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? anonKey = null,Object? apiUrl = null,Object? dbUrl = freezed,Object? graphqlUrl = freezed,Object? inbucketUrl = freezed,Object? jwtSecret = freezed,Object? serviceRoleKey = freezed,Object? studioUrl = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(SupabaseConfig(
 anonKey: null == anonKey ? _self.anonKey : anonKey // ignore: cast_nullable_to_non_nullable
 as String,apiUrl: null == apiUrl ? _self.apiUrl : apiUrl // ignore: cast_nullable_to_non_nullable
 as String,dbUrl: freezed == dbUrl ? _self.dbUrl : dbUrl // ignore: cast_nullable_to_non_nullable
@@ -240,23 +247,25 @@ Map<String, dynamic> toJson() {
 }
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'SupabaseConfig'))
     ..add(DiagnosticsProperty('anonKey', anonKey))..add(DiagnosticsProperty('apiUrl', apiUrl))..add(DiagnosticsProperty('dbUrl', dbUrl))..add(DiagnosticsProperty('graphqlUrl', graphqlUrl))..add(DiagnosticsProperty('inbucketUrl', inbucketUrl))..add(DiagnosticsProperty('jwtSecret', jwtSecret))..add(DiagnosticsProperty('serviceRoleKey', serviceRoleKey))..add(DiagnosticsProperty('studioUrl', studioUrl));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _SupabaseConfig&&(identical(other.anonKey, anonKey) || other.anonKey == anonKey)&&(identical(other.apiUrl, apiUrl) || other.apiUrl == apiUrl)&&(identical(other.dbUrl, dbUrl) || other.dbUrl == dbUrl)&&(identical(other.graphqlUrl, graphqlUrl) || other.graphqlUrl == graphqlUrl)&&(identical(other.inbucketUrl, inbucketUrl) || other.inbucketUrl == inbucketUrl)&&(identical(other.jwtSecret, jwtSecret) || other.jwtSecret == jwtSecret)&&(identical(other.serviceRoleKey, serviceRoleKey) || other.serviceRoleKey == serviceRoleKey)&&(identical(other.studioUrl, studioUrl) || other.studioUrl == studioUrl));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SupabaseConfig&&(identical(other.anonKey, anonKey) || other.anonKey == anonKey)&&(identical(other.apiUrl, apiUrl) || other.apiUrl == apiUrl)&&(identical(other.dbUrl, dbUrl) || other.dbUrl == dbUrl)&&(identical(other.graphqlUrl, graphqlUrl) || other.graphqlUrl == graphqlUrl)&&(identical(other.inbucketUrl, inbucketUrl) || other.inbucketUrl == inbucketUrl)&&(identical(other.jwtSecret, jwtSecret) || other.jwtSecret == jwtSecret)&&(identical(other.serviceRoleKey, serviceRoleKey) || other.serviceRoleKey == serviceRoleKey)&&(identical(other.studioUrl, studioUrl) || other.studioUrl == studioUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,anonKey,apiUrl,dbUrl,graphqlUrl,inbucketUrl,jwtSecret,serviceRoleKey,studioUrl);
+int get hashCode {
+    return Object.hash(runtimeType,anonKey,apiUrl,dbUrl,graphqlUrl,inbucketUrl,jwtSecret,serviceRoleKey,studioUrl);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'SupabaseConfig(anonKey: $anonKey, apiUrl: $apiUrl, dbUrl: $dbUrl, graphqlUrl: $graphqlUrl, inbucketUrl: $inbucketUrl, jwtSecret: $jwtSecret, serviceRoleKey: $serviceRoleKey, studioUrl: $studioUrl)';
+    return 'SupabaseConfig(anonKey: $anonKey, apiUrl: $apiUrl, dbUrl: $dbUrl, graphqlUrl: $graphqlUrl, inbucketUrl: $inbucketUrl, jwtSecret: $jwtSecret, serviceRoleKey: $serviceRoleKey, studioUrl: $studioUrl)';
 }
 
 

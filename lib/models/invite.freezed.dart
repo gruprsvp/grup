@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'invite.dart';
@@ -9,6 +9,7 @@ part of 'invite.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -27,23 +28,29 @@ $InviteCopyWith<Invite> get copyWith => _$InviteCopyWithImpl<Invite>(this as Inv
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as Invite;
   properties
     ..add(DiagnosticsProperty('type', 'Invite'))
-    ..add(DiagnosticsProperty('id', id))..add(DiagnosticsProperty('memberId', memberId))..add(DiagnosticsProperty('method', method))..add(DiagnosticsProperty('value', value))..add(DiagnosticsProperty('createdAt', createdAt))..add(DiagnosticsProperty('updatedAt', updatedAt));
+    ..add(DiagnosticsProperty('id', _this.id))..add(DiagnosticsProperty('memberId', _this.memberId))..add(DiagnosticsProperty('method', _this.method))..add(DiagnosticsProperty('value', _this.value))..add(DiagnosticsProperty('createdAt', _this.createdAt))..add(DiagnosticsProperty('updatedAt', _this.updatedAt));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Invite&&(identical(other.id, id) || other.id == id)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.method, method) || other.method == method)&&(identical(other.value, value) || other.value == value)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  final _this = this as Invite;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Invite&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.memberId, _this.memberId) || other.memberId == _this.memberId)&&(identical(other.method, _this.method) || other.method == _this.method)&&(identical(other.value, _this.value) || other.value == _this.value)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,memberId,method,value,createdAt,updatedAt);
+int get hashCode {
+  final _this = this as Invite;
+  return Object.hash(runtimeType,_this.id,_this.memberId,_this.method,_this.value,_this.createdAt,_this.updatedAt);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'Invite(id: $id, memberId: $memberId, method: $method, value: $value, createdAt: $createdAt, updatedAt: $updatedAt)';
+  final _this = this as Invite;
+  return 'Invite(id: ${_this.id}, memberId: ${_this.memberId}, method: ${_this.method}, value: ${_this.value}, createdAt: ${_this.createdAt}, updatedAt: ${_this.updatedAt})';
 }
 
 
@@ -72,7 +79,7 @@ class _$InviteCopyWithImpl<$Res>
 /// Create a copy of Invite
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? memberId = null,Object? method = null,Object? value = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(Invite(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,memberId: null == memberId ? _self.memberId : memberId // ignore: cast_nullable_to_non_nullable
 as String,method: null == method ? _self.method : method // ignore: cast_nullable_to_non_nullable
@@ -236,23 +243,25 @@ Map<String, dynamic> toJson() {
 }
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'Invite'))
     ..add(DiagnosticsProperty('id', id))..add(DiagnosticsProperty('memberId', memberId))..add(DiagnosticsProperty('method', method))..add(DiagnosticsProperty('value', value))..add(DiagnosticsProperty('createdAt', createdAt))..add(DiagnosticsProperty('updatedAt', updatedAt));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Invite&&(identical(other.id, id) || other.id == id)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.method, method) || other.method == method)&&(identical(other.value, value) || other.value == value)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Invite&&(identical(other.id, id) || other.id == id)&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.method, method) || other.method == method)&&(identical(other.value, value) || other.value == value)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,id,memberId,method,value,createdAt,updatedAt);
+int get hashCode {
+    return Object.hash(runtimeType,id,memberId,method,value,createdAt,updatedAt);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'Invite(id: $id, memberId: $memberId, method: $method, value: $value, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Invite(id: $id, memberId: $memberId, method: $method, value: $value, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
