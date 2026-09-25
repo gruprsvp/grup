@@ -160,7 +160,7 @@ void main() {
     test(
       'all users should be able to create groups',
       () => runWithTemporaryUser(
-        (supabase, user) => runWithTemporaryGroup((_, newGroup, __) async {
+        (supabase, user) => runWithTemporaryGroup((_, newGroup, _) async {
           expect(newGroup, isNotNull);
 
           // Another user should not see the group if they are not a member

@@ -6,11 +6,12 @@ import 'package:redux_entity/redux_entity.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 
-createSchedulesEpics(SchedulesRepository schedules) => combineEpics<AppState>([
-  _createRetrieveGroupSchedulesEpic(schedules),
-  _createCreateOneScheduleEpic(schedules),
-  _createDeleteOneScheduleEpic(schedules),
-]);
+Epic<AppState> createSchedulesEpics(SchedulesRepository schedules) =>
+    combineEpics<AppState>([
+      _createRetrieveGroupSchedulesEpic(schedules),
+      _createCreateOneScheduleEpic(schedules),
+      _createDeleteOneScheduleEpic(schedules),
+    ]);
 
 /// Fetch all schedules for a group
 Epic<AppState> _createRetrieveGroupSchedulesEpic(

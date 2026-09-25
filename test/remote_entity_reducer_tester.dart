@@ -17,7 +17,7 @@ class RemoteEntityReducerTester<
   S extends RemoteEntityState<T>,
   T
 > {
-  testAll(R reducer, EntityFactory<T> generator, S initialState) {
+  void testAll(R reducer, EntityFactory<T> generator, S initialState) {
     group(RemoteEntityReducer, () {
       group(RequestCreateOne, () {
         test('Should set creating true', () {

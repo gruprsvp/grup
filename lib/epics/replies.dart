@@ -7,11 +7,12 @@ import 'package:redux_entity/redux_entity.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 
-createRepliesEpics(RepliesRepository replies) => combineEpics<AppState>([
-  _createRetrieveGroupRepliesEpic(replies),
-  _createRequestUpdateOneReplyEpic(replies),
-  _createRequestDeleteReplyEpic(replies),
-]);
+Epic<AppState> createRepliesEpics(RepliesRepository replies) =>
+    combineEpics<AppState>([
+      _createRetrieveGroupRepliesEpic(replies),
+      _createRequestUpdateOneReplyEpic(replies),
+      _createRequestDeleteReplyEpic(replies),
+    ]);
 
 /// Fetch replies for a group
 Epic<AppState> _createRetrieveGroupRepliesEpic(RepliesRepository replies) {

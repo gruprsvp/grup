@@ -119,7 +119,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  _onGroupCreate(BuildContext context) {
+  Future<void> _onGroupCreate(BuildContext context) {
     return GroupCreateRoute()
         .push<GroupCreateResult>(context)
         .then((value) => value != null ? onGroupCreate?.call(value) : null);

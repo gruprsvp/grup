@@ -16,7 +16,7 @@ class EmptyState extends StatelessWidget {
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          if (text != null) text!,
+          ?text,
           if (image != null)
             Expanded(
               child: Container(
