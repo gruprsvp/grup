@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'home.dart';
@@ -9,6 +9,7 @@ part of 'home.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -24,23 +25,29 @@ _$ViewModelCopyWith<_ViewModel> get copyWith => __$ViewModelCopyWithImpl<_ViewMo
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as _ViewModel;
   properties
     ..add(DiagnosticsProperty('type', '_ViewModel'))
-    ..add(DiagnosticsProperty('loading', loading))..add(DiagnosticsProperty('profile', profile))..add(DiagnosticsProperty('groups', groups))..add(DiagnosticsProperty('onGroupCreate', onGroupCreate))..add(DiagnosticsProperty('onRefresh', onRefresh))..add(DiagnosticsProperty('shouldShowFeedback', shouldShowFeedback))..add(DiagnosticsProperty('onFeedbackDismiss', onFeedbackDismiss));
+    ..add(DiagnosticsProperty('loading', _this.loading))..add(DiagnosticsProperty('profile', _this.profile))..add(DiagnosticsProperty('groups', _this.groups))..add(DiagnosticsProperty('onGroupCreate', _this.onGroupCreate))..add(DiagnosticsProperty('onRefresh', _this.onRefresh))..add(DiagnosticsProperty('shouldShowFeedback', _this.shouldShowFeedback))..add(DiagnosticsProperty('onFeedbackDismiss', _this.onFeedbackDismiss));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ViewModel&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.profile, profile) || other.profile == profile)&&const DeepCollectionEquality().equals(other.groups, groups)&&(identical(other.onGroupCreate, onGroupCreate) || other.onGroupCreate == onGroupCreate)&&(identical(other.onRefresh, onRefresh) || other.onRefresh == onRefresh)&&(identical(other.shouldShowFeedback, shouldShowFeedback) || other.shouldShowFeedback == shouldShowFeedback)&&(identical(other.onFeedbackDismiss, onFeedbackDismiss) || other.onFeedbackDismiss == onFeedbackDismiss));
+  final _this = this as _ViewModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ViewModel&&(identical(other.loading, _this.loading) || other.loading == _this.loading)&&(identical(other.profile, _this.profile) || other.profile == _this.profile)&&const DeepCollectionEquality().equals(other.groups, _this.groups)&&(identical(other.onGroupCreate, _this.onGroupCreate) || other.onGroupCreate == _this.onGroupCreate)&&(identical(other.onRefresh, _this.onRefresh) || other.onRefresh == _this.onRefresh)&&(identical(other.shouldShowFeedback, _this.shouldShowFeedback) || other.shouldShowFeedback == _this.shouldShowFeedback)&&(identical(other.onFeedbackDismiss, _this.onFeedbackDismiss) || other.onFeedbackDismiss == _this.onFeedbackDismiss));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,loading,profile,const DeepCollectionEquality().hash(groups),onGroupCreate,onRefresh,shouldShowFeedback,onFeedbackDismiss);
+int get hashCode {
+  final _this = this as _ViewModel;
+  return Object.hash(runtimeType,_this.loading,_this.profile,const DeepCollectionEquality().hash(_this.groups),_this.onGroupCreate,_this.onRefresh,_this.shouldShowFeedback,_this.onFeedbackDismiss);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return '_ViewModel(loading: $loading, profile: $profile, groups: $groups, onGroupCreate: $onGroupCreate, onRefresh: $onRefresh, shouldShowFeedback: $shouldShowFeedback, onFeedbackDismiss: $onFeedbackDismiss)';
+  final _this = this as _ViewModel;
+  return '_ViewModel(loading: ${_this.loading}, profile: ${_this.profile}, groups: ${_this.groups}, onGroupCreate: ${_this.onGroupCreate}, onRefresh: ${_this.onRefresh}, shouldShowFeedback: ${_this.shouldShowFeedback}, onFeedbackDismiss: ${_this.onFeedbackDismiss})';
 }
 
 
@@ -69,7 +76,7 @@ class __$ViewModelCopyWithImpl<$Res>
 /// Create a copy of _ViewModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? loading = null,Object? profile = freezed,Object? groups = freezed,Object? onGroupCreate = freezed,Object? onRefresh = freezed,Object? shouldShowFeedback = freezed,Object? onFeedbackDismiss = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(_ViewModel(
 loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,profile: freezed == profile ? _self.profile : profile // ignore: cast_nullable_to_non_nullable
 as Profile?,groups: freezed == groups ? _self.groups : groups // ignore: cast_nullable_to_non_nullable
@@ -244,23 +251,25 @@ _$_ViewModelCopyWith<__ViewModel> get copyWith => __$_ViewModelCopyWithImpl<__Vi
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', '_ViewModel'))
     ..add(DiagnosticsProperty('loading', loading))..add(DiagnosticsProperty('profile', profile))..add(DiagnosticsProperty('groups', groups))..add(DiagnosticsProperty('onGroupCreate', onGroupCreate))..add(DiagnosticsProperty('onRefresh', onRefresh))..add(DiagnosticsProperty('shouldShowFeedback', shouldShowFeedback))..add(DiagnosticsProperty('onFeedbackDismiss', onFeedbackDismiss));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is __ViewModel&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.profile, profile) || other.profile == profile)&&const DeepCollectionEquality().equals(other.groups, groups)&&(identical(other.onGroupCreate, onGroupCreate) || other.onGroupCreate == onGroupCreate)&&(identical(other.onRefresh, onRefresh) || other.onRefresh == onRefresh)&&(identical(other.shouldShowFeedback, shouldShowFeedback) || other.shouldShowFeedback == shouldShowFeedback)&&(identical(other.onFeedbackDismiss, onFeedbackDismiss) || other.onFeedbackDismiss == onFeedbackDismiss));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is __ViewModel&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.profile, profile) || other.profile == profile)&&const DeepCollectionEquality().equals(other.groups, groups)&&(identical(other.onGroupCreate, onGroupCreate) || other.onGroupCreate == onGroupCreate)&&(identical(other.onRefresh, onRefresh) || other.onRefresh == onRefresh)&&(identical(other.shouldShowFeedback, shouldShowFeedback) || other.shouldShowFeedback == shouldShowFeedback)&&(identical(other.onFeedbackDismiss, onFeedbackDismiss) || other.onFeedbackDismiss == onFeedbackDismiss));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,loading,profile,const DeepCollectionEquality().hash(groups),onGroupCreate,onRefresh,shouldShowFeedback,onFeedbackDismiss);
+int get hashCode {
+    return Object.hash(runtimeType,loading,profile,const DeepCollectionEquality().hash(groups),onGroupCreate,onRefresh,shouldShowFeedback,onFeedbackDismiss);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return '_ViewModel(loading: $loading, profile: $profile, groups: $groups, onGroupCreate: $onGroupCreate, onRefresh: $onRefresh, shouldShowFeedback: $shouldShowFeedback, onFeedbackDismiss: $onFeedbackDismiss)';
+    return '_ViewModel(loading: $loading, profile: $profile, groups: $groups, onGroupCreate: $onGroupCreate, onRefresh: $onRefresh, shouldShowFeedback: $shouldShowFeedback, onFeedbackDismiss: $onFeedbackDismiss)';
 }
 
 

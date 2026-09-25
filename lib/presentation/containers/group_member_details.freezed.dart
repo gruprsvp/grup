@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'group_member_details.dart';
@@ -9,6 +9,7 @@ part of 'group_member_details.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ _$ViewModelCopyWith<_ViewModel> get copyWith => __$ViewModelCopyWithImpl<_ViewMo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ViewModel&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.isCurrentUser, isCurrentUser) || other.isCurrentUser == isCurrentUser)&&(identical(other.group, group) || other.group == group)&&(identical(other.member, member) || other.member == member)&&(identical(other.profile, profile) || other.profile == profile)&&const DeepCollectionEquality().equals(other.invites, invites)&&(identical(other.onUpdate, onUpdate) || other.onUpdate == onUpdate)&&(identical(other.onRemove, onRemove) || other.onRemove == onRemove));
+  final _this = this as _ViewModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ViewModel&&(identical(other.loading, _this.loading) || other.loading == _this.loading)&&(identical(other.isCurrentUser, _this.isCurrentUser) || other.isCurrentUser == _this.isCurrentUser)&&(identical(other.group, _this.group) || other.group == _this.group)&&(identical(other.member, _this.member) || other.member == _this.member)&&(identical(other.profile, _this.profile) || other.profile == _this.profile)&&const DeepCollectionEquality().equals(other.invites, _this.invites)&&(identical(other.onUpdate, _this.onUpdate) || other.onUpdate == _this.onUpdate)&&(identical(other.onRemove, _this.onRemove) || other.onRemove == _this.onRemove));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,loading,isCurrentUser,group,member,profile,const DeepCollectionEquality().hash(invites),onUpdate,onRemove);
+int get hashCode {
+  final _this = this as _ViewModel;
+  return Object.hash(runtimeType,_this.loading,_this.isCurrentUser,_this.group,_this.member,_this.profile,const DeepCollectionEquality().hash(_this.invites),_this.onUpdate,_this.onRemove);
+}
 
 @override
 String toString() {
-  return '_ViewModel(loading: $loading, isCurrentUser: $isCurrentUser, group: $group, member: $member, profile: $profile, invites: $invites, onUpdate: $onUpdate, onRemove: $onRemove)';
+  final _this = this as _ViewModel;
+  return '_ViewModel(loading: ${_this.loading}, isCurrentUser: ${_this.isCurrentUser}, group: ${_this.group}, member: ${_this.member}, profile: ${_this.profile}, invites: ${_this.invites}, onUpdate: ${_this.onUpdate}, onRemove: ${_this.onRemove})';
 }
 
 
@@ -63,7 +69,7 @@ class __$ViewModelCopyWithImpl<$Res>
 /// Create a copy of _ViewModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? loading = null,Object? isCurrentUser = null,Object? group = freezed,Object? member = freezed,Object? profile = freezed,Object? invites = freezed,Object? onUpdate = freezed,Object? onRemove = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(_ViewModel(
 loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,isCurrentUser: null == isCurrentUser ? _self.isCurrentUser : isCurrentUser // ignore: cast_nullable_to_non_nullable
 as bool,group: freezed == group ? _self.group : group // ignore: cast_nullable_to_non_nullable
@@ -243,7 +249,7 @@ return $default(_that.loading,_that.isCurrentUser,_that.group,_that.member,_that
 
 
 class __ViewModel implements _ViewModel {
-  const __ViewModel({required this.loading, required this.isCurrentUser, this.group, this.member, this.profile, final  List<Invite>? invites, this.onUpdate, this.onRemove}): _invites = invites;
+  const __ViewModel({required this.loading, required this.isCurrentUser, this.group, this.member, this.profile,  List<Invite>? invites, this.onUpdate, this.onRemove}): _invites = invites;
   
 
 @override final  bool loading;
@@ -273,16 +279,18 @@ _$_ViewModelCopyWith<__ViewModel> get copyWith => __$_ViewModelCopyWithImpl<__Vi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is __ViewModel&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.isCurrentUser, isCurrentUser) || other.isCurrentUser == isCurrentUser)&&(identical(other.group, group) || other.group == group)&&(identical(other.member, member) || other.member == member)&&(identical(other.profile, profile) || other.profile == profile)&&const DeepCollectionEquality().equals(other._invites, _invites)&&(identical(other.onUpdate, onUpdate) || other.onUpdate == onUpdate)&&(identical(other.onRemove, onRemove) || other.onRemove == onRemove));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is __ViewModel&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.isCurrentUser, isCurrentUser) || other.isCurrentUser == isCurrentUser)&&(identical(other.group, group) || other.group == group)&&(identical(other.member, member) || other.member == member)&&(identical(other.profile, profile) || other.profile == profile)&&const DeepCollectionEquality().equals(other.invites, _invites)&&(identical(other.onUpdate, onUpdate) || other.onUpdate == onUpdate)&&(identical(other.onRemove, onRemove) || other.onRemove == onRemove));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,loading,isCurrentUser,group,member,profile,const DeepCollectionEquality().hash(_invites),onUpdate,onRemove);
+int get hashCode {
+    return Object.hash(runtimeType,loading,isCurrentUser,group,member,profile,const DeepCollectionEquality().hash(_invites),onUpdate,onRemove);
+}
 
 @override
 String toString() {
-  return '_ViewModel(loading: $loading, isCurrentUser: $isCurrentUser, group: $group, member: $member, profile: $profile, invites: $invites, onUpdate: $onUpdate, onRemove: $onRemove)';
+    return '_ViewModel(loading: $loading, isCurrentUser: $isCurrentUser, group: $group, member: $member, profile: $profile, invites: $invites, onUpdate: $onUpdate, onRemove: $onRemove)';
 }
 
 

@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'app_state.dart';
@@ -9,6 +9,7 @@ part of 'app_state.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -27,23 +28,29 @@ $AppStateCopyWith<AppState> get copyWith => _$AppStateCopyWithImpl<AppState>(thi
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as AppState;
   properties
     ..add(DiagnosticsProperty('type', 'AppState'))
-    ..add(DiagnosticsProperty('profiles', profiles))..add(DiagnosticsProperty('groups', groups))..add(DiagnosticsProperty('members', members))..add(DiagnosticsProperty('invites', invites))..add(DiagnosticsProperty('schedules', schedules))..add(DiagnosticsProperty('defaultRules', defaultRules))..add(DiagnosticsProperty('replies', replies))..add(DiagnosticsProperty('auth', auth))..add(DiagnosticsProperty('themeMode', themeMode))..add(DiagnosticsProperty('selectedDate', selectedDate))..add(DiagnosticsProperty('selectedGroupId', selectedGroupId))..add(DiagnosticsProperty('selectedScheduleId', selectedScheduleId))..add(DiagnosticsProperty('locale', locale))..add(DiagnosticsProperty('hasSeenFeedbackCard', hasSeenFeedbackCard));
+    ..add(DiagnosticsProperty('profiles', _this.profiles))..add(DiagnosticsProperty('groups', _this.groups))..add(DiagnosticsProperty('members', _this.members))..add(DiagnosticsProperty('invites', _this.invites))..add(DiagnosticsProperty('schedules', _this.schedules))..add(DiagnosticsProperty('defaultRules', _this.defaultRules))..add(DiagnosticsProperty('replies', _this.replies))..add(DiagnosticsProperty('auth', _this.auth))..add(DiagnosticsProperty('themeMode', _this.themeMode))..add(DiagnosticsProperty('selectedDate', _this.selectedDate))..add(DiagnosticsProperty('selectedGroupId', _this.selectedGroupId))..add(DiagnosticsProperty('selectedScheduleId', _this.selectedScheduleId))..add(DiagnosticsProperty('locale', _this.locale))..add(DiagnosticsProperty('hasSeenFeedbackCard', _this.hasSeenFeedbackCard));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppState&&(identical(other.profiles, profiles) || other.profiles == profiles)&&(identical(other.groups, groups) || other.groups == groups)&&(identical(other.members, members) || other.members == members)&&(identical(other.invites, invites) || other.invites == invites)&&(identical(other.schedules, schedules) || other.schedules == schedules)&&(identical(other.defaultRules, defaultRules) || other.defaultRules == defaultRules)&&(identical(other.replies, replies) || other.replies == replies)&&(identical(other.auth, auth) || other.auth == auth)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.selectedDate, selectedDate) || other.selectedDate == selectedDate)&&(identical(other.selectedGroupId, selectedGroupId) || other.selectedGroupId == selectedGroupId)&&(identical(other.selectedScheduleId, selectedScheduleId) || other.selectedScheduleId == selectedScheduleId)&&(identical(other.locale, locale) || other.locale == locale)&&(identical(other.hasSeenFeedbackCard, hasSeenFeedbackCard) || other.hasSeenFeedbackCard == hasSeenFeedbackCard));
+  final _this = this as AppState;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is AppState&&(identical(other.profiles, _this.profiles) || other.profiles == _this.profiles)&&(identical(other.groups, _this.groups) || other.groups == _this.groups)&&(identical(other.members, _this.members) || other.members == _this.members)&&(identical(other.invites, _this.invites) || other.invites == _this.invites)&&(identical(other.schedules, _this.schedules) || other.schedules == _this.schedules)&&(identical(other.defaultRules, _this.defaultRules) || other.defaultRules == _this.defaultRules)&&(identical(other.replies, _this.replies) || other.replies == _this.replies)&&(identical(other.auth, _this.auth) || other.auth == _this.auth)&&(identical(other.themeMode, _this.themeMode) || other.themeMode == _this.themeMode)&&(identical(other.selectedDate, _this.selectedDate) || other.selectedDate == _this.selectedDate)&&(identical(other.selectedGroupId, _this.selectedGroupId) || other.selectedGroupId == _this.selectedGroupId)&&(identical(other.selectedScheduleId, _this.selectedScheduleId) || other.selectedScheduleId == _this.selectedScheduleId)&&(identical(other.locale, _this.locale) || other.locale == _this.locale)&&(identical(other.hasSeenFeedbackCard, _this.hasSeenFeedbackCard) || other.hasSeenFeedbackCard == _this.hasSeenFeedbackCard));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,profiles,groups,members,invites,schedules,defaultRules,replies,auth,themeMode,selectedDate,selectedGroupId,selectedScheduleId,locale,hasSeenFeedbackCard);
+int get hashCode {
+  final _this = this as AppState;
+  return Object.hash(runtimeType,_this.profiles,_this.groups,_this.members,_this.invites,_this.schedules,_this.defaultRules,_this.replies,_this.auth,_this.themeMode,_this.selectedDate,_this.selectedGroupId,_this.selectedScheduleId,_this.locale,_this.hasSeenFeedbackCard);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AppState(profiles: $profiles, groups: $groups, members: $members, invites: $invites, schedules: $schedules, defaultRules: $defaultRules, replies: $replies, auth: $auth, themeMode: $themeMode, selectedDate: $selectedDate, selectedGroupId: $selectedGroupId, selectedScheduleId: $selectedScheduleId, locale: $locale, hasSeenFeedbackCard: $hasSeenFeedbackCard)';
+  final _this = this as AppState;
+  return 'AppState(profiles: ${_this.profiles}, groups: ${_this.groups}, members: ${_this.members}, invites: ${_this.invites}, schedules: ${_this.schedules}, defaultRules: ${_this.defaultRules}, replies: ${_this.replies}, auth: ${_this.auth}, themeMode: ${_this.themeMode}, selectedDate: ${_this.selectedDate}, selectedGroupId: ${_this.selectedGroupId}, selectedScheduleId: ${_this.selectedScheduleId}, locale: ${_this.locale}, hasSeenFeedbackCard: ${_this.hasSeenFeedbackCard})';
 }
 
 
@@ -72,7 +79,7 @@ class _$AppStateCopyWithImpl<$Res>
 /// Create a copy of AppState
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? profiles = null,Object? groups = null,Object? members = null,Object? invites = null,Object? schedules = null,Object? defaultRules = null,Object? replies = null,Object? auth = null,Object? themeMode = null,Object? selectedDate = null,Object? selectedGroupId = freezed,Object? selectedScheduleId = freezed,Object? locale = freezed,Object? hasSeenFeedbackCard = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(AppState(
 profiles: null == profiles ? _self.profiles : profiles // ignore: cast_nullable_to_non_nullable
 as RemoteEntityState<Profile>,groups: null == groups ? _self.groups : groups // ignore: cast_nullable_to_non_nullable
 as RemoteEntityState<Group>,members: null == members ? _self.members : members // ignore: cast_nullable_to_non_nullable
@@ -273,23 +280,25 @@ Map<String, dynamic> toJson() {
 }
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'AppState'))
     ..add(DiagnosticsProperty('profiles', profiles))..add(DiagnosticsProperty('groups', groups))..add(DiagnosticsProperty('members', members))..add(DiagnosticsProperty('invites', invites))..add(DiagnosticsProperty('schedules', schedules))..add(DiagnosticsProperty('defaultRules', defaultRules))..add(DiagnosticsProperty('replies', replies))..add(DiagnosticsProperty('auth', auth))..add(DiagnosticsProperty('themeMode', themeMode))..add(DiagnosticsProperty('selectedDate', selectedDate))..add(DiagnosticsProperty('selectedGroupId', selectedGroupId))..add(DiagnosticsProperty('selectedScheduleId', selectedScheduleId))..add(DiagnosticsProperty('locale', locale))..add(DiagnosticsProperty('hasSeenFeedbackCard', hasSeenFeedbackCard));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppState&&(identical(other.profiles, profiles) || other.profiles == profiles)&&(identical(other.groups, groups) || other.groups == groups)&&(identical(other.members, members) || other.members == members)&&(identical(other.invites, invites) || other.invites == invites)&&(identical(other.schedules, schedules) || other.schedules == schedules)&&(identical(other.defaultRules, defaultRules) || other.defaultRules == defaultRules)&&(identical(other.replies, replies) || other.replies == replies)&&(identical(other.auth, auth) || other.auth == auth)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.selectedDate, selectedDate) || other.selectedDate == selectedDate)&&(identical(other.selectedGroupId, selectedGroupId) || other.selectedGroupId == selectedGroupId)&&(identical(other.selectedScheduleId, selectedScheduleId) || other.selectedScheduleId == selectedScheduleId)&&(identical(other.locale, locale) || other.locale == locale)&&(identical(other.hasSeenFeedbackCard, hasSeenFeedbackCard) || other.hasSeenFeedbackCard == hasSeenFeedbackCard));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _AppState&&(identical(other.profiles, profiles) || other.profiles == profiles)&&(identical(other.groups, groups) || other.groups == groups)&&(identical(other.members, members) || other.members == members)&&(identical(other.invites, invites) || other.invites == invites)&&(identical(other.schedules, schedules) || other.schedules == schedules)&&(identical(other.defaultRules, defaultRules) || other.defaultRules == defaultRules)&&(identical(other.replies, replies) || other.replies == replies)&&(identical(other.auth, auth) || other.auth == auth)&&(identical(other.themeMode, themeMode) || other.themeMode == themeMode)&&(identical(other.selectedDate, selectedDate) || other.selectedDate == selectedDate)&&(identical(other.selectedGroupId, selectedGroupId) || other.selectedGroupId == selectedGroupId)&&(identical(other.selectedScheduleId, selectedScheduleId) || other.selectedScheduleId == selectedScheduleId)&&(identical(other.locale, locale) || other.locale == locale)&&(identical(other.hasSeenFeedbackCard, hasSeenFeedbackCard) || other.hasSeenFeedbackCard == hasSeenFeedbackCard));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,profiles,groups,members,invites,schedules,defaultRules,replies,auth,themeMode,selectedDate,selectedGroupId,selectedScheduleId,locale,hasSeenFeedbackCard);
+int get hashCode {
+    return Object.hash(runtimeType,profiles,groups,members,invites,schedules,defaultRules,replies,auth,themeMode,selectedDate,selectedGroupId,selectedScheduleId,locale,hasSeenFeedbackCard);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'AppState(profiles: $profiles, groups: $groups, members: $members, invites: $invites, schedules: $schedules, defaultRules: $defaultRules, replies: $replies, auth: $auth, themeMode: $themeMode, selectedDate: $selectedDate, selectedGroupId: $selectedGroupId, selectedScheduleId: $selectedScheduleId, locale: $locale, hasSeenFeedbackCard: $hasSeenFeedbackCard)';
+    return 'AppState(profiles: $profiles, groups: $groups, members: $members, invites: $invites, schedules: $schedules, defaultRules: $defaultRules, replies: $replies, auth: $auth, themeMode: $themeMode, selectedDate: $selectedDate, selectedGroupId: $selectedGroupId, selectedScheduleId: $selectedScheduleId, locale: $locale, hasSeenFeedbackCard: $hasSeenFeedbackCard)';
 }
 
 

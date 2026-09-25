@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'default_reply.dart';
@@ -9,6 +9,7 @@ part of 'default_reply.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -27,23 +28,29 @@ $DefaultRuleCopyWith<DefaultRule> get copyWith => _$DefaultRuleCopyWithImpl<Defa
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as DefaultRule;
   properties
     ..add(DiagnosticsProperty('type', 'DefaultRule'))
-    ..add(DiagnosticsProperty('memberId', memberId))..add(DiagnosticsProperty('scheduleId', scheduleId))..add(DiagnosticsProperty('selectedOption', selectedOption))..add(DiagnosticsProperty('recurrenceRule', recurrenceRule))..add(DiagnosticsProperty('createdAt', createdAt))..add(DiagnosticsProperty('updatedAt', updatedAt));
+    ..add(DiagnosticsProperty('memberId', _this.memberId))..add(DiagnosticsProperty('scheduleId', _this.scheduleId))..add(DiagnosticsProperty('selectedOption', _this.selectedOption))..add(DiagnosticsProperty('recurrenceRule', _this.recurrenceRule))..add(DiagnosticsProperty('createdAt', _this.createdAt))..add(DiagnosticsProperty('updatedAt', _this.updatedAt));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is DefaultRule&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.scheduleId, scheduleId) || other.scheduleId == scheduleId)&&(identical(other.selectedOption, selectedOption) || other.selectedOption == selectedOption)&&(identical(other.recurrenceRule, recurrenceRule) || other.recurrenceRule == recurrenceRule)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+  final _this = this as DefaultRule;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is DefaultRule&&(identical(other.memberId, _this.memberId) || other.memberId == _this.memberId)&&(identical(other.scheduleId, _this.scheduleId) || other.scheduleId == _this.scheduleId)&&(identical(other.selectedOption, _this.selectedOption) || other.selectedOption == _this.selectedOption)&&(identical(other.recurrenceRule, _this.recurrenceRule) || other.recurrenceRule == _this.recurrenceRule)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,memberId,scheduleId,selectedOption,recurrenceRule,createdAt,updatedAt);
+int get hashCode {
+  final _this = this as DefaultRule;
+  return Object.hash(runtimeType,_this.memberId,_this.scheduleId,_this.selectedOption,_this.recurrenceRule,_this.createdAt,_this.updatedAt);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'DefaultRule(memberId: $memberId, scheduleId: $scheduleId, selectedOption: $selectedOption, recurrenceRule: $recurrenceRule, createdAt: $createdAt, updatedAt: $updatedAt)';
+  final _this = this as DefaultRule;
+  return 'DefaultRule(memberId: ${_this.memberId}, scheduleId: ${_this.scheduleId}, selectedOption: ${_this.selectedOption}, recurrenceRule: ${_this.recurrenceRule}, createdAt: ${_this.createdAt}, updatedAt: ${_this.updatedAt})';
 }
 
 
@@ -72,7 +79,7 @@ class _$DefaultRuleCopyWithImpl<$Res>
 /// Create a copy of DefaultRule
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? memberId = null,Object? scheduleId = null,Object? selectedOption = null,Object? recurrenceRule = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(DefaultRule(
 memberId: null == memberId ? _self.memberId : memberId // ignore: cast_nullable_to_non_nullable
 as String,scheduleId: null == scheduleId ? _self.scheduleId : scheduleId // ignore: cast_nullable_to_non_nullable
 as String,selectedOption: null == selectedOption ? _self.selectedOption : selectedOption // ignore: cast_nullable_to_non_nullable
@@ -236,23 +243,25 @@ Map<String, dynamic> toJson() {
 }
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'DefaultRule'))
     ..add(DiagnosticsProperty('memberId', memberId))..add(DiagnosticsProperty('scheduleId', scheduleId))..add(DiagnosticsProperty('selectedOption', selectedOption))..add(DiagnosticsProperty('recurrenceRule', recurrenceRule))..add(DiagnosticsProperty('createdAt', createdAt))..add(DiagnosticsProperty('updatedAt', updatedAt));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _DefaultRule&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.scheduleId, scheduleId) || other.scheduleId == scheduleId)&&(identical(other.selectedOption, selectedOption) || other.selectedOption == selectedOption)&&(identical(other.recurrenceRule, recurrenceRule) || other.recurrenceRule == recurrenceRule)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _DefaultRule&&(identical(other.memberId, memberId) || other.memberId == memberId)&&(identical(other.scheduleId, scheduleId) || other.scheduleId == scheduleId)&&(identical(other.selectedOption, selectedOption) || other.selectedOption == selectedOption)&&(identical(other.recurrenceRule, recurrenceRule) || other.recurrenceRule == recurrenceRule)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,memberId,scheduleId,selectedOption,recurrenceRule,createdAt,updatedAt);
+int get hashCode {
+    return Object.hash(runtimeType,memberId,scheduleId,selectedOption,recurrenceRule,createdAt,updatedAt);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'DefaultRule(memberId: $memberId, scheduleId: $scheduleId, selectedOption: $selectedOption, recurrenceRule: $recurrenceRule, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'DefaultRule(memberId: $memberId, scheduleId: $scheduleId, selectedOption: $selectedOption, recurrenceRule: $recurrenceRule, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 

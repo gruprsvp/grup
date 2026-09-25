@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'date_fab.dart';
@@ -9,6 +9,7 @@ part of 'date_fab.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
@@ -25,16 +26,21 @@ _$ViewModelCopyWith<_ViewModel> get copyWith => __$ViewModelCopyWithImpl<_ViewMo
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ViewModel&&(identical(other.selectedDate, selectedDate) || other.selectedDate == selectedDate)&&(identical(other.onDateChanged, onDateChanged) || other.onDateChanged == onDateChanged));
+  final _this = this as _ViewModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ViewModel&&(identical(other.selectedDate, _this.selectedDate) || other.selectedDate == _this.selectedDate)&&(identical(other.onDateChanged, _this.onDateChanged) || other.onDateChanged == _this.onDateChanged));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,selectedDate,onDateChanged);
+int get hashCode {
+  final _this = this as _ViewModel;
+  return Object.hash(runtimeType,_this.selectedDate,_this.onDateChanged);
+}
 
 @override
 String toString() {
-  return '_ViewModel(selectedDate: $selectedDate, onDateChanged: $onDateChanged)';
+  final _this = this as _ViewModel;
+  return '_ViewModel(selectedDate: ${_this.selectedDate}, onDateChanged: ${_this.onDateChanged})';
 }
 
 
@@ -63,7 +69,7 @@ class __$ViewModelCopyWithImpl<$Res>
 /// Create a copy of _ViewModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? selectedDate = null,Object? onDateChanged = null,}) {
-  return _then(_self.copyWith(
+  return _then(_ViewModel(
 selectedDate: null == selectedDate ? _self.selectedDate : selectedDate // ignore: cast_nullable_to_non_nullable
 as DateTime,onDateChanged: null == onDateChanged ? _self.onDateChanged : onDateChanged // ignore: cast_nullable_to_non_nullable
 as ValueChanged<DateTime>,
@@ -217,16 +223,18 @@ _$_ViewModelCopyWith<__ViewModel> get copyWith => __$_ViewModelCopyWithImpl<__Vi
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is __ViewModel&&(identical(other.selectedDate, selectedDate) || other.selectedDate == selectedDate)&&(identical(other.onDateChanged, onDateChanged) || other.onDateChanged == onDateChanged));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is __ViewModel&&(identical(other.selectedDate, selectedDate) || other.selectedDate == selectedDate)&&(identical(other.onDateChanged, onDateChanged) || other.onDateChanged == onDateChanged));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,selectedDate,onDateChanged);
+int get hashCode {
+    return Object.hash(runtimeType,selectedDate,onDateChanged);
+}
 
 @override
 String toString() {
-  return '_ViewModel(selectedDate: $selectedDate, onDateChanged: $onDateChanged)';
+    return '_ViewModel(selectedDate: $selectedDate, onDateChanged: $onDateChanged)';
 }
 
 

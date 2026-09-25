@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'group_members.dart';
@@ -9,12 +9,13 @@ part of 'group_members.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$ViewModel implements DiagnosticableTreeMixin {
 
- bool get loading; OnInviteCallback get onInvite; Iterable<(Member, Profile?)>? get members;
+ bool get loading; OnInviteCallback get onInvite; Iterable<(Member, Profile?,)>? get members;
 /// Create a copy of _ViewModel
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -24,23 +25,29 @@ _$ViewModelCopyWith<_ViewModel> get copyWith => __$ViewModelCopyWithImpl<_ViewMo
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as _ViewModel;
   properties
     ..add(DiagnosticsProperty('type', '_ViewModel'))
-    ..add(DiagnosticsProperty('loading', loading))..add(DiagnosticsProperty('onInvite', onInvite))..add(DiagnosticsProperty('members', members));
+    ..add(DiagnosticsProperty('loading', _this.loading))..add(DiagnosticsProperty('onInvite', _this.onInvite))..add(DiagnosticsProperty('members', _this.members));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ViewModel&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.onInvite, onInvite) || other.onInvite == onInvite)&&const DeepCollectionEquality().equals(other.members, members));
+  final _this = this as _ViewModel;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _ViewModel&&(identical(other.loading, _this.loading) || other.loading == _this.loading)&&(identical(other.onInvite, _this.onInvite) || other.onInvite == _this.onInvite)&&const DeepCollectionEquality().equals(other.members, _this.members));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,loading,onInvite,const DeepCollectionEquality().hash(members));
+int get hashCode {
+  final _this = this as _ViewModel;
+  return Object.hash(runtimeType,_this.loading,_this.onInvite,const DeepCollectionEquality().hash(_this.members));
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return '_ViewModel(loading: $loading, onInvite: $onInvite, members: $members)';
+  final _this = this as _ViewModel;
+  return '_ViewModel(loading: ${_this.loading}, onInvite: ${_this.onInvite}, members: ${_this.members})';
 }
 
 
@@ -51,7 +58,7 @@ abstract mixin class _$ViewModelCopyWith<$Res>  {
   factory _$ViewModelCopyWith(_ViewModel value, $Res Function(_ViewModel) _then) = __$ViewModelCopyWithImpl;
 @useResult
 $Res call({
- bool loading, OnInviteCallback onInvite, Iterable<(Member, Profile?)>? members
+ bool loading, OnInviteCallback onInvite, Iterable<(Member, Profile?,)>? members
 });
 
 
@@ -69,11 +76,11 @@ class __$ViewModelCopyWithImpl<$Res>
 /// Create a copy of _ViewModel
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? loading = null,Object? onInvite = null,Object? members = freezed,}) {
-  return _then(_self.copyWith(
+  return _then(_ViewModel(
 loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,onInvite: null == onInvite ? _self.onInvite : onInvite // ignore: cast_nullable_to_non_nullable
 as OnInviteCallback,members: freezed == members ? _self.members : members // ignore: cast_nullable_to_non_nullable
-as Iterable<(Member, Profile?)>?,
+as Iterable<(Member, Profile?,)>?,
   ));
 }
 
@@ -155,7 +162,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool loading,  OnInviteCallback onInvite,  Iterable<(Member, Profile?)>? members)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( bool loading,  OnInviteCallback onInvite,  Iterable<(Member, Profile?,)>? members)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case __ViewModel() when $default != null:
 return $default(_that.loading,_that.onInvite,_that.members);case _:
@@ -176,7 +183,7 @@ return $default(_that.loading,_that.onInvite,_that.members);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool loading,  OnInviteCallback onInvite,  Iterable<(Member, Profile?)>? members)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( bool loading,  OnInviteCallback onInvite,  Iterable<(Member, Profile?,)>? members)  $default,) {final _that = this;
 switch (_that) {
 case __ViewModel():
 return $default(_that.loading,_that.onInvite,_that.members);}
@@ -193,7 +200,7 @@ return $default(_that.loading,_that.onInvite,_that.members);}
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool loading,  OnInviteCallback onInvite,  Iterable<(Member, Profile?)>? members)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( bool loading,  OnInviteCallback onInvite,  Iterable<(Member, Profile?,)>? members)?  $default,) {final _that = this;
 switch (_that) {
 case __ViewModel() when $default != null:
 return $default(_that.loading,_that.onInvite,_that.members);case _:
@@ -213,7 +220,7 @@ class __ViewModel with DiagnosticableTreeMixin implements _ViewModel {
 
 @override final  bool loading;
 @override final  OnInviteCallback onInvite;
-@override final  Iterable<(Member, Profile?)>? members;
+@override final  Iterable<(Member, Profile?,)>? members;
 
 /// Create a copy of _ViewModel
 /// with the given fields replaced by the non-null parameter values.
@@ -224,23 +231,25 @@ _$_ViewModelCopyWith<__ViewModel> get copyWith => __$_ViewModelCopyWithImpl<__Vi
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', '_ViewModel'))
     ..add(DiagnosticsProperty('loading', loading))..add(DiagnosticsProperty('onInvite', onInvite))..add(DiagnosticsProperty('members', members));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is __ViewModel&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.onInvite, onInvite) || other.onInvite == onInvite)&&const DeepCollectionEquality().equals(other.members, members));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is __ViewModel&&(identical(other.loading, loading) || other.loading == loading)&&(identical(other.onInvite, onInvite) || other.onInvite == onInvite)&&const DeepCollectionEquality().equals(other.members, members));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,loading,onInvite,const DeepCollectionEquality().hash(members));
+int get hashCode {
+    return Object.hash(runtimeType,loading,onInvite,const DeepCollectionEquality().hash(members));
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return '_ViewModel(loading: $loading, onInvite: $onInvite, members: $members)';
+    return '_ViewModel(loading: $loading, onInvite: $onInvite, members: $members)';
 }
 
 
@@ -251,7 +260,7 @@ abstract mixin class _$_ViewModelCopyWith<$Res> implements _$ViewModelCopyWith<$
   factory _$_ViewModelCopyWith(__ViewModel value, $Res Function(__ViewModel) _then) = __$_ViewModelCopyWithImpl;
 @override @useResult
 $Res call({
- bool loading, OnInviteCallback onInvite, Iterable<(Member, Profile?)>? members
+ bool loading, OnInviteCallback onInvite, Iterable<(Member, Profile?,)>? members
 });
 
 
@@ -273,7 +282,7 @@ class __$_ViewModelCopyWithImpl<$Res>
 loading: null == loading ? _self.loading : loading // ignore: cast_nullable_to_non_nullable
 as bool,onInvite: null == onInvite ? _self.onInvite : onInvite // ignore: cast_nullable_to_non_nullable
 as OnInviteCallback,members: freezed == members ? _self.members : members // ignore: cast_nullable_to_non_nullable
-as Iterable<(Member, Profile?)>?,
+as Iterable<(Member, Profile?,)>?,
   ));
 }
 

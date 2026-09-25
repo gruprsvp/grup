@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 // coverage:ignore-file
-// ignore_for_file: type=lint
+// ignore_for_file: type=lint, type=warning, deprecated_member_use, deprecated_member_use_from_same_package
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target, unnecessary_question_mark
 
 part of 'config.dart';
@@ -9,6 +9,7 @@ part of 'config.dart';
 // FreezedGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
 // dart format off
 T _$identity<T>(T value) => value;
 
@@ -27,23 +28,29 @@ $ConfigCopyWith<Config> get copyWith => _$ConfigCopyWithImpl<Config>(this as Con
 
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
+  final _this = this as Config;
   properties
     ..add(DiagnosticsProperty('type', 'Config'))
-    ..add(DiagnosticsProperty('supabaseConfigPath', supabaseConfigPath))..add(DiagnosticsProperty('socialAuthWebClientId', socialAuthWebClientId))..add(DiagnosticsProperty('socialAuthIosClientId', socialAuthIosClientId));
+    ..add(DiagnosticsProperty('supabaseConfigPath', _this.supabaseConfigPath))..add(DiagnosticsProperty('socialAuthWebClientId', _this.socialAuthWebClientId))..add(DiagnosticsProperty('socialAuthIosClientId', _this.socialAuthIosClientId));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Config&&(identical(other.supabaseConfigPath, supabaseConfigPath) || other.supabaseConfigPath == supabaseConfigPath)&&(identical(other.socialAuthWebClientId, socialAuthWebClientId) || other.socialAuthWebClientId == socialAuthWebClientId)&&(identical(other.socialAuthIosClientId, socialAuthIosClientId) || other.socialAuthIosClientId == socialAuthIosClientId));
+  final _this = this as Config;
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Config&&(identical(other.supabaseConfigPath, _this.supabaseConfigPath) || other.supabaseConfigPath == _this.supabaseConfigPath)&&(identical(other.socialAuthWebClientId, _this.socialAuthWebClientId) || other.socialAuthWebClientId == _this.socialAuthWebClientId)&&(identical(other.socialAuthIosClientId, _this.socialAuthIosClientId) || other.socialAuthIosClientId == _this.socialAuthIosClientId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,supabaseConfigPath,socialAuthWebClientId,socialAuthIosClientId);
+int get hashCode {
+  final _this = this as Config;
+  return Object.hash(runtimeType,_this.supabaseConfigPath,_this.socialAuthWebClientId,_this.socialAuthIosClientId);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'Config(supabaseConfigPath: $supabaseConfigPath, socialAuthWebClientId: $socialAuthWebClientId, socialAuthIosClientId: $socialAuthIosClientId)';
+  final _this = this as Config;
+  return 'Config(supabaseConfigPath: ${_this.supabaseConfigPath}, socialAuthWebClientId: ${_this.socialAuthWebClientId}, socialAuthIosClientId: ${_this.socialAuthIosClientId})';
 }
 
 
@@ -72,7 +79,7 @@ class _$ConfigCopyWithImpl<$Res>
 /// Create a copy of Config
 /// with the given fields replaced by the non-null parameter values.
 @pragma('vm:prefer-inline') @override $Res call({Object? supabaseConfigPath = null,Object? socialAuthWebClientId = null,Object? socialAuthIosClientId = null,}) {
-  return _then(_self.copyWith(
+  return _then(Config(
 supabaseConfigPath: null == supabaseConfigPath ? _self.supabaseConfigPath : supabaseConfigPath // ignore: cast_nullable_to_non_nullable
 as String,socialAuthWebClientId: null == socialAuthWebClientId ? _self.socialAuthWebClientId : socialAuthWebClientId // ignore: cast_nullable_to_non_nullable
 as String,socialAuthIosClientId: null == socialAuthIosClientId ? _self.socialAuthIosClientId : socialAuthIosClientId // ignore: cast_nullable_to_non_nullable
@@ -230,23 +237,25 @@ Map<String, dynamic> toJson() {
 }
 @override
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
-  properties
+    properties
     ..add(DiagnosticsProperty('type', 'Config'))
     ..add(DiagnosticsProperty('supabaseConfigPath', supabaseConfigPath))..add(DiagnosticsProperty('socialAuthWebClientId', socialAuthWebClientId))..add(DiagnosticsProperty('socialAuthIosClientId', socialAuthIosClientId));
 }
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _Config&&(identical(other.supabaseConfigPath, supabaseConfigPath) || other.supabaseConfigPath == supabaseConfigPath)&&(identical(other.socialAuthWebClientId, socialAuthWebClientId) || other.socialAuthWebClientId == socialAuthWebClientId)&&(identical(other.socialAuthIosClientId, socialAuthIosClientId) || other.socialAuthIosClientId == socialAuthIosClientId));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Config&&(identical(other.supabaseConfigPath, supabaseConfigPath) || other.supabaseConfigPath == supabaseConfigPath)&&(identical(other.socialAuthWebClientId, socialAuthWebClientId) || other.socialAuthWebClientId == socialAuthWebClientId)&&(identical(other.socialAuthIosClientId, socialAuthIosClientId) || other.socialAuthIosClientId == socialAuthIosClientId));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,supabaseConfigPath,socialAuthWebClientId,socialAuthIosClientId);
+int get hashCode {
+    return Object.hash(runtimeType,supabaseConfigPath,socialAuthWebClientId,socialAuthIosClientId);
+}
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-  return 'Config(supabaseConfigPath: $supabaseConfigPath, socialAuthWebClientId: $socialAuthWebClientId, socialAuthIosClientId: $socialAuthIosClientId)';
+    return 'Config(supabaseConfigPath: $supabaseConfigPath, socialAuthWebClientId: $socialAuthWebClientId, socialAuthIosClientId: $socialAuthIosClientId)';
 }
 
 
