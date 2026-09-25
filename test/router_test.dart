@@ -3,7 +3,7 @@
 // and package:material_ui); if go_router looks for the one the app doesn't
 // use, it silently falls back to NoTransitionPage and every page transition
 // disappears. Nothing else in CI would notice.
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:parousia/app.dart';

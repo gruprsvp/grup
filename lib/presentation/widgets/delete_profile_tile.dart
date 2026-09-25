@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:parousia/l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:parousia/actions/profiles.dart';

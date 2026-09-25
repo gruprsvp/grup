@@ -1,7 +1,7 @@
 import 'dart:core';
 
 import 'package:collection/collection.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:memoized/memoized.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/state/state.dart';

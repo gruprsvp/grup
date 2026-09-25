@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/widgets/widgets.dart';
 import 'package:rrule/rrule.dart';

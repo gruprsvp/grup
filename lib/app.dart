@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart'; // ignore: unused_import
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:parousia/l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
@@ -39,8 +39,13 @@ ThemeData appTheme(Brightness brightness) => ThemeData(
 );
 
 /// The app's localization delegates, shared with widget tests.
+///
+/// Not `AppLocalizations.localizationsDelegates`: gen-l10n lists the
+/// in-framework (package:flutter_localizations) Material/Cupertino delegates,
+/// which material_ui widgets don't read. material_ui ships its own.
 const appLocalizationsDelegates = <LocalizationsDelegate<dynamic>>[
-  ...AppLocalizations.localizationsDelegates,
+  AppLocalizations.delegate,
+  ...GlobalMaterialLocalizations.delegates,
   FormBuilderLocalizations.delegate,
   // NOTE: upstream supabase_auth_ui (0.6.1) has no unified localizations
   // delegate; auth-component strings are localized per-component instead.

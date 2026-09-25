@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:parousia/l10n/app_localizations.dart';
 
 /// A ListTile that shows the current theme mode and allows the user to change it.

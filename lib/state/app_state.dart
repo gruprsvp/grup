@@ -1,5 +1,5 @@
 import 'package:flutter/foundation.dart'; // ignore: unused_import
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:parousia/models/models.dart';
 import 'package:redux_entity/redux_entity.dart';

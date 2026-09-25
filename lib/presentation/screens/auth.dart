@@ -1,5 +1,13 @@
+// Legacy-Material island. supabase_auth_ui is still built on the in-framework
+// Material library (package:flutter/material.dart), whose types are distinct
+// from package:material_ui's. Its widgets look up framework Theme,
+// MaterialLocalizations, Material and ScaffoldMessenger ancestors (the latter
+// for error SnackBars), so this screen builds that chain from the framework
+// library, bridged from the app's material_ui theme. Move it to material_ui
+// once supabase_auth_ui migrates; test/auth_screen_test.dart guards it.
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart' as modern;
 import 'package:parousia/l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parousia/go_router_builder.dart';
@@ -9,6 +17,21 @@ import 'package:universal_html/html.dart' as html;
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    // The bridge maps the app's material_ui theme (colour scheme, text theme)
+    // onto a framework Theme and registers the framework localizations. It is
+    // deprecated only because it is meant to be temporary.
+    // ignore: deprecated_member_use
+    return const modern.MaterialUiCompatibilityBridge(
+      child: ScaffoldMessenger(child: _AuthScaffold()),
+    );
+  }
+}
+
+class _AuthScaffold extends StatelessWidget {
+  const _AuthScaffold();
 
   @override
   Widget build(BuildContext context) {
