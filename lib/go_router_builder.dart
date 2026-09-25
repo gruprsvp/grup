@@ -177,7 +177,7 @@ class SelectContactsRoute extends GoRouteData
 }
 
 // Check if a user exists in the Supabase client
-_isAuthenticated() => Supabase.instance.client.auth.currentUser != null;
+bool _isAuthenticated() => Supabase.instance.client.auth.currentUser != null;
 
 /// Routes that require authentication should use this mixin
 mixin AuthenticationGuard on GoRouteData {

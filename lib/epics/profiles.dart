@@ -9,17 +9,19 @@ import 'package:rxdart/rxdart.dart';
 import 'package:supabase/supabase.dart';
 import 'package:uuid/uuid.dart';
 
-createProfileEpics(ProfilesRepository profiles, StorageRepository storage) =>
-    combineEpics<AppState>([
-      _createRetrieveOneProfileEpic(profiles),
-      _createSignOutEpic(profiles),
-      _createUpdateProfileEpic(profiles, storage),
-      _createUpdateOneProfileEpic(profiles),
-      _createDeleteProfileEpic(profiles, storage),
-      _loadOwnProfileOnSignInEpic,
-      _navigateToAuthPageEpic,
-      _navigateToProfilePageEpic,
-    ]);
+Epic<AppState> createProfileEpics(
+  ProfilesRepository profiles,
+  StorageRepository storage,
+) => combineEpics<AppState>([
+  _createRetrieveOneProfileEpic(profiles),
+  _createSignOutEpic(profiles),
+  _createUpdateProfileEpic(profiles, storage),
+  _createUpdateOneProfileEpic(profiles),
+  _createDeleteProfileEpic(profiles, storage),
+  _loadOwnProfileOnSignInEpic,
+  _navigateToAuthPageEpic,
+  _navigateToProfilePageEpic,
+]);
 
 /// Once the user signs in, request to load own profile
 Stream<dynamic> _loadOwnProfileOnSignInEpic(

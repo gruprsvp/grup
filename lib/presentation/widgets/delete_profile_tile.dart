@@ -28,7 +28,7 @@ class DeleteProfileTile extends StatelessWidget {
   }
 
   /// Shows a confirmation dialog and deletes the user profile if confirmed.
-  _confirmDelete(BuildContext context) async {
+  Future<void> _confirmDelete(BuildContext context) async {
     final doDelete = await showAdaptiveDialog<bool>(
       context: context,
       builder: (context) {

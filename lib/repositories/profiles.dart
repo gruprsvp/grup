@@ -23,10 +23,7 @@ class ProfilesRepository extends SupabaseRepository with Postgrest {
   }) async {
     return supabase.auth.updateUser(
       UserAttributes(
-        data: {
-          if (displayName != null) 'full_name': displayName,
-          if (pictureUrl != null) 'avatar_url': pictureUrl,
-        },
+        data: {'full_name': ?displayName, 'avatar_url': ?pictureUrl},
       ),
     );
   }

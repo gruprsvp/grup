@@ -20,7 +20,7 @@ class SignOutTile extends StatelessWidget {
   }
 
   /// Shows a confirmation dialog and signs the user out if confirmed.
-  _confirmSignOut(BuildContext context) async {
+  Future<void> _confirmSignOut(BuildContext context) async {
     final doSignOut = await showAdaptiveDialog<bool>(
       context: context,
       builder: (context) {

@@ -9,7 +9,7 @@ class DateFab extends StatelessWidget {
 
   DateFab({super.key, this.date, this.onDateChanged});
 
-  _selectNewDate(BuildContext context) async {
+  Future<void> _selectNewDate(BuildContext context) async {
     final newDate = await showDatePicker(
       context: context,
       initialDate: date ?? DateTime.now(),

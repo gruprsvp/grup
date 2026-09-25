@@ -79,7 +79,7 @@ class GroupManageScreen extends StatelessWidget {
   }
 
   /// Shows a confirmation dialog and deletes the group if confirmed.
-  _confirmDelete(BuildContext context, String groupId) async {
+  Future<void> _confirmDelete(BuildContext context, String groupId) async {
     final doDelete = await showAdaptiveDialog<bool>(
       context: context,
       builder: (context) {

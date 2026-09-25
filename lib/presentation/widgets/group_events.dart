@@ -85,7 +85,7 @@ class GroupEvents extends StatelessWidget {
     );
   }
 
-  _createNewEvent(BuildContext context) async {
+  Future<void> _createNewEvent(BuildContext context) async {
     final result = await GroupScheduleCreateRoute(groupId: group!.id.toString())
         .push(context);
 
@@ -98,7 +98,7 @@ class GroupEvents extends StatelessWidget {
     onCreate?.call(newSchedule);
   }
 
-  _deleteEvent(BuildContext context, Schedule schedule) async {
+  Future<void> _deleteEvent(BuildContext context, Schedule schedule) async {
     final doDelete = await showAdaptiveDialog<bool>(
       context: context,
       builder: (context) {

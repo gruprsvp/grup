@@ -35,7 +35,7 @@ class ScheduleMemberTile extends StatelessWidget {
   }
 
   /// Shows a confirmation action sheet to define the default reply.
-  _confirmDefaultRule(BuildContext context) async {
+  Future<void> _confirmDefaultRule(BuildContext context) async {
     RecurrenceRule? selectedRecurrenceRule = defaultRule?.recurrenceRule;
     ReplyOptions? selectedOption = defaultRule?.selectedOption;
     final response = await _confirmDefaultRuleActionSheet(

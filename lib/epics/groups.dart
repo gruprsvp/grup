@@ -9,20 +9,22 @@ import 'package:rxdart/rxdart.dart';
 import 'package:supabase/supabase.dart';
 import 'package:uuid/uuid.dart';
 
-createGroupsEpics(GroupsRepository groups, StorageRepository storage) =>
-    combineEpics<AppState>([
-      _createRetrieveAllGroupsEpic(groups),
-      _createRetrieveOneGroupEpic(groups),
-      _createCreateOneGroupEpic(groups, storage),
-      _createUpdateOneGroupEpic(groups, storage),
-      _createDeleteOneGroupEpic(groups),
-      _reloadGroupOnScheduleDateChange,
-      _loadGroupsOnSignInEpic,
-      _loadGroupsOnAppInitEpic,
-      _loadGroupsOnInviteCodeUseEpic,
-      _loadGroupOnGroupDetailsOpenEpic,
-      _navigateToHomePageEpic,
-    ]);
+Epic<AppState> createGroupsEpics(
+  GroupsRepository groups,
+  StorageRepository storage,
+) => combineEpics<AppState>([
+  _createRetrieveAllGroupsEpic(groups),
+  _createRetrieveOneGroupEpic(groups),
+  _createCreateOneGroupEpic(groups, storage),
+  _createUpdateOneGroupEpic(groups, storage),
+  _createDeleteOneGroupEpic(groups),
+  _reloadGroupOnScheduleDateChange,
+  _loadGroupsOnSignInEpic,
+  _loadGroupsOnAppInitEpic,
+  _loadGroupsOnInviteCodeUseEpic,
+  _loadGroupOnGroupDetailsOpenEpic,
+  _navigateToHomePageEpic,
+]);
 
 /// Once the user signs in, request to load all the groups
 Stream<dynamic> _loadGroupsOnSignInEpic(

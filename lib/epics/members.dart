@@ -6,13 +6,14 @@ import 'package:redux_entity/redux_entity.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 
-createMembersEpic(MembersRepository members) => combineEpics<AppState>([
-  _createAddMembersToGroupEpic(members),
-  _createUpdateMemberEpic(members),
-  _onNewMembersCreated,
-  _createRetrieveOwnMemberByGroupIdEpic(members),
-  _createDeleteOneMember(members),
-]);
+Epic<AppState> createMembersEpic(MembersRepository members) =>
+    combineEpics<AppState>([
+      _createAddMembersToGroupEpic(members),
+      _createUpdateMemberEpic(members),
+      _onNewMembersCreated,
+      _createRetrieveOwnMemberByGroupIdEpic(members),
+      _createDeleteOneMember(members),
+    ]);
 
 Epic<AppState> _createAddMembersToGroupEpic(MembersRepository members) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>

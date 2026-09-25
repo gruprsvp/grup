@@ -6,12 +6,13 @@ import 'package:redux_entity/redux_entity.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 
-createInvitesEpics(InvitesRepository invites) => combineEpics<AppState>([
-  _createCreateInvitesOnNewMembersCreatedEpic(invites),
-  _createGetInvitesForMemberEpic(invites),
-  _createUseDeeplinkInviteCodeEpic(invites),
-  _createUseInviteCodeEpic(invites),
-]);
+Epic<AppState> createInvitesEpics(InvitesRepository invites) =>
+    combineEpics<AppState>([
+      _createCreateInvitesOnNewMembersCreatedEpic(invites),
+      _createGetInvitesForMemberEpic(invites),
+      _createUseDeeplinkInviteCodeEpic(invites),
+      _createUseInviteCodeEpic(invites),
+    ]);
 
 Epic<AppState> _createUseInviteCodeEpic(InvitesRepository invites) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>

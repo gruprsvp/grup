@@ -6,7 +6,7 @@ import 'package:redux_entity/redux_entity.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 
-createDefaultRulesEpics(DefaultRulesRepository defaultRules) =>
+Epic<AppState> createDefaultRulesEpics(DefaultRulesRepository defaultRules) =>
     combineEpics<AppState>([
       _createRetrieveGroupDefaultRulesEpic(defaultRules),
       _createRequestUpdateOneDefaultRuleEpic(defaultRules),
