@@ -13,6 +13,43 @@ import 'package:redux/redux.dart';
 
 part 'app.freezed.dart';
 
+// Brand palette, for reference:
+//   light: 0xFF34558B 0xFF007DAF 0xFF00A4B8 0xFF00C8A5 0xFF8BE585 0xFFF9F871
+//   dark:  0xFF000025 0xFF001749 0xFF003E52 0xFF00623F 0xFF257F1F 0xFF93920B
+final _lightColorScheme = ColorScheme.fromSeed(
+  seedColor: const Color(0xFF34558B),
+  secondary: const Color(0xFF00A4B8),
+  tertiary: const Color(0xFF8BE585),
+);
+
+final _darkColorScheme = ColorScheme.fromSeed(
+  brightness: Brightness.dark,
+  seedColor: const Color(0xFF93920B),
+  secondary: const Color(0xFF00623F),
+  tertiary: const Color(0xFF257F1F),
+);
+
+/// The app's theme. Widget tests and the store-screenshot harness use it too,
+/// so they render what users see.
+ThemeData appTheme(Brightness brightness) => ThemeData(
+  colorScheme: brightness == Brightness.dark
+      ? _darkColorScheme
+      : _lightColorScheme,
+  fontFamily: GoogleFonts.cabin().fontFamily,
+);
+
+/// The app's localization delegates, shared with widget tests.
+const appLocalizationsDelegates = <LocalizationsDelegate<dynamic>>[
+  ...AppLocalizations.localizationsDelegates,
+  FormBuilderLocalizations.delegate,
+  // NOTE: upstream supabase_auth_ui (0.6.1) has no unified localizations
+  // delegate; auth-component strings are localized per-component instead.
+  // The forked package's SupabaseAuthUILocalizations was dropped in the
+  // migration. TODO: re-base the custom auth translations (en/fr/de/es/it).
+];
+
+const appSupportedLocales = AppLocalizations.supportedLocales;
+
 class ParApp extends StatelessWidget {
   const ParApp({required this.store, super.key});
 
@@ -27,56 +64,14 @@ class ParApp extends StatelessWidget {
         converter: _ViewModel.fromStore,
         onInit: store.dispatch(AppStartedAction()),
         builder: (context, vm) {
-          ColorScheme lightColorScheme = ColorScheme.fromSeed(
-            seedColor: Color(0xFF34558B),
-            secondary: Color(0xFF00A4B8),
-            tertiary: Color(0xFF8BE585),
-          );
-
-          ColorScheme darkColorScheme = ColorScheme.fromSeed(
-            brightness: Brightness.dark,
-            seedColor: Color(0xFF93920B),
-            secondary: Color(0xFF00623F),
-            tertiary: Color(0xFF257F1F),
-          );
-
-          // Light theme colors for reference
-          Color(0xFF34558B);
-          Color(0xFF007DAF);
-          Color(0xFF00A4B8);
-          Color(0xFF00C8A5);
-          Color(0xFF8BE585);
-          Color(0xFFF9F871);
-
-          // Dark theme colors for reference
-          Color(0xFF000025);
-          Color(0xFF001749);
-          Color(0xFF003E52);
-          Color(0xFF00623F);
-          Color(0xFF257F1F);
-          Color(0xFF93920B);
-
           return MaterialApp.router(
             title: 'GRUP',
-            localizationsDelegates: const [
-              ...AppLocalizations.localizationsDelegates,
-              FormBuilderLocalizations.delegate,
-              // NOTE: upstream supabase_auth_ui (0.6.1) has no unified localizations
-              // delegate; auth-component strings are localized per-component instead.
-              // The forked package's SupabaseAuthUILocalizations was dropped in the
-              // migration. TODO: re-base the custom auth translations (en/fr/de/es/it).
-            ],
-            supportedLocales: AppLocalizations.supportedLocales,
+            localizationsDelegates: appLocalizationsDelegates,
+            supportedLocales: appSupportedLocales,
             themeMode: vm.themeMode,
             locale: vm.locale,
-            darkTheme: ThemeData(
-              colorScheme: darkColorScheme,
-              fontFamily: GoogleFonts.cabin().fontFamily,
-            ),
-            theme: ThemeData(
-              colorScheme: lightColorScheme,
-              fontFamily: GoogleFonts.cabin().fontFamily,
-            ),
+            darkTheme: appTheme(Brightness.dark),
+            theme: appTheme(Brightness.light),
             routerConfig: router,
           );
         },
