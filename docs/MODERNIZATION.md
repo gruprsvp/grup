@@ -29,14 +29,14 @@ Three genuine decisions need your input before Phase 2 — see [Decisions](#deci
 
 Done since the 2026-08-07 entries below: Phase 0 (PR #214), the Phase 1 invite-perimeter bundle (#215), the dependency refresh (#224), Xcode Cloud lockfiles (#225), store-metadata-as-code/ASO, bottom safe areas, release 1.7.3. **Still open:** the rest of Phase 1, all of Phase 1.5, and Phase 2. Spot-checked 2026-09-25: no `/join` route, no `usePathUrlStrategy`, no `getInitialAppLink`, `onInit: store.dispatch(...)` (`lib/app.dart:28`), no-op `copyWithoutErrors`, `short_name: "AFIT"`, `user-scalable` still present, no OG tags, backwards theme cycle, hardcoded `RruleL10nEn`, `linux/` + `windows/` still present. (`withOpacity` is already gone.)
 
-### What the upgrade branch does (`chore/flutter-3.47-upgrade`, 6 commits, local)
+### What the upgrade branch does (`chore/flutter-3.47-upgrade`, local)
 
 - `environment: sdk ^3.13.0, flutter >=3.47.0` (freezed 4 needs Dart 3.13; CI and Xcode Cloud track unpinned `stable`, so an older SDK now fails loudly instead of subtly).
 - Every direct dependency at the latest resolvable version, lower bounds tightened to what was tested. Majors taken: `freezed` 3→4 (new codegen output, no source changes needed). Minors of note: `build_runner` 2.16, `go_router_builder` 4.5, `sentry_flutter` 9.30, `posthog_flutter` 5.49, `supabase_flutter` 2.17.2. Removed the unused `redux_logging`.
 - **Android: Kotlin Gradle plugin 2.2.0 → 2.2.21.** Flutter 3.47's Gradle plugin *refuses* KGP < 2.2.20. `build.yaml` tracks unpinned stable, so the **next merge to `main` would have broken the Android release build even without this branch**.
 - iOS: refreshed `Podfile.lock` + `Package.resolved` (Xcode Cloud has SPM auto-resolution off).
 - Language-version 3.13 `dart format` reflow (blame-ignored), and targeted `dart fix`es. Analyzer infos 30 → 6. **Note:** `dart fix --apply --code=<x>` *still* applies the pubspec `missing_dependency` fix, which moves `faker` into runtime deps as `faker: any`. Reverted by hand. Never commit a `dart fix` without reading the pubspec diff.
-- Verified: analyze (0 errors/warnings); format gate; **188 Flutter tests incl. the 20 live-Supabase tests**; **64 pgTAP** after a from-scratch `supabase db reset` on CLI 2.116; release **web** build + headless-Chrome boot smoke (renders `/auth` with fonts and social buttons, no console errors); Android debug APK + release R8 minification; **iOS simulator** build.
+- Verified: analyze (0 errors/warnings); format gate; **188 Flutter tests incl. the 20 live-Supabase tests**; **64 pgTAP** after a from-scratch `supabase db reset` on CLI 2.116; release **web** build + headless-Chrome boot smoke (renders `/auth` with fonts and social buttons, no console errors); Android debug APK + release R8 minification under **Zulu JDK 17 (CI's JDK)** and Temurin 21; **iOS simulator and Android emulator boot** to the auth screen with no plugin-registration errors. (The Android boot also reproduced Phase 1.5 item 2 live: with no reachable backend, `_createRetrieveAllGroupsEpic` (`lib/epics/groups.dart:93`) throws an *unhandled* `ClientException`.)
 
 ### Deliberately held back — and why (new finding M1)
 
@@ -46,7 +46,7 @@ Three majors moved to `material_ui` and are **held** (commented in `pubspec.yaml
 - `go_router` 18 detects the app via `findAncestorWidgetOfExactType<MaterialApp>()` using *material_ui's* `MaterialApp` (`go_router/lib/src/pages/material.dart`). Against the framework `MaterialApp` it finds nothing, falls through to the WidgetsApp branch, and serves `NoTransitionPage` for every route plus the bare `ErrorScreen`.
 - The form packages resolve *material_ui's* `Theme`/`MaterialLocalizations`, which the app doesn't provide.
 
-→ **Close Dependabot PRs #234 (`phone_form_field` 11) and #235 (`flutter_form_builder` 11) unmerged; they're green and wrong.** #231/#232/#233 are superseded by this branch.
+→ **Close Dependabot PRs #234 (`phone_form_field` 11) and #235 (`flutter_form_builder` 11) unmerged.** They are red today (they need the Flutter 3.47 SDK floor), but once rebased onto this branch they would go green and still be wrong. #231/#232/#233 are superseded by this branch.
 
 Who is where today (resolved graph, 2026-09-25): on `material_ui` — the three held packages only. Still on framework Material: `supabase_auth_ui` 0.7, `widgetbook` 3.25, `sentry_flutter`, `posthog_flutter`, `crop_your_image`, `google_fonts`, `styled_text`, `form_builder_validators`, `accessibility_tools`.
 
@@ -63,7 +63,12 @@ Who is where today (resolved graph, 2026-09-25): on `material_ui` — the three 
 
 Each is its own PR, in this order unless noted:
 
-1. **Merge `chore/flutter-3.47-upgrade`**, then close #231–#235 (supersede three, reject two). Tiny, unblocks everything, and fixes the latent Android release breakage.
+1. **Merge `chore/flutter-3.47-upgrade`**, then close #231–#235 (supersede three, reject two). Tiny, unblocks everything, and fixes the latent Android release breakage. **A merge to `main` is a release event** (`build.yaml`):
+   - tests run, then the draft GitHub release `v<pubspec version>` is created or updated;
+   - if that release is already *published*, the step fails and blocks everything after it, including prod `db push`;
+   - otherwise the **live web app** is redeployed to `gh-pages` and an Android bundle goes to the Play **internal** track.
+
+   This branch has no migrations, so `db push` is a no-op. Decide first whether it ships as a new 1.7.3 build or as 1.7.4 with release notes (`fastlane/metadata/*/changelogs/default.txt`). Watch that first run: it is also the first CI exercise of the Java-17 app-bundle build under Flutter 3.47 and of the `sentry_dart_plugin` 3.2 → 3.4 symbol upload.
 2. **Android toolchain PR (M2):** AGP 9.1 / Gradle 9.3.1 / Kotlin 2.4. AGP 9 has built-in Kotlin and DSL changes, so migrate `android/app/build.gradle` (consider moving to `.kts` like the current template) and verify `flutter build appbundle` locally *and* in CI. Also bump `actions/setup-java` and consider Java 21 in CI. Small and self-contained, and it restores local Android builds on current Android Studio.
 3. **`material_ui` migration PR (M1).** Can run in parallel with step 2. The analysis says the app can migrate **now** rather than wait for the ecosystem:
    - `dart fix --apply --code=migrate_design_widgets` (62 files across `lib/` + `test/` import `flutter/material.dart`; none import `cupertino.dart`). Review the pubspec diff, as above.
