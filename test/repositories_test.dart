@@ -43,15 +43,16 @@ Future<AuthResponse> signUpWithNewUser(
   phone: phone,
 );
 
-typedef RunWithUserCallback<T> =
-    FutureOr<T> Function(SupabaseClient supabase, AuthResponse user);
+typedef RunWithUserCallback<T> = FutureOr<T> Function(
+  SupabaseClient supabase,
+  AuthResponse user,
+);
 
-typedef RunWithGroupCallback<T> =
-    FutureOr<T> Function(
-      SupabaseClient supabase,
-      Group group,
-      GroupsRepository groupsRepository,
-    );
+typedef RunWithGroupCallback<T> = FutureOr<T> Function(
+  SupabaseClient supabase,
+  Group group,
+  GroupsRepository groupsRepository,
+);
 
 /// Run a callback with a new fake user, and keep it for future reference.
 Future<(AuthResponse, T)> runWithUser<T>(
@@ -390,39 +391,36 @@ void main() {
     test(
       'an invited user becomes a member on sign up',
       () => runWithTemporaryUser(
-        (supabase, user) => runWithTemporaryGroup((
-          supabase,
-          group,
-          groupsRepository,
-        ) async {
-          final membersRepository = MembersRepository(supabase: supabase);
-          final invitesRepository = InvitesRepository(supabase: supabase);
+        (supabase, user) =>
+            runWithTemporaryGroup((supabase, group, groupsRepository) async {
+              final membersRepository = MembersRepository(supabase: supabase);
+              final invitesRepository = InvitesRepository(supabase: supabase);
 
-          final member = await membersRepository.addMemberToGroup(
-            group.id,
-            displayName: 'Member invited with email',
-          );
+              final member = await membersRepository.addMemberToGroup(
+                group.id,
+                displayName: 'Member invited with email',
+              );
 
-          final invitedUserEmail = faker.internet.email();
+              final invitedUserEmail = faker.internet.email();
 
-          await invitesRepository.inviteMember(
-            member.id,
-            InviteMethods.email,
-            invitedUserEmail,
-          );
+              await invitesRepository.inviteMember(
+                member.id,
+                InviteMethods.email,
+                invitedUserEmail,
+              );
 
-          await runWithTemporaryUser((supabase2, user2) async {
-            final groupsRepository2 = GroupsRepository(supabase: supabase2);
-            final userGroups = await groupsRepository2.getUserGroups();
+              await runWithTemporaryUser((supabase2, user2) async {
+                final groupsRepository2 = GroupsRepository(supabase: supabase2);
+                final userGroups = await groupsRepository2.getUserGroups();
 
-            expect(userGroups.groups, hasLength(1));
+                expect(userGroups.groups, hasLength(1));
 
-            final group2 = userGroups.groups.first;
-            expect(group2.id, equals(group.id));
-            // TODO check that there are 2 members
-            // TODO check user is member of group and display name override is reset
-          }, email: invitedUserEmail);
-        }),
+                final group2 = userGroups.groups.first;
+                expect(group2.id, equals(group.id));
+                // TODO check that there are 2 members
+                // TODO check user is member of group and display name override is reset
+              }, email: invitedUserEmail);
+            }),
       ),
     );
 
