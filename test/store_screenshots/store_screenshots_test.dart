@@ -6,6 +6,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:parousia/app.dart';
 import 'package:parousia/l10n/app_localizations.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
@@ -39,29 +41,19 @@ final _demoGroups = [
   Group(id: '4', displayName: 'D&D Night 🎲'),
 ];
 
-/// Mirrors the ParApp theme (lib/app.dart) minus google_fonts, which cannot
-/// download in tests — bundle Cabin/Sniglet as assets to make captures
-/// pixel-identical to production.
-ThemeData _appTheme() => ThemeData(
-  colorScheme: ColorScheme.fromSeed(
-    seedColor: const Color(0xFF34558B),
-    secondary: const Color(0xFF00A4B8),
-    tertiary: const Color(0xFF8BE585),
-  ),
-);
-
 Widget _wrap(Widget screen, Locale locale) => MaterialApp(
   debugShowCheckedModeBanner: false,
-  localizationsDelegates: AppLocalizations.localizationsDelegates,
-  supportedLocales: AppLocalizations.supportedLocales,
+  localizationsDelegates: appLocalizationsDelegates,
+  supportedLocales: appSupportedLocales,
   locale: locale,
-  theme: _appTheme(),
+  // The real app theme. Cabin/Sniglet come from the bundled assets
+  // (assets/google_fonts/), because runtime fetching is off in setUpAll.
+  theme: appTheme(Brightness.light),
   home: screen,
 );
 
 /// Load real Roboto + MaterialIcons from the Flutter SDK cache so captures
-/// don't use the blocky test font. (Cabin/Sniglet still need bundling as
-/// assets to be pixel-true — see docs/STORE_SCREENSHOTS.md.)
+/// don't use the blocky test font.
 Future<void> _loadRealFonts() async {
   final root = Platform.environment['FLUTTER_ROOT'];
   if (root == null) return;
@@ -86,7 +78,10 @@ Future<void> _loadRealFonts() async {
 
 void main() {
   final enabled = Platform.environment['STORE_SCREENSHOTS'] == 'true';
-  setUpAll(_loadRealFonts);
+  setUpAll(() async {
+    GoogleFonts.config.allowRuntimeFetching = false;
+    await _loadRealFonts();
+  });
 
   // One entry per store screenshot: name -> screen under test with demo data.
   final screens = <String, Widget>{
