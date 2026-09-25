@@ -46,6 +46,24 @@ build ever fails with `Module 'X' not found`, it's almost always a broken `pod i
 and/or `cd ios && pod install --repo-update`, not by disabling SPM.
 Minimum OS (raised for the transitive `passkeys` dependency): **iOS 16**, **macOS 13.5**.
 Web and Android need none of this. CI only builds web + Android, so it's a local-dev concern.
+If Homebrew has no CocoaPods bottle (e.g. on a macOS pre-release), `gem install cocoapods` works.
+
+**Android local builds** need a JDK ≤ 24 until the AGP 9 / Gradle 9 upgrade lands: Gradle
+8.14 can't run on the Java 25 JBR that current Android Studio bundles (and Flutter prefers
+that JBR over `JAVA_HOME`). Point Flutter at a JDK 17/21: `flutter config --jdk-dir=<path>`.
+CI builds with Java 17.
+
+**Material decoupling (Flutter 3.47).** Packages that moved to `package:material_ui` —
+currently `go_router` ≥ 18, `flutter_form_builder` ≥ 11, `phone_form_field` ≥ 11 — are
+**held** at their previous majors (see the `HELD` comments in `pubspec.yaml`). The app still
+uses `package:flutter/material.dart`, and mixing the two passes analyze, tests and build but
+breaks at runtime (go_router silently drops all page transitions; form fields miss the app's
+theme/localizations). Don't merge those Dependabot majors; they unhold with the app's
+`material_ui` migration (`docs/MODERNIZATION.md`).
+
+**`dart fix` gotcha:** `dart fix --apply`, even with `--code=...`, also applies the pubspec
+`missing_dependency` fix, which moves `faker` (dev-only, imported by `lib/util/fakes.dart`)
+into runtime `dependencies`. Always check the pubspec diff after running it.
 
 **Live vs hermetic tests.** Most tests are hermetic. The `repositories_test.dart` suite is tagged `live` and hits a real local Supabase; it **self-skips** when `supabase/config/localhost.json` is absent, so a plain `flutter test` works without Docker. To run the live suite, bring up Supabase first (see below). CI's `verify.yaml` has two jobs: a Docker-free `analyze` job (format + analyze) on every PR, and a `test` job that runs `supabase start` → `supabase test db` (pgTAP) → `flutter test --coverage` → `flutter build web`.
 
