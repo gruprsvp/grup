@@ -9,16 +9,6 @@ updates:
     directory: "/" # Location of package manifests
     schedule:
       interval: "weekly"
-    # These majors moved to package:material_ui, which the app hasn't migrated to yet.
-    # Mixing the two passes analyze/tests/build but breaks at runtime (see the HELD notes
-    # in pubspec.yaml). Remove these entries as part of the material_ui migration.
-    ignore:
-      - dependency-name: "go_router"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "flutter_form_builder"
-        update-types: ["version-update:semver-major"]
-      - dependency-name: "phone_form_field"
-        update-types: ["version-update:semver-major"]
   # Keeps the SHA-pinned actions in .github/workflows/ up to date.
   - package-ecosystem: "github-actions"
     directory: "/"

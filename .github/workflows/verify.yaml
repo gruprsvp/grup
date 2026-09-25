@@ -45,6 +45,21 @@ jobs:
         # Fail on warnings/errors; infos stay advisory (drive them to zero over time).
         run: flutter analyze --no-fatal-infos
 
+      - name: Only allowlisted files use in-framework Material
+        # Since Flutter 3.47 the app uses package:material_ui. The in-framework
+        # copy (package:flutter/material.dart) defines distinct types, and mixing
+        # the two usually fails at runtime, not at compile time. The allowlist
+        # holds legacy islands for third-party widgets still on framework
+        # Material; each one needs a widget test (see test/auth_screen_test.dart).
+        run: |
+          allowed='lib/presentation/screens/auth.dart'
+          found=$(grep -rlE "^(import|export) 'package:flutter/(material|cupertino)\.dart'" lib | grep -vxF "$allowed" || true)
+          if [ -n "$found" ]; then
+            echo "::error::In-framework Material/Cupertino imported outside the allowlist:"
+            echo "$found"
+            exit 1
+          fi
+
   # Heavier suite: needs a local Supabase (Docker) for the repository/contract
   # tests, then builds web. Skipped only for native draft PRs to save Docker
   # spin-up on WIP; the merge queue (merge_group) always runs it, and branch

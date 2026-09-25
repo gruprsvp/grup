@@ -32,18 +32,16 @@ dependencies:
   flutter:
     sdk: flutter
 
+  # Material Design, decoupled from the Flutter SDK since 3.47
+  material_ui: ^1.4.0
+
   # Localization
   flutter_localizations:
     sdk: flutter
   intl: ^0.20.3
 
   # Routing
-  # HELD at 17.x: go_router 18+ targets package:material_ui (Flutter's decoupled
-  # Material). The app still uses package:flutter/material.dart, and mixing the two
-  # fails silently at runtime (go_router 18 stops detecting MaterialApp and drops
-  # every page transition). Unhold together with the app's material_ui
-  # migration — see docs/MODERNIZATION.md ("Material decoupling").
-  go_router: ^17.5.0
+  go_router: ^18.0.1
 
   # Redux
   rxdart: ^0.28.0
@@ -79,18 +77,9 @@ dependencies:
   flutter_contacts: ^2.5.0
 
   # Forms and validators
-  # HELD at 10.x: flutter_form_builder 11+ targets package:material_ui (Flutter's decoupled
-  # Material). The app still uses package:flutter/material.dart, and mixing the two
-  # fails silently at runtime (its fields resolve material_ui's Theme/localizations,
-  # which the app doesn't provide). Unhold together with the app's material_ui
-  # migration — see docs/MODERNIZATION.md ("Material decoupling").
-  flutter_form_builder: ^10.3.0+2 # TODO Can we remove this?
+  flutter_form_builder: ^11.0.0 # TODO Can we remove this?
   form_builder_validators: ^11.3.0
-  # HELD at 10.x: phone_form_field 11+ targets package:material_ui (Flutter's decoupled
-  # Material). The app still uses package:flutter/material.dart, and mixing the two
-  # fails silently at runtime (same as flutter_form_builder). Unhold together with the app's material_ui
-  # migration — see docs/MODERNIZATION.md ("Material decoupling").
-  phone_form_field: ^10.0.18
+  phone_form_field: ^11.0.1
 
   # To send feedback and report bugs
   device_info_plus: ^13.2.0

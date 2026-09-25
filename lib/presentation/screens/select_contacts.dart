@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_contacts/flutter_contacts.dart';
 import 'package:parousia/l10n/app_localizations.dart';
 import 'package:parousia/util/util.dart';

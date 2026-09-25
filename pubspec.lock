@@ -305,6 +305,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.0.9"
+  cupertino_ui:
+    dependency: transitive
+    description:
+      name: cupertino_ui
+      sha256: c23816577a1280cff409e989541767887011f8f1d8c1863a794ed308af46f2a9
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.1.1"
   dart_jsonwebtoken:
     dependency: transitive
     description:
@@ -458,10 +466,10 @@ packages:
     dependency: transitive
     description:
       name: flutter_country_selector
-      sha256: "92d7ae9092ba492bfb0ffe5cd6b38c941261b56e81941d73a0a963fdf5fcf8f6"
+      sha256: "780ad05f4a57b1f2b86c87edc9f4ed691f5e6ff4c082879b8cbf25fe62cc1dd4"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.19"
+    version: "2.0.2"
   flutter_driver:
     dependency: transitive
     description: flutter
@@ -471,10 +479,10 @@ packages:
     dependency: "direct main"
     description:
       name: flutter_form_builder
-      sha256: "1233251b4bc1d5deb245745d2a89dcebf4cdd382e1ec3f21f1c6703b700e574f"
+      sha256: "2a345c33b6264065c68e7de10e3c1b8aae9831ebd0678c8ae34978e4ceb5cfd7"
       url: "https://pub.dev"
     source: hosted
-    version: "10.3.0+2"
+    version: "11.0.0"
   flutter_launcher_icons:
     dependency: "direct dev"
     description:
@@ -619,10 +627,10 @@ packages:
     dependency: "direct main"
     description:
       name: go_router
-      sha256: d7a3576cb312649eaa51f2356450aed686085fb58fcdebda5b359aa951eef7ea
+      sha256: "008ab21d89d0de8ccd79586838f7533f126c2d894f50bf25f2947888d3c225b5"
       url: "https://pub.dev"
     source: hosted
-    version: "17.5.0"
+    version: "18.0.1"
   go_router_builder:
     dependency: "direct dev"
     description:
@@ -964,6 +972,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "0.13.0"
+  material_ui:
+    dependency: "direct main"
+    description:
+      name: material_ui
+      sha256: "134ab2f0843545c4e661e4ba2753fe1bcf0753cb690d5a9ee4870638a40411e9"
+      url: "https://pub.dev"
+    source: hosted
+    version: "1.4.0"
   memoize:
     dependency: transitive
     description:
@@ -1136,10 +1152,10 @@ packages:
     dependency: "direct main"
     description:
       name: phone_form_field
-      sha256: d2ef37cf5b1d93797d9e05cea2a133f5a87419f0bbe3e24df1ffe4351f31b0de
+      sha256: "6ee45b96f69cbd6f09fc3fe20ec62fdb07c354b4a5fecacd7d0e3b25eca9e30f"
       url: "https://pub.dev"
     source: hosted
-    version: "10.0.18"
+    version: "11.0.1"
   phone_numbers_parser:
     dependency: transitive
     description:

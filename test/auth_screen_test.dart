@@ -3,7 +3,7 @@
 // MaterialLocalizations, a Material ancestor and a ScaffoldMessenger (for the
 // error SnackBar). If any of those lookups stops resolving, framework
 // assertions fire here, and a failed sign-in no longer shows an error.
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:parousia/app.dart';
 import 'package:parousia/presentation/screens/auth.dart';

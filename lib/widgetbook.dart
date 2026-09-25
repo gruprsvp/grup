@@ -1,5 +1,5 @@
-import 'package:flutter/material.dart';
-import 'package:parousia/l10n/app_localizations.dart';
+import 'package:material_ui/material_ui.dart';
+import 'package:parousia/app.dart';
 import 'package:widgetbook/widgetbook.dart';
 import 'package:widgetbook_annotation/widgetbook_annotation.dart' as widgetbook;
 
@@ -22,15 +22,23 @@ class WidgetbookApp extends StatelessWidget {
         AlignmentAddon(),
         DeviceFrameAddon(devices: Devices.all),
         LocalizationAddon(
-          locales: AppLocalizations.supportedLocales,
-          localizationsDelegates: AppLocalizations.localizationsDelegates,
+          locales: appSupportedLocales,
+          localizationsDelegates: appLocalizationsDelegates,
           initialLocale: const Locale('en'),
         ),
-        MaterialThemeAddon(
+        // Use cases are app widgets built on package:material_ui, while
+        // Widgetbook's own shell is framework Material. MaterialThemeAddon
+        // would only set a framework Theme, so give each use case the app's
+        // material_ui theme and a Material surface (text fields need one).
+        ThemeAddon<ThemeData>(
           themes: [
-            WidgetbookTheme(name: 'Light', data: ThemeData.light()),
-            WidgetbookTheme(name: 'Dark', data: ThemeData.dark()),
+            WidgetbookTheme(name: 'Light', data: appTheme(Brightness.light)),
+            WidgetbookTheme(name: 'Dark', data: appTheme(Brightness.dark)),
           ],
+          themeBuilder: (context, theme, child) => Theme(
+            data: theme,
+            child: Material(child: child),
+          ),
         ),
         InspectorAddon(),
       ],
