@@ -90,3 +90,42 @@ jobs:
 
       - name: Compile web
         run: flutter build web
+
+  # Compiles Android on every PR so Gradle/AGP/Kotlin/plugin breakage shows up
+  # here instead of in the production release job (build.yaml), which until now
+  # was the first place Android was ever built. No Docker needed.
+  android:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    if: github.event.pull_request.draft != true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get Flutter
+        uses: subosito/flutter-action@1a449444c387b1966244ae4d4f8c696479add0b2 # v2.23.0
+        with:
+          channel: 'stable'
+          cache: true
+
+      # Same JDK as the release job in build.yaml.
+      - name: Setup Java
+        uses: actions/setup-java@v6
+        with:
+          distribution: 'zulu'
+          java-version: '17'
+          cache: 'gradle'
+
+      - name: Download dependencies
+        run: flutter pub get
+
+      - name: Build debug APK
+        run: flutter build apk --debug
+
+      # R8 only runs for release builds and is where missing keep rules surface.
+      # Run it without signing (no keystore on PRs): generate the release Gradle
+      # config (drops dev-only plugins from the registrant), then minify only.
+      - name: Release R8 minification
+        run: |
+          flutter build apk --release --config-only
+          cd android && ./gradlew app:minifyReleaseWithR8
