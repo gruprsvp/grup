@@ -160,9 +160,8 @@ class RemoteEntityReducerTester<
         final entity = generator();
         final result = reducer.call(
           initialState.copyWith(
-                loadingIds: {reducer.adapter.getId(entity): true},
-              )
-              as S,
+            loadingIds: {reducer.adapter.getId(entity): true},
+          ) as S,
           SuccessRetrieveOne<T>(entity),
         );
         expect(result.loadingIds[reducer.adapter.getId(entity)], false);
@@ -173,9 +172,8 @@ class RemoteEntityReducerTester<
         final entity = generator();
         final result = reducer.call(
           initialState.copyWith(
-                loadingIds: {reducer.adapter.getId(entity): true},
-              )
-              as S,
+            loadingIds: {reducer.adapter.getId(entity): true},
+          ) as S,
           FailRetrieveOne<T>(id: reducer.adapter.getId(entity), error: 'error'),
         );
         expect(result.loadingIds[reducer.adapter.getId(entity)], false);
@@ -220,14 +218,13 @@ class RemoteEntityReducerTester<
         final e3 = generator();
         final result = reducer.call(
           initialState.copyWith(
-                loadingIds: {
-                  reducer.adapter.getId(e1): true,
-                  reducer.adapter.getId(e2): true,
-                  reducer.adapter.getId(e3): true,
-                },
-                loadingAll: true,
-              )
-              as S,
+            loadingIds: {
+              reducer.adapter.getId(e1): true,
+              reducer.adapter.getId(e2): true,
+              reducer.adapter.getId(e3): true,
+            },
+            loadingAll: true,
+          ) as S,
           SuccessRetrieveAll([e1, e2, e3]),
         );
         expect(result.loadingAll, false);
@@ -271,13 +268,12 @@ class RemoteEntityReducerTester<
         final e1 = generator();
         final result = reducer.call(
           initialState.copyWith(
-                creating: false,
-                loadingAll: false,
-                loadingIds: {reducer.adapter.getId(e1): true},
-                entities: {reducer.adapter.getId(e1): generator()},
-                ids: [reducer.adapter.getId(e1)],
-              )
-              as S,
+            creating: false,
+            loadingAll: false,
+            loadingIds: {reducer.adapter.getId(e1): true},
+            entities: {reducer.adapter.getId(e1): generator()},
+            ids: [reducer.adapter.getId(e1)],
+          ) as S,
           SuccessUpdateOne(e1),
         );
         expect(result.entities[reducer.adapter.getId(e1)], e1);
@@ -286,13 +282,12 @@ class RemoteEntityReducerTester<
         final e1 = generator();
         final result = reducer.call(
           initialState.copyWith(
-                creating: false,
-                loadingAll: false,
-                loadingIds: {reducer.adapter.getId(e1): true},
-                entities: {reducer.adapter.getId(e1): generator()},
-                ids: [reducer.adapter.getId(e1)],
-              )
-              as S,
+            creating: false,
+            loadingAll: false,
+            loadingIds: {reducer.adapter.getId(e1): true},
+            entities: {reducer.adapter.getId(e1): generator()},
+            ids: [reducer.adapter.getId(e1)],
+          ) as S,
           SuccessUpdateOne(e1),
         );
         expect(result.loadingIds[reducer.adapter.getId(e1)], false);
@@ -303,13 +298,12 @@ class RemoteEntityReducerTester<
         final e1 = generator();
         final result = reducer.call(
           initialState.copyWith(
-                creating: false,
-                loadingAll: false,
-                loadingIds: {reducer.adapter.getId(e1): true},
-                entities: {reducer.adapter.getId(e1): generator()},
-                ids: [reducer.adapter.getId(e1)],
-              )
-              as S,
+            creating: false,
+            loadingAll: false,
+            loadingIds: {reducer.adapter.getId(e1): true},
+            entities: {reducer.adapter.getId(e1): generator()},
+            ids: [reducer.adapter.getId(e1)],
+          ) as S,
           FailUpdateOne<T>(entity: e1, error: 'error'),
         );
         expect(result.loadingIds[reducer.adapter.getId(e1)], false);
@@ -318,13 +312,12 @@ class RemoteEntityReducerTester<
         final e1 = generator();
         final result = reducer.call(
           initialState.copyWith(
-                creating: false,
-                loadingAll: false,
-                loadingIds: {reducer.adapter.getId(e1): true},
-                entities: {reducer.adapter.getId(e1): generator()},
-                ids: [reducer.adapter.getId(e1)],
-              )
-              as S,
+            creating: false,
+            loadingAll: false,
+            loadingIds: {reducer.adapter.getId(e1): true},
+            entities: {reducer.adapter.getId(e1): generator()},
+            ids: [reducer.adapter.getId(e1)],
+          ) as S,
           FailUpdateOne<T>(entity: e1, error: 'error'),
         );
         expect(result.error, 'error');
@@ -362,25 +355,24 @@ class RemoteEntityReducerTester<
         final e3 = generator();
         final result = reducer.call(
           initialState.copyWith(
-                creating: false,
-                loadingAll: false,
-                loadingIds: {
-                  reducer.adapter.getId(e1): true,
-                  reducer.adapter.getId(e2): true,
-                  reducer.adapter.getId(e3): true,
-                },
-                entities: {
-                  reducer.adapter.getId(e1): generator(),
-                  reducer.adapter.getId(e2): generator(),
-                  reducer.adapter.getId(e3): generator(),
-                },
-                ids: [
-                  reducer.adapter.getId(e1),
-                  reducer.adapter.getId(e2),
-                  reducer.adapter.getId(e3),
-                ],
-              )
-              as S,
+            creating: false,
+            loadingAll: false,
+            loadingIds: {
+              reducer.adapter.getId(e1): true,
+              reducer.adapter.getId(e2): true,
+              reducer.adapter.getId(e3): true,
+            },
+            entities: {
+              reducer.adapter.getId(e1): generator(),
+              reducer.adapter.getId(e2): generator(),
+              reducer.adapter.getId(e3): generator(),
+            },
+            ids: [
+              reducer.adapter.getId(e1),
+              reducer.adapter.getId(e2),
+              reducer.adapter.getId(e3),
+            ],
+          ) as S,
           SuccessUpdateMany<T>([e1, e2, e3]),
         );
         expect(result.entities[reducer.adapter.getId(e1)], e1);
@@ -394,25 +386,24 @@ class RemoteEntityReducerTester<
         final e3 = generator();
         final result = reducer.call(
           initialState.copyWith(
-                creating: false,
-                loadingAll: false,
-                loadingIds: {
-                  reducer.adapter.getId(e1): true,
-                  reducer.adapter.getId(e2): true,
-                  reducer.adapter.getId(e3): true,
-                },
-                entities: {
-                  reducer.adapter.getId(e1): generator(),
-                  reducer.adapter.getId(e2): generator(),
-                  reducer.adapter.getId(e3): generator(),
-                },
-                ids: [
-                  reducer.adapter.getId(e1),
-                  reducer.adapter.getId(e2),
-                  reducer.adapter.getId(e3),
-                ],
-              )
-              as S,
+            creating: false,
+            loadingAll: false,
+            loadingIds: {
+              reducer.adapter.getId(e1): true,
+              reducer.adapter.getId(e2): true,
+              reducer.adapter.getId(e3): true,
+            },
+            entities: {
+              reducer.adapter.getId(e1): generator(),
+              reducer.adapter.getId(e2): generator(),
+              reducer.adapter.getId(e3): generator(),
+            },
+            ids: [
+              reducer.adapter.getId(e1),
+              reducer.adapter.getId(e2),
+              reducer.adapter.getId(e3),
+            ],
+          ) as S,
           SuccessUpdateMany<T>([e1, e2, e3]),
         );
         expect(result.loadingIds[reducer.adapter.getId(e1)], false);
@@ -427,25 +418,24 @@ class RemoteEntityReducerTester<
         final e3 = generator();
         final result = reducer.call(
           initialState.copyWith(
-                creating: false,
-                loadingAll: false,
-                loadingIds: {
-                  reducer.adapter.getId(e1): true,
-                  reducer.adapter.getId(e2): true,
-                  reducer.adapter.getId(e3): true,
-                },
-                entities: {
-                  reducer.adapter.getId(e1): generator(),
-                  reducer.adapter.getId(e2): generator(),
-                  reducer.adapter.getId(e3): generator(),
-                },
-                ids: [
-                  reducer.adapter.getId(e1),
-                  reducer.adapter.getId(e2),
-                  reducer.adapter.getId(e3),
-                ],
-              )
-              as S,
+            creating: false,
+            loadingAll: false,
+            loadingIds: {
+              reducer.adapter.getId(e1): true,
+              reducer.adapter.getId(e2): true,
+              reducer.adapter.getId(e3): true,
+            },
+            entities: {
+              reducer.adapter.getId(e1): generator(),
+              reducer.adapter.getId(e2): generator(),
+              reducer.adapter.getId(e3): generator(),
+            },
+            ids: [
+              reducer.adapter.getId(e1),
+              reducer.adapter.getId(e2),
+              reducer.adapter.getId(e3),
+            ],
+          ) as S,
           FailUpdateMany<T>(entities: [e1, e2, e3], error: 'error'),
         );
         expect(result.loadingIds[reducer.adapter.getId(e1)], false);
@@ -458,25 +448,24 @@ class RemoteEntityReducerTester<
         final e3 = generator();
         final result = reducer.call(
           initialState.copyWith(
-                creating: false,
-                loadingAll: false,
-                loadingIds: {
-                  reducer.adapter.getId(e1): true,
-                  reducer.adapter.getId(e2): true,
-                  reducer.adapter.getId(e3): true,
-                },
-                entities: {
-                  reducer.adapter.getId(e1): generator(),
-                  reducer.adapter.getId(e2): generator(),
-                  reducer.adapter.getId(e3): generator(),
-                },
-                ids: [
-                  reducer.adapter.getId(e1),
-                  reducer.adapter.getId(e2),
-                  reducer.adapter.getId(e3),
-                ],
-              )
-              as S,
+            creating: false,
+            loadingAll: false,
+            loadingIds: {
+              reducer.adapter.getId(e1): true,
+              reducer.adapter.getId(e2): true,
+              reducer.adapter.getId(e3): true,
+            },
+            entities: {
+              reducer.adapter.getId(e1): generator(),
+              reducer.adapter.getId(e2): generator(),
+              reducer.adapter.getId(e3): generator(),
+            },
+            ids: [
+              reducer.adapter.getId(e1),
+              reducer.adapter.getId(e2),
+              reducer.adapter.getId(e3),
+            ],
+          ) as S,
           FailUpdateMany<T>(entities: [e1, e2, e3], error: 'error'),
         );
         expect(result.error, 'error');
@@ -500,17 +489,12 @@ class RemoteEntityReducerTester<
       test('item should be removed from store', () {
         final result = reducer.call(
           initialState.copyWith(
-                creating: false,
-                loadingAll: false,
-                loadingIds: {'a': true},
-                entities: {
-                  'a': generator(),
-                  'b': generator(),
-                  'c': generator(),
-                },
-                ids: ['a', 'b', 'c'],
-              )
-              as S,
+            creating: false,
+            loadingAll: false,
+            loadingIds: {'a': true},
+            entities: {'a': generator(), 'b': generator(), 'c': generator()},
+            ids: ['a', 'b', 'c'],
+          ) as S,
           SuccessDeleteOne<T>('a'),
         );
         expect(result.entities['a'], null);
@@ -518,17 +502,12 @@ class RemoteEntityReducerTester<
       test('Should set loading for element false', () {
         final result = reducer.call(
           initialState.copyWith(
-                creating: false,
-                loadingAll: false,
-                loadingIds: {'a': true},
-                entities: {
-                  'a': generator(),
-                  'b': generator(),
-                  'c': generator(),
-                },
-                ids: ['a', 'b', 'c'],
-              )
-              as S,
+            creating: false,
+            loadingAll: false,
+            loadingIds: {'a': true},
+            entities: {'a': generator(), 'b': generator(), 'c': generator()},
+            ids: ['a', 'b', 'c'],
+          ) as S,
           SuccessDeleteOne<T>('a'),
         );
         expect(result.loadingIds['a'], false);
@@ -538,17 +517,12 @@ class RemoteEntityReducerTester<
       test('Should set loading for element false', () {
         final result = reducer.call(
           initialState.copyWith(
-                creating: false,
-                loadingAll: false,
-                loadingIds: {'a': true},
-                entities: {
-                  'a': generator(),
-                  'b': generator(),
-                  'c': generator(),
-                },
-                ids: ['a', 'b', 'c'],
-              )
-              as S,
+            creating: false,
+            loadingAll: false,
+            loadingIds: {'a': true},
+            entities: {'a': generator(), 'b': generator(), 'c': generator()},
+            ids: ['a', 'b', 'c'],
+          ) as S,
           FailDeleteOne<T>(id: 'a', error: 'error'),
         );
         expect(result.loadingIds['a'], false);
@@ -556,17 +530,12 @@ class RemoteEntityReducerTester<
       test('Should set error', () {
         final result = reducer.call(
           initialState.copyWith(
-                creating: false,
-                loadingAll: false,
-                loadingIds: {'a': true},
-                entities: {
-                  'a': generator(),
-                  'b': generator(),
-                  'c': generator(),
-                },
-                ids: ['a', 'b', 'c'],
-              )
-              as S,
+            creating: false,
+            loadingAll: false,
+            loadingIds: {'a': true},
+            entities: {'a': generator(), 'b': generator(), 'c': generator()},
+            ids: ['a', 'b', 'c'],
+          ) as S,
           FailDeleteOne<T>(id: 'a', error: 'error'),
         );
         expect(result.error, 'error');
@@ -595,17 +564,12 @@ class RemoteEntityReducerTester<
       test('items should be removed fromstore', () {
         final result = reducer.call(
           initialState.copyWith(
-                creating: false,
-                loadingAll: false,
-                loadingIds: {'a': true},
-                entities: {
-                  'a': generator(),
-                  'b': generator(),
-                  'c': generator(),
-                },
-                ids: ['a', 'b', 'c'],
-              )
-              as S,
+            creating: false,
+            loadingAll: false,
+            loadingIds: {'a': true},
+            entities: {'a': generator(), 'b': generator(), 'c': generator()},
+            ids: ['a', 'b', 'c'],
+          ) as S,
           SuccessDeleteMany<T>(['a', 'b', 'c']),
         );
         expect(result.entities['a'], null);
@@ -615,17 +579,12 @@ class RemoteEntityReducerTester<
       test('Should set loading for each element false', () {
         final result = reducer.call(
           initialState.copyWith(
-                creating: false,
-                loadingAll: false,
-                loadingIds: {'a': true},
-                entities: {
-                  'a': generator(),
-                  'b': generator(),
-                  'c': generator(),
-                },
-                ids: ['a', 'b', 'c'],
-              )
-              as S,
+            creating: false,
+            loadingAll: false,
+            loadingIds: {'a': true},
+            entities: {'a': generator(), 'b': generator(), 'c': generator()},
+            ids: ['a', 'b', 'c'],
+          ) as S,
           SuccessDeleteMany<T>(['a', 'b', 'c']),
         );
         expect(result.loadingIds['a'], false);
@@ -637,17 +596,12 @@ class RemoteEntityReducerTester<
       test('Should set loading for each element false', () {
         final result = reducer.call(
           initialState.copyWith(
-                creating: false,
-                loadingAll: false,
-                loadingIds: {'a': true, 'b': true, 'c': true},
-                entities: {
-                  'a': generator(),
-                  'b': generator(),
-                  'c': generator(),
-                },
-                ids: ['a', 'b', 'c'],
-              )
-              as S,
+            creating: false,
+            loadingAll: false,
+            loadingIds: {'a': true, 'b': true, 'c': true},
+            entities: {'a': generator(), 'b': generator(), 'c': generator()},
+            ids: ['a', 'b', 'c'],
+          ) as S,
           FailDeleteMany<T>(ids: ['a', 'b', 'c'], error: 'error'),
         );
         expect(result.loadingIds['a'], false);
@@ -657,17 +611,12 @@ class RemoteEntityReducerTester<
       test('Should set error', () {
         final result = reducer.call(
           initialState.copyWith(
-                creating: false,
-                loadingAll: false,
-                loadingIds: {'a': true, 'b': true, 'c': true},
-                entities: {
-                  'a': generator(),
-                  'b': generator(),
-                  'c': generator(),
-                },
-                ids: ['a', 'b', 'c'],
-              )
-              as S,
+            creating: false,
+            loadingAll: false,
+            loadingIds: {'a': true, 'b': true, 'c': true},
+            entities: {'a': generator(), 'b': generator(), 'c': generator()},
+            ids: ['a', 'b', 'c'],
+          ) as S,
           FailDeleteMany<T>(ids: ['a', 'b', 'c'], error: 'error'),
         );
         expect(result.error, 'error');

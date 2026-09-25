@@ -86,9 +86,8 @@ class GroupEvents extends StatelessWidget {
   }
 
   _createNewEvent(BuildContext context) async {
-    final result = await GroupScheduleCreateRoute(
-      groupId: group!.id.toString(),
-    ).push(context);
+    final result = await GroupScheduleCreateRoute(groupId: group!.id.toString())
+        .push(context);
 
     if (result is! Schedule) {
       // TODO error handling
