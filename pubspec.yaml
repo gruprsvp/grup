@@ -33,7 +33,7 @@ dependencies:
     sdk: flutter
 
   # Material Design, decoupled from the Flutter SDK since 3.47
-  material_ui: ^1.4.0
+  material_ui: ^1.5.0
 
   # Localization
   flutter_localizations:
