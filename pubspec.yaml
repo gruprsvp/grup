@@ -55,7 +55,7 @@ dependencies:
 
   # Supabase
   supabase: ^2.16.1
-  supabase_flutter: ^2.17.2
+  supabase_flutter: ^2.18.0
   supabase_auth_ui: ^0.7.0
 
   # Image picker to let users upload their profile picture
