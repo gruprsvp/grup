@@ -176,5 +176,171 @@
   "licenses": "Licenses",
   "@licenses": {
     "description": "Settings entry that opens the open-source licenses page."
+  },
+  "recurrenceOnce": "Once",
+  "@recurrenceOnce": {
+    "description": "A recurrence option: the event happens once."
+  },
+  "recurrenceDaily": "Every day",
+  "@recurrenceDaily": {
+    "description": "A recurrence option."
+  },
+  "recurrenceWeekly": "Every week",
+  "@recurrenceWeekly": {
+    "description": "A recurrence option."
+  },
+  "recurrenceMonthly": "Every month",
+  "@recurrenceMonthly": {
+    "description": "A recurrence option."
+  },
+  "recurrenceYearly": "Every year",
+  "@recurrenceYearly": {
+    "description": "A recurrence option."
+  },
+  "recurrenceWeekdays": "On weekdays",
+  "@recurrenceWeekdays": {
+    "description": "A recurrence option: Monday to Friday."
+  },
+  "recurrenceWeekends": "On weekends",
+  "@recurrenceWeekends": {
+    "description": "A recurrence option: Saturday and Sunday."
+  },
+  "recurrenceCustom": "Custom",
+  "@recurrenceCustom": {
+    "description": "A recurrence the app has no name for."
+  },
+  "authEnterEmail": "Enter your email",
+  "@authEnterEmail": {
+    "description": "Sign-in screen."
+  },
+  "authValidEmailError": "Please enter a valid email address",
+  "@authValidEmailError": {
+    "description": "Sign-in screen."
+  },
+  "authEnterPassword": "Enter your password",
+  "@authEnterPassword": {
+    "description": "Sign-in screen."
+  },
+  "authPasswordLengthError": "Please enter a password that is at least 6 characters long",
+  "@authPasswordLengthError": {
+    "description": "Sign-in screen."
+  },
+  "authSignIn": "Sign In",
+  "@authSignIn": {
+    "description": "Sign-in screen button."
+  },
+  "authSignUp": "Sign Up",
+  "@authSignUp": {
+    "description": "Sign-in screen button."
+  },
+  "authForgotPassword": "Forgot your password?",
+  "@authForgotPassword": {
+    "description": "Sign-in screen."
+  },
+  "authDontHaveAccount": "Don't have an account? Sign up",
+  "@authDontHaveAccount": {
+    "description": "Sign-in screen."
+  },
+  "authHaveAccount": "Already have an account? Sign in",
+  "@authHaveAccount": {
+    "description": "Sign-in screen."
+  },
+  "authSendPasswordReset": "Send password reset email",
+  "@authSendPasswordReset": {
+    "description": "Sign-in screen."
+  },
+  "authPasswordResetSent": "Password reset email has been sent",
+  "@authPasswordResetSent": {
+    "description": "Sign-in screen."
+  },
+  "authBackToSignIn": "Back to sign in",
+  "@authBackToSignIn": {
+    "description": "Sign-in screen."
+  },
+  "authUnexpectedError": "An unexpected error occurred",
+  "@authUnexpectedError": {
+    "description": "Sign-in screen."
+  },
+  "authRequiredFieldError": "This field is required",
+  "@authRequiredFieldError": {
+    "description": "Sign-in screen."
+  },
+  "authConfirmPasswordError": "Passwords do not match",
+  "@authConfirmPasswordError": {
+    "description": "Sign-in screen."
+  },
+  "authConfirmPassword": "Confirm Password",
+  "@authConfirmPassword": {
+    "description": "Sign-in screen."
+  },
+  "authEnterOtpCode": "Enter OTP code",
+  "@authEnterOtpCode": {
+    "description": "Sign-in screen."
+  },
+  "authEnterNewPassword": "Enter new password",
+  "@authEnterNewPassword": {
+    "description": "Sign-in screen."
+  },
+  "authChangePassword": "Change Password",
+  "@authChangePassword": {
+    "description": "Sign-in screen."
+  },
+  "authPasswordChangedSuccess": "Password successfully updated",
+  "@authPasswordChangedSuccess": {
+    "description": "Sign-in screen."
+  },
+  "authOtpCodeError": "Invalid OTP code",
+  "@authOtpCodeError": {
+    "description": "Sign-in screen."
+  },
+  "authOtpDisabledError": "OTP disabled",
+  "@authOtpDisabledError": {
+    "description": "Sign-in screen."
+  },
+  "authEnterPhoneNumber": "Enter your phone number",
+  "@authEnterPhoneNumber": {
+    "description": "Sign-in screen."
+  },
+  "authValidPhoneNumberError": "Please enter a valid phone number",
+  "@authValidPhoneNumberError": {
+    "description": "Sign-in screen."
+  },
+  "authContinueWithMagicLink": "Continue with magic Link",
+  "@authContinueWithMagicLink": {
+    "description": "Sign-in screen."
+  },
+  "authCheckYourEmail": "Check your email inbox!",
+  "@authCheckYourEmail": {
+    "description": "Sign-in screen."
+  },
+  "authSuccessSignInMessage": "Successfully signed in!",
+  "@authSuccessSignInMessage": {
+    "description": "Sign-in screen."
+  },
+  "authUpdatePassword": "Update Password",
+  "@authUpdatePassword": {
+    "description": "Sign-in screen."
+  },
+  "authEnterOneTimeCode": "Please enter the one time code sent",
+  "@authEnterOneTimeCode": {
+    "description": "Sign-in screen."
+  },
+  "authEnterCodeSent": "Enter the code sent",
+  "@authEnterCodeSent": {
+    "description": "Sign-in screen."
+  },
+  "authVerifyPhone": "Verify Phone",
+  "@authVerifyPhone": {
+    "description": "Sign-in screen."
+  },
+  "authContinueWithProvider": "Continue with {provider}",
+  "@authContinueWithProvider": {
+    "description": "Sign-in screen: a social sign-in button, e.g. 'Continue with Google'.",
+    "placeholders": {
+      "provider": {
+        "type": "String",
+        "example": "Google"
+      }
+    }
   }
 }

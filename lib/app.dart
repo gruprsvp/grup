@@ -3,6 +3,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:parousia/l10n/app_localizations.dart';
+import 'package:parousia/l10n/auth_ui_localizations.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 
@@ -41,10 +42,8 @@ const appLocalizationsDelegates = <LocalizationsDelegate<dynamic>>[
   ...GlobalMaterialLocalizations.delegates,
   FormBuilderLocalizations.delegate,
   PhoneFieldLocalization.delegate,
-  // NOTE: upstream supabase_auth_ui (0.6.1) has no unified localizations
-  // delegate; auth-component strings are localized per-component instead.
-  // The forked package's SupabaseAuthUILocalizations was dropped in the
-  // migration. TODO: re-base the custom auth translations (en/fr/de/es/it).
+  // The sign-in screen (supabase_auth_ui only ships English).
+  AuthUILocalizations.delegate,
 ];
 
 const appSupportedLocales = AppLocalizations.supportedLocales;

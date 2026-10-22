@@ -378,4 +378,132 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get licenses => 'Licencias';
+
+  @override
+  String get recurrenceOnce => 'Una vez';
+
+  @override
+  String get recurrenceDaily => 'Todos los días';
+
+  @override
+  String get recurrenceWeekly => 'Todas las semanas';
+
+  @override
+  String get recurrenceMonthly => 'Todos los meses';
+
+  @override
+  String get recurrenceYearly => 'Todos los años';
+
+  @override
+  String get recurrenceWeekdays => 'Entre semana';
+
+  @override
+  String get recurrenceWeekends => 'Los fines de semana';
+
+  @override
+  String get recurrenceCustom => 'Personalizada';
+
+  @override
+  String get authEnterEmail => 'Introduce tu correo electrónico';
+
+  @override
+  String get authValidEmailError => 'Introduce un correo electrónico válido';
+
+  @override
+  String get authEnterPassword => 'Introduce tu contraseña';
+
+  @override
+  String get authPasswordLengthError =>
+      'Introduce una contraseña de al menos 6 caracteres';
+
+  @override
+  String get authSignIn => 'Iniciar sesión';
+
+  @override
+  String get authSignUp => 'Registrarse';
+
+  @override
+  String get authForgotPassword => '¿Olvidaste tu contraseña?';
+
+  @override
+  String get authDontHaveAccount => '¿No tienes cuenta? Regístrate';
+
+  @override
+  String get authHaveAccount => '¿Ya tienes cuenta? Inicia sesión';
+
+  @override
+  String get authSendPasswordReset =>
+      'Enviar correo para restablecer la contraseña';
+
+  @override
+  String get authPasswordResetSent =>
+      'Te hemos enviado un correo para restablecer la contraseña';
+
+  @override
+  String get authBackToSignIn => 'Volver a iniciar sesión';
+
+  @override
+  String get authUnexpectedError => 'Se produjo un error inesperado';
+
+  @override
+  String get authRequiredFieldError => 'Este campo es obligatorio';
+
+  @override
+  String get authConfirmPasswordError => 'Las contraseñas no coinciden';
+
+  @override
+  String get authConfirmPassword => 'Confirmar contraseña';
+
+  @override
+  String get authEnterOtpCode => 'Introduce el código de verificación';
+
+  @override
+  String get authEnterNewPassword => 'Introduce una contraseña nueva';
+
+  @override
+  String get authChangePassword => 'Cambiar contraseña';
+
+  @override
+  String get authPasswordChangedSuccess => 'Contraseña actualizada';
+
+  @override
+  String get authOtpCodeError => 'Código de verificación no válido';
+
+  @override
+  String get authOtpDisabledError =>
+      'Los códigos de verificación están desactivados';
+
+  @override
+  String get authEnterPhoneNumber => 'Introduce tu número de teléfono';
+
+  @override
+  String get authValidPhoneNumberError =>
+      'Introduce un número de teléfono válido';
+
+  @override
+  String get authContinueWithMagicLink => 'Continuar con enlace mágico';
+
+  @override
+  String get authCheckYourEmail => '¡Revisa tu correo!';
+
+  @override
+  String get authSuccessSignInMessage => '¡Sesión iniciada!';
+
+  @override
+  String get authUpdatePassword => 'Actualizar contraseña';
+
+  @override
+  String get authEnterOneTimeCode =>
+      'Introduce el código de un solo uso que te enviamos';
+
+  @override
+  String get authEnterCodeSent => 'Introduce el código enviado';
+
+  @override
+  String get authVerifyPhone => 'Verificar teléfono';
+
+  @override
+  String authContinueWithProvider(String provider) {
+    return 'Continuar con $provider';
+  }
 }

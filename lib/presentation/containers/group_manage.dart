@@ -3,11 +3,6 @@ import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/util/result.dart';
 import 'package:provider/provider.dart';
-import 'package:rrule/rrule.dart';
-
-/// Loaded once, and shared: creating it per build reset every recurrence
-/// label to a spinner.
-final _rruleL10n = RruleL10nEn.create();
 
 class GroupManageContainer extends StatelessWidget {
   final String groupId;
@@ -50,7 +45,6 @@ class GroupManageContainer extends StatelessWidget {
           if (context.mounted) showFailure(context, vm.invite.result);
         },
         schedules: vm.schedules,
-        rruleL10n: _rruleL10n,
         onCreateSchedule: (schedule) async {
           await vm.createSchedule.execute(schedule);
           if (context.mounted) showFailure(context, vm.createSchedule.result);

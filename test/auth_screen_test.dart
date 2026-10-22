@@ -13,12 +13,23 @@ import 'support/fake_supabase.dart';
 void main() {
   setUpAll(initFakeSupabase);
 
-  Widget wrap(Widget child) => MaterialApp(
+  Widget wrap(Widget child, {Locale? locale}) => MaterialApp(
     theme: appTheme(Brightness.light),
     localizationsDelegates: appLocalizationsDelegates,
     supportedLocales: appSupportedLocales,
+    locale: locale,
     home: child,
   );
+
+  testWidgets('the sign-in screen speaks the user\'s language', (tester) async {
+    await tester.pumpWidget(
+      wrap(const AuthScreen(), locale: const Locale('de')),
+    );
+    await tester.pump();
+
+    expect(find.text('Anmelden'), findsOneWidget);
+    expect(find.text('Weiter mit Google'), findsOneWidget);
+  });
 
   testWidgets('auth screen renders without framework assertions', (
     tester,

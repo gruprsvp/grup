@@ -769,6 +769,246 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Licenses'**
   String get licenses;
+
+  /// A recurrence option: the event happens once.
+  ///
+  /// In en, this message translates to:
+  /// **'Once'**
+  String get recurrenceOnce;
+
+  /// A recurrence option.
+  ///
+  /// In en, this message translates to:
+  /// **'Every day'**
+  String get recurrenceDaily;
+
+  /// A recurrence option.
+  ///
+  /// In en, this message translates to:
+  /// **'Every week'**
+  String get recurrenceWeekly;
+
+  /// A recurrence option.
+  ///
+  /// In en, this message translates to:
+  /// **'Every month'**
+  String get recurrenceMonthly;
+
+  /// A recurrence option.
+  ///
+  /// In en, this message translates to:
+  /// **'Every year'**
+  String get recurrenceYearly;
+
+  /// A recurrence option: Monday to Friday.
+  ///
+  /// In en, this message translates to:
+  /// **'On weekdays'**
+  String get recurrenceWeekdays;
+
+  /// A recurrence option: Saturday and Sunday.
+  ///
+  /// In en, this message translates to:
+  /// **'On weekends'**
+  String get recurrenceWeekends;
+
+  /// A recurrence the app has no name for.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom'**
+  String get recurrenceCustom;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your email'**
+  String get authEnterEmail;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid email address'**
+  String get authValidEmailError;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your password'**
+  String get authEnterPassword;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a password that is at least 6 characters long'**
+  String get authPasswordLengthError;
+
+  /// Sign-in screen button.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign In'**
+  String get authSignIn;
+
+  /// Sign-in screen button.
+  ///
+  /// In en, this message translates to:
+  /// **'Sign Up'**
+  String get authSignUp;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Forgot your password?'**
+  String get authForgotPassword;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Don\'t have an account? Sign up'**
+  String get authDontHaveAccount;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Already have an account? Sign in'**
+  String get authHaveAccount;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Send password reset email'**
+  String get authSendPasswordReset;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Password reset email has been sent'**
+  String get authPasswordResetSent;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Back to sign in'**
+  String get authBackToSignIn;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'An unexpected error occurred'**
+  String get authUnexpectedError;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'This field is required'**
+  String get authRequiredFieldError;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Passwords do not match'**
+  String get authConfirmPasswordError;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm Password'**
+  String get authConfirmPassword;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter OTP code'**
+  String get authEnterOtpCode;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter new password'**
+  String get authEnterNewPassword;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Change Password'**
+  String get authChangePassword;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Password successfully updated'**
+  String get authPasswordChangedSuccess;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid OTP code'**
+  String get authOtpCodeError;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'OTP disabled'**
+  String get authOtpDisabledError;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your phone number'**
+  String get authEnterPhoneNumber;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter a valid phone number'**
+  String get authValidPhoneNumberError;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with magic Link'**
+  String get authContinueWithMagicLink;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Check your email inbox!'**
+  String get authCheckYourEmail;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Successfully signed in!'**
+  String get authSuccessSignInMessage;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Password'**
+  String get authUpdatePassword;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Please enter the one time code sent'**
+  String get authEnterOneTimeCode;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter the code sent'**
+  String get authEnterCodeSent;
+
+  /// Sign-in screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Verify Phone'**
+  String get authVerifyPhone;
+
+  /// Sign-in screen: a social sign-in button, e.g. 'Continue with Google'.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue with {provider}'**
+  String authContinueWithProvider(String provider);
 }
 
 class _AppLocalizationsDelegate

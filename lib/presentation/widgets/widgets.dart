@@ -14,6 +14,7 @@ export 'image_crop.dart';
 export 'image_form_field.dart';
 export 'invite_modal.dart';
 export 'profile_picture.dart';
+export 'recurrence_label.dart';
 export 'reply_button.dart';
 export 'schedule_form.dart';
 export 'schedule_member_tile.dart';

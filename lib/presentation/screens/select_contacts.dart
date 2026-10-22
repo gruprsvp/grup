@@ -99,7 +99,16 @@ class _SelectContactsScreenState extends State<SelectContactsScreen> {
               },
             );
           } else if (snapshot.hasError) {
-            return Center(child: Text(snapshot.error.toString()));
+            // Most likely the permission was denied.
+            return Center(
+              child: Padding(
+                padding: const EdgeInsets.all(32),
+                child: Text(
+                  l10n.contactsPermissionMessage,
+                  textAlign: TextAlign.center,
+                ),
+              ),
+            );
           } else {
             return const Center(child: CircularProgressIndicator.adaptive());
           }

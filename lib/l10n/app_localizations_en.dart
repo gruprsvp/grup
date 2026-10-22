@@ -377,4 +377,127 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get licenses => 'Licenses';
+
+  @override
+  String get recurrenceOnce => 'Once';
+
+  @override
+  String get recurrenceDaily => 'Every day';
+
+  @override
+  String get recurrenceWeekly => 'Every week';
+
+  @override
+  String get recurrenceMonthly => 'Every month';
+
+  @override
+  String get recurrenceYearly => 'Every year';
+
+  @override
+  String get recurrenceWeekdays => 'On weekdays';
+
+  @override
+  String get recurrenceWeekends => 'On weekends';
+
+  @override
+  String get recurrenceCustom => 'Custom';
+
+  @override
+  String get authEnterEmail => 'Enter your email';
+
+  @override
+  String get authValidEmailError => 'Please enter a valid email address';
+
+  @override
+  String get authEnterPassword => 'Enter your password';
+
+  @override
+  String get authPasswordLengthError =>
+      'Please enter a password that is at least 6 characters long';
+
+  @override
+  String get authSignIn => 'Sign In';
+
+  @override
+  String get authSignUp => 'Sign Up';
+
+  @override
+  String get authForgotPassword => 'Forgot your password?';
+
+  @override
+  String get authDontHaveAccount => 'Don\'t have an account? Sign up';
+
+  @override
+  String get authHaveAccount => 'Already have an account? Sign in';
+
+  @override
+  String get authSendPasswordReset => 'Send password reset email';
+
+  @override
+  String get authPasswordResetSent => 'Password reset email has been sent';
+
+  @override
+  String get authBackToSignIn => 'Back to sign in';
+
+  @override
+  String get authUnexpectedError => 'An unexpected error occurred';
+
+  @override
+  String get authRequiredFieldError => 'This field is required';
+
+  @override
+  String get authConfirmPasswordError => 'Passwords do not match';
+
+  @override
+  String get authConfirmPassword => 'Confirm Password';
+
+  @override
+  String get authEnterOtpCode => 'Enter OTP code';
+
+  @override
+  String get authEnterNewPassword => 'Enter new password';
+
+  @override
+  String get authChangePassword => 'Change Password';
+
+  @override
+  String get authPasswordChangedSuccess => 'Password successfully updated';
+
+  @override
+  String get authOtpCodeError => 'Invalid OTP code';
+
+  @override
+  String get authOtpDisabledError => 'OTP disabled';
+
+  @override
+  String get authEnterPhoneNumber => 'Enter your phone number';
+
+  @override
+  String get authValidPhoneNumberError => 'Please enter a valid phone number';
+
+  @override
+  String get authContinueWithMagicLink => 'Continue with magic Link';
+
+  @override
+  String get authCheckYourEmail => 'Check your email inbox!';
+
+  @override
+  String get authSuccessSignInMessage => 'Successfully signed in!';
+
+  @override
+  String get authUpdatePassword => 'Update Password';
+
+  @override
+  String get authEnterOneTimeCode => 'Please enter the one time code sent';
+
+  @override
+  String get authEnterCodeSent => 'Enter the code sent';
+
+  @override
+  String get authVerifyPhone => 'Verify Phone';
+
+  @override
+  String authContinueWithProvider(String provider) {
+    return 'Continue with $provider';
+  }
 }

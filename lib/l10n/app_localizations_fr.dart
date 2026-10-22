@@ -377,4 +377,131 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get licenses => 'Licences';
+
+  @override
+  String get recurrenceOnce => 'Une fois';
+
+  @override
+  String get recurrenceDaily => 'Tous les jours';
+
+  @override
+  String get recurrenceWeekly => 'Toutes les semaines';
+
+  @override
+  String get recurrenceMonthly => 'Tous les mois';
+
+  @override
+  String get recurrenceYearly => 'Tous les ans';
+
+  @override
+  String get recurrenceWeekdays => 'En semaine';
+
+  @override
+  String get recurrenceWeekends => 'Le week-end';
+
+  @override
+  String get recurrenceCustom => 'Personnalisée';
+
+  @override
+  String get authEnterEmail => 'Saisis ton adresse e-mail';
+
+  @override
+  String get authValidEmailError => 'Saisis une adresse e-mail valide';
+
+  @override
+  String get authEnterPassword => 'Saisis ton mot de passe';
+
+  @override
+  String get authPasswordLengthError =>
+      'Saisis un mot de passe d\'au moins 6 caractères';
+
+  @override
+  String get authSignIn => 'Se connecter';
+
+  @override
+  String get authSignUp => 'S\'inscrire';
+
+  @override
+  String get authForgotPassword => 'Mot de passe oublié ?';
+
+  @override
+  String get authDontHaveAccount => 'Pas encore de compte ? Inscris-toi';
+
+  @override
+  String get authHaveAccount => 'Déjà un compte ? Connecte-toi';
+
+  @override
+  String get authSendPasswordReset => 'Envoyer l\'e-mail de réinitialisation';
+
+  @override
+  String get authPasswordResetSent =>
+      'L\'e-mail de réinitialisation a été envoyé';
+
+  @override
+  String get authBackToSignIn => 'Retour à la connexion';
+
+  @override
+  String get authUnexpectedError => 'Une erreur inattendue s\'est produite';
+
+  @override
+  String get authRequiredFieldError => 'Ce champ est obligatoire';
+
+  @override
+  String get authConfirmPasswordError =>
+      'Les mots de passe ne correspondent pas';
+
+  @override
+  String get authConfirmPassword => 'Confirmer le mot de passe';
+
+  @override
+  String get authEnterOtpCode => 'Saisis le code de vérification';
+
+  @override
+  String get authEnterNewPassword => 'Saisis un nouveau mot de passe';
+
+  @override
+  String get authChangePassword => 'Changer le mot de passe';
+
+  @override
+  String get authPasswordChangedSuccess => 'Mot de passe mis à jour';
+
+  @override
+  String get authOtpCodeError => 'Code de vérification invalide';
+
+  @override
+  String get authOtpDisabledError =>
+      'Les codes de vérification sont désactivés';
+
+  @override
+  String get authEnterPhoneNumber => 'Saisis ton numéro de téléphone';
+
+  @override
+  String get authValidPhoneNumberError =>
+      'Saisis un numéro de téléphone valide';
+
+  @override
+  String get authContinueWithMagicLink => 'Continuer avec un lien magique';
+
+  @override
+  String get authCheckYourEmail => 'Consulte ta boîte mail !';
+
+  @override
+  String get authSuccessSignInMessage => 'Connexion réussie !';
+
+  @override
+  String get authUpdatePassword => 'Mettre à jour le mot de passe';
+
+  @override
+  String get authEnterOneTimeCode => 'Saisis le code à usage unique envoyé';
+
+  @override
+  String get authEnterCodeSent => 'Saisis le code envoyé';
+
+  @override
+  String get authVerifyPhone => 'Vérifier le téléphone';
+
+  @override
+  String authContinueWithProvider(String provider) {
+    return 'Continuer avec $provider';
+  }
 }
