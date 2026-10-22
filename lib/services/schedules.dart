@@ -22,14 +22,16 @@ class SchedulesService extends SupabaseService with Postgrest {
         .withConverter((data) => Schedule.fromJson(data));
   }
 
-  Future<Iterable<Schedule>> getGroupSchedules(String groupId) async {
+  Future<List<Schedule>> getGroupSchedules(String groupId) async {
     return table()
-        .select('*,replies(*),default_rules(*)')
+        .select()
         .eq('group_id', groupId)
-        .withConverter((data) => data.map(Schedule.fromJson));
+        .withConverter((data) => decodeRows(data, Schedule.fromJson));
   }
 
+  // Selecting the deleted row makes a delete that matched nothing (already
+  // gone, or hidden by row-level security) fail instead of looking done.
   Future<void> deleteSchedule(String scheduleId) async {
-    return table().delete().eq('id', scheduleId);
+    await table().delete().eq('id', scheduleId).select('id').single();
   }
 }

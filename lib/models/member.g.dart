@@ -9,7 +9,11 @@ part of 'member.dart';
 _Member _$MemberFromJson(Map<String, dynamic> json) => _Member(
   id: json['id'] as String,
   groupId: json['group_id'] as String,
-  role: $enumDecode(_$GroupRolesEnumMap, json['role']),
+  role: $enumDecode(
+    _$GroupRolesEnumMap,
+    json['role'],
+    unknownValue: GroupRoles.member,
+  ),
   profileId: json['profile_id'] as String?,
   displayNameOverride: json['display_name_override'] as String?,
   createdAt: json['created_at'] == null

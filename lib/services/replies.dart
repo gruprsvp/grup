@@ -8,11 +8,7 @@ class RepliesService extends SupabaseService with Postgrest {
   const RepliesService({required super.supabase})
     : super(tableName: Tables.replies);
 
-  Future<Iterable<Reply>> getRepliesForDay(String groupId, DateTime day) async {
-    return getRepliesForDateRange(groupId, day.toUtc().getDayRange());
-  }
-
-  Future<Iterable<Reply>> getRepliesForDateRange(
+  Future<List<Reply>> getRepliesForDateRange(
     String groupId,
     DateTimeRange dateRange,
   ) async {
@@ -21,7 +17,7 @@ class RepliesService extends SupabaseService with Postgrest {
         .eq('members.group_id', groupId)
         .gte('instance_date', dateRange.start)
         .lt('instance_date', dateRange.end)
-        .withConverter((data) => data.map(Reply.fromJson));
+        .withConverter((data) => decodeRows(data, Reply.fromJson));
   }
 
   Future<Reply> createReply(Reply reply) async {
@@ -37,15 +33,19 @@ class RepliesService extends SupabaseService with Postgrest {
         .withConverter((data) => Reply.fromJson(data));
   }
 
+  // Selecting the deleted row makes a delete that matched nothing (already
+  // gone, or hidden by row-level security) fail instead of looking done.
   Future<void> deleteReply({
     required String memberId,
     required String scheduleId,
     required DateTime instanceDate,
   }) async {
-    return table()
+    await table()
         .delete()
         .eq('member_id', memberId)
         .eq('schedule_id', scheduleId)
-        .eq('instance_date', instanceDate.toIso8601String());
+        .eq('instance_date', instanceDate.toIso8601String())
+        .select('member_id')
+        .single();
   }
 }

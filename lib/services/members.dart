@@ -1,4 +1,5 @@
 import 'package:parousia/models/models.dart';
+import 'package:parousia/util/errors.dart';
 import 'package:uuid/uuid.dart';
 
 import 'const.dart';
@@ -49,15 +50,19 @@ class MembersService extends SupabaseService with Postgrest {
         .withConverter(Member.fromJson);
   }
 
+  // Selecting the deleted row makes a delete that matched nothing (already
+  // gone, or hidden by row-level security) fail instead of looking done.
   Future<void> deleteMember(String memberId) async {
-    return table().delete().eq('id', memberId);
+    await table().delete().eq('id', memberId).select('id').single();
   }
 
   Future<Member> getOwnMemberByGroupId(String groupId) async {
+    final userId = supabase.auth.currentUser?.id;
+    if (userId == null) throw const NotSignedInException();
     return table()
         .select('*')
         .eq('group_id', groupId)
-        .eq('profile_id', supabase.auth.currentUser!.id)
+        .eq('profile_id', userId)
         .single()
         .withConverter(Member.fromJson);
   }

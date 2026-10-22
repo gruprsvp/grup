@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Member implements DiagnosticableTreeMixin {
 
- String get id; String get groupId; GroupRoles get role; String? get profileId; String? get displayNameOverride; DateTime? get createdAt; DateTime? get updatedAt;
+ String get id; String get groupId;@JsonKey(unknownEnumValue: GroupRoles.member) GroupRoles get role; String? get profileId; String? get displayNameOverride; DateTime? get createdAt; DateTime? get updatedAt;
 /// Create a copy of Member
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -61,7 +61,7 @@ abstract mixin class $MemberCopyWith<$Res>  {
   factory $MemberCopyWith(Member value, $Res Function(Member) _then) = _$MemberCopyWithImpl;
 @useResult
 $Res call({
- String id, String groupId, GroupRoles role, String? profileId, String? displayNameOverride, DateTime? createdAt, DateTime? updatedAt
+ String id, String groupId,@JsonKey(unknownEnumValue: GroupRoles.member) GroupRoles role, String? profileId, String? displayNameOverride, DateTime? createdAt, DateTime? updatedAt
 });
 
 
@@ -169,7 +169,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String groupId,  GroupRoles role,  String? profileId,  String? displayNameOverride,  DateTime? createdAt,  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String groupId, @JsonKey(unknownEnumValue: GroupRoles.member)  GroupRoles role,  String? profileId,  String? displayNameOverride,  DateTime? createdAt,  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Member() when $default != null:
 return $default(_that.id,_that.groupId,_that.role,_that.profileId,_that.displayNameOverride,_that.createdAt,_that.updatedAt);case _:
@@ -190,7 +190,7 @@ return $default(_that.id,_that.groupId,_that.role,_that.profileId,_that.displayN
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String groupId,  GroupRoles role,  String? profileId,  String? displayNameOverride,  DateTime? createdAt,  DateTime? updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String groupId, @JsonKey(unknownEnumValue: GroupRoles.member)  GroupRoles role,  String? profileId,  String? displayNameOverride,  DateTime? createdAt,  DateTime? updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _Member():
 return $default(_that.id,_that.groupId,_that.role,_that.profileId,_that.displayNameOverride,_that.createdAt,_that.updatedAt);}
@@ -207,7 +207,7 @@ return $default(_that.id,_that.groupId,_that.role,_that.profileId,_that.displayN
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String groupId,  GroupRoles role,  String? profileId,  String? displayNameOverride,  DateTime? createdAt,  DateTime? updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String groupId, @JsonKey(unknownEnumValue: GroupRoles.member)  GroupRoles role,  String? profileId,  String? displayNameOverride,  DateTime? createdAt,  DateTime? updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _Member() when $default != null:
 return $default(_that.id,_that.groupId,_that.role,_that.profileId,_that.displayNameOverride,_that.createdAt,_that.updatedAt);case _:
@@ -222,12 +222,12 @@ return $default(_that.id,_that.groupId,_that.role,_that.profileId,_that.displayN
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _Member with DiagnosticableTreeMixin implements Member {
-  const _Member({required this.id, required this.groupId, required this.role, this.profileId, this.displayNameOverride, this.createdAt, this.updatedAt});
+  const _Member({required this.id, required this.groupId, @JsonKey(unknownEnumValue: GroupRoles.member) required this.role, this.profileId, this.displayNameOverride, this.createdAt, this.updatedAt});
   factory _Member.fromJson(Map<String, dynamic> json) => _$MemberFromJson(json);
 
 @override final  String id;
 @override final  String groupId;
-@override final  GroupRoles role;
+@override@JsonKey(unknownEnumValue: GroupRoles.member) final  GroupRoles role;
 @override final  String? profileId;
 @override final  String? displayNameOverride;
 @override final  DateTime? createdAt;
@@ -274,7 +274,7 @@ abstract mixin class _$MemberCopyWith<$Res> implements $MemberCopyWith<$Res> {
   factory _$MemberCopyWith(_Member value, $Res Function(_Member) _then) = __$MemberCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String groupId, GroupRoles role, String? profileId, String? displayNameOverride, DateTime? createdAt, DateTime? updatedAt
+ String id, String groupId,@JsonKey(unknownEnumValue: GroupRoles.member) GroupRoles role, String? profileId, String? displayNameOverride, DateTime? createdAt, DateTime? updatedAt
 });
 
 

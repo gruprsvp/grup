@@ -21,12 +21,13 @@ class GroupsService extends SupabaseService with Postgrest {
         .withConverter(_convertGroupsAndMembers);
   }
 
-  Future<Group> getGroupById(String id) async {
+  /// The group with its members and their profiles.
+  Future<GroupsAndMembers> getGroupById(String id) async {
     return table()
         .select('*,members!inner(*,profiles!left(*))')
         .eq('id', id)
         .single()
-        .withConverter(Group.fromJson);
+        .withConverter((data) => _convertGroupsAndMembers([data]));
   }
 
   Future<Group> createGroup(Group group) async {
@@ -67,20 +68,23 @@ class GroupsService extends SupabaseService with Postgrest {
   }
 
   GroupsAndMembers _convertGroupsAndMembers(List<Map<String, dynamic>> data) {
-    final groups = <Group>{};
-    final members = <Member>{};
-    final profiles = <Profile>{};
-    for (var value in data) {
-      groups.add(Group.fromJson(value));
-      if (value['members'] != null) {
-        for (var member in value['members']) {
-          members.add(Member.fromJson(member));
-          if (member['profiles'] != null) {
-            profiles.add(Profile.fromJson(member['profiles']));
-          }
-        }
-      }
-    }
-    return (groups: groups, members: members, profiles: profiles);
+    final members = [
+      for (final group in data)
+        ...((group['members'] as List?) ?? const [])
+            .cast<Map<String, dynamic>>(),
+    ];
+    return (
+      groups: decodeRows(data, Group.fromJson),
+      members: decodeRows(members, Member.fromJson),
+      // A profile appears once per group its user is in: keep one of each.
+      profiles: {
+        for (final profile in decodeRows([
+          for (final member in members)
+            if (member['profiles'] case final Map<String, dynamic> profile)
+              profile,
+        ], Profile.fromJson))
+          profile.id: profile,
+      }.values,
+    );
   }
 }

@@ -1,14 +1,18 @@
-/// Enum for all tables in the database.
+/// The tables the app reads and writes.
 enum Tables {
-  roles,
-  profiles,
-  groups,
-  members,
-  invites,
-  schedules,
-  default_rules,
-  replies,
+  profiles('profiles'),
+  groups('groups'),
+  members('members'),
+  invites('invites'),
+  schedules('schedules'),
+  defaultRules('default_rules'),
+  replies('replies');
+
+  const Tables(this.table);
+
+  /// The table's name in the database.
+  final String table;
 }
 
-/// Enum with all bucket IDs in Supabase.
-enum Buckets { public, private }
+/// The storage buckets the app uses.
+enum Buckets { public }
