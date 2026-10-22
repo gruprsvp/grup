@@ -104,61 +104,11 @@ final selectScheduleInstanceForDate = createSelector3(
   selectScheduleInstanceSummary,
   groupMembersWithProfilesSelector,
   selectIsAdmin,
-  (instance, members, canEditOthers) {
-    if (instance == null) return null;
-
-    final groupedMembers = members
-        .map(
-          (m) => ScheduleInstanceMember(
-            member: m.$1,
-            reply: instance.memberReplies[m.$1.id],
-            defaultReply: instance.memberDefaultReplies[m.$1.id],
-            defaultRule: instance.memberDefaultRules[m.$1.id],
-            profile: m.$2,
-          ),
-        )
-        .whereNot((m) => m.member.id == instance.targetMemberId)
-        .groupListsBy((m) => m.reply ?? m.defaultReply);
-
-    // This is ugly but I needed an easy way to count the user's reply,
-    // after grouping the members by their reply (where the user is not included).
-    final ownReply = instance.myReply ?? instance.myDefaultReply;
-    final userRepliedYes = ownReply == ReplyOptions.yes ? 1 : 0;
-    final userRepliedNo = ownReply == ReplyOptions.no ? 1 : 0;
-    final userRepliedUnknown = ownReply == null ? 1 : 0;
-
-    final repliesGroups = [
-      if (groupedMembers.containsKey(ReplyOptions.yes))
-        ScheduleInstanceRepliesGroup(
-          reply: ReplyOptions.yes,
-          count: groupedMembers[ReplyOptions.yes]!.length + userRepliedYes,
-          members: groupedMembers[ReplyOptions.yes]!,
+  (instance, members, canEditOthers) => instance == null
+      ? null
+      : scheduleInstanceDetails(
+          instance,
+          members,
+          canEditOthers: canEditOthers,
         ),
-      if (groupedMembers.containsKey(ReplyOptions.no))
-        ScheduleInstanceRepliesGroup(
-          reply: ReplyOptions.no,
-          count: groupedMembers[ReplyOptions.no]!.length + userRepliedNo,
-          members: groupedMembers[ReplyOptions.no]!,
-        ),
-      if (groupedMembers.containsKey(null))
-        ScheduleInstanceRepliesGroup(
-          reply: null,
-          count: groupedMembers[null]!.length + userRepliedUnknown,
-          members: groupedMembers[null]!,
-        ),
-    ];
-
-    return ScheduleInstanceDetails(
-      scheduleId: instance.scheduleId,
-      groupId: instance.groupId,
-      displayName: instance.displayName,
-      instanceDate: instance.instanceDate,
-      repliesGroups: repliesGroups,
-      myReply: instance.myReply,
-      myDefaultReply: instance.myDefaultReply,
-      myDefaultRule: instance.myDefaultRule,
-      targetMemberId: instance.targetMemberId,
-      canEditOthers: canEditOthers,
-    );
-  },
 );

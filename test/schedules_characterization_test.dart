@@ -9,7 +9,6 @@
 // edges), the assertion encodes the observed behavior, not an assumption.
 
 import 'package:parousia/models/models.dart';
-import 'package:parousia/selectors/selectors.dart';
 import 'package:parousia/util/recurrence_rules.dart';
 import 'package:rrule/rrule.dart';
 import 'package:flutter_test/flutter_test.dart';
