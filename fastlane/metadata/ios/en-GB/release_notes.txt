@@ -1,1 +1,6 @@
-Buttons and content are no longer hidden behind the system bar at the bottom of the screen. Plus a few smaller layout fixes.
+GRUP 2.0 is rebuilt under the hood for reliability.
+• Invite links now work on the web too, and bring you back to the invite after you sign in.
+• If something can't load or save, the app now tells you and lets you try again.
+• The sign-in screen, recurring events and dates now appear in your language.
+• Easier-to-read reply buttons, and labels for screen readers.
+• Group pictures are no longer lost when editing, plus other fixes.

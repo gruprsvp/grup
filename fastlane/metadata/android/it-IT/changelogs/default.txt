@@ -1,1 +1,6 @@
-I pulsanti e i contenuti non sono più nascosti dalla barra di sistema nella parte inferiore dello schermo. Inoltre, piccoli miglioramenti all’interfaccia.
+GRUP 2.0 è stato ricostruito dietro le quinte per essere più affidabile.
+• I link di invito ora funzionano anche sul web e ti riportano all’invito dopo l’accesso.
+• Se qualcosa non si carica o non si salva, ora l’app te lo dice e puoi riprovare.
+• La schermata di accesso, gli eventi ricorrenti e le date ora sono nella tua lingua.
+• Pulsanti di risposta più leggibili ed etichette per gli screen reader.
+• Le immagini dei gruppi non si perdono più durante la modifica, e altre correzioni.
