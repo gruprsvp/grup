@@ -121,6 +121,11 @@ class FormBuilderRecurrenceRule
              mouseCursor: mouseCursor,
              obscureText: obscureText,
              onEditingComplete: onEditingComplete,
+             // Opened on tap, like flutter_form_builder's date picker: opening
+             // on focus reopened the dialog when focus came back after it.
+             onTap: state.enabled
+                 ? () => state.onShowSelector(state.value)
+                 : null,
              readOnly: true,
              scrollPadding: scrollPadding,
              showCursor: showCursor,
@@ -156,12 +161,10 @@ class _RecurrenceRulePickerState
     _textFieldController.text = initVal == null
         ? ''
         : initVal.toText(l10n: widget.rruleL10n);
-    effectiveFocusNode.addListener(_handleFocus);
   }
 
   @override
   void dispose() {
-    effectiveFocusNode.removeListener(_handleFocus);
     // Dispose the _textFieldController when initState created it
     if (null == widget.controller) {
       _textFieldController.dispose();
@@ -169,17 +172,7 @@ class _RecurrenceRulePickerState
     super.dispose();
   }
 
-  Future<void> _handleFocus() async {
-    if (effectiveFocusNode.hasFocus && enabled) {
-      effectiveFocusNode.unfocus();
-      await onShowSelector(context, value);
-    }
-  }
-
-  Future<RecurrenceRule?> onShowSelector(
-    BuildContext context,
-    RecurrenceRule? currentValue,
-  ) async {
+  Future<RecurrenceRule?> onShowSelector(RecurrenceRule? currentValue) async {
     final newValue = await showAdaptiveDialog(
       context: context,
       builder: (context) {

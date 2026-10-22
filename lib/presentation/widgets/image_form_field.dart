@@ -100,6 +100,7 @@ class _ImageFormFieldState extends FormFieldState<XFile> {
     return Stack(
       children: [
         ProfilePicture(
+          tooltip: AppLocalizations.of(context)!.chooseNewProfilePicture,
           onPressed: _changeImage,
           image: image,
           radius: widget.radius,

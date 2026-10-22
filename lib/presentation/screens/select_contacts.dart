@@ -47,6 +47,7 @@ class _SelectContactsScreenState extends State<SelectContactsScreen> {
             isLabelVisible: selected.length > 1,
             alignment: Alignment.topLeft,
             child: IconButton(
+              tooltip: l10n.invite,
               onPressed: selected.isNotEmpty
                   ? () async {
                       final c = await contacts;

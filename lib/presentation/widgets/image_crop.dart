@@ -24,7 +24,8 @@ class ImageCropState extends State<ImageCrop> {
       appBar: AppBar(
         actions: [
           IconButton(
-            icon: Icon(Icons.cut),
+            icon: const Icon(Icons.check),
+            tooltip: MaterialLocalizations.of(context).okButtonLabel,
             onPressed: () {
               _controller.crop();
             },

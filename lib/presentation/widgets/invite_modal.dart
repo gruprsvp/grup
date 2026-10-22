@@ -73,6 +73,7 @@ class InviteModal extends StatelessWidget {
   }) => Column(
     children: [
       IconButton.filled(
+        tooltip: label,
         onPressed: () {
           Navigator.of(context).pop(); // Close the modal
           onOptionSelected?.call(option); // Notify the selection
