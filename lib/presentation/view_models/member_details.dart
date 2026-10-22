@@ -1,0 +1,67 @@
+import 'package:flutter/foundation.dart';
+import 'package:parousia/models/models.dart';
+import 'package:parousia/repositories/repositories.dart';
+import 'package:parousia/util/command.dart';
+import 'package:parousia/util/errors.dart';
+import 'package:parousia/util/result.dart';
+
+/// One member of a group: their role, pending invites, and removal.
+class MemberDetailsViewModel extends ChangeNotifier {
+  MemberDetailsViewModel({
+    required this.groupId,
+    required this.memberId,
+    required this._groups,
+  }) {
+    load = Command0(_load)..execute();
+    setRole = Command1(
+      (role) => _withMember((member) => _groups.setRole(member, role)),
+    );
+    remove = Command0(() => _withMember(_groups.remove));
+    _groups.addListener(notifyListeners);
+  }
+
+  final String groupId;
+  final String memberId;
+  final GroupsRepository _groups;
+
+  late final Command0<void> load;
+  late final Command1<void, GroupRoles> setRole;
+  late final Command0<void> remove;
+
+  Group? get group => _groups.group(groupId);
+
+  Member? get member => _groups.member(memberId);
+
+  Profile? get profile => _groups.profile(member?.profileId);
+
+  /// The pending invites, once loaded. Only admins can see them.
+  List<Invite>? get invites => _groups.invites(memberId);
+
+  bool get isCurrentUser =>
+      member?.profileId != null && member?.profileId == _groups.userId;
+
+  Future<Result<void>> _load() async {
+    final results = await Future.wait([
+      _groups.refreshGroup(groupId),
+      _groups.loadInvites(memberId),
+    ]);
+    return results.firstWhere(
+      (result) => result is Error,
+      orElse: () => const Result.ok(null),
+    );
+  }
+
+  Future<Result<void>> _withMember(
+    Future<Result<void>> Function(Member member) action,
+  ) async {
+    final member = this.member;
+    if (member == null) return const Result.error(NotFoundException());
+    return action(member);
+  }
+
+  @override
+  void dispose() {
+    _groups.removeListener(notifyListeners);
+    super.dispose();
+  }
+}
