@@ -98,5 +98,17 @@
   "themeSystem": "System",
   "unknown": "Unbekannt",
   "yes": "Ja",
-  "you": "Du"
+  "you": "Du",
+  "errorNetwork": "GRUP ist nicht erreichbar. Prüfe deine Verbindung und versuche es erneut.",
+  "errorNotFound": "Das ist nicht mehr verfügbar. Vielleicht wurde es gelöscht, oder du hast keinen Zugriff mehr.",
+  "errorNotAllowed": "Das darfst du nicht.",
+  "errorInvalidInviteCode": "Dieser Einladungscode ist ungültig. Prüfe ihn und versuche es erneut.",
+  "errorAlreadyMember": "Du bist bereits Mitglied dieser Gruppe.",
+  "errorNotSignedIn": "Du bist abgemeldet. Melde dich an und versuche es erneut.",
+  "errorGeneric": "Etwas ist schiefgelaufen. Bitte versuche es erneut.",
+  "retry": "Erneut versuchen",
+  "joiningGroup": "Du trittst der Gruppe bei…",
+  "joinedGroup": "Du bist der Gruppe beigetreten!",
+  "goToGroups": "Zu deinen Gruppen",
+  "licenses": "Lizenzen"
 }

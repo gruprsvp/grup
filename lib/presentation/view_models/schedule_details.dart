@@ -1,5 +1,4 @@
 import 'package:collection/collection.dart';
-import 'package:flutter/foundation.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/util/command.dart';
@@ -7,8 +6,10 @@ import 'package:parousia/util/result.dart';
 import 'package:parousia/util/util.dart';
 import 'package:rrule/rrule.dart';
 
+import 'view_model.dart';
+
 /// One occurrence of a schedule, with everyone's answer to it.
-class ScheduleDetailsViewModel extends ChangeNotifier {
+class ScheduleDetailsViewModel extends ViewModel {
   ScheduleDetailsViewModel({
     required this.groupId,
     required this.scheduleId,
@@ -17,8 +18,8 @@ class ScheduleDetailsViewModel extends ChangeNotifier {
     required this._schedules,
   }) {
     load = Command0(_load)..execute();
-    _groups.addListener(_update);
-    _schedules.addListener(_update);
+    listenTo([_groups, _schedules], _update);
+    listenTo([load]);
     _update();
   }
 
@@ -101,12 +102,5 @@ class ScheduleDetailsViewModel extends ChangeNotifier {
             canEditOthers: _groups.ownMember(groupId)?.role == GroupRoles.admin,
           );
     notifyListeners();
-  }
-
-  @override
-  void dispose() {
-    _groups.removeListener(_update);
-    _schedules.removeListener(_update);
-    super.dispose();
   }
 }

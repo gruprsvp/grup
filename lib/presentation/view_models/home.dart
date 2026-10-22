@@ -1,12 +1,13 @@
-import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/util/command.dart';
 import 'package:parousia/util/result.dart';
 
+import 'view_model.dart';
+
 /// The home screen: the user's groups.
-class HomeViewModel extends ChangeNotifier {
+class HomeViewModel extends ViewModel {
   HomeViewModel({
     required this._groups,
     required this._profile,
@@ -15,16 +16,12 @@ class HomeViewModel extends ChangeNotifier {
     refresh = Command0(_refresh)..execute();
     create = Command1((args) => _groups.create(args.group, image: args.image));
     join = Command1(_groups.join);
-    for (final repository in _repositories) {
-      repository.addListener(notifyListeners);
-    }
+    listenTo([_groups, _profile, _settings, refresh, create, join]);
   }
 
   final GroupsRepository _groups;
   final ProfileRepository _profile;
   final SettingsRepository _settings;
-
-  List<ChangeNotifier> get _repositories => [_groups, _profile, _settings];
 
   late final Command0<void> refresh;
   late final Command1<Group, ({Group group, XFile? image})> create;
@@ -54,13 +51,5 @@ class HomeViewModel extends ChangeNotifier {
       (result) => result is Error,
       orElse: () => const Result.ok(null),
     );
-  }
-
-  @override
-  void dispose() {
-    for (final repository in _repositories) {
-      repository.removeListener(notifyListeners);
-    }
-    super.dispose();
   }
 }

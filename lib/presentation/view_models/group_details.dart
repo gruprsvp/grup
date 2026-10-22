@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/util/command.dart';
@@ -6,8 +5,10 @@ import 'package:parousia/util/errors.dart';
 import 'package:parousia/util/result.dart';
 import 'package:parousia/util/util.dart';
 
+import 'view_model.dart';
+
 /// A group's events on one day, with everyone's answers.
-class GroupDetailsViewModel extends ChangeNotifier {
+class GroupDetailsViewModel extends ViewModel {
   GroupDetailsViewModel({
     required this.groupId,
     required this._groups,
@@ -15,8 +16,8 @@ class GroupDetailsViewModel extends ChangeNotifier {
     DateTime? date,
   }) : _date = date ?? DateTime.now() {
     load = Command0(_load)..execute();
-    _groups.addListener(_update);
-    _schedules.addListener(_update);
+    listenTo([_groups, _schedules], _update);
+    listenTo([load]);
     _update();
   }
 
@@ -110,12 +111,5 @@ class GroupDetailsViewModel extends ChangeNotifier {
           ),
     ]..sort((a, b) => a.instanceDate.compareTo(b.instanceDate));
     notifyListeners();
-  }
-
-  @override
-  void dispose() {
-    _groups.removeListener(_update);
-    _schedules.removeListener(_update);
-    super.dispose();
   }
 }

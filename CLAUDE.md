@@ -25,8 +25,8 @@ supabase status -o json > supabase/config/localhost.json   # app + tests read th
 flutter analyze --no-fatal-infos           # CI gate (warnings/errors fail; infos advisory)
 flutter test                              # whole suite (live tests self-skip if no Supabase)
 flutter test --exclude-tags live          # hermetic only — no Docker/Supabase needed
-flutter test --tags live                  # only the live-Supabase repository suite
-flutter test test/selectors_test.dart     # a single file
+flutter test --tags live                  # only the live-Supabase service suite
+flutter test test/app_flow_test.dart      # a single file
 flutter test --plain-name "substring"     # a single test/group by name
 
 flutter run                               # the app (web/Chrome needs no extra setup)
@@ -74,29 +74,29 @@ which uses `faker`) under `test/`, and check the pubspec diff after running it.
 
 ## Code generation
 
-Large parts of `lib/` are generated and must not be hand-edited: `*.freezed.dart` (freezed), `*.g.dart` (json_serializable / go_router_builder / app_state), `go_router_builder.g.dart`, and `lib/l10n/app_localizations*.dart`. Change the source (`@freezed` class, `@TypedGoRoute`, `.arb` file) and rerun build_runner / gen-l10n.
+Large parts of `lib/` are generated and must not be hand-edited: `*.freezed.dart` (freezed), `*.g.dart` (json_serializable / go_router_builder), `go_router_builder.g.dart`, and `lib/l10n/app_localizations*.dart`. Change the source (`@freezed` class, `@TypedGoRoute`, `.arb` file) and rerun build_runner / gen-l10n.
 
 ## Architecture
 
-Redux is the backbone (`redux`, `redux_epics`, `redux_persist`, `redux_entity`, `reselect`, `rxdart`). The store is assembled in `lib/main.dart#_initStore`. Data flows one direction: **UI dispatches action → epic performs side effect → epic dispatches result action → reducer updates state → selector derives view data → container rebuilds**.
+MVVM as in Flutter's architecture guide (docs.flutter.dev/app-architecture): **services → repositories → view models → views**, with `provider` for dependency injection. Data flows one way: a view calls a view-model method or `Command`; the view model calls a repository; the repository calls services, updates its cached data and notifies; view models listening to it recompute and notify; views rebuild.
 
 Layers under `lib/` (each has a barrel file that re-exports the folder):
 
-- **`models/`** — `@freezed` domain types (`Group`, `Member`, `Schedule`, `Reply`, `Profile`, `Invite`, `DefaultRule`) plus `enum.dart`. Recurring schedules use `RecurrenceRule` from the `rrule` package.
-- **`state/`** — `AppState` (freezed, JSON-serializable). Remote data is held as normalized `RemoteEntityState<T>` (from `redux_entity`), one per entity type. Persisted to disk via `redux_persist`; `copyWithoutErrors` strips errors on save and `selectedDate` is reset to today on load.
-- **`actions/`** — Redux actions. Note many actions are the **generic** ones from `redux_entity` parameterized by type, e.g. `RequestRetrieveAll<Group>`, `SuccessRetrieveOne<Schedule>`, `FailCreateOne`. Domain actions (e.g. `CreateGroupAction`, `GroupDetailsOpenAction`) live here too.
-- **`reducers/`** — pure reducers; `root_reducer.dart` wires them by hand. `remote_entities.dart` defines a `RemoteEntityReducer` per entity (with the `selectId` used as the normalized map key — note composite keys for `DefaultRule` and `Reply`). Signing out resets to `AppState.initialState()`.
-- **`epics/`** — all side effects (rxdart streams). Epics call repositories and translate domain actions into the generic `redux_entity` request/success/fail actions (see `epics/groups.dart` for the canonical pattern). Cross-cutting epics react to auth/app-lifecycle actions to trigger loads.
-- **`selectors/`** — memoized `reselect` selectors. The RSVP-resolution logic (combining replies + default rules + recurrence instances into a `ScheduleInstanceSummary`) lives in `selectors/schedules.dart` and is the most domain-heavy code.
-- **`services/`** — Supabase data access, stateless. All extend `SupabaseService` and mix in `Postgrest` and/or `Storage` (`services/supabase.dart`). Table and bucket names come from the `Tables`/`Buckets` enums in `services/const.dart`. Some writes go through Postgres RPC functions (e.g. `create_group`).
-- **`presentation/`** — three sub-layers:
-  - `screens/` — "dumb" widgets; receive everything via constructor params, never touch the store.
-  - `containers/` — connect Redux to screens via `StoreConnector` + a `@freezed _ViewModel` with a `fromStore(Store)` factory that builds props and wires `onX` callbacks to `store.dispatch(...)`. (See `containers/home.dart`.)
-  - `widgets/` — reusable presentational pieces.
+- **`models/`** — `@freezed` domain types (`Group`, `Member`, `Schedule`, `Reply`, `Profile`, `Invite`, `DefaultRule`) plus `enum.dart`. Recurring schedules use `RecurrenceRule` from the `rrule` package. `rsvp.dart` holds the RSVP resolution (`getScheduleInstances`, `repliesForScheduleInstance`, `scheduleInstanceDetails`): pure functions combining replies, default rules and recurrence instances. It is the most domain-heavy code, pinned by `test/schedules_characterization_test.dart`.
+- **`services/`** — Supabase data access, stateless; they throw. All extend `SupabaseService` and mix in `Postgrest` and/or `Storage` (`services/supabase.dart`). Table and bucket names come from the `Tables`/`Buckets` enums in `services/const.dart`. Some writes go through Postgres RPC functions (e.g. `create_group`). Lists decode row by row (`decodeRows`), so one undecodable row doesn't sink the list. Deletes select the deleted row, so a delete that matched nothing fails (PGRST116). `LocalCache` (SharedPreferences) keeps the repositories' data on the device.
+- **`repositories/`** — the source of truth: `ChangeNotifier`s that cache data and return `Result` (`util/result.dart`); they never throw, `guard` (`util/errors.dart`) turns failures into typed `AppException`s and reports the unexpected ones to Sentry. `GroupsRepository` (groups, members, profiles, invites), `SchedulesRepository` (schedules, default rules, replies; replies and rules are optimistic and roll back), `ProfileRepository` (own profile), `AuthRepository` (who is signed in; notifies only when the user changes), `SettingsRepository` (theme, language, feedback; survive sign-out). The user-data repositories extend `UserData`: `switchUser` swaps in a user's cached data, and results of requests started for a previous user are dropped (read `generation` before the request, apply with `ifCurrent`). **Deliberate deviation from the guide: no abstract repository classes** — the test seam is at the services (`test/support/fake_backend.dart`), so each repository would have one implementation.
+- **`dependencies.dart`** — the composition root: builds services (`supabaseServices`), repositories (`Repositories.create`) and their providers, and switches the repositories to the new user on every auth change. `main.dart` and the tests use it.
+- **`presentation/`**:
+  - `view_models/` — one `ViewModel` (a `ChangeNotifier` that relays its repositories and commands) per screen. User actions are `Command`s (`util/command.dart`, from the guide plus a `catch`): views read `running`/`result` and show failures with `showFailure`. Actions the user may repeat quickly (answering events) are plain methods returning `Result`, because a command ignores calls while running.
+  - `containers/` — create a screen's view model (`ChangeNotifierProvider` + `Consumer`, or a `State` when there are side effects such as navigation) and pass its data and callbacks to the screen.
+  - `screens/` — "dumb" widgets; receive everything via constructor params.
+  - `widgets/` — reusable presentational pieces, also dumb.
+
+Tests mirror the layers: `test/services_test.dart` (live), `test/repositories/`, `test/view_models/` and the widget tests run the real repositories and view models over `FakeBackend` (`test/support/harness.dart#fakeApp`); `test/app_flow_test.dart` and `test/router_test.dart` drive the whole app.
 
 ## Routing
 
-`go_router` with typed routes (`go_router_builder`). The whole route tree is declared with `@TypedGoRoute` annotations on `GoRouteData` classes in `lib/go_router_builder.dart`; `lib/router.dart` just feeds `$appRoutes` to `GoRouter`. Protected routes mix in `AuthenticationGuard`. Navigate using the generated route objects (e.g. `HomeScreenRoute().location`, `GroupDetailsRoute(groupId).go(context)`) rather than raw path strings. Routing-as-side-effect is handled by `epics/routing.dart` + `createRouterEpics`.
+`go_router` with typed routes (`go_router_builder`). The whole route tree is declared with `@TypedGoRoute` annotations on `GoRouteData` classes in `lib/go_router_builder.dart`; `lib/router.dart` creates the `GoRouter` with `refreshListenable: AuthRepository` and one top-level `redirect`: signed-out users go to `/auth?from=…` and come back after signing in; links that open the app (Flutter deep linking is on for Android and iOS) arrive with scheme and host and are opened at their path. `/auth` is a top-level route so nothing is built under it. Invite links are `/join/:code`. Navigate with the generated route objects (e.g. `const HomeScreenRoute().go(context)`, `GroupDetailsRoute(groupId: id).push(context)`) rather than raw path strings.
 
 ## Configuration & environments
 

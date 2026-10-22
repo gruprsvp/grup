@@ -98,5 +98,17 @@
   "themeSystem": "Sistema",
   "unknown": "Sconosciuto",
   "yes": "Sì",
-  "you": "Tu"
+  "you": "Tu",
+  "errorNetwork": "Impossibile raggiungere GRUP. Controlla la connessione e riprova.",
+  "errorNotFound": "Non è più disponibile. Potrebbe essere stato eliminato, o non hai più accesso.",
+  "errorNotAllowed": "Non hai il permesso di farlo.",
+  "errorInvalidInviteCode": "Questo codice di invito non è valido. Controllalo e riprova.",
+  "errorAlreadyMember": "Sei già membro di questo gruppo.",
+  "errorNotSignedIn": "Sei uscito. Accedi e riprova.",
+  "errorGeneric": "Qualcosa è andato storto. Riprova.",
+  "retry": "Riprova",
+  "joiningGroup": "Ti stai unendo al gruppo…",
+  "joinedGroup": "Ti sei unito al gruppo!",
+  "goToGroups": "Vai ai tuoi gruppi",
+  "licenses": "Licenze"
 }

@@ -697,6 +697,78 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'You'**
   String get you;
+
+  /// Shown when the server can't be reached.
+  ///
+  /// In en, this message translates to:
+  /// **'Couldn\'t reach GRUP. Check your connection and try again.'**
+  String get errorNetwork;
+
+  /// Shown when something the user acted on was deleted, or they lost access to it.
+  ///
+  /// In en, this message translates to:
+  /// **'This isn\'t available any more. It may have been deleted, or you no longer have access.'**
+  String get errorNotFound;
+
+  /// Shown when the server refuses an action the user isn't allowed to do.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re not allowed to do that.'**
+  String get errorNotAllowed;
+
+  /// Shown when joining a group with a code that matches no invite.
+  ///
+  /// In en, this message translates to:
+  /// **'This invite code isn\'t valid. Check it and try again.'**
+  String get errorInvalidInviteCode;
+
+  /// Shown when joining a group the user is already in.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re already a member of this group.'**
+  String get errorAlreadyMember;
+
+  /// Shown when an action needs a signed-in user but the session ended.
+  ///
+  /// In en, this message translates to:
+  /// **'You\'re signed out. Sign in and try again.'**
+  String get errorNotSignedIn;
+
+  /// Shown for any unexpected failure.
+  ///
+  /// In en, this message translates to:
+  /// **'Something went wrong. Please try again.'**
+  String get errorGeneric;
+
+  /// Button that tries a failed load again.
+  ///
+  /// In en, this message translates to:
+  /// **'Retry'**
+  String get retry;
+
+  /// Shown while an invite link is being used to join a group.
+  ///
+  /// In en, this message translates to:
+  /// **'Joining the group…'**
+  String get joiningGroup;
+
+  /// Confirmation after joining a group from an invite link.
+  ///
+  /// In en, this message translates to:
+  /// **'You joined the group!'**
+  String get joinedGroup;
+
+  /// Button that leaves an error screen for the home screen.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to your groups'**
+  String get goToGroups;
+
+  /// Settings entry that opens the open-source licenses page.
+  ///
+  /// In en, this message translates to:
+  /// **'Licenses'**
+  String get licenses;
 }
 
 class _AppLocalizationsDelegate

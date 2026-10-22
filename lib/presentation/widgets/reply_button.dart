@@ -68,10 +68,16 @@ class ReplyButton extends StatelessWidget {
     final isActive = reply == option;
     final isDefault = defaultReply == option && reply == null;
 
+    final onReplyChanged = this.onReplyChanged;
+    // Without a callback the buttons show the answer but are disabled.
+    VoidCallback? answer(ReplyOptions? reply) =>
+        onReplyChanged == null ? null : () => onReplyChanged(reply);
+
     if (isActive) {
       return IconButton.filled(
         icon: FaIcon(activeIcon),
-        onPressed: () => onReplyChanged?.call(null),
+        // Tapping the current answer clears it.
+        onPressed: answer(null),
         style: ButtonStyle(
           foregroundColor: foregroundColor,
           backgroundColor: focusColor,
@@ -85,13 +91,13 @@ class ReplyButton extends StatelessWidget {
           side: WidgetStateProperty.all(BorderSide(color: activeColor)),
         ),
         icon: FaIcon(activeIcon),
-        onPressed: () => onReplyChanged?.call(option),
+        onPressed: answer(option),
         tooltip: tooltip,
       );
     } else {
       return IconButton.outlined(
         icon: FaIcon(inactiveIcon),
-        onPressed: () => onReplyChanged?.call(option),
+        onPressed: answer(option),
         tooltip: tooltip,
       );
     }

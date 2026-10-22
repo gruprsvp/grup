@@ -2,8 +2,10 @@ import 'package:material_ui/material_ui.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/util/command.dart';
 
+import 'view_model.dart';
+
 /// App settings, signing out, and deleting the account.
-class SettingsViewModel extends ChangeNotifier {
+class SettingsViewModel extends ViewModel {
   SettingsViewModel({
     required this._settings,
     required AuthRepository auth,
@@ -11,7 +13,7 @@ class SettingsViewModel extends ChangeNotifier {
   }) {
     signOut = Command0(auth.signOut);
     deleteAccount = Command0(profile.deleteAccount);
-    _settings.addListener(notifyListeners);
+    listenTo([_settings, signOut, deleteAccount]);
   }
 
   final SettingsRepository _settings;
@@ -27,10 +29,4 @@ class SettingsViewModel extends ChangeNotifier {
   void nextThemeMode() => _settings.nextThemeMode();
 
   void setLocale(Locale? locale) => _settings.setLocale(locale);
-
-  @override
-  void dispose() {
-    _settings.removeListener(notifyListeners);
-    super.dispose();
-  }
 }

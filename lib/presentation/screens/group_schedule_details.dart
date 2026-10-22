@@ -7,24 +7,18 @@ import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:rrule/rrule.dart';
 
-// The target member ID is the ID of the member that the user is replying for,
-// which is not necessarily the user's own ID in the details screen.
-typedef OnDetailsReplyChangedCallback = void Function(
-  ScheduleInstanceDetails,
-  String,
-  ReplyOptions?,
-);
+/// Answers for [memberId]: the user, or (for admins) anyone in the group.
+typedef OnDetailsReplyChangedCallback = void Function({
+  required String memberId,
+  required ReplyOptions? reply,
+});
 
-// ! This kind of function signature is super risky, as it's easy to mix up the
-// ! order of the arguments. It's better to use a data class or a map instead.
-//   TODO(giorgio): I actually just fixed a bug because of this!
-//   I should refactor this to use either branded types or a map.
-typedef OnDetailsDefaultRuleChangedCallback = void Function(
-  RecurrenceRule?,
-  String,
-  String,
-  ReplyOptions?,
-);
+/// Sets [memberId]'s default answer for the occurrences [rule] matches.
+typedef OnDetailsDefaultRuleChangedCallback = void Function({
+  required String memberId,
+  required RecurrenceRule? rule,
+  required ReplyOptions? reply,
+});
 
 class GroupScheduleDetailsScreen extends StatelessWidget {
   final dateFormat = DateFormat.yMMMd();
@@ -32,7 +26,11 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
 
   final bool loading;
   final Group? group;
+
+  /// `null` until loaded: the answer buttons stay disabled until then.
   final ScheduleInstanceDetails? scheduleInstance;
+  final Exception? error;
+  final VoidCallback? onRetry;
   final OnDetailsReplyChangedCallback? onReplyChanged;
   final OnDetailsDefaultRuleChangedCallback? onDefaultRuleChanged;
 
@@ -41,9 +39,35 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
     required this.loading,
     this.group,
     this.scheduleInstance,
+    this.error,
+    this.onRetry,
     this.onReplyChanged,
     this.onDefaultRuleChanged,
   });
+
+  /// Lets [memberId]'s answers be changed, if there is one.
+  ScheduleMemberTile _memberTile({
+    required String name,
+    required String? memberId,
+    ReplyOptions? reply,
+    ReplyOptions? defaultReply,
+    DefaultRule? defaultRule,
+  }) => ScheduleMemberTile(
+    name: name,
+    reply: reply,
+    defaultReply: defaultReply,
+    defaultRule: defaultRule,
+    onReplyChanged: memberId == null || onReplyChanged == null
+        ? null
+        : (reply) => onReplyChanged!(memberId: memberId, reply: reply),
+    onDefaultRuleChanged: memberId == null || onDefaultRuleChanged == null
+        ? null
+        : (rule, reply) => onDefaultRuleChanged!(
+            memberId: memberId,
+            rule: rule,
+            reply: reply,
+          ),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +76,9 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
     final scheduleName = scheduleInstance?.displayName ?? l10n.loading;
     final instanceDate = scheduleInstance?.instanceDate;
     final repliesGroups = scheduleInstance?.repliesGroups ?? [];
+    // Only admins may answer for others.
+    final canEditOthers = scheduleInstance?.canEditOthers ?? false;
+    final error = this.error;
 
     return Scaffold(
       body: CustomScrollView(
@@ -86,24 +113,19 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
               ),
             ),
           ),
+          if (loading)
+            const SliverToBoxAdapter(child: LinearProgressIndicator()),
+          if (error != null)
+            SliverToBoxAdapter(
+              child: ErrorNotice(error: error, onRetry: onRetry),
+            ),
           SliverToBoxAdapter(
-            child: ScheduleMemberTile(
+            child: _memberTile(
               name: l10n.you,
+              memberId: scheduleInstance?.targetMemberId,
               reply: scheduleInstance?.myReply,
               defaultReply: scheduleInstance?.myDefaultReply,
               defaultRule: scheduleInstance?.myDefaultRule,
-              onReplyChanged: (reply) => onReplyChanged?.call(
-                scheduleInstance!,
-                scheduleInstance!.targetMemberId!,
-                reply,
-              ),
-              onDefaultRuleChanged: (recurrenceRule, reply) =>
-                  onDefaultRuleChanged?.call(
-                    recurrenceRule,
-                    scheduleInstance!.scheduleId,
-                    scheduleInstance!.targetMemberId!,
-                    reply,
-                  ),
             ),
           ),
           for (final replyGroup in repliesGroups) ...[
@@ -132,20 +154,12 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
                     profile?.displayName ??
                     l10n.unknown;
 
-                return ScheduleMemberTile(
+                return _memberTile(
                   name: name,
+                  memberId: canEditOthers ? member.id : null,
                   reply: reply,
                   defaultReply: defaultReply,
                   defaultRule: defaultRule,
-                  onReplyChanged: (reply) =>
-                      onReplyChanged?.call(scheduleInstance!, member.id, reply),
-                  onDefaultRuleChanged: (recurrenceRule, reply) =>
-                      onDefaultRuleChanged?.call(
-                        recurrenceRule,
-                        scheduleInstance!.scheduleId,
-                        member.id,
-                        reply,
-                      ),
                 );
               },
             ),

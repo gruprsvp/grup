@@ -11,3 +11,4 @@ export 'schedule_create.dart';
 export 'select_contacts.dart';
 export 'settings.dart';
 export 'settings_more.dart';
+export 'join_group.dart';

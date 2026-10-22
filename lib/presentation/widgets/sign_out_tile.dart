@@ -1,12 +1,13 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:parousia/l10n/app_localizations.dart';
-import 'package:parousia/go_router_builder.dart';
-import 'package:supabase_flutter/supabase_flutter.dart';
 
 /// A ListTile that signs the user out when tapped,
 /// with an adaptive confirmation dialog.
 class SignOutTile extends StatelessWidget {
-  const SignOutTile({super.key});
+  const SignOutTile({super.key, required this.onSignOut});
+
+  /// Signing out sends the user to the sign-in page (see router.dart).
+  final VoidCallback? onSignOut;
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class SignOutTile extends StatelessWidget {
     return ListTile(
       title: Text(l10n.signOut),
       leading: const Icon(Icons.logout),
-      onTap: () => _confirmSignOut(context),
+      onTap: onSignOut == null ? null : () => _confirmSignOut(context),
     );
   }
 
@@ -49,10 +50,6 @@ class SignOutTile extends StatelessWidget {
       },
     );
 
-    if (doSignOut == null || !doSignOut) return;
-
-    await Supabase.instance.client.auth.signOut();
-    if (!context.mounted) return;
-    AuthRoute().replace(context);
+    if (doSignOut == true) onSignOut?.call();
   }
 }

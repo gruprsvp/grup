@@ -7,15 +7,15 @@ import 'package:rrule/rrule.dart';
 import 'package:styled_text/styled_text.dart';
 
 class GroupEvents extends StatelessWidget {
-  final Group? group; // TODO is this needed?
-  final Iterable<Schedule>? schedules;
+  final String groupId;
+  final List<Schedule>? schedules;
   final ValueSetter<Schedule>? onCreate;
   final ValueSetter<Schedule>? onDelete;
   final Future<RruleL10n>? rrulel10n;
 
   const GroupEvents({
     super.key,
-    this.group,
+    required this.groupId,
     this.schedules,
     this.onCreate,
     this.onDelete,
@@ -29,9 +29,9 @@ class GroupEvents extends StatelessWidget {
 
     final topWidget = schedules?.isNotEmpty ?? false
         ? ListView.builder(
-            itemCount: schedules?.length,
+            itemCount: schedules!.length,
             itemBuilder: (context, index) {
-              final schedule = schedules!.elementAt(index);
+              final schedule = schedules![index];
               return ListTile(
                 title: Text(schedule.displayName),
                 subtitle: FutureBuilder(
@@ -86,16 +86,10 @@ class GroupEvents extends StatelessWidget {
   }
 
   Future<void> _createNewEvent(BuildContext context) async {
-    final result = await GroupScheduleCreateRoute(groupId: group!.id.toString())
-        .push(context);
-
-    if (result is! Schedule) {
-      // TODO error handling
-      return;
-    }
-
-    final newSchedule = result.copyWith(groupId: group!.id);
-    onCreate?.call(newSchedule);
+    final result = await GroupScheduleCreateRoute(groupId: groupId)
+        .push<Schedule>(context);
+    // Null when the user backed out without saving.
+    if (result != null) onCreate?.call(result.copyWith(groupId: groupId));
   }
 
   Future<void> _deleteEvent(BuildContext context, Schedule schedule) async {

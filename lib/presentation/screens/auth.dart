@@ -10,7 +10,6 @@ import 'package:flutter/material.dart';
 import 'package:material_ui/material_ui.dart' as modern;
 import 'package:parousia/l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/util/config.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 import 'package:universal_html/html.dart' as html;
@@ -49,7 +48,7 @@ class _AuthScaffold extends StatelessWidget {
             fontWeight: FontWeight.bold,
           ),
         ),
-        // TODO(borgoat): this shouldn't be needed: fix the navigation stack instead
+        // Nowhere to go back to while signed out.
         automaticallyImplyLeading: false,
       ),
       body: SafeArea(
@@ -58,15 +57,16 @@ class _AuthScaffold extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
+              // No navigation in these callbacks: once signed in, the router
+              // leaves this page for wherever the user was going (see
+              // router.dart), e.g. the invite link that brought them here.
               SupaEmailAuth(
                 redirectTo: _getRedirectUrl(),
-                // The Redux auth listener (main.dart) also reacts to sign-in, but upstream
-                // supabase_auth_ui requires these callbacks; navigate home to match
-                // SupaSocialsAuth.onSuccess below.
-                onSignInComplete: (response) => HomeScreenRoute().go(context),
-                // Email confirmation is disabled, so sign-up yields a session immediately.
-                // TODO: if confirmations get enabled, show a "check your email" state instead.
-                onSignUpComplete: (response) => HomeScreenRoute().go(context),
+                onSignInComplete: (_) {},
+                // Email confirmation is disabled, so sign-up yields a session
+                // immediately. If confirmations get enabled, show a "check your
+                // email" state here instead.
+                onSignUpComplete: (_) {},
               ),
               Divider(height: 64),
               SupaSocialsAuth(
@@ -77,7 +77,7 @@ class _AuthScaffold extends StatelessWidget {
                 ),
                 enableNativeAppleAuth: true,
                 redirectUrl: _getRedirectUrl(),
-                onSuccess: (session) => HomeScreenRoute().go(context),
+                onSuccess: (_) {},
               ),
             ],
           ),

@@ -6,17 +6,23 @@ import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 
-typedef OnProfileSaveCallback = ValueSetter<(String? name, XFile? image)>;
+/// Saves the profile, and says whether that worked.
+typedef OnProfileSaveCallback = Future<bool> Function(
+  String name,
+  XFile? image,
+);
 
 class ProfileScreen extends StatefulWidget {
   final Profile? profile;
   final bool? userNavigated;
+  final bool saving;
   final OnProfileSaveCallback onSave;
 
   const ProfileScreen({
     super.key,
     this.profile,
     this.userNavigated,
+    this.saving = false,
     required this.onSave,
   });
 
@@ -41,6 +47,35 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 
   @override
+  void didUpdateWidget(ProfileScreen oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    // Sign in with Apple sends the name after the profile first loads.
+    final name = widget.profile?.displayName;
+    if (name != null && _nameController.text.isEmpty) {
+      _nameController.text = name;
+    }
+  }
+
+  Future<void> _save() async {
+    if (!_formKey.currentState!.validate()) return;
+    _formKey.currentState!.save();
+    _nameFocusNode.unfocus();
+    setState(() => _enableSaveButton = false);
+
+    final saved = await widget.onSave(
+      _nameController.text.trim(),
+      _imageController.value,
+    );
+    if (!mounted) return;
+    if (!saved) {
+      setState(() => _enableSaveButton = true);
+    } else if (!(widget.userNavigated ?? false)) {
+      // Asked for the name on first sign-in: go back to where they were.
+      Navigator.of(context).pop();
+    }
+  }
+
+  @override
   void dispose() {
     _imageController.dispose();
     _nameFocusNode.dispose();
@@ -59,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           IconButton(
             icon: const FaIcon(FontAwesomeIcons.gear),
             tooltip: l10n.settings,
-            onPressed: () => SettingsRoute().push(context),
+            onPressed: () => const SettingsRoute().push(context),
           ),
         ],
       ),
@@ -95,6 +130,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       TextFormField(
                         focusNode: _nameFocusNode,
                         controller: _nameController,
+                        autofillHints: const [AutofillHints.name],
+                        textCapitalization: TextCapitalization.words,
                         decoration: InputDecoration(
                           labelText: l10n.enterYourName,
                         ),
@@ -113,25 +150,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               Padding(
                 padding: const EdgeInsets.all(16),
                 child: FilledButton(
-                  onPressed: _enableSaveButton
-                      ? () {
-                          if (_formKey.currentState!.validate()) {
-                            setState(() {
-                              _enableSaveButton = false;
-                            });
-                            _formKey.currentState!.save();
-                            _nameFocusNode.unfocus();
-                            widget.onSave((
-                              _nameController.text.trim(),
-                              _imageController.value,
-                            ));
-
-                            if (!(widget.userNavigated ?? false)) {
-                              Navigator.of(context).pop(context);
-                            }
-                          }
-                        }
-                      : null,
+                  onPressed: _enableSaveButton && !widget.saving ? _save : null,
                   child: Text(l10n.save),
                 ),
               ),

@@ -1,14 +1,9 @@
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:parousia/actions/actions.dart';
-import 'package:parousia/models/models.dart';
+import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/presentation/presentation.dart';
-import 'package:parousia/state/state.dart';
-import 'package:redux/redux.dart';
-import 'package:redux_entity/redux_entity.dart';
-
-part 'group_member_details.freezed.dart';
+import 'package:parousia/util/result.dart';
+import 'package:provider/provider.dart';
 
 class GroupMemberDetailsContainer extends StatelessWidget {
   final String groupId;
@@ -21,68 +16,40 @@ class GroupMemberDetailsContainer extends StatelessWidget {
   });
 
   @override
-  Widget build(BuildContext context) {
-    return StoreConnector<AppState, _ViewModel>(
-      distinct: true,
-      converter: (store) => _ViewModel.fromStore(store, groupId, memberId),
-      onInit: (store) => store.dispatch(MemberDetailsOpenAction(memberId)),
-      builder: (context, vm) => GroupMemberDetailsScreen(
-        loading: vm.loading,
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+    create: (context) => MemberDetailsViewModel(
+      groupId: groupId,
+      memberId: memberId,
+      groups: context.read(),
+    ),
+    child: Consumer<MemberDetailsViewModel>(
+      builder: (context, vm, _) => GroupMemberDetailsScreen(
+        loading: vm.load.running || vm.setRole.running || vm.remove.running,
         isCurrentUser: vm.isCurrentUser,
+        isAdmin: vm.isAdmin,
         group: vm.group,
         member: vm.member,
         profile: vm.profile,
         invites: vm.invites,
-        onUpdate: vm.onUpdate,
-        onRemove: vm.onRemove,
+        error: switch (vm.load.result) {
+          Error(:final error) => error,
+          _ => null,
+        },
+        onRetry: vm.load.execute,
+        onSetRole: (role) async {
+          await vm.setRole.execute(role);
+          if (context.mounted) showFailure(context, vm.setRole.result);
+        },
+        onRemove: () async {
+          final leaving = vm.isCurrentUser;
+          await vm.remove.execute();
+          if (!context.mounted) return;
+          showFailure(context, vm.remove.result);
+          if (!vm.remove.completed) return;
+          // Leaving the group: it's gone from the user's list.
+          leaving ? const HomeScreenRoute().go(context) : context.pop();
+        },
       ),
-    );
-  }
-}
-
-@freezed
-sealed class _ViewModel with _$ViewModel {
-  const factory _ViewModel({
-    required bool loading,
-    required bool isCurrentUser,
-    Group? group,
-    Member? member,
-    Profile? profile,
-    List<Invite>? invites,
-    ValueSetter<Member>? onUpdate,
-    OnRemoveFromGroupCallback? onRemove,
-  }) = __ViewModel;
-
-  static _ViewModel fromStore(
-    Store<AppState> store,
-    String groupId,
-    String memberId,
-  ) {
-    final group = store.state.groups.entities[groupId];
-
-    if (group == null) {
-      return const _ViewModel(loading: true, isCurrentUser: false);
-    }
-
-    // TODO: should use selectors
-    final member = store.state.members.entities[memberId];
-    final profile = store.state.profiles.entities[member?.profileId];
-    final invites = store.state.invites.entities.values
-        .where((invite) => invite.memberId.toString() == memberId)
-        .toList();
-
-    return _ViewModel(
-      loading:
-          store.state.groups.loadingAll ||
-          (store.state.groups.loadingIds[groupId] ?? false),
-      isCurrentUser: store.state.auth.user?.id == profile?.id,
-      group: group,
-      member: member,
-      profile: profile,
-      invites: invites,
-      onUpdate: (member) => store.dispatch(RequestUpdateOne<Member>(member)),
-      onRemove: (member) =>
-          store.dispatch(RequestDeleteOne<Member>(member.id.toString())),
-    );
-  }
+    ),
+  );
 }

@@ -1,111 +1,49 @@
-import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:material_ui/material_ui.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:parousia/actions/actions.dart';
-import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
-import 'package:parousia/selectors/selectors.dart';
-import 'package:parousia/state/state.dart';
-import 'package:redux/redux.dart';
-import 'package:redux_entity/redux_entity.dart';
-
-part 'group_schedule_details.freezed.dart';
+import 'package:parousia/util/result.dart';
+import 'package:provider/provider.dart';
 
 class GroupScheduleDetailsContainer extends StatelessWidget {
   final String groupId;
   final String scheduleId;
+  final DateTime instanceDate;
 
   const GroupScheduleDetailsContainer({
     super.key,
     required this.groupId,
     required this.scheduleId,
+    required this.instanceDate,
   });
 
   @override
-  Widget build(BuildContext context) {
-    return StoreConnector<AppState, _ViewModel>(
-      distinct: true,
-      converter: (store) => _ViewModel.fromStore(store, groupId),
-      onInit: (store) =>
-          store.dispatch(GroupScheduleDetailsOpenAction(scheduleId)),
-      builder: (context, vm) => GroupScheduleDetailsScreen(
-        loading: vm.loading,
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+    create: (context) => ScheduleDetailsViewModel(
+      groupId: groupId,
+      scheduleId: scheduleId,
+      instanceDate: instanceDate,
+      groups: context.read(),
+      schedules: context.read(),
+    ),
+    child: Consumer<ScheduleDetailsViewModel>(
+      builder: (context, vm, _) => GroupScheduleDetailsScreen(
+        loading: vm.load.running,
         group: vm.group,
-        scheduleInstance: vm.scheduleInstance,
-        onReplyChanged: vm.onReplyChanged,
-        onDefaultRuleChanged: vm.onDefaultRuleChanged,
+        scheduleInstance: vm.details,
+        error: switch (vm.load.result) {
+          Error(:final error) => error,
+          _ => null,
+        },
+        onRetry: vm.load.execute,
+        onReplyChanged: ({required memberId, required reply}) async {
+          final result = await vm.reply(memberId, reply);
+          if (context.mounted) showFailure(context, result);
+        },
+        onDefaultRuleChanged:
+            ({required memberId, required rule, required reply}) async {
+              final result = await vm.setDefaultRule(memberId, rule, reply);
+              if (context.mounted) showFailure(context, result);
+            },
       ),
-    );
-  }
-}
-
-@freezed
-sealed class _ViewModel with _$ViewModel {
-  const factory _ViewModel({
-    required bool loading,
-    Group? group,
-    ScheduleInstanceDetails? scheduleInstance,
-    OnDetailsReplyChangedCallback? onReplyChanged,
-    OnDetailsDefaultRuleChangedCallback? onDefaultRuleChanged,
-  }) = __ViewModel;
-
-  static _ViewModel fromStore(Store<AppState> store, String groupId) {
-    final group = store.state.groups.entities[groupId];
-
-    if (group == null) {
-      return const _ViewModel(loading: true);
-    }
-
-    return _ViewModel(
-      loading:
-          store.state.groups.loadingAll ||
-          (store.state.groups.loadingIds[groupId] ?? false),
-      group: group,
-      scheduleInstance: selectScheduleInstanceForDate(store.state),
-      onReplyChanged: (schedule, targetMemberId, reply) {
-        if (reply == null) {
-          store.dispatch(
-            RequestDeleteReplyAction(
-              memberId: targetMemberId,
-              scheduleId: schedule.scheduleId,
-              instanceDate: schedule.instanceDate,
-            ),
-          );
-        } else {
-          store.dispatch(
-            RequestUpdateOne(
-              Reply(
-                memberId: targetMemberId,
-                scheduleId: schedule.scheduleId,
-                instanceDate: schedule.instanceDate,
-                selectedOption: reply,
-              ),
-            ),
-          );
-        }
-      },
-      onDefaultRuleChanged: (defaultRule, scheduleId, targetMemberId, reply) {
-        if (reply == null || defaultRule == null) {
-          store.dispatch(
-            RequestDeleteDefaultRuleAction(
-              memberId: targetMemberId,
-              scheduleId: scheduleId,
-            ),
-          );
-        } else {
-          store.dispatch(
-            RequestUpdateOne(
-              DefaultRule(
-                memberId: targetMemberId,
-                scheduleId: scheduleId,
-                selectedOption: reply,
-                recurrenceRule: defaultRule,
-              ),
-            ),
-          );
-        }
-      },
-    );
-  }
+    ),
+  );
 }

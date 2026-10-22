@@ -8,8 +8,8 @@ class ScheduleMemberTile extends StatelessWidget {
   final ReplyOptions? reply;
   final ReplyOptions? defaultReply;
   final DefaultRule? defaultRule;
-  final Function(ReplyOptions?)? onReplyChanged;
-  final Function(RecurrenceRule?, ReplyOptions?)? onDefaultRuleChanged;
+  final ValueChanged<ReplyOptions?>? onReplyChanged;
+  final void Function(RecurrenceRule?, ReplyOptions?)? onDefaultRuleChanged;
 
   const ScheduleMemberTile({
     super.key,
@@ -28,9 +28,11 @@ class ScheduleMemberTile extends StatelessWidget {
       trailing: ReplyButtons(
         reply: reply,
         defaultReply: defaultReply,
-        onReplyChanged: (reply) => onReplyChanged?.call(reply),
+        onReplyChanged: onReplyChanged,
       ),
-      onTap: () => _confirmDefaultRule(context),
+      onTap: onDefaultRuleChanged == null
+          ? null
+          : () => _confirmDefaultRule(context),
     );
   }
 

@@ -8,7 +8,6 @@ class ThemeSwitcherTile extends StatelessWidget {
 
   const ThemeSwitcherTile({
     super.key,
-    nextTheme,
     required this.themeMode,
     required this.onTap,
   });
