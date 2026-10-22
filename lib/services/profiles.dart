@@ -4,8 +4,8 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'const.dart';
 import 'supabase.dart';
 
-class ProfilesRepository extends SupabaseRepository with Postgrest {
-  const ProfilesRepository({required super.supabase})
+class ProfilesService extends SupabaseService with Postgrest {
+  const ProfilesService({required super.supabase})
     : super(tableName: Tables.profiles);
 
   Future<Profile> getProfileById(String id) async {

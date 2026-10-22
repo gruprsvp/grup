@@ -1,12 +1,12 @@
 import 'package:parousia/actions/actions.dart';
 import 'package:parousia/models/models.dart';
-import 'package:parousia/repositories/repositories.dart';
+import 'package:parousia/services/services.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux_entity/redux_entity.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 
-Epic<AppState> createDefaultRulesEpics(DefaultRulesRepository defaultRules) =>
+Epic<AppState> createDefaultRulesEpics(DefaultRulesService defaultRules) =>
     combineEpics<AppState>([
       _createRetrieveGroupDefaultRulesEpic(defaultRules),
       _createRequestUpdateOneDefaultRuleEpic(defaultRules),
@@ -15,7 +15,7 @@ Epic<AppState> createDefaultRulesEpics(DefaultRulesRepository defaultRules) =>
 
 /// Fetch all default replies for a group
 Epic<AppState> _createRetrieveGroupDefaultRulesEpic(
-  DefaultRulesRepository defaultRules,
+  DefaultRulesService defaultRules,
 ) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<GroupDetailsOpenAction>().asyncMap(
@@ -31,7 +31,7 @@ Epic<AppState> _createRetrieveGroupDefaultRulesEpic(
 
 /// Create a new default reply
 Epic<AppState> _createRequestUpdateOneDefaultRuleEpic(
-  DefaultRulesRepository defaultRules,
+  DefaultRulesService defaultRules,
 ) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestUpdateOne<DefaultRule>>().asyncMap(
@@ -49,7 +49,7 @@ Epic<AppState> _createRequestUpdateOneDefaultRuleEpic(
 
 /// Delete a default reply
 Epic<AppState> _createRequestDeleteDefaultRuleEpic(
-  DefaultRulesRepository defaultRules,
+  DefaultRulesService defaultRules,
 ) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestDeleteDefaultRuleAction>().asyncMap(

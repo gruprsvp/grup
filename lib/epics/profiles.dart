@@ -1,7 +1,7 @@
 import 'package:parousia/actions/actions.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
-import 'package:parousia/repositories/repositories.dart';
+import 'package:parousia/services/services.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux_entity/redux_entity.dart';
 import 'package:redux_epics/redux_epics.dart';
@@ -10,8 +10,8 @@ import 'package:supabase/supabase.dart';
 import 'package:uuid/uuid.dart';
 
 Epic<AppState> createProfileEpics(
-  ProfilesRepository profiles,
-  StorageRepository storage,
+  ProfilesService profiles,
+  StorageService storage,
 ) => combineEpics<AppState>([
   _createRetrieveOneProfileEpic(profiles),
   _createSignOutEpic(profiles),
@@ -47,7 +47,7 @@ Stream<dynamic> _loadOwnProfileOnSignInEpic(
     );
 
 /// Fetch 1 user profile from the database
-Epic<AppState> _createRetrieveOneProfileEpic(ProfilesRepository profiles) {
+Epic<AppState> _createRetrieveOneProfileEpic(ProfilesService profiles) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestRetrieveOne<Profile>>().asyncMap(
         (action) => profiles
@@ -74,8 +74,8 @@ Stream<dynamic> _navigateToProfilePageEpic(
 
 /// When the user requests to update their profile
 Epic<AppState> _createUpdateProfileEpic(
-  ProfilesRepository profiles,
-  StorageRepository storage,
+  ProfilesService profiles,
+  StorageService storage,
 ) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<SaveProfileAction>().asyncMap((action) async {
@@ -97,7 +97,7 @@ Epic<AppState> _createUpdateProfileEpic(
 }
 
 /// Update 1 user profile in the database
-Epic<AppState> _createUpdateOneProfileEpic(ProfilesRepository profiles) {
+Epic<AppState> _createUpdateOneProfileEpic(ProfilesService profiles) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<UpdateOne<Profile>>().asyncMap(
         (action) => profiles
@@ -120,8 +120,8 @@ Epic<AppState> _createUpdateOneProfileEpic(ProfilesRepository profiles) {
 
 /// When the user requests to delete their profile
 Epic<AppState> _createDeleteProfileEpic(
-  ProfilesRepository profiles,
-  StorageRepository storage,
+  ProfilesService profiles,
+  StorageService storage,
 ) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<DeleteProfileAction>().asyncMap((action) async {
@@ -138,7 +138,7 @@ Epic<AppState> _createDeleteProfileEpic(
 }
 
 /// When the user profile is deleted, sign out
-Epic<AppState> _createSignOutEpic(ProfilesRepository profiles) {
+Epic<AppState> _createSignOutEpic(ProfilesService profiles) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<SuccessDeleteOne<Profile>>().asyncMap((action) async {
         await profiles.signOut();

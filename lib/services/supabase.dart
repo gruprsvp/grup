@@ -2,22 +2,22 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 
 import 'const.dart';
 
-abstract class SupabaseRepository {
+abstract class SupabaseService {
   final SupabaseClient supabase;
   final Tables? tableName;
   final Buckets? bucketName;
 
-  const SupabaseRepository({
+  const SupabaseService({
     required this.supabase,
     this.tableName,
     this.bucketName,
   });
 }
 
-mixin Postgrest on SupabaseRepository {
+mixin Postgrest on SupabaseService {
   PostgrestQueryBuilder<void> table() => supabase.rest.from(tableName!.name);
 }
 
-mixin Storage on SupabaseRepository {
+mixin Storage on SupabaseService {
   StorageFileApi bucket() => supabase.storage.from(bucketName!.name);
 }

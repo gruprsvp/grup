@@ -3,8 +3,8 @@ import 'package:parousia/models/models.dart';
 import 'const.dart';
 import 'supabase.dart';
 
-class DefaultRulesRepository extends SupabaseRepository with Postgrest {
-  DefaultRulesRepository({required super.supabase})
+class DefaultRulesService extends SupabaseService with Postgrest {
+  DefaultRulesService({required super.supabase})
     : super(tableName: Tables.default_rules);
 
   Future<Iterable<DefaultRule>> getDefaultRules(String groupId) async {

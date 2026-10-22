@@ -9,7 +9,7 @@ import 'package:parousia/actions/actions.dart';
 import 'package:parousia/app.dart';
 import 'package:parousia/epics/epics.dart';
 import 'package:parousia/reducers/reducers.dart';
-import 'package:parousia/repositories/repositories.dart';
+import 'package:parousia/services/services.dart';
 import 'package:parousia/state/state.dart';
 import 'package:parousia/util/config.dart';
 import 'package:parousia/util/util.dart';
@@ -72,25 +72,25 @@ Future<void> main() async {
 }
 
 Future<Store<AppState>> _initStore(SupabaseClient supabase) async {
-  final defaultRulesRepository = DefaultRulesRepository(supabase: supabase);
-  final groupsRepository = GroupsRepository(supabase: supabase);
-  final membersRepository = MembersRepository(supabase: supabase);
-  final invitesRepository = InvitesRepository(supabase: supabase);
-  final profilesRepository = ProfilesRepository(supabase: supabase);
-  final repliesRepository = RepliesRepository(supabase: supabase);
-  final schedulesRepository = SchedulesRepository(supabase: supabase);
-  final storageRepository = StorageRepository(supabase: supabase);
+  final defaultRulesService = DefaultRulesService(supabase: supabase);
+  final groupsService = GroupsService(supabase: supabase);
+  final membersService = MembersService(supabase: supabase);
+  final invitesService = InvitesService(supabase: supabase);
+  final profilesService = ProfilesService(supabase: supabase);
+  final repliesService = RepliesService(supabase: supabase);
+  final schedulesService = SchedulesService(supabase: supabase);
+  final storageService = StorageService(supabase: supabase);
 
   final epics = combineEpics<AppState>([
     createRouterEpics(router),
     createAuthEpics(),
-    createDefaultRulesEpics(defaultRulesRepository),
-    createGroupsEpics(groupsRepository, storageRepository),
-    createMembersEpic(membersRepository),
-    createInvitesEpics(invitesRepository),
-    createProfileEpics(profilesRepository, storageRepository),
-    createRepliesEpics(repliesRepository),
-    createSchedulesEpics(schedulesRepository),
+    createDefaultRulesEpics(defaultRulesService),
+    createGroupsEpics(groupsService, storageService),
+    createMembersEpic(membersService),
+    createInvitesEpics(invitesService),
+    createProfileEpics(profilesService, storageService),
+    createRepliesEpics(repliesService),
+    createSchedulesEpics(schedulesService),
   ]);
 
   const storageLocation = kIsWeb

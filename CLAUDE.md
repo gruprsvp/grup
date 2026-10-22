@@ -74,7 +74,7 @@ lists the framework Material delegates, which `material_ui` widgets don't read.
 anything under `lib/` imports it. Keep test-only code (e.g. `test/support/fake_data.dart`,
 which uses `faker`) under `test/`, and check the pubspec diff after running it.
 
-**Live vs hermetic tests.** Most tests are hermetic. The `repositories_test.dart` suite is tagged `live` and hits a real local Supabase; it **self-skips** when `supabase/config/localhost.json` is absent, so a plain `flutter test` works without Docker. To run the live suite, bring up Supabase first (see below). CI's `verify.yaml` has three jobs: a Docker-free `analyze` job (format + analyze) on every PR, a `test` job that runs `supabase start` → `supabase test db` (pgTAP) → `flutter test --coverage` → `flutter build web`, and an `android` job (debug APK + release R8 minification, no signing) so Android breakage surfaces before the release job.
+**Live vs hermetic tests.** Most tests are hermetic. The `services_test.dart` suite is tagged `live` and hits a real local Supabase; it **self-skips** when `supabase/config/localhost.json` is absent, so a plain `flutter test` works without Docker. To run the live suite, bring up Supabase first (see below). CI's `verify.yaml` has three jobs: a Docker-free `analyze` job (format + analyze) on every PR, a `test` job that runs `supabase start` → `supabase test db` (pgTAP) → `flutter test --coverage` → `flutter build web`, and an `android` job (debug APK + release R8 minification, no signing) so Android breakage surfaces before the release job.
 
 ## Code generation
 
@@ -92,7 +92,7 @@ Layers under `lib/` (each has a barrel file that re-exports the folder):
 - **`reducers/`** — pure reducers; `root_reducer.dart` wires them by hand. `remote_entities.dart` defines a `RemoteEntityReducer` per entity (with the `selectId` used as the normalized map key — note composite keys for `DefaultRule` and `Reply`). Signing out resets to `AppState.initialState()`.
 - **`epics/`** — all side effects (rxdart streams). Epics call repositories and translate domain actions into the generic `redux_entity` request/success/fail actions (see `epics/groups.dart` for the canonical pattern). Cross-cutting epics react to auth/app-lifecycle actions to trigger loads.
 - **`selectors/`** — memoized `reselect` selectors. The RSVP-resolution logic (combining replies + default rules + recurrence instances into a `ScheduleInstanceSummary`) lives in `selectors/schedules.dart` and is the most domain-heavy code.
-- **`repositories/`** — Supabase data access. All extend `SupabaseRepository` and mix in `Postgrest` and/or `Storage` (`repositories/supabase.dart`). Table and bucket names come from the `Tables`/`Buckets` enums in `repositories/const.dart`. Some writes go through Postgres RPC functions (e.g. `create_group`).
+- **`services/`** — Supabase data access, stateless. All extend `SupabaseService` and mix in `Postgrest` and/or `Storage` (`services/supabase.dart`). Table and bucket names come from the `Tables`/`Buckets` enums in `services/const.dart`. Some writes go through Postgres RPC functions (e.g. `create_group`).
 - **`presentation/`** — three sub-layers:
   - `screens/` — "dumb" widgets; receive everything via constructor params, never touch the store.
   - `containers/` — connect Redux to screens via `StoreConnector` + a `@freezed _ViewModel` with a `fromStore(Store)` factory that builds props and wires `onX` callbacks to `store.dispatch(...)`. (See `containers/home.dart`.)

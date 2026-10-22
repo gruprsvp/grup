@@ -6,7 +6,7 @@ import 'dart:io';
 
 import 'package:faker/faker.dart';
 import 'package:parousia/models/models.dart';
-import 'package:parousia/repositories/repositories.dart';
+import 'package:parousia/services/services.dart';
 import 'package:parousia/util/util.dart';
 import 'package:rrule/rrule.dart';
 import 'package:supabase/supabase.dart';
@@ -53,7 +53,7 @@ typedef RunWithUserCallback<T> = FutureOr<T> Function(
 typedef RunWithGroupCallback<T> = FutureOr<T> Function(
   SupabaseClient supabase,
   Group group,
-  GroupsRepository groupsRepository,
+  GroupsService groupsService,
 );
 
 /// Run a callback with a new fake user, and keep it for future reference.
@@ -95,15 +95,15 @@ Future<T?> runWithTemporaryUser<T>(
 /// Run a closure with a temporary group created just for this and then deleted.
 Future<T?> runWithTemporaryGroup<T>(RunWithGroupCallback<T> callback) {
   return runWithTemporaryUser((supabase, user) async {
-    final groupsRepository = GroupsRepository(supabase: supabase);
-    final group = await groupsRepository.createGroup(FakeData.group());
+    final groupsService = GroupsService(supabase: supabase);
+    final group = await groupsService.createGroup(FakeData.group());
     late T result;
     try {
-      result = await callback(supabase, group, groupsRepository);
-      await groupsRepository.deleteGroup(group.id);
+      result = await callback(supabase, group, groupsService);
+      await groupsService.deleteGroup(group.id);
       return result;
     } catch (e) {
-      await groupsRepository.deleteGroup(group.id);
+      await groupsService.deleteGroup(group.id);
       rethrow;
     }
   });
@@ -117,7 +117,7 @@ void main() {
   // explicitly with `flutter test --tags live` (and exclude with `--exclude-tags live`).
   if (!File('supabase/config/localhost.json').existsSync()) {
     test(
-      'repository (live Supabase) tests skipped',
+      'service (live Supabase) tests skipped',
       () {},
       skip: 'No supabase/config/localhost.json — run `supabase start` first.',
     );
@@ -135,20 +135,20 @@ void main() {
     test(
       'users should be able to get and update their profile',
       () => runWithTemporaryUser((supabase, user) async {
-        final profilesRepository = ProfilesRepository(supabase: supabase);
+        final profilesService = ProfilesService(supabase: supabase);
 
         final id = user.user!.id;
-        final profile = await profilesRepository.getProfileById(id);
+        final profile = await profilesService.getProfileById(id);
 
         final displayName = faker.person.name();
         final pictureUrl = faker.image.loremPicsum(height: 128, width: 128);
 
-        await profilesRepository.updateProfile(
+        await profilesService.updateProfile(
           id: id,
           displayName: displayName,
           pictureUrl: pictureUrl,
         );
-        final updatedProfile = await profilesRepository.getProfileById(id);
+        final updatedProfile = await profilesService.getProfileById(id);
 
         expect(updatedProfile, allOf([isNotNull, isNot(profile)]));
 
@@ -167,18 +167,16 @@ void main() {
 
           // Another user should not see the group if they are not a member
           await runWithTemporaryUser((supabase, user) async {
-            final secondUserGroupsRepository = GroupsRepository(
-              supabase: supabase,
-            );
+            final secondUserGroupsService = GroupsService(supabase: supabase);
             try {
-              await secondUserGroupsRepository.getGroupById(newGroup.id);
+              await secondUserGroupsService.getGroupById(newGroup.id);
               fail("Should not be able to get group without being a member");
             } catch (e) {
               expect(e, isA<PostgrestException>());
             }
 
             try {
-              await secondUserGroupsRepository.updateGroup(
+              await secondUserGroupsService.updateGroup(
                 newGroup.copyWith(displayName: 'A new name'),
               );
               fail("Should not be able to update group without being a member");
@@ -187,7 +185,7 @@ void main() {
             }
 
             try {
-              await secondUserGroupsRepository.deleteGroup(newGroup.id);
+              await secondUserGroupsService.deleteGroup(newGroup.id);
               fail("Should not be able to delete group without being a member");
             } catch (e) {
               expect(e, isA<PostgrestException>());
@@ -200,7 +198,7 @@ void main() {
     test(
       'admins should be able to see all the groups they created',
       () => runWithTemporaryUser((supabase, user) async {
-        final groupsRepository = GroupsRepository(supabase: supabase);
+        final groupsService = GroupsService(supabase: supabase);
         const groupsCount = 5;
         final createdGroups = List.generate(
           groupsCount,
@@ -208,10 +206,10 @@ void main() {
         );
 
         await Future.wait(
-          createdGroups.map((g) => groupsRepository.createGroup(g)),
+          createdGroups.map((g) => groupsService.createGroup(g)),
         );
 
-        final userGroups = await groupsRepository.getUserGroups();
+        final userGroups = await groupsService.getUserGroups();
 
         expect(userGroups.groups, hasLength(groupsCount));
 
@@ -219,7 +217,7 @@ void main() {
         // expect(userGroups, unorderedEquals(createdGroups));
 
         await Future.wait(
-          userGroups.groups.map((g) => groupsRepository.deleteGroup(g.id)),
+          userGroups.groups.map((g) => groupsService.deleteGroup(g.id)),
         );
       }),
     );
@@ -228,9 +226,9 @@ void main() {
       'admins can edit their groups',
       () => runWithTemporaryUser(
         (supabase, user) =>
-            runWithTemporaryGroup((supabase, group, groupsRepository) async {
+            runWithTemporaryGroup((supabase, group, groupsService) async {
               const newName = 'A new group name';
-              final updatedGroup = await groupsRepository.updateGroup(
+              final updatedGroup = await groupsService.updateGroup(
                 group.copyWith(displayName: newName),
               );
 
@@ -245,16 +243,16 @@ void main() {
       'admins can add guests to groups',
       () => runWithTemporaryUser(
         (supabase, user) =>
-            runWithTemporaryGroup((supabase, group, groupsRepository) async {
-              final membersRepository = MembersRepository(supabase: supabase);
+            runWithTemporaryGroup((supabase, group, groupsService) async {
+              final membersService = MembersService(supabase: supabase);
 
-              await membersRepository.addMemberToGroup(
+              await membersService.addMemberToGroup(
                 group.id,
                 displayName: 'A guest',
               );
 
               await runWithTemporaryUser(
-                (_, user2) => membersRepository.addMemberToGroup(
+                (_, user2) => membersService.addMemberToGroup(
                   group.id,
                   profileId: user2.user!.id,
                 ),
@@ -267,20 +265,20 @@ void main() {
       'admins can manage group members',
       () => runWithTemporaryUser(
         (supabase, user) =>
-            runWithTemporaryGroup((supabase, group, groupsRepository) async {
-              final membersRepository = MembersRepository(supabase: supabase);
+            runWithTemporaryGroup((supabase, group, groupsService) async {
+              final membersService = MembersService(supabase: supabase);
 
-              final guest = await membersRepository.addMemberToGroup(
+              final guest = await membersService.addMemberToGroup(
                 group.id,
                 displayName: 'A guest',
               );
 
-              final updatedGuest = await membersRepository.updateMember(
+              final updatedGuest = await membersService.updateMember(
                 memberId: guest.id,
                 displayNameOverride: 'A guest with a name',
               );
 
-              await membersRepository.deleteMember(updatedGuest.id);
+              await membersService.deleteMember(updatedGuest.id);
             }),
       ),
     );
@@ -289,15 +287,15 @@ void main() {
       'users can see their groups and members',
       () => runWithTemporaryUser(
         (supabase, user) =>
-            runWithTemporaryGroup((supabase, group, groupsRepository) async {
-              final membersRepository = MembersRepository(supabase: supabase);
+            runWithTemporaryGroup((supabase, group, groupsService) async {
+              final membersService = MembersService(supabase: supabase);
 
-              final member = await membersRepository.addMemberToGroup(
+              final member = await membersService.addMemberToGroup(
                 group.id,
                 displayName: 'A member',
               );
 
-              final userGroups = await groupsRepository.getUserGroups();
+              final userGroups = await groupsService.getUserGroups();
               expect(userGroups.groups, hasLength(1));
 
               final userGroup = userGroups.groups.first;
@@ -317,16 +315,16 @@ void main() {
     test(
       'admins can make other members admins',
       () => runWithTemporaryUser((supabase, user) async {
-        final groupsRepository = GroupsRepository(supabase: supabase);
-        final membersRepository = MembersRepository(supabase: supabase);
+        final groupsService = GroupsService(supabase: supabase);
+        final membersService = MembersService(supabase: supabase);
 
-        final group = await groupsRepository.createGroup(FakeData.group());
-        final member = await membersRepository.addMemberToGroup(
+        final group = await groupsService.createGroup(FakeData.group());
+        final member = await membersService.addMemberToGroup(
           group.id,
           displayName: 'Member',
         );
 
-        final updatedMember = await membersRepository.updateMember(
+        final updatedMember = await membersService.updateMember(
           memberId: member.id,
           role: GroupRoles.admin,
         );
@@ -338,21 +336,21 @@ void main() {
     test(
       'members cannot make themselves admins',
       () => runWithTemporaryUser((supabase, user) async {
-        final groupsRepository = GroupsRepository(supabase: supabase);
-        final membersRepository = MembersRepository(supabase: supabase);
+        final groupsService = GroupsService(supabase: supabase);
+        final membersService = MembersService(supabase: supabase);
 
-        final group = await groupsRepository.createGroup(FakeData.group());
+        final group = await groupsService.createGroup(FakeData.group());
 
         await runWithTemporaryUser((supabase2, user2) async {
-          final membersRepository2 = MembersRepository(supabase: supabase2);
+          final membersService2 = MembersService(supabase: supabase2);
 
-          final member = await membersRepository.addMemberToGroup(
+          final member = await membersService.addMemberToGroup(
             group.id,
             profileId: user2.user!.id,
           );
 
           try {
-            await membersRepository2.updateMember(
+            await membersService2.updateMember(
               memberId: member.id,
               role: GroupRoles.admin,
             );
@@ -368,26 +366,26 @@ void main() {
     // PostgrestException(message: more than one row returned by a subquery used as an expression, code: 21000, details: Internal Server Error, hint: null)
     test(
       'members can see other members profiles across multiple groups',
-      () => runWithTemporaryGroup((supabase, group1, groupsRepository) async {
-        final membersRepository = MembersRepository(supabase: supabase);
-        final group2 = await groupsRepository.createGroup(FakeData.group());
+      () => runWithTemporaryGroup((supabase, group1, groupsService) async {
+        final membersService = MembersService(supabase: supabase);
+        final group2 = await groupsService.createGroup(FakeData.group());
 
         await runWithTemporaryUser((supabase2, user2) async {
-          await membersRepository.addMemberToGroup(
+          await membersService.addMemberToGroup(
             group1.id,
             profileId: user2.user!.id,
           );
-          await membersRepository.addMemberToGroup(
+          await membersService.addMemberToGroup(
             group2.id,
             profileId: user2.user!.id,
           );
 
-          final groups = await groupsRepository.getUserGroups();
+          final groups = await groupsService.getUserGroups();
           expect(groups.groups, hasLength(2));
           expect(groups.members, hasLength(4));
           expect(groups.profiles, hasLength(2));
         });
-        await groupsRepository.deleteGroup(group2.id);
+        await groupsService.deleteGroup(group2.id);
       }),
     );
   });
@@ -397,26 +395,26 @@ void main() {
       'an invited user becomes a member on sign up',
       () => runWithTemporaryUser(
         (supabase, user) =>
-            runWithTemporaryGroup((supabase, group, groupsRepository) async {
-              final membersRepository = MembersRepository(supabase: supabase);
-              final invitesRepository = InvitesRepository(supabase: supabase);
+            runWithTemporaryGroup((supabase, group, groupsService) async {
+              final membersService = MembersService(supabase: supabase);
+              final invitesService = InvitesService(supabase: supabase);
 
-              final member = await membersRepository.addMemberToGroup(
+              final member = await membersService.addMemberToGroup(
                 group.id,
                 displayName: 'Member invited with email',
               );
 
               final invitedUserEmail = faker.internet.email();
 
-              await invitesRepository.inviteMember(
+              await invitesService.inviteMember(
                 member.id,
                 InviteMethods.email,
                 invitedUserEmail,
               );
 
               await runWithTemporaryUser((supabase2, user2) async {
-                final groupsRepository2 = GroupsRepository(supabase: supabase2);
-                final userGroups = await groupsRepository2.getUserGroups();
+                final groupsService2 = GroupsService(supabase: supabase2);
+                final userGroups = await groupsService2.getUserGroups();
 
                 expect(userGroups.groups, hasLength(1));
 
@@ -435,12 +433,12 @@ void main() {
         (supabase, user) => runWithTemporaryGroup((
           supabase,
           group,
-          groupsRepository,
+          groupsService,
         ) async {
-          final membersRepository = MembersRepository(supabase: supabase);
-          final invitesRepository = InvitesRepository(supabase: supabase);
+          final membersService = MembersService(supabase: supabase);
+          final invitesService = InvitesService(supabase: supabase);
 
-          final member = await membersRepository.addMemberToGroup(
+          final member = await membersService.addMemberToGroup(
             group.id,
             displayName: 'Member invited with phone',
           );
@@ -450,15 +448,15 @@ void main() {
           final invitedUserPhone =
               "+1${faker.randomGenerator.integer(999999999, min: 100000000)}";
 
-          await invitesRepository.inviteMember(
+          await invitesService.inviteMember(
             member.id,
             InviteMethods.phone,
             invitedUserPhone,
           );
 
           await runWithTemporaryUser((supabase2, user2) async {
-            final groupsRepository2 = GroupsRepository(supabase: supabase2);
-            final userGroups = await groupsRepository2.getUserGroups();
+            final groupsService2 = GroupsService(supabase: supabase2);
+            final userGroups = await groupsService2.getUserGroups();
 
             expect(userGroups.groups, hasLength(1));
             expect(userGroups.groups.first.id, equals(group.id));
@@ -473,41 +471,41 @@ void main() {
         (supabase, user) => runWithTemporaryGroup((
           supabase,
           group,
-          groupsRepository,
+          groupsService,
         ) async {
-          final membersRepository = MembersRepository(supabase: supabase);
-          final invitesRepository = InvitesRepository(supabase: supabase);
+          final membersService = MembersService(supabase: supabase);
+          final invitesService = InvitesService(supabase: supabase);
 
-          final member = await membersRepository.addMemberToGroup(
+          final member = await membersService.addMemberToGroup(
             group.id,
             displayName: 'Member invited with code',
           );
-          final invite = await invitesRepository.inviteWithGeneratedCode(
+          final invite = await invitesService.inviteWithGeneratedCode(
             member.id,
           );
           final testCode = invite.value;
 
           await runWithTemporaryUser((supabase2, user2) async {
-            final groupsRepository2 = GroupsRepository(supabase: supabase2);
-            final invitesRepository2 = InvitesRepository(supabase: supabase2);
+            final groupsService2 = GroupsService(supabase: supabase2);
+            final invitesService2 = InvitesService(supabase: supabase2);
 
-            final userGroups1 = await groupsRepository2.getUserGroups();
+            final userGroups1 = await groupsService2.getUserGroups();
             expect(userGroups1.groups, hasLength(0));
 
-            final memberId = await invitesRepository2.checkInviteCode(testCode);
+            final memberId = await invitesService2.checkInviteCode(testCode);
             expect(memberId, member.id);
 
-            await invitesRepository2.consumeInviteCode(testCode);
+            await invitesService2.consumeInviteCode(testCode);
 
             // check that the invite code was deleted by now
             try {
-              await invitesRepository2.checkInviteCode(testCode);
+              await invitesService2.checkInviteCode(testCode);
               fail("Should not be able to use the same invite code twice");
             } catch (e) {
               expect(e, isA<PostgrestException>());
             }
 
-            final userGroups2 = await groupsRepository2.getUserGroups();
+            final userGroups2 = await groupsService2.getUserGroups();
             expect(userGroups2.groups, hasLength(1));
           });
         }),
@@ -518,23 +516,23 @@ void main() {
       'an already existing user can be added directly',
       () => runWithTemporaryUser(
         (supabase, user) =>
-            runWithTemporaryGroup((supabase, group, groupsRepository) async {
-              final membersRepository = MembersRepository(supabase: supabase);
-              final invitesRepository = InvitesRepository(supabase: supabase);
+            runWithTemporaryGroup((supabase, group, groupsService) async {
+              final membersService = MembersService(supabase: supabase);
+              final invitesService = InvitesService(supabase: supabase);
 
               await runWithTemporaryUser((supabase2, user2) async {
-                final member = await membersRepository.addMemberToGroup(
+                final member = await membersService.addMemberToGroup(
                   group.id,
                   displayName: 'Member invited with email',
                 );
-                await invitesRepository.inviteMember(
+                await invitesService.inviteMember(
                   member.id,
                   InviteMethods.email,
                   user2.user!.email!,
                 );
 
-                final groupsRepository2 = GroupsRepository(supabase: supabase2);
-                final userGroups = await groupsRepository2.getUserGroups();
+                final groupsService2 = GroupsService(supabase: supabase2);
+                final userGroups = await groupsService2.getUserGroups();
 
                 expect(userGroups.groups, hasLength(1));
                 expect(userGroups.groups.first.id, equals(group.id));
@@ -546,26 +544,27 @@ void main() {
     test(
       'an admin can see all invites for a user',
       () => runWithTemporaryUser(
-        (supabase, user) =>
-            runWithTemporaryGroup((supabase, group, groupsRepository) async {
-              final membersRepository = MembersRepository(supabase: supabase);
-              final invitesRepository = InvitesRepository(supabase: supabase);
+        (supabase, user) => runWithTemporaryGroup((
+          supabase,
+          group,
+          groupsService,
+        ) async {
+          final membersService = MembersService(supabase: supabase);
+          final invitesService = InvitesService(supabase: supabase);
 
-              final member = await membersRepository.addMemberToGroup(
-                group.id,
-                displayName: 'Member invited with email',
-              );
-              await invitesRepository.inviteMember(
-                member.id,
-                InviteMethods.email,
-                'user@example.com',
-              );
+          final member = await membersService.addMemberToGroup(
+            group.id,
+            displayName: 'Member invited with email',
+          );
+          await invitesService.inviteMember(
+            member.id,
+            InviteMethods.email,
+            'user@example.com',
+          );
 
-              final invites = await invitesRepository.getInvitesForMember(
-                member.id,
-              );
-              expect(invites, hasLength(1));
-            }),
+          final invites = await invitesService.getInvitesForMember(member.id);
+          expect(invites, hasLength(1));
+        }),
       ),
     );
   });
@@ -574,28 +573,25 @@ void main() {
     test(
       'admins can create schedules',
       () => runWithTemporaryUser(
-        (supabase, user) => runWithTemporaryGroup((
-          supabase,
-          group,
-          groupsRepository,
-        ) async {
-          final schedulesRepository = SchedulesRepository(supabase: supabase);
+        (supabase, user) =>
+            runWithTemporaryGroup((supabase, group, groupsService) async {
+              final schedulesService = SchedulesService(supabase: supabase);
 
-          final schedule = await schedulesRepository.createSchedule(
-            Schedule(
-              id: '',
-              groupId: group.id,
-              displayName: 'A schedule',
-              startDate: DateTime.now(),
-              recurrenceRule: RecurrenceRule(
-                frequency: Frequency.daily,
-                interval: 1,
-              ),
-            ),
-          );
+              final schedule = await schedulesService.createSchedule(
+                Schedule(
+                  id: '',
+                  groupId: group.id,
+                  displayName: 'A schedule',
+                  startDate: DateTime.now(),
+                  recurrenceRule: RecurrenceRule(
+                    frequency: Frequency.daily,
+                    interval: 1,
+                  ),
+                ),
+              );
 
-          expect(schedule, isNotNull);
-        }),
+              expect(schedule, isNotNull);
+            }),
       ),
     );
 
@@ -605,10 +601,10 @@ void main() {
         (supabase, user) => runWithTemporaryGroup((
           supabase,
           group,
-          groupsRepository,
+          groupsService,
         ) async {
-          final membersRepository = MembersRepository(supabase: supabase);
-          final schedulesRepository = SchedulesRepository(supabase: supabase);
+          final membersService = MembersService(supabase: supabase);
+          final schedulesService = SchedulesService(supabase: supabase);
 
           final recurrenceRules = [
             CommonRecurrenceRules.daily,
@@ -627,23 +623,19 @@ void main() {
                     recurrenceRule: r,
                   ),
                 )
-                .map((s) => schedulesRepository.createSchedule(s)),
+                .map((s) => schedulesService.createSchedule(s)),
           );
 
-          final schedules = await schedulesRepository.getGroupSchedules(
-            group.id,
-          );
+          final schedules = await schedulesService.getGroupSchedules(group.id);
           expect(schedules, hasLength(recurrenceRules.length));
 
           await runWithTemporaryUser((supabase2, user2) async {
-            await membersRepository.addMemberToGroup(
+            await membersService.addMemberToGroup(
               group.id,
               profileId: user2.user!.id,
             );
-            final schedulesRepository2 = SchedulesRepository(
-              supabase: supabase2,
-            );
-            final schedules2 = await schedulesRepository2.getGroupSchedules(
+            final schedulesService2 = SchedulesService(supabase: supabase2);
+            final schedules2 = await schedulesService2.getGroupSchedules(
               group.id,
             );
             expect(schedules2, equals(schedules));
@@ -660,15 +652,13 @@ void main() {
         (supabase, user) => runWithTemporaryGroup((
           supabase,
           group,
-          groupsRepository,
+          groupsService,
         ) async {
-          final membersRepository = MembersRepository(supabase: supabase);
-          final schedulesRepository = SchedulesRepository(supabase: supabase);
-          final defaultRulesRepository = DefaultRulesRepository(
-            supabase: supabase,
-          );
+          final membersService = MembersService(supabase: supabase);
+          final schedulesService = SchedulesService(supabase: supabase);
+          final defaultRulesService = DefaultRulesService(supabase: supabase);
 
-          final member = await membersRepository.addMemberToGroup(
+          final member = await membersService.addMemberToGroup(
             group.id,
             displayName: 'Member invited with code',
           );
@@ -679,7 +669,7 @@ void main() {
             interval: 1,
           );
 
-          final schedule = await schedulesRepository.createSchedule(
+          final schedule = await schedulesService.createSchedule(
             Schedule(
               id: '',
               groupId: group.id,
@@ -689,7 +679,7 @@ void main() {
             ),
           );
 
-          await defaultRulesRepository.createDefaultRule(
+          await defaultRulesService.createDefaultRule(
             DefaultRule(
               scheduleId: schedule.id,
               memberId: member.id,
@@ -698,10 +688,10 @@ void main() {
             ),
           );
 
-          final list = await defaultRulesRepository.getDefaultRules(group.id);
+          final list = await defaultRulesService.getDefaultRules(group.id);
           expect(list, hasLength(1));
 
-          await schedulesRepository.getGroupSchedules(group.id);
+          await schedulesService.getGroupSchedules(group.id);
           // TODO
           // expect(schedules.single.defaultRules?.single, equals(defaultRule));
         }),
@@ -713,58 +703,55 @@ void main() {
     test(
       'users can create replies and get them per day',
       () => runWithTemporaryUser(
-        (supabase, user) => runWithTemporaryGroup((
-          supabase,
-          group,
-          groupsRepository,
-        ) async {
-          final membersRepository = MembersRepository(supabase: supabase);
-          final schedulesRepository = SchedulesRepository(supabase: supabase);
-          final repliesRepository = RepliesRepository(supabase: supabase);
+        (supabase, user) =>
+            runWithTemporaryGroup((supabase, group, groupsService) async {
+              final membersService = MembersService(supabase: supabase);
+              final schedulesService = SchedulesService(supabase: supabase);
+              final repliesService = RepliesService(supabase: supabase);
 
-          final member = await membersRepository.addMemberToGroup(
-            group.id,
-            displayName: 'Member invited with code',
-          );
+              final member = await membersService.addMemberToGroup(
+                group.id,
+                displayName: 'Member invited with code',
+              );
 
-          final startDate = DateTime.now().toUtc();
-          final recurrenceRule = RecurrenceRule(
-            frequency: Frequency.daily,
-            interval: 1,
-          );
+              final startDate = DateTime.now().toUtc();
+              final recurrenceRule = RecurrenceRule(
+                frequency: Frequency.daily,
+                interval: 1,
+              );
 
-          final schedule = await schedulesRepository.createSchedule(
-            Schedule(
-              id: '',
-              groupId: group.id,
-              displayName: 'A schedule',
-              startDate: startDate,
-              recurrenceRule: recurrenceRule,
-            ),
-          );
-
-          await Future.wait(
-            recurrenceRule
-                .getInstances(start: startDate)
-                .take(5)
-                .map(
-                  (s) => repliesRepository.createReply(
-                    Reply(
-                      scheduleId: schedule.id,
-                      memberId: member.id,
-                      instanceDate: s,
-                      selectedOption: ReplyOptions.yes,
-                    ),
-                  ),
+              final schedule = await schedulesService.createSchedule(
+                Schedule(
+                  id: '',
+                  groupId: group.id,
+                  displayName: 'A schedule',
+                  startDate: startDate,
+                  recurrenceRule: recurrenceRule,
                 ),
-          );
+              );
 
-          final replies = await repliesRepository.getRepliesForDay(
-            group.id,
-            startDate.add(const Duration(days: 1)),
-          );
-          expect(replies, hasLength(1));
-        }),
+              await Future.wait(
+                recurrenceRule
+                    .getInstances(start: startDate)
+                    .take(5)
+                    .map(
+                      (s) => repliesService.createReply(
+                        Reply(
+                          scheduleId: schedule.id,
+                          memberId: member.id,
+                          instanceDate: s,
+                          selectedOption: ReplyOptions.yes,
+                        ),
+                      ),
+                    ),
+              );
+
+              final replies = await repliesService.getRepliesForDay(
+                group.id,
+                startDate.add(const Duration(days: 1)),
+              );
+              expect(replies, hasLength(1));
+            }),
       ),
     );
   });

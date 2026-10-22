@@ -10,8 +10,8 @@ typedef GroupsAndMembers = ({
   Iterable<Profile> profiles,
 });
 
-class GroupsRepository extends SupabaseRepository with Postgrest {
-  GroupsRepository({required super.supabase}) : super(tableName: Tables.groups);
+class GroupsService extends SupabaseService with Postgrest {
+  GroupsService({required super.supabase}) : super(tableName: Tables.groups);
 
   Future<GroupsAndMembers> getUserGroups() async {
     return table()

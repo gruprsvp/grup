@@ -1,13 +1,13 @@
 import 'package:parousia/actions/actions.dart';
 import 'package:parousia/models/models.dart';
-import 'package:parousia/repositories/repositories.dart';
+import 'package:parousia/services/services.dart';
 import 'package:parousia/state/state.dart';
 import 'package:parousia/util/util.dart';
 import 'package:redux_entity/redux_entity.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 
-Epic<AppState> createRepliesEpics(RepliesRepository replies) =>
+Epic<AppState> createRepliesEpics(RepliesService replies) =>
     combineEpics<AppState>([
       _createRetrieveGroupRepliesEpic(replies),
       _createRequestUpdateOneReplyEpic(replies),
@@ -15,7 +15,7 @@ Epic<AppState> createRepliesEpics(RepliesRepository replies) =>
     ]);
 
 /// Fetch replies for a group
-Epic<AppState> _createRetrieveGroupRepliesEpic(RepliesRepository replies) {
+Epic<AppState> _createRetrieveGroupRepliesEpic(RepliesService replies) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<GroupDetailsOpenAction>().asyncMap(
         (action) => replies
@@ -31,7 +31,7 @@ Epic<AppState> _createRetrieveGroupRepliesEpic(RepliesRepository replies) {
 }
 
 /// Create a new reply
-Epic<AppState> _createRequestUpdateOneReplyEpic(RepliesRepository replies) {
+Epic<AppState> _createRequestUpdateOneReplyEpic(RepliesService replies) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestUpdateOne<Reply>>().asyncMap(
         (action) => replies
@@ -45,7 +45,7 @@ Epic<AppState> _createRequestUpdateOneReplyEpic(RepliesRepository replies) {
 }
 
 /// Delete a reply
-Epic<AppState> _createRequestDeleteReplyEpic(RepliesRepository replies) {
+Epic<AppState> _createRequestDeleteReplyEpic(RepliesService replies) {
   return (
     Stream<dynamic> actions,
     EpicStore<AppState> store,

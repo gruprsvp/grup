@@ -4,8 +4,8 @@ import 'package:parousia/util/util.dart';
 import 'const.dart';
 import 'supabase.dart';
 
-class RepliesRepository extends SupabaseRepository with Postgrest {
-  const RepliesRepository({required super.supabase})
+class RepliesService extends SupabaseService with Postgrest {
+  const RepliesService({required super.supabase})
     : super(tableName: Tables.replies);
 
   Future<Iterable<Reply>> getRepliesForDay(String groupId, DateTime day) async {

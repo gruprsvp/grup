@@ -1,7 +1,7 @@
 import 'package:parousia/actions/actions.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
-import 'package:parousia/repositories/repositories.dart';
+import 'package:parousia/services/services.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux_entity/redux_entity.dart';
 import 'package:redux_epics/redux_epics.dart';
@@ -10,8 +10,8 @@ import 'package:supabase/supabase.dart';
 import 'package:uuid/uuid.dart';
 
 Epic<AppState> createGroupsEpics(
-  GroupsRepository groups,
-  StorageRepository storage,
+  GroupsService groups,
+  StorageService storage,
 ) => combineEpics<AppState>([
   _createRetrieveAllGroupsEpic(groups),
   _createRetrieveOneGroupEpic(groups),
@@ -81,7 +81,7 @@ Stream<dynamic> _reloadGroupOnScheduleDateChange(
 
 /// Load all groups for the current user, together with their members and profiles.
 /// If the action includes a Completer, complete, to handle the refresh indicator.
-Epic<AppState> _createRetrieveAllGroupsEpic(GroupsRepository groups) {
+Epic<AppState> _createRetrieveAllGroupsEpic(GroupsService groups) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
       .where(
         (action) =>
@@ -111,7 +111,7 @@ Epic<AppState> _createRetrieveAllGroupsEpic(GroupsRepository groups) {
 }
 
 /// Retrieve a single group
-Epic<AppState> _createRetrieveOneGroupEpic(GroupsRepository groups) {
+Epic<AppState> _createRetrieveOneGroupEpic(GroupsService groups) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestRetrieveOne<Group>>().asyncMap(
         (action) => groups
@@ -125,8 +125,8 @@ Epic<AppState> _createRetrieveOneGroupEpic(GroupsRepository groups) {
 
 /// Create a group
 Epic<AppState> _createCreateOneGroupEpic(
-  GroupsRepository groups,
-  StorageRepository storage,
+  GroupsService groups,
+  StorageService storage,
 ) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<CreateGroupAction>().asyncMap((action) async {
@@ -145,8 +145,8 @@ Epic<AppState> _createCreateOneGroupEpic(
 
 /// Update a group
 Epic<AppState> _createUpdateOneGroupEpic(
-  GroupsRepository groups,
-  StorageRepository storage,
+  GroupsService groups,
+  StorageService storage,
 ) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<UpdateGroupAction>().asyncMap((action) async {
@@ -164,7 +164,7 @@ Epic<AppState> _createUpdateOneGroupEpic(
 }
 
 /// Delete a group
-Epic<AppState> _createDeleteOneGroupEpic(GroupsRepository groups) {
+Epic<AppState> _createDeleteOneGroupEpic(GroupsService groups) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestDeleteOne<Group>>().asyncMap(
         (action) => groups
