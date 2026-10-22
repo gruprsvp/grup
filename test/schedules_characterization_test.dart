@@ -1,5 +1,5 @@
 // Characterization tests for the RSVP / recurrence resolution in
-// `selectors/schedules.dart` (`getScheduleInstances` + `repliesForScheduleInstance`).
+// `models/rsvp.dart` (`getScheduleInstances` + `repliesForScheduleInstance`).
 //
 // These lock the CURRENT behavior of the most complex domain logic in the app so
 // it can be safely refactored (e.g. the planned selector-memoization fixes) or,

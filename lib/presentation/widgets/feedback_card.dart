@@ -8,7 +8,6 @@ import 'package:parousia/l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:in_app_review/in_app_review.dart';
-import 'package:mailto/mailto.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:url_launcher/url_launcher_string.dart';
@@ -141,13 +140,13 @@ $deviceString
 
     final body = l10n.feedbackEmailBody + info;
 
-    final mailtoLink = Mailto(
-      to: [_emailAddress],
-      subject: l10n.feedbackEmailSubject,
-      body: body,
-    ).toString();
-
-    return mailtoLink;
+    // Encoded by hand: Uri's query encoding writes spaces as '+', which mail
+    // apps show literally in a mailto: link.
+    final query = {
+      'subject': l10n.feedbackEmailSubject,
+      'body': body,
+    }.entries.map((e) => '${e.key}=${Uri.encodeComponent(e.value)}').join('&');
+    return 'mailto:$_emailAddress?$query';
   }
 
   Future<String> _getVersionString() async {

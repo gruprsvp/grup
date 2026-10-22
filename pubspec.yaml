@@ -72,7 +72,6 @@ dependencies:
 
   # To send feedback and report bugs
   device_info_plus: ^13.3.0
-  mailto: ^2.0.0
   package_info_plus: ^10.2.2
   url_launcher: ^6.3.3
 
@@ -95,7 +94,6 @@ dependencies:
   sentry_flutter: ^10.1.0
   share_plus: ^13.3.1
   styled_text: ^10.0.0
-  universal_html: ^2.3.0
   uuid: ^4.6.0
 
 

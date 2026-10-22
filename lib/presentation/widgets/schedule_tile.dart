@@ -25,7 +25,8 @@ class ScheduleTile extends StatelessWidget {
       ),
       trailing: Badge.count(
         count: schedule.yesCount,
-        backgroundColor: Colors.green,
+        backgroundColor: yesColor,
+        textColor: Colors.white,
         alignment: Alignment.topLeft,
         child: ReplyButtons(
           reply: schedule.myReply,

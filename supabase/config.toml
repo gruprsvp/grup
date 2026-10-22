@@ -60,7 +60,7 @@ double_confirm_changes = true
 enable_confirmations = false
 
 [auth.sms]
-# Phone signups are used by the live phone-invite test (repositories_test.dart).
+# Phone signups are used by the live phone-invite test (test/services_test.dart).
 # No SMS is ever sent locally: confirmations are off, so signUp(phone:, password:)
 # auto-confirms. The Twilio block below is a dummy — the CLI refuses to enable
 # phone signup without *some* provider configured, but it is never called.
