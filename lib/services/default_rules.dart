@@ -5,13 +5,13 @@ import 'supabase.dart';
 
 class DefaultRulesService extends SupabaseService with Postgrest {
   DefaultRulesService({required super.supabase})
-    : super(tableName: Tables.default_rules);
+    : super(tableName: Tables.defaultRules);
 
-  Future<Iterable<DefaultRule>> getDefaultRules(String groupId) async {
+  Future<List<DefaultRule>> getDefaultRules(String groupId) async {
     return table()
         .select('*,members!inner(*)')
         .eq('members.group_id', groupId)
-        .withConverter((data) => data.map(DefaultRule.fromJson));
+        .withConverter((data) => decodeRows(data, DefaultRule.fromJson));
   }
 
   Future<DefaultRule> createDefaultRule(DefaultRule reply) async {
@@ -27,13 +27,17 @@ class DefaultRulesService extends SupabaseService with Postgrest {
         .withConverter((data) => DefaultRule.fromJson(data));
   }
 
+  // Selecting the deleted row makes a delete that matched nothing (already
+  // gone, or hidden by row-level security) fail instead of looking done.
   Future<void> deleteDefaultRule({
     required String memberId,
     required String scheduleId,
   }) async {
-    return table()
+    await table()
         .delete()
         .eq('member_id', memberId)
-        .eq('schedule_id', scheduleId);
+        .eq('schedule_id', scheduleId)
+        .select('member_id')
+        .single();
   }
 }

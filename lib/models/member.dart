@@ -12,7 +12,8 @@ sealed class Member with _$Member {
   const factory Member({
     required String id,
     required String groupId,
-    required GroupRoles role,
+    // A role added on the server after this version shipped grants nothing.
+    @JsonKey(unknownEnumValue: GroupRoles.member) required GroupRoles role,
     String? profileId,
     String? displayNameOverride,
     DateTime? createdAt,

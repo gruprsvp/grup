@@ -116,7 +116,7 @@ Epic<AppState> _createRetrieveOneGroupEpic(GroupsService groups) {
       actions.whereType<RequestRetrieveOne<Group>>().asyncMap(
         (action) => groups
             .getGroupById(action.id)
-            .then<dynamic>((group) => SuccessRetrieveOne(group))
+            .then<dynamic>((result) => SuccessRetrieveOne(result.groups.single))
             .catchError(
               (error) => FailRetrieveOne(id: action.id, error: error),
             ),

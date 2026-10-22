@@ -4,7 +4,9 @@ import 'dart:typed_data';
 import 'package:base32/base32.dart';
 import 'package:base32/encodings.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/util/errors.dart';
 import 'package:parousia/util/util.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 import 'const.dart';
@@ -49,13 +51,23 @@ class InvitesService extends SupabaseService with Postgrest {
   }
 
   Future<void> consumeInviteCode(String code) async {
-    return supabase.rpc('consume_invite_code', params: {'code': code});
+    try {
+      await supabase.rpc('consume_invite_code', params: {'code': code});
+    } on PostgrestException catch (e) {
+      // no_data_found: check_invite_code's `select ... into strict` found no
+      // invite with this code.
+      if (e.code == 'P0002') throw const InvalidInviteCodeException();
+      // unique_violation on members (group_id, profile_id): the user already
+      // belongs to the group this code is for.
+      if (e.code == '23505') throw const AlreadyMemberException();
+      rethrow;
+    }
   }
 
-  Future<Iterable<Invite>> getInvitesForMember(String memberId) async {
+  Future<List<Invite>> getInvitesForMember(String memberId) async {
     return table()
         .select()
         .eq('member_id', memberId)
-        .withConverter((data) => data.map(Invite.fromJson));
+        .withConverter((data) => decodeRows(data, Invite.fromJson));
   }
 }

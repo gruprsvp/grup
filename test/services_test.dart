@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:faker/faker.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/services/services.dart';
+import 'package:parousia/util/errors.dart';
 import 'package:parousia/util/util.dart';
 import 'package:rrule/rrule.dart';
 import 'package:supabase/supabase.dart';
@@ -746,13 +747,160 @@ void main() {
                     ),
               );
 
-              final replies = await repliesService.getRepliesForDay(
+              final replies = await repliesService.getRepliesForDateRange(
                 group.id,
-                startDate.add(const Duration(days: 1)),
+                startDate.add(const Duration(days: 1)).toUtc().getDayRange(),
               );
               expect(replies, hasLength(1));
             }),
       ),
+    );
+  });
+
+  group('failures are explicit', () {
+    Future<Schedule> createSchedule(SupabaseClient supabase, Group group) =>
+        SchedulesService(supabase: supabase).createSchedule(
+          Schedule(
+            id: '',
+            groupId: group.id,
+            displayName: 'A schedule',
+            startDate: DateTime.utc(2024, 1, 1, 18),
+            recurrenceRule: RecurrenceRule(frequency: Frequency.daily),
+          ),
+        );
+
+    Matcher throwsNotFound() => throwsA(
+      isA<PostgrestException>().having((e) => e.code, 'code', 'PGRST116'),
+    );
+
+    test(
+      'getGroupById returns the group with its members and profiles',
+      () => runWithTemporaryGroup((supabase, group, groupsService) async {
+        final result = await groupsService.getGroupById(group.id);
+        expect(result.groups.single.id, group.id);
+        // create_group made the creator its admin.
+        expect(result.members.single.role, GroupRoles.admin);
+        expect(result.profiles.single.id, supabase.auth.currentUser!.id);
+      }),
+    );
+
+    test(
+      'deleting a schedule that is already gone fails',
+      () => runWithTemporaryGroup((supabase, group, _) async {
+        final schedulesService = SchedulesService(supabase: supabase);
+        final schedule = await createSchedule(supabase, group);
+
+        await schedulesService.deleteSchedule(schedule.id);
+        await expectLater(
+          schedulesService.deleteSchedule(schedule.id),
+          throwsNotFound(),
+        );
+      }),
+    );
+
+    test(
+      'deleting a schedule row-level security hides fails',
+      () => runWithTemporaryGroup((supabase, group, _) async {
+        final schedule = await createSchedule(supabase, group);
+
+        await runWithTemporaryUser((outsider, _) async {
+          await expectLater(
+            SchedulesService(supabase: outsider).deleteSchedule(schedule.id),
+            throwsNotFound(),
+          );
+        });
+
+        // Still there for the admin.
+        final schedules = await SchedulesService(supabase: supabase)
+            .getGroupSchedules(group.id);
+        expect(schedules.single.id, schedule.id);
+      }),
+    );
+
+    test(
+      'removing a member that is already gone fails',
+      () => runWithTemporaryGroup((supabase, group, _) async {
+        final membersService = MembersService(supabase: supabase);
+        final guest = await membersService.addMemberToGroup(
+          group.id,
+          displayName: 'Guest',
+        );
+
+        await membersService.deleteMember(guest.id);
+        await expectLater(
+          membersService.deleteMember(guest.id),
+          throwsNotFound(),
+        );
+      }),
+    );
+
+    test(
+      'changing a reply updates it in place (upsert on conflict)',
+      () => runWithTemporaryGroup((supabase, group, groupsService) async {
+        final repliesService = RepliesService(supabase: supabase);
+        final schedule = await createSchedule(supabase, group);
+        final own = (await groupsService.getGroupById(group.id)).members.single;
+        final instanceDate = DateTime.utc(2024, 1, 2, 18);
+
+        Reply reply(ReplyOptions option) => Reply(
+          memberId: own.id,
+          scheduleId: schedule.id,
+          instanceDate: instanceDate,
+          selectedOption: option,
+        );
+        await repliesService.createReply(reply(ReplyOptions.yes));
+        await repliesService.createReply(reply(ReplyOptions.no));
+
+        final replies = await repliesService.getRepliesForDateRange(
+          group.id,
+          instanceDate.getDayRange(),
+        );
+        expect(replies.single.selectedOption, ReplyOptions.no);
+
+        await repliesService.deleteReply(
+          memberId: own.id,
+          scheduleId: schedule.id,
+          instanceDate: instanceDate,
+        );
+        await expectLater(
+          repliesService.deleteReply(
+            memberId: own.id,
+            scheduleId: schedule.id,
+            instanceDate: instanceDate,
+          ),
+          throwsNotFound(),
+        );
+      }),
+    );
+
+    test(
+      'an unknown invite code fails with InvalidInviteCodeException',
+      () => runWithTemporaryUser((supabase, _) async {
+        await expectLater(
+          InvitesService(supabase: supabase).consumeInviteCode('ZZZZ-ZZZZ'),
+          throwsA(isA<InvalidInviteCodeException>()),
+        );
+      }),
+    );
+
+    test(
+      'a code for a group the user is already in fails with '
+      'AlreadyMemberException',
+      () => runWithTemporaryGroup((supabase, group, _) async {
+        final membersService = MembersService(supabase: supabase);
+        final invitesService = InvitesService(supabase: supabase);
+        final slot = await membersService.addMemberToGroup(
+          group.id,
+          displayName: 'Another slot',
+        );
+        final invite = await invitesService.inviteWithGeneratedCode(slot.id);
+
+        // The admin is already a member of the group the code is for.
+        await expectLater(
+          invitesService.consumeInviteCode(invite.value),
+          throwsA(isA<AlreadyMemberException>()),
+        );
+      }),
     );
   });
 }

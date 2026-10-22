@@ -1,5 +1,6 @@
 import 'package:image_picker/image_picker.dart';
 import 'package:mime/mime.dart';
+import 'package:parousia/util/errors.dart';
 import 'package:supabase/supabase.dart';
 
 import 'const.dart';
@@ -10,12 +11,12 @@ class StorageService extends SupabaseService with Storage {
   const StorageService({required super.supabase})
     : super(bucketName: Buckets.public);
 
-  /// Uploads a file to the public bucket.
+  /// Uploads a file to the public bucket, in the current user's folder.
   Future<String> uploadPublicXFile(String key, XFile file) async {
     final ext = file.mimeType != null
         ? extensionFromMime(file.mimeType!)
         : 'jpg';
-    final path = '${supabase.auth.currentUser!.id}/$key.$ext';
+    final path = '${_userId()}/$key.$ext';
     final bytes = await file.readAsBytes();
 
     await bucket().uploadBinary(
@@ -29,11 +30,19 @@ class StorageService extends SupabaseService with Storage {
 
   /// Deletes all files owned by the current user.
   Future<void> deleteUserFiles() async {
-    final String userId = supabase.auth.currentUser!.id;
-    final files = await bucket().list(path: userId);
-    if (files.isEmpty) return;
-
-    final filesPaths = files.map((file) => '$userId/${file.name}').toList();
-    await bucket().remove(filesPaths);
+    final userId = _userId();
+    // A listing returns at most one page (100 files): delete page by page,
+    // and stop once a page deletes nothing, rather than loop forever.
+    while (true) {
+      final files = await bucket().list(path: userId);
+      if (files.isEmpty) return;
+      final removed = await bucket().remove([
+        for (final file in files) '$userId/${file.name}',
+      ]);
+      if (removed.isEmpty) return;
+    }
   }
+
+  String _userId() =>
+      supabase.auth.currentUser?.id ?? (throw const NotSignedInException());
 }
