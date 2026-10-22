@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:parousia/app.dart';
@@ -14,6 +15,11 @@ import 'router.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
+  // Web URLs without '#', so shared links (https://grup.rsvp/join/CODE) open
+  // the right page. The host must serve index.html for every path: Cloudflare
+  // Pages does, as long as the site has no 404.html.
+  usePathUrlStrategy();
 
   // Disable runtime fetching of Google Fonts to avoid network requests
   // They must be bundled with assets

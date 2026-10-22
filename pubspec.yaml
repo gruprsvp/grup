@@ -36,6 +36,9 @@ dependencies:
   # Localization
   flutter_localizations:
     sdk: flutter
+  # usePathUrlStrategy, for links without a '#'
+  flutter_web_plugins:
+    sdk: flutter
   intl: ^0.20.3
 
   # Routing
