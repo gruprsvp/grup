@@ -12,7 +12,6 @@ import 'package:parousia/l10n/app_localizations.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parousia/util/config.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';
-import 'package:universal_html/html.dart' as html;
 
 class AuthScreen extends StatelessWidget {
   const AuthScreen({super.key});
@@ -92,9 +91,8 @@ class _AuthScaffold extends StatelessWidget {
   String? _getRedirectUrl() {
     if (!kIsWeb) return 'grup://auth-callback';
 
-    final currentUrl = html.window.location.href;
-    final uri = Uri.parse(currentUrl);
-    final redirectUrl = Uri(scheme: uri.scheme, host: uri.host, port: uri.port);
-    return redirectUrl.toString();
+    // On the web, Uri.base is the page's URL.
+    final uri = Uri.base;
+    return Uri(scheme: uri.scheme, host: uri.host, port: uri.port).toString();
   }
 }

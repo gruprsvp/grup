@@ -3,6 +3,11 @@ import 'package:parousia/l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:parousia/models/models.dart';
 
+/// "Yes" green, dark enough for a white icon (5.1:1) and visible as an
+/// outline on light and dark surfaces alike (WCAG asks 3:1 for icons).
+/// "No" uses the theme's error colours, which Material keeps accessible.
+final yesColor = Colors.green.shade800;
+
 class ReplyButtons extends StatelessWidget {
   final ReplyOptions? reply;
   final ReplyOptions? defaultReply;
@@ -46,6 +51,9 @@ class ReplyButton extends StatelessWidget {
   final String tooltip;
   final Color activeColor;
 
+  /// The icon's colour on [activeColor].
+  final Color onActiveColor;
+
   const ReplyButton({
     super.key,
     required this.option,
@@ -56,13 +64,12 @@ class ReplyButton extends StatelessWidget {
     required this.inactiveIcon,
     required this.tooltip,
     required this.activeColor,
+    required this.onActiveColor,
   });
 
   @override
   Widget build(BuildContext context) {
-    final surfaceColor = Theme.of(context).colorScheme.surface;
-
-    final foregroundColor = WidgetStatePropertyAll<Color>(surfaceColor);
+    final foregroundColor = WidgetStatePropertyAll<Color>(onActiveColor);
     final focusColor = WidgetStatePropertyAll<Color>(activeColor);
 
     final isActive = reply == option;
@@ -128,7 +135,8 @@ class YesButton extends StatelessWidget {
       activeIcon: FontAwesomeIcons.solidThumbsUp,
       inactiveIcon: FontAwesomeIcons.thumbsUp,
       tooltip: l10n.yes,
-      activeColor: Colors.green,
+      activeColor: yesColor,
+      onActiveColor: Colors.white,
     );
   }
 }
@@ -157,7 +165,8 @@ class NoButton extends StatelessWidget {
       activeIcon: FontAwesomeIcons.solidThumbsDown,
       inactiveIcon: FontAwesomeIcons.thumbsDown,
       tooltip: l10n.no,
-      activeColor: Colors.red,
+      activeColor: Theme.of(context).colorScheme.error,
+      onActiveColor: Theme.of(context).colorScheme.onError,
     );
   }
 }

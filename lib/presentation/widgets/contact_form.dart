@@ -27,6 +27,14 @@ class _ContactFormState extends State<ContactForm> {
   final _phoneController = PhoneController();
 
   @override
+  void dispose() {
+    _nameController.dispose();
+    _emailController.dispose();
+    _phoneController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
 

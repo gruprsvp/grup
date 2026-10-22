@@ -41,7 +41,7 @@ STORE_SCREENSHOTS=true flutter test --tags screenshots --update-goldens
 Profiles: `appstore-6.7` (1290×2796) and `play-phone` (2160×3840, matches the
 current Play assets). Adding a screen = one line in the `screens` map, passing
 the "dumb" screen widget from `lib/presentation/screens/` with fake props —
-no Redux store or backend needed.
+no view models or backend needed.
 
 Current limitations (acceptable for drafts, fix before shipping):
 
