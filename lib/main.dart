@@ -33,8 +33,9 @@ Future<void> main() async {
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
 
-  // Initialize PostHog
-  await initPostHog();
+  // Analytics, like error reports (below), come from release builds only, so
+  // debug and test runs don't count as real use.
+  if (kReleaseMode) await initPostHog();
 
   final configService = ConfigService();
   await configService.initialize();

@@ -120,4 +120,4 @@ release, the Play "What's new", and TestFlight "What to Test".
 
 ## Release
 
-Merging to `main` runs `build.yaml`: tests → push DB migrations → deploy web to the `gh-pages` branch via `peanut` → build & upload the Android bundle → upload symbols/sources to Sentry → create/update a draft GitHub release tagged from the `version:` in `pubspec.yaml`. Analytics is PostHog; error reporting is Sentry (release builds only).
+Merging to `main` runs `build.yaml`: tests → push DB migrations → deploy web to the `gh-pages` branch via `peanut` → build & upload the Android bundle → upload symbols/sources to Sentry → create/update a draft GitHub release tagged from the `version:` in `pubspec.yaml`. Analytics is PostHog, error reporting is Sentry. The app starts both in release builds only; on web, PostHog is started by the `web/index.html` snippet on any host except localhost. Local runs therefore don't reach production analytics.
