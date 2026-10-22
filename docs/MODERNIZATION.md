@@ -2,7 +2,9 @@
 
 _Prepared 2026-06-28. Based on a full audit of the codebase (Flutter app `parousia` v1.7.2+1) across four areas: Supabase/security, state architecture, testing/CI, and web/dependencies/release._
 
-> **Refresh 2026-10-22 — MVVM, and Phase 1 / 1.5 done.** Branch `modernize/2026-10` (local, on top of `main`): every dependency at its latest version, Redux replaced by the Flutter team's MVVM architecture (D1 → B1), Widgetbook removed, and all of Phase 1 and Phase 1.5 except pagination. See [2026-10-22 refresh](#2026-10-22-refresh--mvvm-and-what-is-left).
+> **Supabase audit 2026-10-22 (after the merge).** Three dated Supabase changes reach this app: the legacy API keys go by the end of 2026 (every build so far embeds one), the default table grants go on 2026-10-30, and CLI v3 drops `[inbucket]`. The code check also found that new database functions are still callable by `anon`. See [2026-10-22 Supabase audit](#2026-10-22-supabase-audit--deadlines-and-deprecations).
+>
+> **Refresh 2026-10-22 — MVVM, and Phase 1 / 1.5 done.** Branch `modernize/2026-10`, merged as PR #251 the same day: every dependency at its latest version, Redux replaced by the Flutter team's MVVM architecture (D1 → B1), Widgetbook removed, and all of Phase 1 and Phase 1.5 except pagination. See [2026-10-22 refresh](#2026-10-22-refresh--mvvm-and-what-is-left).
 >
 > **Phase 0 in progress (branch `chore/phase-0-safety-net`).** See [Phase 0 progress & new findings](#phase-0-progress--findings-from-implementation) at the bottom for what's done and what hands-on work uncovered (notably: the app did **not** compile/run on current stable Flutter until several upgrade/migration gaps were fixed).
 >
@@ -22,6 +24,79 @@ The single most important finding is about **sequencing, not any one bug**: almo
 - **Phase 2 — Strategic, decision-gated work** (state-layer evolution, realtime, offline, pro plan).
 
 Three genuine decisions need your input before Phase 2 — see [Decisions](#decisions-need-your-input).
+
+---
+
+## 2026-10-22 Supabase audit — deadlines and deprecations
+
+_Written after PR #251 merged. Inputs: Supabase's docs and changelog, the CI logs of the merge, a fresh `supabase init` (CLI 2.119) compared with `supabase/config.toml`, `supabase db advisors --local`, and probes on the local stack. "Local" means the local stack, not prod; each claim about prod comes with a command to check it._
+
+Sources: [Migrating to publishable and secret API keys](https://supabase.com/docs/guides/getting-started/migrating-to-new-api-keys) (S1), [Breaking change: tables not exposed to Data and GraphQL API automatically](https://supabase.com/changelog/45329-breaking-change-tables-not-exposed-to-data-and-graphql-api-automatically) (S2, and the `pg_graphql` date in S8), [Securing Edge Functions](https://supabase.com/docs/guides/functions/auth) (S1), [`supabase/setup-cli` action.yml](https://github.com/supabase/setup-cli/blob/45a513f8c64c0bc8e0e3dfe572b5c95be85f6359/action.yml) (S3), [Forthcoming Postgres 17 release notes](https://github.com/orgs/supabase/discussions/35851) and [self-hosted 15 → 17](https://github.com/orgs/supabase/discussions/46080) (S7).
+
+### With a date
+
+**S1 — Legacy API keys end by the end of 2026.** Supabase's migration guide says it "is deprecating the `anon` and `service_role` keys by the end of 2026"; no exact removal date is published. Every build so far, the 2.0.0 ones included, carries the legacy anon JWT in `supabase/config/supabase.json`. When Supabase turns it off, those installs stop working, and the app has no "update required" gate to tell users.
+- **Fix, before promoting 2.0.0:**
+  - create the publishable key in the dashboard (Settings → API Keys) and paste it into the `ANON_KEY` field of `supabase/config/supabase.json`;
+  - merge that to `main`. No version bump is needed: the release run gives the Play build a new `versionCode` (the run number, `build.yaml:140`; pubspec's `+N` has always been `+1`), and Xcode Cloud builds again. Promote/submit those builds instead of the first 2.0.0 ones.
+
+  No app code changes. `lib/main.dart:51` already passes the value as `publishableKey:`, and once a user is signed in supabase-dart 2.16 sends an `sb_` key only as `apikey`, never as the Bearer token. Rename the field to `PUBLISHABLE_KEY` later; `supabase status` already prints it.
+- **Edge function.** `delete_user_account/index.ts:18` reads `SUPABASE_SERVICE_ROLE_KEY`, which stops working with the legacy keys, and both stores require in-app account deletion. Read `SUPABASE_SECRET_KEYS` (a JSON map; the key is `['default']`) and fall back to the old variable. The variable names come from Supabase's docs; they were not checked on the local runtime. Keep `verify_jwt` on: the app always calls the function signed in, and the check accepts user tokens.
+- Smoke-test a release build against prod before promoting: sign-in, RSVP, picture upload. Deactivate the legacy keys only once the dashboard shows nothing uses them; deactivation can be undone.
+- **Verified locally:** with `sb_publishable_`/`sb_secret_` swapped into `localhost.json` in place of `ANON_KEY`/`SERVICE_ROLE_KEY`, the live suite passes 27/27, and `delete_user_account` returns 200 for the publishable key plus a signed-in user's token.
+- The product gap this exposes: there is no minimum-version gate, so old installs fail with generic errors whenever a backend change breaks them. JWT signing keys (asymmetric) are a separate, optional migration.
+
+**S2 — 2026-10-30: Supabase revokes the default table grants on existing projects.** The changelog's SQL for it is `alter default privileges for role postgres in schema public revoke select, insert, update, delete on tables from anon, authenticated, service_role` (and `usage, select` on sequences), the same statements new projects get at creation. Our tables are owned by `postgres` (checked locally), so this also cancels the defaults set at `20260628120000_grant_api_roles.sql:30-34`.
+- Existing tables keep their grants, so 2.0.0 is unaffected.
+- It breaks the **next migration that adds a table**. CI stays green, because on a fresh database our migration's defaults still apply, while prod returns "permission denied" (42501).
+- **Fix, before that migration:**
+  - one migration that runs the same revoke, so local matches prod;
+  - explicit `grant`s next to `enable row level security` in every new-table migration;
+  - a pgTAP check over every public table: RLS on, `authenticated` granted.
+
+  Accept the change rather than re-granting the defaults. It closes E3's "future tables are writable before RLS is enabled".
+
+**S3 — Supabase CLI v3.** The CLI in CI already logs `WARN: config section [inbucket] is deprecated and will be removed in v3, use [local_smtp] instead.` and `WARN: INBUCKET_URL is deprecated and will be removed in v3, use MAILPIT_URL instead.` (local 2.119 warns too). `supabase/setup-cli` has no `version:` (`verify.yaml:94`, `build.yaml:52`), and its docs say "If omitted, detect from the root lockfile and otherwise use latest". So CI always runs the newest CLI, including for the **prod `db push`**.
+- **Fix:** rename `[inbucket]` to `[local_smtp]` in `config.toml`; drop the unused `inbucketUrl` from `SupabaseConfig`; pin `version:` in both workflows to the version used locally (latest is 2.121). Dependabot doesn't bump that input, so CLI updates become manual.
+
+### Found in the code
+
+**S4 — New functions are callable by `anon` (local).** Supabase's default privileges grant EXECUTE on every new function in `public` to `anon`, `authenticated` and `service_role` explicitly, not through `PUBLIC`. The "future-proofing" line at `20260807150000_function_execute_perimeter.sql:37` only revokes `PUBLIC`, and `function_grants_test.sql` checks five named functions. A probe function created as `postgres` was executable by `anon`. So the next SECURITY DEFINER RPC would be open to signed-out callers, and no test would fail. S2 doesn't cover functions.
+- **Fix:** `alter default privileges for role postgres in schema public revoke execute on functions from anon;`, plus a pgTAP check that `anon` can execute no `public` function.
+- Same cause, also local: `anon` holds full table privileges on all 7 tables, although the grants migration says "anon only gets schema USAGE". RLS is on everywhere with no `anon` policy, so nothing is exposed. Revoking them changes prod behaviour: do it in its own PR, after checking that nothing queries a table before sign-in.
+- Check prod: `supabase db query --linked "select pg_get_userbyid(defaclrole), defaclobjtype, defaclacl from pg_default_acl"`.
+
+**S5 — `supabase db advisors`**, a newer CLI command, never run on this project before. `--local` reports:
+- **Security:** `public.gen_random_uuid_v7` has a mutable `search_path`. It only calls built-ins, so a new migration with `alter function public.gen_random_uuid_v7() set search_path = ''` is safe; don't edit the vendored migration. In the same PR, add `supabase db advisors --local --type security --fail-on warn` to `verify.yaml`, or that step fails at once.
+- **Performance:** 12 "multiple permissive policies" on `replies`, `default_rules`, `members` and `schedules`. The admin/self overlap is deliberate and pgTAP pins it: skip.
+- **Info:** `unused_index members_profile_id`, only because the local database has no traffic. Keep the index.
+- `supabase db advisors --linked` adds the prod-only checks (auth settings, Postgres patch level) and may answer Confirm #1.
+
+**S6 — CI never deploys edge functions.** `build.yaml` only runs `db push`, so nobody knows which code prod's `delete_user_account` runs. Add `supabase functions deploy` after `db push`; S1 needs it.
+
+**S7 — Postgres 15 → 17.**
+- The `supabase init` template now defaults to 17, and Supabase's self-hosted images switched on 2026-06-17. For hosted 15, Supabase first said about May 2026 and has given no firm date since. Upstream supports 15 until 2027-11-11.
+- Supabase's 17 images drop `pgjwt`, `plv8`, `timescaledb`, `plls` and `plcoffee`. A project created in 2023 may have `pgjwt` and the old dbdev extensions (`pg_tle`, `http`). Check with `supabase db query --linked "select extname from pg_extension"`.
+- Upgrade prod from the dashboard first, then bump `[db] major_version`, which must match prod. A throwaway local stack on 17 can run the migrations and pgTAP beforehand.
+
+**S8 — Leftover config (no effect today).**
+- `[analytics]` still has the BigQuery-era `gcp_project_id`/`gcp_project_number`/`gcp_jwt_path`. Analytics is off, and the template now has `backend = "postgres"`.
+- `[api] schemas` exposes `storage`, under the outdated comment "public and storage are always included". The template has `["public", "graphql_public"]`, and the app reaches storage through the Storage API. Check that prod's exposed schemas match.
+- `supabase/.branches/_current_branch` is tracked. It is a leftover of `supabase db branch`, which the CLI no longer has.
+- Supabase stopped enabling `pg_graphql` on new projects on 2026-05-18. It isn't on the local stack and the app doesn't use GraphQL, but prod probably still has it: consider turning it off there.
+
+**Checked, fine:**
+- The edge function already uses the Deno 2 style (`Deno.serve`, `jsr:` imports); the edge runtime defaults to Deno 2.
+- No `auth_rls_initplan` warnings.
+- Android targets API 36 with NDK 28 (the Flutter defaults).
+- CI's web build reports "Wasm dry run succeeded", so the code is ready for `flutter build web --wasm`. The COOP/COEP question from appendix D still applies.
+- On a machine where `DEVELOPER_DIR` points at an SDK without Xcode's toolchain (a Nix apple-sdk, for example), `flutter test` fails with "install_name_tool not found". `env -u DEVELOPER_DIR flutter test` works.
+
+**Order:**
+1. S1, with S3 and S6, in one merge before promoting 2.0.0.
+2. S2, S4 and S5's `search_path` fix as one migration PR before the next schema change.
+3. S7 once Supabase sets a date.
+4. S8 any time.
 
 ---
 
@@ -54,7 +129,7 @@ Three genuine decisions need your input before Phase 2 — see [Decisions](#deci
 - **#2:** Cloudflare Pages.
 - **#3:** no double counting. `posthog_flutter`'s `setup` does nothing on web, so the `index.html` snippet is the only init. But debug and local runs were sending events to production PostHog. Now only release builds start it on native, and the web snippet skips localhost.
 - **#4:** the app now uses Flutter's built-in deep linking (`FlutterDeepLinkingEnabled` / `flutter_deeplinking_enabled`), which hands the launch URL to go_router. Verified on web and on an Android emulator: a cold start from `https://grup.rsvp/join/…` opens the join screen. Not tested on iOS or a physical device.
-- **#1** is still open.
+- **#1** is still open. `supabase db advisors --linked` may answer it ([S5](#2026-10-22-supabase-audit--deadlines-and-deprecations)).
 
 **Verified:**
 - `flutter analyze`: no issues, infos included.
@@ -76,12 +151,11 @@ Three genuine decisions need your input before Phase 2 — see [Decisions](#deci
 
 ### Still open
 
-- **Release and merge.** This ships as **2.0.0**, with new release notes for both stores in all five languages (each within Play's 500-character limit). A merge does the following:
-  - creates a new draft release `v2.0.0` (the stale `v1.7.2`/`v1.7.3` drafts can be deleted);
-  - runs the index migration on prod;
-  - deploys web, and uploads Android to Play internal.
-
-  Because `fastlane/` and `Gemfile.lock` change, it also runs `store-metadata.yaml`. On iOS, `deliver` pins `app_version` to 2.0.0, so the editable App Store version becomes 2.0.0 (created, or the stuck editable 1.7.x renamed) with these notes. After the merge, watch Xcode Cloud's first SPM-only build, attach it to 2.0.0 and submit. Promote the Play build from internal when ready. Publish the `v2.0.0` release once it is live. Close Dependabot #244–#250 (all superseded). #186 (`refactor/timezone`) predates the rewrite.
+- **Release.** **Merged on 2026-10-22 as PR #251.** It ships as **2.0.0**, with new release notes for both stores in all five languages. Every step of the release run (`build.yaml` run 39795642384) passed: draft release `v2.0.0`, the index migration on prod, web on `gh-pages`, 2.0.0 on Play internal (`versionCode` 224, the run number), and the Sentry upload. `store-metadata.yaml` (run 39795642385) passed too. On iOS, `deliver` pins `app_version` to 2.0.0, which makes the editable App Store version 2.0.0 with these notes (not checked in App Store Connect). Still to do:
+  - ship the publishable key in a new 2.0.0 build, and promote/submit that one instead ([S1](#2026-10-22-supabase-audit--deadlines-and-deprecations));
+  - watch Xcode Cloud's first SPM-only build, attach it to 2.0.0 and submit; promote the Play build from internal;
+  - keep `v2.0.0` a draft until then: once it is published, the next `build.yaml` run fails at the version gate. Publish it when the app is live. The stale `v1.7.2`/`v1.7.3` drafts can be deleted;
+  - close Dependabot #244–#250 (all superseded). #186 (`refactor/timezone`) predates the rewrite.
 - **Phase 1.5 item 6 (pagination)** is not done. No list is near PostgREST's 1000-row cap yet; deleting a user's files does page.
 - **Known gaps:**
   - On web, an OAuth sign-in loses `/auth?from=…` across the provider redirect (email sign-in keeps it).
@@ -258,7 +332,7 @@ Each is shippable independently once Phase 0 gives you coverage.
 10. Add indexes on `replies(schedule_id)`, `default_rules(schedule_id)`, `schedules(group_id)`, `invites(member_id)` — composite PKs only index the leading column, and these are RLS-subquery / cascade columns.
 11. Add `set search_path = public` to the `SECURITY DEFINER` `handle_delete_user` function (every other definer function pins it).
 
-**[A2] Security — close the invite perimeter** — **DONE 2026-08-07** (branch `fix/invite-perimeter`, stacked on Phase 0). All four items below implemented: `Random.secure()` codes; EXECUTE perimeter migration (`20260807150000`, incl. `alter default privileges` so future functions aren't PUBLIC-executable); phone format canonicalized to E.164-with-`+` in `handle_new_invite` (`20260807150200`), phone signup enabled locally (`config.toml` `[auth.sms]` + dummy Twilio, no SMS ever sent — autoconfirm), live phone test un-skipped; member self-service policies + `handle_member_left` admin-continuity trigger (`20260807150100` — promotes the oldest claimed-profile member when the last admin leaves, deletes unmanageable groups). pgTAP grew 37 → 64 assertions (`function_grants_test.sql`, `invite_claim_test.sql`, write-policy flips). _Residual (fold into later passes): the contacts picker still sends raw `p.number` un-normalized (`widgets/group_members.dart:175`) — E.164-normalize at the UI boundary; `handle_new_invite` doesn't reset `display_name_override` while `handle_upsert_user` does._
+**[A2] Security — close the invite perimeter** — **DONE 2026-08-07** (branch `fix/invite-perimeter`, stacked on Phase 0). All four items below implemented: `Random.secure()` codes; EXECUTE perimeter migration (`20260807150000`, incl. `alter default privileges` so future functions aren't PUBLIC-executable; _2026-10-22: they are still `anon`-executable, see S4_); phone format canonicalized to E.164-with-`+` in `handle_new_invite` (`20260807150200`), phone signup enabled locally (`config.toml` `[auth.sms]` + dummy Twilio, no SMS ever sent — autoconfirm), live phone test un-skipped; member self-service policies + `handle_member_left` admin-continuity trigger (`20260807150100` — promotes the oldest claimed-profile member when the last admin leaves, deletes unmanageable groups). pgTAP grew 37 → 64 assertions (`function_grants_test.sql`, `invite_claim_test.sql`, write-policy flips). _Residual (fold into later passes): the contacts picker still sends raw `p.number` un-normalized (`widgets/group_members.dart:175`) — E.164-normalize at the UI boundary; `handle_new_invite` doesn't reset `display_name_override` while `handle_upsert_user` does._
 
 12. Generate invite codes with **`Random.secure()`** — `lib/repositories/invites.dart:35` uses time-seeded `Random()` for 40-bit group-join codes.
 13. **`REVOKE EXECUTE` on the SECURITY DEFINER functions from `anon`/`PUBLIC`**, granting back only what each flow needs. The grants migration deliberately withheld table DML from `anon` but never touched function EXECUTE — `check_invite_code` (`20231023170520_functions.sql:114`) is callable unauthenticated via `/rest/v1/rpc/…` with just the anon key, unrate-limited: an enumeration oracle over weakly-generated codes → join arbitrary groups after signup.
@@ -400,7 +474,7 @@ _Four parallel deep-dives: core Dart layers, presentation/l10n, backend/tests/CI
 - Phone-invite format contradiction (`functions.sql:43` vs `:162`); masked by the skipped test.
 - `members` policies block self-service (leave group / own `display_name_override`) — `schema.sql:261-274`.
 - `handle_upsert_user` fires on every `auth.users` UPDATE; OAuth sign-in can clobber user profile edits (_plausible_); `profiles` has no UPDATE/DELETE policy — trigger is the only write path.
-- Grants migration verified sound + idempotent; residual gaps: default privileges make future tables `authenticated`-writable until RLS is enabled (a forgotten `enable row level security` = cross-tenant DML), and function EXECUTE untouched (see above).
+- Grants migration verified sound + idempotent; residual gaps: default privileges make future tables `authenticated`-writable until RLS is enabled (a forgotten `enable row level security` = cross-tenant DML), and function EXECUTE untouched (see above). _2026-10-22: `anon` gets the same defaults, on tables and on new functions; see S2 and S4._
 - Edge function `delete_user_account`: no HTTP-method check, no `Access-Control-Allow-Methods` on preflight, no top-level try/catch, `SERVICE_ROLE_KEY ?? ""` builds a broken client instead of failing fast (all low; token validation itself is correct).
 - config.toml drift: no `[auth.external.google]` and apple disabled — the app's social-auth path is untestable locally/in CI; `site_url` points at prod from local.
 - Very low: no format CHECK on `invites.value`; duplicate email invites possible; `default_rules.recurrence_rule ⊆ schedule.recurrence_rule` unenforced (TODO at `schema.sql:133`). Positives: composite PK prevents duplicate replies; timestamptz everywhere; partial unique index guards code collisions.
