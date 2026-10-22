@@ -3,6 +3,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:parousia/l10n/app_localizations.dart';
 import 'package:flutter_redux/flutter_redux.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:phone_form_field/phone_form_field.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:parousia/actions/actions.dart';
@@ -47,6 +48,7 @@ const appLocalizationsDelegates = <LocalizationsDelegate<dynamic>>[
   AppLocalizations.delegate,
   ...GlobalMaterialLocalizations.delegates,
   FormBuilderLocalizations.delegate,
+  PhoneFieldLocalization.delegate,
   // NOTE: upstream supabase_auth_ui (0.6.1) has no unified localizations
   // delegate; auth-component strings are localized per-component instead.
   // The forked package's SupabaseAuthUILocalizations was dropped in the

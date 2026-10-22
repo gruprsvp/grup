@@ -1,5 +1,5 @@
 import 'package:redux_entity/redux_entity.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 typedef EntityFactory<T> = T Function();
 

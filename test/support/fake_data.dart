@@ -3,8 +3,8 @@ import 'package:parousia/models/models.dart';
 import 'package:parousia/util/recurrence_rules.dart';
 import 'package:uuid/uuid.dart';
 
-/// Gnenerate fake data for testing
-class Fake {
+/// Generates fake domain data for tests.
+class FakeData {
   static Profile profile() => Profile(
     id: const Uuid().v4(),
     displayName: faker.person.name(),

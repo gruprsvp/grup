@@ -1,14 +1,14 @@
 import 'package:parousia/models/models.dart';
 import 'package:parousia/reducers/remote_entities.dart';
-import 'package:parousia/util/util.dart';
 import 'package:redux_entity/redux_entity.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 import 'remote_entity_reducer_tester.dart';
+import 'support/fake_data.dart';
 
 void main() {
   group(profilesReducer, () {
-    generator() => Fake.profile();
+    generator() => FakeData.profile();
 
     final tester =
         RemoteEntityReducerTester<
@@ -25,7 +25,7 @@ void main() {
   });
 
   group(groupsReducer, () {
-    generator() => Fake.group();
+    generator() => FakeData.group();
 
     final tester =
         RemoteEntityReducerTester<
@@ -42,7 +42,7 @@ void main() {
   });
 
   group(schedulesReducer, () {
-    generator() => Fake.schedule();
+    generator() => FakeData.schedule();
 
     final tester =
         RemoteEntityReducerTester<
