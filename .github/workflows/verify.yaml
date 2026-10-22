@@ -92,6 +92,9 @@ jobs:
 
       - name: Setup Supabase
         uses: supabase/setup-cli@45a513f8c64c0bc8e0e3dfe572b5c95be85f6359 # v3.0.1
+        with:
+          # Same version as build.yaml, which runs the prod `db push`.
+          version: 2.121.0
 
       - name: Start Supabase local for tests
         run: supabase start
