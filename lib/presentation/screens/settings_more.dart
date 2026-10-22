@@ -19,7 +19,7 @@ class SettingsMoreScreen extends StatelessWidget {
           ListTile(
             title: Text(l10n.licenses),
             leading: const Icon(Icons.copyright),
-            onTap: () => const LicensesRoute().push(context),
+            onTap: () => const LicensesRoute().push<void>(context),
           ),
           DeleteProfileTile(onDelete: onDeleteProfile),
         ],

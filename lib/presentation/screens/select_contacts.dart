@@ -15,7 +15,7 @@ class _SelectContactsScreenState extends State<SelectContactsScreen> {
   late final Future<List<Contact>> contacts;
 
   @override
-  initState() {
+  void initState() {
     super.initState();
     contacts = _getContacts();
   }

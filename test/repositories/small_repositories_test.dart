@@ -124,7 +124,7 @@ void main() {
         'themeMode': 'dark',
         'locale': {'languageCode': 'de', 'scriptCode': null},
         'hasSeenFeedbackCard': true,
-        'groups': {'entities': {}},
+        'groups': <String, dynamic>{},
       });
 
       final settings = await SettingsRepository.load(legacyState: legacy);
@@ -167,7 +167,7 @@ void main() {
         jsonEncode({
           'version': LocalCache.version + 1,
           'userId': 'me',
-          'data': {},
+          'data': <String, dynamic>{},
         }),
       );
 

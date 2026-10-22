@@ -29,7 +29,7 @@ class _HomeContainerState extends State<HomeContainer> {
   void _askForName() {
     if (_askedForName || !_viewModel.needsName) return;
     _askedForName = true;
-    const ProfileRoute().push(context);
+    const ProfileRoute().push<void>(context);
   }
 
   Future<void> _onGroupCreate(GroupCreateResult result) async {

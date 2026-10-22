@@ -1,4 +1,5 @@
 import 'package:parousia/models/models.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:uuid/uuid.dart';
 
 import 'const.dart';
@@ -32,7 +33,7 @@ class GroupsService extends SupabaseService with Postgrest {
 
   Future<Group> createGroup(Group group) async {
     return supabase
-        .rpc(
+        .rpc<PostgrestList>(
           'create_group',
           params: {
             'id': const Uuid().v7(),

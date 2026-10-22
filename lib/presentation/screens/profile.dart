@@ -27,7 +27,7 @@ class ProfileScreen extends StatefulWidget {
   });
 
   @override
-  createState() => _ProfileScreenState();
+  State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
@@ -94,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
           IconButton(
             icon: const FaIcon(FontAwesomeIcons.gear),
             tooltip: l10n.settings,
-            onPressed: () => const SettingsRoute().push(context),
+            onPressed: () => const SettingsRoute().push<void>(context),
           ),
         ],
       ),

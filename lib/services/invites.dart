@@ -52,7 +52,7 @@ class InvitesService extends SupabaseService with Postgrest {
 
   Future<void> consumeInviteCode(String code) async {
     try {
-      await supabase.rpc('consume_invite_code', params: {'code': code});
+      await supabase.rpc<void>('consume_invite_code', params: {'code': code});
     } on PostgrestException catch (e) {
       // no_data_found: check_invite_code's `select ... into strict` found no
       // invite with this code.

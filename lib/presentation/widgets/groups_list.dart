@@ -43,7 +43,8 @@ class GroupsList extends StatelessWidget {
                 )
               : null,
           onTap: () =>
-              GroupDetailsRoute(groupId: group.id.toString()).push(context),
+              GroupDetailsRoute(groupId: group.id.toString())
+                  .push<void>(context),
         );
       },
       itemCount: groups?.length ?? 0,

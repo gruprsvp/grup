@@ -11,7 +11,7 @@ import 'recurrence_label.dart';
 
 class ScheduleForm extends StatefulWidget {
   final Schedule? schedule;
-  final Function(Schedule)? onChanged;
+  final ValueChanged<Schedule>? onChanged;
 
   const ScheduleForm({super.key, this.schedule, this.onChanged});
 

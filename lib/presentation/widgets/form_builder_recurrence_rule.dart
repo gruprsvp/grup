@@ -171,7 +171,7 @@ class _RecurrenceRulePickerState
   }
 
   Future<RecurrenceRule?> onShowSelector(RecurrenceRule? currentValue) async {
-    final newValue = await showAdaptiveDialog(
+    final newValue = await showAdaptiveDialog<RecurrenceRule>(
       context: context,
       builder: (context) {
         final l10n = AppLocalizations.of(context)!;
