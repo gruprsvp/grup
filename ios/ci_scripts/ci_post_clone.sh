@@ -25,11 +25,8 @@ mkdir -p ios/TestFlight
 cp fastlane/metadata/ios/en-GB/release_notes.txt ios/TestFlight/WhatToTest.en-GB.txt
 cp fastlane/metadata/ios/en-GB/release_notes.txt ios/TestFlight/WhatToTest.en-US.txt
 
-# Install CocoaPods using Homebrew.
-export HOMEBREW_NO_AUTO_UPDATE=1 # disable homebrew's automatic updates.
-brew install cocoapods
-
-# Install CocoaPods dependencies.
-cd ios && pod install # run `pod install` in the `ios` directory.
+# No CocoaPods: every iOS plugin is a Swift package. Xcode Cloud archives with
+# automatic package resolution off, so the committed
+# ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved must match.
 
 exit 0

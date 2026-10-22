@@ -33,19 +33,15 @@ flutter run                               # the app (web/Chrome needs no extra s
 flutter gen-l10n                           # regenerate localizations from lib/l10n/*.arb
 ```
 
-**iOS / macOS local builds** need CocoaPods installed (some plugins —
-`sign_in_with_apple` — are CocoaPods-only and
-build via the SPM+CocoaPods hybrid):
-```sh
-brew install cocoapods
-```
-Swift Package Manager (Flutter's default) is left **enabled** — it works here. If a
-build ever fails with `Module 'X' not found`, it's almost always a broken `pod install`
-(CocoaPods missing, or a stale `ios/Podfile.lock`) — fix with `brew install cocoapods`
-and/or `cd ios && pod install --repo-update`, not by disabling SPM.
-Minimum OS (raised for the transitive `passkeys` dependency): **iOS 16**, **macOS 13.5**.
-Web and Android need none of this. CI only builds web + Android, so it's a local-dev concern.
-If Homebrew has no CocoaPods bottle (e.g. on a macOS pre-release), `gem install cocoapods` works.
+**iOS / macOS builds use Swift Package Manager only.** Every plugin ships as a Swift
+package, so there is no Podfile and CocoaPods isn't needed. Xcode Cloud archives with
+automatic package resolution off, so `ios/Runner.xcworkspace/xcshareddata/swiftpm/Package.resolved`
+is committed and must be regenerated whenever plugin dependencies change (a
+`flutter build ios` does it). A "failed to emit precompiled module" error after dependency
+changes is stale DerivedData (delete `~/Library/Developer/Xcode/DerivedData/Runner-*`).
+Minimum OS: **iOS 16**, **macOS 13.5** (set for the since-removed `passkeys`
+dependency; sentry_flutter 10 needs iOS 15, so iOS could go back to 15).
+CI only builds web + Android; Xcode Cloud builds iOS.
 
 **Android toolchain:** AGP 9.1 / Gradle 9.3.1 / Kotlin Gradle plugin 2.4 (the newest Flutter
 3.47 supports), Groovy DSL. Builds on Android Studio's bundled JDK and on Java 17 (CI).
