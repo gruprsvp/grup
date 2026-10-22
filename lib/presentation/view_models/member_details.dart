@@ -1,12 +1,13 @@
-import 'package:flutter/foundation.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/util/command.dart';
 import 'package:parousia/util/errors.dart';
 import 'package:parousia/util/result.dart';
 
+import 'view_model.dart';
+
 /// One member of a group: their role, pending invites, and removal.
-class MemberDetailsViewModel extends ChangeNotifier {
+class MemberDetailsViewModel extends ViewModel {
   MemberDetailsViewModel({
     required this.groupId,
     required this.memberId,
@@ -17,7 +18,7 @@ class MemberDetailsViewModel extends ChangeNotifier {
       (role) => _withMember((member) => _groups.setRole(member, role)),
     );
     remove = Command0(() => _withMember(_groups.remove));
-    _groups.addListener(notifyListeners);
+    listenTo([_groups, load, setRole, remove]);
   }
 
   final String groupId;
@@ -40,6 +41,9 @@ class MemberDetailsViewModel extends ChangeNotifier {
   bool get isCurrentUser =>
       member?.profileId != null && member?.profileId == _groups.userId;
 
+  /// Whether the user may change roles and remove members.
+  bool get isAdmin => _groups.ownMember(groupId)?.role == GroupRoles.admin;
+
   Future<Result<void>> _load() async {
     final results = await Future.wait([
       _groups.refreshGroup(groupId),
@@ -57,11 +61,5 @@ class MemberDetailsViewModel extends ChangeNotifier {
     final member = this.member;
     if (member == null) return const Result.error(NotFoundException());
     return action(member);
-  }
-
-  @override
-  void dispose() {
-    _groups.removeListener(notifyListeners);
-    super.dispose();
   }
 }

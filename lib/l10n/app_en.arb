@@ -128,5 +128,53 @@
   "themeSystem": "System",
   "unknown": "Unknown",
   "yes": "Yes",
-  "you": "You"
+  "you": "You",
+  "errorNetwork": "Couldn't reach GRUP. Check your connection and try again.",
+  "@errorNetwork": {
+    "description": "Shown when the server can't be reached."
+  },
+  "errorNotFound": "This isn't available any more. It may have been deleted, or you no longer have access.",
+  "@errorNotFound": {
+    "description": "Shown when something the user acted on was deleted, or they lost access to it."
+  },
+  "errorNotAllowed": "You're not allowed to do that.",
+  "@errorNotAllowed": {
+    "description": "Shown when the server refuses an action the user isn't allowed to do."
+  },
+  "errorInvalidInviteCode": "This invite code isn't valid. Check it and try again.",
+  "@errorInvalidInviteCode": {
+    "description": "Shown when joining a group with a code that matches no invite."
+  },
+  "errorAlreadyMember": "You're already a member of this group.",
+  "@errorAlreadyMember": {
+    "description": "Shown when joining a group the user is already in."
+  },
+  "errorNotSignedIn": "You're signed out. Sign in and try again.",
+  "@errorNotSignedIn": {
+    "description": "Shown when an action needs a signed-in user but the session ended."
+  },
+  "errorGeneric": "Something went wrong. Please try again.",
+  "@errorGeneric": {
+    "description": "Shown for any unexpected failure."
+  },
+  "retry": "Retry",
+  "@retry": {
+    "description": "Button that tries a failed load again."
+  },
+  "joiningGroup": "Joining the group…",
+  "@joiningGroup": {
+    "description": "Shown while an invite link is being used to join a group."
+  },
+  "joinedGroup": "You joined the group!",
+  "@joinedGroup": {
+    "description": "Confirmation after joining a group from an invite link."
+  },
+  "goToGroups": "Go to your groups",
+  "@goToGroups": {
+    "description": "Button that leaves an error screen for the home screen."
+  },
+  "licenses": "Licenses",
+  "@licenses": {
+    "description": "Settings entry that opens the open-source licenses page."
+  }
 }

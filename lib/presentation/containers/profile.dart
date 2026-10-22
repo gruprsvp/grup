@@ -1,14 +1,6 @@
-import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:material_ui/material_ui.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:parousia/actions/actions.dart';
-import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
-import 'package:parousia/state/state.dart';
-import 'package:redux/redux.dart';
-
-part 'profile.freezed.dart';
+import 'package:provider/provider.dart';
 
 class ProfileContainer extends StatelessWidget {
   final bool? userNavigated;
@@ -16,34 +8,20 @@ class ProfileContainer extends StatelessWidget {
   const ProfileContainer({super.key, this.userNavigated});
 
   @override
-  Widget build(BuildContext context) {
-    return StoreConnector(
-      builder: (context, vm) => ProfileScreen(
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+    create: (context) =>
+        ProfileViewModel(profile: context.read(), groups: context.read()),
+    child: Consumer<ProfileViewModel>(
+      builder: (context, vm, _) => ProfileScreen(
         profile: vm.profile,
         userNavigated: userNavigated,
-        onSave: vm.onSave,
+        saving: vm.save.running,
+        onSave: (name, image) async {
+          await vm.save.execute((name: name, image: image));
+          if (context.mounted) showFailure(context, vm.save.result);
+          return vm.save.completed;
+        },
       ),
-      converter: _ViewModel.fromStore,
-    );
-  }
-}
-
-@freezed
-sealed class _ViewModel with _$ViewModel {
-  // TODO add loading state
-
-  const factory _ViewModel({
-    Profile? profile,
-    required OnProfileSaveCallback onSave,
-  }) = __ViewModel;
-
-  static _ViewModel fromStore(Store<AppState> store) {
-    return _ViewModel(
-      profile: store.state.profiles.entities[store.state.auth.user?.id],
-      onSave: (result) {
-        final (name, image) = result;
-        store.dispatch(SaveProfileAction(name: name, image: image));
-      },
-    );
-  }
+    ),
+  );
 }

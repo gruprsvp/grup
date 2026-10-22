@@ -112,9 +112,12 @@ class _GroupFormState extends State<GroupForm> {
                     final picture = _imageController.value;
 
                     _formKey.currentState!.save();
+                    // Edit a copy, so whatever the form doesn't show (the
+                    // current picture) is kept.
+                    final group =
+                        widget.group ?? const Group(id: '', displayName: '');
                     widget.onSave((
-                      Group(
-                        id: widget.group?.id ?? '',
+                      group.copyWith(
                         displayName: displayName,
                         description: description.isNotEmpty
                             ? description

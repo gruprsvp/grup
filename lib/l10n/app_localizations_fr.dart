@@ -338,4 +338,43 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get you => 'Toi';
+
+  @override
+  String get errorNetwork =>
+      'Impossible de joindre GRUP. Vérifie ta connexion et réessaie.';
+
+  @override
+  String get errorNotFound =>
+      'Ce n\'est plus disponible. Il a peut-être été supprimé, ou tu n\'y as plus accès.';
+
+  @override
+  String get errorNotAllowed => 'Tu n\'as pas le droit de faire ça.';
+
+  @override
+  String get errorInvalidInviteCode =>
+      'Ce code d\'invitation n\'est pas valide. Vérifie-le et réessaie.';
+
+  @override
+  String get errorAlreadyMember => 'Tu es déjà membre de ce groupe.';
+
+  @override
+  String get errorNotSignedIn => 'Tu es déconnecté. Connecte-toi et réessaie.';
+
+  @override
+  String get errorGeneric => 'Une erreur s\'est produite. Réessaie.';
+
+  @override
+  String get retry => 'Réessayer';
+
+  @override
+  String get joiningGroup => 'Tu rejoins le groupe…';
+
+  @override
+  String get joinedGroup => 'Tu as rejoint le groupe !';
+
+  @override
+  String get goToGroups => 'Aller à tes groupes';
+
+  @override
+  String get licenses => 'Licences';
 }

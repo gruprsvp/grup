@@ -1,14 +1,13 @@
-import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:material_ui/material_ui.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:parousia/models/models.dart';
+import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/presentation/presentation.dart';
-import 'package:parousia/state/state.dart';
-import 'package:redux/redux.dart';
-import 'package:redux_entity/redux_entity.dart';
+import 'package:parousia/util/result.dart';
+import 'package:provider/provider.dart';
+import 'package:rrule/rrule.dart';
 
-part 'group_manage.freezed.dart';
+/// Loaded once, and shared: creating it per build reset every recurrence
+/// label to a spinner.
+final _rruleL10n = RruleL10nEn.create();
 
 class GroupManageContainer extends StatelessWidget {
   final String groupId;
@@ -16,37 +15,55 @@ class GroupManageContainer extends StatelessWidget {
   const GroupManageContainer({super.key, required this.groupId});
 
   @override
-  Widget build(BuildContext context) {
-    return StoreConnector<AppState, _ViewModel>(
-      distinct: true,
-      converter: (store) => _ViewModel.fromStore(store, groupId),
-      builder: (context, vm) => GroupManageScreen(
-        loading: vm.loading,
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+    create: (context) => GroupManageViewModel(
+      groupId: groupId,
+      groups: context.read(),
+      schedules: context.read(),
+    ),
+    child: Consumer<GroupManageViewModel>(
+      builder: (context, vm, _) => GroupManageScreen(
+        groupId: groupId,
         group: vm.group,
-        onDelete: vm.onDelete,
+        loading:
+            vm.load.running ||
+            vm.update.running ||
+            vm.invite.running ||
+            vm.createSchedule.running ||
+            vm.deleteSchedule.running,
+        error: switch (vm.load.result) {
+          Error(:final error) => error,
+          _ => null,
+        },
+        onRetry: vm.load.execute,
+        onDelete: vm.delete.running
+            ? null
+            : () async {
+                await vm.delete.execute();
+                if (!context.mounted) return;
+                showFailure(context, vm.delete.result);
+                if (vm.delete.completed) const HomeScreenRoute().go(context);
+              },
+        members: vm.members,
+        onInvite: (contacts) async {
+          await vm.invite.execute(contacts);
+          if (context.mounted) showFailure(context, vm.invite.result);
+        },
+        schedules: vm.schedules,
+        rruleL10n: _rruleL10n,
+        onCreateSchedule: (schedule) async {
+          await vm.createSchedule.execute(schedule);
+          if (context.mounted) showFailure(context, vm.createSchedule.result);
+        },
+        onDeleteSchedule: (schedule) async {
+          await vm.deleteSchedule.execute(schedule);
+          if (context.mounted) showFailure(context, vm.deleteSchedule.result);
+        },
+        onSave: (args) async {
+          await vm.update.execute((group: args.$1, image: args.$2));
+          if (context.mounted) showFailure(context, vm.update.result);
+        },
       ),
-    );
-  }
-}
-
-@freezed
-sealed class _ViewModel with _$ViewModel {
-  const factory _ViewModel({
-    required bool loading,
-    Group? group,
-    required ValueSetter<String> onDelete,
-  }) = __ViewModel;
-
-  static _ViewModel fromStore(Store<AppState> store, String groupId) {
-    final group = store.state.groups.entities[groupId];
-
-    return _ViewModel(
-      group: group,
-      loading:
-          store.state.groups.creating ||
-          store.state.groups.loadingAll ||
-          (store.state.groups.loadingIds[groupId] ?? false),
-      onDelete: (groupId) => store.dispatch(RequestDeleteOne<Group>(groupId)),
-    );
-  }
+    ),
+  );
 }

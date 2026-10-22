@@ -38,7 +38,7 @@ class GroupMembers extends StatelessWidget {
                       ? NetworkImage(memberProfile!.picture!)
                       : null,
                   child: memberProfile?.picture == null
-                      ? Text(getNameInitials(name)!)
+                      ? Text(getNameInitials(name) ?? '')
                       : null,
                 ),
                 title: Text(name),

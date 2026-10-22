@@ -98,5 +98,17 @@
   "themeSystem": "Système",
   "unknown": "Inconnu",
   "yes": "Oui",
-  "you": "Toi"
+  "you": "Toi",
+  "errorNetwork": "Impossible de joindre GRUP. Vérifie ta connexion et réessaie.",
+  "errorNotFound": "Ce n'est plus disponible. Il a peut-être été supprimé, ou tu n'y as plus accès.",
+  "errorNotAllowed": "Tu n'as pas le droit de faire ça.",
+  "errorInvalidInviteCode": "Ce code d'invitation n'est pas valide. Vérifie-le et réessaie.",
+  "errorAlreadyMember": "Tu es déjà membre de ce groupe.",
+  "errorNotSignedIn": "Tu es déconnecté. Connecte-toi et réessaie.",
+  "errorGeneric": "Une erreur s'est produite. Réessaie.",
+  "retry": "Réessayer",
+  "joiningGroup": "Tu rejoins le groupe…",
+  "joinedGroup": "Tu as rejoint le groupe !",
+  "goToGroups": "Aller à tes groupes",
+  "licenses": "Licences"
 }

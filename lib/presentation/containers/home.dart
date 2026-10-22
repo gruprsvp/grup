@@ -1,68 +1,72 @@
-import 'package:flutter/foundation.dart'; // ignore: unused_import
 import 'package:material_ui/material_ui.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:parousia/actions/actions.dart';
-import 'package:parousia/models/models.dart';
+import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/presentation/presentation.dart';
-import 'package:parousia/selectors/selectors.dart';
-import 'package:parousia/state/state.dart';
-import 'package:redux/redux.dart';
+import 'package:parousia/util/result.dart';
+import 'package:provider/provider.dart';
 
-part 'home.freezed.dart';
-
-class HomeContainer extends StatelessWidget {
+class HomeContainer extends StatefulWidget {
   const HomeContainer({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    return StoreConnector(
-      distinct: true,
-      builder: (context, vm) => HomeScreen(
-        profile: vm.profile,
-        groups: vm.groups,
-        loading: vm.loading,
-        onGroupCreate: vm.onGroupCreate,
-        onRefresh: vm.onRefresh,
-        shouldShowFeedback: vm.shouldShowFeedback,
-        onFeedbackDismiss: vm.onFeedbackDismiss,
-      ),
-      converter: _ViewModel.fromStore,
-    );
-  }
+  State<HomeContainer> createState() => _HomeContainerState();
 }
 
-@freezed
-sealed class _ViewModel with _$ViewModel {
-  const factory _ViewModel({
-    required bool loading,
-    Profile? profile,
-    Iterable<Group>? groups,
-    ValueSetter<GroupCreateResult>? onGroupCreate,
-    AsyncCallback? onRefresh,
-    bool? shouldShowFeedback,
-    VoidCallback? onFeedbackDismiss,
-  }) = __ViewModel;
+class _HomeContainerState extends State<HomeContainer> {
+  late final _viewModel = HomeViewModel(
+    groups: context.read(),
+    profile: context.read(),
+    settings: context.read(),
+  );
+  var _askedForName = false;
 
-  static _ViewModel fromStore(Store<AppState> store) {
-    return _ViewModel(
-      loading: store.state.groups.loadingAll || store.state.groups.creating,
-      profile: store.state.profiles.entities[store.state.auth.user?.id],
-      groups: store.state.groups.entities.values,
-      onGroupCreate: (value) => store.dispatch(switch (value) {
-        GroupCreateResultNew(group: final group, image: final image) =>
-          CreateGroupAction(group: group, image: image),
-        GroupCreateResultJoin(code: final code) => JoinWithInviteCodeAction(
-          code,
-        ),
-      }),
-      onRefresh: () async {
-        final action = GroupRefreshAllAction();
-        store.dispatch(action);
-        await action.completer.future;
-      },
-      shouldShowFeedback: selectShouldShowFeedbackCard(store.state),
-      onFeedbackDismiss: () => store.dispatch(InteractedWithFeedback()),
-    );
+  @override
+  void initState() {
+    super.initState();
+    _viewModel.addListener(_askForName);
   }
+
+  /// A new user has no name yet: ask for it, once.
+  void _askForName() {
+    if (_askedForName || !_viewModel.needsName) return;
+    _askedForName = true;
+    const ProfileRoute().push(context);
+  }
+
+  Future<void> _onGroupCreate(GroupCreateResult result) async {
+    switch (result) {
+      case GroupCreateResultNew(:final group, :final image):
+        await _viewModel.create.execute((group: group, image: image));
+        if (mounted) showFailure(context, _viewModel.create.result);
+      case GroupCreateResultJoin(:final code):
+        await _viewModel.join.execute(code);
+        if (mounted) showFailure(context, _viewModel.join.result);
+    }
+  }
+
+  @override
+  void dispose() {
+    _viewModel.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) => ListenableBuilder(
+    listenable: _viewModel,
+    builder: (context, _) {
+      final vm = _viewModel;
+      return HomeScreen(
+        profile: vm.profile,
+        groups: vm.groups,
+        loading: vm.refresh.running || vm.create.running || vm.join.running,
+        error: switch (vm.refresh.result) {
+          Error(:final error) => error,
+          _ => null,
+        },
+        onRefresh: vm.refresh.execute,
+        onGroupCreate: _onGroupCreate,
+        shouldShowFeedback: vm.showFeedbackCard,
+        onFeedbackDismiss: vm.dismissFeedback,
+      );
+    },
+  );
 }

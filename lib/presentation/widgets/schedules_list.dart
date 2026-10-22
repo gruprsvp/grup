@@ -11,16 +11,16 @@ typedef OnReplyChangedCallback = void Function(
 );
 
 class SchedulesList extends StatelessWidget {
-  final Iterable<ScheduleInstanceSummary>? schedules;
+  final List<ScheduleInstanceSummary>? schedules;
   final OnReplyChangedCallback? onReplyChanged;
-  final String? groupId;
+  final String groupId;
   final bool isAdmin;
 
   const SchedulesList({
     super.key,
     this.schedules,
     this.onReplyChanged,
-    this.groupId,
+    required this.groupId,
     required this.isAdmin,
   });
 
@@ -29,20 +29,23 @@ class SchedulesList extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
+    final schedules = this.schedules;
     if (schedules == null) {
       return const Center(child: CircularProgressIndicator.adaptive());
     }
 
-    return schedules?.isNotEmpty ?? false
+    return schedules.isNotEmpty
         ? ListView.builder(
-            itemCount: schedules!.length,
+            itemCount: schedules.length,
             itemBuilder: (context, index) => ScheduleTile(
-              schedule: schedules!.elementAt(index),
-              onReplyChanged: (reply) =>
-                  onReplyChanged?.call(schedules!.elementAt(index), reply),
+              schedule: schedules[index],
+              onReplyChanged: onReplyChanged == null
+                  ? null
+                  : (reply) => onReplyChanged!(schedules[index], reply),
               onScheduleTapped: (schedule) => GroupScheduleDetailsRoute(
-                groupId: schedule.groupId.toString(),
-                scheduleId: schedule.scheduleId.toString(),
+                groupId: schedule.groupId,
+                scheduleId: schedule.scheduleId,
+                at: schedule.instanceDate,
               ).push(context),
             ),
           )
@@ -61,7 +64,7 @@ class SchedulesList extends StatelessWidget {
                           icon: const Icon(Icons.edit),
                           label: Text(l10n.groupManage),
                           onPressed: () =>
-                              GroupManageRoute(groupId: groupId!).push(context),
+                              GroupManageRoute(groupId: groupId).push(context),
                         ),
                       ),
                     }

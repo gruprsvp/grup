@@ -41,16 +41,6 @@ dependencies:
   # Routing
   go_router: ^18.1.1
 
-  # Redux
-  rxdart: ^0.28.0
-  redux: ^5.0.0
-  flutter_redux: ^0.10.0
-  redux_epics: ^0.15.2
-  redux_persist: ^0.9.0
-  redux_persist_flutter: ^0.9.0
-  redux_entity: ^1.2.0
-  reselect: ^0.5.0
-
   # Supabase
   supabase: ^2.16.5
   supabase_flutter: ^2.18.3
@@ -90,14 +80,12 @@ dependencies:
   shared_preferences: ^2.5.6
 
   # Utilities
-  app_links: ^7.2.2
   base32: ^2.2.0
   collection: ^1.19.1
   flutter_native_splash: ^2.4.8
   font_awesome_flutter: ^11.0.0
   google_fonts: ^9.0.0
   in_app_review: ^2.0.12
-  memoized: ^2.2.6
   mime: ^2.1.0
   path_provider: ^2.1.6
   posthog_flutter: ^5.56.1

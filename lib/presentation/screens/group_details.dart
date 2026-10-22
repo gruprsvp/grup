@@ -5,15 +5,33 @@ import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 
 class GroupDetailsScreen extends StatelessWidget {
-  final bool loading;
-  final bool isAdmin;
+  final String groupId;
   final Group? group;
+  final bool isAdmin;
+  final bool loading;
+
+  /// Why the group couldn't be loaded, if it couldn't.
+  final Exception? error;
+  final VoidCallback? onRetry;
+
+  /// The day shown, and its events with everyone's answers.
+  final DateTime date;
+  final ValueChanged<DateTime> onDateChanged;
+  final List<ScheduleInstanceSummary> instances;
+  final OnReplyChangedCallback? onReplyChanged;
 
   const GroupDetailsScreen({
     super.key,
-    required this.loading,
+    required this.groupId,
     required this.isAdmin,
+    required this.date,
+    required this.onDateChanged,
+    required this.instances,
     this.group,
+    this.loading = false,
+    this.error,
+    this.onRetry,
+    this.onReplyChanged,
   });
 
   @override
@@ -21,14 +39,10 @@ class GroupDetailsScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
 
-    final groupId = group?.id;
-    final groupIdStr = groupId?.toString();
-    final groupImage = group?.picture;
     final groupName = group?.displayName ?? l10n.loading;
+    final groupImage = group?.picture;
     final groupDescription = group?.description;
-
-    final imageOrDescriptionToShow =
-        groupImage != null || groupDescription != null;
+    final error = this.error;
 
     return Scaffold(
       body: NestedScrollView(
@@ -37,17 +51,27 @@ class GroupDetailsScreen extends StatelessWidget {
             pinned: true,
             title: Text(groupName),
             bottom: PreferredSize(
-              preferredSize: Size.fromHeight(60),
-              child: const DateDropdownContainer(),
+              preferredSize: const Size.fromHeight(60),
+              child: Stack(
+                alignment: Alignment.bottomCenter,
+                children: [
+                  DateDropdown(date: date, onDateChanged: onDateChanged),
+                  if (loading) const LinearProgressIndicator(),
+                ],
+              ),
             ),
           ),
-          if (imageOrDescriptionToShow)
+          if (error != null)
+            SliverToBoxAdapter(
+              child: ErrorNotice(error: error, onRetry: onRetry),
+            ),
+          if (groupImage != null || groupDescription != null)
             SliverToBoxAdapter(
               child: Column(
                 children: [
                   if (groupImage != null)
                     Padding(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: Hero(
                         tag: groupImage,
                         child: ProfilePicture(
@@ -60,19 +84,27 @@ class GroupDetailsScreen extends StatelessWidget {
                     ),
                   if (groupDescription != null)
                     Padding(
-                      padding: EdgeInsets.all(16),
+                      padding: const EdgeInsets.all(16),
                       child: Text(groupDescription),
                     ),
                 ],
               ),
             ),
         ],
-        body: SchedulesListContainer(groupId: groupIdStr),
+        body: DayPager(
+          date: date,
+          onDateChanged: onDateChanged,
+          child: SchedulesList(
+            groupId: groupId,
+            schedules: instances,
+            isAdmin: isAdmin,
+            onReplyChanged: onReplyChanged,
+          ),
+        ),
       ),
-      floatingActionButton: isAdmin && groupIdStr != null
+      floatingActionButton: isAdmin
           ? FloatingActionButton.extended(
-              onPressed: () =>
-                  GroupManageRoute(groupId: groupIdStr).push(context),
+              onPressed: () => GroupManageRoute(groupId: groupId).push(context),
               label: Text(l10n.groupManage),
               icon: const Icon(Icons.edit),
             )

@@ -1,18 +1,10 @@
-import 'package:flutter/foundation.dart'; // ignore: unused_import
+import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:parousia/l10n/app_localizations.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:form_builder_validators/form_builder_validators.dart';
+import 'package:parousia/repositories/repositories.dart';
 import 'package:phone_form_field/phone_form_field.dart';
-import 'package:freezed_annotation/freezed_annotation.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:parousia/actions/actions.dart';
-import 'package:parousia/router.dart';
-import 'package:parousia/selectors/selectors.dart';
-import 'package:parousia/state/state.dart';
-import 'package:redux/redux.dart';
-
-part 'app.freezed.dart';
 
 // Brand palette, for reference:
 //   light: 0xFF34558B 0xFF007DAF 0xFF00A4B8 0xFF00C8A5 0xFF8BE585 0xFFF9F871
@@ -58,44 +50,23 @@ const appLocalizationsDelegates = <LocalizationsDelegate<dynamic>>[
 const appSupportedLocales = AppLocalizations.supportedLocales;
 
 class ParApp extends StatelessWidget {
-  const ParApp({required this.store, super.key});
+  const ParApp({required this.router, required this.settings, super.key});
 
-  final Store<AppState> store;
+  final GoRouter router;
+  final SettingsRepository settings;
 
   @override
-  Widget build(BuildContext context) {
-    return StoreProvider(
-      store: store,
-      child: StoreConnector<AppState, _ViewModel>(
-        distinct: true,
-        converter: _ViewModel.fromStore,
-        onInit: store.dispatch(AppStartedAction()),
-        builder: (context, vm) {
-          return MaterialApp.router(
-            title: 'GRUP',
-            localizationsDelegates: appLocalizationsDelegates,
-            supportedLocales: appSupportedLocales,
-            themeMode: vm.themeMode,
-            locale: vm.locale,
-            darkTheme: appTheme(Brightness.dark),
-            theme: appTheme(Brightness.light),
-            routerConfig: router,
-          );
-        },
-      ),
-    );
-  }
-}
-
-@freezed
-sealed class _ViewModel with _$ViewModel {
-  const factory _ViewModel({required ThemeMode themeMode, Locale? locale}) =
-      __ViewModel;
-
-  factory _ViewModel.fromStore(Store<AppState> store) {
-    return _ViewModel(
-      themeMode: themeModeSelector(store.state),
-      locale: localeSelector(store.state),
-    );
-  }
+  Widget build(BuildContext context) => ListenableBuilder(
+    listenable: settings,
+    builder: (context, _) => MaterialApp.router(
+      title: 'GRUP',
+      localizationsDelegates: appLocalizationsDelegates,
+      supportedLocales: appSupportedLocales,
+      themeMode: settings.themeMode,
+      locale: settings.locale,
+      darkTheme: appTheme(Brightness.dark),
+      theme: appTheme(Brightness.light),
+      routerConfig: router,
+    ),
+  );
 }

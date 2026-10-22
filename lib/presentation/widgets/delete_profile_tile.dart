@@ -1,13 +1,13 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:parousia/l10n/app_localizations.dart';
-import 'package:flutter_redux/flutter_redux.dart';
-import 'package:parousia/actions/profiles.dart';
-import 'package:parousia/state/state.dart';
 
 /// A ListTile that deletes the user profile when tapped,
 /// with an adaptive confirmation dialog.
 class DeleteProfileTile extends StatelessWidget {
-  const DeleteProfileTile({super.key});
+  const DeleteProfileTile({super.key, required this.onDelete});
+
+  /// Deleting the account also signs the user out.
+  final VoidCallback? onDelete;
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +23,7 @@ class DeleteProfileTile extends StatelessWidget {
       hoverColor: theme.colorScheme.error.withValues(alpha: 0.1),
       focusColor: theme.colorScheme.error.withValues(alpha: 0.1),
       textColor: theme.colorScheme.error,
-      onTap: () => _confirmDelete(context),
+      onTap: onDelete == null ? null : () => _confirmDelete(context),
     );
   }
 
@@ -57,9 +57,6 @@ class DeleteProfileTile extends StatelessWidget {
       },
     );
 
-    if (doDelete == null || !doDelete) return;
-
-    if (!context.mounted) return;
-    StoreProvider.of<AppState>(context).dispatch(const DeleteProfileAction());
+    if (doDelete == true) onDelete?.call();
   }
 }

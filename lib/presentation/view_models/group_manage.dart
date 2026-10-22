@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/repositories/repositories.dart';
@@ -6,8 +5,10 @@ import 'package:parousia/util/command.dart';
 import 'package:parousia/util/result.dart';
 import 'package:parousia/util/util.dart';
 
+import 'view_model.dart';
+
 /// What an admin manages in a group: its members, events and details.
-class GroupManageViewModel extends ChangeNotifier {
+class GroupManageViewModel extends ViewModel {
   GroupManageViewModel({
     required this.groupId,
     required this._groups,
@@ -21,8 +22,16 @@ class GroupManageViewModel extends ChangeNotifier {
       (schedule) => _schedules.create(schedule.copyWith(groupId: groupId)),
     );
     deleteSchedule = Command1(_schedules.delete);
-    _groups.addListener(notifyListeners);
-    _schedules.addListener(notifyListeners);
+    listenTo([
+      _groups,
+      _schedules,
+      load,
+      update,
+      delete,
+      invite,
+      createSchedule,
+      deleteSchedule,
+    ]);
   }
 
   final String groupId;
@@ -55,12 +64,5 @@ class GroupManageViewModel extends ChangeNotifier {
       (result) => result is Error,
       orElse: () => const Result.ok(null),
     );
-  }
-
-  @override
-  void dispose() {
-    _groups.removeListener(notifyListeners);
-    _schedules.removeListener(notifyListeners);
-    super.dispose();
   }
 }

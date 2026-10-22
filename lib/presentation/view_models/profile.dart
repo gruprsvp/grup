@@ -1,15 +1,16 @@
-import 'package:flutter/foundation.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/util/command.dart';
 import 'package:parousia/util/result.dart';
 
+import 'view_model.dart';
+
 /// The user's own profile.
-class ProfileViewModel extends ChangeNotifier {
+class ProfileViewModel extends ViewModel {
   ProfileViewModel({required this._profile, required this._groups}) {
     save = Command1(_save);
-    _profile.addListener(notifyListeners);
+    listenTo([_profile, save]);
   }
 
   final ProfileRepository _profile;
@@ -24,11 +25,5 @@ class ProfileViewModel extends ChangeNotifier {
     // Group member lists hold their own copy of the profile.
     if (result case Ok(:final value)) _groups.updateProfile(value);
     return result;
-  }
-
-  @override
-  void dispose() {
-    _profile.removeListener(notifyListeners);
-    super.dispose();
   }
 }

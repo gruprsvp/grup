@@ -6,7 +6,7 @@ part of 'go_router_builder.dart';
 // GoRouterGenerator
 // **************************************************************************
 
-List<RouteBase> get $appRoutes => [$homeScreenRoute];
+List<RouteBase> get $appRoutes => [$homeScreenRoute, $authRoute];
 
 RouteBase get $homeScreenRoute => GoRouteData.$route(
   path: '/',
@@ -14,9 +14,9 @@ RouteBase get $homeScreenRoute => GoRouteData.$route(
   factory: $HomeScreenRoute._fromState,
   routes: [
     GoRouteData.$route(
-      path: 'auth',
+      path: 'join/:code',
       hasOverriddenOnExit: false,
-      factory: $AuthRoute._fromState,
+      factory: $JoinRoute._fromState,
     ),
     GoRouteData.$route(
       path: 'profile',
@@ -86,7 +86,8 @@ RouteBase get $homeScreenRoute => GoRouteData.$route(
 );
 
 mixin $HomeScreenRoute on GoRouteData {
-  static HomeScreenRoute _fromState(GoRouterState state) => HomeScreenRoute();
+  static HomeScreenRoute _fromState(GoRouterState state) =>
+      const HomeScreenRoute();
 
   @override
   String get location => GoRouteData.$location('/');
@@ -105,11 +106,15 @@ mixin $HomeScreenRoute on GoRouteData {
   void replace(BuildContext context) => context.replace(location);
 }
 
-mixin $AuthRoute on GoRouteData {
-  static AuthRoute _fromState(GoRouterState state) => AuthRoute();
+mixin $JoinRoute on GoRouteData {
+  static JoinRoute _fromState(GoRouterState state) =>
+      JoinRoute(code: state.pathParameters['code']!);
+
+  JoinRoute get _self => this as JoinRoute;
 
   @override
-  String get location => GoRouteData.$location('/auth');
+  String get location =>
+      GoRouteData.$location('/join/${Uri.encodeComponent(_self.code)}');
 
   @override
   void go(BuildContext context) => context.go(location);
@@ -161,7 +166,7 @@ mixin $ProfileRoute on GoRouteData {
 
 mixin $SelectContactsRoute on GoRouteData {
   static SelectContactsRoute _fromState(GoRouterState state) =>
-      SelectContactsRoute();
+      const SelectContactsRoute();
 
   @override
   String get location => GoRouteData.$location('/contacts-select');
@@ -181,7 +186,8 @@ mixin $SelectContactsRoute on GoRouteData {
 }
 
 mixin $GroupCreateRoute on GoRouteData {
-  static GroupCreateRoute _fromState(GoRouterState state) => GroupCreateRoute();
+  static GroupCreateRoute _fromState(GoRouterState state) =>
+      const GroupCreateRoute();
 
   @override
   String get location => GoRouteData.$location('/group-create');
@@ -279,6 +285,7 @@ mixin $GroupScheduleDetailsRoute on GoRouteData {
       GroupScheduleDetailsRoute(
         groupId: state.pathParameters['groupId']!,
         scheduleId: state.pathParameters['scheduleId']!,
+        at: DateTime.parse(state.uri.queryParameters['at']!),
       );
 
   GroupScheduleDetailsRoute get _self => this as GroupScheduleDetailsRoute;
@@ -286,6 +293,7 @@ mixin $GroupScheduleDetailsRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
     '/groups/${Uri.encodeComponent(_self.groupId)}/schedules/${Uri.encodeComponent(_self.scheduleId)}',
+    queryParams: {'at': _self.at.toString()},
   );
 
   @override
@@ -331,7 +339,7 @@ mixin $GroupMemberDetailsRoute on GoRouteData {
 }
 
 mixin $SettingsRoute on GoRouteData {
-  static SettingsRoute _fromState(GoRouterState state) => SettingsRoute();
+  static SettingsRoute _fromState(GoRouterState state) => const SettingsRoute();
 
   @override
   String get location => GoRouteData.$location('/settings');
@@ -351,7 +359,7 @@ mixin $SettingsRoute on GoRouteData {
 }
 
 mixin $LocaleRoute on GoRouteData {
-  static LocaleRoute _fromState(GoRouterState state) => LocaleRoute();
+  static LocaleRoute _fromState(GoRouterState state) => const LocaleRoute();
 
   @override
   String get location => GoRouteData.$location('/settings/locale');
@@ -372,7 +380,7 @@ mixin $LocaleRoute on GoRouteData {
 
 mixin $SettingsMoreRoute on GoRouteData {
   static SettingsMoreRoute _fromState(GoRouterState state) =>
-      SettingsMoreRoute();
+      const SettingsMoreRoute();
 
   @override
   String get location => GoRouteData.$location('/settings/more');
@@ -392,7 +400,7 @@ mixin $SettingsMoreRoute on GoRouteData {
 }
 
 mixin $LicensesRoute on GoRouteData {
-  static LicensesRoute _fromState(GoRouterState state) => LicensesRoute();
+  static LicensesRoute _fromState(GoRouterState state) => const LicensesRoute();
 
   @override
   String get location => GoRouteData.$location('/settings/licenses');
@@ -429,4 +437,36 @@ bool _$boolConverter(String value) {
     default:
       throw UnsupportedError('Cannot convert "$value" into a bool.');
   }
+}
+
+RouteBase get $authRoute => GoRouteData.$route(
+  path: '/auth',
+  hasOverriddenOnExit: false,
+  factory: $AuthRoute._fromState,
+);
+
+mixin $AuthRoute on GoRouteData {
+  static AuthRoute _fromState(GoRouterState state) =>
+      AuthRoute(from: state.uri.queryParameters['from']);
+
+  AuthRoute get _self => this as AuthRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/auth',
+    queryParams: {if (_self.from != null) 'from': _self.from},
+  );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
 }

@@ -5,7 +5,9 @@ import 'package:parousia/presentation/presentation.dart';
 
 /// Screen for less common settings.
 class SettingsMoreScreen extends StatelessWidget {
-  const SettingsMoreScreen({super.key});
+  const SettingsMoreScreen({super.key, this.onDeleteProfile});
+
+  final VoidCallback? onDeleteProfile;
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +17,11 @@ class SettingsMoreScreen extends StatelessWidget {
       body: ListView(
         children: [
           ListTile(
-            title: Text('Licenses'),
+            title: Text(l10n.licenses),
             leading: const Icon(Icons.copyright),
-            onTap: () => LicensesRoute().push(context),
+            onTap: () => const LicensesRoute().push(context),
           ),
-          const DeleteProfileTile(),
+          DeleteProfileTile(onDelete: onDeleteProfile),
         ],
       ),
     );

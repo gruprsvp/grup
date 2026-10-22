@@ -1,13 +1,8 @@
-export 'date_dropdown.dart';
 export 'group_details.dart';
-export 'group_events.dart';
-export 'group_form.dart';
 export 'group_manage.dart';
 export 'group_member_details.dart';
-export 'group_members.dart';
 export 'group_schedule_details.dart';
 export 'home.dart';
-export 'locale.dart';
+export 'join_group.dart';
 export 'profile.dart';
-export 'schedules_list.dart';
-export 'theme_switcher.dart';
+export 'settings.dart';
