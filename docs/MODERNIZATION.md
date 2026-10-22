@@ -2,6 +2,8 @@
 
 _Prepared 2026-06-28. Based on a full audit of the codebase (Flutter app `parousia` v1.7.2+1) across four areas: Supabase/security, state architecture, testing/CI, and web/dependencies/release._
 
+> **Refresh 2026-10-22 — MVVM, and Phase 1 / 1.5 done.** Branch `modernize/2026-10` (local, on top of `main`): every dependency at its latest version, Redux replaced by the Flutter team's MVVM architecture (D1 → B1), Widgetbook removed, and all of Phase 1 and Phase 1.5 except pagination. See [2026-10-22 refresh](#2026-10-22-refresh--mvvm-and-what-is-left).
+>
 > **Phase 0 in progress (branch `chore/phase-0-safety-net`).** See [Phase 0 progress & new findings](#phase-0-progress--findings-from-implementation) at the bottom for what's done and what hands-on work uncovered (notably: the app did **not** compile/run on current stable Flutter until several upgrade/migration gaps were fixed).
 >
 > **Refresh 2026-09-25 — Flutter 3.47 / Dart 3.13.** Toolchain + dependency upgrade on branch `chore/flutter-3.47-upgrade`, and a re-plan. The headline: Flutter 3.47 **decoupled Material and Cupertino into the `material_ui`/`cupertino_ui` pub packages**, and mixing them with `package:flutter/material.dart` fails *silently at runtime*. That is now the top structural item. See [2026-09-25 refresh](#2026-09-25-refresh--flutter-347-and-the-road-from-here) for what changed, what was deliberately held back, and the re-sequenced next steps.
@@ -20,6 +22,66 @@ The single most important finding is about **sequencing, not any one bug**: almo
 - **Phase 2 — Strategic, decision-gated work** (state-layer evolution, realtime, offline, pro plan).
 
 Three genuine decisions need your input before Phase 2 — see [Decisions](#decisions-need-your-input).
+
+---
+
+## 2026-10-22 refresh — MVVM, and what is left
+
+**Decisions taken:**
+- **D1 → B1, the Flutter team's MVVM.** View models are `ChangeNotifier`s with Commands and `Result`, repositories are the source of truth, and `provider` does DI.
+- **Widgetbook removed** (the Phase 2 "invest or remove" item). This also unpinned the codegen stack.
+- **Android minSdk 24 → 26** to take `sentry_flutter` 10. This drops Android 7.x.
+- **D2 stays client-side.** The RSVP functions moved, unchanged apart from one fix, to `lib/models/rsvp.dart`.
+
+### What the branch does
+
+| Commit | Roadmap items |
+|---|---|
+| `da05949` deps | Every direct dependency at its latest version. Majors: `google_fonts` 9, `sentry_flutter` 10, `phone_form_field` 12; codegen now runs on analyzer 14. Removed Widgetbook, `cupertino_icons` and the direct `test` dependency. `lib/util/fakes.dart` moved to `test/support/`. CI actions bumped; third-party ones stay SHA-pinned. **Release fix:** `build.yaml` shipped `supabase/config/localhost.json` to the live site (it holds the local demo keys CI generates for the tests); the file is now deleted before the web build. Held upstream: `build_runner` 2.17 (`go_router_builder` caps `build` < 5) and `peanut` 6.0.2. |
+| `76a8e6a` | Phase 1 item 24: deleted `linux/`, `windows/` and `DateFab`. |
+| `0116adb` | Renamed `lib/repositories/` (Supabase access) to `lib/services/`, the guide's name for that layer. `repositories/` now holds the MVVM data layer. |
+| `075388c` | M3: CocoaPods is gone from iOS and macOS, since every plugin now ships a Swift package. Verified a simulator debug build and a device Release build with automatic package resolution off (as on Xcode Cloud). |
+| `e5bde6c` | Phase 1 items 10–11, plus an index on `members(profile_id)`. New pgTAP test `indexes_test.sql`. |
+| `737c19a` | Phase 1.5 items 3 (a delete that removes 0 rows is now an error), 2 (no more `currentUser!`; typed `AppException`s; only unexpected errors go to Sentry) and 8 (an unknown enum value falls back to a default, and one bad row no longer fails the whole list). Invite errors are typed: wrong code, already a member. |
+| `631fffc`, `f7efb92` | **D1.** Deleted Redux, `redux_*`, `reselect`, `rxdart` and `app_links`. This supersedes Phase 1 items 6–9 and 16 and Phase 1.5 item 1.<br>• View models recompute summaries when data changes, not on every build or dispatch.<br>• The device cache (`LocalCache`) is versioned, per user and cleared on sign-out. Settings survive sign-out.<br>• The app no longer persists invites (emails, phone numbers) or the auth user ([A2] PII at rest).<br>• Phase 1 items 1, 4, 17 and 22: typed `/join/:code`, router `redirect` + `refreshListenable`, `/auth?from=` with an open-redirect guard, admin-only manage route.<br>• Phase 1.5 item 4: error notices with retry, failure SnackBars, rollback of optimistic answers.<br>• Phase 1.5 item 5: a fetch replaces the group's events instead of merging.<br>• Phase 1.5 item 8: the theme cycles forward, the feedback-card date is no longer frozen, `pop(context)` is fixed, sign-out goes through the repository. |
+| `eced3e4` | Phase 1 item 21 (tooltips, avatar label). Fixed the recurrence picker reopening itself. |
+| `a864984` | Phase 1 items 2, 3 and 5. No `404.html`: Cloudflare Pages already serves the SPA fallback (checked live). |
+| `89788b3` | Phase 1 item 18: the sign-in screen (via `AuthUILocalizations`), recurrence text, dates, licenses and the contacts-permission message are localized. |
+| `4ca6227` | Phase 1 items 19–20. Reply colours meet the 4.5:1 contrast ratio in both themes. |
+| `0c2b7b6` | Phase 1 item 23. CI also fails when the committed generated code is stale. |
+
+**Confirm-before-acting answers:**
+- **#2:** Cloudflare Pages.
+- **#3:** no double counting. `posthog_flutter`'s `setup` does nothing on web, so the `index.html` snippet is the only init.
+- **#4:** the app now uses Flutter's built-in deep linking (`FlutterDeepLinkingEnabled` / `flutter_deeplinking_enabled`), which hands the launch URL to go_router. Verified on web; native cold start has not been tested on a device.
+- **#1** is still open.
+
+**Verified:**
+- `flutter analyze`: no issues, infos included.
+- Format check passes.
+- 125 tests pass, including the live-Supabase suite; 10 store-screenshot tests are skipped.
+- pgTAP: 70/70 after `supabase db reset`.
+- A profile web build against local Supabase, in headless Chromium, ran the two-user flow end to end with no console errors:
+  1. The first user signs up, names themself, creates a group and an event (date, time and recurrence pickers), invites by code and answers.
+  2. The second user opens `/join/CODE` signed out, signs up and joins, then answers.
+  3. The counts are right, and a non-admin can't answer for others.
+- The release web build boots with production hosts blocked.
+- Android: debug APK and release R8. iOS: simulator debug build.
+
+### Still open
+
+- **Release and merge.** `pubspec.yaml` says `1.7.3+1`, and `v1.7.3` is still an unpublished draft (checked 2026-10-22), so a merge updates that draft. Choose 1.7.3 or 1.7.4, and update the release notes (`fastlane/metadata/*/changelogs/default.txt`) either way. The merge also runs the index migration on prod and deploys web and Android. Close Dependabot #244–#250 (all superseded). #186 (`refactor/timezone`) predates the rewrite.
+- **Phase 1.5 item 6 (pagination)** is not done. No list is near PostgREST's 1000-row cap yet; deleting a user's files does page.
+- **Known gaps:**
+  - On web, an OAuth sign-in loses `/auth?from=…` across the provider redirect (email sign-in keeps it).
+  - Pages opened with `push` don't update the browser URL (`optionURLReflectsImperativeAPIs` is off).
+  - There are no per-invite link-preview cards.
+- **Design call:** the light and dark seeds are still unrelated colours (blue vs olive).
+- **Product calls:**
+  - iOS could go back to a 15 floor; `passkeys` is gone, and `sentry_flutter` 10 needs 15.
+  - Storage lifecycle and orphaned files ([A2]).
+  - D3 realtime/push, offline, the pro plan, environments/flavors.
+- **Upstream:** `builtInKotlin`/`newDsl` stay off until `in_app_review` and `posthog_flutter` stop applying KGP.
 
 ---
 
