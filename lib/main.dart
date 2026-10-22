@@ -48,7 +48,7 @@ Future<void> main() async {
   final supabaseConfig = SupabaseConfig.fromString(supabaseConfigFile);
 
   final supabase = await Supabase.initialize(
-    publishableKey: supabaseConfig.anonKey,
+    publishableKey: supabaseConfig.publishableKey,
     url: supabaseConfig.apiUrl,
   );
 

@@ -11,11 +11,11 @@ part 'supabase_config.g.dart';
 sealed class SupabaseConfig with _$SupabaseConfig {
   @JsonSerializable(fieldRename: FieldRename.screamingSnake)
   const factory SupabaseConfig({
-    required String anonKey,
+    // Not ANON_KEY: Supabase turns the legacy keys off by the end of 2026.
+    required String publishableKey,
     required String apiUrl,
     String? dbUrl,
     String? graphqlUrl,
-    String? inbucketUrl,
     String? jwtSecret,
     String? serviceRoleKey,
     String? studioUrl,

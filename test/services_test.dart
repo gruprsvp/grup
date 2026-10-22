@@ -21,8 +21,11 @@ final SupabaseConfig config = SupabaseConfig.fromPath(
 
 const authOptions = AuthClientOptions(authFlowType: AuthFlowType.implicit);
 
-SupabaseClient supabaseAnonClient() =>
-    SupabaseClient(config.apiUrl, config.anonKey, authOptions: authOptions);
+SupabaseClient supabaseAnonClient() => SupabaseClient(
+  config.apiUrl,
+  config.publishableKey,
+  authOptions: authOptions,
+);
 
 SupabaseClient supabaseAdminClient() => SupabaseClient(
   config.apiUrl,
@@ -126,12 +129,16 @@ void main() {
   }
 
   group('profiles', () {
-    test(
-      'users should be able to sign up and delete their profile',
-      () => runWithTemporaryUser(
-        (supabase, user) => expect(user.user, isNotNull),
-      ),
-    );
+    test('users should be able to sign up and delete their profile', () async {
+      // Through the delete_user_account edge function, with the secret key.
+      final (user, _) = await runWithUser(
+        (supabase, _) => ProfilesService(supabase: supabase).deleteProfile(),
+      );
+      await expectLater(
+        supabaseAdmin.auth.admin.getUserById(user.user!.id),
+        throwsA(isA<AuthException>()),
+      );
+    });
 
     test(
       'users should be able to get and update their profile',

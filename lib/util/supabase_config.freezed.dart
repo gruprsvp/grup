@@ -16,7 +16,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$SupabaseConfig implements DiagnosticableTreeMixin {
 
- String get anonKey; String get apiUrl; String? get dbUrl; String? get graphqlUrl; String? get inbucketUrl; String? get jwtSecret; String? get serviceRoleKey; String? get studioUrl;
+ String get publishableKey; String get apiUrl; String? get dbUrl; String? get graphqlUrl; String? get jwtSecret; String? get serviceRoleKey; String? get studioUrl;
 /// Create a copy of SupabaseConfig
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -31,26 +31,26 @@ void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   final _this = this as SupabaseConfig;
   properties
     ..add(DiagnosticsProperty('type', 'SupabaseConfig'))
-    ..add(DiagnosticsProperty('anonKey', _this.anonKey))..add(DiagnosticsProperty('apiUrl', _this.apiUrl))..add(DiagnosticsProperty('dbUrl', _this.dbUrl))..add(DiagnosticsProperty('graphqlUrl', _this.graphqlUrl))..add(DiagnosticsProperty('inbucketUrl', _this.inbucketUrl))..add(DiagnosticsProperty('jwtSecret', _this.jwtSecret))..add(DiagnosticsProperty('serviceRoleKey', _this.serviceRoleKey))..add(DiagnosticsProperty('studioUrl', _this.studioUrl));
+    ..add(DiagnosticsProperty('publishableKey', _this.publishableKey))..add(DiagnosticsProperty('apiUrl', _this.apiUrl))..add(DiagnosticsProperty('dbUrl', _this.dbUrl))..add(DiagnosticsProperty('graphqlUrl', _this.graphqlUrl))..add(DiagnosticsProperty('jwtSecret', _this.jwtSecret))..add(DiagnosticsProperty('serviceRoleKey', _this.serviceRoleKey))..add(DiagnosticsProperty('studioUrl', _this.studioUrl));
 }
 
 @override
 bool operator ==(Object other) {
   final _this = this as SupabaseConfig;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is SupabaseConfig&&(identical(other.anonKey, _this.anonKey) || other.anonKey == _this.anonKey)&&(identical(other.apiUrl, _this.apiUrl) || other.apiUrl == _this.apiUrl)&&(identical(other.dbUrl, _this.dbUrl) || other.dbUrl == _this.dbUrl)&&(identical(other.graphqlUrl, _this.graphqlUrl) || other.graphqlUrl == _this.graphqlUrl)&&(identical(other.inbucketUrl, _this.inbucketUrl) || other.inbucketUrl == _this.inbucketUrl)&&(identical(other.jwtSecret, _this.jwtSecret) || other.jwtSecret == _this.jwtSecret)&&(identical(other.serviceRoleKey, _this.serviceRoleKey) || other.serviceRoleKey == _this.serviceRoleKey)&&(identical(other.studioUrl, _this.studioUrl) || other.studioUrl == _this.studioUrl));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is SupabaseConfig&&(identical(other.publishableKey, _this.publishableKey) || other.publishableKey == _this.publishableKey)&&(identical(other.apiUrl, _this.apiUrl) || other.apiUrl == _this.apiUrl)&&(identical(other.dbUrl, _this.dbUrl) || other.dbUrl == _this.dbUrl)&&(identical(other.graphqlUrl, _this.graphqlUrl) || other.graphqlUrl == _this.graphqlUrl)&&(identical(other.jwtSecret, _this.jwtSecret) || other.jwtSecret == _this.jwtSecret)&&(identical(other.serviceRoleKey, _this.serviceRoleKey) || other.serviceRoleKey == _this.serviceRoleKey)&&(identical(other.studioUrl, _this.studioUrl) || other.studioUrl == _this.studioUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as SupabaseConfig;
-  return Object.hash(runtimeType,_this.anonKey,_this.apiUrl,_this.dbUrl,_this.graphqlUrl,_this.inbucketUrl,_this.jwtSecret,_this.serviceRoleKey,_this.studioUrl);
+  return Object.hash(runtimeType,_this.publishableKey,_this.apiUrl,_this.dbUrl,_this.graphqlUrl,_this.jwtSecret,_this.serviceRoleKey,_this.studioUrl);
 }
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   final _this = this as SupabaseConfig;
-  return 'SupabaseConfig(anonKey: ${_this.anonKey}, apiUrl: ${_this.apiUrl}, dbUrl: ${_this.dbUrl}, graphqlUrl: ${_this.graphqlUrl}, inbucketUrl: ${_this.inbucketUrl}, jwtSecret: ${_this.jwtSecret}, serviceRoleKey: ${_this.serviceRoleKey}, studioUrl: ${_this.studioUrl})';
+  return 'SupabaseConfig(publishableKey: ${_this.publishableKey}, apiUrl: ${_this.apiUrl}, dbUrl: ${_this.dbUrl}, graphqlUrl: ${_this.graphqlUrl}, jwtSecret: ${_this.jwtSecret}, serviceRoleKey: ${_this.serviceRoleKey}, studioUrl: ${_this.studioUrl})';
 }
 
 
@@ -61,7 +61,7 @@ abstract mixin class $SupabaseConfigCopyWith<$Res>  {
   factory $SupabaseConfigCopyWith(SupabaseConfig value, $Res Function(SupabaseConfig) _then) = _$SupabaseConfigCopyWithImpl;
 @useResult
 $Res call({
- String anonKey, String apiUrl, String? dbUrl, String? graphqlUrl, String? inbucketUrl, String? jwtSecret, String? serviceRoleKey, String? studioUrl
+ String publishableKey, String apiUrl, String? dbUrl, String? graphqlUrl, String? jwtSecret, String? serviceRoleKey, String? studioUrl
 });
 
 
@@ -78,13 +78,12 @@ class _$SupabaseConfigCopyWithImpl<$Res>
 
 /// Create a copy of SupabaseConfig
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? anonKey = null,Object? apiUrl = null,Object? dbUrl = freezed,Object? graphqlUrl = freezed,Object? inbucketUrl = freezed,Object? jwtSecret = freezed,Object? serviceRoleKey = freezed,Object? studioUrl = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? publishableKey = null,Object? apiUrl = null,Object? dbUrl = freezed,Object? graphqlUrl = freezed,Object? jwtSecret = freezed,Object? serviceRoleKey = freezed,Object? studioUrl = freezed,}) {
   return _then(SupabaseConfig(
-anonKey: null == anonKey ? _self.anonKey : anonKey // ignore: cast_nullable_to_non_nullable
+publishableKey: null == publishableKey ? _self.publishableKey : publishableKey // ignore: cast_nullable_to_non_nullable
 as String,apiUrl: null == apiUrl ? _self.apiUrl : apiUrl // ignore: cast_nullable_to_non_nullable
 as String,dbUrl: freezed == dbUrl ? _self.dbUrl : dbUrl // ignore: cast_nullable_to_non_nullable
 as String?,graphqlUrl: freezed == graphqlUrl ? _self.graphqlUrl : graphqlUrl // ignore: cast_nullable_to_non_nullable
-as String?,inbucketUrl: freezed == inbucketUrl ? _self.inbucketUrl : inbucketUrl // ignore: cast_nullable_to_non_nullable
 as String?,jwtSecret: freezed == jwtSecret ? _self.jwtSecret : jwtSecret // ignore: cast_nullable_to_non_nullable
 as String?,serviceRoleKey: freezed == serviceRoleKey ? _self.serviceRoleKey : serviceRoleKey // ignore: cast_nullable_to_non_nullable
 as String?,studioUrl: freezed == studioUrl ? _self.studioUrl : studioUrl // ignore: cast_nullable_to_non_nullable
@@ -170,10 +169,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String anonKey,  String apiUrl,  String? dbUrl,  String? graphqlUrl,  String? inbucketUrl,  String? jwtSecret,  String? serviceRoleKey,  String? studioUrl)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String publishableKey,  String apiUrl,  String? dbUrl,  String? graphqlUrl,  String? jwtSecret,  String? serviceRoleKey,  String? studioUrl)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _SupabaseConfig() when $default != null:
-return $default(_that.anonKey,_that.apiUrl,_that.dbUrl,_that.graphqlUrl,_that.inbucketUrl,_that.jwtSecret,_that.serviceRoleKey,_that.studioUrl);case _:
+return $default(_that.publishableKey,_that.apiUrl,_that.dbUrl,_that.graphqlUrl,_that.jwtSecret,_that.serviceRoleKey,_that.studioUrl);case _:
   return orElse();
 
 }
@@ -191,10 +190,10 @@ return $default(_that.anonKey,_that.apiUrl,_that.dbUrl,_that.graphqlUrl,_that.in
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String anonKey,  String apiUrl,  String? dbUrl,  String? graphqlUrl,  String? inbucketUrl,  String? jwtSecret,  String? serviceRoleKey,  String? studioUrl)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String publishableKey,  String apiUrl,  String? dbUrl,  String? graphqlUrl,  String? jwtSecret,  String? serviceRoleKey,  String? studioUrl)  $default,) {final _that = this;
 switch (_that) {
 case _SupabaseConfig():
-return $default(_that.anonKey,_that.apiUrl,_that.dbUrl,_that.graphqlUrl,_that.inbucketUrl,_that.jwtSecret,_that.serviceRoleKey,_that.studioUrl);}
+return $default(_that.publishableKey,_that.apiUrl,_that.dbUrl,_that.graphqlUrl,_that.jwtSecret,_that.serviceRoleKey,_that.studioUrl);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -208,10 +207,10 @@ return $default(_that.anonKey,_that.apiUrl,_that.dbUrl,_that.graphqlUrl,_that.in
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String anonKey,  String apiUrl,  String? dbUrl,  String? graphqlUrl,  String? inbucketUrl,  String? jwtSecret,  String? serviceRoleKey,  String? studioUrl)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String publishableKey,  String apiUrl,  String? dbUrl,  String? graphqlUrl,  String? jwtSecret,  String? serviceRoleKey,  String? studioUrl)?  $default,) {final _that = this;
 switch (_that) {
 case _SupabaseConfig() when $default != null:
-return $default(_that.anonKey,_that.apiUrl,_that.dbUrl,_that.graphqlUrl,_that.inbucketUrl,_that.jwtSecret,_that.serviceRoleKey,_that.studioUrl);case _:
+return $default(_that.publishableKey,_that.apiUrl,_that.dbUrl,_that.graphqlUrl,_that.jwtSecret,_that.serviceRoleKey,_that.studioUrl);case _:
   return null;
 
 }
@@ -223,14 +222,13 @@ return $default(_that.anonKey,_that.apiUrl,_that.dbUrl,_that.graphqlUrl,_that.in
 
 @JsonSerializable(fieldRename: FieldRename.screamingSnake)
 class _SupabaseConfig with DiagnosticableTreeMixin implements SupabaseConfig {
-  const _SupabaseConfig({required this.anonKey, required this.apiUrl, this.dbUrl, this.graphqlUrl, this.inbucketUrl, this.jwtSecret, this.serviceRoleKey, this.studioUrl});
+  const _SupabaseConfig({required this.publishableKey, required this.apiUrl, this.dbUrl, this.graphqlUrl, this.jwtSecret, this.serviceRoleKey, this.studioUrl});
   factory _SupabaseConfig.fromJson(Map<String, dynamic> json) => _$SupabaseConfigFromJson(json);
 
-@override final  String anonKey;
+@override final  String publishableKey;
 @override final  String apiUrl;
 @override final  String? dbUrl;
 @override final  String? graphqlUrl;
-@override final  String? inbucketUrl;
 @override final  String? jwtSecret;
 @override final  String? serviceRoleKey;
 @override final  String? studioUrl;
@@ -249,23 +247,23 @@ Map<String, dynamic> toJson() {
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties
     ..add(DiagnosticsProperty('type', 'SupabaseConfig'))
-    ..add(DiagnosticsProperty('anonKey', anonKey))..add(DiagnosticsProperty('apiUrl', apiUrl))..add(DiagnosticsProperty('dbUrl', dbUrl))..add(DiagnosticsProperty('graphqlUrl', graphqlUrl))..add(DiagnosticsProperty('inbucketUrl', inbucketUrl))..add(DiagnosticsProperty('jwtSecret', jwtSecret))..add(DiagnosticsProperty('serviceRoleKey', serviceRoleKey))..add(DiagnosticsProperty('studioUrl', studioUrl));
+    ..add(DiagnosticsProperty('publishableKey', publishableKey))..add(DiagnosticsProperty('apiUrl', apiUrl))..add(DiagnosticsProperty('dbUrl', dbUrl))..add(DiagnosticsProperty('graphqlUrl', graphqlUrl))..add(DiagnosticsProperty('jwtSecret', jwtSecret))..add(DiagnosticsProperty('serviceRoleKey', serviceRoleKey))..add(DiagnosticsProperty('studioUrl', studioUrl));
 }
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SupabaseConfig&&(identical(other.anonKey, anonKey) || other.anonKey == anonKey)&&(identical(other.apiUrl, apiUrl) || other.apiUrl == apiUrl)&&(identical(other.dbUrl, dbUrl) || other.dbUrl == dbUrl)&&(identical(other.graphqlUrl, graphqlUrl) || other.graphqlUrl == graphqlUrl)&&(identical(other.inbucketUrl, inbucketUrl) || other.inbucketUrl == inbucketUrl)&&(identical(other.jwtSecret, jwtSecret) || other.jwtSecret == jwtSecret)&&(identical(other.serviceRoleKey, serviceRoleKey) || other.serviceRoleKey == serviceRoleKey)&&(identical(other.studioUrl, studioUrl) || other.studioUrl == studioUrl));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _SupabaseConfig&&(identical(other.publishableKey, publishableKey) || other.publishableKey == publishableKey)&&(identical(other.apiUrl, apiUrl) || other.apiUrl == apiUrl)&&(identical(other.dbUrl, dbUrl) || other.dbUrl == dbUrl)&&(identical(other.graphqlUrl, graphqlUrl) || other.graphqlUrl == graphqlUrl)&&(identical(other.jwtSecret, jwtSecret) || other.jwtSecret == jwtSecret)&&(identical(other.serviceRoleKey, serviceRoleKey) || other.serviceRoleKey == serviceRoleKey)&&(identical(other.studioUrl, studioUrl) || other.studioUrl == studioUrl));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,anonKey,apiUrl,dbUrl,graphqlUrl,inbucketUrl,jwtSecret,serviceRoleKey,studioUrl);
+    return Object.hash(runtimeType,publishableKey,apiUrl,dbUrl,graphqlUrl,jwtSecret,serviceRoleKey,studioUrl);
 }
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-    return 'SupabaseConfig(anonKey: $anonKey, apiUrl: $apiUrl, dbUrl: $dbUrl, graphqlUrl: $graphqlUrl, inbucketUrl: $inbucketUrl, jwtSecret: $jwtSecret, serviceRoleKey: $serviceRoleKey, studioUrl: $studioUrl)';
+    return 'SupabaseConfig(publishableKey: $publishableKey, apiUrl: $apiUrl, dbUrl: $dbUrl, graphqlUrl: $graphqlUrl, jwtSecret: $jwtSecret, serviceRoleKey: $serviceRoleKey, studioUrl: $studioUrl)';
 }
 
 
@@ -276,7 +274,7 @@ abstract mixin class _$SupabaseConfigCopyWith<$Res> implements $SupabaseConfigCo
   factory _$SupabaseConfigCopyWith(_SupabaseConfig value, $Res Function(_SupabaseConfig) _then) = __$SupabaseConfigCopyWithImpl;
 @override @useResult
 $Res call({
- String anonKey, String apiUrl, String? dbUrl, String? graphqlUrl, String? inbucketUrl, String? jwtSecret, String? serviceRoleKey, String? studioUrl
+ String publishableKey, String apiUrl, String? dbUrl, String? graphqlUrl, String? jwtSecret, String? serviceRoleKey, String? studioUrl
 });
 
 
@@ -293,13 +291,12 @@ class __$SupabaseConfigCopyWithImpl<$Res>
 
 /// Create a copy of SupabaseConfig
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? anonKey = null,Object? apiUrl = null,Object? dbUrl = freezed,Object? graphqlUrl = freezed,Object? inbucketUrl = freezed,Object? jwtSecret = freezed,Object? serviceRoleKey = freezed,Object? studioUrl = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? publishableKey = null,Object? apiUrl = null,Object? dbUrl = freezed,Object? graphqlUrl = freezed,Object? jwtSecret = freezed,Object? serviceRoleKey = freezed,Object? studioUrl = freezed,}) {
   return _then(_SupabaseConfig(
-anonKey: null == anonKey ? _self.anonKey : anonKey // ignore: cast_nullable_to_non_nullable
+publishableKey: null == publishableKey ? _self.publishableKey : publishableKey // ignore: cast_nullable_to_non_nullable
 as String,apiUrl: null == apiUrl ? _self.apiUrl : apiUrl // ignore: cast_nullable_to_non_nullable
 as String,dbUrl: freezed == dbUrl ? _self.dbUrl : dbUrl // ignore: cast_nullable_to_non_nullable
 as String?,graphqlUrl: freezed == graphqlUrl ? _self.graphqlUrl : graphqlUrl // ignore: cast_nullable_to_non_nullable
-as String?,inbucketUrl: freezed == inbucketUrl ? _self.inbucketUrl : inbucketUrl // ignore: cast_nullable_to_non_nullable
 as String?,jwtSecret: freezed == jwtSecret ? _self.jwtSecret : jwtSecret // ignore: cast_nullable_to_non_nullable
 as String?,serviceRoleKey: freezed == serviceRoleKey ? _self.serviceRoleKey : serviceRoleKey // ignore: cast_nullable_to_non_nullable
 as String?,studioUrl: freezed == studioUrl ? _self.studioUrl : studioUrl // ignore: cast_nullable_to_non_nullable

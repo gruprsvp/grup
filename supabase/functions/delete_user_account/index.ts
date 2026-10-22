@@ -7,16 +7,20 @@ import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { corsHeaders } from "../_shared/cors.ts";
 
+// The secret key replaces the legacy service_role key, which Supabase turns
+// off by the end of 2026; both are set while the legacy keys are active.
+const secretKey =
+  JSON.parse(Deno.env.get("SUPABASE_SECRET_KEYS") || "{}").default ??
+    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+if (!secretKey) throw new Error("No Supabase secret key is set");
+
 Deno.serve(async (req) => {
   // This is needed if you're planning to invoke your function from a browser.
   if (req.method === "OPTIONS") {
     return new Response("ok", { headers: corsHeaders });
   }
 
-  const supabase = createClient(
-    Deno.env.get("SUPABASE_URL") ?? "",
-    Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") ?? "",
-  );
+  const supabase = createClient(Deno.env.get("SUPABASE_URL") ?? "", secretKey);
 
   const headers = { ...corsHeaders, "Content-Type": "application/json" };
 
@@ -62,11 +66,9 @@ Deno.serve(async (req) => {
 /* To invoke locally:
 
   1. Run `supabase start` (see: https://supabase.com/docs/reference/cli/supabase-start)
-  2. Make an HTTP request:
+  2. Make an HTTP request with a signed-in user's access token. It deletes that user.
 
   curl -i --location --request POST 'http://127.0.0.1:54321/functions/v1/delete_user_account' \
-    --header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZS1kZW1vIiwicm9sZSI6ImFub24iLCJleHAiOjE5ODM4MTI5OTZ9.CRXP1A7WOeoJeXxjNni43kdQwgnWNReilDMblYTn_I0' \
-    --header 'Content-Type: application/json' \
-    --data '{"name":"Functions"}'
+    --header 'Authorization: Bearer <access token>'
 
 */
