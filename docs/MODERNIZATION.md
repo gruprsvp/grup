@@ -52,8 +52,8 @@ Three genuine decisions need your input before Phase 2 — see [Decisions](#deci
 
 **Confirm-before-acting answers:**
 - **#2:** Cloudflare Pages.
-- **#3:** no double counting. `posthog_flutter`'s `setup` does nothing on web, so the `index.html` snippet is the only init.
-- **#4:** the app now uses Flutter's built-in deep linking (`FlutterDeepLinkingEnabled` / `flutter_deeplinking_enabled`), which hands the launch URL to go_router. Verified on web; native cold start has not been tested on a device.
+- **#3:** no double counting. `posthog_flutter`'s `setup` does nothing on web, so the `index.html` snippet is the only init. But debug and local runs were sending events to production PostHog. Now only release builds start it on native, and the web snippet skips localhost.
+- **#4:** the app now uses Flutter's built-in deep linking (`FlutterDeepLinkingEnabled` / `flutter_deeplinking_enabled`), which hands the launch URL to go_router. Verified on web and on an Android emulator: a cold start from `https://grup.rsvp/join/…` opens the join screen. Not tested on iOS or a physical device.
 - **#1** is still open.
 
 **Verified:**
@@ -66,7 +66,13 @@ Three genuine decisions need your input before Phase 2 — see [Decisions](#deci
   2. The second user opens `/join/CODE` signed out, signs up and joins, then answers.
   3. The counts are right, and a non-admin can't answer for others.
 - The release web build boots with production hosts blocked.
-- Android: debug APK and release R8. iOS: simulator debug build.
+- Android: debug APK and release R8 build. On an emulator against local Supabase (`adb reverse`):
+  - sign-in, the name prompt and home work;
+  - a relaunch restores the session;
+  - a cold-start invite link opens the join screen with the invalid-code message;
+  - logcat shows no app errors.
+- iOS simulator: boots to the localized sign-in screen, and Supabase starts with no plugin errors.
+- Not run natively: release builds, where Sentry 10's native SDK starts. They were only built (Android R8; iOS device Release in `075388c`).
 
 ### Still open
 
