@@ -124,7 +124,7 @@ void main() {
         'themeMode': 'dark',
         'locale': {'languageCode': 'de', 'scriptCode': null},
         'hasSeenFeedbackCard': true,
-        'groups': <String, dynamic>{},
+        'groups': {'entities': <String, dynamic>{}},
       });
 
       final settings = await SettingsRepository.load(legacyState: legacy);
