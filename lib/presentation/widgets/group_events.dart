@@ -3,7 +3,6 @@ import 'package:parousia/l10n/app_localizations.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
-import 'package:rrule/rrule.dart';
 import 'package:styled_text/styled_text.dart';
 
 class GroupEvents extends StatelessWidget {
@@ -11,7 +10,6 @@ class GroupEvents extends StatelessWidget {
   final List<Schedule>? schedules;
   final ValueSetter<Schedule>? onCreate;
   final ValueSetter<Schedule>? onDelete;
-  final Future<RruleL10n>? rrulel10n;
 
   const GroupEvents({
     super.key,
@@ -19,7 +17,6 @@ class GroupEvents extends StatelessWidget {
     this.schedules,
     this.onCreate,
     this.onDelete,
-    this.rrulel10n,
   });
 
   @override
@@ -34,16 +31,7 @@ class GroupEvents extends StatelessWidget {
               final schedule = schedules![index];
               return ListTile(
                 title: Text(schedule.displayName),
-                subtitle: FutureBuilder(
-                  future: rrulel10n,
-                  builder: (context, snapshot) {
-                    if (snapshot.connectionState == ConnectionState.done) {
-                      final rrl10n = snapshot.data as RruleL10n;
-                      return Text(schedule.recurrenceRule.toText(l10n: rrl10n));
-                    }
-                    return Text(l10n.loading);
-                  },
-                ),
+                subtitle: Text(recurrenceLabel(l10n, schedule.recurrenceRule)),
                 trailing: IconButton(
                   icon: const Icon(Icons.delete),
                   tooltip: l10n.deleteSchedule,

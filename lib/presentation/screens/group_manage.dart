@@ -3,7 +3,6 @@ import 'package:parousia/l10n/app_localizations.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
-import 'package:rrule/rrule.dart';
 
 /// Where an admin manages a group's members, events and details.
 class GroupManageScreen extends StatelessWidget {
@@ -18,7 +17,6 @@ class GroupManageScreen extends StatelessWidget {
   final OnInviteCallback? onInvite;
 
   final List<Schedule> schedules;
-  final Future<RruleL10n>? rruleL10n;
   final ValueSetter<Schedule>? onCreateSchedule;
   final ValueSetter<Schedule>? onDeleteSchedule;
 
@@ -35,7 +33,6 @@ class GroupManageScreen extends StatelessWidget {
     this.members = const [],
     this.onInvite,
     this.schedules = const [],
-    this.rruleL10n,
     this.onCreateSchedule,
     this.onDeleteSchedule,
     this.onSave,
@@ -100,7 +97,6 @@ class GroupManageScreen extends StatelessWidget {
                     schedules: schedules,
                     onCreate: onCreateSchedule,
                     onDelete: onDeleteSchedule,
-                    rrulel10n: rruleL10n,
                   ),
                   group != null
                       // Keyed by the group, so the form shows it once loaded.

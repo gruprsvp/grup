@@ -377,4 +377,131 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get licenses => 'Licenze';
+
+  @override
+  String get recurrenceOnce => 'Una volta';
+
+  @override
+  String get recurrenceDaily => 'Ogni giorno';
+
+  @override
+  String get recurrenceWeekly => 'Ogni settimana';
+
+  @override
+  String get recurrenceMonthly => 'Ogni mese';
+
+  @override
+  String get recurrenceYearly => 'Ogni anno';
+
+  @override
+  String get recurrenceWeekdays => 'Nei giorni feriali';
+
+  @override
+  String get recurrenceWeekends => 'Nel fine settimana';
+
+  @override
+  String get recurrenceCustom => 'Personalizzata';
+
+  @override
+  String get authEnterEmail => 'Inserisci la tua email';
+
+  @override
+  String get authValidEmailError => 'Inserisci un indirizzo email valido';
+
+  @override
+  String get authEnterPassword => 'Inserisci la tua password';
+
+  @override
+  String get authPasswordLengthError =>
+      'Inserisci una password di almeno 6 caratteri';
+
+  @override
+  String get authSignIn => 'Accedi';
+
+  @override
+  String get authSignUp => 'Registrati';
+
+  @override
+  String get authForgotPassword => 'Password dimenticata?';
+
+  @override
+  String get authDontHaveAccount => 'Non hai un account? Registrati';
+
+  @override
+  String get authHaveAccount => 'Hai già un account? Accedi';
+
+  @override
+  String get authSendPasswordReset =>
+      'Invia l\'email per reimpostare la password';
+
+  @override
+  String get authPasswordResetSent =>
+      'Ti abbiamo inviato l\'email per reimpostare la password';
+
+  @override
+  String get authBackToSignIn => 'Torna all\'accesso';
+
+  @override
+  String get authUnexpectedError => 'Si è verificato un errore imprevisto';
+
+  @override
+  String get authRequiredFieldError => 'Questo campo è obbligatorio';
+
+  @override
+  String get authConfirmPasswordError => 'Le password non corrispondono';
+
+  @override
+  String get authConfirmPassword => 'Conferma password';
+
+  @override
+  String get authEnterOtpCode => 'Inserisci il codice di verifica';
+
+  @override
+  String get authEnterNewPassword => 'Inserisci una nuova password';
+
+  @override
+  String get authChangePassword => 'Cambia password';
+
+  @override
+  String get authPasswordChangedSuccess => 'Password aggiornata';
+
+  @override
+  String get authOtpCodeError => 'Codice di verifica non valido';
+
+  @override
+  String get authOtpDisabledError => 'I codici di verifica sono disattivati';
+
+  @override
+  String get authEnterPhoneNumber => 'Inserisci il tuo numero di telefono';
+
+  @override
+  String get authValidPhoneNumberError =>
+      'Inserisci un numero di telefono valido';
+
+  @override
+  String get authContinueWithMagicLink => 'Continua con link magico';
+
+  @override
+  String get authCheckYourEmail => 'Controlla la tua casella email!';
+
+  @override
+  String get authSuccessSignInMessage => 'Accesso effettuato!';
+
+  @override
+  String get authUpdatePassword => 'Aggiorna password';
+
+  @override
+  String get authEnterOneTimeCode =>
+      'Inserisci il codice monouso che ti abbiamo inviato';
+
+  @override
+  String get authEnterCodeSent => 'Inserisci il codice inviato';
+
+  @override
+  String get authVerifyPhone => 'Verifica telefono';
+
+  @override
+  String authContinueWithProvider(String provider) {
+    return 'Continua con $provider';
+  }
 }

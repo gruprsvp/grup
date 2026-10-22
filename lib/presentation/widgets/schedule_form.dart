@@ -7,6 +7,7 @@ import 'package:parousia/models/models.dart';
 import 'package:rrule/rrule.dart';
 
 import 'form_builder_recurrence_rule.dart';
+import 'recurrence_label.dart';
 
 class ScheduleForm extends StatefulWidget {
   final Schedule? schedule;
@@ -63,23 +64,19 @@ class _ScheduleFormState extends State<ScheduleForm> {
             initialValue: widget.schedule?.startDate,
             decoration: InputDecoration(labelText: l10n.eventDatetime),
             validator: FormBuilderValidators.required(),
-            format: DateFormat.yMMMMEEEEd().add_Hm(),
+            format: DateFormat.yMMMMEEEEd(
+              Localizations.localeOf(context).toString(),
+            ).add_Hm(),
             initialDate: DateTime.now(),
             firstDate: DateTime.now(),
             lastDate: DateTime(9999),
           ),
-          // TODO: Move this outside
-          FutureBuilder(
-            future: RruleL10nEn.create(),
-            builder: (context, snapshot) => snapshot.hasData
-                ? FormBuilderRecurrenceRule(
-                    name: 'recurrenceRule',
-                    initialValue: widget.schedule?.recurrenceRule,
-                    decoration: InputDecoration(labelText: l10n.recurrenceRule),
-                    validator: FormBuilderValidators.required(),
-                    rruleL10n: snapshot.data as RruleL10n,
-                  )
-                : const CircularProgressIndicator.adaptive(),
+          FormBuilderRecurrenceRule(
+            name: 'recurrenceRule',
+            initialValue: widget.schedule?.recurrenceRule,
+            decoration: InputDecoration(labelText: l10n.recurrenceRule),
+            validator: FormBuilderValidators.required(),
+            label: (rule) => recurrenceLabel(l10n, rule),
           ),
         ],
       ),

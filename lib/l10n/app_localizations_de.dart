@@ -380,4 +380,129 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get licenses => 'Lizenzen';
+
+  @override
+  String get recurrenceOnce => 'Einmalig';
+
+  @override
+  String get recurrenceDaily => 'Täglich';
+
+  @override
+  String get recurrenceWeekly => 'Wöchentlich';
+
+  @override
+  String get recurrenceMonthly => 'Monatlich';
+
+  @override
+  String get recurrenceYearly => 'Jährlich';
+
+  @override
+  String get recurrenceWeekdays => 'An Wochentagen';
+
+  @override
+  String get recurrenceWeekends => 'Am Wochenende';
+
+  @override
+  String get recurrenceCustom => 'Benutzerdefiniert';
+
+  @override
+  String get authEnterEmail => 'Gib deine E-Mail-Adresse ein';
+
+  @override
+  String get authValidEmailError => 'Bitte gib eine gültige E-Mail-Adresse ein';
+
+  @override
+  String get authEnterPassword => 'Gib dein Passwort ein';
+
+  @override
+  String get authPasswordLengthError =>
+      'Bitte gib ein Passwort mit mindestens 6 Zeichen ein';
+
+  @override
+  String get authSignIn => 'Anmelden';
+
+  @override
+  String get authSignUp => 'Registrieren';
+
+  @override
+  String get authForgotPassword => 'Passwort vergessen?';
+
+  @override
+  String get authDontHaveAccount => 'Noch kein Konto? Registrieren';
+
+  @override
+  String get authHaveAccount => 'Schon ein Konto? Anmelden';
+
+  @override
+  String get authSendPasswordReset => 'E-Mail zum Zurücksetzen senden';
+
+  @override
+  String get authPasswordResetSent =>
+      'Die E-Mail zum Zurücksetzen wurde gesendet';
+
+  @override
+  String get authBackToSignIn => 'Zurück zur Anmeldung';
+
+  @override
+  String get authUnexpectedError => 'Ein unerwarteter Fehler ist aufgetreten';
+
+  @override
+  String get authRequiredFieldError => 'Dieses Feld ist erforderlich';
+
+  @override
+  String get authConfirmPasswordError => 'Die Passwörter stimmen nicht überein';
+
+  @override
+  String get authConfirmPassword => 'Passwort bestätigen';
+
+  @override
+  String get authEnterOtpCode => 'Gib den Bestätigungscode ein';
+
+  @override
+  String get authEnterNewPassword => 'Gib ein neues Passwort ein';
+
+  @override
+  String get authChangePassword => 'Passwort ändern';
+
+  @override
+  String get authPasswordChangedSuccess => 'Passwort erfolgreich geändert';
+
+  @override
+  String get authOtpCodeError => 'Ungültiger Bestätigungscode';
+
+  @override
+  String get authOtpDisabledError => 'Bestätigungscodes sind deaktiviert';
+
+  @override
+  String get authEnterPhoneNumber => 'Gib deine Telefonnummer ein';
+
+  @override
+  String get authValidPhoneNumberError =>
+      'Bitte gib eine gültige Telefonnummer ein';
+
+  @override
+  String get authContinueWithMagicLink => 'Weiter mit Magic Link';
+
+  @override
+  String get authCheckYourEmail => 'Schau in dein E-Mail-Postfach!';
+
+  @override
+  String get authSuccessSignInMessage => 'Erfolgreich angemeldet!';
+
+  @override
+  String get authUpdatePassword => 'Passwort aktualisieren';
+
+  @override
+  String get authEnterOneTimeCode => 'Bitte gib den gesendeten Einmalcode ein';
+
+  @override
+  String get authEnterCodeSent => 'Gib den gesendeten Code ein';
+
+  @override
+  String get authVerifyPhone => 'Telefon bestätigen';
+
+  @override
+  String authContinueWithProvider(String provider) {
+    return 'Weiter mit $provider';
+  }
 }

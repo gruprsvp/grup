@@ -7,8 +7,8 @@ import 'package:rrule/rrule.dart';
 
 class FormBuilderRecurrenceRule
     extends FormBuilderFieldDecoration<RecurrenceRule> {
-  /// To localize the recurrence rule picker, supply a [RruleL10n] implementation
-  final RruleL10n rruleL10n;
+  /// Names a recurrence rule, in the user's language.
+  final String Function(RecurrenceRule rule) label;
 
   /// Called when an enclosing form is submitted. The value passed will be
   /// `null` if [format] fails to parse the text.
@@ -54,7 +54,7 @@ class FormBuilderRecurrenceRule
   FormBuilderRecurrenceRule({
     super.key,
     required super.name,
-    required this.rruleL10n,
+    required this.label,
     super.autovalidateMode = AutovalidateMode.disabled,
     super.decoration,
     super.enabled,
@@ -158,9 +158,7 @@ class _RecurrenceRulePickerState
     _textFieldController = widget.controller ?? TextEditingController();
     //setting this to value instead of initialValue here is OK since we handle initial value in the parent class
     final initVal = value;
-    _textFieldController.text = initVal == null
-        ? ''
-        : initVal.toText(l10n: widget.rruleL10n);
+    _textFieldController.text = initVal == null ? '' : widget.label(initVal);
   }
 
   @override
@@ -193,7 +191,7 @@ class _RecurrenceRulePickerState
                   .map<ListTile>(
                     (r) => ListTile(
                       leading: Icon(r.$2),
-                      title: Text(r.$1.toText(l10n: widget.rruleL10n)),
+                      title: Text(widget.label(r.$1)),
                       onTap: () => Navigator.pop(context, r.$1),
                     ),
                   )
@@ -212,8 +210,6 @@ class _RecurrenceRulePickerState
   @override
   void didChange(RecurrenceRule? value) {
     super.didChange(value);
-    _textFieldController.text = (value == null)
-        ? ''
-        : value.toText(l10n: widget.rruleL10n);
+    _textFieldController.text = value == null ? '' : widget.label(value);
   }
 }

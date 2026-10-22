@@ -21,9 +21,6 @@ typedef OnDetailsDefaultRuleChangedCallback = void Function({
 });
 
 class GroupScheduleDetailsScreen extends StatelessWidget {
-  final dateFormat = DateFormat.yMMMd();
-  final timeFormat = DateFormat.jm();
-
   final bool loading;
   final Group? group;
 
@@ -34,7 +31,7 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
   final OnDetailsReplyChangedCallback? onReplyChanged;
   final OnDetailsDefaultRuleChangedCallback? onDefaultRuleChanged;
 
-  GroupScheduleDetailsScreen({
+  const GroupScheduleDetailsScreen({
     super.key,
     required this.loading,
     this.group,
@@ -72,6 +69,7 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
+    final locale = Localizations.localeOf(context).toString();
     final groupName = group?.displayName ?? l10n.loading;
     final scheduleName = scheduleInstance?.displayName ?? l10n.loading;
     final instanceDate = scheduleInstance?.instanceDate;
@@ -104,8 +102,8 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.end,
                         children: [
-                          Text(dateFormat.format(instanceDate)),
-                          Text(timeFormat.format(instanceDate)),
+                          Text(DateFormat.yMMMd(locale).format(instanceDate)),
+                          Text(DateFormat.jm(locale).format(instanceDate)),
                         ],
                       ),
                   ],
