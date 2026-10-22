@@ -10,8 +10,8 @@ import 'package:uuid/uuid.dart';
 import 'const.dart';
 import 'supabase.dart';
 
-class InvitesRepository extends SupabaseRepository with Postgrest {
-  const InvitesRepository({required super.supabase})
+class InvitesService extends SupabaseService with Postgrest {
+  const InvitesService({required super.supabase})
     : super(tableName: Tables.invites);
 
   // Invite codes are bearer credentials that grant group membership — they

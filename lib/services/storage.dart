@@ -5,9 +5,9 @@ import 'package:supabase/supabase.dart';
 import 'const.dart';
 import 'supabase.dart';
 
-/// Repository for uploading files to Supabase Storage.
-class StorageRepository extends SupabaseRepository with Storage {
-  const StorageRepository({required super.supabase})
+/// Uploads and deletes files in Supabase Storage.
+class StorageService extends SupabaseService with Storage {
+  const StorageService({required super.supabase})
     : super(bucketName: Buckets.public);
 
   /// Uploads a file to the public bucket.

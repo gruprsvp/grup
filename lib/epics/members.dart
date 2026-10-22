@@ -1,12 +1,12 @@
 import 'package:parousia/actions/actions.dart';
 import 'package:parousia/models/models.dart';
-import 'package:parousia/repositories/repositories.dart';
+import 'package:parousia/services/services.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux_entity/redux_entity.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 
-Epic<AppState> createMembersEpic(MembersRepository members) =>
+Epic<AppState> createMembersEpic(MembersService members) =>
     combineEpics<AppState>([
       _createAddMembersToGroupEpic(members),
       _createUpdateMemberEpic(members),
@@ -15,7 +15,7 @@ Epic<AppState> createMembersEpic(MembersRepository members) =>
       _createDeleteOneMember(members),
     ]);
 
-Epic<AppState> _createAddMembersToGroupEpic(MembersRepository members) {
+Epic<AppState> _createAddMembersToGroupEpic(MembersService members) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<InviteGroupMembersAction>().asyncMap((action) async {
         final createMembersPromise = [
@@ -35,7 +35,7 @@ Epic<AppState> _createAddMembersToGroupEpic(MembersRepository members) {
       });
 }
 
-Epic<AppState> _createUpdateMemberEpic(MembersRepository members) {
+Epic<AppState> _createUpdateMemberEpic(MembersService members) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestUpdateOne<Member>>().asyncMap(
         (action) => members
@@ -60,9 +60,7 @@ Stream<dynamic> _onNewMembersCreated(
       SuccessCreateMany<Member>(action.members.map((e) => e.$1).toList()),
 );
 
-Epic<AppState> _createRetrieveOwnMemberByGroupIdEpic(
-  MembersRepository members,
-) {
+Epic<AppState> _createRetrieveOwnMemberByGroupIdEpic(MembersService members) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<SuccessCreateOne<Group>>().asyncMap((action) {
         final groupId = action.entity.id;
@@ -73,7 +71,7 @@ Epic<AppState> _createRetrieveOwnMemberByGroupIdEpic(
       });
 }
 
-Epic<AppState> _createDeleteOneMember(MembersRepository members) {
+Epic<AppState> _createDeleteOneMember(MembersService members) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestDeleteOne<Member>>().asyncMap((action) {
         return members

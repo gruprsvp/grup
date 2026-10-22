@@ -1,12 +1,12 @@
 import 'package:parousia/actions/actions.dart';
 import 'package:parousia/models/models.dart';
-import 'package:parousia/repositories/repositories.dart';
+import 'package:parousia/services/services.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux_entity/redux_entity.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 
-Epic<AppState> createSchedulesEpics(SchedulesRepository schedules) =>
+Epic<AppState> createSchedulesEpics(SchedulesService schedules) =>
     combineEpics<AppState>([
       _createRetrieveGroupSchedulesEpic(schedules),
       _createCreateOneScheduleEpic(schedules),
@@ -14,9 +14,7 @@ Epic<AppState> createSchedulesEpics(SchedulesRepository schedules) =>
     ]);
 
 /// Fetch all schedules for a group
-Epic<AppState> _createRetrieveGroupSchedulesEpic(
-  SchedulesRepository schedules,
-) {
+Epic<AppState> _createRetrieveGroupSchedulesEpic(SchedulesService schedules) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<GroupDetailsOpenAction>().asyncMap(
         (action) => schedules
@@ -30,7 +28,7 @@ Epic<AppState> _createRetrieveGroupSchedulesEpic(
 }
 
 /// When the user requests to create a new schedule
-Epic<AppState> _createCreateOneScheduleEpic(SchedulesRepository schedules) {
+Epic<AppState> _createCreateOneScheduleEpic(SchedulesService schedules) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestCreateOne<Schedule>>().asyncMap(
         (action) => schedules
@@ -44,7 +42,7 @@ Epic<AppState> _createCreateOneScheduleEpic(SchedulesRepository schedules) {
 }
 
 /// When the user requests to delete one schedule
-Epic<AppState> _createDeleteOneScheduleEpic(SchedulesRepository schedules) {
+Epic<AppState> _createDeleteOneScheduleEpic(SchedulesService schedules) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<RequestDeleteOne<Schedule>>().asyncMap(
         (action) => schedules

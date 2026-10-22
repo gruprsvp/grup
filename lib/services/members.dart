@@ -4,8 +4,8 @@ import 'package:uuid/uuid.dart';
 import 'const.dart';
 import 'supabase.dart';
 
-class MembersRepository extends SupabaseRepository with Postgrest {
-  const MembersRepository({required super.supabase})
+class MembersService extends SupabaseService with Postgrest {
+  const MembersService({required super.supabase})
     : super(tableName: Tables.members);
 
   Future<Member> addMemberToGroup(

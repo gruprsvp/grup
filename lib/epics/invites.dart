@@ -1,12 +1,12 @@
 import 'package:parousia/actions/actions.dart';
 import 'package:parousia/models/models.dart';
-import 'package:parousia/repositories/repositories.dart';
+import 'package:parousia/services/services.dart';
 import 'package:parousia/state/state.dart';
 import 'package:redux_entity/redux_entity.dart';
 import 'package:redux_epics/redux_epics.dart';
 import 'package:rxdart/rxdart.dart';
 
-Epic<AppState> createInvitesEpics(InvitesRepository invites) =>
+Epic<AppState> createInvitesEpics(InvitesService invites) =>
     combineEpics<AppState>([
       _createCreateInvitesOnNewMembersCreatedEpic(invites),
       _createGetInvitesForMemberEpic(invites),
@@ -14,7 +14,7 @@ Epic<AppState> createInvitesEpics(InvitesRepository invites) =>
       _createUseInviteCodeEpic(invites),
     ]);
 
-Epic<AppState> _createUseInviteCodeEpic(InvitesRepository invites) {
+Epic<AppState> _createUseInviteCodeEpic(InvitesService invites) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<JoinWithInviteCodeAction>().asyncMap(
         (action) => invites
@@ -25,7 +25,7 @@ Epic<AppState> _createUseInviteCodeEpic(InvitesRepository invites) {
 }
 
 Epic<AppState> _createCreateInvitesOnNewMembersCreatedEpic(
-  InvitesRepository invites,
+  InvitesService invites,
 ) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<NewMembersCreatedAction>().asyncMap((action) async {
@@ -42,7 +42,7 @@ Epic<AppState> _createCreateInvitesOnNewMembersCreatedEpic(
       });
 }
 
-Epic<AppState> _createGetInvitesForMemberEpic(InvitesRepository invites) {
+Epic<AppState> _createGetInvitesForMemberEpic(InvitesService invites) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) =>
       actions.whereType<MemberDetailsOpenAction>().asyncMap(
         (action) => invites
@@ -55,7 +55,7 @@ Epic<AppState> _createGetInvitesForMemberEpic(InvitesRepository invites) {
       );
 }
 
-Epic<AppState> _createUseDeeplinkInviteCodeEpic(InvitesRepository invites) {
+Epic<AppState> _createUseDeeplinkInviteCodeEpic(InvitesService invites) {
   return (Stream<dynamic> actions, EpicStore<AppState> store) => actions
       .whereType<HandleDeeplinkAction>()
       .where(
