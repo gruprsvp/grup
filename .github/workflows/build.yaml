@@ -50,6 +50,10 @@ jobs:
 
       - name: Setup Supabase
         uses: supabase/setup-cli@45a513f8c64c0bc8e0e3dfe572b5c95be85f6359 # v3.0.1
+        with:
+          # Pinned: unpinned means the newest CLI, also for the prod `db push`.
+          # Dependabot doesn't bump it; keep verify.yaml on the same version.
+          version: 2.121.0
 
       - name: Start Supabase local for tests
         run: supabase start
@@ -107,6 +111,9 @@ jobs:
         run: |
           supabase link --project-ref "$SUPABASE_PROJECT_ID"
           supabase db push
+          # Every function in supabase/functions. No --prune: it would also
+          # delete prod functions that aren't in the repo.
+          supabase functions deploy
         env:
           SUPABASE_ACCESS_TOKEN: ${{ secrets.SUPABASE_ACCESS_TOKEN }}
           SUPABASE_DB_PASSWORD: ${{ secrets.SUPABASE_PROD_DB_PASSWORD }}
