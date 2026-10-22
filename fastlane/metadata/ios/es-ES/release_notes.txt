@@ -1,1 +1,6 @@
-Los botones y el contenido ya no quedan ocultos tras la barra del sistema en la parte inferior de la pantalla. Además, pequeñas mejoras en la interfaz.
+GRUP 2.0 se ha reconstruido por dentro para ser más fiable.
+• Los enlaces de invitación ya funcionan en la web y te llevan a la invitación al iniciar sesión.
+• Si algo no se puede cargar o guardar, la app ahora te lo indica y puedes volver a intentarlo.
+• El inicio de sesión, los eventos periódicos y las fechas aparecen ahora en tu idioma.
+• Botones de respuesta más legibles y etiquetas para lectores de pantalla.
+• Las imágenes de grupo ya no se pierden al editarlas, y más correcciones.

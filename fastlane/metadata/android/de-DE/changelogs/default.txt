@@ -1,1 +1,6 @@
-Schaltflächen und Inhalte werden nicht mehr von der Systemleiste am unteren Bildschirmrand verdeckt. Dazu kleinere Verbesserungen an der Oberfläche.
+GRUP 2.0 wurde unter der Haube für mehr Zuverlässigkeit neu gebaut.
+• Einladungslinks funktionieren jetzt auch im Web und führen nach der Anmeldung zur Einladung zurück.
+• Wenn etwas nicht lädt oder speichert, sagt dir die App das und du kannst es erneut versuchen.
+• Anmeldung, wiederkehrende Termine und Daten erscheinen in deiner Sprache.
+• Besser lesbare Antwort-Schaltflächen und Beschriftungen für Screenreader.
+• Gruppenbilder gehen beim Bearbeiten nicht mehr verloren, und mehr.

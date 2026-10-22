@@ -1,1 +1,6 @@
-Les boutons et le contenu ne sont plus masqués par la barre système en bas de l’écran. Et quelques petites améliorations de l’interface.
+GRUP 2.0 a été reconstruit pour plus de fiabilité.
+• Les liens d’invitation fonctionnent aussi sur le web et vous ramènent à l’invitation après connexion.
+• En cas d’échec de chargement ou d’enregistrement, l’app vous le signale et vous pouvez réessayer.
+• La connexion, les événements récurrents et les dates s’affichent dans votre langue.
+• Boutons de réponse plus lisibles et libellés pour les lecteurs d’écran.
+• Les images de groupe ne se perdent plus lors de la modification, et plus encore.

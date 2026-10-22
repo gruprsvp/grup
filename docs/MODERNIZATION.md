@@ -76,7 +76,12 @@ Three genuine decisions need your input before Phase 2 — see [Decisions](#deci
 
 ### Still open
 
-- **Release and merge.** `pubspec.yaml` says `1.7.3+1`, and `v1.7.3` is still an unpublished draft (checked 2026-10-22), so a merge updates that draft. Choose 1.7.3 or 1.7.4, and update the release notes (`fastlane/metadata/*/changelogs/default.txt`) either way. The merge also runs the index migration on prod and deploys web and Android. Close Dependabot #244–#250 (all superseded). #186 (`refactor/timezone`) predates the rewrite.
+- **Release and merge.** This ships as **2.0.0**, with new release notes for both stores in all five languages (each within Play's 500-character limit). A merge does the following:
+  - creates a new draft release `v2.0.0` (the stale `v1.7.2`/`v1.7.3` drafts can be deleted);
+  - runs the index migration on prod;
+  - deploys web, and uploads Android to Play internal.
+
+  Because `fastlane/` and `Gemfile.lock` change, it also runs `store-metadata.yaml`. On iOS, `deliver` pins `app_version` to 2.0.0, so the editable App Store version becomes 2.0.0 (created, or the stuck editable 1.7.x renamed) with these notes. After the merge, watch Xcode Cloud's first SPM-only build, attach it to 2.0.0 and submit. Promote the Play build from internal when ready. Publish the `v2.0.0` release once it is live. Close Dependabot #244–#250 (all superseded). #186 (`refactor/timezone`) predates the rewrite.
 - **Phase 1.5 item 6 (pagination)** is not done. No list is near PostgREST's 1000-row cap yet; deleting a user's files does page.
 - **Known gaps:**
   - On web, an OAuth sign-in loses `/auth?from=…` across the provider redirect (email sign-in keeps it).
