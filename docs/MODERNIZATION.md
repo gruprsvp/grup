@@ -2,11 +2,11 @@
 
 _Prepared 2026-06-28. Based on a full audit of the codebase (Flutter app `parousia` v1.7.2+1) across four areas: Supabase/security, state architecture, testing/CI, and web/dependencies/release._
 
-> **Supabase audit 2026-10-22 (after the merge).** Three dated Supabase changes reach this app: the legacy API keys go by the end of 2026 (every build so far embeds one), the default table grants go on 2026-10-30, and CLI v3 drops `[inbucket]`. The code check also found that new database functions are still callable by `anon`. See [2026-10-22 Supabase audit](#2026-10-22-supabase-audit--deadlines-and-deprecations).
+> **Supabase audit 2026-10-22 (after the merge).** Three dated Supabase changes reach this app: the legacy API keys go by the end of 2026 (every build so far embeds one), the default table grants go on 2026-10-30, and CLI v3 drops `[inbucket]`. The code check also found that new database functions are still callable by `anon`. See [2026-10-22 Supabase audit](#2026-10-22-supabase-audit--deadlines-and-deprecations). Branch `fix/supabase-deprecations` does S3, S6 and the code half of S1; it waits for the publishable key.
 >
 > **Refresh 2026-10-22 — MVVM, and Phase 1 / 1.5 done.** Branch `modernize/2026-10`, merged as PR #251 the same day: every dependency at its latest version, Redux replaced by the Flutter team's MVVM architecture (D1 → B1), Widgetbook removed, and all of Phase 1 and Phase 1.5 except pagination. See [2026-10-22 refresh](#2026-10-22-refresh--mvvm-and-what-is-left).
 >
-> **Phase 0 in progress (branch `chore/phase-0-safety-net`).** See [Phase 0 progress & new findings](#phase-0-progress--findings-from-implementation) at the bottom for what's done and what hands-on work uncovered (notably: the app did **not** compile/run on current stable Flutter until several upgrade/migration gaps were fixed).
+> **Phase 0 done (PR #214).** See [Phase 0 progress & new findings](#phase-0-progress--findings-from-implementation) at the bottom for what was done and what hands-on work uncovered (notably: the app did **not** compile/run on current stable Flutter until several upgrade/migration gaps were fixed).
 >
 > **Refresh 2026-09-25 — Flutter 3.47 / Dart 3.13.** Toolchain + dependency upgrade on branch `chore/flutter-3.47-upgrade`, and a re-plan. The headline: Flutter 3.47 **decoupled Material and Cupertino into the `material_ui`/`cupertino_ui` pub packages**, and mixing them with `package:flutter/material.dart` fails *silently at runtime*. That is now the top structural item. See [2026-09-25 refresh](#2026-09-25-refresh--flutter-347-and-the-road-from-here) for what changed, what was deliberately held back, and the re-sequenced next steps.
 >
@@ -36,13 +36,18 @@ Sources: [Migrating to publishable and secret API keys](https://supabase.com/doc
 ### With a date
 
 **S1 — Legacy API keys end by the end of 2026.** Supabase's migration guide says it "is deprecating the `anon` and `service_role` keys by the end of 2026"; no exact removal date is published. Every build so far, the 2.0.0 ones included, carries the legacy anon JWT in `supabase/config/supabase.json`. When Supabase turns it off, those installs stop working, and the app has no "update required" gate to tell users.
+- **Branch `fix/supabase-deprecations` (code done, key pending):**
+  - The app reads `PUBLISHABLE_KEY` (`SupabaseConfig.publishableKey`), so local runs and CI use the publishable key too.
+  - `test/util/supabase_config_test.dart` fails until `supabase/config/supabase.json` holds an `sb_publishable_` key. `build.yaml` runs the tests before any deploy, so a merge without the key ships nothing.
+  - The edge function prefers `SUPABASE_SECRET_KEYS` and throws at boot when no key is set. The live suite now deletes an account through it.
+  - Left: the key itself, the release smoke test, and deactivating the legacy keys.
 - **Fix, before promoting 2.0.0:**
-  - create the publishable key in the dashboard (Settings → API Keys) and paste it into the `ANON_KEY` field of `supabase/config/supabase.json`;
+  - create the publishable key in the dashboard (Settings → API Keys) and put it in `supabase/config/supabase.json` as `"PUBLISHABLE_KEY"`, in place of the `ANON_KEY` entry;
   - merge that to `main`. No version bump is needed: the release run gives the Play build a new `versionCode` (the run number, `build.yaml:140`; pubspec's `+N` has always been `+1`), and Xcode Cloud builds again. Promote/submit those builds instead of the first 2.0.0 ones.
 
-  No app code changes. `lib/main.dart:51` already passes the value as `publishableKey:`, and once a user is signed in supabase-dart 2.16 sends an `sb_` key only as `apikey`, never as the Bearer token. Rename the field to `PUBLISHABLE_KEY` later; `supabase status` already prints it.
-- **Edge function.** `delete_user_account/index.ts:18` reads `SUPABASE_SERVICE_ROLE_KEY`, which stops working with the legacy keys, and both stores require in-app account deletion. Read `SUPABASE_SECRET_KEYS` (a JSON map; the key is `['default']`) and fall back to the old variable. The variable names come from Supabase's docs; they were not checked on the local runtime. Keep `verify_jwt` on: the app always calls the function signed in, and the check accepts user tokens.
-- Smoke-test a release build against prod before promoting: sign-in, RSVP, picture upload. Deactivate the legacy keys only once the dashboard shows nothing uses them; deactivation can be undone.
+  `lib/main.dart:51` passes the value as `publishableKey:`, and once a user is signed in supabase-dart 2.16 sends an `sb_` key only as `apikey`, never as the Bearer token.
+- **Edge function.** `delete_user_account/index.ts:18` reads `SUPABASE_SERVICE_ROLE_KEY`, which stops working with the legacy keys, and both stores require in-app account deletion. Read `SUPABASE_SECRET_KEYS` (a JSON map; the key is `['default']`) and fall back to the old variable. The local runtime (CLI 2.119 and 2.121) sets `SUPABASE_SECRET_KEYS` to `{"default": <secret key>}`, as the docs say. Keep `verify_jwt` on: the app always calls the function signed in, and the check accepts user tokens.
+- Smoke-test a release build against prod before promoting: sign-in with every provider (OAuth can't be tested locally), RSVP, picture upload, and deleting a throwaway account (which shows prod sets `SUPABASE_SECRET_KEYS`). Deactivate the legacy keys only once the dashboard shows nothing uses them; deactivation can be undone.
 - **Verified locally:** with `sb_publishable_`/`sb_secret_` swapped into `localhost.json` in place of `ANON_KEY`/`SERVICE_ROLE_KEY`, the live suite passes 27/27, and `delete_user_account` returns 200 for the publishable key plus a signed-in user's token.
 - The product gap this exposes: there is no minimum-version gate, so old installs fail with generic errors whenever a backend change breaks them. JWT signing keys (asymmetric) are a separate, optional migration.
 
@@ -58,6 +63,7 @@ Sources: [Migrating to publishable and secret API keys](https://supabase.com/doc
 
 **S3 — Supabase CLI v3.** The CLI in CI already logs `WARN: config section [inbucket] is deprecated and will be removed in v3, use [local_smtp] instead.` and `WARN: INBUCKET_URL is deprecated and will be removed in v3, use MAILPIT_URL instead.` (local 2.119 warns too). `supabase/setup-cli` has no `version:` (`verify.yaml:94`, `build.yaml:52`), and its docs say "If omitted, detect from the root lockfile and otherwise use latest". So CI always runs the newest CLI, including for the **prod `db push`**.
 - **Fix:** rename `[inbucket]` to `[local_smtp]` in `config.toml`; drop the unused `inbucketUrl` from `SupabaseConfig`; pin `version:` in both workflows to the version used locally (latest is 2.121). Dependabot doesn't bump that input, so CLI updates become manual.
+- **Done on `fix/supabase-deprecations`.** Both workflows are pinned to 2.121.0, the version the 2026-10-22 release run used; pgTAP passes 70/70 on it. `supabase status` itself still warns about `INBUCKET_URL` until v3 drops it; the app no longer reads it.
 
 ### Found in the code
 
@@ -72,7 +78,7 @@ Sources: [Migrating to publishable and secret API keys](https://supabase.com/doc
 - **Info:** `unused_index members_profile_id`, only because the local database has no traffic. Keep the index.
 - `supabase db advisors --linked` adds the prod-only checks (auth settings, Postgres patch level) and may answer Confirm #1.
 
-**S6 — CI never deploys edge functions.** `build.yaml` only runs `db push`, so nobody knows which code prod's `delete_user_account` runs. Add `supabase functions deploy` after `db push`; S1 needs it.
+**S6 — CI never deploys edge functions.** `build.yaml` only runs `db push`, so nobody knows which code prod's `delete_user_account` runs. Add `supabase functions deploy` after `db push`; S1 needs it. **Done on `fix/supabase-deprecations`**, in the same step and without `--prune` (that would delete prod functions that aren't in the repo); `verify_jwt` stays on. The first run replaces whatever prod runs now.
 
 **S7 — Postgres 15 → 17.**
 - The `supabase init` template now defaults to 17, and Supabase's self-hosted images switched on 2026-06-17. For hosted 15, Supabase first said about May 2026 and has given no firm date since. Upstream supports 15 until 2027-11-11.
@@ -93,8 +99,8 @@ Sources: [Migrating to publishable and secret API keys](https://supabase.com/doc
 - On a machine where `DEVELOPER_DIR` points at an SDK without Xcode's toolchain (a Nix apple-sdk, for example), `flutter test` fails with "install_name_tool not found". `env -u DEVELOPER_DIR flutter test` works.
 
 **Order:**
-1. S1, with S3 and S6, in one merge before promoting 2.0.0.
-2. S2, S4 and S5's `search_path` fix as one migration PR before the next schema change.
+1. S1, with S3 and S6, in one merge before promoting 2.0.0: branch `fix/supabase-deprecations`, waiting for the publishable key.
+2. S2, S4 and S5's `search_path` fix as one migration PR before the next schema change. Reviving #186 counts: it changes the schedules schema.
 3. S7 once Supabase sets a date.
 4. S8 any time.
 
@@ -152,10 +158,10 @@ Sources: [Migrating to publishable and secret API keys](https://supabase.com/doc
 ### Still open
 
 - **Release.** **Merged on 2026-10-22 as PR #251.** It ships as **2.0.0**, with new release notes for both stores in all five languages. Every step of the release run (`build.yaml` run 39795642384) passed: draft release `v2.0.0`, the index migration on prod, web on `gh-pages`, 2.0.0 on Play internal (`versionCode` 224, the run number), and the Sentry upload. `store-metadata.yaml` (run 39795642385) passed too. On iOS, `deliver` pins `app_version` to 2.0.0, which makes the editable App Store version 2.0.0 with these notes (not checked in App Store Connect). Still to do:
-  - ship the publishable key in a new 2.0.0 build, and promote/submit that one instead ([S1](#2026-10-22-supabase-audit--deadlines-and-deprecations));
+  - ship the publishable key in a new 2.0.0 build, and promote/submit that one instead ([S1](#2026-10-22-supabase-audit--deadlines-and-deprecations), branch `fix/supabase-deprecations`);
   - watch Xcode Cloud's first SPM-only build, attach it to 2.0.0 and submit; promote the Play build from internal;
   - keep `v2.0.0` a draft until then: once it is published, the next `build.yaml` run fails at the version gate. Publish it when the app is live. The stale `v1.7.2`/`v1.7.3` drafts can be deleted;
-  - close Dependabot #244–#250 (all superseded). #186 (`refactor/timezone`) predates the rewrite.
+  - #186 (`refactor/timezone`) predates the rewrite and changes the schedules schema, so it comes after the S2/S4/S5 migration. Dependabot #244–#250 were closed at the merge.
 - **Phase 1.5 item 6 (pagination)** is not done. No list is near PostgREST's 1000-row cap yet; deleting a user's files does page.
 - **Known gaps:**
   - On web, an OAuth sign-in loses `/auth?from=…` across the provider redirect (email sign-in keeps it).
