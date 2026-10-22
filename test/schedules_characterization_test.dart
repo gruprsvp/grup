@@ -12,7 +12,7 @@ import 'package:parousia/models/models.dart';
 import 'package:parousia/selectors/selectors.dart';
 import 'package:parousia/util/recurrence_rules.dart';
 import 'package:rrule/rrule.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
 
 void main() {
   // 2024-01-01 is a Monday. All dates are UTC because rrule requires it and the

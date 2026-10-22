@@ -30,7 +30,7 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
@@ -49,7 +49,7 @@ jobs:
         run: flutter pub get
 
       - name: Setup Supabase
-        uses: supabase/setup-cli@ab058987d8d6c725971f6cf9d0b5c98467e30bd1 # v1.7.1
+        uses: supabase/setup-cli@45a513f8c64c0bc8e0e3dfe572b5c95be85f6359 # v3.0.1
 
       - name: Start Supabase local for tests
         run: supabase start
@@ -58,6 +58,10 @@ jobs:
         run: |
           supabase status -o json > supabase/config/localhost.json
           flutter test
+          # supabase/config/ is a bundled asset directory: without this, the
+          # web and Android release builds below would ship the local stack's
+          # demo keys (service role, JWT secret) as a public asset.
+          rm supabase/config/localhost.json
 
       - name: Compare pubspec version and git tag
         id: parse_pubspec

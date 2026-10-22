@@ -14,7 +14,7 @@ GRUP is a Flutter app for group event scheduling and RSVP tracking, backed by Su
 # First-time / after pulling
 flutter pub get
 
-# Codegen — REQUIRED whenever you touch models, state, routes, or widgetbook stories.
+# Codegen — REQUIRED whenever you touch models, state, or routes.
 dart run build_runner watch --delete-conflicting-outputs   # leave running during dev
 dart run build_runner build  --delete-conflicting-outputs  # one-shot
 
@@ -30,12 +30,11 @@ flutter test test/selectors_test.dart     # a single file
 flutter test --plain-name "substring"     # a single test/group by name
 
 flutter run                               # the app (web/Chrome needs no extra setup)
-flutter run -t lib/widgetbook.dart        # the Widgetbook component catalog
 flutter gen-l10n                           # regenerate localizations from lib/l10n/*.arb
 ```
 
 **iOS / macOS local builds** need CocoaPods installed (some plugins —
-`flutter_contacts`, `posthog_flutter`, `sign_in_with_apple` — are CocoaPods-only and
+`sign_in_with_apple` — are CocoaPods-only and
 build via the SPM+CocoaPods hybrid):
 ```sh
 brew install cocoapods
@@ -51,9 +50,9 @@ If Homebrew has no CocoaPods bottle (e.g. on a macOS pre-release), `gem install 
 **Android toolchain:** AGP 9.1 / Gradle 9.3.1 / Kotlin Gradle plugin 2.4 (the newest Flutter
 3.47 supports), Groovy DSL. Builds on Android Studio's bundled JDK and on Java 17 (CI).
 `android/gradle.properties` keeps `android.builtInKotlin=false` and `android.newDsl=false`:
-these are temporary opt-outs because `in_app_review`, `posthog_flutter`, `sentry_flutter` and
-`sign_in_with_apple` still apply KGP (the build prints them). Flip both to `true` once those
-plugins migrate; Flutter will eventually drop the opt-out.
+these are temporary opt-outs because `in_app_review` and `posthog_flutter` still apply KGP
+(the build prints them). Flip both to `true` once those plugins migrate; Flutter will
+eventually drop the opt-out. Minimum Android is **API 26** (sentry_flutter 10).
 
 **Material is `package:material_ui`.** Since Flutter 3.47 Material ships as the `material_ui`
 pub package; app code imports `package:material_ui/material_ui.dart`, never
@@ -71,14 +70,15 @@ test like `test/auth_screen_test.dart`. In tests, use `appTheme()`,
 lists the framework Material delegates, which `material_ui` widgets don't read.
 
 **`dart fix` gotcha:** `dart fix --apply`, even with `--code=...`, also applies the pubspec
-`missing_dependency` fix, which moves `faker` (dev-only, imported by `lib/util/fakes.dart`)
-into runtime `dependencies`. Always check the pubspec diff after running it.
+`missing_dependency` fix, which can move a dev-only package into runtime `dependencies` if
+anything under `lib/` imports it. Keep test-only code (e.g. `test/support/fake_data.dart`,
+which uses `faker`) under `test/`, and check the pubspec diff after running it.
 
 **Live vs hermetic tests.** Most tests are hermetic. The `repositories_test.dart` suite is tagged `live` and hits a real local Supabase; it **self-skips** when `supabase/config/localhost.json` is absent, so a plain `flutter test` works without Docker. To run the live suite, bring up Supabase first (see below). CI's `verify.yaml` has three jobs: a Docker-free `analyze` job (format + analyze) on every PR, a `test` job that runs `supabase start` → `supabase test db` (pgTAP) → `flutter test --coverage` → `flutter build web`, and an `android` job (debug APK + release R8 minification, no signing) so Android breakage surfaces before the release job.
 
 ## Code generation
 
-Large parts of `lib/` are generated and must not be hand-edited: `*.freezed.dart` (freezed), `*.g.dart` (json_serializable / go_router_builder / app_state), `go_router_builder.g.dart`, `widgetbook.directories.g.dart`, and `lib/l10n/app_localizations*.dart`. Change the source (`@freezed` class, `@TypedGoRoute`, `.arb` file) and rerun build_runner / gen-l10n.
+Large parts of `lib/` are generated and must not be hand-edited: `*.freezed.dart` (freezed), `*.g.dart` (json_serializable / go_router_builder / app_state), `go_router_builder.g.dart`, and `lib/l10n/app_localizations*.dart`. Change the source (`@freezed` class, `@TypedGoRoute`, `.arb` file) and rerun build_runner / gen-l10n.
 
 ## Architecture
 
@@ -96,7 +96,7 @@ Layers under `lib/` (each has a barrel file that re-exports the folder):
 - **`presentation/`** — three sub-layers:
   - `screens/` — "dumb" widgets; receive everything via constructor params, never touch the store.
   - `containers/` — connect Redux to screens via `StoreConnector` + a `@freezed _ViewModel` with a `fromStore(Store)` factory that builds props and wires `onX` callbacks to `store.dispatch(...)`. (See `containers/home.dart`.)
-  - `widgets/` — reusable presentational pieces; `*.stories.dart` are Widgetbook stories.
+  - `widgets/` — reusable presentational pieces.
 
 ## Routing
 

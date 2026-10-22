@@ -10,7 +10,9 @@ import 'package:parousia/repositories/repositories.dart';
 import 'package:parousia/util/util.dart';
 import 'package:rrule/rrule.dart';
 import 'package:supabase/supabase.dart';
-import 'package:test/test.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+import 'support/fake_data.dart';
 
 final SupabaseConfig config = SupabaseConfig.fromPath(
   'supabase/config/localhost.json',
@@ -94,7 +96,7 @@ Future<T?> runWithTemporaryUser<T>(
 Future<T?> runWithTemporaryGroup<T>(RunWithGroupCallback<T> callback) {
   return runWithTemporaryUser((supabase, user) async {
     final groupsRepository = GroupsRepository(supabase: supabase);
-    final group = await groupsRepository.createGroup(Fake.group());
+    final group = await groupsRepository.createGroup(FakeData.group());
     late T result;
     try {
       result = await callback(supabase, group, groupsRepository);
@@ -139,7 +141,7 @@ void main() {
         final profile = await profilesRepository.getProfileById(id);
 
         final displayName = faker.person.name();
-        final pictureUrl = faker.image.image(height: 128, width: 128);
+        final pictureUrl = faker.image.loremPicsum(height: 128, width: 128);
 
         await profilesRepository.updateProfile(
           id: id,
@@ -200,7 +202,10 @@ void main() {
       () => runWithTemporaryUser((supabase, user) async {
         final groupsRepository = GroupsRepository(supabase: supabase);
         const groupsCount = 5;
-        final createdGroups = List.generate(groupsCount, (_) => Fake.group());
+        final createdGroups = List.generate(
+          groupsCount,
+          (_) => FakeData.group(),
+        );
 
         await Future.wait(
           createdGroups.map((g) => groupsRepository.createGroup(g)),
@@ -315,7 +320,7 @@ void main() {
         final groupsRepository = GroupsRepository(supabase: supabase);
         final membersRepository = MembersRepository(supabase: supabase);
 
-        final group = await groupsRepository.createGroup(Fake.group());
+        final group = await groupsRepository.createGroup(FakeData.group());
         final member = await membersRepository.addMemberToGroup(
           group.id,
           displayName: 'Member',
@@ -336,7 +341,7 @@ void main() {
         final groupsRepository = GroupsRepository(supabase: supabase);
         final membersRepository = MembersRepository(supabase: supabase);
 
-        final group = await groupsRepository.createGroup(Fake.group());
+        final group = await groupsRepository.createGroup(FakeData.group());
 
         await runWithTemporaryUser((supabase2, user2) async {
           final membersRepository2 = MembersRepository(supabase: supabase2);
@@ -365,7 +370,7 @@ void main() {
       'members can see other members profiles across multiple groups',
       () => runWithTemporaryGroup((supabase, group1, groupsRepository) async {
         final membersRepository = MembersRepository(supabase: supabase);
-        final group2 = await groupsRepository.createGroup(Fake.group());
+        final group2 = await groupsRepository.createGroup(FakeData.group());
 
         await runWithTemporaryUser((supabase2, user2) async {
           await membersRepository.addMemberToGroup(
