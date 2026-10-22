@@ -11,6 +11,7 @@ class ProfilePicture extends StatelessWidget {
     this.loadingValue = 1,
     this.icon,
     this.color,
+    this.tooltip,
   });
 
   final VoidCallback? onPressed;
@@ -20,6 +21,9 @@ class ProfilePicture extends StatelessWidget {
   final double? loadingValue;
   final IconData? icon;
   final Color? color;
+
+  /// What pressing it does, for screen readers and on hover.
+  final String? tooltip;
 
   @override
   Widget build(BuildContext context) {
@@ -31,7 +35,7 @@ class ProfilePicture extends StatelessWidget {
         .withLightness(0.9)
         .toColor();
 
-    return ElevatedButton(
+    final button = ElevatedButton(
       onPressed: onPressed,
       style: OutlinedButton.styleFrom(shape: CircleBorder()),
       child: Stack(
@@ -45,15 +49,20 @@ class ProfilePicture extends StatelessWidget {
                 ? Text(nameInitials)
                 : Icon(icon, size: radius, color: color),
           ),
+          // A decorative ring: not a progress bar to screen readers.
           Positioned.fill(
-            child: CircularProgressIndicator(
-              strokeWidth: padding,
-              value: loadingValue,
-              color: color,
+            child: ExcludeSemantics(
+              child: CircularProgressIndicator(
+                strokeWidth: padding,
+                value: loadingValue,
+                color: color,
+              ),
             ),
           ),
         ],
       ),
     );
+    final tooltip = this.tooltip;
+    return tooltip == null ? button : Tooltip(message: tooltip, child: button);
   }
 }

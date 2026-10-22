@@ -45,7 +45,8 @@ class GroupEvents extends StatelessWidget {
                   },
                 ),
                 trailing: IconButton(
-                  icon: Icon(Icons.delete),
+                  icon: const Icon(Icons.delete),
+                  tooltip: l10n.deleteSchedule,
                   onPressed: () => _deleteEvent(context, schedule),
                 ),
               );
