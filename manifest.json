@@ -1,11 +1,11 @@
 {
   "name": "GRUP",
-  "short_name": "AFIT",
+  "short_name": "GRUP",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#FFFFFF",
   "theme_color": "#34558B",
-  "description": "Group Scheduling Made Simple",
+  "description": "Plan with your groups and see who's coming.",
   "orientation": "portrait-primary",
   "prefer_related_applications": false,
   "icons": [
