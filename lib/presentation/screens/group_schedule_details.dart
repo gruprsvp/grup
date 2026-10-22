@@ -201,7 +201,7 @@ class _SliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
 
-    surfaceColorByReply(ReplyOptions? reply) {
+    Color surfaceColorByReply(ReplyOptions? reply) {
       switch (reply) {
         case ReplyOptions.yes:
           return colorScheme.surfaceContainerHighest;

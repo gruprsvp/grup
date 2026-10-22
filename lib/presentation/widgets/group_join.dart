@@ -10,7 +10,7 @@ class GroupJoin extends StatefulWidget {
   const GroupJoin({super.key, required this.onJoin});
 
   @override
-  createState() => _GroupJoinState();
+  State<GroupJoin> createState() => _GroupJoinState();
 }
 
 class _GroupJoinState extends State<GroupJoin> {

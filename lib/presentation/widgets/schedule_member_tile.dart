@@ -56,7 +56,7 @@ class ScheduleMemberTile extends StatelessWidget {
     }
   }
 
-  Future<(RecurrenceRule?, ReplyOptions?)?> _confirmDefaultRuleActionSheet<T>(
+  Future<(RecurrenceRule?, ReplyOptions?)?> _confirmDefaultRuleActionSheet(
     BuildContext context,
     WidgetBuilder builder,
   ) async {

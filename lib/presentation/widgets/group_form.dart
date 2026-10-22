@@ -14,7 +14,7 @@ class GroupForm extends StatefulWidget {
   const GroupForm({super.key, required this.onSave, this.group});
 
   @override
-  createState() => _GroupFormState();
+  State<GroupForm> createState() => _GroupFormState();
 }
 
 class _GroupFormState extends State<GroupForm> {

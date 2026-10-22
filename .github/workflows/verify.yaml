@@ -45,6 +45,15 @@ jobs:
         # Fail on warnings/errors; infos stay advisory (drive them to zero over time).
         run: flutter analyze --no-fatal-infos
 
+      - name: Generated code is up to date
+        # Generated code is committed: regenerate it and fail on any change, so
+        # a forgotten build_runner or gen-l10n run can't ship stale code or
+        # translations.
+        run: |
+          flutter gen-l10n
+          dart run build_runner build --delete-conflicting-outputs
+          git diff --exit-code -- lib
+
       - name: Only allowlisted files use in-framework Material
         # Since Flutter 3.47 the app uses package:material_ui. The in-framework
         # copy (package:flutter/material.dart) defines distinct types, and mixing

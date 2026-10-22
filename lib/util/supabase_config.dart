@@ -25,7 +25,7 @@ sealed class SupabaseConfig with _$SupabaseConfig {
       _$SupabaseConfigFromJson(json);
 
   factory SupabaseConfig.fromString(String jsonString) =>
-      SupabaseConfig.fromJson(jsonDecode(jsonString));
+      SupabaseConfig.fromJson(jsonDecode(jsonString) as Map<String, dynamic>);
 
   factory SupabaseConfig.fromFile(File file) =>
       SupabaseConfig.fromString(file.readAsStringSync());

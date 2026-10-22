@@ -12,7 +12,7 @@ class ContactForm extends StatefulWidget {
     this.showPhone = true,
   });
 
-  final Function(ContactInvite, bool)? onChanged;
+  final void Function(ContactInvite invite, bool isValid)? onChanged;
   final bool showEmail;
   final bool showPhone;
 

@@ -26,13 +26,13 @@ class SettingsScreen extends StatelessWidget {
           ListTile(
             title: Text(l10n.language),
             leading: const Icon(Icons.translate),
-            onTap: () => const LocaleRoute().push(context),
+            onTap: () => const LocaleRoute().push<void>(context),
           ),
           ThemeSwitcherTile(themeMode: themeMode, onTap: onThemeTap),
           ListTile(
             title: Text(l10n.settingsMoreInfo),
             leading: const Icon(Icons.info_outline),
-            onTap: () => const SettingsMoreRoute().push(context),
+            onTap: () => const SettingsMoreRoute().push<void>(context),
           ),
           SignOutTile(onSignOut: onSignOut),
         ],

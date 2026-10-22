@@ -47,7 +47,7 @@ class GroupMembers extends StatelessWidget {
                   GroupMemberDetailsRoute(
                     groupId: member.groupId.toString(),
                     memberId: member.id.toString(),
-                  ).push(context);
+                  ).push<void>(context);
                 },
               );
             },
@@ -90,7 +90,7 @@ class GroupMembers extends StatelessWidget {
   }
 
   void _showInviteModal(BuildContext context) {
-    showModalBottomSheet(
+    showModalBottomSheet<void>(
       context: context,
       builder: (context) {
         return InviteModal(

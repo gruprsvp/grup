@@ -69,7 +69,7 @@ Future<(AuthResponse, T)> runWithUser<T>(
     final result = await callback(supabase, user);
     return (user, result);
   } catch (e) {
-    supabaseAdmin.auth.admin.deleteUser(user.user!.id);
+    await supabaseAdmin.auth.admin.deleteUser(user.user!.id);
     rethrow;
   }
 }
