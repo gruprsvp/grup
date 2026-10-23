@@ -2,6 +2,7 @@
 // repositories and routing.
 import 'package:flutter_test/flutter_test.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' show ClientException;
 import 'package:material_ui/material_ui.dart';
 import 'package:parousia/app.dart';
@@ -18,6 +19,7 @@ void main() {
   setUpAll(initFakeSupabase);
 
   late FakeBackend backend;
+  late GoRouter router;
 
   Future<void> pumpApp(WidgetTester tester) async {
     final (fake, repositories) = await fakeApp(
@@ -28,7 +30,7 @@ void main() {
       },
     );
     backend = fake;
-    final router = createRouter(repositories.auth);
+    router = createRouter(repositories.auth);
     addTearDown(router.dispose);
     await tester.pumpWidget(
       MultiProvider(
@@ -66,6 +68,36 @@ void main() {
         find.byWidgetPredicate((w) => w is FaIcon && w.icon == data.data);
     expect(icon(FontAwesomeIcons.solidThumbsUp), findsOneWidget);
     expect(icon(FontAwesomeIcons.solidThumbsDown), findsNothing);
+  });
+
+  testWidgets('the address bar follows the group pages', (tester) async {
+    await pumpApp(tester);
+    // What go_router reports to the browser: on the web, a refresh or a
+    // shared link opens this page.
+    String address() => router.routeInformationProvider.value.uri.toString();
+    final club = backend.groups.values.single.id;
+    final dinner = backend.schedules.values.single.id;
+
+    await tester.tap(find.text('Club'));
+    await tester.pumpAndSettle();
+    expect(address(), '/groups/$club');
+
+    await tester.tap(find.text('Dinner'));
+    await tester.pumpAndSettle();
+    expect(find.byType(GroupScheduleDetailsScreen), findsOneWidget);
+    expect(Uri.parse(address()).path, '/groups/$club/schedules/$dinner');
+
+    // Back retraces the same pages. go_router keeps the event's ?at= on the
+    // way back; the pages below have no such parameter and ignore it.
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.byType(GroupDetailsScreen), findsOneWidget);
+    expect(Uri.parse(address()).path, '/groups/$club');
+
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    expect(find.byType(HomeScreen), findsOneWidget);
+    expect(Uri.parse(address()).path, '/');
   });
 
   testWidgets('signing out shows the sign-in page', (tester) async {

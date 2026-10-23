@@ -9,6 +9,11 @@ part 'go_router_builder.g.dart';
 
 // Every route but /auth needs a signed-in user; the redirect in router.dart
 // enforces that for all of them.
+//
+// Open a page with `go` when its parent route is the page on screen: the
+// stack stays the same and the web address follows, so a refresh or a shared
+// link reopens it. `push` (address unchanged) is for pages that return a
+// result or whose parent route isn't the page on screen.
 @TypedGoRoute<HomeScreenRoute>(
   path: '/',
   routes: [

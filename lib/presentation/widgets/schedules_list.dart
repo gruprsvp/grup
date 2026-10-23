@@ -46,7 +46,7 @@ class SchedulesList extends StatelessWidget {
                 groupId: schedule.groupId,
                 scheduleId: schedule.scheduleId,
                 at: schedule.instanceDate,
-              ).push<void>(context),
+              ).go(context),
             ),
           )
         : EmptyState(
@@ -64,8 +64,7 @@ class SchedulesList extends StatelessWidget {
                           icon: const Icon(Icons.edit),
                           label: Text(l10n.groupManage),
                           onPressed: () =>
-                              GroupManageRoute(groupId: groupId)
-                                  .push<void>(context),
+                              GroupManageRoute(groupId: groupId).go(context),
                         ),
                       ),
                     }
