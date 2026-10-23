@@ -92,6 +92,7 @@ Sources: [Migrating to publishable and secret API keys](https://supabase.com/doc
 - `[api] schemas` exposes `storage`, under the outdated comment "public and storage are always included". The template has `["public", "graphql_public"]`, and the app reaches storage through the Storage API. Check that prod's exposed schemas match.
 - `supabase/.branches/_current_branch` is tracked. It is a leftover of `supabase db branch`, which the CLI no longer has.
 - Supabase stopped enabling `pg_graphql` on new projects on 2026-05-18. It isn't on the local stack and the app doesn't use GraphQL, but prod probably still has it: consider turning it off there.
+- **Done on `chore/supabase-config-cleanup`:** `[analytics]` matches the template (`backend = "postgres"`, the BigQuery and `vector_port` keys gone), `[api] schemas` is `["public", "graphql_public"]` (PostgREST now answers 406 for the `storage` schema locally; the live suite, which uploads pictures and deletes an account, passes), and `supabase/.branches/` is untracked and ignored. Same PR: `build.yaml` passes `tracks:` to `upload-google-play`, whose `track:` input is deprecated (a warning in every release run). Left for prod (dashboard): its exposed schemas and `pg_graphql`.
 
 **Checked, fine:**
 - The edge function already uses the Deno 2 style (`Deno.serve`, `jsr:` imports); the edge runtime defaults to Deno 2.

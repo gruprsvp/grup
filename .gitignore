@@ -48,6 +48,7 @@ app.*.map.json
 
 # Supabase
 supabase/.temp/
+supabase/.branches/
 supabase/config/localhost.json
 
 # fastlane run artifacts (metadata itself IS committed)
