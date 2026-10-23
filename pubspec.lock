@@ -707,10 +707,10 @@ packages:
     dependency: transitive
     description:
       name: image_picker_ios
-      sha256: "592e5cfed81d73c2784bcaa04db9d06b19371faf036f2afa7f650452025db180"
+      sha256: "57255225702ace8c81b8d92c1de6a04b60ee9befa6dab242b10a7612116886fd"
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.13+12"
+    version: "0.8.13+13"
   image_picker_linux:
     dependency: transitive
     description:
@@ -792,18 +792,18 @@ packages:
     dependency: transitive
     description:
       name: jni
-      sha256: f038e58b4dc2c9037f50e233175086337e0b305e356d28211bf55f21c504cbd3
+      sha256: "6b9ca0602fef0230e83149afbe3f9f8227e94f2bbe84a1da4f14d699742f402d"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.1.0"
   jni_flutter:
     dependency: transitive
     description:
       name: jni_flutter
-      sha256: b2310cdd4c18c65c081ab141a41efa94aa26c65431803703ece51996f174f351
+      sha256: "0dd33d67797560f66e961a6053882d4df54bd345bf063b8fe7ea133f7ad8b191"
       url: "https://pub.dev"
     source: hosted
-    version: "1.0.3"
+    version: "1.0.4+1"
   jni_util:
     dependency: transitive
     description:
@@ -1104,10 +1104,10 @@ packages:
     dependency: "direct main"
     description:
       name: posthog_flutter
-      sha256: "63c2fd84e4b0ca165967562ef0c9f8a258245d99b45dcff26b32854689c6f90a"
+      sha256: affc775fc3ad01a2daad24391a79a2cd563efe2d3c06c84d2ede0b76fa191190
       url: "https://pub.dev"
     source: hosted
-    version: "5.56.1"
+    version: "5.56.2"
   process:
     dependency: transitive
     description:
@@ -1176,10 +1176,10 @@ packages:
     dependency: transitive
     description:
       name: sentry
-      sha256: a3d9e4442958e24c03630b2d8123cd7ad42212c5fde09ebe127936428c57432a
+      sha256: f8219c441f6b0903f88475058373c08ac62cac753195b344cc1f8c540a6e490a
       url: "https://pub.dev"
     source: hosted
-    version: "10.1.0"
+    version: "10.2.0"
   sentry_dart_plugin:
     dependency: "direct dev"
     description:
@@ -1192,10 +1192,10 @@ packages:
     dependency: "direct main"
     description:
       name: sentry_flutter
-      sha256: ac05ebf5d0a5174d6fea782966a9b5a3476d67e87b8379a95414e6639f11dab5
+      sha256: a4dd14fee180b0a6dfd16133bc617a8cfc8c7cbc2e991851e5765ebcbbfcc9a8
       url: "https://pub.dev"
     source: hosted
-    version: "10.1.0"
+    version: "10.2.0"
   share_plus:
     dependency: "direct main"
     description:
@@ -1224,10 +1224,10 @@ packages:
     dependency: transitive
     description:
       name: shared_preferences_android
-      sha256: "1e12aafe408aa50da80edfd679a2a6bf63ba7ab37c7fa98286da459a757b3399"
+      sha256: "593034a16e82953ca31145db6c85174286262715f9c5e6a9d8c65ffd9fcdce09"
       url: "https://pub.dev"
     source: hosted
-    version: "2.4.28"
+    version: "2.5.3"
   shared_preferences_foundation:
     dependency: transitive
     description:
@@ -1597,10 +1597,10 @@ packages:
     dependency: transitive
     description:
       name: web
-      sha256: "868d88a33d8a87b18ffc05f9f030ba328ffefba92d6c127917a2ba740f9cfe4a"
+      sha256: e119e82ac4795c7925103b7cf3768191f33941b99e7ccffbd6c645201d9f606b
       url: "https://pub.dev"
     source: hosted
-    version: "1.1.1"
+    version: "1.1.2"
   web_socket:
     dependency: transitive
     description:
