@@ -30,4 +30,18 @@ alter default privileges for role postgres
 -- S5 (`supabase db advisors`: function_search_path_mutable). The function only
 -- calls pg_catalog built-ins, so an empty search_path changes nothing. The
 -- vendored 20230706000000 stays untouched: prod never re-applies it.
-alter function public.gen_random_uuid_v7() set search_path = '';
+-- On prod the function belongs to the pg_tle extension that installed it, and
+-- its owner may not be postgres. ALTER by a non-owner is an error, which would
+-- stop `db push` and every release after it, so skip it there with a notice.
+do $$
+begin
+  if pg_has_role(
+    (select proowner from pg_proc where oid = 'public.gen_random_uuid_v7()'::regprocedure),
+    'usage'
+  ) then
+    alter function public.gen_random_uuid_v7() set search_path = '';
+  else
+    raise notice 'gen_random_uuid_v7: not its owner, search_path left as is';
+  end if;
+end
+$$;
