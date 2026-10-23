@@ -46,6 +46,7 @@ S1, S3 and S6 shipped on 2026-10-23 (release run 39923801096). What could be don
 **Before promoting:** the builds from #256–#258 change the app binary. Smoke-test them on devices like the S1 build (#257's release APK was only booted offline on an emulator; iOS only built for the simulator).
 
 **Needs prod access** (the agent had none; none of these was run):
+- before merging #253: who owns `gen_random_uuid_v7` (query under S5). The migration skips its `search_path` change with a notice unless `postgres` holds the owner's role;
 - after #253/#254: `supabase db query --linked "select pg_get_userbyid(defaclrole), defaclnamespace::regnamespace, defaclobjtype, defaclacl from pg_default_acl"` should match local (postgres/public: tables `Dxt` for `authenticated`/`service_role` and nothing for `anon`, functions `postgres, authenticated, service_role`, a global `postgres` functions entry);
 - `supabase db advisors --linked` (prod-only checks, and Confirm #1);
 - S7: `supabase db query --linked "select extname from pg_extension"`;
@@ -197,7 +198,7 @@ Sources: [Migrating to publishable and secret API keys](https://supabase.com/doc
 - **Phase 1.5 item 6 (pagination)** is not done. No list is near PostgREST's 1000-row cap yet; deleting a user's files does page.
 - **Known gaps:**
   - On web, an OAuth sign-in loses `/auth?from=…` across the provider redirect (email sign-in keeps it).
-  - ~~Pages opened with `push` don't update the browser URL~~: #258 opens group details, manage, event details and profile with `go` where the route tree matches the stack (go_router advises against `optionURLReflectsImperativeAPIs`). Pages that return a result or sit elsewhere in the tree still use `push`. After leaving an event, its `?at=` stays on the address of the pages below, which ignore it.
+  - ~~Pages opened with `push` don't update the browser URL~~: #258 opens group details, manage, event details and profile with `go` where the route tree matches the stack (go_router advises against `optionURLReflectsImperativeAPIs`). Pages that return a result or sit elsewhere in the tree still use `push`. After leaving an event, its `?at=` stays on the address of the pages below, which ignore it; leaving the profile likewise leaves `?user-navigated=true` on `/`.
   - There are no per-invite link-preview cards.
 - **Design call:** the light and dark seeds are still unrelated colours (blue vs olive).
 - **Product calls:**
