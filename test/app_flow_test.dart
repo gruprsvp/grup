@@ -100,6 +100,28 @@ void main() {
     expect(Uri.parse(address()).path, '/');
   });
 
+  testWidgets('the address bar follows manage and profile', (tester) async {
+    await pumpApp(tester);
+    String path() => router.routeInformationProvider.value.uri.path;
+    final club = backend.groups.values.single.id;
+
+    await tester.tap(find.text('Club'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Manage group'));
+    await tester.pumpAndSettle();
+    expect(find.byType(GroupManageScreen), findsOneWidget);
+    expect(path(), '/groups/$club/manage');
+
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    await tester.pageBack();
+    await tester.pumpAndSettle();
+    await tester.tap(find.byTooltip('Profile'));
+    await tester.pumpAndSettle();
+    expect(find.byType(ProfileScreen), findsOneWidget);
+    expect(path(), '/profile');
+  });
+
   testWidgets('signing out shows the sign-in page', (tester) async {
     await pumpApp(tester);
     expect(find.byType(HomeScreen), findsOneWidget);
