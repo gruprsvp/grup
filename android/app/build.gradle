@@ -14,9 +14,7 @@ if (keystorePropertiesFile.exists()) {
 android {
     namespace = "is.giorgio.app.parousia"
     compileSdk = flutter.compileSdkVersion
-     ndkVersion = flutter.ndkVersion
-    // This was failing as the Flutter NDK version is now 26 - which is not compatible with the Android Gradle Plugin
-    // ndkVersion = "27.0.12077973"
+    ndkVersion = flutter.ndkVersion
 
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
@@ -32,7 +30,6 @@ android {
         targetSdk = flutter.targetSdkVersion
         versionCode = flutter.versionCode
         versionName = flutter.versionName
-        multiDexEnabled = true
     }
 
     // https://docs.flutter.dev/deployment/android#configure-signing-in-gradle
@@ -60,8 +57,4 @@ kotlin {
 
 flutter {
     source = '../..'
-}
-
-dependencies {
-    implementation 'androidx.multidex:multidex:2.0.1'
 }
