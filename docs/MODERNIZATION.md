@@ -2,6 +2,8 @@
 
 _Prepared 2026-06-28. Based on a full audit of the codebase (Flutter app `parousia` v1.7.2+1) across four areas: Supabase/security, state architecture, testing/CI, and web/dependencies/release._
 
+> **2026-10-23 — a stack of seven PRs (#253–#259).** S2, S4 and S5, the `anon` table grants, S8, the multidex removal, dependency updates, and web addresses for pushed pages. See [2026-10-23 stack](#2026-10-23--the-stack-after-s1).
+>
 > **Supabase audit 2026-10-22 (after the merge).** Three dated Supabase changes reach this app: the legacy API keys go by the end of 2026 (every build so far embeds one), the default table grants go on 2026-10-30, and CLI v3 drops `[inbucket]`. The code check also found that new database functions are still callable by `anon`. See [2026-10-22 Supabase audit](#2026-10-22-supabase-audit--deadlines-and-deprecations). **S1, S3 and S6 shipped on 2026-10-23** (PR #252, then the publishable key in `d46f5ef`; release run 39923801096). Branch `fix/supabase-default-privileges` does S2, S4 and S5.
 >
 > **Refresh 2026-10-22 — MVVM, and Phase 1 / 1.5 done.** Branch `modernize/2026-10`, merged as PR #251 the same day: every dependency at its latest version, Redux replaced by the Flutter team's MVVM architecture (D1 → B1), Widgetbook removed, and all of Phase 1 and Phase 1.5 except pagination. See [2026-10-22 refresh](#2026-10-22-refresh--mvvm-and-what-is-left).
@@ -24,6 +26,33 @@ The single most important finding is about **sequencing, not any one bug**: almo
 - **Phase 2 — Strategic, decision-gated work** (state-layer evolution, realtime, offline, pro plan).
 
 Three genuine decisions need your input before Phase 2 — see [Decisions](#decisions-need-your-input).
+
+---
+
+## 2026-10-23 — the stack after S1
+
+S1, S3 and S6 shipped on 2026-10-23 (release run 39923801096). What could be done without prod access or a product decision is a stack of PRs, each based on the one before. Merge them in order: every merge to `main` is a full release run.
+
+| PR | Branch | What |
+|---|---|---|
+| #253 | `fix/supabase-default-privileges` | S2, S4, S5: no default grants on new tables, no `anon` or `PUBLIC` EXECUTE on new functions, `gen_random_uuid_v7` `search_path`, security advisors in CI, `default_privileges_test.sql`. |
+| #254 | `fix/revoke-anon-tables` | `anon` holds no privilege on any table (S4's second half). |
+| #255 | `chore/supabase-config-cleanup` | S8 config leftovers; `build.yaml` uses the Play action's `tracks:` input. |
+| #256 | `chore/android-no-multidex` | Drops multidex, which minSdk 26 has natively; clears the warning from every build. |
+| #257 | `chore/deps-2026-10-23` | `sentry_flutter` 10.2, `posthog_flutter` 5.56.2, transitive updates, iOS `Package.resolved`. |
+| #258 | `fix/web-address-follows-pages` | Group, event, manage and profile pages open with `go`, so the web address follows them (the known gap below). |
+| #259 | `docs/roadmap-2026-10-23` | This section. |
+
+**Before promoting:** the builds from #256–#258 change the app binary. Smoke-test them on devices like the S1 build (#257's release APK was only booted offline on an emulator; iOS only built for the simulator).
+
+**Needs prod access** (the agent had none; none of these was run):
+- after #253/#254: `supabase db query --linked "select pg_get_userbyid(defaclrole), defaclnamespace::regnamespace, defaclobjtype, defaclacl from pg_default_acl"` should match local (postgres/public: tables `Dxt` for `authenticated`/`service_role` and nothing for `anon`, functions `postgres, authenticated, service_role`, a global `postgres` functions entry);
+- `supabase db advisors --linked` (prod-only checks, and Confirm #1);
+- S7: `supabase db query --linked "select extname from pg_extension"`;
+- S8: prod's exposed schemas, and turning off `pg_graphql`;
+- S1: deactivate the legacy keys once the dashboard shows no use.
+
+**Still open in code:** the web OAuth `from` gap (needs a real provider and prod's redirect allowlist to test), pagination (no list is near the cap; replies are fetched per date range), per-invite link previews, S7 once Supabase sets a date, and the design and product calls under "Still open" below.
 
 ---
 
@@ -168,14 +197,14 @@ Sources: [Migrating to publishable and secret API keys](https://supabase.com/doc
 - **Phase 1.5 item 6 (pagination)** is not done. No list is near PostgREST's 1000-row cap yet; deleting a user's files does page.
 - **Known gaps:**
   - On web, an OAuth sign-in loses `/auth?from=…` across the provider redirect (email sign-in keeps it).
-  - Pages opened with `push` don't update the browser URL (`optionURLReflectsImperativeAPIs` is off).
+  - ~~Pages opened with `push` don't update the browser URL~~: #258 opens group details, manage, event details and profile with `go` where the route tree matches the stack (go_router advises against `optionURLReflectsImperativeAPIs`). Pages that return a result or sit elsewhere in the tree still use `push`. After leaving an event, its `?at=` stays on the address of the pages below, which ignore it.
   - There are no per-invite link-preview cards.
 - **Design call:** the light and dark seeds are still unrelated colours (blue vs olive).
 - **Product calls:**
   - iOS could go back to a 15 floor; `passkeys` is gone, and `sentry_flutter` 10 needs 15.
   - Storage lifecycle and orphaned files ([A2]).
   - D3 realtime/push, offline, the pro plan, environments/flavors.
-- **Upstream:** `builtInKotlin`/`newDsl` stay off until `in_app_review` and `posthog_flutter` stop applying KGP.
+- **Upstream:** `builtInKotlin`/`newDsl` stay off until `in_app_review` and `posthog_flutter` stop applying KGP (still true with `posthog_flutter` 5.56.2, 2026-10-23).
 
 ---
 
