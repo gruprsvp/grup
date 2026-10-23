@@ -2,7 +2,7 @@
 
 _Prepared 2026-06-28. Based on a full audit of the codebase (Flutter app `parousia` v1.7.2+1) across four areas: Supabase/security, state architecture, testing/CI, and web/dependencies/release._
 
-> **Supabase audit 2026-10-22 (after the merge).** Three dated Supabase changes reach this app: the legacy API keys go by the end of 2026 (every build so far embeds one), the default table grants go on 2026-10-30, and CLI v3 drops `[inbucket]`. The code check also found that new database functions are still callable by `anon`. See [2026-10-22 Supabase audit](#2026-10-22-supabase-audit--deadlines-and-deprecations). Branch `fix/supabase-deprecations` does S3, S6 and the code half of S1; it waits for the publishable key.
+> **Supabase audit 2026-10-22 (after the merge).** Three dated Supabase changes reach this app: the legacy API keys go by the end of 2026 (every build so far embeds one), the default table grants go on 2026-10-30, and CLI v3 drops `[inbucket]`. The code check also found that new database functions are still callable by `anon`. See [2026-10-22 Supabase audit](#2026-10-22-supabase-audit--deadlines-and-deprecations). **S1, S3 and S6 shipped on 2026-10-23** (PR #252, then the publishable key in `d46f5ef`; release run 39923801096). Branch `fix/supabase-default-privileges` does S2, S4 and S5.
 >
 > **Refresh 2026-10-22 — MVVM, and Phase 1 / 1.5 done.** Branch `modernize/2026-10`, merged as PR #251 the same day: every dependency at its latest version, Redux replaced by the Flutter team's MVVM architecture (D1 → B1), Widgetbook removed, and all of Phase 1 and Phase 1.5 except pagination. See [2026-10-22 refresh](#2026-10-22-refresh--mvvm-and-what-is-left).
 >
@@ -36,14 +36,11 @@ Sources: [Migrating to publishable and secret API keys](https://supabase.com/doc
 ### With a date
 
 **S1 — Legacy API keys end by the end of 2026.** Supabase's migration guide says it "is deprecating the `anon` and `service_role` keys by the end of 2026"; no exact removal date is published. Every build so far, the 2.0.0 ones included, carries the legacy anon JWT in `supabase/config/supabase.json`. When Supabase turns it off, those installs stop working, and the app has no "update required" gate to tell users.
-- **Branch `fix/supabase-deprecations` (code done, key pending):**
-  - The app reads `PUBLISHABLE_KEY` (`SupabaseConfig.publishableKey`), so local runs and CI use the publishable key too.
-  - `test/util/supabase_config_test.dart` fails until `supabase/config/supabase.json` holds an `sb_publishable_` key. `build.yaml` runs the tests before any deploy, so a merge without the key ships nothing.
-  - The edge function prefers `SUPABASE_SECRET_KEYS` and throws at boot when no key is set. The live suite now deletes an account through it.
-  - Left: the key itself, the release smoke test, and deactivating the legacy keys.
-- **Fix, before promoting 2.0.0:**
-  - create the publishable key in the dashboard (Settings → API Keys) and put it in `supabase/config/supabase.json` as `"PUBLISHABLE_KEY"`, in place of the `ANON_KEY` entry;
-  - merge that to `main`. No version bump is needed: the release run gives the Play build a new `versionCode` (the run number, `build.yaml:140`; pubspec's `+N` has always been `+1`), and Xcode Cloud builds again. Promote/submit those builds instead of the first 2.0.0 ones.
+- **Done (PR #252, merged 2026-10-22; key in `d46f5ef`, 2026-10-23):**
+  - The app reads `PUBLISHABLE_KEY` (`SupabaseConfig.publishableKey`), so local runs and CI use the publishable key too. `supabase/config/supabase.json` holds an `sb_publishable_` key, and `test/util/supabase_config_test.dart` keeps it that way.
+  - The edge function prefers `SUPABASE_SECRET_KEYS` and throws at boot when no key is set. The live suite deletes an account through it.
+  - Release run 39923801096 (2026-10-23) passed: no migrations to push, `delete_user_account` deployed by CI for the first time, a new Play internal build, and Xcode Cloud builds again. No version bump was needed: the Play `versionCode` is the run number (pubspec's `+N` has always been `+1`).
+- **Left (manual):** the smoke test below on that release build, then promote/submit it (not the first 2.0.0 builds, versionCode 224, which carry the anon key), then deactivate the legacy keys.
 
   `lib/main.dart:51` passes the value as `publishableKey:`, and once a user is signed in supabase-dart 2.16 sends an `sb_` key only as `apikey`, never as the Bearer token.
 - **Edge function.** `delete_user_account/index.ts:18` reads `SUPABASE_SERVICE_ROLE_KEY`, which stops working with the legacy keys, and both stores require in-app account deletion. Read `SUPABASE_SECRET_KEYS` (a JSON map; the key is `['default']`) and fall back to the old variable. The local runtime (CLI 2.119 and 2.121) sets `SUPABASE_SECRET_KEYS` to `{"default": <secret key>}`, as the docs say. Keep `verify_jwt` on: the app always calls the function signed in, and the check accepts user tokens.
@@ -60,6 +57,7 @@ Sources: [Migrating to publishable and secret API keys](https://supabase.com/doc
   - a pgTAP check over every public table: RLS on, `authenticated` granted.
 
   Accept the change rather than re-granting the defaults. It closes E3's "future tables are writable before RLS is enabled".
+- **Done on `fix/supabase-default-privileges`** (`20261023120000_default_privileges.sql`, `default_privileges_test.sql`): the revoke, written `for role postgres` like the changelog, and pgTAP checks that every table has RLS and `authenticated`'s grants, and that a table or sequence created as `postgres` grants nothing. `CLAUDE.md` says what a new-table migration must grant. Supabase's defaults still give new tables `truncate, references, trigger` to the API roles; PostgREST exposes none of them.
 
 **S3 — Supabase CLI v3.** The CLI in CI already logs `WARN: config section [inbucket] is deprecated and will be removed in v3, use [local_smtp] instead.` and `WARN: INBUCKET_URL is deprecated and will be removed in v3, use MAILPIT_URL instead.` (local 2.119 warns too). `supabase/setup-cli` has no `version:` (`verify.yaml:94`, `build.yaml:52`), and its docs say "If omitted, detect from the root lockfile and otherwise use latest". So CI always runs the newest CLI, including for the **prod `db push`**.
 - **Fix:** rename `[inbucket]` to `[local_smtp]` in `config.toml`; drop the unused `inbucketUrl` from `SupabaseConfig`; pin `version:` in both workflows to the version used locally (latest is 2.121). Dependabot doesn't bump that input, so CLI updates become manual.
@@ -69,6 +67,8 @@ Sources: [Migrating to publishable and secret API keys](https://supabase.com/doc
 
 **S4 — New functions are callable by `anon` (local).** Supabase's default privileges grant EXECUTE on every new function in `public` to `anon`, `authenticated` and `service_role` explicitly, not through `PUBLIC`. The "future-proofing" line at `20260807150000_function_execute_perimeter.sql:37` only revokes `PUBLIC`, and `function_grants_test.sql` checks five named functions. A probe function created as `postgres` was executable by `anon`. So the next SECURITY DEFINER RPC would be open to signed-out callers, and no test would fail. S2 doesn't cover functions.
 - **Fix:** `alter default privileges for role postgres in schema public revoke execute on functions from anon;`, plus a pgTAP check that `anon` can execute no `public` function.
+- **Found while fixing it:** that revoke alone isn't enough. `20260807150000`'s `alter default privileges in schema public revoke execute on functions from public` never did anything: per-schema default privileges only add to the global ones, and the global default gives `PUBLIC` EXECUTE on every function. A probe function still came out as `{=X/postgres,…}`.
+- **Done on `fix/supabase-default-privileges`:** the schema-level revoke from `anon` plus a global `alter default privileges for role postgres revoke execute on functions from public`. A probe function now gets `postgres`, `authenticated` and `service_role` only. pgTAP checks the probe and that `anon` can execute no `public` function (extension members excluded). Every existing function already had explicit grants, so nothing changes for them.
 - Same cause, also local: `anon` holds full table privileges on all 7 tables, although the grants migration says "anon only gets schema USAGE". RLS is on everywhere with no `anon` policy, so nothing is exposed. Revoking them changes prod behaviour: do it in its own PR, after checking that nothing queries a table before sign-in.
 - Check prod: `supabase db query --linked "select pg_get_userbyid(defaclrole), defaclobjtype, defaclacl from pg_default_acl"`.
 
@@ -76,9 +76,10 @@ Sources: [Migrating to publishable and secret API keys](https://supabase.com/doc
 - **Security:** `public.gen_random_uuid_v7` has a mutable `search_path`. It only calls built-ins, so a new migration with `alter function public.gen_random_uuid_v7() set search_path = ''` is safe; don't edit the vendored migration. In the same PR, add `supabase db advisors --local --type security --fail-on warn` to `verify.yaml`, or that step fails at once.
 - **Performance:** 12 "multiple permissive policies" on `replies`, `default_rules`, `members` and `schedules`. The admin/self overlap is deliberate and pgTAP pins it: skip.
 - **Info:** `unused_index members_profile_id`, only because the local database has no traffic. Keep the index.
+- **Done on `fix/supabase-default-privileges`:** the `search_path` fix, with a pgTAP check that the function still returns a version-7 UUID, and the security advisors as a `verify.yaml` step after pgTAP (exit 1 before the fix, 0 after).
 - `supabase db advisors --linked` adds the prod-only checks (auth settings, Postgres patch level) and may answer Confirm #1.
 
-**S6 — CI never deploys edge functions.** `build.yaml` only runs `db push`, so nobody knows which code prod's `delete_user_account` runs. Add `supabase functions deploy` after `db push`; S1 needs it. **Done on `fix/supabase-deprecations`**, in the same step and without `--prune` (that would delete prod functions that aren't in the repo); `verify_jwt` stays on. The first run replaces whatever prod runs now.
+**S6 — CI never deploys edge functions.** `build.yaml` only runs `db push`, so nobody knows which code prod's `delete_user_account` runs. Add `supabase functions deploy` after `db push`; S1 needs it. **Done in PR #252**, in the same step and without `--prune` (that would delete prod functions that aren't in the repo); `verify_jwt` stays on. Release run 39923801096 deployed it: "Deployed Functions on project …: delete_user_account".
 
 **S7 — Postgres 15 → 17.**
 - The `supabase init` template now defaults to 17, and Supabase's self-hosted images switched on 2026-06-17. For hosted 15, Supabase first said about May 2026 and has given no firm date since. Upstream supports 15 until 2027-11-11.
@@ -99,8 +100,8 @@ Sources: [Migrating to publishable and secret API keys](https://supabase.com/doc
 - On a machine where `DEVELOPER_DIR` points at an SDK without Xcode's toolchain (a Nix apple-sdk, for example), `flutter test` fails with "install_name_tool not found". `env -u DEVELOPER_DIR flutter test` works.
 
 **Order:**
-1. S1, with S3 and S6, in one merge before promoting 2.0.0: branch `fix/supabase-deprecations`, waiting for the publishable key.
-2. S2, S4 and S5's `search_path` fix as one migration PR before the next schema change. Reviving #186 counts: it changes the schedules schema.
+1. ~~S1, with S3 and S6~~: shipped 2026-10-23 (PR #252 and `d46f5ef`).
+2. S2, S4 and S5's `search_path` fix as one migration PR before the next schema change: `fix/supabase-default-privileges`. Reviving #186 counts: it changes the schedules schema.
 3. S7 once Supabase sets a date.
 4. S8 any time.
 
@@ -158,7 +159,7 @@ Sources: [Migrating to publishable and secret API keys](https://supabase.com/doc
 ### Still open
 
 - **Release.** **Merged on 2026-10-22 as PR #251.** It ships as **2.0.0**, with new release notes for both stores in all five languages. Every step of the release run (`build.yaml` run 39795642384) passed: draft release `v2.0.0`, the index migration on prod, web on `gh-pages`, 2.0.0 on Play internal (`versionCode` 224, the run number), and the Sentry upload. `store-metadata.yaml` (run 39795642385) passed too. On iOS, `deliver` pins `app_version` to 2.0.0, which makes the editable App Store version 2.0.0 with these notes (not checked in App Store Connect). Still to do:
-  - ship the publishable key in a new 2.0.0 build, and promote/submit that one instead ([S1](#2026-10-22-supabase-audit--deadlines-and-deprecations), branch `fix/supabase-deprecations`);
+  - ~~ship the publishable key in a new 2.0.0 build~~: done, release run 39923801096 (2026-10-23). Smoke-test that build on prod, then promote/submit it instead of the first ones ([S1](#2026-10-22-supabase-audit--deadlines-and-deprecations));
   - watch Xcode Cloud's first SPM-only build, attach it to 2.0.0 and submit; promote the Play build from internal;
   - keep `v2.0.0` a draft until then: once it is published, the next `build.yaml` run fails at the version gate. Publish it when the app is live. The stale `v1.7.2`/`v1.7.3` drafts can be deleted;
   - #186 (`refactor/timezone`) predates the rewrite and changes the schedules schema, so it comes after the S2/S4/S5 migration. Dependabot #244–#250 were closed at the merge.
@@ -338,7 +339,7 @@ Each is shippable independently once Phase 0 gives you coverage.
 10. Add indexes on `replies(schedule_id)`, `default_rules(schedule_id)`, `schedules(group_id)`, `invites(member_id)` — composite PKs only index the leading column, and these are RLS-subquery / cascade columns.
 11. Add `set search_path = public` to the `SECURITY DEFINER` `handle_delete_user` function (every other definer function pins it).
 
-**[A2] Security — close the invite perimeter** — **DONE 2026-08-07** (branch `fix/invite-perimeter`, stacked on Phase 0). All four items below implemented: `Random.secure()` codes; EXECUTE perimeter migration (`20260807150000`, incl. `alter default privileges` so future functions aren't PUBLIC-executable; _2026-10-22: they are still `anon`-executable, see S4_); phone format canonicalized to E.164-with-`+` in `handle_new_invite` (`20260807150200`), phone signup enabled locally (`config.toml` `[auth.sms]` + dummy Twilio, no SMS ever sent — autoconfirm), live phone test un-skipped; member self-service policies + `handle_member_left` admin-continuity trigger (`20260807150100` — promotes the oldest claimed-profile member when the last admin leaves, deletes unmanageable groups). pgTAP grew 37 → 64 assertions (`function_grants_test.sql`, `invite_claim_test.sql`, write-policy flips). _Residual (fold into later passes): the contacts picker still sends raw `p.number` un-normalized (`widgets/group_members.dart:175`) — E.164-normalize at the UI boundary; `handle_new_invite` doesn't reset `display_name_override` while `handle_upsert_user` does._
+**[A2] Security — close the invite perimeter** — **DONE 2026-08-07** (branch `fix/invite-perimeter`, stacked on Phase 0). All four items below implemented: `Random.secure()` codes; EXECUTE perimeter migration (`20260807150000`, incl. `alter default privileges` so future functions aren't PUBLIC-executable; _2026-10-23: that statement was a no-op, and they were also `anon`-executable; fixed in S4_); phone format canonicalized to E.164-with-`+` in `handle_new_invite` (`20260807150200`), phone signup enabled locally (`config.toml` `[auth.sms]` + dummy Twilio, no SMS ever sent — autoconfirm), live phone test un-skipped; member self-service policies + `handle_member_left` admin-continuity trigger (`20260807150100` — promotes the oldest claimed-profile member when the last admin leaves, deletes unmanageable groups). pgTAP grew 37 → 64 assertions (`function_grants_test.sql`, `invite_claim_test.sql`, write-policy flips). _Residual (fold into later passes): the contacts picker still sends raw `p.number` un-normalized (`widgets/group_members.dart:175`) — E.164-normalize at the UI boundary; `handle_new_invite` doesn't reset `display_name_override` while `handle_upsert_user` does._
 
 12. Generate invite codes with **`Random.secure()`** — `lib/repositories/invites.dart:35` uses time-seeded `Random()` for 40-bit group-join codes.
 13. **`REVOKE EXECUTE` on the SECURITY DEFINER functions from `anon`/`PUBLIC`**, granting back only what each flow needs. The grants migration deliberately withheld table DML from `anon` but never touched function EXECUTE — `check_invite_code` (`20231023170520_functions.sql:114`) is callable unauthenticated via `/rest/v1/rpc/…` with just the anon key, unrate-limited: an enumeration oracle over weakly-generated codes → join arbitrary groups after signup.
