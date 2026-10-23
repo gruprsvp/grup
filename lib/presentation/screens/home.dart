@@ -99,7 +99,7 @@ class HomeScreen extends StatelessWidget {
               ProfilePicture(
                 tooltip: l10n.profile,
                 onPressed: () =>
-                    const ProfileRoute(userNavigated: true).push<void>(context),
+                    const ProfileRoute(userNavigated: true).go(context),
                 image: _profilePicture(),
                 name: profile?.displayName,
                 icon: Icons.person,

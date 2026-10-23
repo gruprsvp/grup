@@ -104,8 +104,7 @@ class GroupDetailsScreen extends StatelessWidget {
       ),
       floatingActionButton: isAdmin
           ? FloatingActionButton.extended(
-              onPressed: () =>
-                  GroupManageRoute(groupId: groupId).push<void>(context),
+              onPressed: () => GroupManageRoute(groupId: groupId).go(context),
               label: Text(l10n.groupManage),
               icon: const Icon(Icons.edit),
             )
