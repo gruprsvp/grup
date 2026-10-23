@@ -1,11 +1,11 @@
 -- Grants on tables and functions, including those later migrations add
--- (migration 20261023120000).
+-- (migrations 20261023120000 and 20261023130000).
 --
 -- The probes are created here as postgres, the role migrations run as, so
 -- they get exactly the default privileges the next migration's objects get.
 
 begin;
-select plan(9);
+select plan(10);
 
 -- Every table the API can reach is behind row-level security, and signed-in
 -- users hold the privileges the policies then filter.
@@ -31,12 +31,26 @@ select is_empty(
   'authenticated holds select, insert, update and delete on every public table'
 );
 
+-- anon holds nothing on any table: every route needs a session.
+select is_empty(
+  $$
+    select relname from pg_class
+    where relnamespace = 'public'::regnamespace and relkind in ('r', 'p', 'v', 'm', 'S')
+      and has_table_privilege(
+        'anon', oid, 'select, insert, update, delete, truncate, references, trigger'
+      )
+  $$,
+  'anon holds no privilege on any public table or sequence'
+);
+
 -- S2: a new table grants nothing until its migration says so (as on prod
 -- after Supabase's 2026-10-30 change).
 create table public.probe_table (id int);
 create sequence public.probe_sequence;
 select ok(
-  not has_table_privilege('anon', 'public.probe_table', 'select, insert, update, delete'),
+  not has_table_privilege(
+    'anon', 'public.probe_table', 'select, insert, update, delete, truncate, references, trigger'
+  ),
   'a new table grants anon nothing by default'
 );
 select ok(
