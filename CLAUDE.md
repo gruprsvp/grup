@@ -109,7 +109,7 @@ Tests mirror the layers: `test/services_test.dart` (live), `test/repositories/`,
 
 ## Backend (`supabase/`)
 
-- `migrations/` — SQL schema, functions, RLS, and storage buckets. Production deploy happens in `.github/workflows/build.yaml` (`supabase db push` on merge to `main`).
+- `migrations/` — SQL schema, functions, RLS, and storage buckets. Production deploy happens in `.github/workflows/build.yaml` (`supabase db push` on merge to `main`). **New objects get no privileges by default** (`20261023120000_default_privileges.sql`, matching Supabase's 2026-10-30 change): a new table needs `enable row level security` plus explicit `grant select, insert, update, delete … to authenticated, service_role`, or prod answers 42501. A new function is executable by `authenticated` and `service_role` only; revoke that too for trigger functions. `supabase/tests/default_privileges_test.sql` checks every table, and CI runs `supabase db advisors --local --type security --fail-on warn`.
 - `functions/` — Deno edge functions (e.g. `delete_user_account`). The same `build.yaml` step deploys them (`supabase functions deploy`, after `db push`). They read the secret key from `SUPABASE_SECRET_KEYS`; the legacy `SUPABASE_SERVICE_ROLE_KEY` is only a fallback.
 - `tests/` — pgTAP SQL tests for RLS and group logic (`supabase test db`).
 - CI pins the Supabase CLI (`version:` on `supabase/setup-cli` in `verify.yaml` and in `build.yaml`, which also runs the prod `db push`). Dependabot doesn't bump it: update both, and your local CLI, together.

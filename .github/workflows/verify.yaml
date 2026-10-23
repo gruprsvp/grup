@@ -102,6 +102,12 @@ jobs:
       - name: Run database (pgTAP) tests
         run: supabase test db
 
+      - name: Database security advisors
+        # Supabase's linter (mutable search_path, RLS off, exposed auth.users,
+        # ...). Performance findings stay advisory: the overlapping admin/self
+        # policies are deliberate and pinned by pgTAP.
+        run: supabase db advisors --local --type security --fail-on warn
+
       - name: Run tests
         run: |
           supabase status -o json > supabase/config/localhost.json
