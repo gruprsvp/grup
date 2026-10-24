@@ -1,0 +1,285 @@
+---
+name: GRUP
+description: Group event scheduling where every event answers "who's coming?"
+colors:
+  harbour-navy: "#415E91"
+  harbour-navy-container: "#D7E3FF"
+  on-harbour-navy-container: "#284777"
+  lagoon-teal: "#00A4B8"
+  lantern-olive: "#CCCB76"
+  lantern-olive-container: "#4A4900"
+  pitch-green: "#00623F"
+  yes-green: "#2E7D32"
+  no-red: "#BA1A1A"
+  no-red-night: "#FFB4AB"
+  day-surface: "#F9F9FF"
+  day-ink: "#191C20"
+  day-ink-muted: "#44474E"
+  day-container: "#EDEDF4"
+  day-container-high: "#E7E8EE"
+  day-container-highest: "#E2E2E9"
+  day-outline: "#74777F"
+  night-surface: "#14140C"
+  night-ink: "#E6E3D5"
+  night-ink-muted: "#CAC7B6"
+  night-container: "#202018"
+  night-container-high: "#2B2A22"
+  night-container-highest: "#36352C"
+  night-outline: "#939181"
+typography:
+  wordmark:
+    fontFamily: "Sniglet, Cabin, sans-serif"
+    fontSize: "32sp"
+    fontWeight: 400
+    lineHeight: 1.25
+  headline:
+    fontFamily: "Cabin, sans-serif"
+    fontSize: "28sp"
+    fontWeight: 400
+    lineHeight: 1.29
+  title:
+    fontFamily: "Cabin, sans-serif"
+    fontSize: "22sp"
+    fontWeight: 400
+    lineHeight: 1.27
+  title-small:
+    fontFamily: "Cabin, sans-serif"
+    fontSize: "16sp"
+    fontWeight: 500
+    lineHeight: 1.5
+    letterSpacing: "0.15sp"
+  body:
+    fontFamily: "Cabin, sans-serif"
+    fontSize: "16sp"
+    fontWeight: 400
+    lineHeight: 1.5
+    letterSpacing: "0.5sp"
+  body-small:
+    fontFamily: "Cabin, sans-serif"
+    fontSize: "14sp"
+    fontWeight: 400
+    lineHeight: 1.43
+    letterSpacing: "0.25sp"
+  label:
+    fontFamily: "Cabin, sans-serif"
+    fontSize: "14sp"
+    fontWeight: 500
+    lineHeight: 1.43
+    letterSpacing: "0.1sp"
+rounded:
+  sm: "12dp"
+  md: "16dp"
+  lg: "28dp"
+  full: "999dp"
+spacing:
+  xs: "8dp"
+  md: "16dp"
+  xl: "32dp"
+components:
+  reply-yes-active:
+    backgroundColor: "{colors.yes-green}"
+    textColor: "#FFFFFF"
+    rounded: "{rounded.full}"
+    size: "40dp"
+  reply-no-active:
+    backgroundColor: "{colors.no-red}"
+    textColor: "#FFFFFF"
+    rounded: "{rounded.full}"
+    size: "40dp"
+  reply-unanswered:
+    textColor: "{colors.day-ink-muted}"
+    rounded: "{rounded.full}"
+    size: "40dp"
+  headcount:
+    typography: "{typography.headline}"
+    padding: "4dp 16dp 8dp"
+  answer-header:
+    backgroundColor: "{colors.day-container}"
+    typography: "{typography.title-small}"
+    padding: "0 16dp"
+  fab-extended:
+    backgroundColor: "{colors.harbour-navy-container}"
+    textColor: "{colors.on-harbour-navy-container}"
+    typography: "{typography.label}"
+    rounded: "{rounded.md}"
+    height: "56dp"
+  button-filled:
+    backgroundColor: "{colors.harbour-navy}"
+    textColor: "#FFFFFF"
+    typography: "{typography.label}"
+    rounded: "{rounded.full}"
+    height: "40dp"
+    padding: "0 24dp"
+  group-row:
+    typography: "{typography.headline}"
+    padding: "0 16dp"
+  feedback-card:
+    backgroundColor: "{colors.day-container}"
+    rounded: "{rounded.md}"
+    padding: "16dp"
+---
+
+# Design System: GRUP
+
+## Overview
+
+**Creative North Star: "The Roll Call"**
+
+GRUP is the clipboard at the start of practice: names, and a tick or a cross next to each. Every screen exists to answer one question, "who's in?", and the design's job is to put that answer on screen before anything else. Organisers glance at it minutes before the activity starts, often on a phone, so the system values instant legibility over decoration: counts, names and answers lead, and the chrome stays out of the way.
+
+The world is **quiet Material 3 utility with one wink**. Structure, components and motion are stock Material 3 (`package:material_ui`) on Android, iOS and web, themed through two seed colours and the Cabin typeface. The personality lives in exactly one place: the rounded, cheerful **Sniglet** wordmark "GRUP", and the few onboarding and feedback moments that name it. Everything else is a well-made tool.
+
+Day and night are two moods of the same brand, not an inversion. By day it's a harbour: navy and lagoon teal on a cool, near-white surface. At night it becomes a floodlit pitch: lantern olive and deep greens on a warm near-black. Both come from the brand palette in `lib/app.dart`.
+
+**Key Characteristics:**
+- The answer leads: the headcount is the largest text on an event, and yes/no marks are the most saturated things on any screen.
+- Stock Material 3 components, themed, never re-invented; `.adaptive()` controls where the OS has trained users.
+- One typeface for the UI (Cabin), one wink for the brand (Sniglet).
+- Separate day (navy/teal) and night (olive/green) identities.
+- Big, friendly group names; small, factual everything else.
+
+## Colors
+
+Two seeded Material 3 schemes, built with `ColorScheme.fromSeed`, plus one fixed attendance green. Widgets read colour **roles** (`colorScheme.primary`, `surfaceContainerHigh`, …). The hexes in the frontmatter are what those roles resolve to today. The seeds in `lib/app.dart` are the source; if a seed changes, regenerate these values.
+
+### Primary
+- **Harbour Navy** (day `primary`, seed #34558B): the brand voice by day. The Sniglet wordmark, brand mentions in onboarding copy, filled buttons, the default profile ring. 6.2:1 on the day surface.
+- **Harbour Navy Container** (day `primaryContainer`): the extended FAB ("Create or join group", "Manage group").
+- **Lantern Olive** (night `primary`, seed #93920B): the same roles at night. A warm, lamplit khaki, 10.9:1 on the night surface.
+
+### Secondary
+- **Lagoon Teal** (day `secondary`): rings around group avatars and the group-details picture. It is decorative only, at 2.9:1 on the day surface.
+- **Pitch Green** (night `secondary`): the same avatar rings at night. Weak at 2.5:1 on the night surface; see Don'ts.
+
+### Tertiary
+- **Meadow Green** (#8BE585 day tertiary, #257F1F night) is set in the theme but no screen uses it. Its generated `tertiaryContainer` resolves to an off-brand pink (#FAD8FD), because only `tertiary` is overridden.
+
+### Neutral
+- **Day Surface / Day Ink** (`surface` / `onSurface`): a cool near-white page with near-black text.
+- **Day containers** (`surfaceContainer`): the opaque band behind each pinned answer header on an event, and the collapsed feedback card. Headers tell answers apart by icon and label, not by tone.
+- **Night Surface / Night Ink**: a warm near-black with parchment text. Night containers step the same way.
+- **Outlines** (`outline`): the borders of unanswered reply buttons.
+
+### Attendance
+- **Yes Green** (#2E7D32, `Colors.green.shade800`, `yesColor` in `reply_button.dart`): an active "yes", a usual "yes" (as an outline), and the thumb on the Yes header. White icons on it (`onYesColor`) pass at 5.1:1, and it stays visible as an outline on both surfaces (3.6:1 at night).
+- **No Red** (`colorScheme.error`): an active "no". The theme keeps its accessible pairing (`onError`).
+
+### Named Rules
+**The Answer Colour Rule.** Yes Green and the error red mean *yes* and *no*, and nothing else. No decorative green, no red for anything but "no" and real errors. When colour appears on a screen, it should be telling the organiser who is coming.
+
+**The Role, Not Hex Rule.** Widgets take colour from `ColorScheme` roles so day and night resolve on their own. `yesColor` and its `onYesColor` are the only raw colours, chosen to work on both themes.
+
+**The Night Shift Rule.** Night is its own identity (olive and green on warm black). Don't derive it by darkening the navy, and don't "fix" it towards blue.
+
+## Typography
+
+**Display Font:** Sniglet (with Cabin fallback), bundled in `assets/google_fonts/`; runtime fetching is off.
+**Body Font:** Cabin, applied app-wide through `ThemeData.fontFamily` and on the Material 3 type scale.
+
+**Character:** Cabin is a humanist sans with slightly soft terminals: friendly but businesslike, and legible at list sizes. Sniglet is round and bubbly, a one-word signature, never a working typeface.
+
+### Hierarchy
+Sizes come from the Material 3 type scale in `sp`, so they follow the system font-size setting.
+- **Wordmark** (Sniglet 400, `headlineLarge` 32sp, in `primary`): "GRUP" in the home app bar. Inline Sniglet spans in `primary` mark the brand name in onboarding and feedback copy, and the feedback card's title is Sniglet at 24.
+- **Headline** (Cabin 400, 28sp): group names in the home list (a group is a place, so its name reads big), and at 600 weight the headcount on an event ("5 coming").
+- **Title** (Cabin 400, 22sp): app-bar titles: the group's name on the group screen, the event's name on the event screen.
+- **Title small** (Cabin 500, 16sp): list-tile titles. Event names, member names, the Yes / No reply yet / No headers.
+- **Body** (Cabin 400, 16sp): onboarding and descriptive copy, centred in empty states.
+- **Body small** (Cabin 400, 14sp): list-tile subtitles. Event time and headcount ("10:00 AM · **5 coming** +2 usually", the count in Label weight when it isn't zero), a member's usual answer.
+- **Label** (Cabin 500, 14sp): buttons, the FAB and badges.
+
+### Named Rules
+**The One Wink Rule.** Sniglet appears only for the GRUP name and the feedback card's title. Never use it for buttons, labels, data, headings or numbers.
+
+**The Scale Rule.** Text maps to a Material 3 role (`theme.textTheme.*`). Don't hand-pick font sizes per screen; the wordmark's base size comes from the scale too.
+
+## Layout
+
+Single column on every size, built from Material slivers. A pinned or floating `SliverAppBar` sits on top, lists scroll underneath, and the one primary action is an extended FAB at bottom right.
+
+- **Gutter:** 16dp around blocks of content, plus `ListTile`'s own 16dp insets.
+- **Rhythm:** 8dp between list rows (group list, reply buttons), 16dp inside blocks, 16dp above each answer section on an event.
+- **Events by day:** a group's events are shown one day at a time, under a date row (‹ date ›) pinned in the app bar; swiping sideways also moves days (`DayPager`). Opened without a date, a group lands on its next event, not on an empty today. An empty day says so and offers "Next: {event}, {date}".
+- **Event detail:** the headcount block leads (group · date · time, then "**5 coming** +2 usually", then "3 no reply · 2 out"), then "You", then members grouped Yes → No reply yet → No. Each group's header pins only while its own members scroll by (`SliverMainAxisGroup` + `PinnedHeaderSliver`), so headers hand over instead of stacking.
+- **Text size:** no fixed heights on headers; the date row grows with the text scale. Short count phrases are kept on one line (`keepTogether`).
+- **Pull to refresh** on the group's day list and on the event, with the empty states scrollable so it works there too.
+- **Edge-to-edge:** content clears system bars with `SafeArea` and the bottom view padding (Android 15 enforces edge-to-edge).
+- **Wide screens:** today the layout simply stretches. There are no breakpoints, rail, or max width yet.
+
+## Elevation & Depth
+
+**Today:** flat. Depth comes only from Material 3 tonal surfaces (`surfaceContainer` → `High` → `Highest`) and from stock component elevation: the FAB's level-3 shadow, and modal bottom sheets and dialogs. There are no custom shadows.
+
+**Direction (chosen, not built yet): add some lift.** The things an organiser acts on, such as an event occurrence and a group, should rest on low Material 3 elevation, so they read as separate units at a glance. Use the standard M3 levels: 1 for cards and rows at rest, 2–3 for pressed or dragged items and the FAB, with the tonal tint that goes with each level. Lift is structural (it separates units of action), never decorative glow.
+
+### Named Rules
+**The Material Levels Rule.** Elevation uses the Material 3 levels (0, 1, 2, 3, 4, 5) and their tonal surfaces. Never use an arbitrary `BoxShadow`, coloured shadow, or blur.
+
+**The Lift Means Tappable Rule.** If it's raised, it's something you act on (an event, a group, a sheet). Section headers, notices and empty states stay flat.
+
+## Shapes
+
+Material 3's rounded, friendly geometry, unmodified: pill-shaped (stadium) buttons, a 16dp-rounded extended FAB, 12dp cards, 28dp dialogs and bottom-sheet tops. Circles carry identity. Avatars and group pictures are circles inside a thin coloured ring (`ProfilePicture`), and reply buttons are circular icon buttons. The one custom shape is the feedback card's 16dp rounding.
+
+## Components
+
+### Reply Buttons (signature)
+The heart of the product: a thumbs-up / thumbs-down pair (Font Awesome thumbs) beside every event and every member.
+- **Shape:** circular icon buttons (40dp visual, 48dp touch target on mobile), 8dp apart.
+- **Unanswered:** outlined, with hollow thumbs in the default ink.
+- **Usual answer showing** (from the member's usual answer, nothing answered yet): outlined in the answer's colour, with a solid thumb in that colour. It says "you're counted as yes" without claiming you've answered.
+- **Answered:** filled with Yes Green or the error red, with a solid white (`onYesColor` / `onError`) thumb.
+- **Read-only** (someone else's answer, for non-admins): no buttons, just the mark: a filled or outlined circle with the solid thumb, in its 48dp slot so rows line up, and nothing at all when there's no answer. Never the framework's faded disabled button.
+- **Behaviour:** tapping the current answer clears it. Buttons expose `isSelected`; a usual answer adds the semantics value "usual answer". Tooltips stay "Yes" / "No".
+
+### Headcount (signature)
+The number the product exists for, split by how sure it is: confirmed answers, then "+N usually" for people counted only by their usual answer (`Headcount` / `DetailsHeadcount` in `rsvp.dart`).
+- **Event screen:** "**5 coming**" in Headline at 600 weight, "+2 usually" in Title medium, muted; below it "3 no reply · 2 out".
+- **Group's day list:** in the subtitle, "10:00 AM · **5 coming** +2 usually".
+
+### Answer Sections
+On the event screen, in the order the organiser needs: Yes, No reply yet, No. Each header is an opaque `surfaceContainer` band with the answer's icon (solid green thumb up, hourglass, solid red thumb down), the label, and the count trailing; it pins only while its own members scroll by. Each member row reads to screen readers as "Name, coming" (or not coming, usually coming, no reply yet), and shows their usual answer as a subtitle ("Usually in", "Usually in · On weekdays").
+
+### Usual Answers
+The "set it once" feature. "You" invites it ("Set your usual answer", in `primary`) on recurring events; tapping a row opens a bottom sheet titled with whose answer it is and which event, offering only rules that fit the event (every time; weekdays / weekends for a daily event). Hidden for one-off events. Saving or removing confirms with a snackbar and Undo, as does an admin answering for someone else.
+
+### Buttons
+- **Primary action:** one extended FAB per screen (Harbour Navy Container, 16dp rounding, icon + label).
+- **Filled:** stadium-shaped `primary`, used for in-flow confirmations (join group, update app, not-found home).
+- **Tonal / Text:** `FilledButton.tonalIcon` inside the feedback card; `TextButton.icon` inline in onboarding copy ("Create or join group").
+- **Destructive:** sign-out and delete-profile tiles take `colorScheme.error` for icon and text.
+
+### Lists
+`ListTile` everywhere: groups (avatar + headline name + one-line faded description), events (name + local time + reply pair) and members (name + reply pair; tapping opens the default-answer sheet).
+
+### Group Avatar
+`ProfilePicture`: a circle (radius 24 in lists, 128 on group details) with the photo or initials on a light tint of its ring colour, inside a thin `CircularProgressIndicator` ring. The ring doubles as upload progress. Groups use Lagoon Teal and people use Harbour Navy.
+
+### Feedback Card
+A dismissible `ExpansionTile` on home: collapsed on `surfaceContainer` with a Sniglet title, expanded on `secondaryContainer` with an email button and a store-review button (red heart).
+
+### Sheets & Dialogs
+The default-answer picker is a modal bottom sheet. Confirmations use `AlertDialog.adaptive`, so iOS gets its native alert.
+
+### Empty & Error States
+Empty: centred body copy with inline Sniglet brand spans and an inline action, above a full-width illustration (`assets/images/*.webp`). In dark mode the illustration's lightness is inverted while its hues are kept (invert + 180° hue rotation), so the line art turns light and the navy stays blue. A day with no events in a group that has them elsewhere shows no illustration: just the fact and a tonal "Next: {event}, {date}" button. Error: `ErrorNotice` with a cloud-off icon and a retry.
+
+## Do's and Don'ts
+
+### Do:
+- **Do** put the headcount and the user's own answer within the first screenful of any event surface, with confirmed and usual answers counted separately.
+- **Do** call it a "usual answer" in copy; "default" is the code's word.
+- **Do** use `.adaptive()` constructors for dialogs, switches, checkboxes, radios and progress indicators, and stock Material for everything else.
+- **Do** read colour from `ColorScheme` roles and text from `theme.textTheme`, so night mode and system font scale work for free.
+- **Do** keep one extended FAB per screen for its single primary action.
+- **Do** keep touch targets at 48dp minimum, including the reply buttons.
+- **Do** test every change in both the day (navy) and night (olive) themes.
+
+### Don't:
+- **Don't** use Yes Green or the error red for anything except answers, counts and genuine errors (The Answer Colour Rule).
+- **Don't** set Sniglet on anything but the GRUP name (The One Wink Rule).
+- **Don't** use `tertiaryContainer` / `onTertiaryContainer`: they resolve to an off-brand pink until the scheme is fixed.
+- **Don't** put text in Lagoon Teal (2.9:1) or rely on Pitch Green for anything meaningful at night (2.5:1). They are decorative rings only.
+- **Don't** add custom `BoxShadow`s, gradients or glows. Lift uses Material 3 elevation levels.
+- **Don't** port Cupertino navigation (tab bars, nav bars) into the app. iOS gets Material plus OS behaviours, not a second design language.
+- **Don't** import `package:flutter/material.dart` outside the legacy island (`screens/auth.dart`).
