@@ -2,6 +2,8 @@
 
 _Prepared 2026-06-28. Based on a full audit of the codebase (Flutter app `parousia` v1.7.2+1) across four areas: Supabase/security, state architecture, testing/CI, and web/dependencies/release._
 
+> **2026-10-24 — where things stand.** The 2026-10-23 stack (#253–#259) merged on 2026-10-24; its release run, 40078516614, pushed the S2/S4/S5 migrations to prod on 2026-10-24. Every open item, in one list: [2026-10-24 status](#2026-10-24--status-and-everything-still-open).
+>
 > **2026-10-23 — a stack of seven PRs (#253–#259).** S2, S4 and S5, the `anon` table grants, S8, the multidex removal, dependency updates, and web addresses for pushed pages. See [2026-10-23 stack](#2026-10-23--the-stack-after-s1).
 >
 > **Supabase audit 2026-10-22 (after the merge).** Three dated Supabase changes reach this app: the legacy API keys go by the end of 2026 (every build so far embeds one), the default table grants go on 2026-10-30, and CLI v3 drops `[inbucket]`. The code check also found that new database functions are still callable by `anon`. See [2026-10-22 Supabase audit](#2026-10-22-supabase-audit--deadlines-and-deprecations). **S1, S3 and S6 shipped on 2026-10-23** (PR #252, then the publishable key in `d46f5ef`; release run 39923801096). Branch `fix/supabase-default-privileges` does S2, S4 and S5.
@@ -16,6 +18,8 @@ _Prepared 2026-06-28. Based on a full audit of the codebase (Flutter app `parous
 
 ## TL;DR
 
+_The 2026-06-28 summary, kept as written. Redux, the missing safety net and Phases 0–1.5 are history now: for the current state see [2026-10-24 status](#2026-10-24--status-and-everything-still-open)._
+
 The app is a small (~7.5k hand-written LOC), production Flutter + Supabase app with a **sound core** — unidirectional Redux flow, repository-isolated side effects, RLS-backed multi-tenancy — but it has accumulated debt that blocks the stated goals (more features, a pro plan, growth, thorough testing, great web, eventual offline).
 
 The single most important finding is about **sequencing, not any one bug**: almost every worthwhile change here is a refactor (fix selector performance, move/keep RSVP logic, migrate state, add indexes), and **there is currently no safety net to refactor against** — the pre-merge CI gate is skippable, the complex RSVP logic has one shallow test, and most of the app (widgets, screens, ViewModels, epics, routing, edge functions) has zero coverage. So the roadmap is dependency-ordered:
@@ -29,9 +33,66 @@ Three genuine decisions need your input before Phase 2 — see [Decisions](#deci
 
 ---
 
+## 2026-10-24 — status and everything still open
+
+**Merged.** #253–#259 merged in order on 2026-10-24 at 08:33 UTC, within a minute of each other. Release run 40078516614 (`492f994`) started right after: tests, the draft release, `db push` of `20261023120000_default_privileges.sql` and `20261023130000_revoke_anon_tables.sql`, and web on `gh-pages` passed. So did the Android build and upload to Play internal (the first with `tracks:`) and the Sentry upload; `delete_user_account` had no changes. So prod has S2's revoke before Supabase applies it on 2026-10-30.
+
+**Done:** Phase 0 except item 5 (below, under CI) and branch protection; Phase 1 except item 20's seed colours and item 1's error page; Phase 1.5 except item 6 (pagination) and part of item 8 (clearing values); D1 (B1, MVVM) and D2 (client-side); M1–M4; Widgetbook removed; invites and the auth user no longer persisted ([A2] PII at rest); S1–S6 and S8 in code.
+
+Everything still open, in one place:
+
+**Prod checks.** The agent has no prod access, and none of these has a recorded result:
+- `gen_random_uuid_v7`'s owner (query under S5). There's no record of it being run before #253 merged. The `db push` log doesn't settle it either: it shows no notices from the remote, so it can't tell whether the `search_path` change applied or was skipped.
+- `pg_default_acl` on prod against local (query in the 2026-10-23 section below).
+- `supabase db advisors --linked`: the prod-only checks, and Confirm #1 (email confirmations on prod).
+- S7: `select extname from pg_extension` on prod.
+- S8: prod's exposed schemas; turn off `pg_graphql`.
+- S1: deactivate the legacy keys once the dashboard shows nothing uses them.
+
+**Release and stores:**
+- Smoke-test the build from 40078516614 on devices against prod: sign-in with every provider, RSVP, picture upload, deleting a throwaway account. It is the first one with #256–#258, which change the binary.
+- Then promote it from Play internal, attach the Xcode Cloud build to 2.0.0 and submit. Neither the versionCode 224 build (legacy key) nor any other build before #257 should go out.
+- Keep `v2.0.0` a draft until the app is live (the version gate in `build.yaml`). Delete the stale `v1.7.2`/`v1.7.3` drafts.
+
+**Code:**
+- **Minimum-version gate.** When Supabase turns off the legacy keys, every 1.x and early 2.0.0 install fails with generic errors. A gate only helps installs that already have it, so ship it in an early 2.x build.
+- Pagination (Phase 1.5 item 6). No list is near the 1000-row cap.
+- Web OAuth loses `/auth?from=…` (needs a real provider and prod's redirect allowlist to test).
+- Per-invite link-preview cards.
+- No `errorBuilder` on the router (Phase 1 item 1): an unknown URL shows go_router's bare error screen.
+- A member's name override, and a profile's name or picture, still can't be cleared (Phase 1.5 item 8): `MembersService.updateMember` skips a null or empty override, and `ProfilesService.updateProfile` drops null values.
+- #186 (`refactor/timezone`; probably the fix for #51, though it doesn't say so). S2 is merged, so the order is fine now. It predates MVVM and needs a rewrite, and any new column or table needs the explicit grants from `CLAUDE.md`.
+- **Legacy island.** `lib/presentation/screens/auth.dart` wraps `supabase_auth_ui` 0.7.2 (still on framework Material, 8 files) in `MaterialUiCompatibilityBridge`, which is `@Deprecated`. When framework Material is formally deprecated, the bridge goes with it. Until then the web build carries both Material copies.
+- **Database residuals** (re-checked in the code 2026-10-24):
+  - `handle_new_invite` (`20260807150200`) links an existing user's profile but keeps the member's `display_name_override`. `handle_upsert_user` resets it.
+  - `profiles` has no UPDATE policy. Profile edits go through `auth.updateUser` metadata, and `handle_upsert_user` copies `full_name`/`avatar_url` on every `auth.users` update, so a provider that rewrites that metadata at sign-in overwrites an in-app edit.
+- **Storage residuals:** every picture change uploads a new object and never deletes the old one. Group pictures sit in the uploader's folder, so deleting that account (`deleteUserFiles`) breaks the group's picture.
+- **CI:** no iOS build (Xcode Cloud only) and no staging gate before prod `db push` (Phase 0 item 5; needs the environments work).
+
+**Repo settings (unverified, the agent can't read them):** branch protection requiring `analyze` and `test` on `main` (Phase 0's manual step).
+
+**Design and product:** the light and dark seeds are unrelated colours; iOS could go back to 15; D3 realtime/push, offline, the pro plan (#26, RevenueCat) and environments/flavors.
+
+**Upstream:** `builtInKotlin`/`newDsl` stay off until `in_app_review` and `posthog_flutter` stop applying KGP. `build_runner` 2.17 waits for `go_router_builder` to allow `build` 5; `peanut` 6.0.2 is held by a constraint.
+
+**Open GitHub issues** (not in this roadmap before):
+
+| Issue | Note |
+|---|---|
+| #26 Integrate RevenueCat | The pro plan's billing (Phase 2). |
+| #51 Reply/schedule timezone mismatch | #186. |
+| #73 Localise recurrence descriptions | Partly done: the app's own rules have localized names (`recurrence_label.dart`); any other rule shows "Custom". The issue asks for a full `RruleL10n`. |
+| #85 Service worker caching on Safari | Filed against the old domain (2024-11). Re-check on `grup.rsvp`. |
+| #122 Default rules don't always appear set | Filed before MVVM. Re-check. |
+| #127 Group details scrolls into blank space | Filed before MVVM. Re-check. |
+| #129 Touchpad swipes on web | Filed before MVVM. Re-check. |
+| #92, #107, #125, #128 | Enhancements: guest shortcut, master-detail groups, forms refactor, feedback-button spacing. |
+
+---
+
 ## 2026-10-23 — the stack after S1
 
-S1, S3 and S6 shipped on 2026-10-23 (release run 39923801096). What could be done without prod access or a product decision is a stack of PRs, each based on the one before. Merge them in order: every merge to `main` is a full release run.
+S1, S3 and S6 shipped on 2026-10-23 (release run 39923801096). What could be done without prod access or a product decision is a stack of PRs, each based on the one before. **All seven merged in order on 2026-10-24**; see [2026-10-24 status](#2026-10-24--status-and-everything-still-open) for the release run.
 
 | PR | Branch | What |
 |---|---|---|
@@ -46,7 +107,7 @@ S1, S3 and S6 shipped on 2026-10-23 (release run 39923801096). What could be don
 **Before promoting:** the builds from #256–#258 change the app binary. Smoke-test them on devices like the S1 build (#257's release APK was only booted offline on an emulator; iOS only built for the simulator).
 
 **Needs prod access** (the agent had none; none of these was run):
-- before merging #253: who owns `gen_random_uuid_v7` (query under S5). The migration skips its `search_path` change with a notice unless `postgres` holds the owner's role;
+- who owns `gen_random_uuid_v7` (query under S5); meant for before merging #253, which merged without it. The migration skips its `search_path` change with a notice unless `postgres` holds the owner's role;
 - after #253/#254: `supabase db query --linked "select pg_get_userbyid(defaclrole), defaclnamespace::regnamespace, defaclobjtype, defaclacl from pg_default_acl"` should match local (postgres/public: tables `Dxt` for `authenticated`/`service_role` and nothing for `anon`, functions `postgres, authenticated, service_role`, a global `postgres` functions entry);
 - `supabase db advisors --linked` (prod-only checks, and Confirm #1);
 - S7: `supabase db query --linked "select extname from pg_extension"`;
@@ -349,6 +410,8 @@ The second audit verified the Phase-0 work as built. Three items don't yet deliv
 
 ## Phase 1 — High-impact, isolated, low-risk wins
 
+_Status 2026-10-24: done except item 20's unrelated light/dark seeds and item 1's friendly error page (PR #215 and PR #251; the [2026-10-22 table](#what-the-branch-does) maps each item to its commit). File paths below are from the Redux code, since deleted._
+
 Each is shippable independently once Phase 0 gives you coverage.
 
 **Web — fix shareable invite links end-to-end** (the core share flow is currently broken on web):
@@ -395,6 +458,8 @@ Each is shippable independently once Phase 0 gives you coverage.
 
 ## Phase 1.5 — Failure-path correctness [A2] (added 2026-07-09)
 
+_Status 2026-10-24: done in PR #251, except item 6 (pagination) and item 8's "can never be cleared". File paths below are from the Redux code, since deleted._
+
 **The second audit's biggest finding, absent from the first audit.** Four defect classes compound so that the store's `loading`/`error`/entity state reliably reflects only the happy path — whenever the network or RLS says no, the app silently shows stale/phantom data or an infinite spinner. The fixes are small and mechanical; do them as one workstream because they share a test seam (a fake repository that fails on demand). This phase is also a **hard prerequisite for offline** (Phase 2): offline is nothing but failure paths.
 
 1. **Type every generic Fail action.** `FailRetrieveOne(id: …, error: …)` without a type argument infers `FailRetrieveOne<dynamic>`, which matches no `RemoteEntityReducer<T>` — the action is silently dropped and `loadingIds[id]` stays true forever (`epics/groups.dart:119`, `epics/members.dart:71` — the latter also stuffs a *group* id into the *members* entity state). Audit every generic action construction; the Phase-1 tooling lints then keep it fixed.
@@ -409,6 +474,8 @@ Each is shippable independently once Phase 0 gives you coverage.
 ## Phase 2 — Strategic, decision-gated
 
 Gated on D1/D2/D3 and Phase 0 being in place.
+
+_Status 2026-10-24: state layer (D1 → B1), RSVP resolution (D2, client-side), dependency cleanup, PII at rest and Widgetbook (removed) are done. Realtime, offline, the pro plan, environments and storage lifecycle are open._
 
 - **State layer** — execute D1 (Path A in place, or Path B migration slice-by-slice behind the existing repository interfaces).
 - **RSVP resolution** — execute D2 (server-side view/RPC, or fixed client-side).
@@ -571,7 +638,7 @@ The team's recent "finalise upgrades" commits left the project **uncompilable on
 - ~~**Close the verify.yaml draft-gate bypass**~~ **Done 2026-07-17**: explicit `types: [opened, synchronize, reopened, ready_for_review]` on the `pull_request` trigger.
 - ~~**Widen pgTAP + characterization coverage**~~ **Done 2026-07-17** (addendum item 9): `write_policies_test.sql` (20 assertions — admin-vs-member writes, reply/default-rule spoofing negatives, no-direct-INSERT on `groups`, and a pin on "a plain member cannot leave a group" to flip when Phase 1 item 15 lands) + `storage_test.sql` (7 — INSERT/SELECT behavioral; DELETE pinned declaratively because the storage service's statement-level `protect_objects_delete` trigger blocks all direct SQL deletes). pgTAP total: 37 assertions. Characterization suite grew 12 → 19: local-time relabeling (verified under two extreme TZs), moment-vs-day matching, time-of-day `startDate`, monthly 29th/31st boundaries, `UNTIL`, `interval > 1`.
 - ~~**dbdev HTTP-fetch migration**~~ **Done 2026-07-17**: `20230706000000_dbdev.sql` now vendors `gen_random_uuid_v7()` verbatim (pinned from `kiwicopple-pg_idkit` 0.0.4, the prod-installed version) instead of fetching installer SQL over HTTP; `http`/`pg_tle` and the unused idkit functions are no longer installed on fresh environments. Prod is unaffected (migration already in its history). Verified: `supabase db reset` applies offline; pgTAP 37/37; full Flutter suite 187 passing incl. live.
-- **Make the CI check required** in GitHub branch protection (manual step — require both `analyze` and `test`), and **activate blame-ignore** locally: `git config blame.ignoreRevsFile .git-blame-ignore-revs`.
+- **Make the CI check required** in GitHub branch protection (manual step — require both `analyze` and `test`; _2026-10-24: never confirmed done_), and **activate blame-ignore** locally: `git config blame.ignoreRevsFile .git-blame-ignore-revs`.
 
 _Small corrections from re-verification: analyze is exit 0 with **39** infos (not 38); everything else in "Completed" above checks out as claimed (split CI jobs with caching, upstream `supabase_auth_ui` 0.6.1 with zero overrides, clean working tree)._
 
