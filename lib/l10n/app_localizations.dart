@@ -1027,6 +1027,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Update'**
   String get updateRequiredAction;
+
+  /// No description provided for @notFoundTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Page not found'**
+  String get notFoundTitle;
+
+  /// No description provided for @notFoundBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This link doesn\'t lead to anything in GRUP. It may be mistyped, or what it pointed to is gone.'**
+  String get notFoundBody;
+
+  /// No description provided for @notFoundAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Go to your groups'**
+  String get notFoundAction;
 }
 
 class _AppLocalizationsDelegate

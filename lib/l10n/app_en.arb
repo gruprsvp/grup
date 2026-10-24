@@ -345,5 +345,8 @@
   },
   "updateRequiredTitle": "Update GRUP",
   "updateRequiredBody": "This version of GRUP is no longer supported. Update the app to keep using it.",
-  "updateRequiredAction": "Update"
+  "updateRequiredAction": "Update",
+  "notFoundTitle": "Page not found",
+  "notFoundBody": "This link doesn't lead to anything in GRUP. It may be mistyped, or what it pointed to is gone.",
+  "notFoundAction": "Go to your groups"
 }

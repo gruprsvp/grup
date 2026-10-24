@@ -6,6 +6,7 @@ export 'group_member_details.dart';
 export 'group_schedule_details.dart';
 export 'home.dart';
 export 'locale.dart';
+export 'not_found.dart';
 export 'profile.dart';
 export 'schedule_create.dart';
 export 'select_contacts.dart';

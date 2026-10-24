@@ -123,5 +123,21 @@ void main() {
       expect(find.byType(HomeScreen), findsOneWidget);
       expect(find.text('Club'), findsOneWidget);
     });
+
+    testWidgets('an unknown address shows not found, also after sign-in', (
+      tester,
+    ) async {
+      final backend = await pumpApp(tester, '/no/such/page');
+      expect(find.byType(AuthScreen), findsOneWidget);
+
+      backend.addProfile('me', name: 'Me');
+      backend.auth.signIn('me');
+      await tester.pumpAndSettle();
+      expect(find.byType(NotFoundScreen), findsOneWidget);
+
+      await tester.tap(find.byType(FilledButton));
+      await tester.pumpAndSettle();
+      expect(find.byType(HomeScreen), findsOneWidget);
+    });
   });
 }

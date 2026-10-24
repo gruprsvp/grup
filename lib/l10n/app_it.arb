@@ -153,5 +153,8 @@
   "authContinueWithProvider": "Continua con {provider}",
   "updateRequiredTitle": "Aggiorna GRUP",
   "updateRequiredBody": "Questa versione di GRUP non è più supportata. Aggiorna l'app per continuare a usarla.",
-  "updateRequiredAction": "Aggiorna"
+  "updateRequiredAction": "Aggiorna",
+  "notFoundTitle": "Pagina non trovata",
+  "notFoundBody": "Questo link non porta a nulla in GRUP. Forse è scritto male, o ciò a cui puntava non esiste più.",
+  "notFoundAction": "Vai ai tuoi gruppi"
 }
