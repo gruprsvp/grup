@@ -63,6 +63,10 @@ AppException toAppException(Object error, StackTrace stackTrace) =>
       ClientException() ||
       TimeoutException() ||
       AuthRetryableFetchException() => const NetworkException(),
+      // A gateway in front of PostgREST timed out or is down: a non-JSON
+      // body, so the HTTP status becomes the code.
+      PostgrestException(code: '502' || '503' || '504' || '520') =>
+        const NetworkException(),
       // PostgREST: .single() matched no rows.
       PostgrestException(code: 'PGRST116') => const NotFoundException(),
       // Postgres: insufficient_privilege, e.g. a row-level security violation.
