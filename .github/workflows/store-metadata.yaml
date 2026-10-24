@@ -43,7 +43,8 @@ jobs:
 
   app-store:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    # Screenshot uploads (and App Store processing) can take a while.
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v7

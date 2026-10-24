@@ -39,13 +39,15 @@ staged demo data at exact store resolutions, per locale and platform:
 
 ```sh
 STORE_SCREENSHOTS=true flutter test --tags screenshots --update-goldens
-# → test/store_screenshots/raw/<profile>/<locale>/<screen>.png      bare screen
-# → test/store_screenshots/store/<profile>/<locale>/<n>_<screen>.png captioned
-#   (both gitignored)
+# → test/store_screenshots/raw/<profile>/<locale>/<screen>.png  bare (gitignored)
+# → fastlane/metadata/android/<locale>/images/{phone,sevenInch,tenInch}Screenshots/<n>_<screen>.png
+# → fastlane/screenshots/<locale>/<device>_<n>_<screen>.png        captioned
 ```
 
 240 images (6 profiles × 5 locales × 4 screens, bare and captioned) in about
-25 seconds. The captioned set is the store image: the caption on the brand
+a minute and a half. Review the captioned ones in the diff, commit, and merge:
+`store-metadata.yaml` uploads them to both stores. The captioned set is the
+store image: the caption on the brand
 colour in the top 18% (Play allows 20%), then the screen, laid out at full
 device size and scaled down, with rounded corners and no device frame (Play
 discourages device imagery). The bare set is for other tools (e.g. ButterKit).
@@ -78,11 +80,10 @@ Known gaps:
    caption or frame. Google wants any status bar clean (no carrier, full icons).
 4. **Wide profiles compose the panes by hand** (`TwoPane` in `_screens`), as the
    app lays them out from 840dp: the harness renders screens, not routes.
-5. **Captures have an alpha channel**: both stores reject alpha. Flatten when
-   exporting, e.g. `sips -s format jpeg in.png --out out.jpg` (macOS).
-6. **Publishing isn't automated yet**. Final images go to `fastlane/metadata/{android,ios}/<locale>/` (Android `it-IT`, iOS
-   `it`). Only write final images there: merging changes under
-   `fastlane/metadata/` pushes them live to the stores (`store-metadata.yaml`).
+5. **Store images are written by the test itself**, as RGB PNGs (both stores
+   reject an alpha channel, and the engine only encodes RGBA); each one is
+   checked to decode back to the same pixels. Renamed or removed screens leave
+   their old files behind: delete them by hand, or the stores keep showing them.
 
 ## Store rules worth remembering
 

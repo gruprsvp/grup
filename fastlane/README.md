@@ -50,8 +50,12 @@ commit-level detail already lands in the generated GitHub notes.
 
 ## Screenshots
 
-Play images live in the repo and sync by checksum. App Store screenshots are
-still managed in App Store Connect directly (`skip_screenshots: true`).
+Both stores' screenshots live in the repo and sync by checksum: Play's under
+`android/<locale>/images/*Screenshots/` (`sync_image_upload`), the App Store's
+under `fastlane/screenshots/<locale>/` (deliver's `sync_screenshots`, a beta
+enabled in the Fastfile; deliver tells iPhone and iPad sets apart by
+resolution). Don't edit them by hand: they're generated, see
+`docs/STORE_SCREENSHOTS.md`.
 
 ## Secrets (GitHub Actions)
 

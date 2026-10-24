@@ -3,6 +3,8 @@ library;
 
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
+import 'dart:ui' as ui;
 
 import 'package:material_ui/material_ui.dart';
 import 'package:flutter/services.dart';
@@ -15,9 +17,10 @@ import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/util/recurrence_rules.dart';
 
 // Store-screenshot harness: renders real screens with staged demo data at
-// store resolutions and captures one PNG per screen × locale × device profile.
-// Raw captures land in test/store_screenshots/raw/; compositing them into
-// framed, captioned store images is a separate step (see docs/STORE_SCREENSHOTS.md).
+// store resolutions, one per screen × locale × device profile. The bare screen
+// lands in test/store_screenshots/raw/ (gitignored); the captioned store image
+// is written straight into fastlane's folders, which store-metadata.yaml
+// uploads once merged to main (see docs/STORE_SCREENSHOTS.md).
 //
 // Generate with:
 //   STORE_SCREENSHOTS=true flutter test --tags screenshots --update-goldens
@@ -381,6 +384,100 @@ Future<void> _loadRealFonts() async {
 
 const _framedKey = Key('framed');
 
+/// Store locale folders: Android's (supply) and the App Store's (deliver).
+const _androidLocales = {
+  'de': 'de-DE',
+  'en': 'en-GB',
+  'es': 'es-ES',
+  'fr': 'fr-FR',
+  'it': 'it-IT',
+};
+const _iosLocales = {
+  'de': 'de-DE',
+  'en': 'en-GB',
+  'es': 'es-ES',
+  'fr': 'fr-FR',
+  'it': 'it',
+};
+
+/// Where fastlane expects the store image ([n]th, [screen]) of [profile].
+/// deliver tells the iPhone and iPad sets apart by resolution, and orders each
+/// by file name.
+// shortcut: renamed or removed screens leave their old files behind; delete
+// them by hand.
+String _exportPath(String profile, Locale locale, int n, String screen) {
+  final name = '${n}_$screen.png';
+  final lang = locale.languageCode;
+  final android = 'fastlane/metadata/android/${_androidLocales[lang]}/images';
+  return switch (profile) {
+    'android-phone' => '$android/phoneScreenshots/$name',
+    'android-tablet-7' => '$android/sevenInchScreenshots/$name',
+    'android-tablet-10' => '$android/tenInchScreenshots/$name',
+    _ =>
+      'fastlane/screenshots/${_iosLocales[lang]}/${profile.substring(4)}_$name',
+  };
+}
+
+/// Writes what [finder] shows to [path] as a PNG with no alpha channel: both
+/// stores reject one, and the engine only encodes RGBA.
+Future<void> _writeOpaquePng(WidgetTester tester, Finder finder, String path) =>
+    tester.runAsync(() async {
+      final image = await captureImage(finder.evaluate().single);
+      final rgba = (await image.toByteData())!.buffer.asUint8List();
+      final png = _opaquePng(rgba, image.width, image.height);
+
+      // Self-check: the file decodes back to the same pixels.
+      final codec = await ui.instantiateImageCodec(png);
+      final decoded = (await codec.getNextFrame()).image;
+      final pixels = (await decoded.toByteData())!.buffer.asUint8List();
+      expect(pixels, orderedEquals(rgba), reason: path);
+
+      final file = File(path);
+      await file.parent.create(recursive: true);
+      await file.writeAsBytes(png);
+    });
+
+/// [rgba] (fully opaque) encoded as an 8-bit RGB PNG.
+Uint8List _opaquePng(Uint8List rgba, int width, int height) {
+  final rowBytes = 1 + width * 3; // each row starts with filter type 0
+  final raw = Uint8List(rowBytes * height);
+  for (var y = 0, i = 0, o = 0; y < height; y++) {
+    o++;
+    for (var x = 0; x < width; x++, i += 4, o += 3) {
+      raw[o] = rgba[i];
+      raw[o + 1] = rgba[i + 1];
+      raw[o + 2] = rgba[i + 2];
+    }
+  }
+  final header = ByteData(13)
+    ..setUint32(0, width)
+    ..setUint32(4, height)
+    ..setUint8(8, 8) // bit depth
+    ..setUint8(9, 2); // colour type: RGB
+  return (BytesBuilder()
+        ..add(const [137, 80, 78, 71, 13, 10, 26, 10])
+        ..add(_pngChunk('IHDR', header.buffer.asUint8List()))
+        ..add(_pngChunk('IDAT', zlib.encode(raw)))
+        ..add(_pngChunk('IEND', const [])))
+      .takeBytes();
+}
+
+List<int> _pngChunk(String type, List<int> data) {
+  final typed = [...ascii.encode(type), ...data];
+  var crc = 0xFFFFFFFF;
+  for (final byte in typed) {
+    crc ^= byte;
+    for (var k = 0; k < 8; k++) {
+      crc = crc & 1 == 1 ? (crc >> 1) ^ 0xEDB88320 : crc >> 1;
+    }
+  }
+  return [
+    ...(ByteData(4)..setUint32(0, data.length)).buffer.asUint8List(),
+    ...typed,
+    ...(ByteData(4)..setUint32(0, crc ^ 0xFFFFFFFF)).buffer.asUint8List(),
+  ];
+}
+
 /// [app] laid out at full device size ([device]), scaled down under [caption]
 /// on the brand colour. Captions stay within the top ~20% (Play's limit).
 Widget _framed(
@@ -522,11 +619,10 @@ void main() {
                   await tester.tap(tap);
                   await tester.pumpAndSettle();
                 }
-                await expectLater(
+                await _writeOpaquePng(
+                  tester,
                   find.byKey(_framedKey),
-                  matchesGoldenFile(
-                    'store/$profileName/$locale/${index + 1}_$screenName.png',
-                  ),
+                  _exportPath(profileName, locale, index + 1, screenName),
                 );
               } finally {
                 debugDisableShadows = true;
