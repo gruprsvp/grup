@@ -40,51 +40,6 @@ part 'go_router_builder.g.dart';
     ),
   ],
 )
-/// A [MaterialPage] with no transition on wide windows, where the event it
-/// opens appears next to the list already on screen.
-class PanesPage<T> extends MaterialPage<T> {
-  const PanesPage({
-    required super.child,
-    super.key,
-    super.name,
-    super.arguments,
-    super.restorationId,
-  });
-
-  @override
-  Route<T> createRoute(BuildContext context) => _PanesRoute<T>(this);
-}
-
-class _PanesRoute<T> extends PageRoute<T> with MaterialRouteTransitionMixin<T> {
-  _PanesRoute(PanesPage<T> page) : super(settings: page);
-
-  bool get _wide => TwoPane.isWide(navigator!.context);
-
-  @override
-  Widget buildContent(BuildContext context) => (settings as PanesPage<T>).child;
-
-  @override
-  bool get maintainState => true;
-
-  @override
-  Duration get transitionDuration =>
-      _wide ? Duration.zero : super.transitionDuration;
-
-  @override
-  Duration get reverseTransitionDuration =>
-      _wide ? Duration.zero : super.reverseTransitionDuration;
-
-  @override
-  Widget buildTransitions(
-    BuildContext context,
-    Animation<double> animation,
-    Animation<double> secondaryAnimation,
-    Widget child,
-  ) => _wide
-      ? child
-      : super.buildTransitions(context, animation, secondaryAnimation, child);
-}
-
 @immutable
 class HomeScreenRoute extends GoRouteData with $HomeScreenRoute {
   const HomeScreenRoute();
@@ -297,4 +252,49 @@ class SelectContactsRoute extends GoRouteData with $SelectContactsRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const ReadableWidth(child: SelectContactsScreen());
+}
+
+/// A [MaterialPage] with no transition on wide windows, where the event it
+/// opens appears next to the list already on screen.
+class PanesPage<T> extends MaterialPage<T> {
+  const PanesPage({
+    required super.child,
+    super.key,
+    super.name,
+    super.arguments,
+    super.restorationId,
+  });
+
+  @override
+  Route<T> createRoute(BuildContext context) => _PanesRoute<T>(this);
+}
+
+class _PanesRoute<T> extends PageRoute<T> with MaterialRouteTransitionMixin<T> {
+  _PanesRoute(PanesPage<T> page) : super(settings: page);
+
+  bool get _wide => TwoPane.isWide(navigator!.context);
+
+  @override
+  Widget buildContent(BuildContext context) => (settings as PanesPage<T>).child;
+
+  @override
+  bool get maintainState => true;
+
+  @override
+  Duration get transitionDuration =>
+      _wide ? Duration.zero : super.transitionDuration;
+
+  @override
+  Duration get reverseTransitionDuration =>
+      _wide ? Duration.zero : super.reverseTransitionDuration;
+
+  @override
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) => _wide
+      ? child
+      : super.buildTransitions(context, animation, secondaryAnimation, child);
 }
