@@ -125,11 +125,14 @@ class ProfileRoute extends GoRouteData with $ProfileRoute {
 
 @immutable
 class GroupCreateRoute extends GoRouteData with $GroupCreateRoute {
-  const GroupCreateRoute();
+  const GroupCreateRoute({this.create});
+
+  /// Opens on creating a group rather than joining one.
+  final bool? create;
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const GroupCreateScreen();
+      GroupCreateScreen(create: create ?? false);
 }
 
 @immutable

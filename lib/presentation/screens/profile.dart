@@ -134,6 +134,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         textCapitalization: TextCapitalization.words,
                         decoration: InputDecoration(
                           labelText: l10n.enterYourName,
+                          helperText: l10n.profileNameHelper,
                         ),
                         validator: (value) {
                           if (value == null || value.isEmpty) {

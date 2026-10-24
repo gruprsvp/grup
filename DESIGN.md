@@ -244,9 +244,10 @@ On the event screen, in the order the organiser needs: Yes, No reply yet, No. Ea
 The "set it once" feature. "You" invites it ("Set your usual answer", in `primary`) on recurring events; tapping a row opens a bottom sheet titled with whose answer it is and which event, offering only rules that fit the event (every time; weekdays / weekends for a daily event). Hidden for one-off events. Saving or removing confirms with a snackbar and Undo, as does an admin answering for someone else.
 
 ### Buttons
-- **Primary action:** one extended FAB per screen (Harbour Navy Container, 16dp rounding, icon + label).
+- **Primary action:** one extended FAB per screen (Harbour Navy Container, 16dp rounding, icon + label). The one exception is the first-run home (`HomeIntro`): it has no FAB, because its in-flow buttons are the way in.
 - **Filled:** stadium-shaped `primary`, used for in-flow confirmations (join group, update app, not-found home).
-- **Tonal / Text:** `FilledButton.tonalIcon` inside the feedback card; `TextButton.icon` inline in onboarding copy ("Create or join group").
+- **Filled + Text pair:** the first-run home ends with "Start a group" (`FilledButton.icon`, which opens the new-group page on Create) next to "Join with an invite code" (`TextButton.icon`, which opens it on Join).
+- **Tonal:** `FilledButton.tonalIcon` inside the feedback card and for an empty day's "Next: …".
 - **Destructive:** sign-out and delete-profile tiles take `colorScheme.error` for icon and text.
 
 ### Lists
@@ -261,8 +262,16 @@ A dismissible `ExpansionTile` on home: collapsed on `surfaceContainer` with a Sn
 ### Sheets & Dialogs
 The default-answer picker is a modal bottom sheet. Confirmations use `AlertDialog.adaptive`, so iOS gets its native alert.
 
+### First Run (`widgets/onboarding.dart`)
+The onboarding lives in the empty states and teaches by showing the real thing. There is no tour and no seen-flags: every state comes from data.
+- **Home with no groups (`HomeIntro`):** "Welcome to GRUP" (headlineSmall, with the GRUP name in Sniglet) and a one-line tagline. Below them, an example event built from the real pieces: a flat `Card.filled` with a made-up weekly event, the headcount ("1 coming +1 usually"), and three members showing a yes, a usual yes and a no as read-only marks. It ignores taps, and each name tells screen readers that member's answer. A caption explains confirmed and usual answers. Three numbered `SetupStep`s follow (start a group, add its events, invite your people), then the button pair. The page is capped at 560dp wide. While the first load runs, home stays blank instead of welcoming a returning user.
+- **New group, admin (`GroupSetup`):** "Get your group going" lists the same steps as a checklist. Each step is done when the data says so: the group exists, it has events, someone else is in it. "Add the first event" opens event creation directly, and "Invite your people" opens manage on the Members tab. The checklist replaces the empty-group state, then stays below the day's events until someone else joins.
+- **`SetupStep`:** a `ListTile` with a 32dp outlined circle holding the number in `primary`. When the step is done, the circle becomes `primary`-filled with a check, the title is muted and the hint drops. Never green: green means "yes" (The Answer Colour Rule).
+- **New group, member:** the illustration over "no events yet". It says that an admin's events will show up here and take one tap to answer.
+- **Name prompt:** on first sign-in the profile page explains, under the name field, that groups see the name next to answers.
+
 ### Empty & Error States
-Empty: centred body copy with inline Sniglet brand spans and an inline action, above a full-width illustration (`assets/images/*.webp`). In dark mode the illustration's lightness is inverted while its hues are kept (invert + 180° hue rotation), so the line art turns light and the navy stays blue. A day with no events in a group that has them elsewhere shows no illustration: just the fact and a tonal "Next: {event}, {date}" button. Error: `ErrorNotice` with a cloud-off icon and a retry.
+Empty: centred body copy, above a full-width illustration (`assets/images/*.webp`). In dark mode the illustration's lightness is inverted while its hues are kept (invert + 180° hue rotation), so the line art turns light and the navy stays blue. A day with no events in a group that has them elsewhere shows no illustration: just the fact and a tonal "Next: {event}, {date}" button. Error: `ErrorNotice` with a cloud-off icon and a retry.
 
 ## Do's and Don'ts
 

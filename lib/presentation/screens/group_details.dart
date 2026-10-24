@@ -27,6 +27,11 @@ class GroupDetailsScreen extends StatelessWidget {
   final bool hasSchedules;
   final (Schedule, DateTime)? next;
 
+  /// Whether anyone but the user is in the group: until then, an admin is
+  /// shown what's left to set up.
+  final bool hasOtherMembers;
+  final ValueSetter<Schedule>? onCreateSchedule;
+
   const GroupDetailsScreen({
     super.key,
     required this.groupId,
@@ -42,6 +47,8 @@ class GroupDetailsScreen extends StatelessWidget {
     this.onReplyChanged,
     this.hasSchedules = false,
     this.next,
+    this.hasOtherMembers = true,
+    this.onCreateSchedule,
   });
 
   @override
@@ -149,6 +156,8 @@ class GroupDetailsScreen extends StatelessWidget {
             unknown: instances.isEmpty && !hasSchedules && error != null,
             isAdmin: isAdmin,
             hasSchedules: hasSchedules,
+            hasOtherMembers: hasOtherMembers,
+            onCreateSchedule: onCreateSchedule,
             next: next,
             onDateChanged: onDateChanged,
             onRefresh: onRefresh,

@@ -21,7 +21,10 @@ class GroupCreateResultJoin extends GroupCreateResult {
 }
 
 class GroupCreateScreen extends StatelessWidget {
-  const GroupCreateScreen({super.key});
+  /// Opens on the Create tab rather than Join.
+  final bool create;
+
+  const GroupCreateScreen({super.key, this.create = false});
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +32,7 @@ class GroupCreateScreen extends StatelessWidget {
 
     return DefaultTabController(
       length: 2,
+      initialIndex: create ? 1 : 0,
       child: Scaffold(
         appBar: AppBar(
           title: Text(l10n.newGroup),

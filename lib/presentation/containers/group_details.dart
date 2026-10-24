@@ -20,7 +20,7 @@ class GroupDetailsContainer extends StatelessWidget {
         groupId: groupId,
         group: vm.group,
         isAdmin: vm.isAdmin,
-        loading: vm.load.running,
+        loading: vm.load.running || vm.createSchedule.running,
         error: switch (vm.load.result) {
           Error(:final error) => error,
           _ => null,
@@ -28,6 +28,11 @@ class GroupDetailsContainer extends StatelessWidget {
         onRetry: vm.load.execute,
         onRefresh: vm.load.execute,
         hasSchedules: vm.hasSchedules,
+        hasOtherMembers: vm.hasOtherMembers,
+        onCreateSchedule: (schedule) async {
+          await vm.createSchedule.execute(schedule);
+          if (context.mounted) showFailure(context, vm.createSchedule.result);
+        },
         next: vm.next,
         date: vm.date,
         onDateChanged: vm.selectDate,

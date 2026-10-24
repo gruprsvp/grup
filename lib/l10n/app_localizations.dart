@@ -422,16 +422,10 @@ abstract class AppLocalizations {
   /// **'Are you sure you want to dismiss this member as an admin?'**
   String get groupDismissAdminConfirmation;
 
-  /// No description provided for @groupEmptyEventsAdmin.
-  ///
-  /// In en, this message translates to:
-  /// **'Your event calendar is empty.<br/>Ready to plan something exciting? Tap the <manage/> button to create a new event and invite your group members!'**
-  String get groupEmptyEventsAdmin;
-
   /// No description provided for @groupEmptyEventsUser.
   ///
   /// In en, this message translates to:
-  /// **'This group has no events yet.'**
+  /// **'This group has no events yet.<br/>When an admin adds one, it shows up here and you answer with one tap.'**
   String get groupEmptyEventsUser;
 
   /// No description provided for @groupLeave.
@@ -583,12 +577,6 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'No'**
   String get no;
-
-  /// No description provided for @onboardingMessage.
-  ///
-  /// In en, this message translates to:
-  /// **'Welcome to <title>GRUP</title>!<br/>You haven’t created any groups yet. Start by tapping the <plus/> button to create your first group and begin organizing events with friends, family, or colleagues.'**
-  String get onboardingMessage;
 
   /// No description provided for @profile.
   ///
@@ -1207,6 +1195,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Answer cleared for {name}'**
   String answerCleared(String name);
+
+  /// No description provided for @onboardingWelcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to <title>GRUP</title>'**
+  String get onboardingWelcome;
+
+  /// No description provided for @onboardingTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Know who\'s coming, without asking around.'**
+  String get onboardingTagline;
+
+  /// No description provided for @onboardingExampleEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Tuesday football'**
+  String get onboardingExampleEvent;
+
+  /// No description provided for @onboardingExampleCaption.
+  ///
+  /// In en, this message translates to:
+  /// **'Every event shows you who\'s coming. Usual answers count separately until people confirm.'**
+  String get onboardingExampleCaption;
+
+  /// No description provided for @onboardingStepGroup.
+  ///
+  /// In en, this message translates to:
+  /// **'Start a group'**
+  String get onboardingStepGroup;
+
+  /// No description provided for @onboardingStepGroupHint.
+  ///
+  /// In en, this message translates to:
+  /// **'For the people you meet with: a team, a club, friends or family.'**
+  String get onboardingStepGroupHint;
+
+  /// No description provided for @onboardingStepEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Add its events'**
+  String get onboardingStepEvent;
+
+  /// No description provided for @onboardingStepEventHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Make one repeat if you meet every week.'**
+  String get onboardingStepEventHint;
+
+  /// No description provided for @onboardingStepInvite.
+  ///
+  /// In en, this message translates to:
+  /// **'Invite your people'**
+  String get onboardingStepInvite;
+
+  /// No description provided for @onboardingStepInviteHint.
+  ///
+  /// In en, this message translates to:
+  /// **'They answer with one tap, or set a usual answer once.'**
+  String get onboardingStepInviteHint;
+
+  /// No description provided for @onboardingJoin.
+  ///
+  /// In en, this message translates to:
+  /// **'Join with an invite code'**
+  String get onboardingJoin;
+
+  /// No description provided for @groupSetupTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Get your group going'**
+  String get groupSetupTitle;
+
+  /// No description provided for @groupSetupBody.
+  ///
+  /// In en, this message translates to:
+  /// **'Its events show up here, with who\'s coming to each.'**
+  String get groupSetupBody;
+
+  /// No description provided for @groupSetupEvent.
+  ///
+  /// In en, this message translates to:
+  /// **'Add the first event'**
+  String get groupSetupEvent;
+
+  /// No description provided for @profileNameHelper.
+  ///
+  /// In en, this message translates to:
+  /// **'Your groups see this name next to your answers.'**
+  String get profileNameHelper;
 }
 
 class _AppLocalizationsDelegate

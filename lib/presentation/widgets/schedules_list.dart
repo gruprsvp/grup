@@ -28,6 +28,11 @@ class SchedulesList extends StatelessWidget {
   final bool unknown;
   final ValueChanged<DateTime>? onDateChanged;
 
+  /// Whether anyone but the user is in the group. An admin sees what's left
+  /// to set up until the group has events and people.
+  final bool hasOtherMembers;
+  final ValueSetter<Schedule>? onCreateSchedule;
+
   const SchedulesList({
     super.key,
     this.schedules,
@@ -39,6 +44,8 @@ class SchedulesList extends StatelessWidget {
     this.next,
     this.onDateChanged,
     this.unknown = false,
+    this.hasOtherMembers = true,
+    this.onCreateSchedule,
   });
 
   @override
@@ -48,25 +55,37 @@ class SchedulesList extends StatelessWidget {
       return const Center(child: CircularProgressIndicator.adaptive());
     }
 
+    final setup = isAdmin && !unknown && (!hasSchedules || !hasOtherMembers)
+        ? GroupSetup(
+            hasEvents: hasSchedules,
+            hasMembers: hasOtherMembers,
+            onAddEvent: () => _addEvent(context),
+            onInvite: () => GroupManageRoute(groupId: groupId).go(context),
+          )
+        : null;
+
     return RefreshIndicator.adaptive(
       onRefresh: onRefresh ?? () async {},
       child: schedules.isNotEmpty
-          ? ListView.builder(
+          ? ListView(
               physics: const AlwaysScrollableScrollPhysics(),
               // Clear of the "Manage group" button over the last row.
               padding: const EdgeInsets.only(bottom: 96),
-              itemCount: schedules.length,
-              itemBuilder: (context, index) => ScheduleTile(
-                schedule: schedules[index],
-                onReplyChanged: onReplyChanged == null
-                    ? null
-                    : (reply) => onReplyChanged!(schedules[index], reply),
-                onScheduleTapped: (schedule) => GroupScheduleDetailsRoute(
-                  groupId: schedule.groupId,
-                  scheduleId: schedule.scheduleId,
-                  at: schedule.instanceDate,
-                ).go(context),
-              ),
+              children: [
+                for (final schedule in schedules)
+                  ScheduleTile(
+                    schedule: schedule,
+                    onReplyChanged: onReplyChanged == null
+                        ? null
+                        : (reply) => onReplyChanged!(schedule, reply),
+                    onScheduleTapped: (schedule) => GroupScheduleDetailsRoute(
+                      groupId: schedule.groupId,
+                      scheduleId: schedule.scheduleId,
+                      at: schedule.instanceDate,
+                    ).go(context),
+                  ),
+                if (setup != null) ...[const Divider(), setup],
+              ],
             )
           // Scrollable, so pull-to-refresh works on an empty day too.
           : CustomScrollView(
@@ -77,8 +96,8 @@ class SchedulesList extends StatelessWidget {
                   child: unknown
                       ? const SizedBox.shrink()
                       : hasSchedules
-                      ? _emptyDay(context)
-                      : _emptyGroup(context),
+                      ? Column(children: [_emptyDay(context), ?setup])
+                      : setup ?? _emptyGroup(context),
                 ),
               ],
             ),
@@ -121,29 +140,23 @@ class SchedulesList extends StatelessWidget {
     );
   }
 
-  /// A group with no events at all.
+  /// A group with no events at all, for a member: an admin sees [GroupSetup].
   Widget _emptyGroup(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
     return EmptyState(
       image: 'add-events.webp',
       text: StyledText(
-        text: isAdmin ? l10n.groupEmptyEventsAdmin : l10n.groupEmptyEventsUser,
+        text: l10n.groupEmptyEventsUser,
         textAlign: TextAlign.center,
-        style: theme.textTheme.bodyLarge,
-        tags: isAdmin
-            ? {
-                'manage': StyledTextWidgetTag(
-                  TextButton.icon(
-                    icon: const Icon(Icons.edit),
-                    label: Text(l10n.groupManage),
-                    onPressed: () =>
-                        GroupManageRoute(groupId: groupId).go(context),
-                  ),
-                ),
-              }
-            : null,
+        style: Theme.of(context).textTheme.bodyLarge,
       ),
     );
+  }
+
+  Future<void> _addEvent(BuildContext context) async {
+    final schedule = await GroupScheduleCreateRoute(groupId: groupId)
+        .push<Schedule>(context);
+    // Null when the user backed out without saving.
+    if (schedule != null) onCreateSchedule?.call(schedule);
   }
 }
