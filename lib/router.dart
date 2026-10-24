@@ -1,4 +1,5 @@
 import 'package:go_router/go_router.dart';
+import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/repositories/repositories.dart';
 
 import 'go_router_builder.dart';
@@ -8,6 +9,8 @@ GoRouter createRouter(AuthRepository auth) => GoRouter(
   routes: $appRoutes,
   refreshListenable: auth,
   redirect: (context, state) => redirect(state.uri, auth.isAuthenticated),
+  errorBuilder: (context, state) =>
+      NotFoundScreen(onHome: () => const HomeScreenRoute().go(context)),
 );
 
 /// Where to send a user who asked for [uri], or `null` to let them in.

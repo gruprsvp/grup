@@ -516,4 +516,14 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get updateRequiredAction => 'Actualizar';
+
+  @override
+  String get notFoundTitle => 'Página no encontrada';
+
+  @override
+  String get notFoundBody =>
+      'Este enlace no lleva a nada en GRUP. Puede que esté mal escrito o que lo que enlazaba ya no exista.';
+
+  @override
+  String get notFoundAction => 'Ir a tus grupos';
 }

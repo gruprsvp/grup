@@ -514,4 +514,14 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get updateRequiredAction => 'Mettre à jour';
+
+  @override
+  String get notFoundTitle => 'Page introuvable';
+
+  @override
+  String get notFoundBody =>
+      'Ce lien ne mène à rien dans GRUP. Il est peut-être mal saisi, ou ce vers quoi il pointait n\'existe plus.';
+
+  @override
+  String get notFoundAction => 'Aller à tes groupes';
 }

@@ -515,4 +515,14 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get updateRequiredAction => 'Aktualisieren';
+
+  @override
+  String get notFoundTitle => 'Seite nicht gefunden';
+
+  @override
+  String get notFoundBody =>
+      'Dieser Link führt zu nichts in GRUP. Vielleicht ist er falsch geschrieben, oder das Ziel gibt es nicht mehr.';
+
+  @override
+  String get notFoundAction => 'Zu deinen Gruppen';
 }
