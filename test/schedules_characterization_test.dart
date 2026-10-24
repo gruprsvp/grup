@@ -480,4 +480,120 @@ void main() {
       }
     });
   });
+
+  group('headcount split', () {
+    test('separates answers from usual answers, summing to yesCount', () {
+      final s = schedule(CommonRecurrenceRules.daily);
+      final members = [memberA, memberB, 'member-d', 'member-e'];
+      final summary = repliesForScheduleInstance(
+        instanceDate: day(0),
+        schedule: s,
+        startDate: monday,
+        endDate: day(1),
+        members: [for (final m in members) member(m)],
+        targetMemberId: memberA,
+        defaultRules: [
+          // Me: usually in, and not answered today.
+          defaultRule(
+            memberA,
+            s.id,
+            ReplyOptions.yes,
+            CommonRecurrenceRules.daily,
+          ),
+          // Usually in, but said no today: neither confirmed nor usual.
+          defaultRule(
+            memberB,
+            s.id,
+            ReplyOptions.yes,
+            CommonRecurrenceRules.daily,
+          ),
+          // Usually in, and said yes today: confirmed, not usual.
+          defaultRule(
+            'member-d',
+            s.id,
+            ReplyOptions.yes,
+            CommonRecurrenceRules.daily,
+          ),
+        ],
+        replies: [
+          reply(memberB, s.id, day(0), ReplyOptions.no),
+          reply('member-d', s.id, day(0), ReplyOptions.yes),
+          reply('member-e', s.id, day(0), ReplyOptions.yes),
+        ],
+      );
+
+      expect(summary.confirmedYes, 2);
+      expect(summary.usualYes, 1);
+      expect(summary.confirmedYes + summary.usualYes, summary.yesCount);
+
+      // The details screen splits the same way.
+      final details = scheduleInstanceDetails(summary, [
+        for (final m in members) (member(m), null),
+      ], canEditOthers: false);
+      expect(details.confirmedYes, 2);
+      expect(details.usualYes, 1);
+      expect(details.count(ReplyOptions.no), 1);
+    });
+
+    test('my own answer counts as confirmed', () {
+      final s = schedule(CommonRecurrenceRules.daily);
+      final summary = repliesForScheduleInstance(
+        instanceDate: day(0),
+        schedule: s,
+        startDate: monday,
+        endDate: day(1),
+        members: [member(memberA)],
+        targetMemberId: memberA,
+        defaultRules: [
+          defaultRule(
+            memberA,
+            s.id,
+            ReplyOptions.yes,
+            CommonRecurrenceRules.daily,
+          ),
+        ],
+        replies: [reply(memberA, s.id, day(0), ReplyOptions.yes)],
+      );
+
+      expect(summary.confirmedYes, 1);
+      expect(summary.usualYes, 0);
+    });
+  });
+
+  group('nextOccurrence', () {
+    test('finds the next weekly occurrence after an empty day', () {
+      // Weekly from Saturday 2024-01-06 at 10:00.
+      final saturday = schedule(
+        CommonRecurrenceRules.weekly,
+        start: DateTime.utc(2024, 1, 6, 10),
+        id: 'sat',
+      );
+      final next = nextOccurrence([saturday], day(8)); // Tuesday the 9th
+
+      expect(next?.$1.id, 'sat');
+      expect(next?.$2, DateTime.utc(2024, 1, 13, 10));
+    });
+
+    test('picks the earliest of several schedules, today included', () {
+      final daily = schedule(
+        CommonRecurrenceRules.daily,
+        start: DateTime.utc(2024, 1, 1, 18),
+        id: 'daily',
+      );
+      final once = schedule(
+        CommonRecurrenceRules.once,
+        start: DateTime.utc(2024, 1, 3, 9),
+        id: 'once',
+      );
+
+      expect(nextOccurrence([once, daily], day(2))?.$1.id, 'once');
+      expect(nextOccurrence([once, daily], day(3))?.$1.id, 'daily');
+    });
+
+    test('is null when nothing is left', () {
+      final once = schedule(CommonRecurrenceRules.once, id: 'once');
+
+      expect(nextOccurrence([once], day(1)), isNull);
+    });
+  });
 }

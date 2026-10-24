@@ -27,6 +27,28 @@ void showFailure(BuildContext context, Result<Object?>? result) {
   }
 }
 
+/// Confirms a change that's easy to make by mistake, with a way to [undo] it.
+void showUndo(
+  BuildContext context,
+  String message,
+  Future<Result<Object?>> Function() undo,
+) {
+  ScaffoldMessenger.of(context)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(
+      SnackBar(
+        content: Text(message),
+        action: SnackBarAction(
+          label: AppLocalizations.of(context)!.undo,
+          onPressed: () async {
+            final result = await undo();
+            if (context.mounted) showFailure(context, result);
+          },
+        ),
+      ),
+    );
+}
+
 /// Says why loading failed, with a way to try again.
 class ErrorNotice extends StatelessWidget {
   const ErrorNotice({super.key, required this.error, this.onRetry});

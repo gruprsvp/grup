@@ -185,3 +185,69 @@ ScheduleInstanceDetails scheduleInstanceDetails(
     canEditOthers: canEditOthers,
   );
 }
+
+/// The headcount for an occurrence, split by how sure it is.
+extension Headcount on ScheduleInstanceSummary {
+  /// Who answered yes, the user included.
+  int get confirmedYes =>
+      memberReplies.values.where((r) => r == ReplyOptions.yes).length +
+      (myReply == ReplyOptions.yes ? 1 : 0);
+
+  /// Who is counted as coming only by their usual answer: they haven't
+  /// answered this occurrence. [confirmedYes] + [usualYes] == `yesCount`.
+  int get usualYes =>
+      memberDefaultReplies.entries
+          .where(
+            (e) =>
+                e.value == ReplyOptions.yes &&
+                !memberReplies.containsKey(e.key),
+          )
+          .length +
+      (myReply == null && myDefaultReply == ReplyOptions.yes ? 1 : 0);
+}
+
+/// The earliest occurrence of any of [schedules] from [from] on, looking no
+/// further than [horizon] ahead; `null` if there is none.
+(Schedule, DateTime)? nextOccurrence(
+  Iterable<Schedule> schedules,
+  DateTime from, {
+  Duration horizon = const Duration(days: 366),
+}) {
+  (Schedule, DateTime)? next;
+  for (final schedule in schedules) {
+    final after = from.isAfter(schedule.startDate) ? from : schedule.startDate;
+    // Open-ended rules recur forever: take the first, never the whole list.
+    final first = schedule.recurrenceRule
+        .getInstances(
+          start: schedule.startDate,
+          after: after,
+          before: from.add(horizon),
+          includeAfter: true,
+        )
+        .firstOrNull;
+    if (first != null && (next == null || first.isBefore(next.$2))) {
+      next = (schedule, first);
+    }
+  }
+  return next;
+}
+
+/// The headcount for an occurrence's details, as [Headcount] for summaries.
+extension DetailsHeadcount on ScheduleInstanceDetails {
+  /// How many are in the [reply] group (`null`: no reply yet).
+  int count(ReplyOptions? reply) =>
+      repliesGroups.firstWhereOrNull((g) => g.reply == reply)?.count ?? 0;
+
+  /// Who answered yes, the user included.
+  int get confirmedYes =>
+      (repliesGroups
+              .firstWhereOrNull((g) => g.reply == ReplyOptions.yes)
+              ?.members
+              .where((m) => m.reply == ReplyOptions.yes)
+              .length ??
+          0) +
+      (myReply == ReplyOptions.yes ? 1 : 0);
+
+  /// Who is counted as coming only by their usual answer.
+  int get usualYes => count(ReplyOptions.yes) - confirmedYes;
+}

@@ -74,18 +74,8 @@ class AppLocalizationsFr extends AppLocalizations {
   String get createOrJoinGroup => 'Crée ou rejoins un groupe';
 
   @override
-  String get defaultRules => 'Réponses par défaut';
-
-  @override
-  String get defaultRulesDescription =>
-      'Choisis une réponse par défaut pour cet événement';
-
-  @override
-  String get defaultRulesDaily => 'Quotidien';
-
-  @override
   String get defaultRulesExplanation =>
-      'Les réponses par défaut te permettent de définir des réponses automatiques pour les événements récurrents. Tu peux choisir entre des options quotidiennes, en semaine ou le week-end.';
+      'Ta réponse habituelle s\'applique à chaque occurrence concernée : tu es compté sans répondre à chaque fois. Tu peux toujours changer un jour précis.';
 
   @override
   String get defaultRulesWeekdays => 'Jours de semaine';
@@ -197,8 +187,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Ton calendrier d\'événements est vide.<br/>Prêt à planifier quelque chose d\'excitant? Appuie sur le bouton <manage/> pour créer un nouvel événement et inviter les membres du groupe!';
 
   @override
-  String get groupEmptyEventsUser =>
-      'Il n\'y a pas d\'événements pour ce jour spécifique, vérifie une autre date!';
+  String get groupEmptyEventsUser => 'Ce groupe n\'a pas encore d\'événements.';
 
   @override
   String get groupLeave => 'Quitte le groupe';
@@ -215,7 +204,7 @@ class AppLocalizationsFr extends AppLocalizations {
       'Es-tu sûr de vouloir rendre ce membre admin?';
 
   @override
-  String get groupManage => 'Gère le groupe';
+  String get groupManage => 'Gérer le groupe';
 
   @override
   String get grantPermission => 'Donne la permission';
@@ -524,4 +513,128 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get notFoundAction => 'Aller à tes groupes';
+
+  @override
+  String eventComing(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count présents',
+      one: '1 présent',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String eventUsually(int count) {
+    return '+$count d\'habitude';
+  }
+
+  @override
+  String eventOut(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count absents',
+      one: '1 absent',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String eventNoReply(int count) {
+    return '$count sans réponse';
+  }
+
+  @override
+  String get noReplyYet => 'Pas encore de réponse';
+
+  @override
+  String get previousDay => 'Jour précédent';
+
+  @override
+  String get nextDay => 'Jour suivant';
+
+  @override
+  String get noEventsThisDay => 'Aucun événement ce jour-là.';
+
+  @override
+  String nextEvent(String event, String date) {
+    return 'Prochain : $event, $date';
+  }
+
+  @override
+  String get eventNotFound => 'Cet événement n\'a pas lieu ce jour-là.';
+
+  @override
+  String get usualAnswer => 'réponse habituelle';
+
+  @override
+  String get answerComing => 'présent';
+
+  @override
+  String get answerNotComing => 'absent';
+
+  @override
+  String get answerUsuallyComing => 'présent d\'habitude';
+
+  @override
+  String get answerUsuallyNotComing => 'absent d\'habitude';
+
+  @override
+  String get answerNoReply => 'pas encore de réponse';
+
+  @override
+  String get usualAnswerYours => 'Ta réponse habituelle';
+
+  @override
+  String usualAnswerFor(String name) {
+    return 'Réponse habituelle de $name';
+  }
+
+  @override
+  String get usualEveryTime => 'À chaque fois';
+
+  @override
+  String get usuallyIn => 'Présent d\'habitude';
+
+  @override
+  String get usuallyOut => 'Absent d\'habitude';
+
+  @override
+  String usuallyInWhen(String when) {
+    return 'Présent d\'habitude · $when';
+  }
+
+  @override
+  String usuallyOutWhen(String when) {
+    return 'Absent d\'habitude · $when';
+  }
+
+  @override
+  String get setUsualAnswer => 'Choisis ta réponse habituelle';
+
+  @override
+  String get usualAnswerSaved => 'Réponse habituelle enregistrée';
+
+  @override
+  String get usualAnswerRemoved => 'Réponse habituelle supprimée';
+
+  @override
+  String get undo => 'Annuler';
+
+  @override
+  String markedComing(String name) {
+    return '$name noté présent';
+  }
+
+  @override
+  String markedNotComing(String name) {
+    return '$name noté absent';
+  }
+
+  @override
+  String answerCleared(String name) {
+    return 'Réponse de $name effacée';
+  }
 }

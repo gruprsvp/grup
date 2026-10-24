@@ -230,28 +230,10 @@ abstract class AppLocalizations {
   /// **'Create or join group'**
   String get createOrJoinGroup;
 
-  /// No description provided for @defaultRules.
-  ///
-  /// In en, this message translates to:
-  /// **'Default replies'**
-  String get defaultRules;
-
-  /// No description provided for @defaultRulesDescription.
-  ///
-  /// In en, this message translates to:
-  /// **'Choose a default reply to apply to this event'**
-  String get defaultRulesDescription;
-
-  /// No description provided for @defaultRulesDaily.
-  ///
-  /// In en, this message translates to:
-  /// **'Daily'**
-  String get defaultRulesDaily;
-
   /// No description provided for @defaultRulesExplanation.
   ///
   /// In en, this message translates to:
-  /// **'Default replies allow you to set automatic responses for recurring events. You can choose from daily, weekdays, or weekends options.'**
+  /// **'Your usual answer fills in every occurrence it covers, so you\'re counted without answering each time. You can still change any single day.'**
   String get defaultRulesExplanation;
 
   /// No description provided for @defaultRulesWeekdays.
@@ -449,7 +431,7 @@ abstract class AppLocalizations {
   /// No description provided for @groupEmptyEventsUser.
   ///
   /// In en, this message translates to:
-  /// **'There are no events for this specific day, check another date!'**
+  /// **'This group has no events yet.'**
   String get groupEmptyEventsUser;
 
   /// No description provided for @groupLeave.
@@ -1045,6 +1027,186 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Go to your groups'**
   String get notFoundAction;
+
+  /// Headline count of people coming to an event (answered yes).
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 coming} other{{count} coming}}'**
+  String eventComing(int count);
+
+  /// People counted as coming only by their usual answer, shown after the headline count.
+  ///
+  /// In en, this message translates to:
+  /// **'+{count} usually'**
+  String eventUsually(int count);
+
+  /// How many answered no.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} out'**
+  String eventOut(int count);
+
+  /// How many haven't answered.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} no reply'**
+  String eventNoReply(int count);
+
+  /// Section header for members who haven't answered.
+  ///
+  /// In en, this message translates to:
+  /// **'No reply yet'**
+  String get noReplyYet;
+
+  /// Button that shows the day before.
+  ///
+  /// In en, this message translates to:
+  /// **'Previous day'**
+  String get previousDay;
+
+  /// Button that shows the day after.
+  ///
+  /// In en, this message translates to:
+  /// **'Next day'**
+  String get nextDay;
+
+  /// A group's day with no events, when the group has events on other days.
+  ///
+  /// In en, this message translates to:
+  /// **'No events on this day.'**
+  String get noEventsThisDay;
+
+  /// Button that jumps to the group's next event.
+  ///
+  /// In en, this message translates to:
+  /// **'Next: {event}, {date}'**
+  String nextEvent(String event, String date);
+
+  /// An event link for a day the event doesn't happen on (or a deleted event).
+  ///
+  /// In en, this message translates to:
+  /// **'This event isn\'t on this day.'**
+  String get eventNotFound;
+
+  /// Screen-reader value on an answer button that shows a usual answer, not a real one.
+  ///
+  /// In en, this message translates to:
+  /// **'usual answer'**
+  String get usualAnswer;
+
+  /// Screen-reader status of a member.
+  ///
+  /// In en, this message translates to:
+  /// **'coming'**
+  String get answerComing;
+
+  /// Screen-reader status of a member.
+  ///
+  /// In en, this message translates to:
+  /// **'not coming'**
+  String get answerNotComing;
+
+  /// Screen-reader status of a member counted by their usual answer.
+  ///
+  /// In en, this message translates to:
+  /// **'usually coming'**
+  String get answerUsuallyComing;
+
+  /// Screen-reader status of a member counted by their usual answer.
+  ///
+  /// In en, this message translates to:
+  /// **'usually not coming'**
+  String get answerUsuallyNotComing;
+
+  /// Screen-reader status of a member who hasn't answered.
+  ///
+  /// In en, this message translates to:
+  /// **'no reply yet'**
+  String get answerNoReply;
+
+  /// Title of the sheet that sets the user's usual answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Your usual answer'**
+  String get usualAnswerYours;
+
+  /// Title of the sheet where an admin sets a member's usual answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Usual answer for {name}'**
+  String usualAnswerFor(String name);
+
+  /// Usual-answer option covering every occurrence of the event.
+  ///
+  /// In en, this message translates to:
+  /// **'Every time'**
+  String get usualEveryTime;
+
+  /// Under a member's name: their usual answer is yes, for every occurrence.
+  ///
+  /// In en, this message translates to:
+  /// **'Usually in'**
+  String get usuallyIn;
+
+  /// Under a member's name: their usual answer is no, for every occurrence.
+  ///
+  /// In en, this message translates to:
+  /// **'Usually out'**
+  String get usuallyOut;
+
+  /// Under a member's name: their usual answer is yes on some occurrences.
+  ///
+  /// In en, this message translates to:
+  /// **'Usually in · {when}'**
+  String usuallyInWhen(String when);
+
+  /// Under a member's name: their usual answer is no on some occurrences.
+  ///
+  /// In en, this message translates to:
+  /// **'Usually out · {when}'**
+  String usuallyOutWhen(String when);
+
+  /// Under the user's own row on a recurring event: opens the usual-answer sheet.
+  ///
+  /// In en, this message translates to:
+  /// **'Set your usual answer'**
+  String get setUsualAnswer;
+
+  /// Confirmation after setting a usual answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Usual answer saved'**
+  String get usualAnswerSaved;
+
+  /// Confirmation after clearing a usual answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Usual answer removed'**
+  String get usualAnswerRemoved;
+
+  /// Snackbar action that reverts the last change.
+  ///
+  /// In en, this message translates to:
+  /// **'Undo'**
+  String get undo;
+
+  /// After an admin answers yes for a member.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} marked as coming'**
+  String markedComing(String name);
+
+  /// After an admin answers no for a member.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} marked as not coming'**
+  String markedNotComing(String name);
+
+  /// After an admin clears a member's answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Answer cleared for {name}'**
+  String answerCleared(String name);
 }
 
 class _AppLocalizationsDelegate

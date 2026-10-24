@@ -74,18 +74,8 @@ class AppLocalizationsEn extends AppLocalizations {
   String get createOrJoinGroup => 'Create or join group';
 
   @override
-  String get defaultRules => 'Default replies';
-
-  @override
-  String get defaultRulesDescription =>
-      'Choose a default reply to apply to this event';
-
-  @override
-  String get defaultRulesDaily => 'Daily';
-
-  @override
   String get defaultRulesExplanation =>
-      'Default replies allow you to set automatic responses for recurring events. You can choose from daily, weekdays, or weekends options.';
+      'Your usual answer fills in every occurrence it covers, so you\'re counted without answering each time. You can still change any single day.';
 
   @override
   String get defaultRulesWeekdays => 'Weekdays';
@@ -197,8 +187,7 @@ class AppLocalizationsEn extends AppLocalizations {
       'Your event calendar is empty.<br/>Ready to plan something exciting? Tap the <manage/> button to create a new event and invite your group members!';
 
   @override
-  String get groupEmptyEventsUser =>
-      'There are no events for this specific day, check another date!';
+  String get groupEmptyEventsUser => 'This group has no events yet.';
 
   @override
   String get groupLeave => 'Leave group';
@@ -520,4 +509,122 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notFoundAction => 'Go to your groups';
+
+  @override
+  String eventComing(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count coming',
+      one: '1 coming',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String eventUsually(int count) {
+    return '+$count usually';
+  }
+
+  @override
+  String eventOut(int count) {
+    return '$count out';
+  }
+
+  @override
+  String eventNoReply(int count) {
+    return '$count no reply';
+  }
+
+  @override
+  String get noReplyYet => 'No reply yet';
+
+  @override
+  String get previousDay => 'Previous day';
+
+  @override
+  String get nextDay => 'Next day';
+
+  @override
+  String get noEventsThisDay => 'No events on this day.';
+
+  @override
+  String nextEvent(String event, String date) {
+    return 'Next: $event, $date';
+  }
+
+  @override
+  String get eventNotFound => 'This event isn\'t on this day.';
+
+  @override
+  String get usualAnswer => 'usual answer';
+
+  @override
+  String get answerComing => 'coming';
+
+  @override
+  String get answerNotComing => 'not coming';
+
+  @override
+  String get answerUsuallyComing => 'usually coming';
+
+  @override
+  String get answerUsuallyNotComing => 'usually not coming';
+
+  @override
+  String get answerNoReply => 'no reply yet';
+
+  @override
+  String get usualAnswerYours => 'Your usual answer';
+
+  @override
+  String usualAnswerFor(String name) {
+    return 'Usual answer for $name';
+  }
+
+  @override
+  String get usualEveryTime => 'Every time';
+
+  @override
+  String get usuallyIn => 'Usually in';
+
+  @override
+  String get usuallyOut => 'Usually out';
+
+  @override
+  String usuallyInWhen(String when) {
+    return 'Usually in · $when';
+  }
+
+  @override
+  String usuallyOutWhen(String when) {
+    return 'Usually out · $when';
+  }
+
+  @override
+  String get setUsualAnswer => 'Set your usual answer';
+
+  @override
+  String get usualAnswerSaved => 'Usual answer saved';
+
+  @override
+  String get usualAnswerRemoved => 'Usual answer removed';
+
+  @override
+  String get undo => 'Undo';
+
+  @override
+  String markedComing(String name) {
+    return '$name marked as coming';
+  }
+
+  @override
+  String markedNotComing(String name) {
+    return '$name marked as not coming';
+  }
+
+  @override
+  String answerCleared(String name) {
+    return 'Answer cleared for $name';
+  }
 }

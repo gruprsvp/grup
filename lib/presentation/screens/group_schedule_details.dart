@@ -1,33 +1,49 @@
-import 'dart:math';
-
+import 'package:collection/collection.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:parousia/l10n/app_localizations.dart';
 import 'package:intl/intl.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
+import 'package:parousia/util/util.dart';
 import 'package:rrule/rrule.dart';
 
 /// Answers for [memberId]: the user, or (for admins) anyone in the group.
+/// [previous] is what it replaces, and [name] is set when it's someone else.
 typedef OnDetailsReplyChangedCallback = void Function({
   required String memberId,
   required ReplyOptions? reply,
+  required ReplyOptions? previous,
+  String? name,
 });
 
-/// Sets [memberId]'s default answer for the occurrences [rule] matches.
+/// Sets [memberId]'s usual answer for the occurrences [rule] matches.
+/// [previous] is the rule it replaces, and [name] is set when it's someone
+/// else.
 typedef OnDetailsDefaultRuleChangedCallback = void Function({
   required String memberId,
   required RecurrenceRule? rule,
   required ReplyOptions? reply,
+  required DefaultRule? previous,
+  String? name,
 });
+
+/// The answer groups, in the order the organiser needs them: who's coming,
+/// who to chase, who's out.
+const _answerOrder = [ReplyOptions.yes, null, ReplyOptions.no];
 
 class GroupScheduleDetailsScreen extends StatelessWidget {
   final bool loading;
   final Group? group;
 
-  /// `null` until loaded: the answer buttons stay disabled until then.
+  /// `null` until loaded, or when the event doesn't happen on this day.
   final ScheduleInstanceDetails? scheduleInstance;
+
+  /// How the event recurs; usual answers need it.
+  final RecurrenceRule? scheduleRule;
   final Exception? error;
   final VoidCallback? onRetry;
+  final Future<void> Function()? onRefresh;
   final OnDetailsReplyChangedCallback? onReplyChanged;
   final OnDetailsDefaultRuleChangedCallback? onDefaultRuleChanged;
 
@@ -36,138 +52,222 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
     required this.loading,
     this.group,
     this.scheduleInstance,
+    this.scheduleRule,
     this.error,
     this.onRetry,
+    this.onRefresh,
     this.onReplyChanged,
     this.onDefaultRuleChanged,
   });
 
-  /// Lets [memberId]'s answers be changed, if there is one.
+  /// Lets [memberId]'s answers be changed, if there is one. [name] is `null`
+  /// for the user's own row.
   ScheduleMemberTile _memberTile({
-    required String name,
+    required String eventName,
+    required String displayName,
+    required String? name,
     required String? memberId,
     ReplyOptions? reply,
     ReplyOptions? defaultReply,
     DefaultRule? defaultRule,
-  }) => ScheduleMemberTile(
-    name: name,
-    reply: reply,
-    defaultReply: defaultReply,
-    defaultRule: defaultRule,
-    onReplyChanged: memberId == null || onReplyChanged == null
-        ? null
-        : (reply) => onReplyChanged!(memberId: memberId, reply: reply),
-    onDefaultRuleChanged: memberId == null || onDefaultRuleChanged == null
-        ? null
-        : (rule, reply) => onDefaultRuleChanged!(
-            memberId: memberId,
-            rule: rule,
-            reply: reply,
-          ),
-  );
+  }) {
+    final rule = scheduleRule;
+    return ScheduleMemberTile(
+      name: displayName,
+      isYou: name == null,
+      eventName: eventName,
+      // A one-off event has nothing to answer "usually".
+      scheduleRule: rule == null || rule == CommonRecurrenceRules.once
+          ? null
+          : rule,
+      reply: reply,
+      defaultReply: defaultReply,
+      defaultRule: defaultRule,
+      onReplyChanged: memberId == null || onReplyChanged == null
+          ? null
+          : (answer) => onReplyChanged!(
+              memberId: memberId,
+              reply: answer,
+              // Undo puts back the explicit answer, not a usual one.
+              previous: reply,
+              name: name,
+            ),
+      onDefaultRuleChanged: memberId == null || onDefaultRuleChanged == null
+          ? null
+          : (rule, answer) => onDefaultRuleChanged!(
+              memberId: memberId,
+              rule: rule,
+              reply: answer,
+              previous: defaultRule,
+              name: name,
+            ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final locale = Localizations.localeOf(context).toString();
-    final groupName = group?.displayName ?? l10n.loading;
-    final scheduleName = scheduleInstance?.displayName ?? l10n.loading;
-    final instanceDate = scheduleInstance?.instanceDate;
-    final repliesGroups = scheduleInstance?.repliesGroups ?? [];
-    // Only admins may answer for others.
-    final canEditOthers = scheduleInstance?.canEditOthers ?? false;
+    final details = scheduleInstance;
     final error = this.error;
+    final notFound = details == null && !loading && error == null;
+    final eventName = details?.displayName ?? '';
+    // Only admins may answer for others.
+    final canEditOthers = details?.canEditOthers ?? false;
 
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SliverAppBar(
-            title: Text(groupName),
-            floating: true,
-            pinned: true,
-            bottom: PreferredSize(
-              preferredSize: Size.fromHeight(80),
-              child: Padding(
-                padding: EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        scheduleName,
-                        maxLines: 2,
-                        overflow: TextOverflow.fade,
-                      ),
+      body: RefreshIndicator.adaptive(
+        onRefresh: onRefresh ?? () async {},
+        child: CustomScrollView(
+          // Pull to refresh works on a short roster too.
+          physics: const AlwaysScrollableScrollPhysics(),
+          slivers: [
+            SliverAppBar(pinned: true, title: Text(eventName)),
+            if (loading)
+              const SliverToBoxAdapter(child: LinearProgressIndicator()),
+            if (error != null)
+              SliverToBoxAdapter(
+                child: ErrorNotice(error: error, onRetry: onRetry),
+              ),
+            if (notFound)
+              SliverFillRemaining(
+                hasScrollBody: false,
+                child: Center(
+                  child: Padding(
+                    padding: const EdgeInsets.all(16),
+                    child: Text(
+                      l10n.eventNotFound,
+                      textAlign: TextAlign.center,
+                      style: Theme.of(context).textTheme.bodyLarge,
                     ),
-                    if (instanceDate != null)
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.end,
-                        children: [
-                          Text(DateFormat.yMMMd(locale).format(instanceDate)),
-                          Text(DateFormat.jm(locale).format(instanceDate)),
-                        ],
+                  ),
+                ),
+              ),
+            if (details != null) ...[
+              SliverToBoxAdapter(
+                child: _Headcount(
+                  groupName: group?.displayName,
+                  details: details,
+                ),
+              ),
+              SliverToBoxAdapter(
+                child: _memberTile(
+                  eventName: eventName,
+                  displayName: l10n.you,
+                  name: null,
+                  memberId: details.targetMemberId,
+                  reply: details.myReply,
+                  defaultReply: details.myDefaultReply,
+                  defaultRule: details.myDefaultRule,
+                ),
+              ),
+              for (final answer in _answerOrder)
+                if (details.repliesGroups.firstWhereOrNull(
+                      (g) => g.reply == answer,
+                    )
+                    case final replyGroup?) ...[
+                  const SliverToBoxAdapter(child: SizedBox(height: 16)),
+                  // The header stays on top only while its members scroll by.
+                  SliverMainAxisGroup(
+                    slivers: [
+                      PinnedHeaderSliver(
+                        child: _AnswerHeader(
+                          reply: answer,
+                          count: replyGroup.count,
+                        ),
                       ),
-                  ],
-                ),
-              ),
-            ),
-          ),
-          if (loading)
-            const SliverToBoxAdapter(child: LinearProgressIndicator()),
-          if (error != null)
-            SliverToBoxAdapter(
-              child: ErrorNotice(error: error, onRetry: onRetry),
-            ),
-          SliverToBoxAdapter(
-            child: _memberTile(
-              name: l10n.you,
-              memberId: scheduleInstance?.targetMemberId,
-              reply: scheduleInstance?.myReply,
-              defaultReply: scheduleInstance?.myDefaultReply,
-              defaultRule: scheduleInstance?.myDefaultRule,
-            ),
-          ),
-          for (final replyGroup in repliesGroups) ...[
+                      SliverList.builder(
+                        itemCount: replyGroup.members.length,
+                        itemBuilder: (context, index) {
+                          final el = replyGroup.members[index];
+                          final name =
+                              el.member.displayNameOverride ??
+                              el.profile?.displayName ??
+                              l10n.unknown;
+                          return _memberTile(
+                            eventName: eventName,
+                            displayName: name,
+                            name: name,
+                            memberId: canEditOthers ? el.member.id : null,
+                            reply: el.reply,
+                            defaultReply: el.defaultReply,
+                            defaultRule: el.defaultRule,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ],
+            ],
+            // CustomScrollView slivers don't apply the bottom view inset
+            // automatically (unlike ListView), so pad past the system nav bar.
             SliverPadding(
-              padding: EdgeInsets.only(top: 32, bottom: 16),
-              sliver: SliverPersistentHeader(
-                pinned: true,
-                delegate: _SliverPersistentHeaderDelegate(
-                  maxHeight: kToolbarHeight,
-                  replyGroup: replyGroup,
-                ),
+              padding: EdgeInsets.only(
+                bottom: MediaQuery.paddingOf(context).bottom + 16,
               ),
-            ),
-            SliverList.builder(
-              itemCount: replyGroup.members.length,
-              itemBuilder: (context, index) {
-                final el = replyGroup.members.elementAt(index);
-                final member = el.member;
-                final profile = el.profile;
-                final reply = el.reply;
-                final defaultReply = el.defaultReply;
-                final defaultRule = el.defaultRule;
-
-                final name =
-                    member.displayNameOverride ??
-                    profile?.displayName ??
-                    l10n.unknown;
-
-                return _memberTile(
-                  name: name,
-                  memberId: canEditOthers ? member.id : null,
-                  reply: reply,
-                  defaultReply: defaultReply,
-                  defaultRule: defaultRule,
-                );
-              },
             ),
           ],
-          // CustomScrollView slivers don't apply the bottom view inset
-          // automatically (unlike ListView), so pad past the system nav bar.
-          SliverPadding(
-            padding: EdgeInsets.only(
-              bottom: MediaQuery.paddingOf(context).bottom,
+        ),
+      ),
+    );
+  }
+}
+
+/// Where, when, and who's coming: the answer the screen exists for.
+class _Headcount extends StatelessWidget {
+  const _Headcount({required this.groupName, required this.details});
+
+  final String? groupName;
+  final ScheduleInstanceDetails details;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final textTheme = theme.textTheme;
+    final muted = theme.colorScheme.onSurfaceVariant;
+    final locale = Localizations.localeOf(context).toString();
+    final date = details.instanceDate;
+    final usual = details.usualYes;
+    final groupName = this.groupName;
+
+    return Padding(
+      padding: const EdgeInsets.fromLTRB(16, 4, 16, 8),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            [
+              ?groupName,
+              DateFormat.MMMEd(locale).format(date),
+              DateFormat.jm(locale).format(date),
+            ].join(' · '),
+            style: textTheme.bodyMedium?.copyWith(color: muted),
+          ),
+          const SizedBox(height: 16),
+          Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(
+                  text: keepTogether(l10n.eventComing(details.confirmedYes)),
+                  style: textTheme.headlineMedium?.copyWith(
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+                if (usual > 0)
+                  TextSpan(
+                    text: '  ${keepTogether(l10n.eventUsually(usual))}',
+                    style: textTheme.titleMedium?.copyWith(color: muted),
+                  ),
+              ],
             ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            [
+              keepTogether(l10n.eventNoReply(details.count(null))),
+              keepTogether(l10n.eventOut(details.count(ReplyOptions.no))),
+            ].join(' · '),
+            style: textTheme.bodyLarge?.copyWith(color: muted),
           ),
         ],
       ),
@@ -175,65 +275,44 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
   }
 }
 
-class _SliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
-  _SliverPersistentHeaderDelegate({
-    required this.replyGroup,
-    required this.maxHeight,
-  });
+/// Names an answer group and how many are in it. Opaque, since it stays on
+/// top of the members scrolling under it.
+class _AnswerHeader extends StatelessWidget {
+  const _AnswerHeader({required this.reply, required this.count});
 
-  final double minHeight = kToolbarHeight;
-  final double maxHeight;
-  final ScheduleInstanceRepliesGroup replyGroup;
+  final ReplyOptions? reply;
+  final int count;
 
   @override
-  double get minExtent => minHeight;
-
-  @override
-  double get maxExtent => max(maxHeight, minHeight);
-
-  @override
-  Widget build(
-    BuildContext context,
-    double shrinkOffset,
-    bool overlapsContent,
-  ) {
+  Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-    final colorScheme = theme.colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
+    final (icon, color, label) = switch (reply) {
+      ReplyOptions.yes => (FontAwesomeIcons.solidThumbsUp, yesColor, l10n.yes),
+      ReplyOptions.no => (
+        FontAwesomeIcons.solidThumbsDown,
+        colorScheme.error,
+        l10n.no,
+      ),
+      null => (
+        FontAwesomeIcons.hourglassHalf,
+        colorScheme.onSurfaceVariant,
+        l10n.noReplyYet,
+      ),
+    };
 
-    Color surfaceColorByReply(ReplyOptions? reply) {
-      switch (reply) {
-        case ReplyOptions.yes:
-          return colorScheme.surfaceContainerHighest;
-        case ReplyOptions.no:
-          return colorScheme.surfaceContainerHigh;
-        default:
-          return colorScheme.surfaceContainer;
-      }
-    }
-
-    return SizedBox.expand(
-      child: Container(
-        color: surfaceColorByReply(replyGroup.reply),
+    return ColoredBox(
+      color: colorScheme.surfaceContainer,
+      child: MergeSemantics(
         child: ListTile(
-          dense: overlapsContent,
-          title: Text(
-            replyGroup.reply == null
-                ? l10n.unknown
-                : replyGroup.reply == ReplyOptions.yes
-                ? l10n.yes
-                : l10n.no,
+          leading: FaIcon(icon, color: color, size: 18),
+          title: Text(label),
+          trailing: Text(
+            '$count',
+            style: Theme.of(context).textTheme.titleMedium,
           ),
-          trailing: Text('${replyGroup.count}'),
         ),
       ),
     );
-  }
-
-  @override
-  bool shouldRebuild(_SliverPersistentHeaderDelegate oldDelegate) {
-    return maxHeight != oldDelegate.maxHeight ||
-        minHeight != oldDelegate.minHeight ||
-        replyGroup != oldDelegate.replyGroup;
   }
 }

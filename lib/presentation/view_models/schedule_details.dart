@@ -40,6 +40,10 @@ class ScheduleDetailsViewModel extends ViewModel {
   /// `null` until loaded, or if the schedule has no such occurrence.
   ScheduleInstanceDetails? get details => _details;
 
+  /// How the event recurs; `null` until loaded.
+  RecurrenceRule? get scheduleRule =>
+      _schedules.schedule(scheduleId)?.recurrenceRule;
+
   /// Answers for [memberId] (the user, or anyone when the user is an admin),
   /// or clears the answer when [option] is null.
   Future<Result<void>> reply(String memberId, ReplyOptions? option) =>

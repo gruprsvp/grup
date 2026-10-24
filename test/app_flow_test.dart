@@ -27,6 +27,7 @@ void main() {
         backend.addProfile('me', name: 'Me');
         final club = backend.addGroup('Club');
         backend.addSchedule(club.id, name: 'Dinner');
+        backend.addMember(club.id, name: 'Ann');
       },
     );
     backend = fake;
@@ -68,6 +69,34 @@ void main() {
         find.byWidgetPredicate((w) => w is FaIcon && w.icon == data.data);
     expect(icon(FontAwesomeIcons.solidThumbsUp), findsOneWidget);
     expect(icon(FontAwesomeIcons.solidThumbsDown), findsNothing);
+  });
+
+  testWidgets('an admin answering for someone else can undo it', (
+    tester,
+  ) async {
+    await pumpApp(tester);
+    final ann = backend.members.values.singleWhere(
+      (m) => m.displayNameOverride == 'Ann',
+    );
+
+    await tester.tap(find.text('Club'));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Dinner'));
+    await tester.pumpAndSettle();
+
+    final annYes = find.descendant(
+      of: find.widgetWithText(ListTile, 'Ann'),
+      matching: find.byTooltip('Yes'),
+    );
+    await tester.ensureVisible(annYes);
+    await tester.tap(annYes);
+    await tester.pumpAndSettle();
+    expect(backend.replies.values.single.memberId, ann.id);
+    expect(find.text('Ann marked as coming'), findsOneWidget);
+
+    await tester.tap(find.text('Undo'));
+    await tester.pumpAndSettle();
+    expect(backend.replies, isEmpty);
   });
 
   testWidgets('the address bar follows the group pages', (tester) async {
