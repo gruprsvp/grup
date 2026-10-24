@@ -37,7 +37,7 @@ Three genuine decisions need your input before Phase 2 — see [Decisions](#deci
 
 **Merged.** #253–#259 merged in order on 2026-10-24 at 08:33 UTC, within a minute of each other. Release run 40078516614 (`492f994`) started right after: tests, the draft release, `db push` of `20261023120000_default_privileges.sql` and `20261023130000_revoke_anon_tables.sql`, and web on `gh-pages` passed. So did the Android build and upload to Play internal (the first with `tracks:`) and the Sentry upload; `delete_user_account` had no changes. So prod has S2's revoke before Supabase applies it on 2026-10-30.
 
-**Done:** Phase 0 except item 5 (below, under CI) and branch protection; Phase 1 except item 20's seed colours and item 1's error page; Phase 1.5 except item 6 (pagination) and part of item 8 (clearing values); D1 (B1, MVVM) and D2 (client-side); M1–M4; Widgetbook removed; invites and the auth user no longer persisted ([A2] PII at rest); S1–S6 and S8 in code.
+**Done:** Phase 0 except item 5 (below, under CI) and branch protection; Phase 1 except item 20's seed colours (item 1's error page is on `fix/profile-edits-stick`); Phase 1.5 except item 6 (pagination; item 8's clearing values is on `fix/profile-edits-stick`, service only); D1 (B1, MVVM) and D2 (client-side); M1–M4; Widgetbook removed; invites and the auth user no longer persisted ([A2] PII at rest); S1–S6 and S8 in code.
 
 Everything still open, in one place:
 
@@ -46,26 +46,27 @@ Everything still open, in one place:
 - `pg_default_acl` on prod against local (query in the 2026-10-23 section below).
 - `supabase db advisors --linked`: the prod-only checks, and Confirm #1 (email confirmations on prod).
 - S7: `select extname from pg_extension` on prod.
+- After `fix/profile-edits-stick`: `select count(*) from profiles p join auth.users u on u.id = p.id where p.display_name is distinct from u.raw_user_meta_data ->> 'full_name' or p.picture is distinct from u.raw_user_meta_data ->> 'avatar_url'`. Edits from 1.x/2.0.0 clients never reach those profiles, so a non-zero count needs a one-time backfill.
 - S8: prod's exposed schemas; turn off `pg_graphql`.
 - S1: deactivate the legacy keys once the dashboard shows nothing uses them.
 
 **Release and stores:**
-- Smoke-test the build from 40078516614 on devices against prod: sign-in with every provider, RSVP, picture upload, deleting a throwaway account. It is the first one with #256–#258, which change the binary.
+- Smoke-test the build from `bd9bc4e`'s release run (or later; 40078516614 predates the version gate) on devices against prod: sign-in with every provider, RSVP, picture upload, deleting a throwaway account. It is the first one with #256–#258, which change the binary. Once `fix/profile-edits-stick` is released, also: edit your name and picture, sign out, sign back in with Google (and Apple), and check the edit survived. pgTAP only simulates what GoTrue does to the metadata.
 - Then promote it from Play internal, attach the Xcode Cloud build to 2.0.0 and submit. Neither the versionCode 224 build (legacy key) nor any other build before #257 should go out.
 - Keep `v2.0.0` a draft until the app is live (the version gate in `build.yaml`). Delete the stale `v1.7.2`/`v1.7.3` drafts.
 
 **Code:**
-- **Minimum-version gate.** When Supabase turns off the legacy keys, every 1.x and early 2.0.0 install fails with generic errors. A gate only helps installs that already have it, so ship it in an early 2.x build.
+- ~~**Minimum-version gate.**~~ Merged in `bd9bc4e` after this list was written. A gate only helps installs that already have it, so the build to smoke-test and promote is the one from `bd9bc4e`'s release run or later, not 40078516614.
 - Pagination (Phase 1.5 item 6). No list is near the 1000-row cap.
 - Web OAuth loses `/auth?from=…` (needs a real provider and prod's redirect allowlist to test).
 - Per-invite link-preview cards.
-- No `errorBuilder` on the router (Phase 1 item 1): an unknown URL shows go_router's bare error screen.
-- A member's name override, and a profile's name or picture, still can't be cleared (Phase 1.5 item 8): `MembersService.updateMember` skips a null or empty override, and `ProfilesService.updateProfile` drops null values.
+- ~~No `errorBuilder` on the router~~ (Phase 1 item 1): `fix/profile-edits-stick` adds `NotFoundScreen`.
+- Clearing values (Phase 1.5 item 8), `fix/profile-edits-stick`: an empty override now clears it (`updateMember`), except on a guest, whose override is their only name (check constraint). No screen clears anything: nothing edits a member's override, the profile name is required, and the profile screen can't remove a picture. Add that UI if it's wanted.
 - #186 (`refactor/timezone`; probably the fix for #51, though it doesn't say so). S2 is merged, so the order is fine now. It predates MVVM and needs a rewrite, and any new column or table needs the explicit grants from `CLAUDE.md`.
 - **Legacy island.** `lib/presentation/screens/auth.dart` wraps `supabase_auth_ui` 0.7.2 (still on framework Material, 8 files) in `MaterialUiCompatibilityBridge`, which is `@Deprecated`. When framework Material is formally deprecated, the bridge goes with it. Until then the web build carries both Material copies.
-- **Database residuals** (re-checked in the code 2026-10-24):
-  - `handle_new_invite` (`20260807150200`) links an existing user's profile but keeps the member's `display_name_override`. `handle_upsert_user` resets it.
-  - `profiles` has no UPDATE policy. Profile edits go through `auth.updateUser` metadata, and `handle_upsert_user` copies `full_name`/`avatar_url` on every `auth.users` update, so a provider that rewrites that metadata at sign-in overwrites an in-app edit.
+- ~~**Database residuals**~~, `fix/profile-edits-stick` (`20261024120000_profile_edits_stick.sql`, `profile_edits_test.sql`):
+  - `handle_new_invite` resets `display_name_override` like the other two claim paths.
+  - `profiles_update_self` lets users edit their own profile, and the app writes `profiles` directly instead of auth metadata. `handle_upsert_user` copies a metadata field only while the profile still holds the previous metadata value: a provider rewriting it at sign-in no longer overwrites an in-app edit, while 1.x/2.0.0 clients (which still save as metadata) and Sign in with Apple's late name still reach the profile. Limits until every install has the new client: old clients' edits can still be overwritten by a provider sign-in, and once a user edits their profile on web (deployed on merge), edits from their old phone build silently stop landing.
 - **Storage residuals:** every picture change uploads a new object and never deletes the old one. Group pictures sit in the uploader's folder, so deleting that account (`deleteUserFiles`) breaks the group's picture.
 - **CI:** no iOS build (Xcode Cloud only) and no staging gate before prod `db push` (Phase 0 item 5; needs the environments work).
 
