@@ -1,0 +1,559 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-24T11:20:05+00:00",
+  "title": "Design System: GRUP",
+  "extensions": {
+    "colorMeta": {
+      "harbour-navy": {
+        "role": "primary",
+        "displayName": "Harbour Navy",
+        "canonical": "#415E91",
+        "tonalRamp": [
+          "#00062C",
+          "#08214E",
+          "#233E6F",
+          "#405D90",
+          "#5F7DB3",
+          "#7F9FD7",
+          "#A4C5FF",
+          "#E0EFFF"
+        ]
+      },
+      "harbour-navy-container": {
+        "role": "primary",
+        "displayName": "Harbour Navy Container",
+        "canonical": "#D7E3FF",
+        "tonalRamp": [
+          "#050A1C",
+          "#1B2338",
+          "#363F56",
+          "#535D75",
+          "#727D96",
+          "#939EB8",
+          "#B8C4DF",
+          "#E2EEFF"
+        ]
+      },
+      "on-harbour-navy-container": {
+        "role": "primary",
+        "displayName": "On Harbour Navy Container",
+        "canonical": "#284777",
+        "tonalRamp": [
+          "#00062C",
+          "#04224E",
+          "#203F6E",
+          "#3E5E90",
+          "#5C7EB2",
+          "#7CA0D6",
+          "#A1C6FE",
+          "#DFF0FF"
+        ]
+      },
+      "lagoon-teal": {
+        "role": "secondary",
+        "displayName": "Lagoon Teal",
+        "canonical": "#00A4B8",
+        "tonalRamp": [
+          "#00111D",
+          "#002F42",
+          "#004E60",
+          "#006D81",
+          "#008FA2",
+          "#25B1C5",
+          "#77D5E5",
+          "#D1F6FD"
+        ]
+      },
+      "lantern-olive": {
+        "role": "primary",
+        "displayName": "Lantern Olive (night)",
+        "canonical": "#CCCB76",
+        "tonalRamp": [
+          "#100B00",
+          "#2B2500",
+          "#464200",
+          "#646100",
+          "#84822B",
+          "#A5A34F",
+          "#C9C982",
+          "#F1F1D3"
+        ]
+      },
+      "lantern-olive-container": {
+        "role": "primary",
+        "displayName": "Lantern Olive Container (night)",
+        "canonical": "#4A4900",
+        "tonalRamp": [
+          "#0F0C00",
+          "#282600",
+          "#444300",
+          "#626121",
+          "#818142",
+          "#A2A363",
+          "#C8C988",
+          "#F0F1D3"
+        ]
+      },
+      "pitch-green": {
+        "role": "secondary",
+        "displayName": "Pitch Green (night)",
+        "canonical": "#00623F",
+        "tonalRamp": [
+          "#001401",
+          "#003112",
+          "#004F2D",
+          "#186E4A",
+          "#408F69",
+          "#63B18A",
+          "#8ED7B0",
+          "#D8F7E6"
+        ]
+      },
+      "yes-green": {
+        "role": "attendance",
+        "displayName": "Yes Green",
+        "canonical": "#2E7D32",
+        "tonalRamp": [
+          "#001200",
+          "#003100",
+          "#005000",
+          "#1F7025",
+          "#439146",
+          "#66B467",
+          "#A0D49F",
+          "#DFF6DE"
+        ]
+      },
+      "no-red": {
+        "role": "attendance",
+        "displayName": "No Red",
+        "canonical": "#BA1A1A",
+        "tonalRamp": [
+          "#240000",
+          "#510000",
+          "#820000",
+          "#B10710",
+          "#D5433A",
+          "#E8796D",
+          "#FAAEA3",
+          "#FFE5E0"
+        ]
+      },
+      "no-red-night": {
+        "role": "attendance",
+        "displayName": "No Red (night)",
+        "canonical": "#FFB4AB",
+        "tonalRamp": [
+          "#240000",
+          "#460B0A",
+          "#672A25",
+          "#894842",
+          "#AC6860",
+          "#D08981",
+          "#F9AEA5",
+          "#FFE5E0"
+        ]
+      },
+      "day-surface": {
+        "role": "neutral",
+        "displayName": "Day Surface",
+        "canonical": "#F9F9FF",
+        "tonalRamp": [
+          "#0B0B0E",
+          "#242328",
+          "#3F3F44",
+          "#5D5D62",
+          "#7D7D82",
+          "#9E9EA3",
+          "#C3C3C9",
+          "#EEEEF4"
+        ]
+      },
+      "day-ink": {
+        "role": "neutral",
+        "displayName": "Day Ink",
+        "canonical": "#191C20",
+        "tonalRamp": [
+          "#090B0F",
+          "#212428",
+          "#3D4045",
+          "#5A5E63",
+          "#7A7E83",
+          "#9B9FA4",
+          "#C0C4CA",
+          "#EBEFF5"
+        ]
+      },
+      "day-ink-muted": {
+        "role": "neutral",
+        "displayName": "Day Ink Muted",
+        "canonical": "#44474E",
+        "tonalRamp": [
+          "#090B11",
+          "#21242A",
+          "#3D4047",
+          "#5A5E65",
+          "#7A7D85",
+          "#9B9EA6",
+          "#C0C4CC",
+          "#EBEEF7"
+        ]
+      },
+      "day-container": {
+        "role": "neutral",
+        "displayName": "Day Container",
+        "canonical": "#EDEDF4",
+        "tonalRamp": [
+          "#0B0B0F",
+          "#232328",
+          "#3F3F45",
+          "#5D5D63",
+          "#7C7C83",
+          "#9E9EA4",
+          "#C3C3CA",
+          "#EEEEF5"
+        ]
+      },
+      "day-container-high": {
+        "role": "neutral",
+        "displayName": "Day Container High",
+        "canonical": "#E7E8EE",
+        "tonalRamp": [
+          "#0A0B0F",
+          "#232428",
+          "#3F3F44",
+          "#5C5D62",
+          "#7C7D82",
+          "#9D9EA4",
+          "#C3C4C9",
+          "#EDEEF4"
+        ]
+      },
+      "day-container-highest": {
+        "role": "neutral",
+        "displayName": "Day Container Highest",
+        "canonical": "#E2E2E9",
+        "tonalRamp": [
+          "#0B0B0F",
+          "#232328",
+          "#3F3F45",
+          "#5D5D63",
+          "#7C7C83",
+          "#9E9EA4",
+          "#C3C3CA",
+          "#EEEEF5"
+        ]
+      },
+      "day-outline": {
+        "role": "neutral",
+        "displayName": "Day Outline",
+        "canonical": "#74777F",
+        "tonalRamp": [
+          "#090B11",
+          "#21242A",
+          "#3D4047",
+          "#5B5D65",
+          "#7A7D85",
+          "#9B9EA7",
+          "#C1C4CD",
+          "#EBEEF7"
+        ]
+      },
+      "night-surface": {
+        "role": "neutral",
+        "displayName": "Night Surface",
+        "canonical": "#14140C",
+        "tonalRamp": [
+          "#0C0C05",
+          "#25251C",
+          "#404037",
+          "#5E5E55",
+          "#7E7E74",
+          "#9F9F94",
+          "#C5C5BA",
+          "#EFEFE4"
+        ]
+      },
+      "night-ink": {
+        "role": "neutral",
+        "displayName": "Night Ink",
+        "canonical": "#E6E3D5",
+        "tonalRamp": [
+          "#0D0B03",
+          "#27241A",
+          "#424035",
+          "#605E52",
+          "#807D71",
+          "#A19F92",
+          "#C7C4B7",
+          "#F2EFE1"
+        ]
+      },
+      "night-ink-muted": {
+        "role": "neutral",
+        "displayName": "Night Ink Muted",
+        "canonical": "#CAC7B6",
+        "tonalRamp": [
+          "#0E0B02",
+          "#272417",
+          "#434032",
+          "#615E4F",
+          "#817E6E",
+          "#A29F8F",
+          "#C8C5B4",
+          "#F2EFDD"
+        ]
+      },
+      "night-container": {
+        "role": "neutral",
+        "displayName": "Night Container",
+        "canonical": "#202018",
+        "tonalRamp": [
+          "#0C0C05",
+          "#25251C",
+          "#404038",
+          "#5E5E55",
+          "#7E7E74",
+          "#9F9F95",
+          "#C5C5BA",
+          "#EFEFE4"
+        ]
+      },
+      "night-container-high": {
+        "role": "neutral",
+        "displayName": "Night Container High",
+        "canonical": "#2B2A22",
+        "tonalRamp": [
+          "#0C0B05",
+          "#25241C",
+          "#414038",
+          "#5F5E55",
+          "#7F7E74",
+          "#A09F95",
+          "#C6C5BA",
+          "#F0EFE4"
+        ]
+      },
+      "night-container-highest": {
+        "role": "neutral",
+        "displayName": "Night Container Highest",
+        "canonical": "#36352C",
+        "tonalRamp": [
+          "#0C0B05",
+          "#25241C",
+          "#414037",
+          "#5F5E54",
+          "#7F7E73",
+          "#A09F94",
+          "#C6C5B9",
+          "#F0EFE3"
+        ]
+      },
+      "night-outline": {
+        "role": "neutral",
+        "displayName": "Night Outline",
+        "canonical": "#939181",
+        "tonalRamp": [
+          "#0D0B02",
+          "#262417",
+          "#424032",
+          "#605E4F",
+          "#807E6E",
+          "#A19F8F",
+          "#C7C5B4",
+          "#F1EFDE"
+        ]
+      }
+    },
+    "typographyMeta": {
+      "wordmark": {
+        "displayName": "Wordmark",
+        "purpose": "The GRUP name only (app bar, brand spans, feedback title)."
+      },
+      "headline": {
+        "displayName": "Headline",
+        "purpose": "Group names in the home list."
+      },
+      "title": {
+        "displayName": "Title",
+        "purpose": "App-bar titles."
+      },
+      "title-small": {
+        "displayName": "Title Small",
+        "purpose": "List-tile titles: events, members, answer headers."
+      },
+      "body": {
+        "displayName": "Body",
+        "purpose": "Onboarding and descriptive copy."
+      },
+      "body-small": {
+        "displayName": "Body Small",
+        "purpose": "List subtitles: times, descriptions."
+      },
+      "label": {
+        "displayName": "Label",
+        "purpose": "Buttons, FAB, badges."
+      }
+    },
+    "shadows": [
+      {
+        "name": "m3-level-1",
+        "value": "0 1px 2px rgba(0,0,0,.3), 0 1px 3px 1px rgba(0,0,0,.15)",
+        "purpose": "Direction (not built yet): cards and rows the user acts on, at rest."
+      },
+      {
+        "name": "m3-level-3",
+        "value": "0 1px 3px rgba(0,0,0,.3), 0 4px 8px 3px rgba(0,0,0,.15)",
+        "purpose": "FAB (stock) and pressed or dragged items."
+      }
+    ],
+    "motion": [
+      {
+        "name": "material-default",
+        "value": "Stock platform route transitions; Hero on group avatar and name",
+        "purpose": "No custom motion tokens exist."
+      }
+    ],
+    "breakpoints": []
+  },
+  "components": [
+    {
+      "name": "Reply Buttons",
+      "kind": "custom",
+      "refersTo": "reply-yes-active",
+      "description": "Signature yes/no pair beside every event and member: answered, unanswered, usual-answer and answered-no states.",
+      "html": "<div class=\"ds-replies\"><button class=\"ds-reply ds-reply-yes-on\" aria-label=\"Yes, answered\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M2 21h4V9H2v12zm20-11a2 2 0 0 0-2-2h-6.3l1-4.6v-.3c0-.4-.2-.8-.4-1.1L13.2 1 6.6 7.6c-.4.4-.6.9-.6 1.4v10a2 2 0 0 0 2 2h9c.8 0 1.5-.5 1.8-1.2l3-7.1c.1-.2.2-.5.2-.7v-2z\"/></svg></button><button class=\"ds-reply ds-reply-off\" aria-label=\"No\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\" style=\"transform:rotate(180deg)\"><path d=\"M2 21h4V9H2v12zm20-11a2 2 0 0 0-2-2h-6.3l1-4.6v-.3c0-.4-.2-.8-.4-1.1L13.2 1 6.6 7.6c-.4.4-.6.9-.6 1.4v10a2 2 0 0 0 2 2h9c.8 0 1.5-.5 1.8-1.2l3-7.1c.1-.2.2-.5.2-.7v-2z\"/></svg></button><span class=\"ds-sep\"></span><button class=\"ds-reply ds-reply-yes-default\" aria-label=\"Yes by default\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M2 21h4V9H2v12zm20-11a2 2 0 0 0-2-2h-6.3l1-4.6v-.3c0-.4-.2-.8-.4-1.1L13.2 1 6.6 7.6c-.4.4-.6.9-.6 1.4v10a2 2 0 0 0 2 2h9c.8 0 1.5-.5 1.8-1.2l3-7.1c.1-.2.2-.5.2-.7v-2z\"/></svg></button><button class=\"ds-reply ds-reply-no-on\" aria-label=\"No, answered\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\" style=\"transform:rotate(180deg)\"><path d=\"M2 21h4V9H2v12zm20-11a2 2 0 0 0-2-2h-6.3l1-4.6v-.3c0-.4-.2-.8-.4-1.1L13.2 1 6.6 7.6c-.4.4-.6.9-.6 1.4v10a2 2 0 0 0 2 2h9c.8 0 1.5-.5 1.8-1.2l3-7.1c.1-.2.2-.5.2-.7v-2z\"/></svg></button></div>",
+      "css": ".ds-reply { width:40px; height:40px; border-radius:999px; display:inline-grid; place-items:center; cursor:pointer; transition: background .15s, box-shadow .15s; } .ds-reply:focus-visible { outline:2px solid #415E91; outline-offset:2px; } .ds-reply-off{background:transparent;border:1px solid #74777F;color:#44474E} .ds-reply-off:hover{background:rgba(25,28,32,.08)} .ds-reply-yes-on{background:#2E7D32;border:none;color:#fff} .ds-reply-yes-on:hover{box-shadow:0 1px 3px rgba(0,0,0,.3)} .ds-replies{display:flex;gap:8px;align-items:center} .ds-sep{width:16px} .ds-reply-no-on{background:#BA1A1A;border:none;color:#fff} .ds-reply-yes-default{background:transparent;border:1px solid #2E7D32;color:#2E7D32} .ds-reply-yes-default:hover{background:rgba(46,125,50,.08)}"
+    },
+    {
+      "name": "Event Row",
+      "kind": "custom",
+      "refersTo": null,
+      "description": "An event occurrence in a group's day: name, then time and headcount (\"5 coming +2 usually\"), then the reply pair.",
+      "html": "<div class=\"ds-event\"><div><div class=\"ds-event-title\">Five-a-side match</div><div class=\"ds-event-sub\">10:00 AM · <b>5&nbsp;coming</b> +2&nbsp;usually</div></div><div class=\"ds-event-trail\"><button class=\"ds-reply ds-reply-yes-on\" aria-label=\"Yes\" aria-pressed=\"true\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M2 21h4V9H2v12zm20-11a2 2 0 0 0-2-2h-6.3l1-4.6v-.3c0-.4-.2-.8-.4-1.1L13.2 1 6.6 7.6c-.4.4-.6.9-.6 1.4v10a2 2 0 0 0 2 2h9c.8 0 1.5-.5 1.8-1.2l3-7.1c.1-.2.2-.5.2-.7v-2z\"/></svg></button><button class=\"ds-reply ds-reply-off\" aria-label=\"No\" aria-pressed=\"false\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\" style=\"transform:rotate(180deg)\"><path d=\"M2 21h4V9H2v12zm20-11a2 2 0 0 0-2-2h-6.3l1-4.6v-.3c0-.4-.2-.8-.4-1.1L13.2 1 6.6 7.6c-.4.4-.6.9-.6 1.4v10a2 2 0 0 0 2 2h9c.8 0 1.5-.5 1.8-1.2l3-7.1c.1-.2.2-.5.2-.7v-2z\"/></svg></button></div></div>",
+      "css": ".ds-reply { width:40px; height:40px; border-radius:999px; display:inline-grid; place-items:center; cursor:pointer; transition: background .15s, box-shadow .15s; } .ds-reply:focus-visible { outline:2px solid #415E91; outline-offset:2px; } .ds-reply-off{background:transparent;border:1px solid #74777F;color:#44474E} .ds-reply-off:hover{background:rgba(25,28,32,.08)} .ds-reply-yes-on{background:#2E7D32;border:none;color:#fff} .ds-reply-yes-on:hover{box-shadow:0 1px 3px rgba(0,0,0,.3)} .ds-event{font-family: Cabin, system-ui, sans-serif; display:flex;justify-content:space-between;align-items:center;gap:16px;padding:8px 16px;background:#F9F9FF;color:#191C20;min-width:320px} .ds-event:hover{background:#EDEDF4} .ds-event-title{font-size:16px;font-weight:500;letter-spacing:.15px} .ds-event-sub{font-size:14px;color:#44474E;letter-spacing:.25px} .ds-event-sub b{font-weight:500;color:#191C20} .ds-event-trail{display:flex;gap:8px}"
+    },
+    {
+      "name": "Headcount",
+      "kind": "custom",
+      "refersTo": "headcount",
+      "description": "Top of the event screen: where and when, then who is coming, split by how sure it is.",
+      "html": "<div class=\"ds-hc\"><div class=\"ds-hc-meta\">Saturday Football · Sat, Oct 24 · 10:00 AM</div><div class=\"ds-hc-count\">5&nbsp;coming <span>+2&nbsp;usually</span></div><div class=\"ds-hc-rest\">3&nbsp;no&nbsp;reply · 2&nbsp;out</div></div>",
+      "css": ".ds-hc{font-family: Cabin, system-ui, sans-serif; padding:4px 16px 8px;background:#F9F9FF;color:#191C20;min-width:320px} .ds-hc-meta{font-size:14px;color:#44474E;margin-bottom:16px} .ds-hc-count{font-size:28px;line-height:36px;font-weight:600} .ds-hc-count span{font-size:16px;font-weight:500;color:#44474E} .ds-hc-rest{font-size:16px;color:#44474E;margin-top:4px}"
+    },
+    {
+      "name": "Answer Section Header",
+      "kind": "custom",
+      "refersTo": "answer-header",
+      "description": "Pinned header per answer group, in the order Yes, No reply yet, No; the icon tells them apart.",
+      "html": "<div class=\"ds-ans\"><div class=\"ds-ans-row\"><span class=\"ds-ans-i ds-yes\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M2 21h4V9H2v12zm20-11a2 2 0 0 0-2-2h-6.3l1-4.6v-.3c0-.4-.2-.8-.4-1.1L13.2 1 6.6 7.6c-.4.4-.6.9-.6 1.4v10a2 2 0 0 0 2 2h9c.8 0 1.5-.5 1.8-1.2l3-7.1c.1-.2.2-.5.2-.7v-2z\"/></svg></span><span class=\"ds-ans-l\">Yes</span><span>7</span></div><div class=\"ds-ans-row\"><span class=\"ds-ans-i ds-wait\"><svg width=\"16\" height=\"16\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><path d=\"M6 2h12M6 22h12M7 2c0 6 10 6 10 10S7 16 7 22M17 2c0 6-10 6-10 10s10 4 10 10\"/></svg></span><span class=\"ds-ans-l\">No reply yet</span><span>3</span></div><div class=\"ds-ans-row\"><span class=\"ds-ans-i ds-no\"><svg width=\"18\" height=\"18\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\" style=\"transform:rotate(180deg)\"><path d=\"M2 21h4V9H2v12zm20-11a2 2 0 0 0-2-2h-6.3l1-4.6v-.3c0-.4-.2-.8-.4-1.1L13.2 1 6.6 7.6c-.4.4-.6.9-.6 1.4v10a2 2 0 0 0 2 2h9c.8 0 1.5-.5 1.8-1.2l3-7.1c.1-.2.2-.5.2-.7v-2z\"/></svg></span><span class=\"ds-ans-l\">No</span><span>2</span></div></div>",
+      "css": ".ds-ans{font-family: Cabin, system-ui, sans-serif; min-width:320px;display:grid;gap:16px;color:#191C20} .ds-ans-row{display:flex;align-items:center;gap:16px;padding:16px;background:#EDEDF4;font-size:16px;font-weight:500} .ds-ans-l{flex:1} .ds-ans-i{display:inline-grid;place-items:center;width:24px} .ds-yes{color:#2E7D32} .ds-no{color:#BA1A1A} .ds-wait{color:#44474E}"
+    },
+    {
+      "name": "Extended FAB",
+      "kind": "button",
+      "refersTo": "fab-extended",
+      "description": "The one primary action per screen.",
+      "html": "<button class=\"ds-fab\"><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" aria-hidden=\"true\"><circle cx=\"9\" cy=\"8\" r=\"4\"/><path d=\"M2 20c0-3.3 3.1-6 7-6s7 2.7 7 6M19 8v6M16 11h6\"/></svg>Create or join group</button>",
+      "css": ".ds-fab{font-family: Cabin, system-ui, sans-serif; display:inline-flex;align-items:center;gap:12px;height:56px;padding:0 20px 0 16px;border:none;border-radius:16px;background:#D7E3FF;color:#284777;font-size:14px;font-weight:500;letter-spacing:.1px;box-shadow:0 1px 3px rgba(0,0,0,.3),0 4px 8px 3px rgba(0,0,0,.15);cursor:pointer;transition:box-shadow .15s} .ds-fab:hover{box-shadow:0 2px 3px rgba(0,0,0,.3),0 6px 10px 4px rgba(0,0,0,.15)} .ds-fab:focus-visible{outline:2px solid #415E91;outline-offset:2px}"
+    },
+    {
+      "name": "Filled Button",
+      "kind": "button",
+      "refersTo": "button-filled",
+      "description": "In-flow confirmation (join, update, go home).",
+      "html": "<button class=\"ds-btn-filled\">Join group</button>",
+      "css": ".ds-btn-filled{font-family: Cabin, system-ui, sans-serif; height:40px;padding:0 24px;border:none;border-radius:999px;background:#415E91;color:#fff;font-size:14px;font-weight:500;letter-spacing:.1px;cursor:pointer;transition:box-shadow .15s} .ds-btn-filled:hover{box-shadow:0 1px 2px rgba(0,0,0,.3),0 1px 3px 1px rgba(0,0,0,.15)} .ds-btn-filled:focus-visible{outline:2px solid #415E91;outline-offset:2px}"
+    },
+    {
+      "name": "Group Row",
+      "kind": "custom",
+      "refersTo": "group-row",
+      "description": "Home list row: ringed group avatar and a big headline name.",
+      "html": "<div class=\"ds-group\"><span class=\"ds-avatar\"><svg width=\"22\" height=\"22\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5s-3 1.34-3 3 1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5C15 14.17 10.33 13 8 13zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z\"/></svg></span><div><div class=\"ds-group-name\">Book Club</div><div class=\"ds-group-sub\">One book a month</div></div></div>",
+      "css": ".ds-group{font-family: Cabin, system-ui, sans-serif; display:flex;align-items:center;gap:16px;padding:8px 16px;min-width:320px;color:#191C20;cursor:pointer} .ds-group:hover{background:rgba(25,28,32,.08)} .ds-avatar{width:48px;height:48px;border-radius:999px;display:grid;place-items:center;background:#CCF8FF;color:#00A4B8;box-shadow:0 0 0 2px #00A4B8} .ds-group-name{font-size:28px;line-height:36px} .ds-group-sub{font-size:14px;color:#44474E}"
+    },
+    {
+      "name": "Wordmark App Bar",
+      "kind": "nav",
+      "refersTo": null,
+      "description": "Home app bar: Sniglet wordmark in primary and the profile avatar.",
+      "html": "<header class=\"ds-bar\"><span class=\"ds-wordmark\">GRUP</span><button class=\"ds-me\" aria-label=\"Profile\">A</button></header>",
+      "css": ".ds-bar{font-family: Cabin, system-ui, sans-serif; display:flex;justify-content:space-between;align-items:center;height:64px;padding:0 16px;background:#F9F9FF;min-width:320px} .ds-wordmark{font-family:Sniglet,Cabin,sans-serif;font-size:32px;color:#415E91} .ds-me{width:40px;height:40px;border-radius:999px;border:1.5px solid #415E91;background:#DCE3F0;color:#284777;font-size:16px;cursor:pointer} .ds-me:focus-visible{outline:2px solid #415E91;outline-offset:2px}"
+    },
+    {
+      "name": "Feedback Card",
+      "kind": "card",
+      "refersTo": "feedback-card",
+      "description": "Dismissible feedback prompt on home; Sniglet title, tonal container.",
+      "html": "<div class=\"ds-fb\" tabindex=\"0\"><div class=\"ds-fb-title\">Enjoying GRUP?</div><div class=\"ds-fb-body\">Tell us what to build next.</div></div>",
+      "css": ".ds-fb{font-family: Cabin, system-ui, sans-serif; border-radius:16px;background:#EDEDF4;color:#191C20;padding:16px;min-width:280px;cursor:pointer;transition:background .15s} .ds-fb:hover{background:#DAE2F9;color:#3E4759} .ds-fb:focus-visible{outline:2px solid #415E91;outline-offset:2px} .ds-fb-title{font-family:Sniglet,Cabin,sans-serif;font-size:24px;padding:8px 0} .ds-fb-body{font-size:16px}"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Roll Call",
+    "overview": "GRUP is the clipboard at the start of practice: names, and a tick or a cross next to each. Every screen exists to answer one question, \"who's in?\", and the design's job is to put that answer on screen before anything else. Organisers glance at it minutes before the activity starts, often on a phone, so the system values instant legibility over decoration: counts, names and answers lead, and the chrome stays out of the way.\n\nThe world is **quiet Material 3 utility with one wink**. Structure, components and motion are stock Material 3 (`package:material_ui`) on Android, iOS and web, themed through two seed colours and the Cabin typeface. The personality lives in exactly one place: the rounded, cheerful **Sniglet** wordmark \"GRUP\", and the few onboarding and feedback moments that name it. Everything else is a well-made tool.\n\nDay and night are two moods of the same brand, not an inversion. By day it's a harbour: navy and lagoon teal on a cool, near-white surface. At night it becomes a floodlit pitch: lantern olive and deep greens on a warm near-black. Both come from the brand palette in `lib/app.dart`.",
+    "keyCharacteristics": [
+      "The answer leads: the headcount is the largest text on an event, and yes/no marks are the most saturated things on any screen.",
+      "Stock Material 3 components, themed, never re-invented; `.adaptive()` controls where the OS has trained users.",
+      "One typeface for the UI (Cabin), one wink for the brand (Sniglet).",
+      "Separate day (navy/teal) and night (olive/green) identities.",
+      "Big, friendly group names; small, factual everything else."
+    ],
+    "rules": [
+      {
+        "name": "The Answer Colour Rule",
+        "body": "Yes Green and the error red mean *yes* and *no*, and nothing else. No decorative green, no red for anything but \"no\" and real errors. When colour appears on a screen, it should be telling the organiser who is coming.",
+        "section": "colors"
+      },
+      {
+        "name": "The Role, Not Hex Rule",
+        "body": "Widgets take colour from `ColorScheme` roles so day and night resolve on their own. `yesColor` and its `onYesColor` are the only raw colours, chosen to work on both themes.",
+        "section": "colors"
+      },
+      {
+        "name": "The Night Shift Rule",
+        "body": "Night is its own identity (olive and green on warm black). Don't derive it by darkening the navy, and don't \"fix\" it towards blue.",
+        "section": "colors"
+      },
+      {
+        "name": "The One Wink Rule",
+        "body": "Sniglet appears only for the GRUP name and the feedback card's title. Never use it for buttons, labels, data, headings or numbers.",
+        "section": "typography"
+      },
+      {
+        "name": "The Scale Rule",
+        "body": "Text maps to a Material 3 role (`theme.textTheme.*`). Don't hand-pick font sizes per screen; the wordmark's base size comes from the scale too.",
+        "section": "typography"
+      },
+      {
+        "name": "The Material Levels Rule",
+        "body": "Elevation uses the Material 3 levels (0, 1, 2, 3, 4, 5) and their tonal surfaces. Never use an arbitrary `BoxShadow`, coloured shadow, or blur.",
+        "section": "elevation"
+      },
+      {
+        "name": "The Lift Means Tappable Rule",
+        "body": "If it's raised, it's something you act on (an event, a group, a sheet). Section headers, notices and empty states stay flat.",
+        "section": "elevation"
+      }
+    ],
+    "dos": [
+      "Do put the headcount and the user's own answer within the first screenful of any event surface, with confirmed and usual answers counted separately.",
+      "Do call it a \"usual answer\" in copy; \"default\" is the code's word.",
+      "Do use `.adaptive()` constructors for dialogs, switches, checkboxes, radios and progress indicators, and stock Material for everything else.",
+      "Do read colour from `ColorScheme` roles and text from `theme.textTheme`, so night mode and system font scale work for free.",
+      "Do keep one extended FAB per screen for its single primary action.",
+      "Do keep touch targets at 48dp minimum, including the reply buttons.",
+      "Do test every change in both the day (navy) and night (olive) themes."
+    ],
+    "donts": [
+      "Don't use Yes Green or the error red for anything except answers, counts and genuine errors (The Answer Colour Rule).",
+      "Don't set Sniglet on anything but the GRUP name (The One Wink Rule).",
+      "Don't use `tertiaryContainer` / `onTertiaryContainer`: they resolve to an off-brand pink until the scheme is fixed.",
+      "Don't put text in Lagoon Teal (2.9:1) or rely on Pitch Green for anything meaningful at night (2.5:1). They are decorative rings only.",
+      "Don't add custom `BoxShadow`s, gradients or glows. Lift uses Material 3 elevation levels.",
+      "Don't port Cupertino navigation (tab bars, nav bars) into the app. iOS gets Material plus OS behaviours, not a second design language.",
+      "Don't import `package:flutter/material.dart` outside the legacy island (`screens/auth.dart`)."
+    ]
+  }
+}
