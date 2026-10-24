@@ -183,11 +183,8 @@ class AppLocalizationsEn extends AppLocalizations {
       'Are you sure you want to dismiss this member as an admin?';
 
   @override
-  String get groupEmptyEventsAdmin =>
-      'Your event calendar is empty.<br/>Ready to plan something exciting? Tap the <manage/> button to create a new event and invite your group members!';
-
-  @override
-  String get groupEmptyEventsUser => 'This group has no events yet.';
+  String get groupEmptyEventsUser =>
+      'This group has no events yet.<br/>When an admin adds one, it shows up here and you answer with one tap.';
 
   @override
   String get groupLeave => 'Leave group';
@@ -278,10 +275,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get no => 'No';
-
-  @override
-  String get onboardingMessage =>
-      'Welcome to <title>GRUP</title>!<br/>You haven’t created any groups yet. Start by tapping the <plus/> button to create your first group and begin organizing events with friends, family, or colleagues.';
 
   @override
   String get profile => 'Profile';
@@ -627,4 +620,55 @@ class AppLocalizationsEn extends AppLocalizations {
   String answerCleared(String name) {
     return 'Answer cleared for $name';
   }
+
+  @override
+  String get onboardingWelcome => 'Welcome to <title>GRUP</title>';
+
+  @override
+  String get onboardingTagline => 'Know who\'s coming, without asking around.';
+
+  @override
+  String get onboardingExampleEvent => 'Tuesday football';
+
+  @override
+  String get onboardingExampleCaption =>
+      'Every event shows you who\'s coming. Usual answers count separately until people confirm.';
+
+  @override
+  String get onboardingStepGroup => 'Start a group';
+
+  @override
+  String get onboardingStepGroupHint =>
+      'For the people you meet with: a team, a club, friends or family.';
+
+  @override
+  String get onboardingStepEvent => 'Add its events';
+
+  @override
+  String get onboardingStepEventHint =>
+      'Make one repeat if you meet every week.';
+
+  @override
+  String get onboardingStepInvite => 'Invite your people';
+
+  @override
+  String get onboardingStepInviteHint =>
+      'They answer with one tap, or set a usual answer once.';
+
+  @override
+  String get onboardingJoin => 'Join with an invite code';
+
+  @override
+  String get groupSetupTitle => 'Get your group going';
+
+  @override
+  String get groupSetupBody =>
+      'Its events show up here, with who\'s coming to each.';
+
+  @override
+  String get groupSetupEvent => 'Add the first event';
+
+  @override
+  String get profileNameHelper =>
+      'Your groups see this name next to your answers.';
 }

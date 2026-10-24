@@ -5,7 +5,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
-import 'package:styled_text/styled_text.dart';
 
 class HomeScreen extends StatelessWidget {
   final Profile? profile;
@@ -50,29 +49,14 @@ class HomeScreen extends StatelessWidget {
         ? _Scrollable(
             child: ErrorNotice(error: error, onRetry: onRefresh),
           )
+        // Not the welcome yet: a returning user's groups may be on their way.
+        : nothingToShow && loading
+        ? const _Scrollable(child: SizedBox.shrink())
         : nothingToShow
         ? _Scrollable(
-            child: EmptyState(
-              image: 'home.webp',
-              text: StyledText(
-                text: l10n.onboardingMessage,
-                textAlign: TextAlign.center,
-                style: theme.textTheme.bodyLarge,
-                tags: {
-                  'title': StyledTextTag(
-                    style: GoogleFonts.sniglet(
-                      color: theme.colorScheme.primary,
-                    ),
-                  ),
-                  'plus': StyledTextWidgetTag(
-                    TextButton.icon(
-                      icon: Icon(Icons.group_add_outlined),
-                      label: Text(l10n.createOrJoinGroup),
-                      onPressed: () => _onGroupCreate(context),
-                    ),
-                  ),
-                },
-              ),
+            child: HomeIntro(
+              onCreate: () => _onGroupCreate(context, create: true),
+              onJoin: () => _onGroupCreate(context),
             ),
           )
         : GroupsList(groups: groups);
@@ -130,16 +114,19 @@ class HomeScreen extends StatelessWidget {
           child: innerBody,
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        onPressed: () => _onGroupCreate(context),
-        label: Text(l10n.createOrJoinGroup),
-        icon: const Icon(Icons.group_add_outlined),
-      ),
+      // The intro has its own ways in.
+      floatingActionButton: nothingToShow && error == null
+          ? null
+          : FloatingActionButton.extended(
+              onPressed: () => _onGroupCreate(context),
+              label: Text(l10n.createOrJoinGroup),
+              icon: const Icon(Icons.group_add_outlined),
+            ),
     );
   }
 
-  Future<void> _onGroupCreate(BuildContext context) {
-    return const GroupCreateRoute()
+  Future<void> _onGroupCreate(BuildContext context, {bool? create}) {
+    return GroupCreateRoute(create: create)
         .push<GroupCreateResult>(context)
         .then((value) => value != null ? onGroupCreate?.call(value) : null);
   }

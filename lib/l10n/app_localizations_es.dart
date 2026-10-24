@@ -183,11 +183,8 @@ class AppLocalizationsEs extends AppLocalizations {
       '¿Seguro que quieres descartar a este miembro como admin?';
 
   @override
-  String get groupEmptyEventsAdmin =>
-      'Tu calendario de eventos está vacío.<br/>¿Listo para planear algo emocionante? Toca el botón <manage/> para crear un nuevo evento e invitar a los miembros del grupo.';
-
-  @override
-  String get groupEmptyEventsUser => 'Este grupo aún no tiene eventos.';
+  String get groupEmptyEventsUser =>
+      'Este grupo aún no tiene eventos.<br/>Cuando un administrador añada uno, aparecerá aquí y responderás con un toque.';
 
   @override
   String get groupLeave => 'Abandona el grupo';
@@ -278,10 +275,6 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get no => 'No';
-
-  @override
-  String get onboardingMessage =>
-      '¡Bienvenido a <title>GRUP</title>!<br/>Aún no has creado grupos. Empieza tocando el botón <plus/> para crear tu primer grupo y empieza a organizar eventos con amigos, familiares o compañeros.';
 
   @override
   String get profile => 'Perfil';
@@ -639,4 +632,56 @@ class AppLocalizationsEs extends AppLocalizations {
   String answerCleared(String name) {
     return 'Respuesta de $name borrada';
   }
+
+  @override
+  String get onboardingWelcome =>
+      'Te damos la bienvenida a <title>GRUP</title>';
+
+  @override
+  String get onboardingTagline => 'Sabe quién viene sin tener que preguntar.';
+
+  @override
+  String get onboardingExampleEvent => 'Fútbol del martes';
+
+  @override
+  String get onboardingExampleCaption =>
+      'Cada evento te muestra quién viene. Las respuestas habituales cuentan aparte hasta que la gente confirma.';
+
+  @override
+  String get onboardingStepGroup => 'Crea un grupo';
+
+  @override
+  String get onboardingStepGroupHint =>
+      'Para la gente con la que quedas: un equipo, un club, amigos o familia.';
+
+  @override
+  String get onboardingStepEvent => 'Añade sus eventos';
+
+  @override
+  String get onboardingStepEventHint =>
+      'Haz que uno se repita si quedáis cada semana.';
+
+  @override
+  String get onboardingStepInvite => 'Invita a tu gente';
+
+  @override
+  String get onboardingStepInviteHint =>
+      'Responden con un toque, o eligen una vez su respuesta habitual.';
+
+  @override
+  String get onboardingJoin => 'Unirse con un código de invitación';
+
+  @override
+  String get groupSetupTitle => 'Pon en marcha tu grupo';
+
+  @override
+  String get groupSetupBody =>
+      'Aquí aparecen sus eventos, con quién viene a cada uno.';
+
+  @override
+  String get groupSetupEvent => 'Añade el primer evento';
+
+  @override
+  String get profileNameHelper =>
+      'Tus grupos ven este nombre junto a tus respuestas.';
 }

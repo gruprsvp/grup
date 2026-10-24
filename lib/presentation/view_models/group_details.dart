@@ -19,8 +19,11 @@ class GroupDetailsViewModel extends ViewModel {
        // today. Most groups meet weekly, so today is usually empty.
        _findNext = date == null {
     load = Command0(_load)..execute();
+    createSchedule = Command1(
+      (schedule) => _schedules.create(schedule.copyWith(groupId: groupId)),
+    );
     listenTo([_groups, _schedules], _update);
-    listenTo([load]);
+    listenTo([load, createSchedule]);
     _update();
   }
 
@@ -36,11 +39,17 @@ class GroupDetailsViewModel extends ViewModel {
   /// Fetches the group, and its events around [date].
   late final Command0<void> load;
 
+  /// Adds an event, for an admin setting the group up from this page.
+  late final Command1<Schedule, Schedule> createSchedule;
+
   Group? get group => _groups.group(groupId);
 
   bool get isAdmin => _groups.ownMember(groupId)?.role == GroupRoles.admin;
 
   DateTime get date => _date;
+
+  /// Whether anyone but the user is in the group, joined or invited.
+  bool get hasOtherMembers => _groups.members(groupId).length > 1;
 
   /// Whether the group has any events at all, on any day.
   bool get hasSchedules => _schedules.schedules(groupId).isNotEmpty;

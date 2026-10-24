@@ -21,14 +21,19 @@ void main() {
   late FakeBackend backend;
   late GoRouter router;
 
-  Future<void> pumpApp(WidgetTester tester) async {
+  Future<void> pumpApp(
+    WidgetTester tester, {
+    void Function(FakeBackend)? seed,
+  }) async {
     final (fake, repositories) = await fakeApp(
-      seed: (backend) {
-        backend.addProfile('me', name: 'Me');
-        final club = backend.addGroup('Club');
-        backend.addSchedule(club.id, name: 'Dinner');
-        backend.addMember(club.id, name: 'Ann');
-      },
+      seed:
+          seed ??
+          (backend) {
+            backend.addProfile('me', name: 'Me');
+            final club = backend.addGroup('Club');
+            backend.addSchedule(club.id, name: 'Dinner');
+            backend.addMember(club.id, name: 'Ann');
+          },
     );
     backend = fake;
     router = createRouter(repositories.auth);
@@ -149,6 +154,49 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.byType(ProfileScreen), findsOneWidget);
     expect(path(), '/profile');
+  });
+
+  testWidgets('a new user is shown how GRUP works, and starts a group', (
+    tester,
+  ) async {
+    await pumpApp(
+      tester,
+      seed: (backend) => backend.addProfile('me', name: 'Me'),
+    );
+
+    expect(
+      find.text("Know who's coming, without asking around."),
+      findsOneWidget,
+    );
+    // The intro brings its own ways in.
+    expect(find.byType(FloatingActionButton), findsNothing);
+
+    final start = find.widgetWithText(FilledButton, 'Start a group');
+    await tester.ensureVisible(start);
+    await tester.pumpAndSettle();
+    await tester.tap(start);
+    await tester.pumpAndSettle();
+    expect(find.byType(GroupForm), findsOneWidget);
+  });
+
+  testWidgets("a new group's admin is shown what's left to set up", (
+    tester,
+  ) async {
+    await pumpApp(
+      tester,
+      seed: (backend) {
+        backend.addProfile('me', name: 'Me');
+        backend.addGroup('Club');
+      },
+    );
+
+    await tester.tap(find.text('Club'));
+    await tester.pumpAndSettle();
+    expect(find.text('Get your group going'), findsOneWidget);
+
+    await tester.tap(find.text('Add the first event'));
+    await tester.pumpAndSettle();
+    expect(find.byType(ScheduleCreateScreen), findsOneWidget);
   });
 
   testWidgets('signing out shows the sign-in page', (tester) async {

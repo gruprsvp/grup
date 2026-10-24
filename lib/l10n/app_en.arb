@@ -53,8 +53,7 @@
   "gallery": "Gallery",
   "groupDismissAdmin": "Dismiss as admin",
   "groupDismissAdminConfirmation": "Are you sure you want to dismiss this member as an admin?",
-  "groupEmptyEventsAdmin": "Your event calendar is empty.<br/>Ready to plan something exciting? Tap the <manage/> button to create a new event and invite your group members!",
-  "groupEmptyEventsUser": "This group has no events yet.",
+  "groupEmptyEventsUser": "This group has no events yet.<br/>When an admin adds one, it shows up here and you answer with one tap.",
   "groupLeave": "Leave group",
   "groupLeaveConfirmation": "Are you sure you want to leave this group? You will lose access to all group events and members.",
   "groupMakeAdmin": "Make group admin",
@@ -110,7 +109,6 @@
   "members": "Members",
   "newGroup": "New group",
   "no": "No",
-  "onboardingMessage": "Welcome to <title>GRUP</title>!<br/>You haven’t created any groups yet. Start by tapping the <plus/> button to create your first group and begin organizing events with friends, family, or colleagues.",
   "profile": "Profile",
   "recurrenceRule": "Recurrence",
   "save": "Save",
@@ -531,5 +529,20 @@
         "example": "Marta"
       }
     }
-  }
+  },
+  "onboardingWelcome": "Welcome to <title>GRUP</title>",
+  "onboardingTagline": "Know who's coming, without asking around.",
+  "onboardingExampleEvent": "Tuesday football",
+  "onboardingExampleCaption": "Every event shows you who's coming. Usual answers count separately until people confirm.",
+  "onboardingStepGroup": "Start a group",
+  "onboardingStepGroupHint": "For the people you meet with: a team, a club, friends or family.",
+  "onboardingStepEvent": "Add its events",
+  "onboardingStepEventHint": "Make one repeat if you meet every week.",
+  "onboardingStepInvite": "Invite your people",
+  "onboardingStepInviteHint": "They answer with one tap, or set a usual answer once.",
+  "onboardingJoin": "Join with an invite code",
+  "groupSetupTitle": "Get your group going",
+  "groupSetupBody": "Its events show up here, with who's coming to each.",
+  "groupSetupEvent": "Add the first event",
+  "profileNameHelper": "Your groups see this name next to your answers."
 }

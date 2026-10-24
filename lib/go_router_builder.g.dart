@@ -186,11 +186,21 @@ mixin $SelectContactsRoute on GoRouteData {
 }
 
 mixin $GroupCreateRoute on GoRouteData {
-  static GroupCreateRoute _fromState(GoRouterState state) =>
-      const GroupCreateRoute();
+  static GroupCreateRoute _fromState(GoRouterState state) => GroupCreateRoute(
+    create: _$convertMapValue(
+      'create',
+      state.uri.queryParameters,
+      _$boolConverter,
+    ),
+  );
+
+  GroupCreateRoute get _self => this as GroupCreateRoute;
 
   @override
-  String get location => GoRouteData.$location('/group-create');
+  String get location => GoRouteData.$location(
+    '/group-create',
+    queryParams: {if (_self.create != null) 'create': _self.create!.toString()},
+  );
 
   @override
   void go(BuildContext context) => context.go(location);

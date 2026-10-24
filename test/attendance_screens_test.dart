@@ -109,7 +109,10 @@ void main() {
       await tester.pumpAndSettle();
 
       expect(
-        find.text('This group has no events yet.', findRichText: true),
+        find.textContaining(
+          'This group has no events yet.',
+          findRichText: true,
+        ),
         findsOneWidget,
       );
     });

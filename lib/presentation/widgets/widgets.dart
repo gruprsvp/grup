@@ -13,6 +13,7 @@ export 'groups_list.dart';
 export 'image_crop.dart';
 export 'image_form_field.dart';
 export 'invite_modal.dart';
+export 'onboarding.dart';
 export 'profile_picture.dart';
 export 'recurrence_label.dart';
 export 'reply_button.dart';
