@@ -6,6 +6,7 @@ import 'package:go_router/go_router.dart';
 import 'package:http/http.dart' show ClientException;
 import 'package:material_ui/material_ui.dart';
 import 'package:parousia/app.dart';
+import 'package:parousia/go_router_builder.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/router.dart';
@@ -179,6 +180,13 @@ void main() {
       await tester.pumpAndSettle();
       expect(path(), '/groups/$club');
       expect(inDetail('Dinner'), findsOneWidget);
+      // Screen readers hear which event is open.
+      final semantics = tester.ensureSemantics();
+      expect(
+        tester.getSemantics(find.widgetWithText(ScheduleTile, 'Dinner')),
+        isSemantics(isSelected: true, hasSelectedState: true),
+      );
+      semantics.dispose();
       // The event is part of the page: nothing to go back from.
       expect(
         find.descendant(
@@ -227,6 +235,40 @@ void main() {
       );
       await tester.pumpAndSettle();
       expect(path(), '/');
+    });
+
+    testWidgets("a link to another group's event shows that group", (
+      tester,
+    ) async {
+      wide(tester);
+      await pumpApp(
+        tester,
+        seed: (backend) {
+          backend.addProfile('me', name: 'Me');
+          final club = backend.addGroup('Club');
+          backend.addSchedule(club.id, name: 'Dinner');
+          final choir = backend.addGroup('Choir');
+          backend.addSchedule(choir.id, name: 'Rehearsal');
+        },
+      );
+      final choir = backend.groups.values.last.id;
+      final rehearsal = backend.schedules.values.last;
+
+      await tester.tap(find.text('Club'));
+      await tester.pumpAndSettle();
+      await tester.tap(inList('Dinner'));
+      await tester.pumpAndSettle();
+
+      router.go(
+        GroupScheduleDetailsRoute(
+          groupId: choir,
+          scheduleId: rehearsal.id,
+          at: DateTime.utc(2024, 1, 1, 18),
+        ).location,
+      );
+      await tester.pumpAndSettle();
+      expect(inList('Choir'), findsOneWidget);
+      expect(inDetail('Rehearsal'), findsOneWidget);
     });
 
     testWidgets('narrowing the window shows the event alone', (tester) async {
