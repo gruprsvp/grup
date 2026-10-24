@@ -8,10 +8,13 @@ class DateDropdown extends StatelessWidget {
   const DateDropdown({super.key, this.date, this.onDateChanged});
 
   Future<void> _selectDate(BuildContext context) async {
+    final date = this.date;
+    final yearAgo = DateTime.now().add(const Duration(days: -365));
     final DateTime? newDate = await showDatePicker(
       context: context,
       initialDate: date,
-      firstDate: DateTime.now().add(const Duration(days: -365)),
+      // Swiping can go back further than a year; the picker must allow it.
+      firstDate: date != null && date.isBefore(yearAgo) ? date : yearAgo,
       lastDate: DateTime(2101),
     );
 
@@ -23,7 +26,7 @@ class DateDropdown extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 4),
       child: ElevatedButton.icon(
         icon: const Icon(Icons.event),
         label: Text(
@@ -31,6 +34,8 @@ class DateDropdown extends StatelessWidget {
               ? ''
               : DateFormat.MMMMEEEEd(Localizations.localeOf(context).toString())
                     .format(date!),
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
         ),
         onPressed: () => _selectDate(context),
       ),

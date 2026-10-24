@@ -8,9 +8,17 @@ import 'package:parousia/models/models.dart';
 /// "No" uses the theme's error colours, which Material keeps accessible.
 final yesColor = Colors.green.shade800;
 
+/// Icons and text on [yesColor].
+const onYesColor = Colors.white;
+
+/// Keeps a short phrase ("5 coming") on one line when the text wraps.
+String keepTogether(String phrase) => phrase.replaceAll(' ', '\u00A0');
+
 class ReplyButtons extends StatelessWidget {
   final ReplyOptions? reply;
   final ReplyOptions? defaultReply;
+
+  /// Without it, the answer is shown but can't be changed.
   final ValueChanged<ReplyOptions?>? onReplyChanged;
 
   const ReplyButtons({
@@ -69,46 +77,75 @@ class ReplyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final foregroundColor = WidgetStatePropertyAll<Color>(onActiveColor);
-    final focusColor = WidgetStatePropertyAll<Color>(activeColor);
-
     final isActive = reply == option;
     final isDefault = defaultReply == option && reply == null;
 
     final onReplyChanged = this.onReplyChanged;
-    // Without a callback the buttons show the answer but are disabled.
-    VoidCallback? answer(ReplyOptions? reply) =>
-        onReplyChanged == null ? null : () => onReplyChanged(reply);
+    if (onReplyChanged == null) return _readOnly(isActive, isDefault);
 
     if (isActive) {
       return IconButton.filled(
         icon: FaIcon(activeIcon),
+        isSelected: true,
         // Tapping the current answer clears it.
-        onPressed: answer(null),
+        onPressed: () => onReplyChanged(null),
         style: ButtonStyle(
-          foregroundColor: foregroundColor,
-          backgroundColor: focusColor,
+          foregroundColor: WidgetStatePropertyAll(onActiveColor),
+          backgroundColor: WidgetStatePropertyAll(activeColor),
         ),
-        tooltip: tooltip,
-      );
-    } else if (isDefault) {
-      return IconButton.outlined(
-        style: ButtonStyle(
-          foregroundColor: focusColor,
-          side: WidgetStateProperty.all(BorderSide(color: activeColor)),
-        ),
-        icon: FaIcon(activeIcon),
-        onPressed: answer(option),
-        tooltip: tooltip,
-      );
-    } else {
-      return IconButton.outlined(
-        icon: FaIcon(inactiveIcon),
-        onPressed: answer(option),
         tooltip: tooltip,
       );
     }
+    final icon = FaIcon(isDefault ? activeIcon : inactiveIcon);
+    return IconButton.outlined(
+      // The tooltip stays "Yes"/"No"; screen readers also hear it's the usual
+      // answer, not a real one. Inside the button, so it lands on its node.
+      icon: isDefault
+          ? Semantics(
+              value: AppLocalizations.of(context)!.usualAnswer,
+              child: icon,
+            )
+          : icon,
+      isSelected: false,
+      onPressed: () => onReplyChanged(option),
+      style: isDefault
+          ? ButtonStyle(
+              foregroundColor: WidgetStatePropertyAll(activeColor),
+              side: WidgetStatePropertyAll(BorderSide(color: activeColor)),
+            )
+          : null,
+      tooltip: tooltip,
+    );
   }
+
+  /// The answer as a mark rather than a disabled button: full contrast, not
+  /// focusable, and nothing at all when there's no answer. The row's label
+  /// tells screen readers the answer.
+  Widget _readOnly(bool isActive, bool isDefault) => ExcludeSemantics(
+    child: SizedBox.square(
+      // The slot an enabled button takes, so rows line up.
+      dimension: 48,
+      child: !isActive && !isDefault
+          ? null
+          : Center(
+              child: Container(
+                width: 40,
+                height: 40,
+                decoration: ShapeDecoration(
+                  shape: CircleBorder(side: BorderSide(color: activeColor)),
+                  color: isActive ? activeColor : null,
+                ),
+                child: Center(
+                  child: FaIcon(
+                    activeIcon,
+                    size: 20,
+                    color: isActive ? onActiveColor : activeColor,
+                  ),
+                ),
+              ),
+            ),
+    ),
+  );
 }
 
 class YesButton extends StatelessWidget {
@@ -136,7 +173,7 @@ class YesButton extends StatelessWidget {
       inactiveIcon: FontAwesomeIcons.thumbsUp,
       tooltip: l10n.yes,
       activeColor: yesColor,
-      onActiveColor: Colors.white,
+      onActiveColor: onYesColor,
     );
   }
 }

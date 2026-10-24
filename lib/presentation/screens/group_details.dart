@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:material_ui/material_ui.dart';
 import 'package:parousia/l10n/app_localizations.dart';
 import 'package:parousia/go_router_builder.dart';
@@ -13,12 +15,17 @@ class GroupDetailsScreen extends StatelessWidget {
   /// Why the group couldn't be loaded, if it couldn't.
   final Exception? error;
   final VoidCallback? onRetry;
+  final Future<void> Function()? onRefresh;
 
   /// The day shown, and its events with everyone's answers.
   final DateTime date;
   final ValueChanged<DateTime> onDateChanged;
   final List<ScheduleInstanceSummary> instances;
   final OnReplyChangedCallback? onReplyChanged;
+
+  /// Whether the group has events on any day, and the first after [date].
+  final bool hasSchedules;
+  final (Schedule, DateTime)? next;
 
   const GroupDetailsScreen({
     super.key,
@@ -31,7 +38,10 @@ class GroupDetailsScreen extends StatelessWidget {
     this.loading = false,
     this.error,
     this.onRetry,
+    this.onRefresh,
     this.onReplyChanged,
+    this.hasSchedules = false,
+    this.next,
   });
 
   @override
@@ -39,23 +49,51 @@ class GroupDetailsScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final colorScheme = Theme.of(context).colorScheme;
 
-    final groupName = group?.displayName ?? l10n.loading;
     final groupImage = group?.picture;
     final groupDescription = group?.description;
     final error = this.error;
+    // Room for the date row at the user's text size (48dp buttons at 1×).
+    final dateRowHeight =
+        16.0 + max(48.0, MediaQuery.textScalerOf(context).scale(48));
 
     return Scaffold(
       body: NestedScrollView(
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
             pinned: true,
-            title: Text(groupName),
+            title: Text(group?.displayName ?? ''),
             bottom: PreferredSize(
-              preferredSize: const Size.fromHeight(60),
+              preferredSize: Size.fromHeight(dateRowHeight),
               child: Stack(
                 alignment: Alignment.bottomCenter,
                 children: [
-                  DateDropdown(date: date, onDateChanged: onDateChanged),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 8),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        IconButton(
+                          icon: const Icon(Icons.chevron_left),
+                          tooltip: l10n.previousDay,
+                          onPressed: () => onDateChanged(
+                            date.subtract(const Duration(days: 1)),
+                          ),
+                        ),
+                        Flexible(
+                          child: DateDropdown(
+                            date: date,
+                            onDateChanged: onDateChanged,
+                          ),
+                        ),
+                        IconButton(
+                          icon: const Icon(Icons.chevron_right),
+                          tooltip: l10n.nextDay,
+                          onPressed: () =>
+                              onDateChanged(date.add(const Duration(days: 1))),
+                        ),
+                      ],
+                    ),
+                  ),
                   if (loading) const LinearProgressIndicator(),
                 ],
               ),
@@ -67,27 +105,33 @@ class GroupDetailsScreen extends StatelessWidget {
             ),
           if (groupImage != null || groupDescription != null)
             SliverToBoxAdapter(
-              child: Column(
-                children: [
-                  if (groupImage != null)
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Hero(
-                        tag: groupImage,
-                        child: ProfilePicture(
-                          image: NetworkImage(groupImage),
-                          icon: Icons.group,
-                          radius: 128,
-                          color: colorScheme.secondary,
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Row(
+                  children: [
+                    if (groupImage != null)
+                      Padding(
+                        padding: const EdgeInsets.only(right: 16),
+                        child: Hero(
+                          tag: groupImage,
+                          child: ProfilePicture(
+                            image: NetworkImage(groupImage),
+                            icon: Icons.group,
+                            radius: 32,
+                            color: colorScheme.secondary,
+                          ),
                         ),
                       ),
-                    ),
-                  if (groupDescription != null)
-                    Padding(
-                      padding: const EdgeInsets.all(16),
-                      child: Text(groupDescription),
-                    ),
-                ],
+                    if (groupDescription != null)
+                      Expanded(
+                        child: Text(
+                          groupDescription,
+                          maxLines: 4,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                      ),
+                  ],
+                ),
               ),
             ),
         ],
@@ -96,8 +140,18 @@ class GroupDetailsScreen extends StatelessWidget {
           onDateChanged: onDateChanged,
           child: SchedulesList(
             groupId: groupId,
-            schedules: instances,
+            // Before the first load, or after it failed, an empty list says
+            // nothing about the group: wait (or let the error speak) rather
+            // than claim it has no events.
+            schedules: instances.isEmpty && !hasSchedules && loading
+                ? null
+                : instances,
+            unknown: instances.isEmpty && !hasSchedules && error != null,
             isAdmin: isAdmin,
+            hasSchedules: hasSchedules,
+            next: next,
+            onDateChanged: onDateChanged,
+            onRefresh: onRefresh,
             onReplyChanged: onReplyChanged,
           ),
         ),

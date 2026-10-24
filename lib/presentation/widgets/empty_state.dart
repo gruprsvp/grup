@@ -23,7 +23,9 @@ class EmptyState extends StatelessWidget {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(imageUri!),
-                    invertColors: theme.brightness == Brightness.dark,
+                    colorFilter: theme.brightness == Brightness.dark
+                        ? _invertLightness
+                        : null,
                   ),
                 ),
               ),
@@ -33,3 +35,13 @@ class EmptyState extends StatelessWidget {
     );
   }
 }
+
+/// Swaps light and dark but keeps hues: the line art turns light for the dark
+/// theme and the brand navy stays blue (a plain invert makes it orange).
+/// An invert followed by a 180° hue rotation.
+const _invertLightness = ColorFilter.matrix([
+  0.574, -1.43, -0.144, 0, 255, //
+  -0.426, -0.43, -0.144, 0, 255, //
+  -0.426, -1.43, 0.856, 0, 255, //
+  0, 0, 0, 1, 0, //
+]);

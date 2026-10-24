@@ -12,8 +12,8 @@ class DayPager extends StatefulWidget {
   final DateTime date;
   final ValueChanged<DateTime> onDateChanged;
 
-  /// The content for [date]. The pages being swiped in show it too, until
-  /// the swipe settles on the new day.
+  /// The content for [date]. A page being swiped in stays blank until it
+  /// becomes the current day, rather than showing the day it's leaving.
   final Widget child;
 
   @override
@@ -42,6 +42,7 @@ class _DayPagerState extends State<DayPager> {
         widget.onDateChanged(widget.date.add(Duration(days: days)));
       }
     },
-    itemBuilder: (context, _) => widget.child,
+    itemBuilder: (context, page) =>
+        page == _page ? widget.child : const SizedBox.shrink(),
   );
 }

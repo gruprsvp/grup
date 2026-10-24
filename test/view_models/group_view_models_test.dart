@@ -6,6 +6,7 @@ import 'package:parousia/dependencies.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/view_models/view_models.dart';
 import 'package:parousia/util/errors.dart';
+import 'package:parousia/util/recurrence_rules.dart';
 import 'package:parousia/util/result.dart';
 
 import '../support/fake_backend.dart';
@@ -131,6 +132,49 @@ void main() {
 
       expect(vm.instances.single.instanceDate, later);
       expect(vm.instances.single.myReply, ReplyOptions.no);
+    });
+  });
+
+  group('GroupDetailsViewModel without a date', () {
+    test('opens on the next event when today has none', () async {
+      // Weekly, starting three days from now: today is empty.
+      final now = DateTime.now();
+      final start = DateTime.utc(now.year, now.month, now.day + 3, 18);
+      backend.schedules.remove(dinner.id);
+      final game = backend.addSchedule(
+        club.id,
+        name: 'Game',
+        start: start,
+        rule: CommonRecurrenceRules.weekly,
+      );
+
+      final vm = GroupDetailsViewModel(
+        groupId: club.id,
+        groups: repositories.groups,
+        schedules: repositories.schedules,
+      );
+      await pumpEventQueue();
+
+      expect(vm.date, DateTime(start.year, start.month, start.day));
+      expect(vm.instances.single.scheduleId, game.id);
+      // And the empty-day hint points a week on.
+      expect(vm.next?.$2, start.add(const Duration(days: 7)));
+    });
+
+    test('stays on today when today has an event', () async {
+      final vm = GroupDetailsViewModel(
+        groupId: club.id,
+        groups: repositories.groups,
+        schedules: repositories.schedules,
+      );
+      await pumpEventQueue();
+
+      final now = DateTime.now();
+      expect(
+        (vm.date.year, vm.date.month, vm.date.day),
+        (now.year, now.month, now.day),
+      );
+      expect(vm.instances.single.scheduleId, dinner.id);
     });
   });
 

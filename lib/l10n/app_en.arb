@@ -21,10 +21,7 @@
   "createNewEvent": "Create new event",
   "createNewGroup": "Create new group",
   "createOrJoinGroup": "Create or join group",
-  "defaultRules": "Default replies",
-  "defaultRulesDescription": "Choose a default reply to apply to this event",
-  "defaultRulesDaily": "Daily",
-  "defaultRulesExplanation": "Default replies allow you to set automatic responses for recurring events. You can choose from daily, weekdays, or weekends options.",
+  "defaultRulesExplanation": "Your usual answer fills in every occurrence it covers, so you're counted without answering each time. You can still change any single day.",
   "defaultRulesWeekdays": "Weekdays",
   "defaultRulesWeekends": "Weekends",
   "delete": "Delete",
@@ -57,7 +54,7 @@
   "groupDismissAdmin": "Dismiss as admin",
   "groupDismissAdminConfirmation": "Are you sure you want to dismiss this member as an admin?",
   "groupEmptyEventsAdmin": "Your event calendar is empty.<br/>Ready to plan something exciting? Tap the <manage/> button to create a new event and invite your group members!",
-  "groupEmptyEventsUser": "There are no events for this specific day, check another date!",
+  "groupEmptyEventsUser": "This group has no events yet.",
   "groupLeave": "Leave group",
   "groupLeaveConfirmation": "Are you sure you want to leave this group? You will lose access to all group events and members.",
   "groupMakeAdmin": "Make group admin",
@@ -348,5 +345,191 @@
   "updateRequiredAction": "Update",
   "notFoundTitle": "Page not found",
   "notFoundBody": "This link doesn't lead to anything in GRUP. It may be mistyped, or what it pointed to is gone.",
-  "notFoundAction": "Go to your groups"
+  "notFoundAction": "Go to your groups",
+  "eventComing": "{count, plural, =1{1 coming} other{{count} coming}}",
+  "@eventComing": {
+    "description": "Headline count of people coming to an event (answered yes).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "eventUsually": "+{count} usually",
+  "@eventUsually": {
+    "description": "People counted as coming only by their usual answer, shown after the headline count.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "eventOut": "{count} out",
+  "@eventOut": {
+    "description": "How many answered no.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "eventNoReply": "{count} no reply",
+  "@eventNoReply": {
+    "description": "How many haven't answered.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "noReplyYet": "No reply yet",
+  "@noReplyYet": {
+    "description": "Section header for members who haven't answered."
+  },
+  "previousDay": "Previous day",
+  "@previousDay": {
+    "description": "Button that shows the day before."
+  },
+  "nextDay": "Next day",
+  "@nextDay": {
+    "description": "Button that shows the day after."
+  },
+  "noEventsThisDay": "No events on this day.",
+  "@noEventsThisDay": {
+    "description": "A group's day with no events, when the group has events on other days."
+  },
+  "nextEvent": "Next: {event}, {date}",
+  "@nextEvent": {
+    "description": "Button that jumps to the group's next event.",
+    "placeholders": {
+      "event": {
+        "type": "String",
+        "example": "Five-a-side"
+      },
+      "date": {
+        "type": "String",
+        "example": "Sat, Oct 31"
+      }
+    }
+  },
+  "eventNotFound": "This event isn't on this day.",
+  "@eventNotFound": {
+    "description": "An event link for a day the event doesn't happen on (or a deleted event)."
+  },
+  "usualAnswer": "usual answer",
+  "@usualAnswer": {
+    "description": "Screen-reader value on an answer button that shows a usual answer, not a real one."
+  },
+  "answerComing": "coming",
+  "@answerComing": {
+    "description": "Screen-reader status of a member."
+  },
+  "answerNotComing": "not coming",
+  "@answerNotComing": {
+    "description": "Screen-reader status of a member."
+  },
+  "answerUsuallyComing": "usually coming",
+  "@answerUsuallyComing": {
+    "description": "Screen-reader status of a member counted by their usual answer."
+  },
+  "answerUsuallyNotComing": "usually not coming",
+  "@answerUsuallyNotComing": {
+    "description": "Screen-reader status of a member counted by their usual answer."
+  },
+  "answerNoReply": "no reply yet",
+  "@answerNoReply": {
+    "description": "Screen-reader status of a member who hasn't answered."
+  },
+  "usualAnswerYours": "Your usual answer",
+  "@usualAnswerYours": {
+    "description": "Title of the sheet that sets the user's usual answer."
+  },
+  "usualAnswerFor": "Usual answer for {name}",
+  "@usualAnswerFor": {
+    "description": "Title of the sheet where an admin sets a member's usual answer.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Marta"
+      }
+    }
+  },
+  "usualEveryTime": "Every time",
+  "@usualEveryTime": {
+    "description": "Usual-answer option covering every occurrence of the event."
+  },
+  "usuallyIn": "Usually in",
+  "@usuallyIn": {
+    "description": "Under a member's name: their usual answer is yes, for every occurrence."
+  },
+  "usuallyOut": "Usually out",
+  "@usuallyOut": {
+    "description": "Under a member's name: their usual answer is no, for every occurrence."
+  },
+  "usuallyInWhen": "Usually in · {when}",
+  "@usuallyInWhen": {
+    "description": "Under a member's name: their usual answer is yes on some occurrences.",
+    "placeholders": {
+      "when": {
+        "type": "String",
+        "example": "On weekdays"
+      }
+    }
+  },
+  "usuallyOutWhen": "Usually out · {when}",
+  "@usuallyOutWhen": {
+    "description": "Under a member's name: their usual answer is no on some occurrences.",
+    "placeholders": {
+      "when": {
+        "type": "String",
+        "example": "On weekdays"
+      }
+    }
+  },
+  "setUsualAnswer": "Set your usual answer",
+  "@setUsualAnswer": {
+    "description": "Under the user's own row on a recurring event: opens the usual-answer sheet."
+  },
+  "usualAnswerSaved": "Usual answer saved",
+  "@usualAnswerSaved": {
+    "description": "Confirmation after setting a usual answer."
+  },
+  "usualAnswerRemoved": "Usual answer removed",
+  "@usualAnswerRemoved": {
+    "description": "Confirmation after clearing a usual answer."
+  },
+  "undo": "Undo",
+  "@undo": {
+    "description": "Snackbar action that reverts the last change."
+  },
+  "markedComing": "{name} marked as coming",
+  "@markedComing": {
+    "description": "After an admin answers yes for a member.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Marta"
+      }
+    }
+  },
+  "markedNotComing": "{name} marked as not coming",
+  "@markedNotComing": {
+    "description": "After an admin answers no for a member.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Marta"
+      }
+    }
+  },
+  "answerCleared": "Answer cleared for {name}",
+  "@answerCleared": {
+    "description": "After an admin clears a member's answer.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Marta"
+      }
+    }
+  }
 }

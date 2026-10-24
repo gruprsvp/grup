@@ -74,18 +74,8 @@ class AppLocalizationsDe extends AppLocalizations {
   String get createOrJoinGroup => 'Gruppe erstellen oder beitreten';
 
   @override
-  String get defaultRules => 'Standardantworten';
-
-  @override
-  String get defaultRulesDescription =>
-      'Wähle eine Standardantwort für dieses Event';
-
-  @override
-  String get defaultRulesDaily => 'Täglich';
-
-  @override
   String get defaultRulesExplanation =>
-      'Standardantworten ermöglichen es dir, automatische Antworten für wiederkehrende Events festzulegen. Du kannst zwischen täglichen, wochentäglichen oder wochenendlichen Optionen wählen.';
+      'Deine übliche Antwort gilt für jedes passende Event, so wirst du mitgezählt, ohne jedes Mal zu antworten. Einzelne Tage kannst du trotzdem ändern.';
 
   @override
   String get defaultRulesWeekdays => 'Wochentage';
@@ -197,8 +187,7 @@ class AppLocalizationsDe extends AppLocalizations {
       'Dein Eventkalender ist leer.<br/>Bereit, etwas Aufregendes zu planen? Tippe auf die Schaltfläche <manage/>, um ein neues Event zu erstellen und die Gruppenmitglieder einzuladen!';
 
   @override
-  String get groupEmptyEventsUser =>
-      'Für diesen speziellen Tag gibt es keine Events, schau an einem anderen Datum nach!';
+  String get groupEmptyEventsUser => 'Diese Gruppe hat noch keine Events.';
 
   @override
   String get groupLeave => 'Gruppe verlassen';
@@ -288,7 +277,7 @@ class AppLocalizationsDe extends AppLocalizations {
   String get newGroup => 'Neue Gruppe';
 
   @override
-  String get no => 'Nee';
+  String get no => 'Nein';
 
   @override
   String get onboardingMessage =>
@@ -525,4 +514,116 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get notFoundAction => 'Zu deinen Gruppen';
+
+  @override
+  String eventComing(int count) {
+    return '$count dabei';
+  }
+
+  @override
+  String eventUsually(int count) {
+    return '+$count meistens';
+  }
+
+  @override
+  String eventOut(int count) {
+    return '$count nicht dabei';
+  }
+
+  @override
+  String eventNoReply(int count) {
+    return '$count ohne Antwort';
+  }
+
+  @override
+  String get noReplyYet => 'Noch keine Antwort';
+
+  @override
+  String get previousDay => 'Vorheriger Tag';
+
+  @override
+  String get nextDay => 'Nächster Tag';
+
+  @override
+  String get noEventsThisDay => 'An diesem Tag gibt es keine Events.';
+
+  @override
+  String nextEvent(String event, String date) {
+    return 'Nächstes: $event, $date';
+  }
+
+  @override
+  String get eventNotFound => 'Dieses Event findet an diesem Tag nicht statt.';
+
+  @override
+  String get usualAnswer => 'übliche Antwort';
+
+  @override
+  String get answerComing => 'dabei';
+
+  @override
+  String get answerNotComing => 'nicht dabei';
+
+  @override
+  String get answerUsuallyComing => 'meistens dabei';
+
+  @override
+  String get answerUsuallyNotComing => 'meistens nicht dabei';
+
+  @override
+  String get answerNoReply => 'noch keine Antwort';
+
+  @override
+  String get usualAnswerYours => 'Deine übliche Antwort';
+
+  @override
+  String usualAnswerFor(String name) {
+    return 'Übliche Antwort für $name';
+  }
+
+  @override
+  String get usualEveryTime => 'Jedes Mal';
+
+  @override
+  String get usuallyIn => 'Meistens dabei';
+
+  @override
+  String get usuallyOut => 'Meistens nicht dabei';
+
+  @override
+  String usuallyInWhen(String when) {
+    return 'Meistens dabei · $when';
+  }
+
+  @override
+  String usuallyOutWhen(String when) {
+    return 'Meistens nicht dabei · $when';
+  }
+
+  @override
+  String get setUsualAnswer => 'Übliche Antwort festlegen';
+
+  @override
+  String get usualAnswerSaved => 'Übliche Antwort gespeichert';
+
+  @override
+  String get usualAnswerRemoved => 'Übliche Antwort entfernt';
+
+  @override
+  String get undo => 'Rückgängig';
+
+  @override
+  String markedComing(String name) {
+    return '$name als dabei markiert';
+  }
+
+  @override
+  String markedNotComing(String name) {
+    return '$name als nicht dabei markiert';
+  }
+
+  @override
+  String answerCleared(String name) {
+    return 'Antwort von $name gelöscht';
+  }
 }
