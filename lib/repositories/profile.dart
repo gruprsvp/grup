@@ -64,14 +64,11 @@ class ProfileRepository extends UserData {
       final picture = image == null
           ? null
           : await _storage.uploadPublicXFile(const Uuid().v7(), image);
-      await _profilesService.updateProfile(
+      final profile = await _profilesService.updateProfile(
         id: userId,
         displayName: name,
         pictureUrl: picture,
       );
-      // The handle_upsert_user trigger copies the auth metadata into the
-      // profile, so read the profile back rather than guess it.
-      final profile = await _profilesService.getProfileById(userId);
       ifCurrent(generation, () => _profile = profile);
       return profile;
     });

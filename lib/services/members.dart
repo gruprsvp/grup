@@ -40,8 +40,11 @@ class MembersService extends SupabaseService with Postgrest {
   }) async {
     return table()
         .update({
-          if (displayNameOverride != null && displayNameOverride.isNotEmpty)
-            'display_name_override': displayNameOverride,
+          // An empty override clears it, so the member shows their own name.
+          if (displayNameOverride != null)
+            'display_name_override': displayNameOverride.isEmpty
+                ? null
+                : displayNameOverride,
           if (role != null) 'role': role.name,
         })
         .eq('id', memberId)
