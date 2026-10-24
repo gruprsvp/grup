@@ -12,6 +12,9 @@ import 'package:package_info_plus/package_info_plus.dart';
 import 'package:styled_text/styled_text.dart';
 import 'package:url_launcher/url_launcher_string.dart';
 
+/// From App Store Connect under General > App Information > Apple ID.
+const appStoreId = '6473851276';
+
 class FeedbackCard extends StatelessWidget {
   const FeedbackCard({super.key});
 
@@ -196,9 +199,6 @@ class _StoreButton extends StatelessWidget {
     final theme = Theme.of(context);
     final colorScheme = theme.colorScheme;
     final inAppReview = InAppReview.instance;
-
-    // From App Store Connect under General > App Information > Apple ID
-    final appStoreId = '6473851276';
 
     return FilledButton.icon(
       style: ButtonStyle(

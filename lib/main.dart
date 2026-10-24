@@ -1,11 +1,16 @@
+import 'dart:async';
+import 'dart:io';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:parousia/app.dart';
 import 'package:parousia/dependencies.dart';
 import 'package:parousia/repositories/repositories.dart';
+import 'package:parousia/services/services.dart';
 import 'package:parousia/util/config.dart';
 import 'package:parousia/util/util.dart';
 import 'package:provider/provider.dart';
@@ -57,6 +62,21 @@ Future<void> main() async {
     legacyState: await takeLegacyState(),
   );
 
+  // Checked after launch, so a slow or missing network never holds up
+  // startup. The web app is always the latest version.
+  final updateRequired = ValueNotifier(false);
+  if (!kIsWeb && (Platform.isAndroid || Platform.isIOS)) {
+    final info = await PackageInfo.fromPlatform();
+    unawaited(
+      AppVersionService()
+          .updateRequired(
+            version: info.version,
+            platform: Platform.operatingSystem,
+          )
+          .then((required) => updateRequired.value = required),
+    );
+  }
+
   // Links that open the app (https://grup.rsvp/join/CODE) reach the router
   // through Flutter's deep linking, enabled on Android and iOS.
   final app = MultiProvider(
@@ -64,6 +84,7 @@ Future<void> main() async {
     child: ParApp(
       router: createRouter(repositories.auth),
       settings: repositories.settings,
+      updateRequired: updateRequired,
     ),
   );
 

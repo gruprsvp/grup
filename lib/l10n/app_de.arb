@@ -150,5 +150,8 @@
   "authEnterOneTimeCode": "Bitte gib den gesendeten Einmalcode ein",
   "authEnterCodeSent": "Gib den gesendeten Code ein",
   "authVerifyPhone": "Telefon bestätigen",
-  "authContinueWithProvider": "Weiter mit {provider}"
+  "authContinueWithProvider": "Weiter mit {provider}",
+  "updateRequiredTitle": "GRUP aktualisieren",
+  "updateRequiredBody": "Diese Version von GRUP wird nicht mehr unterstützt. Aktualisiere die App, um sie weiter zu nutzen.",
+  "updateRequiredAction": "Aktualisieren"
 }

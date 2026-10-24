@@ -48,19 +48,41 @@ void main() {
   group('the app', () {
     setUpAll(initFakeSupabase);
 
-    Future<FakeBackend> pumpApp(WidgetTester tester, String location) async {
+    Future<FakeBackend> pumpApp(
+      WidgetTester tester,
+      String location, {
+      ValueNotifier<bool>? updateRequired,
+    }) async {
       final (backend, repositories) = await fakeApp(userId: null);
       final router = createRouter(repositories.auth)..go(location);
       addTearDown(router.dispose);
       await tester.pumpWidget(
         MultiProvider(
           providers: repositories.providers,
-          child: ParApp(router: router, settings: repositories.settings),
+          child: ParApp(
+            router: router,
+            settings: repositories.settings,
+            updateRequired: updateRequired,
+          ),
         ),
       );
       await tester.pumpAndSettle();
       return backend;
     }
+
+    testWidgets('an unsupported version shows only the update screen', (
+      tester,
+    ) async {
+      final updateRequired = ValueNotifier(false);
+      await pumpApp(tester, '/join/ABCD-1234', updateRequired: updateRequired);
+      expect(find.byType(AuthScreen), findsOneWidget);
+
+      updateRequired.value = true;
+      await tester.pumpAndSettle();
+
+      expect(find.byType(UpdateRequiredScreen), findsOneWidget);
+      expect(find.byType(AuthScreen), findsNothing);
+    });
 
     testWidgets('routes are built as MaterialPage', (tester) async {
       await pumpApp(tester, '/');

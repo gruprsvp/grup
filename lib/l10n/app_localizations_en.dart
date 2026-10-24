@@ -500,4 +500,14 @@ class AppLocalizationsEn extends AppLocalizations {
   String authContinueWithProvider(String provider) {
     return 'Continue with $provider';
   }
+
+  @override
+  String get updateRequiredTitle => 'Update GRUP';
+
+  @override
+  String get updateRequiredBody =>
+      'This version of GRUP is no longer supported. Update the app to keep using it.';
+
+  @override
+  String get updateRequiredAction => 'Update';
 }
