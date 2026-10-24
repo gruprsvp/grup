@@ -40,13 +40,58 @@ part 'go_router_builder.g.dart';
     ),
   ],
 )
+/// A [MaterialPage] with no transition on wide windows, where the event it
+/// opens appears next to the list already on screen.
+class PanesPage<T> extends MaterialPage<T> {
+  const PanesPage({
+    required super.child,
+    super.key,
+    super.name,
+    super.arguments,
+    super.restorationId,
+  });
+
+  @override
+  Route<T> createRoute(BuildContext context) => _PanesRoute<T>(this);
+}
+
+class _PanesRoute<T> extends PageRoute<T> with MaterialRouteTransitionMixin<T> {
+  _PanesRoute(PanesPage<T> page) : super(settings: page);
+
+  bool get _wide => TwoPane.isWide(navigator!.context);
+
+  @override
+  Widget buildContent(BuildContext context) => (settings as PanesPage<T>).child;
+
+  @override
+  bool get maintainState => true;
+
+  @override
+  Duration get transitionDuration =>
+      _wide ? Duration.zero : super.transitionDuration;
+
+  @override
+  Duration get reverseTransitionDuration =>
+      _wide ? Duration.zero : super.reverseTransitionDuration;
+
+  @override
+  Widget buildTransitions(
+    BuildContext context,
+    Animation<double> animation,
+    Animation<double> secondaryAnimation,
+    Widget child,
+  ) => _wide
+      ? child
+      : super.buildTransitions(context, animation, secondaryAnimation, child);
+}
+
 @immutable
 class HomeScreenRoute extends GoRouteData with $HomeScreenRoute {
   const HomeScreenRoute();
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const HomeContainer();
+      const ReadableWidth(child: HomeContainer());
 }
 
 // Top level, so the signed-out user's stack is this page alone (as a child
@@ -60,7 +105,8 @@ class AuthRoute extends GoRouteData with $AuthRoute {
   final String? from;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) => const AuthScreen();
+  Widget build(BuildContext context, GoRouterState state) =>
+      const ReadableWidth(child: AuthScreen());
 }
 
 /// An invite link: https://grup.rsvp/join/CODE.
@@ -72,7 +118,7 @@ class JoinRoute extends GoRouteData with $JoinRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      JoinGroupContainer(code: code);
+      ReadableWidth(child: JoinGroupContainer(code: code));
 }
 
 @immutable
@@ -81,7 +127,7 @@ class SettingsRoute extends GoRouteData with $SettingsRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const SettingsContainer();
+      const ReadableWidth(child: SettingsContainer());
 }
 
 @immutable
@@ -90,7 +136,7 @@ class LocaleRoute extends GoRouteData with $LocaleRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const LocaleContainer();
+      const ReadableWidth(child: LocaleContainer());
 }
 
 @immutable
@@ -99,7 +145,7 @@ class SettingsMoreRoute extends GoRouteData with $SettingsMoreRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const SettingsMoreContainer();
+      const ReadableWidth(child: SettingsMoreContainer());
 }
 
 @immutable
@@ -108,7 +154,7 @@ class LicensesRoute extends GoRouteData with $LicensesRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const LicensePage();
+      const ReadableWidth(child: LicensePage());
 }
 
 @immutable
@@ -120,7 +166,7 @@ class ProfileRoute extends GoRouteData with $ProfileRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      ProfileContainer(userNavigated: userNavigated);
+      ReadableWidth(child: ProfileContainer(userNavigated: userNavigated));
 }
 
 @immutable
@@ -132,7 +178,7 @@ class GroupCreateRoute extends GoRouteData with $GroupCreateRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      GroupCreateScreen(create: create ?? false);
+      ReadableWidth(child: GroupCreateScreen(create: create ?? false));
 }
 
 @immutable
@@ -164,7 +210,7 @@ class GroupManageRoute extends GoRouteData with $GroupManageRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      GroupManageContainer(groupId: groupId);
+      ReadableWidth(child: GroupManageContainer(groupId: groupId));
 }
 
 @immutable
@@ -176,7 +222,7 @@ class GroupScheduleCreateRoute extends GoRouteData
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const ScheduleCreateScreen();
+      const ReadableWidth(child: ScheduleCreateScreen());
 }
 
 /// One occurrence of a schedule, at [at].
@@ -193,13 +239,33 @@ class GroupScheduleDetailsRoute extends GoRouteData
   final String scheduleId;
   final DateTime at;
 
+  /// On a wide window, the event opens next to the group's day.
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      GroupScheduleDetailsContainer(
-        groupId: groupId,
-        scheduleId: scheduleId,
-        instanceDate: at,
-      );
+      TwoPane.isWide(context)
+      ? GroupDetailsContainer(
+          groupId: groupId,
+          selected: (scheduleId: scheduleId, at: at),
+        )
+      : ReadableWidth(
+          child: GroupScheduleDetailsContainer(
+            groupId: groupId,
+            scheduleId: scheduleId,
+            instanceDate: at,
+          ),
+        );
+
+  /// One page class at every width, under go_router's key (the route's
+  /// pattern): opening another event, or resizing, updates the page in place
+  /// instead of pushing a new one.
+  @override
+  Page<void> buildPage(BuildContext context, GoRouterState state) => PanesPage(
+    key: state.pageKey,
+    name: state.name ?? state.path,
+    arguments: state.pathParameters,
+    restorationId: state.pageKey.value,
+    child: build(context, state),
+  );
 }
 
 @immutable
@@ -214,8 +280,9 @@ class GroupMemberDetailsRoute extends GoRouteData
   final String memberId;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      GroupMemberDetailsContainer(groupId: groupId, memberId: memberId);
+  Widget build(BuildContext context, GoRouterState state) => ReadableWidth(
+    child: GroupMemberDetailsContainer(groupId: groupId, memberId: memberId),
+  );
 }
 
 @immutable
@@ -224,5 +291,5 @@ class SelectContactsRoute extends GoRouteData with $SelectContactsRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const SelectContactsScreen();
+      const ReadableWidth(child: SelectContactsScreen());
 }

@@ -10,11 +10,15 @@ class GroupScheduleDetailsContainer extends StatelessWidget {
   final String scheduleId;
   final DateTime instanceDate;
 
+  /// Whether to show a back button: not when open next to the group's list.
+  final bool automaticallyImplyLeading;
+
   const GroupScheduleDetailsContainer({
     super.key,
     required this.groupId,
     required this.scheduleId,
     required this.instanceDate,
+    this.automaticallyImplyLeading = true,
   });
 
   @override
@@ -28,6 +32,7 @@ class GroupScheduleDetailsContainer extends StatelessWidget {
     ),
     child: Consumer<ScheduleDetailsViewModel>(
       builder: (context, vm, _) => GroupScheduleDetailsScreen(
+        automaticallyImplyLeading: automaticallyImplyLeading,
         loading: vm.load.running,
         group: vm.group,
         scheduleInstance: vm.details,

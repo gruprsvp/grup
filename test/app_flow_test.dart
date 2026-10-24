@@ -134,6 +134,122 @@ void main() {
     expect(Uri.parse(address()).path, '/');
   });
 
+  group('on a wide window', () {
+    void wide(WidgetTester tester, [double width = 1280]) {
+      tester.view.physicalSize = Size(width, 800);
+      tester.view.devicePixelRatio = 1;
+      addTearDown(tester.view.reset);
+    }
+
+    Future<void> pumpTwoEvents(WidgetTester tester) => pumpApp(
+      tester,
+      seed: (backend) {
+        backend.addProfile('me', name: 'Me');
+        final club = backend.addGroup('Club');
+        backend.addSchedule(club.id, name: 'Dinner');
+        backend.addSchedule(
+          club.id,
+          name: 'Drinks',
+          start: DateTime.utc(2024, 1, 1, 21),
+        );
+        backend.addMember(club.id, name: 'Ann');
+      },
+    );
+
+    String path() => router.routeInformationProvider.value.uri.path;
+    Finder inList(String text) => find.descendant(
+      of: find.byType(GroupDetailsScreen),
+      matching: find.text(text),
+    );
+    Finder inDetail(String text) => find.descendant(
+      of: find.byType(GroupScheduleDetailsScreen),
+      matching: find.text(text),
+    );
+    GroupDetailsViewModel listViewModel(WidgetTester tester) =>
+        tester.element(find.byType(GroupDetailsScreen)).read();
+
+    testWidgets("a group's day shows its first event alongside", (
+      tester,
+    ) async {
+      wide(tester);
+      await pumpTwoEvents(tester);
+      final club = backend.groups.values.single.id;
+
+      await tester.tap(find.text('Club'));
+      await tester.pumpAndSettle();
+      expect(path(), '/groups/$club');
+      expect(inDetail('Dinner'), findsOneWidget);
+      // The event is part of the page: nothing to go back from.
+      expect(
+        find.descendant(
+          of: find.byType(GroupScheduleDetailsScreen),
+          matching: find.byType(BackButton),
+        ),
+        findsNothing,
+      );
+    });
+
+    testWidgets('opening events keeps the list as it is', (tester) async {
+      wide(tester);
+      await pumpTwoEvents(tester);
+      final club = backend.groups.values.single.id;
+      final drinks = backend.schedules.values.last.id;
+
+      await tester.tap(find.text('Club'));
+      await tester.pumpAndSettle();
+      await tester.tap(inList('Dinner'));
+      await tester.pumpAndSettle();
+      final list = listViewModel(tester);
+
+      await tester.tap(inList('Drinks'));
+      await tester.pumpAndSettle();
+      expect(path(), '/groups/$club/schedules/$drinks');
+      expect(inDetail('Drinks'), findsOneWidget);
+      expect(inDetail('Dinner'), findsNothing);
+      expect(identical(listViewModel(tester), list), isTrue);
+
+      // One snackbar, not one per pane.
+      final annYes = find.descendant(
+        of: find.widgetWithText(ListTile, 'Ann'),
+        matching: find.byTooltip('Yes'),
+      );
+      await tester.ensureVisible(annYes);
+      await tester.tap(annYes);
+      await tester.pumpAndSettle();
+      expect(find.byType(SnackBar), findsOneWidget);
+
+      // Back leaves the group, rather than closing the event.
+      await tester.tap(
+        find.descendant(
+          of: find.byType(GroupDetailsScreen),
+          matching: find.byType(BackButton),
+        ),
+      );
+      await tester.pumpAndSettle();
+      expect(path(), '/');
+    });
+
+    testWidgets('narrowing the window shows the event alone', (tester) async {
+      wide(tester);
+      await pumpTwoEvents(tester);
+
+      await tester.tap(find.text('Club'));
+      await tester.pumpAndSettle();
+      await tester.tap(inList('Drinks'));
+      await tester.pumpAndSettle();
+
+      wide(tester, 700);
+      await tester.pumpAndSettle();
+      expect(find.byType(GroupDetailsScreen), findsNothing);
+      expect(inDetail('Drinks'), findsOneWidget);
+
+      wide(tester);
+      await tester.pumpAndSettle();
+      expect(inList('Dinner'), findsOneWidget);
+      expect(inDetail('Drinks'), findsOneWidget);
+    });
+  });
+
   testWidgets('the address bar follows manage and profile', (tester) async {
     await pumpApp(tester);
     String path() => router.routeInformationProvider.value.uri.path;

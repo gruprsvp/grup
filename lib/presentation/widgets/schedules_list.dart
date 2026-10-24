@@ -33,6 +33,9 @@ class SchedulesList extends StatelessWidget {
   final bool hasOtherMembers;
   final ValueSetter<Schedule>? onCreateSchedule;
 
+  /// The event open next to the list, if any.
+  final ScheduleInstanceKey? selected;
+
   const SchedulesList({
     super.key,
     this.schedules,
@@ -46,6 +49,7 @@ class SchedulesList extends StatelessWidget {
     this.unknown = false,
     this.hasOtherMembers = true,
     this.onCreateSchedule,
+    this.selected,
   });
 
   @override
@@ -75,6 +79,10 @@ class SchedulesList extends StatelessWidget {
                 for (final schedule in schedules)
                   ScheduleTile(
                     schedule: schedule,
+                    selected:
+                        selected?.scheduleId == schedule.scheduleId &&
+                        // The address's time may differ in zone, not moment.
+                        selected!.at.isAtSameMomentAs(schedule.instanceDate),
                     onReplyChanged: onReplyChanged == null
                         ? null
                         : (reply) => onReplyChanged!(schedule, reply),

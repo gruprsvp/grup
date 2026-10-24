@@ -204,7 +204,7 @@ Single column on every size, built from Material slivers. A pinned or floating `
 - **Text size:** no fixed heights on headers; the date row grows with the text scale. Short count phrases are kept on one line (`keepTogether`).
 - **Pull to refresh** on the group's day list and on the event, with the empty states scrollable so it works there too.
 - **Edge-to-edge:** content clears system bars with `SafeArea` and the bottom view padding (Android 15 enforces edge-to-edge).
-- **Wide screens:** today the layout simply stretches. There are no breakpoints, rail, or max width yet.
+- **Wide screens:** chosen by window width, never by platform (iPad split view and browser windows resize). From Material's expanded width (840dp) a group is two panes (`TwoPane`): the day's list on the left (40% of the window, 360–480dp) and the open event on the right, under one outer `Scaffold` so a snackbar shows once. The group's address opens its first event of the day; an event's address keeps its URL and opens next to its day, with no page transition, and the list's back button leaves the group. The open event's row sits on `secondaryContainer`, without recolouring its answer buttons. Every other page, and a group or event below 840dp, is one column capped at 640dp and centred (`ReadableWidth`). Sheets stay modal bottom sheets, centred at their 640dp maximum.
 
 ## Elevation & Depth
 
