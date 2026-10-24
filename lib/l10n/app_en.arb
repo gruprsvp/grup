@@ -342,5 +342,8 @@
         "example": "Google"
       }
     }
-  }
+  },
+  "updateRequiredTitle": "Update GRUP",
+  "updateRequiredBody": "This version of GRUP is no longer supported. Update the app to keep using it.",
+  "updateRequiredAction": "Update"
 }

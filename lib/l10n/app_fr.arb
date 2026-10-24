@@ -150,5 +150,8 @@
   "authEnterOneTimeCode": "Saisis le code à usage unique envoyé",
   "authEnterCodeSent": "Saisis le code envoyé",
   "authVerifyPhone": "Vérifier le téléphone",
-  "authContinueWithProvider": "Continuer avec {provider}"
+  "authContinueWithProvider": "Continuer avec {provider}",
+  "updateRequiredTitle": "Mets à jour GRUP",
+  "updateRequiredBody": "Cette version de GRUP n'est plus prise en charge. Mets à jour l'appli pour continuer à l'utiliser.",
+  "updateRequiredAction": "Mettre à jour"
 }

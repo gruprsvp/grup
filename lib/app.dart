@@ -1,9 +1,12 @@
+import 'package:flutter/foundation.dart';
 import 'package:form_builder_validators/form_builder_validators.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:in_app_review/in_app_review.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:parousia/l10n/app_localizations.dart';
 import 'package:parousia/l10n/auth_ui_localizations.dart';
+import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/repositories/repositories.dart';
 import 'package:phone_form_field/phone_form_field.dart';
 
@@ -49,14 +52,22 @@ const appLocalizationsDelegates = <LocalizationsDelegate<dynamic>>[
 const appSupportedLocales = AppLocalizations.supportedLocales;
 
 class ParApp extends StatelessWidget {
-  const ParApp({required this.router, required this.settings, super.key});
+  const ParApp({
+    required this.router,
+    required this.settings,
+    this.updateRequired,
+    super.key,
+  });
 
   final GoRouter router;
   final SettingsRepository settings;
 
+  /// When true, every page gives way to [UpdateRequiredScreen].
+  final ValueListenable<bool>? updateRequired;
+
   @override
   Widget build(BuildContext context) => ListenableBuilder(
-    listenable: settings,
+    listenable: Listenable.merge([settings, ?updateRequired]),
     builder: (context, _) => MaterialApp.router(
       title: 'GRUP',
       localizationsDelegates: appLocalizationsDelegates,
@@ -66,6 +77,12 @@ class ParApp extends StatelessWidget {
       darkTheme: appTheme(Brightness.dark),
       theme: appTheme(Brightness.light),
       routerConfig: router,
+      builder: (context, child) => updateRequired?.value ?? false
+          ? UpdateRequiredScreen(
+              onUpdate: () =>
+                  InAppReview.instance.openStoreListing(appStoreId: appStoreId),
+            )
+          : child!,
     ),
   );
 }

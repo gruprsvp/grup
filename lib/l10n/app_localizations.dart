@@ -1009,6 +1009,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Continue with {provider}'**
   String authContinueWithProvider(String provider);
+
+  /// No description provided for @updateRequiredTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Update GRUP'**
+  String get updateRequiredTitle;
+
+  /// No description provided for @updateRequiredBody.
+  ///
+  /// In en, this message translates to:
+  /// **'This version of GRUP is no longer supported. Update the app to keep using it.'**
+  String get updateRequiredBody;
+
+  /// No description provided for @updateRequiredAction.
+  ///
+  /// In en, this message translates to:
+  /// **'Update'**
+  String get updateRequiredAction;
 }
 
 class _AppLocalizationsDelegate
