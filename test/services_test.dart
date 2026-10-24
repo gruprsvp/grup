@@ -292,6 +292,40 @@ void main() {
     );
 
     test(
+      'an empty override clears it, except on a guest',
+      () => runWithTemporaryUser(
+        (supabase, user) =>
+            runWithTemporaryGroup((supabase, group, groupsService) async {
+              final membersService = MembersService(supabase: supabase);
+              final own = await membersService.getOwnMemberByGroupId(group.id);
+
+              await membersService.updateMember(
+                memberId: own.id,
+                displayNameOverride: 'Nickname',
+              );
+              final cleared = await membersService.updateMember(
+                memberId: own.id,
+                displayNameOverride: '',
+              );
+              expect(cleared.displayNameOverride, isNull);
+
+              // A guest has no profile, so the override is their only name.
+              final guest = await membersService.addMemberToGroup(
+                group.id,
+                displayName: 'A guest',
+              );
+              await expectLater(
+                membersService.updateMember(
+                  memberId: guest.id,
+                  displayNameOverride: '',
+                ),
+                throwsA(isA<PostgrestException>()),
+              );
+            }),
+      ),
+    );
+
+    test(
       'users can see their groups and members',
       () => runWithTemporaryUser(
         (supabase, user) =>

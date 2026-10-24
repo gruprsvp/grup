@@ -262,7 +262,11 @@ class _FakeMembersService extends Fake implements MembersService {
     await _b._call();
     final member = _b.members[memberId] ?? (throw FakeBackend.notFound);
     return _b.members[memberId] = member.copyWith(
-      displayNameOverride: displayNameOverride ?? member.displayNameOverride,
+      displayNameOverride: displayNameOverride == null
+          ? member.displayNameOverride
+          : displayNameOverride.isEmpty
+          ? null
+          : displayNameOverride,
       role: role ?? member.role,
     );
   }
@@ -307,7 +311,10 @@ class _FakeInvitesService extends Fake implements InvitesService {
     );
     final member = _b.members[invite.memberId]!;
     if (_b._isMember(member.groupId)) throw const AlreadyMemberException();
-    _b.members[member.id] = member.copyWith(profileId: _b.userId);
+    _b.members[member.id] = member.copyWith(
+      profileId: _b.userId,
+      displayNameOverride: null,
+    );
     _b.invites.removeWhere((_, i) => i.memberId == member.id);
   }
 
@@ -329,18 +336,17 @@ class _FakeProfilesService extends Fake implements ProfilesService {
   }
 
   @override
-  Future<UserResponse> updateProfile({
+  Future<Profile> updateProfile({
     required String id,
-    String? displayName,
+    required String displayName,
     String? pictureUrl,
   }) async {
     await _b._call();
-    final profile = _b.profiles[id] ?? Profile(id: id);
-    _b.profiles[id] = profile.copyWith(
-      displayName: displayName ?? profile.displayName,
+    final profile = _b.profiles[id] ?? (throw FakeBackend.notFound);
+    return _b.profiles[id] = profile.copyWith(
+      displayName: displayName,
       picture: pictureUrl ?? profile.picture,
     );
-    return UserResponse.fromJson({'id': id});
   }
 
   @override

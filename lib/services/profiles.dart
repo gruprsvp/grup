@@ -16,16 +16,19 @@ class ProfilesService extends SupabaseService with Postgrest {
         .withConverter(Profile.fromJson);
   }
 
-  Future<UserResponse> updateProfile({
+  /// Sets [id]'s name and, unless null, their picture. Writes the profile
+  /// itself: auth metadata is rewritten by providers at sign-in.
+  Future<Profile> updateProfile({
     required String id,
-    String? displayName,
+    required String displayName,
     String? pictureUrl,
   }) async {
-    return supabase.auth.updateUser(
-      UserAttributes(
-        data: {'full_name': ?displayName, 'avatar_url': ?pictureUrl},
-      ),
-    );
+    return table()
+        .update({'display_name': displayName, 'picture': ?pictureUrl})
+        .eq('id', id)
+        .select()
+        .single()
+        .withConverter(Profile.fromJson);
   }
 
   Future<void> deleteProfile() async {

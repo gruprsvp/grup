@@ -7,7 +7,7 @@
 -- while signup-then-invite silently no-oped. Both directions are pinned here.
 
 begin;
-select plan(5);
+select plan(6);
 
 -- ── Setup: Alice, admin of a group ─────────────────────────────────────────
 insert into auth.users (id, email) values
@@ -69,6 +69,12 @@ select is(
    where member_id = 'ffffffff-ffff-ffff-ffff-ffffffffffff'),
   0,
   'signup-then-invite: the invite is consumed immediately'
+);
+select is(
+  (select display_name_override from members
+   where id = 'ffffffff-ffff-ffff-ffff-ffffffffffff'),
+  null,
+  'signup-then-invite: the member shows the user''s own name, as the other claim paths do'
 );
 
 select * from finish();
