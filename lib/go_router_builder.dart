@@ -189,7 +189,8 @@ class GroupDetailsRoute extends GoRouteData with $GroupDetailsRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      GroupDetailsContainer(groupId: groupId);
+      // Keyed, so another group's address gets its own view model.
+      GroupDetailsContainer(key: ValueKey(groupId), groupId: groupId);
 }
 
 @immutable
@@ -243,12 +244,16 @@ class GroupScheduleDetailsRoute extends GoRouteData
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       TwoPane.isWide(context)
+      // Keyed: the page is updated in place when the address changes, so a
+      // link to another group or event must not keep the old view model.
       ? GroupDetailsContainer(
+          key: ValueKey(groupId),
           groupId: groupId,
           selected: (scheduleId: scheduleId, at: at),
         )
       : ReadableWidth(
           child: GroupScheduleDetailsContainer(
+            key: ValueKey((scheduleId, at)),
             groupId: groupId,
             scheduleId: scheduleId,
             instanceDate: at,
