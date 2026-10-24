@@ -13,15 +13,19 @@ TimeTree's is prettier and Howbout's is more social.
 ## Recommended sequence (both stores)
 
 Captions carry ~80% of a screenshot's job; viewers rarely read past the first
-three images. Short caption on top, device frame below, brand background.
+three images (and the App Store shows only those in search). Short caption on
+top, the screen below, brand background, no device frame.
 
 | # | Screen | Caption (EN) | Why here |
 |---|--------|--------------|----------|
-| 1 | Event with replies visible | **See who's coming — before you cook for twelve** | The differentiator, stated in one glance |
-| 2 | Group calendar | **One calendar for your whole crew** | The category keyword, visualized |
-| 3 | RSVP buttons on an event | **One tap to answer. No group-chat archaeology** | Shows how light the commitment is |
-| 4 | Recurring event / default answers | **Weekly plans on autopilot — "I'm always in on Tuesdays"** | Unique feature no competitor shows |
-| 5 | Groups list (home) | **Family, friends, team, book club — all of them** | Breadth, multiple-groups use case |
+| 1 | Event: headcount and who answered what | **See who's coming at a glance** | The differentiator, stated in one glance |
+| 2 | A group's day, answer buttons on each event | **Every plan, one tap to answer** | Shows how light the commitment is |
+| 3 | The usual-answer sheet | **Always in on Saturdays? Say it once** | Unique feature no competitor shows |
+| 4 | Groups list (home) | **Family, friends, team: all in one place** | Breadth, multiple-groups use case |
+
+The captions in every language live in `_demo` in the test, which is the source
+of truth. Play forbids "best", "#1", "new", "sale" and calls to action, so keep
+them descriptive.
 
 Caption translations should be *localized, not translated* — e.g. the German
 "cook for twelve" hook works better as „Bevor du für zwölf kochst" but the
@@ -31,41 +35,70 @@ possible; verbs first.
 ## Automated raw captures (working today)
 
 `test/store_screenshots/store_screenshots_test.dart` renders real screens with
-staged demo data at exact store resolutions, per locale:
+staged demo data at exact store resolutions, per locale and platform:
 
 ```sh
 STORE_SCREENSHOTS=true flutter test --tags screenshots --update-goldens
-# → test/store_screenshots/raw/<profile>/<locale>/<screen>.png
+# → test/store_screenshots/raw/<profile>/<locale>/<screen>.png      bare screen
+# → test/store_screenshots/store/<profile>/<locale>/<n>_<screen>.png captioned
+#   (both gitignored)
 ```
 
-Profiles: `appstore-6.7` (1290×2796) and `play-phone` (2160×3840, matches the
-current Play assets). Adding a screen = one line in the `screens` map, passing
-the "dumb" screen widget from `lib/presentation/screens/` with fake props —
-no view models or backend needed.
+240 images (6 profiles × 5 locales × 4 screens, bare and captioned) in about
+25 seconds. The captioned set is the store image: the caption on the brand
+colour in the top 18% (Play allows 20%), then the screen, laid out at full
+device size and scaled down, with rounded corners and no device frame (Play
+discourages device imagery). The bare set is for other tools (e.g. ButterKit).
+Demo names and captions are per language, in `_demo` in the test; the
+translations are drafts to review. No simulators
+or backend involved: screens are the "dumb" widgets from `lib/presentation/screens/`
+with fake props, so adding one is one entry in the `screens` map.
 
-Current limitations (acceptable for drafts, fix before shipping):
+| Profile | Pixels | Store slot |
+|---|---|---|
+| `ios-iphone-6.9` | 1320×2868 | iPhone 6.9" (largest; ASC scales it down) |
+| `ios-iphone-6.3` | 1206×2622 | iPhone 6.3" (ASC may require it) |
+| `ios-ipad-13` | 2064×2752 | iPad 13" (required: the app runs on iPad) |
+| `android-phone` | 1440×2560 | Play phone (9:16, ≥1080 px for featuring) |
+| `android-tablet-7` | 2048×1152 | Play 7" tablet (must be exactly 16:9) |
+| `android-tablet-10` | 2560×1440 | Play 10" tablet (must be exactly 16:9) |
 
-1. **Fonts** — Roboto + MaterialIcons load from the Flutter SDK cache, so
-   body text and icons are real. The Cabin/Sniglet brand fonts come from
-   `google_fonts`, which cannot download inside tests, so the GRUP wordmark
-   (and any emoji in demo data) render as tofu. Fix: bundle Cabin, Sniglet
-   and NotoColorEmoji under `assets/fonts/` and add them to `_loadRealFonts`
-   (google_fonts picks up bundled fonts at runtime too).
-2. **Richer screens** — screens showing replies (`group_schedule_details`)
-   need a staged `ScheduleInstanceSummary`; build fakes with the selectors'
-   types in `selectors/schedules.dart`.
-3. **Framing & captions** — raw captures still need device frame + caption +
-   background. Do this deterministically with a small compositing script
-   (ImageMagick or a Dart script using `package:image`) reading captions from
-   a per-locale YAML, writing straight into
-   `fastlane/metadata/android/<locale>/images/phoneScreenshots/`. Play then
-   syncs from the repo automatically (`sync_image_upload`); for the App Store
-   flip `skip_screenshots` in the Fastfile once frames are final.
+iOS profiles render with `TargetPlatform.iOS` (back chevrons, scroll physics), and
+every profile sets the system insets (Dynamic Island, nav bar) so a frame never
+covers the app bar. Fonts: Cabin/Sniglet from `assets/google_fonts/`, Roboto and
+Material Icons from the Flutter SDK cache, and package fonts (Font Awesome reply
+icons) from `FontManifest.json`. Shadows render for real, not as the test's black
+outlines.
+
+Known gaps:
+
+1. **Member names aren't localized**: they're a deliberately mixed set.
+2. **No colour emoji**: tests can't render them, so the demo data has none.
+3. **No status bar** is drawn: the top inset is blank. That's fine under a
+   caption or frame. Google wants any status bar clean (no carrier, full icons).
+4. **Tablets show the phone layout stretched**: the app has no wide layout.
+5. **Captures have an alpha channel**: both stores reject alpha. Flatten when
+   exporting, e.g. `sips -s format jpeg in.png --out out.jpg` (macOS).
+6. **Publishing isn't automated yet**. Final images go to `fastlane/metadata/{android,ios}/<locale>/` (Android `it-IT`, iOS
+   `it`). Only write final images there: merging changes under
+   `fastlane/metadata/` pushes them live to the stores (`store-metadata.yaml`).
 
 ## Store rules worth remembering
 
-- Play phone screenshots: 2–8 images, each side 320–3840 px. Feature graphic
-  (1024×500) is what shows in most promo placements — keep it caption-first too.
-- App Store: one 6.7"/6.9" set covers modern iPhones; iPad screenshots only if
-  the iPad experience is good (we currently ship 7"/10" tablet shots on Play).
+- **Play** ([preview assets](https://support.google.com/googleplay/android-developer/answer/9866151)):
+  2–8 per device type; JPEG or 24-bit PNG without alpha; each side 320–3840 px,
+  long side ≤ 2× short side. Featuring needs ≥ 4 at ≥ 1080 px. Taglines optional
+  and ≤ 20% of the image; the first three should be mostly UI. No "best", "#1",
+  "new", "sale", awards, prices or calls to action ("Download now"). Device
+  imagery is discouraged. Alt text ≤ 140 chars per image. Tablets must be 16:9 or
+  9:16 (1080–7680 px). Feature graphic 1024×500, centred, no plain white, black
+  or dark grey background, no copy of the icon.
+- **App Store** ([best practices](https://developer.apple.com/app-store/asset-best-practices/),
+  [specs](https://developer.apple.com/help/app-store-connect/reference/app-information/screenshot-specifications)):
+  up to 10 per size, no alpha; the first 3 show in search results. Lead with the
+  strongest feature and sequence the images as a story. Captions are short
+  phrases that add to the image instead of describing it, localized for every
+  language. Keep the focal point centred and inside the template safe area. Use
+  no other platforms' logos, prices or URLs, and nothing above a 4+ rating.
+  iPhone Duo sizes become required in April 2027 (iOS 27.1 SDK): one more profile.
 - Don't put text in the bottom ~15% (store UI overlays it in some placements).
