@@ -32,6 +32,12 @@ class GroupDetailsScreen extends StatelessWidget {
   final bool hasOtherMembers;
   final ValueSetter<Schedule>? onCreateSchedule;
 
+  /// The event open next to the list, if any.
+  final ScheduleInstanceKey? selected;
+
+  /// Replaces the back button's pop, if set.
+  final VoidCallback? onBack;
+
   const GroupDetailsScreen({
     super.key,
     required this.groupId,
@@ -49,6 +55,8 @@ class GroupDetailsScreen extends StatelessWidget {
     this.next,
     this.hasOtherMembers = true,
     this.onCreateSchedule,
+    this.selected,
+    this.onBack,
   });
 
   @override
@@ -68,6 +76,7 @@ class GroupDetailsScreen extends StatelessWidget {
         headerSliverBuilder: (context, innerBoxIsScrolled) => [
           SliverAppBar(
             pinned: true,
+            leading: onBack == null ? null : BackButton(onPressed: onBack),
             title: Text(group?.displayName ?? ''),
             bottom: PreferredSize(
               preferredSize: Size.fromHeight(dateRowHeight),
@@ -162,6 +171,7 @@ class GroupDetailsScreen extends StatelessWidget {
             onDateChanged: onDateChanged,
             onRefresh: onRefresh,
             onReplyChanged: onReplyChanged,
+            selected: selected,
           ),
         ),
       ),

@@ -9,11 +9,15 @@ class ScheduleTile extends StatelessWidget {
   final ValueChanged<ReplyOptions?>? onReplyChanged;
   final ValueChanged<ScheduleInstanceSummary>? onScheduleTapped;
 
+  /// Whether this event is open next to the list.
+  final bool selected;
+
   const ScheduleTile({
     super.key,
     required this.schedule,
     this.onReplyChanged,
     this.onScheduleTapped,
+    this.selected = false,
   });
 
   @override
@@ -26,32 +30,40 @@ class ScheduleTile extends StatelessWidget {
     final usual = schedule.usualYes;
 
     // The time orders the day; who's coming is why the row is here.
-    return ListTile(
-      title: Text(
-        schedule.displayName,
-        maxLines: 2,
-        overflow: TextOverflow.ellipsis,
-      ),
-      subtitle: Text.rich(
-        TextSpan(
-          children: [
-            TextSpan(text: '$time · '),
-            TextSpan(
-              text: keepTogether(l10n.eventComing(confirmed)),
-              // Quiet when nobody's coming yet.
-              style: confirmed > 0 ? textTheme.labelLarge : null,
-            ),
-            if (usual > 0)
-              TextSpan(text: ' ${keepTogether(l10n.eventUsually(usual))}'),
-          ],
+    // The open event is marked by its background, not by recolouring the
+    // row (as ListTile.selected would): its answer colours mean answers.
+    return Semantics(
+      selected: selected,
+      child: ListTile(
+        tileColor: selected
+            ? Theme.of(context).colorScheme.secondaryContainer
+            : null,
+        title: Text(
+          schedule.displayName,
+          maxLines: 2,
+          overflow: TextOverflow.ellipsis,
         ),
+        subtitle: Text.rich(
+          TextSpan(
+            children: [
+              TextSpan(text: '$time · '),
+              TextSpan(
+                text: keepTogether(l10n.eventComing(confirmed)),
+                // Quiet when nobody's coming yet.
+                style: confirmed > 0 ? textTheme.labelLarge : null,
+              ),
+              if (usual > 0)
+                TextSpan(text: ' ${keepTogether(l10n.eventUsually(usual))}'),
+            ],
+          ),
+        ),
+        trailing: ReplyButtons(
+          reply: schedule.myReply,
+          defaultReply: schedule.myDefaultReply,
+          onReplyChanged: onReplyChanged,
+        ),
+        onTap: () => onScheduleTapped?.call(schedule),
       ),
-      trailing: ReplyButtons(
-        reply: schedule.myReply,
-        defaultReply: schedule.myDefaultReply,
-        onReplyChanged: onReplyChanged,
-      ),
-      onTap: () => onScheduleTapped?.call(schedule),
     );
   }
 }

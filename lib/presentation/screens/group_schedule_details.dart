@@ -47,6 +47,9 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
   final OnDetailsReplyChangedCallback? onReplyChanged;
   final OnDetailsDefaultRuleChangedCallback? onDefaultRuleChanged;
 
+  /// Whether to show a back button: not when open next to the group's list.
+  final bool automaticallyImplyLeading;
+
   const GroupScheduleDetailsScreen({
     super.key,
     required this.loading,
@@ -58,6 +61,7 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
     this.onRefresh,
     this.onReplyChanged,
     this.onDefaultRuleChanged,
+    this.automaticallyImplyLeading = true,
   });
 
   /// Lets [memberId]'s answers be changed, if there is one. [name] is `null`
@@ -121,7 +125,11 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
           // Pull to refresh works on a short roster too.
           physics: const AlwaysScrollableScrollPhysics(),
           slivers: [
-            SliverAppBar(pinned: true, title: Text(eventName)),
+            SliverAppBar(
+              pinned: true,
+              automaticallyImplyLeading: automaticallyImplyLeading,
+              title: Text(eventName),
+            ),
             if (loading)
               const SliverToBoxAdapter(child: LinearProgressIndicator()),
             if (error != null)

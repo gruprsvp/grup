@@ -250,8 +250,8 @@ ScheduleInstanceSummary _instance(
 ).single;
 
 /// One entry per store screenshot, in store order: name -> screen under test
-/// with [demo] data.
-Map<String, Widget> _screens(_Demo demo) {
+/// with [demo] data, laid out for a [wide] window or not.
+Map<String, Widget> _screens(_Demo demo, {required bool wide}) {
   final groups = [
     for (final (i, (name, description)) in demo.groups.indexed)
       Group(
@@ -276,15 +276,23 @@ Map<String, Widget> _screens(_Demo demo) {
     recurrenceRule: CommonRecurrenceRules.once,
   );
   final matchInstance = _instance(match, _answers);
-  final event = GroupScheduleDetailsScreen(
+  final pizzaInstance = _instance(pizza, {
+    'marta': ReplyOptions.yes,
+    'diego': ReplyOptions.yes,
+  });
+  GroupScheduleDetailsScreen event(
+    Schedule schedule,
+    ScheduleInstanceSummary instance,
+  ) => GroupScheduleDetailsScreen(
     loading: false,
     group: football,
     scheduleInstance: scheduleInstanceDetails(
-      matchInstance,
+      instance,
       _members,
       canEditOthers: true,
     ),
-    scheduleRule: match.recurrenceRule,
+    scheduleRule: schedule.recurrenceRule,
+    automaticallyImplyLeading: !wide,
     onReplyChanged: ({
       required memberId,
       required reply,
@@ -299,26 +307,29 @@ Map<String, Widget> _screens(_Demo demo) {
       name,
     }) {},
   );
+  GroupDetailsScreen day(ScheduleInstanceSummary? open) => GroupDetailsScreen(
+    groupId: football.id,
+    group: football,
+    isAdmin: true,
+    date: _day,
+    onDateChanged: (_) {},
+    instances: [matchInstance, pizzaInstance],
+    hasSchedules: true,
+    onReplyChanged: (_, _) {},
+    selected: open == null
+        ? null
+        : (scheduleId: open.scheduleId, at: open.instanceDate),
+  );
+  // As the app lays them out: wide windows show the event next to the day.
+  Widget panes(Schedule schedule, ScheduleInstanceSummary open) =>
+      TwoPane(list: day(open), detail: event(schedule, open));
   return {
-    'event': event,
-    'group': GroupDetailsScreen(
-      groupId: football.id,
-      group: football,
-      isAdmin: true,
-      date: _day,
-      onDateChanged: (_) {},
-      instances: [
-        matchInstance,
-        _instance(pizza, {
-          'marta': ReplyOptions.yes,
-          'diego': ReplyOptions.yes,
-        }),
-      ],
-      hasSchedules: true,
-      onReplyChanged: (_, _) {},
+    'event': wide ? panes(match, matchInstance) : event(match, matchInstance),
+    'group': wide ? panes(pizza, pizzaInstance) : day(null),
+    'usual': wide ? panes(match, matchInstance) : event(match, matchInstance),
+    'home': ReadableWidth(
+      child: HomeScreen(profile: _demoProfile, groups: groups),
     ),
-    'usual': event,
-    'home': HomeScreen(profile: _demoProfile, groups: groups),
   };
 }
 
@@ -462,7 +473,10 @@ void main() {
           in _profiles.entries) {
         for (final locale in AppLocalizations.supportedLocales) {
           final demo = _demo[locale.languageCode]!;
-          final screens = _screens(demo);
+          final screens = _screens(
+            demo,
+            wide: profile.logical.width >= TwoPane.expandedWidth,
+          );
           for (final (index, MapEntry(key: screenName, value: screen))
               in screens.entries.indexed) {
             testWidgets('$profileName $locale $screenName', (tester) async {

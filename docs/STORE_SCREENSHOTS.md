@@ -76,7 +76,8 @@ Known gaps:
 2. **No colour emoji**: tests can't render them, so the demo data has none.
 3. **No status bar** is drawn: the top inset is blank. That's fine under a
    caption or frame. Google wants any status bar clean (no carrier, full icons).
-4. **Tablets show the phone layout stretched**: the app has no wide layout.
+4. **Wide profiles compose the panes by hand** (`TwoPane` in `_screens`), as the
+   app lays them out from 840dp: the harness renders screens, not routes.
 5. **Captures have an alpha channel**: both stores reject alpha. Flatten when
    exporting, e.g. `sips -s format jpeg in.png --out out.jpg` (macOS).
 6. **Publishing isn't automated yet**. Final images go to `fastlane/metadata/{android,ios}/<locale>/` (Android `it-IT`, iOS
