@@ -2,7 +2,7 @@
 
 _Prepared 2026-06-28. Based on a full audit of the codebase (Flutter app `parousia` v1.7.2+1) across four areas: Supabase/security, state architecture, testing/CI, and web/dependencies/release._
 
-> **2026-10-24 — where things stand.** The 2026-10-23 stack (#253–#259) merged on 2026-10-24; its release run, 40078516614, pushed the S2/S4/S5 migrations to prod on 2026-10-24. Every open item, in one list: [2026-10-24 status](#2026-10-24--status-and-everything-still-open).
+> **2026-10-25 — where things stand.** On 2026-10-24 the 2026-10-23 stack (#253–#259), the version gate, profile edits (#263), the attendance flow (#264), onboarding (#266) and the wide layout with store screenshots (#267–#269) merged and released. The S2/S4/S5 migrations reached prod before 2026-10-30. 2.0 is released (`v2.0.0` at `d4cfb6b`), and 2.0.1 (#271, #272) merged on 2026-10-25. Every open item, in one list: [2026-10-25 status](#2026-10-25--status-and-everything-still-open).
 >
 > **2026-10-23 — a stack of seven PRs (#253–#259).** S2, S4 and S5, the `anon` table grants, S8, the multidex removal, dependency updates, and web addresses for pushed pages. See [2026-10-23 stack](#2026-10-23--the-stack-after-s1).
 >
@@ -18,7 +18,7 @@ _Prepared 2026-06-28. Based on a full audit of the codebase (Flutter app `parous
 
 ## TL;DR
 
-_The 2026-06-28 summary, kept as written. Redux, the missing safety net and Phases 0–1.5 are history now: for the current state see [2026-10-24 status](#2026-10-24--status-and-everything-still-open)._
+_The 2026-06-28 summary, kept as written. Redux, the missing safety net and Phases 0–1.5 are history now: for the current state see [2026-10-25 status](#2026-10-25--status-and-everything-still-open)._
 
 The app is a small (~7.5k hand-written LOC), production Flutter + Supabase app with a **sound core** — unidirectional Redux flow, repository-isolated side effects, RLS-backed multi-tenancy — but it has accumulated debt that blocks the stated goals (more features, a pro plan, growth, thorough testing, great web, eventual offline).
 
@@ -33,41 +33,52 @@ Three genuine decisions need your input before Phase 2 — see [Decisions](#deci
 
 ---
 
-## 2026-10-24 — status and everything still open
+## 2026-10-25 — status and everything still open
 
-**Merged.** #253–#259 merged in order on 2026-10-24 at 08:33 UTC, within a minute of each other. Release run 40078516614 (`492f994`) started right after: tests, the draft release, `db push` of `20261023120000_default_privileges.sql` and `20261023130000_revoke_anon_tables.sql`, and web on `gh-pages` passed. So did the Android build and upload to Play internal (the first with `tracks:`) and the Sentry upload; `delete_user_account` had no changes. So prod has S2's revoke before Supabase applies it on 2026-10-30.
+**Merged and released.** On 2026-10-24, and every release run passed:
+- #253–#259 at 08:33 UTC. Run 40078516614 (`492f994`) pushed `20261023120000_default_privileges.sql` and `20261023130000_revoke_anon_tables.sql`, so prod has S2's revoke before Supabase applies it on 2026-10-30. It also built the first Android upload to Play internal with `tracks:`.
+- The minimum-version gate (`bd9bc4e`).
+- #263 (profile edits stick, a not-found page) and #264 (who's coming leads the attendance flow) at 11:43. Run 40091070440 pushed `20261024120000_profile_edits_stick.sql`.
+- #266 (in-context onboarding) at 13:33.
+- #267–#269 (store screenshots, the wide layout, publishing the screenshots) at 15:40. Run 40108091397 (`d4cfb6b`) built 2.0: the `v2.0.0` tag points at it.
 
-**Done:** Phase 0 except item 5 (below, under CI) and branch protection; Phase 1 except item 20's seed colours (item 1's error page is on `fix/profile-edits-stick`); Phase 1.5 except item 6 (pagination; item 8's clearing values is on `fix/profile-edits-stick`, service only); D1 (B1, MVVM) and D2 (client-side); M1–M4; Widgetbook removed; invites and the auth user no longer persisted ([A2] PII at rest); S1–S6 and S8 in code.
+On 2026-10-25 at 12:37, 2.0.1 (`pubspec` 2.0.1+1, new release notes in all five languages for both stores):
+- #271: storage's delete policy refuses objects a group's picture points at (`20261025120000_keep_group_pictures.sql`, `is_group_picture`), so deleting an account no longer breaks its groups' pictures.
+- #272: the feedback card's buttons keep apart on narrow phones (closes #128).
+- Release run 40193902886 (`d6b641c`) was still running when this was written; it pushes `20261025120000`. Check it passed.
+
+**Done:** Phase 0 except item 5 (below, under CI) and branch protection; Phase 1 except item 20's seed colours; Phase 1.5 except item 6 (pagination); D1 (B1, MVVM) and D2 (client-side); M1–M4; Widgetbook removed; invites and the auth user no longer persisted ([A2] PII at rest); S1–S6 and S8 in code; the database residuals (#263: `handle_new_invite` resets `display_name_override`, `profiles_update_self`, the app writes `profiles` directly, and `handle_upsert_user` copies a metadata field only while the profile still holds the previous metadata value, so a provider sign-in no longer overwrites an in-app edit while 1.x/2.0.0 clients and Sign in with Apple's late name still reach the profile); the router's `errorBuilder` (`NotFoundScreen`); group pictures surviving account deletion (#271); the 2.0/2.0.1 release notes.
 
 Everything still open, in one place:
 
-**Prod checks.** The agent has no prod access, and none of these has a recorded result:
-- `gen_random_uuid_v7`'s owner (query under S5). There's no record of it being run before #253 merged. The `db push` log doesn't settle it either: it shows no notices from the remote, so it can't tell whether the `search_path` change applied or was skipped.
-- `pg_default_acl` on prod against local (query in the 2026-10-23 section below).
+**Prod checks**, by deadline. The agent has no prod access, and none of these has a recorded result:
+- Before 2026-10-30: `pg_default_acl` on prod against local (query in the 2026-10-23 section below), and `gen_random_uuid_v7`'s owner (query under S5). There's no record of the owner query being run before #253 merged. The `db push` log doesn't settle it either: it shows no notices from the remote, so it can't tell whether the `search_path` change applied or was skipped.
+- Now that #263 is live: `select count(*) from profiles p join auth.users u on u.id = p.id where p.display_name is distinct from u.raw_user_meta_data ->> 'full_name' or p.picture is distinct from u.raw_user_meta_data ->> 'avatar_url'`. Edits from 1.x/2.0.0 clients never reached those profiles, so a non-zero count needs a one-time backfill.
 - `supabase db advisors --linked`: the prod-only checks, and Confirm #1 (email confirmations on prod).
 - S7: `select extname from pg_extension` on prod.
-- After `fix/profile-edits-stick`: `select count(*) from profiles p join auth.users u on u.id = p.id where p.display_name is distinct from u.raw_user_meta_data ->> 'full_name' or p.picture is distinct from u.raw_user_meta_data ->> 'avatar_url'`. Edits from 1.x/2.0.0 clients never reach those profiles, so a non-zero count needs a one-time backfill.
 - S8: prod's exposed schemas; turn off `pg_graphql`.
-- S1: deactivate the legacy keys once the dashboard shows nothing uses them.
+- S1, by the end of 2026: deactivate the legacy keys once the dashboard shows nothing uses them. Every 1.x install and the 2.0.0 builds before #257 embed one and stop working then, so 2.0.x has to be live in both stores well before.
 
 **Release and stores:**
-- Smoke-test the build from `bd9bc4e`'s release run (or later; 40078516614 predates the version gate) on devices against prod: sign-in with every provider, RSVP, picture upload, deleting a throwaway account. It is the first one with #256–#258, which change the binary. Once `fix/profile-edits-stick` is released, also: edit your name and picture, sign out, sign back in with Google (and Apple), and check the edit survived. pgTAP only simulates what GoTrue does to the metadata.
-- Then promote it from Play internal, attach the Xcode Cloud build to 2.0.0 and submit. Neither the versionCode 224 build (legacy key) nor any other build before #257 should go out.
-- Keep `v2.0.0` a draft until the app is live (the version gate in `build.yaml`). Delete the stale `v1.7.2`/`v1.7.3` drafts.
+- Record which stores 2.0 reached and at what rollout (unverified: the agent can't see the consoles). The App Store had 1.7.1 live before it; neither the versionCode 224 build (legacy key) nor any other build before #257 should go out.
+- Smoke-test 2.0.1 (run 40193902886's build, or later) on devices against prod:
+  - sign-in with every provider, RSVP, picture upload, deleting a throwaway account that uploaded a group picture (the group keeps it);
+  - edit your name and picture, sign out, sign back in with Google (and Apple), and check the edit survived (pgTAP only simulates what GoTrue does to the metadata);
+  - onboarding, the attendance flow, and an unknown address showing the not-found page;
+  - the wide layout on a real tablet, a browser window and a desktop window. #268 was only tested in widget tests at 1280×800.
+- Then promote 2.0.1 from Play internal, attach the Xcode Cloud build to a 2.0.1 App Store version and submit.
+- Every merge to `main` that should release needs a `pubspec` version bump: `build.yaml`'s draft-release step only updates unreleased drafts. Keep `v2.0.1` a draft until it is live. Delete the stale `v1.7.2` draft, if it exists (unverified: the agent can't list releases; `v1.7.3` is a tag).
 
 **Code:**
-- ~~**Minimum-version gate.**~~ Merged in `bd9bc4e` after this list was written. A gate only helps installs that already have it, so the build to smoke-test and promote is the one from `bd9bc4e`'s release run or later, not 40078516614.
+- Wide layout's known limits (#268): the first event tap from a group's page reloads the list once; back from an event on a wide window shows the group's first event; on web the mouse wheel doesn't scroll over the side margins.
 - Pagination (Phase 1.5 item 6). No list is near the 1000-row cap.
 - Web OAuth loses `/auth?from=…` (needs a real provider and prod's redirect allowlist to test).
 - Per-invite link-preview cards.
-- ~~No `errorBuilder` on the router~~ (Phase 1 item 1): `fix/profile-edits-stick` adds `NotFoundScreen`.
-- Clearing values (Phase 1.5 item 8), `fix/profile-edits-stick`: an empty override now clears it (`updateMember`), except on a guest, whose override is their only name (check constraint). No screen clears anything: nothing edits a member's override, the profile name is required, and the profile screen can't remove a picture. Add that UI if it's wanted.
-- #186 (`refactor/timezone`; probably the fix for #51, though it doesn't say so). S2 is merged, so the order is fine now. It predates MVVM and needs a rewrite, and any new column or table needs the explicit grants from `CLAUDE.md`.
+- Clearing values (Phase 1.5 item 8) is done in the service only: an empty override clears it (`updateMember`), except on a guest, whose override is their only name (check constraint). No screen clears anything: nothing edits a member's override, the profile name is required, and the profile screen can't remove a picture. Add that UI if it's wanted.
+- Profile edits, until every install has the new client: old clients' edits can still be overwritten by a provider sign-in, and once a user edits their profile on web, edits from their old phone build silently stop landing.
+- #186 (`refactor/timezone`; probably the fix for #51, though it doesn't say so). It predates MVVM and needs a rewrite, and any new column or table needs the explicit grants from `CLAUDE.md`.
 - **Legacy island.** `lib/presentation/screens/auth.dart` wraps `supabase_auth_ui` 0.7.2 (still on framework Material, 8 files) in `MaterialUiCompatibilityBridge`, which is `@Deprecated`. When framework Material is formally deprecated, the bridge goes with it. Until then the web build carries both Material copies.
-- ~~**Database residuals**~~, `fix/profile-edits-stick` (`20261024120000_profile_edits_stick.sql`, `profile_edits_test.sql`):
-  - `handle_new_invite` resets `display_name_override` like the other two claim paths.
-  - `profiles_update_self` lets users edit their own profile, and the app writes `profiles` directly instead of auth metadata. `handle_upsert_user` copies a metadata field only while the profile still holds the previous metadata value: a provider rewriting it at sign-in no longer overwrites an in-app edit, while 1.x/2.0.0 clients (which still save as metadata) and Sign in with Apple's late name still reach the profile. Limits until every install has the new client: old clients' edits can still be overwritten by a provider sign-in, and once a user edits their profile on web (deployed on merge), edits from their old phone build silently stop landing.
-- **Storage residuals:** every picture change uploads a new object and never deletes the old one. Group pictures sit in the uploader's folder, so deleting that account (`deleteUserFiles`) breaks the group's picture.
+- **Storage residual:** every picture change uploads a new object and never deletes the old one. Since #271 a deleted account's group pictures stay in its folder for good: their `owner_id` names a user that no longer exists, so only the secret key can delete them.
 - **CI:** no iOS build (Xcode Cloud only) and no staging gate before prod `db push` (Phase 0 item 5; needs the environments work).
 
 **Repo settings (unverified, the agent can't read them):** branch protection requiring `analyze` and `test` on `main` (Phase 0's manual step).
@@ -76,24 +87,25 @@ Everything still open, in one place:
 
 **Upstream:** `builtInKotlin`/`newDsl` stay off until `in_app_review` and `posthog_flutter` stop applying KGP. `build_runner` 2.17 waits for `go_router_builder` to allow `build` 5; `peanut` 6.0.2 is held by a constraint.
 
-**Open GitHub issues** (not in this roadmap before):
+**Open GitHub issues:**
 
 | Issue | Note |
 |---|---|
 | #26 Integrate RevenueCat | The pro plan's billing (Phase 2). |
 | #51 Reply/schedule timezone mismatch | #186. |
 | #73 Localise recurrence descriptions | Partly done: the app's own rules have localized names (`recurrence_label.dart`); any other rule shows "Custom". The issue asks for a full `RruleL10n`. |
-| #85 Service worker caching on Safari | Filed against the old domain (2024-11). Re-check on `grup.rsvp`. |
-| #122 Default rules don't always appear set | Filed before MVVM. Re-check. |
-| #127 Group details scrolls into blank space | Filed before MVVM. Re-check. |
-| #129 Touchpad swipes on web | Filed before MVVM. Re-check. |
-| #92, #107, #125, #128 | Enhancements: guest shortcut, master-detail groups, forms refactor, feedback-button spacing. |
+| #107 Master-detail groups | Partly done by #268: on wide windows a group's day and the open event sit side by side. The groups list itself is still one pane. |
+| #127 Group details scrolls into blank space | #268 rewrote group details for the wide layout. Re-check. |
+| #129 Touchpad swipes on web | #268 rewrote group details for the wide layout. Re-check. |
+| #92, #125 | Enhancements: guest shortcut, forms refactor. |
+
+Closed on 2026-10-25: #85, #122, #128 (#272).
 
 ---
 
 ## 2026-10-23 — the stack after S1
 
-S1, S3 and S6 shipped on 2026-10-23 (release run 39923801096). What could be done without prod access or a product decision is a stack of PRs, each based on the one before. **All seven merged in order on 2026-10-24**; see [2026-10-24 status](#2026-10-24--status-and-everything-still-open) for the release run.
+S1, S3 and S6 shipped on 2026-10-23 (release run 39923801096). What could be done without prod access or a product decision is a stack of PRs, each based on the one before. **All seven merged in order on 2026-10-24**; see [2026-10-25 status](#2026-10-25--status-and-everything-still-open) for the release run.
 
 | PR | Branch | What |
 |---|---|---|
