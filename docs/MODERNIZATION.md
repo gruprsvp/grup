@@ -96,7 +96,7 @@ Everything still open, in one place:
 | #73 Localise recurrence descriptions | Partly done: the app's own rules have localized names (`recurrence_label.dart`); any other rule shows "Custom". The issue asks for a full `RruleL10n`. |
 | #107 Master-detail groups | Partly done by #268: on wide windows a group's day and the open event sit side by side. The groups list itself is still one pane. |
 | #127 Group details scrolls into blank space | #268 rewrote group details for the wide layout. Re-check. |
-| #129 Touchpad swipes on web | #268 rewrote group details for the wide layout. Re-check. |
+| #129 Touchpad swipes on web | `fix/web-trackpad-swipe`: one sideways scroll gesture moves one day, and `overscroll-behavior-x` stops Chrome's swipe-back. Checked with synthetic wheel events in Chrome; a real trackpad's momentum and Safari's swipe-back are unverified. |
 | #92, #125 | Enhancements: guest shortcut, forms refactor. |
 
 Closed on 2026-10-25: #85, #122, #128 (#272).

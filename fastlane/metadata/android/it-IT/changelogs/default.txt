@@ -1,3 +1,4 @@
-GRUP 2.0.1 corregge due problemi.
+GRUP 2.0.1 corregge tre problemi.
 • L’immagine di un gruppo ora resta anche quando chi l’ha aggiunta elimina il proprio account.
 • I pulsanti sotto “Come stiamo andando?” non sono più attaccati sugli schermi piccoli.
+• Il passaggio al giorno successivo o precedente ora funziona anche a ridosso del cambio d’ora.
