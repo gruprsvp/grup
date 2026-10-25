@@ -316,7 +316,7 @@ Map<String, Widget> _screens(_Demo demo, {required bool wide}) {
     isAdmin: true,
     date: _day,
     onDateChanged: (_) {},
-    instances: [matchInstance, pizzaInstance],
+    instancesOn: (_) => [matchInstance, pizzaInstance],
     hasSchedules: true,
     onReplyChanged: (_, _) {},
     selected: open == null

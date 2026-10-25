@@ -33,8 +33,11 @@ class GroupDetailsViewModel extends ViewModel {
 
   DateTime _date;
   bool _findNext;
-  List<ScheduleInstanceSummary> _instances = const [];
-  (Schedule, DateTime)? _next;
+
+  // Days worked out since the data last changed: the shown day, and the days
+  // either side as a swipe brings them into view.
+  final _instances = <DateTime, List<ScheduleInstanceSummary>>{};
+  final _next = <DateTime, (Schedule, DateTime)?>{};
 
   /// Fetches the group, and its events around [date].
   late final Command0<void> load;
@@ -55,16 +58,26 @@ class GroupDetailsViewModel extends ViewModel {
   bool get hasSchedules => _schedules.schedules(groupId).isNotEmpty;
 
   /// The group's first event after [date], if any.
-  (Schedule, DateTime)? get next => _next;
+  (Schedule, DateTime)? get next => nextAfter(_date);
 
-  /// The occurrences on [date], earliest first. Computed when the data or the
-  /// date changes, not on every build.
-  List<ScheduleInstanceSummary> get instances => _instances;
+  /// The occurrences on [date], earliest first.
+  List<ScheduleInstanceSummary> get instances => instancesOn(_date);
+
+  /// The group's first event after [day], if any.
+  (Schedule, DateTime)? nextAfter(DateTime day) => _next.putIfAbsent(
+    day,
+    () => nextOccurrence(_schedules.schedules(groupId), day.getDayEnd()),
+  );
+
+  /// The occurrences on [day], earliest first. Computed once per day while
+  /// the data stays the same, not on every build.
+  List<ScheduleInstanceSummary> instancesOn(DateTime day) => _instances
+      .putIfAbsent(day, () => _instancesOn(day, _schedules.schedules(groupId)));
 
   void selectDate(DateTime date) {
     _findNext = false;
     _date = date;
-    _update();
+    notifyListeners();
     // A running load picks the new date up when it finishes (see _load).
     load.execute();
   }
@@ -103,30 +116,31 @@ class GroupDetailsViewModel extends ViewModel {
   }
 
   /// Loads the replies around [date], again if the date changed meanwhile.
+  /// Two days either side: after a swipe, the day beyond shows before this
+  /// load returns.
   Future<Result<void>> _loadSchedules() async {
     while (true) {
       final date = _date;
-      final result = await _schedules.load(groupId, date.getNdayRange(1));
+      final result = await _schedules.load(groupId, date.getNdayRange(2));
       if (date == _date) return result;
     }
   }
 
   void _update() {
+    _instances.clear();
+    _next.clear();
     final schedules = _schedules.schedules(groupId);
-    _instances = _instancesOn(_date, schedules);
     if (_findNext && schedules.isNotEmpty) {
       _findNext = false;
-      if (_instances.isEmpty) {
+      if (instances.isEmpty) {
         if (nextOccurrence(schedules, _date.getDayStart()) case (_, final at)) {
           // Occurrences carry the wall-clock time in UTC fields.
           _date = DateTime(at.year, at.month, at.day);
-          _instances = _instancesOn(_date, schedules);
           // A running load picks the new date up when it finishes.
           load.execute();
         }
       }
     }
-    _next = nextOccurrence(schedules, _date.getDayEnd());
     notifyListeners();
   }
 

@@ -84,10 +84,10 @@ class GroupDetailsContainer extends StatelessWidget {
       await vm.createSchedule.execute(schedule);
       if (context.mounted) showFailure(context, vm.createSchedule.result);
     },
-    next: vm.next,
+    nextAfter: vm.nextAfter,
     date: vm.date,
     onDateChanged: vm.selectDate,
-    instances: vm.instances,
+    instancesOn: vm.instancesOn,
     onReplyChanged: (instance, reply) async {
       final result = await vm.reply(instance, reply);
       if (context.mounted) showFailure(context, result);

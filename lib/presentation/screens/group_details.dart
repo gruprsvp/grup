@@ -17,15 +17,16 @@ class GroupDetailsScreen extends StatelessWidget {
   final VoidCallback? onRetry;
   final Future<void> Function()? onRefresh;
 
-  /// The day shown, and its events with everyone's answers.
+  /// The day shown, and a day's events with everyone's answers: a swipe
+  /// shows the next or previous day as it comes in.
   final DateTime date;
   final ValueChanged<DateTime> onDateChanged;
-  final List<ScheduleInstanceSummary> instances;
+  final List<ScheduleInstanceSummary> Function(DateTime day) instancesOn;
   final OnReplyChangedCallback? onReplyChanged;
 
-  /// Whether the group has events on any day, and the first after [date].
+  /// Whether the group has events on any day, and the first after a day.
   final bool hasSchedules;
-  final (Schedule, DateTime)? next;
+  final (Schedule, DateTime)? Function(DateTime day)? nextAfter;
 
   /// Whether anyone but the user is in the group: until then, an admin is
   /// shown what's left to set up.
@@ -44,7 +45,7 @@ class GroupDetailsScreen extends StatelessWidget {
     required this.isAdmin,
     required this.date,
     required this.onDateChanged,
-    required this.instances,
+    required this.instancesOn,
     this.group,
     this.loading = false,
     this.error,
@@ -52,7 +53,7 @@ class GroupDetailsScreen extends StatelessWidget {
     this.onRefresh,
     this.onReplyChanged,
     this.hasSchedules = false,
-    this.next,
+    this.nextAfter,
     this.hasOtherMembers = true,
     this.onCreateSchedule,
     this.selected,
@@ -153,25 +154,28 @@ class GroupDetailsScreen extends StatelessWidget {
         body: DayPager(
           date: date,
           onDateChanged: onDateChanged,
-          child: SchedulesList(
-            groupId: groupId,
-            // Before the first load, or after it failed, an empty list says
-            // nothing about the group: wait (or let the error speak) rather
-            // than claim it has no events.
-            schedules: instances.isEmpty && !hasSchedules && loading
-                ? null
-                : instances,
-            unknown: instances.isEmpty && !hasSchedules && error != null,
-            isAdmin: isAdmin,
-            hasSchedules: hasSchedules,
-            hasOtherMembers: hasOtherMembers,
-            onCreateSchedule: onCreateSchedule,
-            next: next,
-            onDateChanged: onDateChanged,
-            onRefresh: onRefresh,
-            onReplyChanged: onReplyChanged,
-            selected: selected,
-          ),
+          itemBuilder: (context, day) {
+            final instances = instancesOn(day);
+            return SchedulesList(
+              groupId: groupId,
+              // Before the first load, or after it failed, an empty list says
+              // nothing about the group: wait (or let the error speak) rather
+              // than claim it has no events.
+              schedules: instances.isEmpty && !hasSchedules && loading
+                  ? null
+                  : instances,
+              unknown: instances.isEmpty && !hasSchedules && error != null,
+              isAdmin: isAdmin,
+              hasSchedules: hasSchedules,
+              hasOtherMembers: hasOtherMembers,
+              onCreateSchedule: onCreateSchedule,
+              next: nextAfter?.call(day),
+              onDateChanged: onDateChanged,
+              onRefresh: onRefresh,
+              onReplyChanged: onReplyChanged,
+              selected: selected,
+            );
+          },
         ),
       ),
       floatingActionButton: isAdmin
