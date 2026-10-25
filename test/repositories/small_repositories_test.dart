@@ -1,6 +1,8 @@
 import 'dart:convert';
+import 'dart:typed_data';
 
 import 'package:flutter_test/flutter_test.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/repositories/auth.dart';
@@ -60,6 +62,28 @@ void main() {
 
       expect((result as Ok<Profile>).value.displayName, 'New name');
       expect(repository.profile?.displayName, 'New name');
+    });
+
+    test('a new picture deletes the old one, a name change does not', () async {
+      backend.profiles['me'] = const Profile(
+        id: 'me',
+        picture: 'https://old.png',
+      );
+      await repository.load();
+
+      await repository.save(name: 'Name');
+      expect(backend.storageService.deletedUrls, isEmpty);
+
+      final image = XFile.fromData(Uint8List(0), mimeType: 'image/png');
+      await repository.save(name: 'Name', image: image);
+      expect(backend.storageService.deletedUrls, ['https://old.png']);
+
+      backend.storageService.deleteFailure = Exception('offline');
+      expect(
+        await repository.save(name: 'Name', image: image),
+        isA<Ok<Profile>>(),
+      );
+      expect(repository.profile?.picture, startsWith('https://storage.test/'));
     });
 
     test(

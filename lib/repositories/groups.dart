@@ -133,6 +133,7 @@ class GroupsRepository extends UserData {
         group.copyWith(picture: picture),
       );
       ifCurrent(generation, () => _groups = {..._groups, updated.id: updated});
+      if (picture != group.picture) await _forgetFile(group.picture);
       return updated;
     });
   }
@@ -141,8 +142,10 @@ class GroupsRepository extends UserData {
   Future<Result<void>> delete(String groupId) {
     final generation = this.generation;
     return guard(() async {
+      final picture = _groups[groupId]?.picture;
       await _groupsService.deleteGroup(groupId);
       ifCurrent(generation, () => _forget(groupId));
+      await _forgetFile(picture);
     });
   }
 
@@ -234,6 +237,15 @@ class GroupsRepository extends UserData {
   Future<String?> _upload(XFile? image) async => image == null
       ? null
       : await _storage.uploadPublicXFile(const Uuid().v7(), image);
+
+  /// Deletes a picture no group shows any more. Best effort: a file left
+  /// behind only takes up space, so a failure doesn't fail the change.
+  Future<void> _forgetFile(String? url) async {
+    if (url == null) return;
+    try {
+      await _storage.deletePublicUrl(url);
+    } on Object catch (_) {}
+  }
 
   void _forget(String groupId) {
     _groups = {..._groups}..remove(groupId);
