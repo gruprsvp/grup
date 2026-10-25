@@ -9,6 +9,9 @@ import 'package:parousia/presentation/presentation.dart';
 class HomeScreen extends StatelessWidget {
   final Profile? profile;
   final Iterable<Group>? groups;
+
+  /// A group's next event, for its card.
+  final NextEvent? Function(String groupId)? nextEvent;
   final bool loading;
 
   /// Why the groups couldn't be loaded, if they couldn't.
@@ -26,6 +29,7 @@ class HomeScreen extends StatelessWidget {
     this.loading = false,
     this.profile,
     this.groups,
+    this.nextEvent,
     this.error,
     this.onGroupCreate,
     this.onRefresh,
@@ -63,7 +67,7 @@ class HomeScreen extends StatelessWidget {
               onJoin: () => _onGroupCreate(context),
             ),
           )
-        : GroupsList(groups: groups);
+        : GroupsList(groups: groups, nextEvent: nextEvent);
 
     return Scaffold(
       body: NestedScrollView(

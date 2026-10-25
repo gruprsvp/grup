@@ -16,6 +16,7 @@ class _HomeContainerState extends State<HomeContainer> {
     groups: context.read(),
     profile: context.read(),
     settings: context.read(),
+    schedules: context.read(),
   );
   var _askedForName = false;
 
@@ -57,6 +58,7 @@ class _HomeContainerState extends State<HomeContainer> {
       return HomeScreen(
         profile: vm.profile,
         groups: vm.groups,
+        nextEvent: vm.nextEvent,
         loading: vm.refresh.running || vm.create.running || vm.join.running,
         error: switch (vm.refresh.result) {
           Error(:final error) => error,
