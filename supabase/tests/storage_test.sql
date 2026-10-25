@@ -12,7 +12,7 @@
 -- supabase_storage_admin. It is pinned declaratively instead.
 
 begin;
-select plan(7);
+select plan(11);
 
 -- ── Setup ──────────────────────────────────────────────────────────────────
 insert into auth.users (id, email) values
@@ -87,6 +87,31 @@ select policy_roles_are(
   'storage', 'objects', 'Allow users to delete their own public files',
   array['authenticated'],
   'the delete policy applies to authenticated users only'
+);
+
+-- The delete policy spares group pictures (20261025120000): deleting an
+-- account deletes its folder, where its groups' pictures were uploaded.
+insert into groups (display_name, picture) values
+  ('Club', 'http://127.0.0.1:54321/storage/v1/object/public/public/11111111-1111-1111-1111-111111111111/avatar.png');
+
+select ok(
+  is_group_picture('11111111-1111-1111-1111-111111111111/avatar.png'),
+  'an object a group''s picture points at is a group picture'
+);
+select ok(
+  not is_group_picture('11111111-1111-1111-1111-111111111111/other.png'),
+  'any other object is not'
+);
+select ok(
+  not has_function_privilege('anon', 'public.is_group_picture(text)', 'execute'),
+  'anon cannot execute is_group_picture'
+);
+select matches(
+  (select qual from pg_policies
+   where schemaname = 'storage' and tablename = 'objects'
+     and policyname = 'Allow users to delete their own public files'),
+  'is_group_picture',
+  'the delete policy spares group pictures'
 );
 
 select * from finish();
