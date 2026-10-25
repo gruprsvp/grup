@@ -29,6 +29,8 @@ class SettingsContainer extends StatelessWidget {
     builder: (context, vm) => SettingsScreen(
       themeMode: vm.themeMode,
       onThemeTap: vm.nextThemeMode,
+      analytics: vm.analytics,
+      onAnalyticsChanged: vm.setAnalytics,
       onSignOut: vm.signOut.running
           ? null
           : () async {

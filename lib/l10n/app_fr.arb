@@ -197,5 +197,11 @@
   "groupSetupBody": "Ses événements s'affichent ici, avec qui vient à chacun.",
   "groupSetupEvent": "Ajoute le premier événement",
   "profileNameHelper": "Tes groupes voient ce nom à côté de tes réponses.",
-  "signUpCheckEmail": "Presque fini : ouvre le lien de l’e-mail que nous t’avons envoyé pour terminer ton inscription."
+  "signUpCheckEmail": "Presque fini : ouvre le lien de l’e-mail que nous t’avons envoyé pour terminer ton inscription.",
+  "analyticsTitle": "Aide-nous à arrêter de deviner",
+  "analyticsBody": "Partage les fonctions que tu utilises, et on construira ce qui compte. On compte les touches, pas les secrets. Jamais de pub.",
+  "analyticsYes": "J'en suis",
+  "analyticsNo": "Je passe",
+  "analyticsSetting": "Aide à améliorer GRUP",
+  "analyticsSettingSubtitle": "On compte les touches, pas les secrets."
 }

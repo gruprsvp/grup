@@ -1291,6 +1291,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Almost there: open the link we emailed you to finish signing up.'**
   String get signUpCheckEmail;
+
+  /// Title of the card on the home screen asking once whether the user shares usage analytics. Playful.
+  ///
+  /// In en, this message translates to:
+  /// **'Help us stop guessing'**
+  String get analyticsTitle;
+
+  /// Body of the analytics opt-in card: what is shared (which features are used, never content), and no ads.
+  ///
+  /// In en, this message translates to:
+  /// **'Share which features you use, and we\'ll build what matters. We count taps, not secrets. No ads, ever.'**
+  String get analyticsBody;
+
+  /// Opt-in button on the analytics card.
+  ///
+  /// In en, this message translates to:
+  /// **'Count me in'**
+  String get analyticsYes;
+
+  /// Opt-out button on the analytics card.
+  ///
+  /// In en, this message translates to:
+  /// **'I\'ll pass'**
+  String get analyticsNo;
+
+  /// Settings switch that turns usage analytics on or off.
+  ///
+  /// In en, this message translates to:
+  /// **'Help improve GRUP'**
+  String get analyticsSetting;
+
+  /// Subtitle of the usage analytics switch in settings.
+  ///
+  /// In en, this message translates to:
+  /// **'We count taps, not secrets.'**
+  String get analyticsSettingSubtitle;
 }
 
 class _AppLocalizationsDelegate

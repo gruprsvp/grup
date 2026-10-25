@@ -4,6 +4,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:material_ui/material_ui.dart';
+import 'package:parousia/util/analytics.dart';
 import 'package:parousia/util/errors.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -27,7 +28,13 @@ class SettingsRepository extends ChangeNotifier {
   static const _themeModeKey = 'themeMode';
   static const _languageKey = 'language';
   static const _feedbackDismissedKey = 'feedbackDismissed';
-  static const _keys = {_themeModeKey, _languageKey, _feedbackDismissedKey};
+  static const _analyticsKey = 'analytics';
+  static const _keys = {
+    _themeModeKey,
+    _languageKey,
+    _feedbackDismissedKey,
+    _analyticsKey,
+  };
 
   final SharedPreferencesWithCache _prefs;
 
@@ -43,6 +50,9 @@ class SettingsRepository extends ChangeNotifier {
 
   bool get feedbackDismissed => _prefs.getBool(_feedbackDismissedKey) ?? false;
 
+  /// Whether the user shares usage analytics, or `null` until they choose.
+  bool? get analytics => _prefs.getBool(_analyticsKey);
+
   /// Cycles through system → light → dark.
   void nextThemeMode() {
     final next =
@@ -55,6 +65,11 @@ class SettingsRepository extends ChangeNotifier {
         ? _prefs.remove(_languageKey)
         : _prefs.setString(_languageKey, locale.languageCode),
   );
+
+  void setAnalytics(bool enabled) {
+    setAnalyticsEnabled(enabled).ignore();
+    _save(() => _prefs.setBool(_analyticsKey, enabled));
+  }
 
   void dismissFeedback() =>
       _save(() => _prefs.setBool(_feedbackDismissedKey, true));

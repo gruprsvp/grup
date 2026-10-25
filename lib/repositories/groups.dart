@@ -3,6 +3,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/services/local_cache.dart';
 import 'package:parousia/services/services.dart';
+import 'package:parousia/util/analytics.dart';
 import 'package:parousia/util/errors.dart';
 import 'package:parousia/util/result.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -117,6 +118,10 @@ class GroupsRepository extends UserData {
         group.copyWith(picture: picture),
       );
       ifCurrent(generation, () => _groups = {..._groups, created.id: created});
+      track('group created', {
+        'group_id': created.id,
+        'has_picture': picture != null,
+      });
       // Also fetch the membership create_group added: the user, as admin.
       // The group exists either way, so this can't fail the creation.
       await guard(() => _loadGroup(created.id, generation));
@@ -152,6 +157,7 @@ class GroupsRepository extends UserData {
   /// Joins the group an invite [code] is for.
   Future<Result<void>> join(String code) => guard(() async {
     await _invitesService.consumeInviteCode(code);
+    track('group joined');
     // The code doesn't say which group it was for: reload them all. Joining
     // already worked, so a failed reload only delays showing the group.
     await refresh();
@@ -165,6 +171,10 @@ class GroupsRepository extends UserData {
       final results = await Future.wait([
         for (final contact in contacts) guard(() => _invite(groupId, contact)),
       ]);
+      final invited = results.whereType<Ok<void>>().length;
+      if (invited > 0) {
+        track('members invited', {'group_id': groupId, 'count': invited});
+      }
       // Invites for people who already have an account link them right away
       // (the handle_new_invite trigger), so reload to show who joined.
       await guard(() => _loadGroup(groupId, generation));

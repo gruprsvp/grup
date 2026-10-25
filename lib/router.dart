@@ -1,12 +1,14 @@
 import 'package:go_router/go_router.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/repositories/repositories.dart';
+import 'package:parousia/util/analytics.dart';
 
 import 'go_router_builder.dart';
 
 /// The app's routes. Re-runs [redirect] whenever the signed-in user changes.
 GoRouter createRouter(AuthRepository auth) => GoRouter(
   routes: $appRoutes,
+  observers: analyticsObservers,
   refreshListenable: auth,
   redirect: (context, state) => redirect(state.uri, auth.isAuthenticated),
   errorBuilder: (context, state) =>

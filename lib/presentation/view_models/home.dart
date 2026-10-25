@@ -45,6 +45,11 @@ class HomeViewModel extends ViewModel {
 
   void dismissFeedback() => _settings.dismissFeedback();
 
+  /// Ask once whether the user shares usage analytics.
+  bool get showAnalyticsCard => _settings.analytics == null;
+
+  void setAnalytics(bool enabled) => _settings.setAnalytics(enabled);
+
   Future<Result<void>> _refresh() async {
     final results = await Future.wait([_groups.refresh(), _profile.load()]);
     return results.firstWhere(

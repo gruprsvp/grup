@@ -685,4 +685,23 @@ class AppLocalizationsIt extends AppLocalizations {
   @override
   String get signUpCheckEmail =>
       'Ci siamo quasi: apri il link nell’email che ti abbiamo inviato per completare la registrazione.';
+
+  @override
+  String get analyticsTitle => 'Aiutaci a non tirare a indovinare';
+
+  @override
+  String get analyticsBody =>
+      'Condividi quali funzioni usi e costruiremo ciò che conta. Contiamo i tocchi, non i segreti. Niente pubblicità, mai.';
+
+  @override
+  String get analyticsYes => 'Ci sto';
+
+  @override
+  String get analyticsNo => 'Passo';
+
+  @override
+  String get analyticsSetting => 'Aiutaci a migliorare GRUP';
+
+  @override
+  String get analyticsSettingSubtitle => 'Contiamo i tocchi, non i segreti.';
 }

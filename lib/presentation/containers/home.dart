@@ -66,6 +66,7 @@ class _HomeContainerState extends State<HomeContainer> {
         onGroupCreate: _onGroupCreate,
         shouldShowFeedback: vm.showFeedbackCard,
         onFeedbackDismiss: vm.dismissFeedback,
+        onAnalyticsChoice: vm.showAnalyticsCard ? vm.setAnalytics : null,
       );
     },
   );

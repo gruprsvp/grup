@@ -26,7 +26,11 @@ class SettingsViewModel extends ViewModel {
   /// The language the user picked, or `null` to follow the system.
   Locale? get locale => _settings.locale;
 
+  bool get analytics => _settings.analytics ?? false;
+
   void nextThemeMode() => _settings.nextThemeMode();
+
+  void setAnalytics(bool enabled) => _settings.setAnalytics(enabled);
 
   void setLocale(Locale? locale) => _settings.setLocale(locale);
 }

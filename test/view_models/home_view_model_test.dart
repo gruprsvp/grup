@@ -72,6 +72,21 @@ void main() {
     expect(vm.showFeedbackCard, isFalse);
   });
 
+  test('asks once about analytics, whatever the answer', () async {
+    final (_, repositories) = await fakeApp();
+    final vm = HomeViewModel(
+      groups: repositories.groups,
+      profile: repositories.profile,
+      settings: repositories.settings,
+    );
+    expect(vm.showAnalyticsCard, isTrue);
+
+    vm.setAnalytics(false);
+
+    expect(vm.showAnalyticsCard, isFalse);
+    expect(repositories.settings.analytics, isFalse);
+  });
+
   test('creates groups, and explains a wrong invite code', () async {
     final (backend, repositories) = await fakeApp();
     backend.addProfile('me', name: 'Alex');
