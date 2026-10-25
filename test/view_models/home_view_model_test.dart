@@ -2,6 +2,7 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/view_models/view_models.dart';
 import 'package:parousia/util/errors.dart';
+import 'package:parousia/util/recurrence_rules.dart';
 import 'package:parousia/util/result.dart';
 
 import '../support/harness.dart';
@@ -16,6 +17,7 @@ void main() {
       groups: repositories.groups,
       profile: repositories.profile,
       settings: repositories.settings,
+      schedules: repositories.schedules,
     );
     await pumpEventQueue();
 
@@ -32,6 +34,7 @@ void main() {
       groups: repositories.groups,
       profile: repositories.profile,
       settings: repositories.settings,
+      schedules: repositories.schedules,
     );
     expect(vm.needsName, isFalse, reason: 'not before the profile loads');
     await pumpEventQueue();
@@ -50,6 +53,7 @@ void main() {
       groups: repositories.groups,
       profile: repositories.profile,
       settings: repositories.settings,
+      schedules: repositories.schedules,
     );
     await pumpEventQueue();
     expect(vm.showFeedbackCard, isTrue);
@@ -66,6 +70,7 @@ void main() {
       groups: repositories.groups,
       profile: repositories.profile,
       settings: repositories.settings,
+      schedules: repositories.schedules,
     );
     await pumpEventQueue();
 
@@ -78,6 +83,7 @@ void main() {
       groups: repositories.groups,
       profile: repositories.profile,
       settings: repositories.settings,
+      schedules: repositories.schedules,
     );
     expect(vm.showAnalyticsCard, isTrue);
 
@@ -94,6 +100,7 @@ void main() {
       groups: repositories.groups,
       profile: repositories.profile,
       settings: repositories.settings,
+      schedules: repositories.schedules,
     );
 
     await vm.create.execute((
@@ -104,5 +111,51 @@ void main() {
 
     await vm.join.execute('NOPE-NOPE');
     expect((vm.join.result! as Error).error, isA<InvalidInviteCodeException>());
+  });
+
+  test("shows each group's next event, with who's coming", () async {
+    final (backend, repositories) = await fakeApp();
+    final club = backend.addGroup('Club');
+    final me = backend.members.values.single;
+    // Tomorrow, in the wall-clock-as-UTC-fields form occurrences use.
+    final now = DateTime.now();
+    final at = DateTime.utc(now.year, now.month, now.day + 1, 18);
+    final dinner = backend.addSchedule(
+      club.id,
+      start: at,
+      rule: CommonRecurrenceRules.weekly,
+    );
+    backend.addReply(
+      Reply(
+        memberId: me.id,
+        scheduleId: dinner.id,
+        instanceDate: at,
+        selectedOption: ReplyOptions.yes,
+      ),
+    );
+    final far = backend.addGroup('Far');
+    backend.addSchedule(
+      far.id,
+      start: at.add(const Duration(days: HomeViewModel.lookahead + 1)),
+      rule: CommonRecurrenceRules.once,
+    );
+
+    final vm = HomeViewModel(
+      groups: repositories.groups,
+      profile: repositories.profile,
+      settings: repositories.settings,
+      schedules: repositories.schedules,
+    );
+    await pumpEventQueue();
+
+    final next = vm.nextEvent(club.id)!;
+    expect(next.event.instanceDate, at);
+    expect(next.event.confirmedYes, 1);
+    expect(next.counted, isTrue);
+    expect(
+      vm.nextEvent(far.id)!.counted,
+      isFalse,
+      reason: 'its answers are beyond the loaded window',
+    );
   });
 }
