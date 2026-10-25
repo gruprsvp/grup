@@ -54,7 +54,7 @@ Everything still open, in one place:
 **Prod checks**, by deadline. The agent has no prod access, and none of these has a recorded result:
 - Before 2026-10-30: `pg_default_acl` on prod against local (query in the 2026-10-23 section below), and `gen_random_uuid_v7`'s owner (query under S5). There's no record of the owner query being run before #253 merged. The `db push` log doesn't settle it either: it shows no notices from the remote, so it can't tell whether the `search_path` change applied or was skipped.
 - Now that #263 is live: `select count(*) from profiles p join auth.users u on u.id = p.id where p.display_name is distinct from u.raw_user_meta_data ->> 'full_name' or p.picture is distinct from u.raw_user_meta_data ->> 'avatar_url'`. Edits from 1.x/2.0.0 clients never reached those profiles, so a non-zero count needs a one-time backfill.
-- `supabase db advisors --linked`: the prod-only checks, and Confirm #1 (email confirmations on prod).
+- `supabase db advisors --linked`: the prod-only checks, and Confirm #1 (email confirmations on prod). Since `feat/signup-check-email` the app tells a new email user to open the confirmation link, so confirmations can be turned on once that release is live in both stores.
 - S7: `select extname from pg_extension` on prod.
 - S8: prod's exposed schemas; turn off `pg_graphql`.
 - S1, by the end of 2026: deactivate the legacy keys once the dashboard shows nothing uses them. Every 1.x install and the 2.0.0 builds before #257 embed one and stop working then, so 2.0.x has to be live in both stores well before.

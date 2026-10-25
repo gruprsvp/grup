@@ -544,5 +544,9 @@
   "groupSetupTitle": "Get your group going",
   "groupSetupBody": "Its events show up here, with who's coming to each.",
   "groupSetupEvent": "Add the first event",
-  "profileNameHelper": "Your groups see this name next to your answers."
+  "profileNameHelper": "Your groups see this name next to your answers.",
+  "signUpCheckEmail": "Almost there: open the link we emailed you to finish signing up.",
+  "@signUpCheckEmail": {
+    "description": "Shown after an email sign-up while the address still needs confirming."
+  }
 }

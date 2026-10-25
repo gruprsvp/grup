@@ -196,5 +196,6 @@
   "groupSetupTitle": "Lance ton groupe",
   "groupSetupBody": "Ses événements s'affichent ici, avec qui vient à chacun.",
   "groupSetupEvent": "Ajoute le premier événement",
-  "profileNameHelper": "Tes groupes voient ce nom à côté de tes réponses."
+  "profileNameHelper": "Tes groupes voient ce nom à côté de tes réponses.",
+  "signUpCheckEmail": "Presque fini : ouvre le lien de l’e-mail que nous t’avons envoyé pour terminer ton inscription."
 }

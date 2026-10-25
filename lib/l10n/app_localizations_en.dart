@@ -671,4 +671,8 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get profileNameHelper =>
       'Your groups see this name next to your answers.';
+
+  @override
+  String get signUpCheckEmail =>
+      'Almost there: open the link we emailed you to finish signing up.';
 }

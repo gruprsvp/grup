@@ -196,5 +196,6 @@
   "groupSetupTitle": "Bring deine Gruppe in Gang",
   "groupSetupBody": "Hier erscheinen ihre Events, jeweils mit allen, die dabei sind.",
   "groupSetupEvent": "Erstes Event hinzufügen",
-  "profileNameHelper": "Deine Gruppen sehen diesen Namen neben deinen Antworten."
+  "profileNameHelper": "Deine Gruppen sehen diesen Namen neben deinen Antworten.",
+  "signUpCheckEmail": "Fast geschafft: Öffne den Link in der E-Mail, die wir dir geschickt haben, um die Registrierung abzuschließen."
 }
