@@ -1,3 +1,4 @@
-GRUP 2.0.1 corrige deux problèmes.
+GRUP 2.0.1 corrige trois problèmes.
 • L’image d’un groupe reste désormais en place quand la personne qui l’a ajoutée supprime son compte.
 • Les boutons sous « Comment nous débrouillons-nous ? » ne se touchent plus sur les petits écrans.
+• Passer au jour suivant ou précédent fonctionne désormais aussi autour du changement d’heure.

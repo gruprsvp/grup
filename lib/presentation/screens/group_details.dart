@@ -91,9 +91,8 @@ class GroupDetailsScreen extends StatelessWidget {
                         IconButton(
                           icon: const Icon(Icons.chevron_left),
                           tooltip: l10n.previousDay,
-                          onPressed: () => onDateChanged(
-                            date.subtract(const Duration(days: 1)),
-                          ),
+                          onPressed: () =>
+                              onDateChanged(date.copyWith(day: date.day - 1)),
                         ),
                         Flexible(
                           child: DateDropdown(
@@ -105,7 +104,7 @@ class GroupDetailsScreen extends StatelessWidget {
                           icon: const Icon(Icons.chevron_right),
                           tooltip: l10n.nextDay,
                           onPressed: () =>
-                              onDateChanged(date.add(const Duration(days: 1))),
+                              onDateChanged(date.copyWith(day: date.day + 1)),
                         ),
                       ],
                     ),

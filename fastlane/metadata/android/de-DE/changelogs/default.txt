@@ -1,3 +1,4 @@
-GRUP 2.0.1 behebt zwei Fehler.
+GRUP 2.0.1 behebt drei Fehler.
 • Das Bild einer Gruppe bleibt jetzt erhalten, wenn das Mitglied, das es hinzugefügt hat, sein Konto löscht.
 • Die Schaltflächen unter „Wie machen wir uns?“ kleben auf kleinen Bildschirmen nicht mehr aneinander.
+• Der Wechsel zum nächsten oder vorherigen Tag klappt jetzt auch rund um die Zeitumstellung.
