@@ -76,7 +76,7 @@ void main() {
     isAdmin: false,
     date: DateTime(2024, 1, 6),
     onDateChanged: (_) {},
-    instances: instances,
+    instancesOn: (_) => instances,
     hasSchedules: hasSchedules,
     loading: loading,
     error: error,
@@ -116,6 +116,44 @@ void main() {
         findsOneWidget,
       );
     });
+  });
+
+  testWidgets('a swipe shows the next day as it comes in', (tester) async {
+    final dates = <DateTime>[];
+    final saturday = DateTime(2024, 1, 6);
+    await tester.pumpWidget(
+      wrap(
+        GroupDetailsScreen(
+          groupId: 'g',
+          group: club,
+          isAdmin: false,
+          date: saturday,
+          onDateChanged: dates.add,
+          // The game is on the Sunday; Saturday is empty.
+          instancesOn: (day) => day == DateTime(2024, 1, 7) ? [summary()] : [],
+          hasSchedules: true,
+        ),
+      ),
+    );
+    await tester.pumpAndSettle();
+    final pager = find.byType(DayPager);
+    final width = tester.getSize(pager).width;
+
+    final drag = await tester.startGesture(tester.getCenter(pager));
+    await drag.moveBy(const Offset(-kDragSlopDefault * 2, 0));
+    await drag.moveBy(Offset(-width * 0.3, 0));
+    await tester.pump();
+
+    expect(find.text('No events on this day.'), findsOneWidget);
+    expect(find.text('Game'), findsOneWidget);
+    expect(dates, isEmpty);
+
+    await drag.moveBy(Offset(-width * 0.3, 0));
+    await drag.up();
+    await tester.pumpAndSettle();
+
+    expect(dates, [DateTime(2024, 1, 7)]);
+    expect(tester.takeException(), isNull);
   });
 
   group('pulling down refreshes', () {
