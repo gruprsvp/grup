@@ -1,6 +1,3 @@
-GRUP 2.0 se ha reconstruido por dentro para ser más fiable.
-• Los enlaces de invitación ya funcionan en la web y te llevan a la invitación al iniciar sesión.
-• Si algo no se puede cargar o guardar, la app ahora te lo indica y puedes volver a intentarlo.
-• El inicio de sesión, los eventos periódicos y las fechas aparecen ahora en tu idioma.
-• Botones de respuesta más legibles y etiquetas para lectores de pantalla.
-• Las imágenes de grupo ya no se pierden al editarlas, y más correcciones.
+GRUP 2.0.1 corrige dos problemas.
+• La imagen de un grupo ahora se mantiene cuando quien la añadió elimina su cuenta.
+• Los botones bajo «¿Cómo lo estamos haciendo?» ya no quedan pegados en pantallas pequeñas.
