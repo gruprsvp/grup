@@ -47584,7 +47584,7 @@ if(r!=null)r._overrideSDKInfo("posthog-flutter","5.56.2")}catch(q){s=A.Y(q)
 A.l(s)}},
 bQo(a){var s=t.N
 s=A.o(s,s)
-s.l(0,"$app_version","2.0.0")
+s.l(0,"$app_version","2.0.1")
 s.l(0,"$app_build","1")
 s.aZ(0,new A.bHU(a))},
 bQH(){var s,r,q
@@ -49313,9 +49313,9 @@ for(;;)switch(s){case 0:n=a.a
 a.sa8E(n==null?null:n)
 if(a.dy==null){q=a.rx.bgC(a.R8)
 a.dy=q}n=a.dx
-a.dx=n==null?"is.giorgio.app.parousia@2.0.0+230":n
+a.dx=n==null?"is.giorgio.app.parousia@2.0.1+231":n
 n=a.ok
-a.ok=n==null?"230":n
+a.ok=n==null?"231":n
 if(a.a9)a.Q.push(new A.ahp())
 n=a.Q
 n.push(new A.alp())
@@ -173213,7 +173213,7 @@ m=A.oY(16)
 l=A.ac(i.gOh(),j,j,j,j,j,A.aK1().$1$fontSize(24),j,j,j)
 i=i.gOg()
 k=t.p
-return new A.QT(new A.aN(B.pL,l,j),A.b([new A.aN(B.cV,A.ar0(s.ok.y,A.Z(["title",new A.XA(A.aK1().$1$color(r.b))],t.N,t.M4),i,B.b8),j),new A.aN(new A.aB(0,0,0,16),A.auo(B.a54,A.b([B.bIE,B.bJY],k),B.r4,0,0),j)],k),n,p,o,r.k3,new A.e9(m,B.I),new A.e9(q,B.I),j)}}
+return new A.QT(new A.aN(B.pL,l,j),A.b([new A.aN(B.cV,A.ar0(s.ok.y,A.Z(["title",new A.XA(A.aK1().$1$color(r.b))],t.N,t.M4),i,B.b8),j),new A.aN(new A.aB(0,0,0,16),A.auo(B.a54,A.b([B.bIE,B.bJY],k),B.r4,8,8),j)],k),n,p,o,r.k3,new A.e9(m,B.I),new A.e9(q,B.I),j)}}
 A.aym.prototype={
 G(a){var s=null,r=A.aH(a,B.a_,t.J)
 r.toString
