@@ -12,38 +12,50 @@ class GroupsList extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
-    return ListView.separated(
-      separatorBuilder: (context, index) => const SizedBox(height: 8),
+    return ListView.builder(
+      // Clear of the "Create or join group" button over the last card.
+      padding: const EdgeInsets.only(top: 4, bottom: 96),
       itemBuilder: (context, index) {
         final group = groups!.elementAt(index);
         final picture = group.picture;
         final displayName = group.displayName;
         final description = group.description;
 
-        return ListTile(
-          leading: Hero(
-            tag: picture ?? group.hashCode,
-            child: ProfilePicture(
-              image: picture != null ? NetworkImage(picture) : null,
-              icon: Icons.group,
-              radius: 24,
-              color: theme.colorScheme.secondary,
+        return Card(
+          child: ListTile(
+            contentPadding: const EdgeInsets.symmetric(
+              horizontal: 16,
+              vertical: 8,
             ),
+            leading: Hero(
+              tag: picture ?? group.hashCode,
+              child: ProfilePicture(
+                image: picture != null ? NetworkImage(picture) : null,
+                icon: Icons.group,
+                radius: 24,
+                color: theme.colorScheme.secondary,
+              ),
+            ),
+            title: Hero(
+              tag: group,
+              child: Text(
+                displayName,
+                style: theme.textTheme.titleLarge,
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+              ),
+            ),
+            subtitle: description != null
+                ? Text(
+                    description,
+                    overflow: TextOverflow.fade,
+                    softWrap: false,
+                    maxLines: 1,
+                  )
+                : null,
+            onTap: () =>
+                GroupDetailsRoute(groupId: group.id.toString()).go(context),
           ),
-          title: Hero(
-            tag: group,
-            child: Text(displayName, style: theme.textTheme.headlineMedium),
-          ),
-          subtitle: description != null
-              ? Text(
-                  description,
-                  overflow: TextOverflow.fade,
-                  softWrap: false,
-                  maxLines: 1,
-                )
-              : null,
-          onTap: () =>
-              GroupDetailsRoute(groupId: group.id.toString()).go(context),
         );
       },
       itemCount: groups?.length ?? 0,

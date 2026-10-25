@@ -35,57 +35,88 @@ class _AuthScaffold extends StatelessWidget {
   Widget build(BuildContext context) {
     final config = ConfigService().config;
     final l10n = AppLocalizations.of(context)!;
-    final theme = Theme.of(context);
-
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          l10n.appName,
-          style: GoogleFonts.sniglet(
-            color: theme.colorScheme.primary,
-            textStyle: theme.textTheme.headlineLarge,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        // Nowhere to go back to while signed out.
-        automaticallyImplyLeading: false,
+    final bridged = Theme.of(context);
+    final colorScheme = bridged.colorScheme;
+    UnderlineInputBorder border([Color? color]) => UnderlineInputBorder(
+      borderRadius: const BorderRadius.all(Radius.circular(16)),
+      borderSide: color == null
+          ? BorderSide.none
+          : BorderSide(color: color, width: 2),
+    );
+    // The bridge carries colours and text only: mirror the app's fields
+    // (appInputDecorationTheme in app.dart) and filled buttons here.
+    final theme = bridged.copyWith(
+      inputDecorationTheme: InputDecorationTheme(
+        filled: true,
+        fillColor: colorScheme.surfaceContainerHighest,
+        border: border(),
+        enabledBorder: border(),
+        focusedBorder: border(colorScheme.primary),
+        errorBorder: border(colorScheme.error),
+        focusedErrorBorder: border(colorScheme.error),
       ),
-      body: SafeArea(
-        top: false,
-        child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            children: [
-              // No navigation in these callbacks: once signed in, the router
-              // leaves this page for wherever the user was going (see
-              // router.dart), e.g. the invite link that brought them here.
-              SupaEmailAuth(
-                redirectTo: _getRedirectUrl(),
-                onSignInComplete: (_) {},
-                // With email confirmations on, sign-up yields no session until
-                // the user opens the link in the email.
-                onSignUpComplete: (response) {
-                  if (response.session != null) return;
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text(l10n.signUpCheckEmail),
-                      duration: const Duration(seconds: 10),
-                    ),
-                  );
-                },
-              ),
-              Divider(height: 64),
-              SupaSocialsAuth(
-                socialProviders: [OAuthProvider.apple, OAuthProvider.google],
-                nativeGoogleAuthConfig: NativeGoogleAuthConfig(
-                  webClientId: config.socialAuthWebClientId,
-                  iosClientId: config.socialAuthIosClientId,
+      elevatedButtonTheme: ElevatedButtonThemeData(
+        style: ElevatedButton.styleFrom(
+          backgroundColor: colorScheme.primary,
+          foregroundColor: colorScheme.onPrimary,
+          minimumSize: const Size(64, 48),
+          elevation: 0,
+        ),
+      ),
+    );
+
+    return Theme(
+      data: theme,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            l10n.appName,
+            style: GoogleFonts.sniglet(
+              color: theme.colorScheme.primary,
+              textStyle: theme.textTheme.headlineLarge,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          // Nowhere to go back to while signed out.
+          automaticallyImplyLeading: false,
+        ),
+        body: SafeArea(
+          top: false,
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              children: [
+                // No navigation in these callbacks: once signed in, the router
+                // leaves this page for wherever the user was going (see
+                // router.dart), e.g. the invite link that brought them here.
+                SupaEmailAuth(
+                  redirectTo: _getRedirectUrl(),
+                  onSignInComplete: (_) {},
+                  // With email confirmations on, sign-up yields no session until
+                  // the user opens the link in the email.
+                  onSignUpComplete: (response) {
+                    if (response.session != null) return;
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text(l10n.signUpCheckEmail),
+                        duration: const Duration(seconds: 10),
+                      ),
+                    );
+                  },
                 ),
-                enableNativeAppleAuth: true,
-                redirectUrl: _getRedirectUrl(),
-                onSuccess: (_) {},
-              ),
-            ],
+                Divider(height: 64),
+                SupaSocialsAuth(
+                  socialProviders: [OAuthProvider.apple, OAuthProvider.google],
+                  nativeGoogleAuthConfig: NativeGoogleAuthConfig(
+                    webClientId: config.socialAuthWebClientId,
+                    iosClientId: config.socialAuthIosClientId,
+                  ),
+                  enableNativeAppleAuth: true,
+                  redirectUrl: _getRedirectUrl(),
+                  onSuccess: (_) {},
+                ),
+              ],
+            ),
           ),
         ),
       ),

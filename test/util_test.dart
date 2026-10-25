@@ -17,5 +17,10 @@ void main() {
       'should support complex emojis',
       () => expect(getNameInitials('👨‍👩‍👧‍👦 Ciao'), '👨‍👩‍👧‍👦C'),
     );
+
+    test(
+      'should skip an aside in brackets',
+      () => expect(getNameInitials('Tom (no app) Jones'), 'TJ'),
+    );
   });
 }

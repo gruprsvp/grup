@@ -74,7 +74,7 @@ class SchedulesList extends StatelessWidget {
           ? ListView(
               physics: const AlwaysScrollableScrollPhysics(),
               // Clear of the "Manage group" button over the last row.
-              padding: const EdgeInsets.only(bottom: 96),
+              padding: const EdgeInsets.only(top: 8, bottom: 96),
               children: [
                 for (final schedule in schedules)
                   ScheduleTile(

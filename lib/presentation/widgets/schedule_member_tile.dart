@@ -2,10 +2,14 @@ import 'package:material_ui/material_ui.dart';
 import 'package:parousia/l10n/app_localizations.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/widgets/widgets.dart';
+import 'package:parousia/util/util.dart';
 import 'package:rrule/rrule.dart';
 
 class ScheduleMemberTile extends StatelessWidget {
   final String name;
+
+  /// The member's picture, if they have one.
+  final String? picture;
 
   /// The user's own row: it invites them to set a usual answer.
   final bool isYou;
@@ -22,6 +26,7 @@ class ScheduleMemberTile extends StatelessWidget {
   const ScheduleMemberTile({
     super.key,
     required this.name,
+    this.picture,
     this.isYou = false,
     required this.eventName,
     this.scheduleRule,
@@ -67,7 +72,20 @@ class ScheduleMemberTile extends StatelessWidget {
       subtitle = null;
     }
 
+    final picture = this.picture;
+    final initials = getNameInitials(name) ?? '';
     return ListTile(
+      // The name says who it is; the avatar is a face to find them by.
+      leading: ExcludeSemantics(
+        child: CircleAvatar(
+          backgroundColor: isYou ? theme.colorScheme.primary : null,
+          foregroundColor: isYou ? theme.colorScheme.onPrimary : null,
+          foregroundImage: picture != null ? NetworkImage(picture) : null,
+          child: isYou
+              ? const Icon(Icons.person)
+              : Text(initials, style: theme.textTheme.labelLarge),
+        ),
+      ),
       title: Text(
         name,
         maxLines: 2,

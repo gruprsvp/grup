@@ -14,6 +14,7 @@ class AnalyticsCard extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
 
     return Card.filled(
+      margin: EdgeInsets.zero,
       child: Padding(
         padding: const EdgeInsets.all(16),
         child: Column(

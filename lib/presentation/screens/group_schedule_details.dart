@@ -70,6 +70,7 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
     required String eventName,
     required String displayName,
     required String? name,
+    String? picture,
     required String? memberId,
     ReplyOptions? reply,
     ReplyOptions? defaultReply,
@@ -78,6 +79,7 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
     final rule = scheduleRule;
     return ScheduleMemberTile(
       name: displayName,
+      picture: picture,
       isYou: name == null,
       eventName: eventName,
       // A one-off event has nothing to answer "usually".
@@ -158,14 +160,16 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(
-                child: _memberTile(
-                  eventName: eventName,
-                  displayName: l10n.you,
-                  name: null,
-                  memberId: details.targetMemberId,
-                  reply: details.myReply,
-                  defaultReply: details.myDefaultReply,
-                  defaultRule: details.myDefaultRule,
+                child: Card.filled(
+                  child: _memberTile(
+                    eventName: eventName,
+                    displayName: l10n.you,
+                    name: null,
+                    memberId: details.targetMemberId,
+                    reply: details.myReply,
+                    defaultReply: details.myDefaultReply,
+                    defaultRule: details.myDefaultRule,
+                  ),
                 ),
               ),
               for (final answer in _answerOrder)
@@ -195,6 +199,7 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
                             eventName: eventName,
                             displayName: name,
                             name: name,
+                            picture: el.profile?.picture,
                             memberId: canEditOthers ? el.member.id : null,
                             reply: el.reply,
                             defaultReply: el.defaultReply,
@@ -309,16 +314,17 @@ class _AnswerHeader extends StatelessWidget {
       ),
     };
 
+    final textTheme = Theme.of(context).textTheme;
     return ColoredBox(
-      color: colorScheme.surfaceContainer,
+      color: colorScheme.surface,
       child: MergeSemantics(
         child: ListTile(
-          leading: FaIcon(icon, color: color, size: 18),
-          title: Text(label),
-          trailing: Text(
-            '$count',
-            style: Theme.of(context).textTheme.titleMedium,
+          leading: CircleAvatar(
+            backgroundColor: color.withValues(alpha: 0.14),
+            child: FaIcon(icon, color: color, size: 18),
           ),
+          title: Text(label, style: textTheme.titleMedium),
+          trailing: Text('$count', style: textTheme.titleLarge),
         ),
       ),
     );

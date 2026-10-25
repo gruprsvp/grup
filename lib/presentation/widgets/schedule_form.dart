@@ -50,6 +50,7 @@ class _ScheduleFormState extends State<ScheduleForm> {
         }
       },
       child: Column(
+        spacing: 16,
         children: [
           FormBuilderTextField(
             name: 'displayName',

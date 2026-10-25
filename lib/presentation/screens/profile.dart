@@ -118,6 +118,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 child: SingleChildScrollView(
                   padding: const EdgeInsets.all(16),
                   child: Column(
+                    spacing: 16,
                     children: [
                       ImageFormField(
                         controller: _imageController,

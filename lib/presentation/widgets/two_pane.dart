@@ -34,7 +34,10 @@ class TwoPane extends StatelessWidget {
         children: [
           SizedBox(width: min(max(width * 0.4, 360), 480), child: list),
           const VerticalDivider(width: 1),
-          Expanded(child: detail ?? const SizedBox.shrink()),
+          // Capped like a single-column page: answers stay near the names.
+          Expanded(
+            child: ReadableWidth(child: detail ?? const SizedBox.shrink()),
+          ),
         ],
       ),
     );
