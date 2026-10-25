@@ -62,10 +62,17 @@ class _AuthScaffold extends StatelessWidget {
               SupaEmailAuth(
                 redirectTo: _getRedirectUrl(),
                 onSignInComplete: (_) {},
-                // Email confirmation is disabled, so sign-up yields a session
-                // immediately. If confirmations get enabled, show a "check your
-                // email" state here instead.
-                onSignUpComplete: (_) {},
+                // With email confirmations on, sign-up yields no session until
+                // the user opens the link in the email.
+                onSignUpComplete: (response) {
+                  if (response.session != null) return;
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(l10n.signUpCheckEmail),
+                      duration: const Duration(seconds: 10),
+                    ),
+                  );
+                },
               ),
               Divider(height: 64),
               SupaSocialsAuth(

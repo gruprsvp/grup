@@ -1285,6 +1285,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Your groups see this name next to your answers.'**
   String get profileNameHelper;
+
+  /// Shown after an email sign-up while the address still needs confirming.
+  ///
+  /// In en, this message translates to:
+  /// **'Almost there: open the link we emailed you to finish signing up.'**
+  String get signUpCheckEmail;
 }
 
 class _AppLocalizationsDelegate
