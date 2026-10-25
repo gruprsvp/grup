@@ -5,6 +5,7 @@ import 'package:supabase_flutter/supabase_flutter.dart';
 import 'repositories/repositories.dart';
 import 'services/local_cache.dart';
 import 'services/services.dart';
+import 'util/analytics.dart';
 
 /// The services the repositories are built on. Tests swap in fakes.
 typedef Services = ({
@@ -94,6 +95,7 @@ class Repositories {
   ];
 
   void _switchUser() {
+    identify(auth.userId);
     for (final repository in [groups, schedules, profile]) {
       repository.switchUser(auth.userId);
     }

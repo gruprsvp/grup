@@ -197,5 +197,11 @@
   "groupSetupBody": "Hier erscheinen ihre Events, jeweils mit allen, die dabei sind.",
   "groupSetupEvent": "Erstes Event hinzufügen",
   "profileNameHelper": "Deine Gruppen sehen diesen Namen neben deinen Antworten.",
-  "signUpCheckEmail": "Fast geschafft: Öffne den Link in der E-Mail, die wir dir geschickt haben, um die Registrierung abzuschließen."
+  "signUpCheckEmail": "Fast geschafft: Öffne den Link in der E-Mail, die wir dir geschickt haben, um die Registrierung abzuschließen.",
+  "analyticsTitle": "Hilf uns, nicht mehr zu raten",
+  "analyticsBody": "Teile, welche Funktionen du nutzt, und wir bauen, was zählt. Wir zählen Fingertipps, keine Geheimnisse. Niemals Werbung.",
+  "analyticsYes": "Bin dabei",
+  "analyticsNo": "Ich passe",
+  "analyticsSetting": "Hilf, GRUP zu verbessern",
+  "analyticsSettingSubtitle": "Wir zählen Fingertipps, keine Geheimnisse."
 }

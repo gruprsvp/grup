@@ -548,5 +548,29 @@
   "signUpCheckEmail": "Almost there: open the link we emailed you to finish signing up.",
   "@signUpCheckEmail": {
     "description": "Shown after an email sign-up while the address still needs confirming."
+  },
+  "analyticsTitle": "Help us stop guessing",
+  "@analyticsTitle": {
+    "description": "Title of the card on the home screen asking once whether the user shares usage analytics. Playful."
+  },
+  "analyticsBody": "Share which features you use, and we'll build what matters. We count taps, not secrets. No ads, ever.",
+  "@analyticsBody": {
+    "description": "Body of the analytics opt-in card: what is shared (which features are used, never content), and no ads."
+  },
+  "analyticsYes": "Count me in",
+  "@analyticsYes": {
+    "description": "Opt-in button on the analytics card."
+  },
+  "analyticsNo": "I'll pass",
+  "@analyticsNo": {
+    "description": "Opt-out button on the analytics card."
+  },
+  "analyticsSetting": "Help improve GRUP",
+  "@analyticsSetting": {
+    "description": "Settings switch that turns usage analytics on or off."
+  },
+  "analyticsSettingSubtitle": "We count taps, not secrets.",
+  "@analyticsSettingSubtitle": {
+    "description": "Subtitle of the usage analytics switch in settings."
   }
 }

@@ -18,6 +18,9 @@ class HomeScreen extends StatelessWidget {
   final bool? shouldShowFeedback;
   final VoidCallback? onFeedbackDismiss;
 
+  /// Set while the user hasn't said whether they share usage analytics.
+  final ValueChanged<bool>? onAnalyticsChoice;
+
   const HomeScreen({
     super.key,
     this.loading = false,
@@ -28,6 +31,7 @@ class HomeScreen extends StatelessWidget {
     this.onRefresh,
     this.shouldShowFeedback,
     this.onFeedbackDismiss,
+    this.onAnalyticsChoice,
   });
 
   ImageProvider? _profilePicture() {
@@ -93,6 +97,16 @@ class HomeScreen extends StatelessWidget {
           if (error != null && !nothingToShow)
             SliverToBoxAdapter(
               child: ErrorNotice(error: error, onRetry: onRefresh),
+            ),
+          if (onAnalyticsChoice case final onChoice?)
+            SliverToBoxAdapter(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 8,
+                ),
+                child: AnalyticsCard(onChoice: onChoice),
+              ),
             ),
           if (shouldShowFeedback == true)
             SliverToBoxAdapter(

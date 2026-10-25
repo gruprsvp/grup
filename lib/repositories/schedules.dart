@@ -101,6 +101,10 @@ class SchedulesRepository extends UserData {
       ifCurrent(generation, () {
         _schedules = {..._schedules, created.id: created};
       });
+      track('schedule created', {
+        'group_id': created.groupId,
+        'recurring': created.recurrenceRule.count != 1,
+      });
       return created;
     });
   }
@@ -148,9 +152,15 @@ class SchedulesRepository extends UserData {
             scheduleId: scheduleId,
             instanceDate: instanceDate,
           );
+          track('reply cleared', {'schedule_id': scheduleId});
           return null;
         }
-        return _repliesService.createReply(reply);
+        final saved = await _repliesService.createReply(reply);
+        track('reply set', {
+          'schedule_id': scheduleId,
+          'option': reply.selectedOption.name,
+        });
+        return saved;
       },
     );
   }
@@ -184,9 +194,15 @@ class SchedulesRepository extends UserData {
             memberId: memberId,
             scheduleId: scheduleId,
           );
+          track('default answer cleared', {'schedule_id': scheduleId});
           return null;
         }
-        return _defaultRulesService.createDefaultRule(defaultRule);
+        final saved = await _defaultRulesService.createDefaultRule(defaultRule);
+        track('default answer set', {
+          'schedule_id': scheduleId,
+          'option': defaultRule.selectedOption.name,
+        });
+        return saved;
       },
     );
   }

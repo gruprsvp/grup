@@ -38,10 +38,6 @@ Future<void> main() async {
     yield LicenseEntryWithLineBreaks(['google_fonts'], license);
   });
 
-  // Analytics, like error reports (below), come from release builds only, so
-  // debug and test runs don't count as real use.
-  if (kReleaseMode) await initPostHog();
-
   final configService = ConfigService();
   await configService.initialize();
 
@@ -51,6 +47,7 @@ Future<void> main() async {
   );
 
   final supabaseConfig = SupabaseConfig.fromString(supabaseConfigFile);
+  final backend = Uri.parse(supabaseConfig.apiUrl).host;
 
   final supabase = await Supabase.initialize(
     publishableKey: supabaseConfig.publishableKey,
@@ -61,6 +58,15 @@ Future<void> main() async {
     supabaseServices(supabase.client),
     legacyState: await takeLegacyState(),
   );
+
+  // Analytics, like error reports (below), come from release builds only, so
+  // debug and test runs don't count as real use. Only after the user says yes.
+  if (kReleaseMode) {
+    await initPostHog(
+      backend: backend,
+      enabled: repositories.settings.analytics ?? false,
+    );
+  }
 
   // Checked after launch, so a slow or missing network never holds up
   // startup. The web app is always the latest version.
@@ -88,5 +94,5 @@ Future<void> main() async {
     ),
   );
 
-  kReleaseMode ? initSentry(() => runApp(app)) : runApp(app);
+  kReleaseMode ? initSentry(() => runApp(app), backend: backend) : runApp(app);
 }

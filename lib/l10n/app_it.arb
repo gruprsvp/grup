@@ -197,5 +197,11 @@
   "groupSetupBody": "Qui compaiono i suoi eventi, con chi viene a ciascuno.",
   "groupSetupEvent": "Aggiungi il primo evento",
   "profileNameHelper": "I tuoi gruppi vedono questo nome accanto alle tue risposte.",
-  "signUpCheckEmail": "Ci siamo quasi: apri il link nell’email che ti abbiamo inviato per completare la registrazione."
+  "signUpCheckEmail": "Ci siamo quasi: apri il link nell’email che ti abbiamo inviato per completare la registrazione.",
+  "analyticsTitle": "Aiutaci a non tirare a indovinare",
+  "analyticsBody": "Condividi quali funzioni usi e costruiremo ciò che conta. Contiamo i tocchi, non i segreti. Niente pubblicità, mai.",
+  "analyticsYes": "Ci sto",
+  "analyticsNo": "Passo",
+  "analyticsSetting": "Aiutaci a migliorare GRUP",
+  "analyticsSettingSubtitle": "Contiamo i tocchi, non i segreti."
 }

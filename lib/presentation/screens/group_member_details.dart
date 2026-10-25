@@ -4,6 +4,7 @@ import 'package:parousia/l10n/app_localizations.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
+import 'package:parousia/util/analytics.dart';
 import 'package:share_plus/share_plus.dart';
 
 class GroupMemberDetailsScreen extends StatelessWidget {
@@ -144,6 +145,7 @@ class GroupMemberDetailsScreen extends StatelessWidget {
     Invite invite,
   ) async {
     await Clipboard.setData(ClipboardData(text: invite.value));
+    track('invite shared', {'via': 'clipboard'});
 
     if (!context.mounted) return;
     ScaffoldMessenger.of(context).showSnackBar(
@@ -161,9 +163,12 @@ class GroupMemberDetailsScreen extends StatelessWidget {
     final code = invite.value;
     final deeplink = Uri.https('grup.rsvp', '/join/$code').toString();
 
-    return SharePlus.instance.share(
+    final result = await SharePlus.instance.share(
       ShareParams(text: l10n.inviteMessage(code, deeplink)),
     );
+    // Android can't tell whether it was sent: 'unavailable' there.
+    track('invite shared', {'via': 'share', 'status': result.status.name});
+    return result;
   }
 
   /// Shows a confirmation dialog before updating the role of a member.

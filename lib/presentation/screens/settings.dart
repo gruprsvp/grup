@@ -9,11 +9,15 @@ class SettingsScreen extends StatelessWidget {
     super.key,
     required this.themeMode,
     required this.onThemeTap,
+    required this.analytics,
+    required this.onAnalyticsChanged,
     this.onSignOut,
   });
 
   final ThemeMode themeMode;
   final VoidCallback onThemeTap;
+  final bool analytics;
+  final ValueChanged<bool> onAnalyticsChanged;
   final VoidCallback? onSignOut;
 
   @override
@@ -29,6 +33,13 @@ class SettingsScreen extends StatelessWidget {
             onTap: () => const LocaleRoute().push<void>(context),
           ),
           ThemeSwitcherTile(themeMode: themeMode, onTap: onThemeTap),
+          SwitchListTile(
+            secondary: const Icon(Icons.insights_outlined),
+            title: Text(l10n.analyticsSetting),
+            subtitle: Text(l10n.analyticsSettingSubtitle),
+            value: analytics,
+            onChanged: onAnalyticsChanged,
+          ),
           ListTile(
             title: Text(l10n.settingsMoreInfo),
             leading: const Icon(Icons.info_outline),

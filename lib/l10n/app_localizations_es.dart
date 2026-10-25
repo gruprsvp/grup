@@ -688,4 +688,23 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get signUpCheckEmail =>
       'Ya casi está: abre el enlace del correo que te hemos enviado para terminar de registrarte.';
+
+  @override
+  String get analyticsTitle => 'Ayúdanos a dejar de adivinar';
+
+  @override
+  String get analyticsBody =>
+      'Comparte qué funciones usas y construiremos lo que importa. Contamos toques, no secretos. Nunca anuncios.';
+
+  @override
+  String get analyticsYes => 'Me apunto';
+
+  @override
+  String get analyticsNo => 'Paso';
+
+  @override
+  String get analyticsSetting => 'Ayuda a mejorar GRUP';
+
+  @override
+  String get analyticsSettingSubtitle => 'Contamos toques, no secretos.';
 }
