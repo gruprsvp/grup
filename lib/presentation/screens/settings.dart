@@ -25,27 +25,42 @@ class SettingsScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     return Scaffold(
       appBar: AppBar(title: Text(l10n.settings)),
+      // Preferences, then the account: flat groups, nothing here is lifted.
       body: ListView(
+        padding: const EdgeInsets.symmetric(vertical: 8),
         children: [
-          ListTile(
-            title: Text(l10n.language),
-            leading: const Icon(Icons.translate),
-            onTap: () => const LocaleRoute().push<void>(context),
+          Card.filled(
+            child: Column(
+              children: [
+                ListTile(
+                  title: Text(l10n.language),
+                  leading: const Icon(Icons.translate),
+                  onTap: () => const LocaleRoute().push<void>(context),
+                ),
+                ThemeSwitcherTile(themeMode: themeMode, onTap: onThemeTap),
+                SwitchListTile(
+                  secondary: const Icon(Icons.insights_outlined),
+                  title: Text(l10n.analyticsSetting),
+                  subtitle: Text(l10n.analyticsSettingSubtitle),
+                  value: analytics,
+                  onChanged: onAnalyticsChanged,
+                ),
+              ],
+            ),
           ),
-          ThemeSwitcherTile(themeMode: themeMode, onTap: onThemeTap),
-          SwitchListTile(
-            secondary: const Icon(Icons.insights_outlined),
-            title: Text(l10n.analyticsSetting),
-            subtitle: Text(l10n.analyticsSettingSubtitle),
-            value: analytics,
-            onChanged: onAnalyticsChanged,
+          const SizedBox(height: 8),
+          Card.filled(
+            child: Column(
+              children: [
+                ListTile(
+                  title: Text(l10n.settingsMoreInfo),
+                  leading: const Icon(Icons.info_outline),
+                  onTap: () => const SettingsMoreRoute().push<void>(context),
+                ),
+                SignOutTile(onSignOut: onSignOut),
+              ],
+            ),
           ),
-          ListTile(
-            title: Text(l10n.settingsMoreInfo),
-            leading: const Icon(Icons.info_outline),
-            onTap: () => const SettingsMoreRoute().push<void>(context),
-          ),
-          SignOutTile(onSignOut: onSignOut),
         ],
       ),
     );

@@ -28,12 +28,50 @@ final _darkColorScheme = ColorScheme.fromSeed(
 
 /// The app's theme. Widget tests and the store-screenshot harness use it too,
 /// so they render what users see.
-ThemeData appTheme(Brightness brightness) => ThemeData(
-  colorScheme: brightness == Brightness.dark
+ThemeData appTheme(Brightness brightness) {
+  final colorScheme = brightness == Brightness.dark
       ? _darkColorScheme
-      : _lightColorScheme,
-  fontFamily: GoogleFonts.cabin().fontFamily,
-);
+      : _lightColorScheme;
+  return ThemeData(
+    colorScheme: colorScheme,
+    fontFamily: GoogleFonts.cabin().fontFamily,
+    inputDecorationTheme: appInputDecorationTheme(colorScheme),
+    // Cards are what you act on (a group, an event): lifted, softly rounded.
+    cardTheme: const CardThemeData(
+      margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(20)),
+      ),
+      clipBehavior: Clip.antiAlias,
+    ),
+    filledButtonTheme: FilledButtonThemeData(
+      style: FilledButton.styleFrom(minimumSize: const Size(64, 48)),
+    ),
+    snackBarTheme: const SnackBarThemeData(behavior: SnackBarBehavior.floating),
+    bottomSheetTheme: const BottomSheetThemeData(showDragHandle: true),
+    tabBarTheme: const TabBarThemeData(dividerHeight: 0),
+  );
+}
+
+/// Filled, rounded text fields with no underline. Also mirrored onto the
+/// sign-in screen's framework theme (`screens/auth.dart`).
+InputDecorationTheme appInputDecorationTheme(ColorScheme colorScheme) {
+  UnderlineInputBorder border([Color? color]) => UnderlineInputBorder(
+    borderRadius: const BorderRadius.all(Radius.circular(16)),
+    borderSide: color == null
+        ? BorderSide.none
+        : BorderSide(color: color, width: 2),
+  );
+  return InputDecorationTheme(
+    filled: true,
+    fillColor: colorScheme.surfaceContainerHighest,
+    border: border(),
+    enabledBorder: border(),
+    focusedBorder: border(colorScheme.primary),
+    errorBorder: border(colorScheme.error),
+    focusedErrorBorder: border(colorScheme.error),
+  );
+}
 
 /// The app's localization delegates, shared with widget tests.
 ///

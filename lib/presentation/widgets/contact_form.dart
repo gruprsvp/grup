@@ -70,6 +70,7 @@ class _ContactFormState extends State<ContactForm> {
         );
       },
       child: Column(
+        spacing: 16,
         children: [
           TextFormField(
             autofocus: true,

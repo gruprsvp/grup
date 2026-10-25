@@ -94,7 +94,7 @@ components:
     typography: "{typography.headline}"
     padding: "4dp 16dp 8dp"
   answer-header:
-    backgroundColor: "{colors.day-container}"
+    backgroundColor: "{colors.day-surface}"
     typography: "{typography.title-small}"
     padding: "0 16dp"
   fab-extended:
@@ -111,8 +111,9 @@ components:
     height: "40dp"
     padding: "0 24dp"
   group-row:
-    typography: "{typography.headline}"
-    padding: "0 16dp"
+    typography: "{typography.title}"
+    rounded: "20dp"
+    padding: "8dp 16dp"
   feedback-card:
     backgroundColor: "{colors.day-container}"
     rounded: "{rounded.md}"
@@ -156,7 +157,7 @@ Two seeded Material 3 schemes, built with `ColorScheme.fromSeed`, plus one fixed
 
 ### Neutral
 - **Day Surface / Day Ink** (`surface` / `onSurface`): a cool near-white page with near-black text.
-- **Day containers** (`surfaceContainer`): the opaque band behind each pinned answer header on an event, and the collapsed feedback card. Headers tell answers apart by icon and label, not by tone.
+- **Day containers** (`surfaceContainerLow` → `Highest`): the resting surface of lifted cards (groups, events), the flat tonal groups ("You" on an event, settings sections, notices like the analytics and feedback cards), and the fill of text fields.
 - **Night Surface / Night Ink**: a warm near-black with parchment text. Night containers step the same way.
 - **Outlines** (`outline`): the borders of unanswered reply buttons.
 
@@ -181,8 +182,8 @@ Two seeded Material 3 schemes, built with `ColorScheme.fromSeed`, plus one fixed
 ### Hierarchy
 Sizes come from the Material 3 type scale in `sp`, so they follow the system font-size setting.
 - **Wordmark** (Sniglet 400, `headlineLarge` 32sp, in `primary`): "GRUP" in the home app bar. Inline Sniglet spans in `primary` mark the brand name in onboarding and feedback copy, and the feedback card's title is Sniglet at 24.
-- **Headline** (Cabin 400, 28sp): group names in the home list (a group is a place, so its name reads big), and at 600 weight the headcount on an event ("5 coming").
-- **Title** (Cabin 400, 22sp): app-bar titles: the group's name on the group screen, the event's name on the event screen.
+- **Headline** (Cabin 400, 28sp): at 600 weight, the headcount on an event ("5 coming").
+- **Title** (Cabin 400, 22sp): group names on their home cards (big enough to read as a place, small enough for "Tuesday Five-a-side" on one line at phone width), and app-bar titles: the group's name on the group screen, the event's name on the event screen.
 - **Title small** (Cabin 500, 16sp): list-tile titles. Event names, member names, the Yes / No reply yet / No headers.
 - **Body** (Cabin 400, 16sp): onboarding and descriptive copy, centred in empty states.
 - **Body small** (Cabin 400, 14sp): list-tile subtitles. Event time and headcount ("10:00 AM · **5 coming** +2 usually", the count in Label weight when it isn't zero), a member's usual answer.
@@ -204,13 +205,13 @@ Single column on every size, built from Material slivers. A pinned or floating `
 - **Text size:** no fixed heights on headers; the date row grows with the text scale. Short count phrases are kept on one line (`keepTogether`).
 - **Pull to refresh** on the group's day list and on the event, with the empty states scrollable so it works there too.
 - **Edge-to-edge:** content clears system bars with `SafeArea` and the bottom view padding (Android 15 enforces edge-to-edge).
-- **Wide screens:** chosen by window width, never by platform (iPad split view and browser windows resize). From Material's expanded width (840dp) a group is two panes (`TwoPane`): the day's list on the left (40% of the window, 360–480dp) and the open event on the right, under one outer `Scaffold` so a snackbar shows once. The group's address opens its first event of the day; an event's address keeps its URL and opens next to its day, with no page transition, and the list's back button leaves the group. The open event's row sits on `secondaryContainer`, without recolouring its answer buttons. Every other page, and a group or event below 840dp, is one column capped at 640dp and centred (`ReadableWidth`). Sheets stay modal bottom sheets, centred at their 640dp maximum.
+- **Wide screens:** chosen by window width, never by platform (iPad split view and browser windows resize). From Material's expanded width (840dp) a group is two panes (`TwoPane`): the day's list on the left (40% of the window, 360–480dp) and the open event on the right, capped at 640dp and centred in its pane so answers stay near the names, under one outer `Scaffold` so a snackbar shows once. The group's address opens its first event of the day; an event's address keeps its URL and opens next to its day, with no page transition, and the list's back button leaves the group. The open event's row sits on `secondaryContainer`, without recolouring its answer buttons. Every other page, and a group or event below 840dp, is one column capped at 640dp and centred (`ReadableWidth`). Sheets stay modal bottom sheets, centred at their 640dp maximum.
 
 ## Elevation & Depth
 
-**Today:** flat. Depth comes only from Material 3 tonal surfaces (`surfaceContainer` → `High` → `Highest`) and from stock component elevation: the FAB's level-3 shadow, and modal bottom sheets and dialogs. There are no custom shadows.
+Depth comes from Material 3 tonal surfaces and stock component elevation, never custom shadows. The things an organiser acts on rest on level 1: each group on home and each event in a group's day is a `Card()` (`surfaceContainerLow`, 20dp corners, 16dp side margins, ripple clipped to the shape). The FAB keeps level 3; sheets and dialogs keep theirs. Groupings that aren't one tappable unit use flat `Card.filled`: the "You" row on an event, settings sections, the analytics card and the first-run example.
 
-**Direction (chosen, not built yet): add some lift.** The things an organiser acts on, such as an event occurrence and a group, should rest on low Material 3 elevation, so they read as separate units at a glance. Use the standard M3 levels: 1 for cards and rows at rest, 2–3 for pressed or dragged items and the FAB, with the tonal tint that goes with each level. Lift is structural (it separates units of action), never decorative glow.
+Lift is structural (it separates units of action), never decorative glow. The roster's member rows stay flat: only some are tappable, and a dozen cards is noise.
 
 ### Named Rules
 **The Material Levels Rule.** Elevation uses the Material 3 levels (0, 1, 2, 3, 4, 5) and their tonal surfaces. Never use an arbitrary `BoxShadow`, coloured shadow, or blur.
@@ -219,7 +220,7 @@ Single column on every size, built from Material slivers. A pinned or floating `
 
 ## Shapes
 
-Material 3's rounded, friendly geometry, unmodified: pill-shaped (stadium) buttons, a 16dp-rounded extended FAB, 12dp cards, 28dp dialogs and bottom-sheet tops. Circles carry identity. Avatars and group pictures are circles inside a thin coloured ring (`ProfilePicture`), and reply buttons are circular icon buttons. The one custom shape is the feedback card's 16dp rounding.
+Material 3's rounded, friendly geometry, slightly softened: pill-shaped (stadium) buttons, a 16dp-rounded extended FAB, 20dp cards (`cardTheme` in `lib/app.dart`), filled text fields with 16dp corners and no outline (`appInputDecorationTheme`, mirrored on the sign-in screen), filled buttons at least 48dp tall, 28dp dialogs and bottom-sheet tops. Circles carry identity. Avatars and group pictures are circles inside a thin coloured ring (`ProfilePicture`), and reply buttons are circular icon buttons. The custom shapes are the 20dp cards, the 16dp filled fields and the feedback card's 16dp rounding.
 
 ## Components
 
@@ -238,7 +239,7 @@ The number the product exists for, split by how sure it is: confirmed answers, t
 - **Group's day list:** in the subtitle, "10:00 AM · **5 coming** +2 usually".
 
 ### Answer Sections
-On the event screen, in the order the organiser needs: Yes, No reply yet, No. Each header is an opaque `surfaceContainer` band with the answer's icon (solid green thumb up, hourglass, solid red thumb down), the label, and the count trailing; it pins only while its own members scroll by. Each member row reads to screen readers as "Name, coming" (or not coming, usually coming, no reply yet), and shows their usual answer as a subtitle ("Usually in", "Usually in · On weekdays").
+On the event screen, in the order the organiser needs: Yes, No reply yet, No. Each header sits on the opaque page `surface`, with the answer's icon in a 14%-tinted circle of its colour (solid green thumb up, hourglass, solid red thumb down) that lines up with the member avatars below, the label in Title medium, and the count trailing in Title large; it pins only while its own members scroll by. Each member row reads to screen readers as "Name, coming" (or not coming, usually coming, no reply yet), and shows their usual answer as a subtitle ("Usually in", "Usually in · On weekdays").
 
 ### Usual Answers
 The "set it once" feature. "You" invites it ("Set your usual answer", in `primary`) on recurring events; tapping a row opens a bottom sheet titled with whose answer it is and which event, offering only rules that fit the event (every time; weekdays / weekends for a daily event). Hidden for one-off events. Saving or removing confirms with a snackbar and Undo, as does an admin answering for someone else.
@@ -251,7 +252,7 @@ The "set it once" feature. "You" invites it ("Set your usual answer", in `primar
 - **Destructive:** sign-out and delete-profile tiles take `colorScheme.error` for icon and text.
 
 ### Lists
-`ListTile` everywhere: groups (avatar + headline name + one-line faded description), events (name + local time + reply pair) and members (name + reply pair; tapping opens the default-answer sheet).
+`ListTile` everywhere: groups (a card: ringed avatar + Title large name, up to two lines + one-line faded description), events (a card: Title medium name + local time + reply pair; the open one on `secondaryContainer`) and members (a flat row: initials or photo avatar + name + reply pair; tapping opens the default-answer sheet). The member avatar is a plain `CircleAvatar` hidden from screen readers (the name already says who); "You" gets a `primary` circle with a person icon. Initials skip asides in brackets ("Tom (no app)" is T).
 
 ### Group Avatar
 `ProfilePicture`: a circle (radius 24 in lists, 128 on group details) with the photo or initials on a light tint of its ring colour, inside a thin `CircularProgressIndicator` ring. The ring doubles as upload progress. Groups use Lagoon Teal and people use Harbour Navy.

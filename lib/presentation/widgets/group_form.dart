@@ -57,6 +57,7 @@ class _GroupFormState extends State<GroupForm> {
               child: SingleChildScrollView(
                 padding: const EdgeInsets.all(16),
                 child: Column(
+                  spacing: 16,
                   children: [
                     ListenableBuilder(
                       listenable: _nameController,

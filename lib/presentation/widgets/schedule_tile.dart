@@ -34,35 +34,39 @@ class ScheduleTile extends StatelessWidget {
     // row (as ListTile.selected would): its answer colours mean answers.
     return Semantics(
       selected: selected,
-      child: ListTile(
-        tileColor: selected
+      child: Card(
+        color: selected
             ? Theme.of(context).colorScheme.secondaryContainer
             : null,
-        title: Text(
-          schedule.displayName,
-          maxLines: 2,
-          overflow: TextOverflow.ellipsis,
-        ),
-        subtitle: Text.rich(
-          TextSpan(
-            children: [
-              TextSpan(text: '$time · '),
-              TextSpan(
-                text: keepTogether(l10n.eventComing(confirmed)),
-                // Quiet when nobody's coming yet.
-                style: confirmed > 0 ? textTheme.labelLarge : null,
-              ),
-              if (usual > 0)
-                TextSpan(text: ' ${keepTogether(l10n.eventUsually(usual))}'),
-            ],
+        child: ListTile(
+          contentPadding: const EdgeInsetsDirectional.only(start: 16, end: 8),
+          title: Text(
+            schedule.displayName,
+            style: textTheme.titleMedium,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
           ),
+          subtitle: Text.rich(
+            TextSpan(
+              children: [
+                TextSpan(text: '$time · '),
+                TextSpan(
+                  text: keepTogether(l10n.eventComing(confirmed)),
+                  // Quiet when nobody's coming yet.
+                  style: confirmed > 0 ? textTheme.labelLarge : null,
+                ),
+                if (usual > 0)
+                  TextSpan(text: ' ${keepTogether(l10n.eventUsually(usual))}'),
+              ],
+            ),
+          ),
+          trailing: ReplyButtons(
+            reply: schedule.myReply,
+            defaultReply: schedule.myDefaultReply,
+            onReplyChanged: onReplyChanged,
+          ),
+          onTap: () => onScheduleTapped?.call(schedule),
         ),
-        trailing: ReplyButtons(
-          reply: schedule.myReply,
-          defaultReply: schedule.myDefaultReply,
-          onReplyChanged: onReplyChanged,
-        ),
-        onTap: () => onScheduleTapped?.call(schedule),
       ),
     );
   }
