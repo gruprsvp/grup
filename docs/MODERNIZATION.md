@@ -51,21 +51,25 @@ On 2026-10-25 at 12:37, 2.0.1 (`pubspec` 2.0.1+1, new release notes in all five 
 
 Everything still open, in one place:
 
-**Prod checks**, by deadline. The agent has no prod access, and none of these has a recorded result:
-- Before 2026-10-30: `pg_default_acl` on prod against local (query in the 2026-10-23 section below), and `gen_random_uuid_v7`'s owner (query under S5). There's no record of the owner query being run before #253 merged. The `db push` log doesn't settle it either: it shows no notices from the remote, so it can't tell whether the `search_path` change applied or was skipped.
-- Now that #263 is live: `select count(*) from profiles p join auth.users u on u.id = p.id where p.display_name is distinct from u.raw_user_meta_data ->> 'full_name' or p.picture is distinct from u.raw_user_meta_data ->> 'avatar_url'`. Edits from 1.x/2.0.0 clients never reached those profiles, so a non-zero count needs a one-time backfill.
-- `supabase db advisors --linked`: the prod-only checks, and Confirm #1 (email confirmations on prod). Since `feat/signup-check-email` the app tells a new email user to open the confirmation link, so confirmations can be turned on once that release is live in both stores.
-- S7: `select extname from pg_extension` on prod.
-- S8: prod's exposed schemas; turn off `pg_graphql`.
-- S1, by the end of 2026: deactivate the legacy keys once the dashboard shows nothing uses them. Every 1.x install and the 2.0.0 builds before #257 embed one and stop working then, so 2.0.x has to be live in both stores well before.
+**Prod checks**, by deadline, each with its issue (commands and expected output are there). The agent has no prod access, and none of these has a recorded result:
+- #275, before 2026-10-30: `pg_default_acl` on prod against local (query in the 2026-10-23 section below), and `gen_random_uuid_v7`'s owner (query under S5). There's no record of the owner query being run before #253 merged. The `db push` log doesn't settle it either: it shows no notices from the remote, so it can't tell whether the `search_path` change applied or was skipped.
+- Now that #263 is live: `select count(*) from profiles p join auth.users u on u.id = p.id where p.display_name is distinct from u.raw_user_meta_data ->> 'full_name' or p.picture is distinct from u.raw_user_meta_data ->> 'avatar_url'`. Profiles that already differed when the migration ran no longer follow their metadata, so edits from 1.x/2.0.0 clients don't reach them. But since 2.0 every in-app edit differs too, legitimately: inspect the rows, don't backfill blindly (#276).
+- #276: `supabase db advisors --linked`: the prod-only checks, and Confirm #1 (email confirmations on prod). Since `feat/signup-check-email` the app tells a new email user to open the confirmation link, so confirmations can be turned on once that release is live in both stores.
+- #276, S7: `select extname from pg_extension` on prod.
+- #276, S8: prod's exposed schemas; turn off `pg_graphql`.
+- #278, S1, by the end of 2026: deactivate the legacy keys once the dashboard shows nothing uses them. Every 1.x install and the 2.0.0 builds before #257 embed one and stop working then, so 2.0.x has to be live in both stores well before.
 
-**Release and stores:**
+**Release and stores** (#277):
 - Record which stores 2.0 reached and at what rollout (unverified: the agent can't see the consoles). The App Store had 1.7.1 live before it; neither the versionCode 224 build (legacy key) nor any other build before #257 should go out.
-- Smoke-test 2.0.1 (run 40193902886's build, or later) on devices against prod:
+- Merge #274, #279, #280 and #281 (one stack, in that order) before publishing `v2.0.1`; they join its draft. Published first, the stack needs a bump to 2.0.2 and new release notes.
+- Smoke-test 2.0.1 (the build after the stack merges) on devices against prod:
   - sign-in with every provider, RSVP, picture upload, deleting a throwaway account that uploaded a group picture (the group keeps it);
   - edit your name and picture, sign out, sign back in with Google (and Apple), and check the edit survived (pgTAP only simulates what GoTrue does to the metadata);
   - onboarding, the attendance flow, and an unknown address showing the not-found page;
-  - the wide layout on a real tablet, a browser window and a desktop window. #268 was only tested in widget tests at 1280×800.
+  - the wide layout on a real tablet, a browser window and a desktop window. #268 was only tested in widget tests at 1280×800;
+  - replacing a profile and a group picture (#279): the old file is gone, avatars still show after a refresh;
+  - stepping through days with the arrows, swipes and, on web, a trackpad (#280);
+  - an email sign-up still signs in at once while confirmations are off (#281).
 - Then promote 2.0.1 from Play internal, attach the Xcode Cloud build to a 2.0.1 App Store version and submit.
 - Every merge to `main` that should release needs a `pubspec` version bump: `build.yaml`'s draft-release step only updates unreleased drafts. Keep `v2.0.1` a draft until it is live. Delete the stale `v1.7.2` draft, if it exists (unverified: the agent can't list releases; `v1.7.3` is a tag).
 
