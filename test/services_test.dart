@@ -3,9 +3,12 @@ library;
 
 import 'dart:async';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:faker/faker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:parousia/models/models.dart';
+import 'package:parousia/services/const.dart';
 import 'package:parousia/services/services.dart';
 import 'package:parousia/util/errors.dart';
 import 'package:parousia/util/util.dart';
@@ -162,6 +165,33 @@ void main() {
 
         expect(updatedProfile.displayName, equals(displayName));
         expect(updatedProfile.picture, equals(pictureUrl));
+      }),
+    );
+  });
+
+  group('storage', () {
+    test(
+      'deletePublicUrl deletes a replaced picture but not a group\'s',
+      () => runWithTemporaryGroup((supabase, group, groupsService) async {
+        final storage = StorageService(supabase: supabase);
+        final image = XFile.fromData(
+          Uint8List.fromList([1, 2, 3]),
+          mimeType: 'image/png',
+        );
+        final replaced = await storage.uploadPublicXFile('replaced', image);
+        final shown = await storage.uploadPublicXFile('shown', image);
+        await groupsService.updateGroup(group.copyWith(picture: shown));
+
+        await storage.deletePublicUrl(replaced);
+        await storage.deletePublicUrl(shown);
+        await storage.deletePublicUrl('https://lh3.googleusercontent.com/a');
+
+        final files = await supabase.storage
+            .from(Buckets.public.name)
+            .list(path: supabase.auth.currentUser!.id);
+        expect(files.map((f) => f.name), ['shown.png']);
+        await groupsService.updateGroup(group.copyWith(picture: null));
+        await storage.deleteUserFiles();
       }),
     );
   });

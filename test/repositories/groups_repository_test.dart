@@ -87,6 +87,47 @@ void main() {
     expect(repository.group(group.id)?.displayName, 'Renamed');
   });
 
+  test('a new image deletes the old picture, best effort', () async {
+    final group = backend.addGroup('Group');
+    backend.groups[group.id] = group.copyWith(picture: 'https://old.png');
+    await repository.refresh();
+    final image = XFile.fromData(Uint8List(0), mimeType: 'image/png');
+
+    await repository.update(repository.group(group.id)!, image: image);
+    expect(backend.storageService.deletedUrls, ['https://old.png']);
+
+    backend.storageService.deleteFailure = ClientException('offline');
+    final result = await repository.update(
+      repository.group(group.id)!,
+      image: image,
+    );
+    expect(result, isA<Ok<Group>>());
+  });
+
+  test('a failed update keeps the old picture', () async {
+    final group = backend.addGroup('Group');
+    backend.groups[group.id] = group.copyWith(picture: 'https://old.png');
+    await repository.refresh();
+
+    backend.failure = ClientException('offline');
+    await repository.update(
+      repository.group(group.id)!,
+      image: XFile.fromData(Uint8List(0), mimeType: 'image/png'),
+    );
+
+    expect(backend.storageService.deletedUrls, isEmpty);
+  });
+
+  test('delete also deletes the picture', () async {
+    final group = backend.addGroup('Group');
+    backend.groups[group.id] = group.copyWith(picture: 'https://old.png');
+    await repository.refresh();
+
+    await repository.delete(group.id);
+
+    expect(backend.storageService.deletedUrls, ['https://old.png']);
+  });
+
   test('delete forgets the group; deleting it twice fails', () async {
     final group = backend.addGroup('Group');
     await repository.refresh();

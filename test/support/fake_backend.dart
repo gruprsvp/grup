@@ -369,6 +369,19 @@ class _FakeStorageService extends Fake implements StorageService {
     return 'https://storage.test/${_b.userId}/$key';
   }
 
+  /// The URLs [deletePublicUrl] was asked to delete.
+  final deletedUrls = <String>[];
+
+  /// While set, [deletePublicUrl] throws it (other calls still work).
+  Object? deleteFailure;
+
+  @override
+  Future<void> deletePublicUrl(String url) async {
+    await _b._call();
+    if (deleteFailure case final failure?) throw failure;
+    deletedUrls.add(url);
+  }
+
   @override
   Future<void> deleteUserFiles() => _b._call();
 }

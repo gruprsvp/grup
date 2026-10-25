@@ -28,6 +28,14 @@ class StorageService extends SupabaseService with Storage {
     return bucket().getPublicUrl(path);
   }
 
+  /// Deletes the file at [url], if it is one of this bucket's. Storage skips
+  /// files the user may not delete: other users' files, and group pictures.
+  Future<void> deletePublicUrl(String url) async {
+    final prefix = bucket().getPublicUrl('');
+    if (!url.startsWith(prefix)) return; // e.g. a sign-in provider's avatar
+    await bucket().remove([Uri.decodeComponent(url.substring(prefix.length))]);
+  }
+
   /// Deletes all files owned by the current user.
   Future<void> deleteUserFiles() async {
     final userId = _userId();

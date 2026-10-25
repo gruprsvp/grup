@@ -61,6 +61,7 @@ class ProfileRepository extends UserData {
     }
     final generation = this.generation;
     return guard(() async {
+      final old = _profile?.picture;
       final picture = image == null
           ? null
           : await _storage.uploadPublicXFile(const Uuid().v7(), image);
@@ -70,6 +71,7 @@ class ProfileRepository extends UserData {
         pictureUrl: picture,
       );
       ifCurrent(generation, () => _profile = profile);
+      if (picture != null) await _forgetFile(old);
       return profile;
     });
   }
@@ -80,6 +82,15 @@ class ProfileRepository extends UserData {
     await _profilesService.deleteProfile();
     await _profilesService.signOut();
   });
+
+  /// Deletes a replaced picture. Best effort: a file left behind only takes
+  /// up space, so a failure doesn't fail the save.
+  Future<void> _forgetFile(String? url) async {
+    if (url == null) return;
+    try {
+      await _storage.deletePublicUrl(url);
+    } on Object catch (_) {}
+  }
 
   @override
   void clear() => _profile = null;
