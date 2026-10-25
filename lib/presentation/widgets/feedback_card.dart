@@ -59,6 +59,9 @@ class FeedbackCard extends StatelessWidget {
           padding: EdgeInsets.only(bottom: 16),
           child: Wrap(
             alignment: WrapAlignment.spaceEvenly,
+            // On a narrow screen the buttons wrap: keep them apart.
+            spacing: 8,
+            runSpacing: 8,
             children: [const _EmailButton(), const _StoreButton()],
           ),
         ),
