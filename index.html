@@ -130,7 +130,10 @@
         if (!['localhost', '127.0.0.1'].includes(location.hostname)) {
             posthog.init('phc_maDGNEUn4Xpo0Nys1jNI2GnZjEQTVD2IIymbcRxBPta', {
                 api_host:'https://eu.i.posthog.com',
-                person_profiles: 'identified_only'
+                person_profiles: 'identified_only',
+                // Nothing is sent or stored until the user says yes in the app.
+                opt_out_capturing_by_default: true,
+                opt_out_persistence_by_default: true
             })
         }
     </script>
