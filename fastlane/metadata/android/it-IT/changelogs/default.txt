@@ -1,6 +1,3 @@
-GRUP 2.0 è stato ricostruito dietro le quinte per essere più affidabile.
-• I link di invito ora funzionano anche sul web e ti riportano all’invito dopo l’accesso.
-• Se qualcosa non si carica o non si salva, ora l’app te lo dice e puoi riprovare.
-• La schermata di accesso, gli eventi ricorrenti e le date ora sono nella tua lingua.
-• Pulsanti di risposta più leggibili ed etichette per gli screen reader.
-• Le immagini dei gruppi non si perdono più durante la modifica, e altre correzioni.
+GRUP 2.0.1 corregge due problemi.
+• L’immagine di un gruppo ora resta anche quando chi l’ha aggiunta elimina il proprio account.
+• I pulsanti sotto “Come stiamo andando?” non sono più attaccati sugli schermi piccoli.
