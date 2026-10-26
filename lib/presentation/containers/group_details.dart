@@ -1,5 +1,6 @@
 import 'package:material_ui/material_ui.dart';
 import 'package:parousia/go_router_builder.dart';
+import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/util/result.dart';
 import 'package:provider/provider.dart';
@@ -94,5 +95,6 @@ class GroupDetailsContainer extends StatelessWidget {
       if (context.mounted) showFailure(context, result);
     },
     closedAt: vm.closedAt,
+    showKitchen: vm.access.show(FeatureKey.kitchenView),
   );
 }

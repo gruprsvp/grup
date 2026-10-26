@@ -58,6 +58,11 @@ RouteBase get $homeScreenRoute => GoRouteData.$route(
           hasOverriddenOnExit: false,
           factory: $GroupMemberDetailsRoute._fromState,
         ),
+        GoRouteData.$route(
+          path: 'kitchen',
+          hasOverriddenOnExit: false,
+          factory: $GroupKitchenRoute._fromState,
+        ),
       ],
     ),
     GoRouteData.$route(
@@ -332,6 +337,34 @@ mixin $GroupMemberDetailsRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
     '/groups/${Uri.encodeComponent(_self.groupId)}/members/${Uri.encodeComponent(_self.memberId)}',
+  );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $GroupKitchenRoute on GoRouteData {
+  static GroupKitchenRoute _fromState(GoRouterState state) => GroupKitchenRoute(
+    groupId: state.pathParameters['groupId']!,
+    date: state.uri.queryParameters['date'],
+  );
+
+  GroupKitchenRoute get _self => this as GroupKitchenRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/groups/${Uri.encodeComponent(_self.groupId)}/kitchen',
+    queryParams: {if (_self.date != null) 'date': _self.date},
   );
 
   @override

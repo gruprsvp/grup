@@ -1070,5 +1070,44 @@ void main() {
         await clear();
       }),
     );
+
+    test(
+      'replies come back whole past the API\'s 1000-row pages',
+      () => runWithTemporaryGroup((supabase, group, _) async {
+        final me = await MembersService(supabase: supabase)
+            .getOwnMemberByGroupId(group.id);
+        final start = DateTime.utc(2025, 1, 1, 18);
+        final daily = await SchedulesService(supabase: supabase).createSchedule(
+          Schedule(
+            id: '',
+            groupId: group.id,
+            displayName: 'Dinner',
+            startDate: start,
+            recurrenceRule: RecurrenceRule(frequency: Frequency.daily),
+          ),
+        );
+        await supabase.from(Tables.replies.table).insert([
+          for (var day = 0; day < 1100; day++)
+            {
+              'member_id': me.id,
+              'schedule_id': daily.id,
+              'instance_date': start.add(Duration(days: day)).toIso8601String(),
+              'selected_option': 'yes',
+            },
+        ]);
+
+        final all = await RepliesService(supabase: supabase)
+            .getRepliesForDateRange(
+              group.id,
+              DateTimeRange(
+                start: start,
+                end: start.add(const Duration(days: 1100)),
+              ),
+            );
+
+        expect(all, hasLength(1100));
+        expect(all.map((reply) => reply.instanceDate).toSet(), hasLength(1100));
+      }),
+    );
   });
 }

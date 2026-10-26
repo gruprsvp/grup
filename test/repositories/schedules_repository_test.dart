@@ -209,6 +209,26 @@ void main() {
     expect(repository.schedule(dinner.id)?.cutoffMinutesBefore, isNull);
   });
 
+  test('repliesIn reads a range without touching what is cached', () async {
+    backend.addReply(reply(ReplyOptions.yes));
+    final later = Reply(
+      memberId: me.id,
+      scheduleId: dinner.id,
+      instanceDate: day.add(const Duration(days: 200)),
+      selectedOption: ReplyOptions.no,
+    );
+    backend.addReply(later);
+    await repository.load(group.id, window);
+
+    final result = await repository.repliesIn(
+      group.id,
+      DateTimeRange(start: day, end: day.add(const Duration(days: 365))),
+    );
+
+    expect((result as Ok<List<Reply>>).value, hasLength(2));
+    expect(repository.replies(group.id), hasLength(1));
+  });
+
   test('data survives a restart', () async {
     backend.addReply(reply(ReplyOptions.yes));
     await repository.load(group.id, window);

@@ -1388,6 +1388,60 @@ abstract class AppLocalizations {
   /// **'Late change'**
   String get lateChange;
 
+  /// A day of the group's events as a kitchen needs it: headcounts and names, printable.
+  ///
+  /// In en, this message translates to:
+  /// **'Kitchen view'**
+  String get kitchenTitle;
+
+  /// How many of those coming have an account.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 member} other{{count} members}}'**
+  String kitchenMembers(int count);
+
+  /// How many of those coming are guests the admins answer for (no account).
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =1{1 guest} other{{count} guests}}'**
+  String kitchenGuests(int count);
+
+  /// Heading of who changed their answer after the deadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Changed late'**
+  String get kitchenLate;
+
+  /// Prints the kitchen view of the day.
+  ///
+  /// In en, this message translates to:
+  /// **'Print'**
+  String get kitchenPrint;
+
+  /// No one is coming to the event yet.
+  ///
+  /// In en, this message translates to:
+  /// **'Nobody\'s coming yet.'**
+  String get kitchenNobody;
+
+  /// A page for a feature the group doesn't have here.
+  ///
+  /// In en, this message translates to:
+  /// **'This isn\'t available for this group.'**
+  String get featureUnavailable;
+
+  /// Menu item: download everyone's answers over a range of days as a spreadsheet (CSV).
+  ///
+  /// In en, this message translates to:
+  /// **'Export answers'**
+  String get exportAnswers;
+
+  /// The export's range of days is longer than a year.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose at most a year.'**
+  String get exportTooLong;
+
   /// How long before the event changes to answers close, when it isn't whole hours.
   ///
   /// In en, this message translates to:

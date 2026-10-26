@@ -624,6 +624,52 @@
   "@lateChange": {
     "description": "Badge on a member who changed their answer after the deadline."
   },
+  "kitchenTitle": "Kitchen view",
+  "@kitchenTitle": {
+    "description": "A day of the group's events as a kitchen needs it: headcounts and names, printable."
+  },
+  "kitchenMembers": "{count, plural, =1{1 member} other{{count} members}}",
+  "@kitchenMembers": {
+    "description": "How many of those coming have an account.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "kitchenGuests": "{count, plural, =1{1 guest} other{{count} guests}}",
+  "@kitchenGuests": {
+    "description": "How many of those coming are guests the admins answer for (no account).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "kitchenLate": "Changed late",
+  "@kitchenLate": {
+    "description": "Heading of who changed their answer after the deadline."
+  },
+  "kitchenPrint": "Print",
+  "@kitchenPrint": {
+    "description": "Prints the kitchen view of the day."
+  },
+  "kitchenNobody": "Nobody's coming yet.",
+  "@kitchenNobody": {
+    "description": "No one is coming to the event yet."
+  },
+  "featureUnavailable": "This isn't available for this group.",
+  "@featureUnavailable": {
+    "description": "A page for a feature the group doesn't have here."
+  },
+  "exportAnswers": "Export answers",
+  "@exportAnswers": {
+    "description": "Menu item: download everyone's answers over a range of days as a spreadsheet (CSV)."
+  },
+  "exportTooLong": "Choose at most a year.",
+  "@exportTooLong": {
+    "description": "The export's range of days is longer than a year."
+  },
   "cutoffMinutes": "{minutes} min before",
   "@cutoffMinutes": {
     "description": "How long before the event changes to answers close, when it isn't whole hours.",

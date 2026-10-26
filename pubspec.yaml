@@ -81,8 +81,11 @@ dependencies:
   # Local settings and the offline read cache
   shared_preferences: ^2.5.6
 
-  # Paid features: the device's time zone for reply cutoffs
+  # Paid features: the device's time zone for reply cutoffs, and the kitchen
+  # view's printable sheet
   flutter_timezone: ^5.1.1
+  pdf: ^3.13.1
+  printing: ^5.15.1
 
   # Utilities
   base32: ^2.2.0
@@ -120,6 +123,8 @@ dev_dependencies:
   faker: ^2.2.0
   # In-memory SharedPreferences for tests
   shared_preferences_platform_interface: ^2.4.2
+  # A share sheet that records what the export shares
+  share_plus_platform_interface: ^7.2.0
 
   # Utilities
   flutter_launcher_icons: ^0.14.4

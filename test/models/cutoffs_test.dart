@@ -128,4 +128,59 @@ void main() {
       );
     });
   });
+
+  group('answersCsv', () {
+    String csv({
+      List<Reply> replies = const [],
+      List<DefaultRule> rules = const [],
+      List<Member> members = const [ann, bob, cy],
+    }) => answersCsv(
+      first: DateTime(2026, 3, 10),
+      last: DateTime(2026, 3, 11),
+      schedules: [dinner],
+      members: members,
+      nameOf: (member) => switch (member.id) {
+        'ann' => 'Ann',
+        'bob' => 'Bob, Jr.',
+        _ => member.displayNameOverride ?? '',
+      },
+      defaultRules: rules,
+      replies: replies,
+    );
+
+    test(
+      'a row per occurrence and member, saying where the answer comes from',
+      () {
+        final lines = csv(
+          replies: [reply(ann, ReplyOptions.no, DateTime(2026, 3, 10, 17, 30))],
+          rules: [usual(ann, ReplyOptions.yes, DateTime(2026, 3, 1))],
+        ).split('\r\n');
+
+        expect(lines, [
+          'date,time,event,name,managed,answer,source,late',
+          '2026-03-10,18:00,Dinner,Ann,no,no,reply,yes',
+          '2026-03-10,18:00,Dinner,"Bob, Jr.",no,,none,no',
+          '2026-03-10,18:00,Dinner,Cy,yes,,none,no',
+          '2026-03-11,18:00,Dinner,Ann,no,yes,default,no',
+          '2026-03-11,18:00,Dinner,"Bob, Jr.",no,,none,no',
+          '2026-03-11,18:00,Dinner,Cy,yes,,none,no',
+          '',
+        ]);
+      },
+    );
+
+    test('a name a spreadsheet would run as a formula stays text', () {
+      const mallory = Member(
+        id: 'm',
+        groupId: 'club',
+        role: GroupRoles.member,
+        displayNameOverride: '=HYPERLINK("http://evil.example","x")',
+      );
+      final lines = csv(members: const [mallory]).split('\r\n');
+      expect(
+        lines[1],
+        '2026-03-10,18:00,Dinner,"\'=HYPERLINK(""http://evil.example"",""x"")",yes,,none,no',
+      );
+    });
+  });
 }
