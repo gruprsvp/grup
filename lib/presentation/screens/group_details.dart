@@ -39,6 +39,9 @@ class GroupDetailsScreen extends StatelessWidget {
   /// Replaces the back button's pop, if set.
   final VoidCallback? onBack;
 
+  /// When changes to an event's answers closed, if they have.
+  final DateTime? Function(ScheduleInstanceSummary instance)? closedAt;
+
   const GroupDetailsScreen({
     super.key,
     required this.groupId,
@@ -58,6 +61,7 @@ class GroupDetailsScreen extends StatelessWidget {
     this.onCreateSchedule,
     this.selected,
     this.onBack,
+    this.closedAt,
   });
 
   @override
@@ -174,6 +178,7 @@ class GroupDetailsScreen extends StatelessWidget {
               onRefresh: onRefresh,
               onReplyChanged: onReplyChanged,
               selected: selected,
+              closedAt: closedAt,
             );
           },
         ),

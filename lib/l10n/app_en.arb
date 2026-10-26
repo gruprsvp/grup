@@ -585,6 +585,58 @@
   "@errorReplyLocked": {
     "description": "A member tried to change an answer after the event's answer deadline."
   },
+  "cutoffLabel": "Changes close",
+  "@cutoffLabel": {
+    "description": "Setting of an event: how long before it starts members can no longer change their answer."
+  },
+  "cutoffNone": "No deadline",
+  "@cutoffNone": {
+    "description": "Answers can change until the event starts: no deadline."
+  },
+  "cutoffHours": "{hours, plural, =0{When it starts} =1{1 hour before} other{{hours} hours before}}",
+  "@cutoffHours": {
+    "description": "How long before the event changes to answers close.",
+    "placeholders": {
+      "hours": {
+        "type": "int"
+      }
+    }
+  },
+  "cutoffCustom": "Custom…",
+  "@cutoffCustom": {
+    "description": "Choose another number of hours for the answer deadline."
+  },
+  "cutoffCustomTitle": "Hours before the start",
+  "@cutoffCustomTitle": {
+    "description": "Field for a custom answer deadline, in hours before the event."
+  },
+  "changesClosedAt": "Changes closed at {time}",
+  "@changesClosedAt": {
+    "description": "Members can no longer change their answer to this event.",
+    "placeholders": {
+      "time": {
+        "type": "String",
+        "example": "4:00 PM"
+      }
+    }
+  },
+  "lateChange": "Late change",
+  "@lateChange": {
+    "description": "Badge on a member who changed their answer after the deadline."
+  },
+  "cutoffMinutes": "{minutes} min before",
+  "@cutoffMinutes": {
+    "description": "How long before the event changes to answers close, when it isn't whole hours.",
+    "placeholders": {
+      "minutes": {
+        "type": "int"
+      }
+    }
+  },
+  "cutoffCustomInvalid": "Enter 0 to 168 hours.",
+  "@cutoffCustomInvalid": {
+    "description": "The custom answer deadline must be a whole number of hours up to a week."
+  },
   "inviteCreateCode": "Create an invite code",
   "@inviteCreateCode": {
     "description": "Creates an invite code for a member who hasn't joined, so they can join and answer for themselves."

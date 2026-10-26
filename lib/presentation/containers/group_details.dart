@@ -25,6 +25,7 @@ class GroupDetailsContainer extends StatelessWidget {
       groupId: groupId,
       groups: context.read(),
       schedules: context.read(),
+      billing: context.read(),
       // Occurrences carry the wall-clock time in UTC fields.
       date: switch (selected?.at) {
         final at? => DateTime(at.year, at.month, at.day),
@@ -92,5 +93,6 @@ class GroupDetailsContainer extends StatelessWidget {
       final result = await vm.reply(instance, reply);
       if (context.mounted) showFailure(context, result);
     },
+    closedAt: vm.closedAt,
   );
 }

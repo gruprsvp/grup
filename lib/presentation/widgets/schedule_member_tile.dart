@@ -23,6 +23,12 @@ class ScheduleMemberTile extends StatelessWidget {
   final ValueChanged<ReplyOptions?>? onReplyChanged;
   final void Function(RecurrenceRule?, ReplyOptions?)? onDefaultRuleChanged;
 
+  /// Whether tapping the answer clears it: not after the event's deadline.
+  final bool canClear;
+
+  /// They changed their answer after the deadline (shown to admins).
+  final bool late;
+
   const ScheduleMemberTile({
     super.key,
     required this.name,
@@ -35,6 +41,8 @@ class ScheduleMemberTile extends StatelessWidget {
     this.defaultRule,
     this.onReplyChanged,
     this.onDefaultRuleChanged,
+    this.canClear = true,
+    this.late = false,
   });
 
   @override
@@ -53,24 +61,39 @@ class ScheduleMemberTile extends StatelessWidget {
     };
 
     final defaultRule = this.defaultRule;
-    final Widget? subtitle;
+    final Widget? usualSubtitle;
     if (defaultRule != null && scheduleRule != null) {
       final rule = defaultRule.recurrenceRule;
       final yes = defaultRule.selectedOption == ReplyOptions.yes;
       final when = recurrenceLabel(l10n, rule);
-      subtitle = Text(
+      usualSubtitle = Text(
         rule == scheduleRule
             ? (yes ? l10n.usuallyIn : l10n.usuallyOut)
             : (yes ? l10n.usuallyInWhen(when) : l10n.usuallyOutWhen(when)),
       );
     } else if (isYou && canSetUsual) {
-      subtitle = Text(
+      usualSubtitle = Text(
         l10n.setUsualAnswer,
         style: TextStyle(color: theme.colorScheme.primary),
       );
     } else {
-      subtitle = null;
+      usualSubtitle = null;
     }
+    final lateBadge = late
+        ? Text(
+            l10n.lateChange,
+            style: TextStyle(
+              color: theme.colorScheme.error,
+              fontWeight: FontWeight.w600,
+            ),
+          )
+        : null;
+    final subtitle = usualSubtitle != null && lateBadge != null
+        ? Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [usualSubtitle, lateBadge],
+          )
+        : usualSubtitle ?? lateBadge;
 
     final picture = this.picture;
     final initials = getNameInitials(name) ?? '';
@@ -98,6 +121,7 @@ class ScheduleMemberTile extends StatelessWidget {
         reply: reply,
         defaultReply: defaultReply,
         onReplyChanged: onReplyChanged,
+        canClear: canClear,
       ),
       onTap: canSetUsual ? () => _pickDefaultRule(context, scheduleRule) : null,
     );

@@ -14,6 +14,8 @@ _Schedule _$ScheduleFromJson(Map<String, dynamic> json) => _Schedule(
   recurrenceRule: RecurrenceRule.fromJson(
     json['recurrence_rule'] as Map<String, dynamic>,
   ),
+  cutoffMinutesBefore: (json['cutoff_minutes_before'] as num?)?.toInt(),
+  timeZone: json['time_zone'] as String?,
   createdAt: json['created_at'] == null
       ? null
       : DateTime.parse(json['created_at'] as String),
@@ -28,6 +30,8 @@ Map<String, dynamic> _$ScheduleToJson(_Schedule instance) => <String, dynamic>{
   'display_name': instance.displayName,
   'start_date': instance.startDate.toIso8601String(),
   'recurrence_rule': instance.recurrenceRule,
+  'cutoff_minutes_before': instance.cutoffMinutesBefore,
+  'time_zone': instance.timeZone,
   'created_at': instance.createdAt?.toIso8601String(),
   'updated_at': instance.updatedAt?.toIso8601String(),
 };

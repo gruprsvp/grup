@@ -15,6 +15,7 @@ class GroupManageContainer extends StatelessWidget {
       groupId: groupId,
       groups: context.read(),
       schedules: context.read(),
+      billing: context.read(),
     ),
     child: Consumer<GroupManageViewModel>(
       builder: (context, vm, _) => GroupManageScreen(
@@ -25,7 +26,8 @@ class GroupManageContainer extends StatelessWidget {
             vm.update.running ||
             vm.invite.running ||
             vm.createSchedule.running ||
-            vm.deleteSchedule.running,
+            vm.deleteSchedule.running ||
+            vm.setCutoff.running,
         error: switch (vm.load.result) {
           Error(:final error) => error,
           _ => null,
@@ -56,6 +58,11 @@ class GroupManageContainer extends StatelessWidget {
         onSave: (args) async {
           await vm.update.execute((group: args.$1, image: args.$2));
           if (context.mounted) showFailure(context, vm.update.result);
+        },
+        access: vm.access,
+        onSetCutoff: (schedule, minutes) async {
+          await vm.setCutoff.execute((schedule: schedule, minutes: minutes));
+          if (context.mounted) showFailure(context, vm.setCutoff.result);
         },
       ),
     ),

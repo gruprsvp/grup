@@ -11,12 +11,17 @@ class GroupEvents extends StatelessWidget {
   final ValueSetter<Schedule>? onCreate;
   final ValueSetter<Schedule>? onDelete;
 
+  /// Sets when changes to an event's answers close; null where the group's
+  /// plan doesn't include cutoffs.
+  final void Function(Schedule schedule, int? minutes)? onSetCutoff;
+
   const GroupEvents({
     super.key,
     required this.groupId,
     this.schedules,
     this.onCreate,
     this.onDelete,
+    this.onSetCutoff,
   });
 
   @override
@@ -29,9 +34,28 @@ class GroupEvents extends StatelessWidget {
             itemCount: schedules!.length,
             itemBuilder: (context, index) {
               final schedule = schedules![index];
+              final onSetCutoff = this.onSetCutoff;
               return ListTile(
                 title: Text(schedule.displayName),
-                subtitle: Text(recurrenceLabel(l10n, schedule.recurrenceRule)),
+                subtitle: Text(
+                  [
+                    recurrenceLabel(l10n, schedule.recurrenceRule),
+                    if (onSetCutoff != null)
+                      '${l10n.cutoffLabel}: '
+                          '${cutoffLabel(l10n, schedule.cutoffMinutesBefore)}',
+                  ].join(' · '),
+                ),
+                onTap: onSetCutoff == null
+                    ? null
+                    : () async {
+                        final picked = await pickCutoff(
+                          context,
+                          current: schedule.cutoffMinutesBefore,
+                        );
+                        if (picked != null) {
+                          onSetCutoff(schedule, picked.minutes);
+                        }
+                      },
                 trailing: IconButton(
                   icon: const Icon(Icons.delete),
                   tooltip: l10n.deleteSchedule,

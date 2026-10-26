@@ -29,11 +29,14 @@ class GroupScheduleDetailsContainer extends StatelessWidget {
       instanceDate: instanceDate,
       groups: context.read(),
       schedules: context.read(),
+      billing: context.read(),
     ),
     child: Consumer<ScheduleDetailsViewModel>(
       builder: (context, vm, _) => GroupScheduleDetailsScreen(
         automaticallyImplyLeading: automaticallyImplyLeading,
         loading: vm.load.running,
+        closedAt: vm.closedAt,
+        lateMembers: vm.lateMembers,
         group: vm.group,
         scheduleInstance: vm.details,
         scheduleRule: vm.scheduleRule,

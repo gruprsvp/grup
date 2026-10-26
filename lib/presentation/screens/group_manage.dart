@@ -22,6 +22,12 @@ class GroupManageScreen extends StatelessWidget {
 
   final OnGroupSaveCallback? onSave;
 
+  /// What the group's plan allows here.
+  final GroupAccess? access;
+
+  /// Sets when changes to an event's answers close.
+  final void Function(Schedule schedule, int? minutes)? onSetCutoff;
+
   const GroupManageScreen({
     super.key,
     required this.groupId,
@@ -36,6 +42,8 @@ class GroupManageScreen extends StatelessWidget {
     this.onCreateSchedule,
     this.onDeleteSchedule,
     this.onSave,
+    this.access,
+    this.onSetCutoff,
   });
 
   @override
@@ -43,6 +51,7 @@ class GroupManageScreen extends StatelessWidget {
     final l10n = AppLocalizations.of(context)!;
     final group = this.group;
     final error = this.error;
+    final access = this.access;
 
     return DefaultTabController(
       length: 3,
@@ -97,6 +106,9 @@ class GroupManageScreen extends StatelessWidget {
                     schedules: schedules,
                     onCreate: onCreateSchedule,
                     onDelete: onDeleteSchedule,
+                    onSetCutoff: access?.show(FeatureKey.replyCutoffs) ?? false
+                        ? onSetCutoff
+                        : null,
                   ),
                   group != null
                       // Keyed by the group, so the form shows it once loaded.

@@ -16,9 +16,10 @@ class ScheduleDetailsViewModel extends ViewModel {
     required this.instanceDate,
     required this._groups,
     required this._schedules,
+    required this._billing,
   }) {
     load = Command0(_load)..execute();
-    listenTo([_groups, _schedules], _update);
+    listenTo([_groups, _schedules, _billing], _update);
     listenTo([load]);
     _update();
   }
@@ -28,8 +29,10 @@ class ScheduleDetailsViewModel extends ViewModel {
   final DateTime instanceDate;
   final GroupsRepository _groups;
   final SchedulesRepository _schedules;
+  final BillingRepository _billing;
 
   ScheduleInstanceDetails? _details;
+  Set<String> _late = const {};
 
   /// Fetches the latest answers (and everything else, when opened from a
   /// link rather than from the group).
@@ -39,6 +42,17 @@ class ScheduleDetailsViewModel extends ViewModel {
 
   /// `null` until loaded, or if the schedule has no such occurrence.
   ScheduleInstanceDetails? get details => _details;
+
+  /// When changes to the answers closed, if they have: only admins answer
+  /// then, and nobody clears an answer (reply_cutoffs).
+  DateTime? get closedAt {
+    if (!_billing.access(groupId).can(FeatureKey.replyCutoffs)) return null;
+    final closes = _schedules.schedule(scheduleId)?.closesAt(instanceDate);
+    return closes == null || DateTime.now().isBefore(closes) ? null : closes;
+  }
+
+  /// The members who changed their answer after changes closed, for admins.
+  Set<String> get lateMembers => _late;
 
   /// How the event recurs; `null` until loaded.
   RecurrenceRule? get scheduleRule =>
@@ -67,6 +81,8 @@ class ScheduleDetailsViewModel extends ViewModel {
   );
 
   Future<Result<void>> _load() async {
+    // What the plan allows only adds to the page: it can't fail it.
+    _billing.refresh().ignore();
     final results = await Future.wait([
       _groups.refreshGroup(groupId),
       _schedules.load(groupId, instanceDate.getNdayRange(1)),
@@ -95,6 +111,14 @@ class ScheduleDetailsViewModel extends ViewModel {
           ).firstWhereOrNull(
             (instance) => instance.instanceDate.isAtSameMomentAs(instanceDate),
           );
+    final isAdmin = _groups.ownMember(groupId)?.role == GroupRoles.admin;
+    _late =
+        summary == null ||
+            schedule == null ||
+            !isAdmin ||
+            !_billing.access(groupId).can(FeatureKey.replyCutoffs)
+        ? const {}
+        : lateMemberIds(schedule, summary, _schedules.replies(groupId));
     _details = summary == null
         ? null
         : scheduleInstanceDetails(

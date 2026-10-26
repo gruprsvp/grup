@@ -50,6 +50,13 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
   /// Whether to show a back button: not when open next to the group's list.
   final bool automaticallyImplyLeading;
 
+  /// When changes to the answers closed, if they have: only admins answer
+  /// then, and nobody clears an answer.
+  final DateTime? closedAt;
+
+  /// Who changed their answer after changes closed, shown to admins.
+  final Set<String> lateMembers;
+
   const GroupScheduleDetailsScreen({
     super.key,
     required this.loading,
@@ -62,6 +69,8 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
     this.onReplyChanged,
     this.onDefaultRuleChanged,
     this.automaticallyImplyLeading = true,
+    this.closedAt,
+    this.lateMembers = const {},
   });
 
   /// Lets [memberId]'s answers be changed, if there is one. [name] is `null`
@@ -75,6 +84,7 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
     ReplyOptions? reply,
     ReplyOptions? defaultReply,
     DefaultRule? defaultRule,
+    bool canAnswer = true,
   }) {
     final rule = scheduleRule;
     return ScheduleMemberTile(
@@ -89,7 +99,9 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
       reply: reply,
       defaultReply: defaultReply,
       defaultRule: defaultRule,
-      onReplyChanged: memberId == null || onReplyChanged == null
+      canClear: closedAt == null,
+      late: memberId != null && lateMembers.contains(memberId),
+      onReplyChanged: memberId == null || onReplyChanged == null || !canAnswer
           ? null
           : (answer) => onReplyChanged!(
               memberId: memberId,
@@ -117,8 +129,9 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
     final error = this.error;
     final notFound = details == null && !loading && error == null;
     final eventName = details?.displayName ?? '';
-    // Only admins may answer for others.
+    // Only admins may answer for others, and after the deadline at all.
     final canEditOthers = details?.canEditOthers ?? false;
+    final closedAt = this.closedAt;
 
     return Scaffold(
       body: RefreshIndicator.adaptive(
@@ -159,6 +172,19 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
                   details: details,
                 ),
               ),
+              if (closedAt != null)
+                SliverToBoxAdapter(
+                  child: ListTile(
+                    leading: const Icon(Icons.lock_clock_outlined),
+                    title: Text(
+                      l10n.changesClosedAt(
+                        DateFormat.jm(
+                          Localizations.localeOf(context).toString(),
+                        ).format(closedAt),
+                      ),
+                    ),
+                  ),
+                ),
               SliverToBoxAdapter(
                 child: Card.filled(
                   child: _memberTile(
@@ -169,6 +195,7 @@ class GroupScheduleDetailsScreen extends StatelessWidget {
                     reply: details.myReply,
                     defaultReply: details.myDefaultReply,
                     defaultRule: details.myDefaultRule,
+                    canAnswer: closedAt == null || canEditOthers,
                   ),
                 ),
               ),

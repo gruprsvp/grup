@@ -177,8 +177,14 @@ class GroupScheduleCreateRoute extends GoRouteData
   final String groupId;
 
   @override
-  Widget build(BuildContext context, GoRouterState state) =>
-      const ReadableWidth(child: ScheduleCreateScreen());
+  Widget build(BuildContext context, GoRouterState state) => ReadableWidth(
+    child: ScheduleCreateScreen(
+      showCutoff: context
+          .read<BillingRepository>()
+          .access(groupId)
+          .show(FeatureKey.replyCutoffs),
+    ),
+  );
 }
 
 /// One occurrence of a schedule, at [at].
