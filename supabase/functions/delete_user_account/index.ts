@@ -6,6 +6,7 @@
 import "jsr:@supabase/functions-js/edge-runtime.d.ts";
 import { createClient } from "jsr:@supabase/supabase-js@2";
 import { corsHeaders } from "../_shared/cors.ts";
+import { cancelStripeSubscriptions } from "../_shared/billing.ts";
 
 // The secret key replaces the legacy service_role key, which Supabase turns
 // off by the end of 2026; both are set while the legacy keys are active.
@@ -41,6 +42,18 @@ Deno.serve(async (req) => {
       status: 401,
       headers,
     });
+  }
+
+  // Once the account is gone the payer can't cancel: stop renewals first,
+  // or refuse to delete rather than keep charging them.
+  try {
+    await cancelStripeSubscriptions(user.id);
+  } catch (e) {
+    console.error(`Failed to cancel subscriptions: ${e}`);
+    return new Response(
+      JSON.stringify({ error: "Could not cancel the subscriptions" }),
+      { status: 500, headers },
+    );
   }
 
   const { error: deleteError } = await supabase.auth.admin.deleteUser(
