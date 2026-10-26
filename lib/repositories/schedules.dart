@@ -52,6 +52,11 @@ class SchedulesRepository extends UserData {
       if (_schedules[reply.scheduleId]?.groupId == groupId) reply,
   ];
 
+  /// [groupId]'s replies in [range], fresh from the server and not kept:
+  /// for an export, which may span a year.
+  Future<Result<List<Reply>>> repliesIn(String groupId, DateTimeRange range) =>
+      guard(() => _repliesService.getRepliesForDateRange(groupId, range));
+
   /// Reloads [groupId]'s schedules and default rules, and its replies within
   /// [window]. Replaces what is cached for the group, so whatever someone
   /// else deleted disappears; replies outside [window] are dropped.

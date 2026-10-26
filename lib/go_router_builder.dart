@@ -28,6 +28,7 @@ part 'go_router_builder.g.dart';
         TypedGoRoute<GroupScheduleCreateRoute>(path: 'schedule-create'),
         TypedGoRoute<GroupScheduleDetailsRoute>(path: 'schedules/:scheduleId'),
         TypedGoRoute<GroupMemberDetailsRoute>(path: 'members/:memberId'),
+        TypedGoRoute<GroupKitchenRoute>(path: 'kitchen'),
       ],
     ),
     TypedGoRoute<SettingsRoute>(
@@ -248,6 +249,25 @@ class GroupMemberDetailsRoute extends GoRouteData
   @override
   Widget build(BuildContext context, GoRouterState state) => ReadableWidth(
     child: GroupMemberDetailsContainer(groupId: groupId, memberId: memberId),
+  );
+}
+
+/// A day of a group's events as the kitchen needs it (kitchen_view).
+@immutable
+class GroupKitchenRoute extends GoRouteData with $GroupKitchenRoute {
+  const GroupKitchenRoute({required this.groupId, this.date});
+
+  final String groupId;
+
+  /// The day, as YYYY-MM-DD; today without one.
+  final String? date;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => ReadableWidth(
+    child: GroupKitchenContainer(
+      groupId: groupId,
+      date: DateTime.tryParse(date ?? ''),
+    ),
   );
 }
 

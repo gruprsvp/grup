@@ -25,6 +25,9 @@ class GroupManageScreen extends StatelessWidget {
   /// What the group's plan allows here.
   final GroupAccess? access;
 
+  /// Exports everyone's answers over a range of days.
+  final VoidCallback? onExport;
+
   /// Sets when changes to an event's answers close.
   final void Function(Schedule schedule, int? minutes)? onSetCutoff;
 
@@ -43,6 +46,7 @@ class GroupManageScreen extends StatelessWidget {
     this.onDeleteSchedule,
     this.onSave,
     this.access,
+    this.onExport,
     this.onSetCutoff,
   });
 
@@ -52,6 +56,8 @@ class GroupManageScreen extends StatelessWidget {
     final group = this.group;
     final error = this.error;
     final access = this.access;
+    final canExport =
+        onExport != null && (access?.show(FeatureKey.exportCsv) ?? false);
 
     return DefaultTabController(
       length: 3,
@@ -60,8 +66,16 @@ class GroupManageScreen extends StatelessWidget {
           title: Text(group?.displayName ?? l10n.loading),
           actions: [
             PopupMenuButton(
-              enabled: onDelete != null,
+              enabled: onDelete != null || canExport,
               itemBuilder: (context) => [
+                if (canExport)
+                  PopupMenuItem(
+                    value: 'export',
+                    child: ListTile(
+                      leading: const Icon(Icons.file_download_outlined),
+                      title: Text(l10n.exportAnswers),
+                    ),
+                  ),
                 PopupMenuItem(
                   value: 'delete',
                   child: ListTile(
@@ -73,6 +87,7 @@ class GroupManageScreen extends StatelessWidget {
               ],
               onSelected: (value) async {
                 if (value == 'delete') await _confirmDelete(context);
+                if (value == 'export') onExport?.call();
               },
             ),
           ],

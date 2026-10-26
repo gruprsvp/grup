@@ -25,6 +25,24 @@ mixin Storage on SupabaseService {
   StorageFileApi bucket() => supabase.storage.from(bucketName!.name);
 }
 
+/// The rows of a query, fetched [pageSize] at a time with [page] (`from` and
+/// `to` are inclusive row indexes) until a page comes back short.
+///
+/// shortcut: [pageSize] must not exceed the API's max_rows (1000 here, in
+/// config.toml, and on the hosted project): a page capped below it would
+/// look like the last one.
+Future<List<Map<String, dynamic>>> allPages(
+  Future<List<Map<String, dynamic>>> Function(int from, int to) page, {
+  int pageSize = 1000,
+}) async {
+  final rows = <Map<String, dynamic>>[];
+  while (true) {
+    final next = await page(rows.length, rows.length + pageSize - 1);
+    rows.addAll(next);
+    if (next.length < pageSize) return rows;
+  }
+}
+
 /// Decodes [rows], skipping (and reporting) the ones that don't decode.
 ///
 /// The database is shared by every installed app version: a value added to a

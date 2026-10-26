@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:intl/intl.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:parousia/l10n/app_localizations.dart';
 import 'package:parousia/go_router_builder.dart';
@@ -42,6 +43,9 @@ class GroupDetailsScreen extends StatelessWidget {
   /// When changes to an event's answers closed, if they have.
   final DateTime? Function(ScheduleInstanceSummary instance)? closedAt;
 
+  /// Whether the group's plan includes the kitchen view here.
+  final bool showKitchen;
+
   const GroupDetailsScreen({
     super.key,
     required this.groupId,
@@ -62,6 +66,7 @@ class GroupDetailsScreen extends StatelessWidget {
     this.selected,
     this.onBack,
     this.closedAt,
+    this.showKitchen = false,
   });
 
   @override
@@ -83,6 +88,17 @@ class GroupDetailsScreen extends StatelessWidget {
             pinned: true,
             leading: onBack == null ? null : BackButton(onPressed: onBack),
             title: Text(group?.displayName ?? ''),
+            actions: [
+              if (showKitchen)
+                IconButton(
+                  icon: const Icon(Icons.soup_kitchen_outlined),
+                  tooltip: l10n.kitchenTitle,
+                  onPressed: () => GroupKitchenRoute(
+                    groupId: groupId,
+                    date: DateFormat('yyyy-MM-dd').format(date),
+                  ).go(context),
+                ),
+            ],
             bottom: PreferredSize(
               preferredSize: Size.fromHeight(dateRowHeight),
               child: Stack(

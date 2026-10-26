@@ -748,6 +748,49 @@ class AppLocalizationsIt extends AppLocalizations {
   String get lateChange => 'Cambiata in ritardo';
 
   @override
+  String get kitchenTitle => 'Vista cucina';
+
+  @override
+  String kitchenMembers(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count membri',
+      one: '1 membro',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String kitchenGuests(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count ospiti',
+      one: '1 ospite',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get kitchenLate => 'Cambiato in ritardo';
+
+  @override
+  String get kitchenPrint => 'Stampa';
+
+  @override
+  String get kitchenNobody => 'Ancora nessuno.';
+
+  @override
+  String get featureUnavailable => 'Non è disponibile per questo gruppo.';
+
+  @override
+  String get exportAnswers => 'Esporta risposte';
+
+  @override
+  String get exportTooLong => 'Scegli al massimo un anno.';
+
+  @override
   String cutoffMinutes(int minutes) {
     return '$minutes min prima';
   }

@@ -1,4 +1,5 @@
 export 'group_details.dart';
+export 'group_kitchen.dart';
 export 'group_manage.dart';
 export 'home.dart';
 export 'join_group.dart';

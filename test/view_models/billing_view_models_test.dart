@@ -84,6 +84,44 @@ void main() {
     );
   });
 
+  test('the kitchen counts who is coming, by account and guest, and who '
+      'changed late', () async {
+    final vm = GroupKitchenViewModel(
+      groupId: club.id,
+      groups: repositories.groups,
+      schedules: repositories.schedules,
+      billing: repositories.billing,
+      date: day,
+    );
+    addTearDown(vm.dispose);
+    await pumpEventQueue();
+
+    final event = vm.events.single;
+    expect(event.coming.map((m) => m.$1.id), [ann.id, guest.id]);
+    expect(
+      (event.members, event.guests, event.no, event.noReply),
+      (1, 1, 1, 1),
+    );
+    expect(event.late.map((m) => m.$1.id), [ann.id]);
+    expect(vm.access.show(FeatureKey.kitchenView), isTrue);
+  });
+
+  test('late changes need the cutoff feature', () async {
+    backend.billingMode = BillingMode.prelaunch;
+    final vm = GroupKitchenViewModel(
+      groupId: club.id,
+      groups: repositories.groups,
+      schedules: repositories.schedules,
+      billing: repositories.billing,
+      date: day,
+    );
+    addTearDown(vm.dispose);
+    await pumpEventQueue();
+
+    expect(vm.events.single.late, isEmpty);
+    expect(vm.access.show(FeatureKey.kitchenView), isFalse);
+  });
+
   group('after the deadline', () {
     test('the group page says changes closed, with the feature', () async {
       final vm = GroupDetailsViewModel(
@@ -153,6 +191,31 @@ void main() {
       schedules: repositories.schedules,
       billing: repositories.billing,
     );
+
+    test('exports everyone\'s answers as CSV', () async {
+      final vm = open();
+      addTearDown(vm.dispose);
+      await pumpEventQueue();
+
+      await vm.export.execute((first: day, last: day));
+
+      final csv = (vm.export.result as Ok<String>).value;
+      final lines = csv.trim().split('\r\n');
+      expect(lines.first, 'date,time,event,name,managed,answer,source,late');
+      expect(lines, hasLength(5));
+      expect(
+        lines.where((l) => l.contains(',Ann,')).single,
+        endsWith(',yes,reply,yes'),
+      );
+      expect(
+        lines.where((l) => l.contains(',Guest,')).single,
+        contains(',yes,yes,reply,no'),
+      );
+      expect(
+        lines.where((l) => l.contains(',Me,')).single,
+        endsWith(',,none,no'),
+      );
+    });
 
     test('sets a cutoff, with the device time zone', () async {
       final vm = open();
