@@ -16,7 +16,10 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Schedule implements DiagnosticableTreeMixin {
 
- String get id; String get groupId; String get displayName; DateTime get startDate; RecurrenceRule get recurrenceRule; DateTime? get createdAt; DateTime? get updatedAt;
+ String get id; String get groupId; String get displayName; DateTime get startDate; RecurrenceRule get recurrenceRule;/// Replies close this long before each occurrence (reply_cutoffs).
+ int? get cutoffMinutesBefore;/// The IANA time zone the occurrences' wall-clock times are in, set
+/// with the cutoff: the server reads them there.
+ String? get timeZone; DateTime? get createdAt; DateTime? get updatedAt;
 /// Create a copy of Schedule
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -31,26 +34,26 @@ void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   final _this = this as Schedule;
   properties
     ..add(DiagnosticsProperty('type', 'Schedule'))
-    ..add(DiagnosticsProperty('id', _this.id))..add(DiagnosticsProperty('groupId', _this.groupId))..add(DiagnosticsProperty('displayName', _this.displayName))..add(DiagnosticsProperty('startDate', _this.startDate))..add(DiagnosticsProperty('recurrenceRule', _this.recurrenceRule))..add(DiagnosticsProperty('createdAt', _this.createdAt))..add(DiagnosticsProperty('updatedAt', _this.updatedAt));
+    ..add(DiagnosticsProperty('id', _this.id))..add(DiagnosticsProperty('groupId', _this.groupId))..add(DiagnosticsProperty('displayName', _this.displayName))..add(DiagnosticsProperty('startDate', _this.startDate))..add(DiagnosticsProperty('recurrenceRule', _this.recurrenceRule))..add(DiagnosticsProperty('cutoffMinutesBefore', _this.cutoffMinutesBefore))..add(DiagnosticsProperty('timeZone', _this.timeZone))..add(DiagnosticsProperty('createdAt', _this.createdAt))..add(DiagnosticsProperty('updatedAt', _this.updatedAt));
 }
 
 @override
 bool operator ==(Object other) {
   final _this = this as Schedule;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is Schedule&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.groupId, _this.groupId) || other.groupId == _this.groupId)&&(identical(other.displayName, _this.displayName) || other.displayName == _this.displayName)&&(identical(other.startDate, _this.startDate) || other.startDate == _this.startDate)&&(identical(other.recurrenceRule, _this.recurrenceRule) || other.recurrenceRule == _this.recurrenceRule)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is Schedule&&(identical(other.id, _this.id) || other.id == _this.id)&&(identical(other.groupId, _this.groupId) || other.groupId == _this.groupId)&&(identical(other.displayName, _this.displayName) || other.displayName == _this.displayName)&&(identical(other.startDate, _this.startDate) || other.startDate == _this.startDate)&&(identical(other.recurrenceRule, _this.recurrenceRule) || other.recurrenceRule == _this.recurrenceRule)&&(identical(other.cutoffMinutesBefore, _this.cutoffMinutesBefore) || other.cutoffMinutesBefore == _this.cutoffMinutesBefore)&&(identical(other.timeZone, _this.timeZone) || other.timeZone == _this.timeZone)&&(identical(other.createdAt, _this.createdAt) || other.createdAt == _this.createdAt)&&(identical(other.updatedAt, _this.updatedAt) || other.updatedAt == _this.updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as Schedule;
-  return Object.hash(runtimeType,_this.id,_this.groupId,_this.displayName,_this.startDate,_this.recurrenceRule,_this.createdAt,_this.updatedAt);
+  return Object.hash(runtimeType,_this.id,_this.groupId,_this.displayName,_this.startDate,_this.recurrenceRule,_this.cutoffMinutesBefore,_this.timeZone,_this.createdAt,_this.updatedAt);
 }
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   final _this = this as Schedule;
-  return 'Schedule(id: ${_this.id}, groupId: ${_this.groupId}, displayName: ${_this.displayName}, startDate: ${_this.startDate}, recurrenceRule: ${_this.recurrenceRule}, createdAt: ${_this.createdAt}, updatedAt: ${_this.updatedAt})';
+  return 'Schedule(id: ${_this.id}, groupId: ${_this.groupId}, displayName: ${_this.displayName}, startDate: ${_this.startDate}, recurrenceRule: ${_this.recurrenceRule}, cutoffMinutesBefore: ${_this.cutoffMinutesBefore}, timeZone: ${_this.timeZone}, createdAt: ${_this.createdAt}, updatedAt: ${_this.updatedAt})';
 }
 
 
@@ -61,7 +64,7 @@ abstract mixin class $ScheduleCopyWith<$Res>  {
   factory $ScheduleCopyWith(Schedule value, $Res Function(Schedule) _then) = _$ScheduleCopyWithImpl;
 @useResult
 $Res call({
- String id, String groupId, String displayName, DateTime startDate, RecurrenceRule recurrenceRule, DateTime? createdAt, DateTime? updatedAt
+ String id, String groupId, String displayName, DateTime startDate, RecurrenceRule recurrenceRule, int? cutoffMinutesBefore, String? timeZone, DateTime? createdAt, DateTime? updatedAt
 });
 
 
@@ -78,14 +81,16 @@ class _$ScheduleCopyWithImpl<$Res>
 
 /// Create a copy of Schedule
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? groupId = null,Object? displayName = null,Object? startDate = null,Object? recurrenceRule = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? id = null,Object? groupId = null,Object? displayName = null,Object? startDate = null,Object? recurrenceRule = null,Object? cutoffMinutesBefore = freezed,Object? timeZone = freezed,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(Schedule(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,groupId: null == groupId ? _self.groupId : groupId // ignore: cast_nullable_to_non_nullable
 as String,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String,startDate: null == startDate ? _self.startDate : startDate // ignore: cast_nullable_to_non_nullable
 as DateTime,recurrenceRule: null == recurrenceRule ? _self.recurrenceRule : recurrenceRule // ignore: cast_nullable_to_non_nullable
-as RecurrenceRule,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as RecurrenceRule,cutoffMinutesBefore: freezed == cutoffMinutesBefore ? _self.cutoffMinutesBefore : cutoffMinutesBefore // ignore: cast_nullable_to_non_nullable
+as int?,timeZone: freezed == timeZone ? _self.timeZone : timeZone // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));
@@ -169,10 +174,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String groupId,  String displayName,  DateTime startDate,  RecurrenceRule recurrenceRule,  DateTime? createdAt,  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String groupId,  String displayName,  DateTime startDate,  RecurrenceRule recurrenceRule,  int? cutoffMinutesBefore,  String? timeZone,  DateTime? createdAt,  DateTime? updatedAt)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Schedule() when $default != null:
-return $default(_that.id,_that.groupId,_that.displayName,_that.startDate,_that.recurrenceRule,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.groupId,_that.displayName,_that.startDate,_that.recurrenceRule,_that.cutoffMinutesBefore,_that.timeZone,_that.createdAt,_that.updatedAt);case _:
   return orElse();
 
 }
@@ -190,10 +195,10 @@ return $default(_that.id,_that.groupId,_that.displayName,_that.startDate,_that.r
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String groupId,  String displayName,  DateTime startDate,  RecurrenceRule recurrenceRule,  DateTime? createdAt,  DateTime? updatedAt)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String groupId,  String displayName,  DateTime startDate,  RecurrenceRule recurrenceRule,  int? cutoffMinutesBefore,  String? timeZone,  DateTime? createdAt,  DateTime? updatedAt)  $default,) {final _that = this;
 switch (_that) {
 case _Schedule():
-return $default(_that.id,_that.groupId,_that.displayName,_that.startDate,_that.recurrenceRule,_that.createdAt,_that.updatedAt);}
+return $default(_that.id,_that.groupId,_that.displayName,_that.startDate,_that.recurrenceRule,_that.cutoffMinutesBefore,_that.timeZone,_that.createdAt,_that.updatedAt);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -207,10 +212,10 @@ return $default(_that.id,_that.groupId,_that.displayName,_that.startDate,_that.r
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String groupId,  String displayName,  DateTime startDate,  RecurrenceRule recurrenceRule,  DateTime? createdAt,  DateTime? updatedAt)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String groupId,  String displayName,  DateTime startDate,  RecurrenceRule recurrenceRule,  int? cutoffMinutesBefore,  String? timeZone,  DateTime? createdAt,  DateTime? updatedAt)?  $default,) {final _that = this;
 switch (_that) {
 case _Schedule() when $default != null:
-return $default(_that.id,_that.groupId,_that.displayName,_that.startDate,_that.recurrenceRule,_that.createdAt,_that.updatedAt);case _:
+return $default(_that.id,_that.groupId,_that.displayName,_that.startDate,_that.recurrenceRule,_that.cutoffMinutesBefore,_that.timeZone,_that.createdAt,_that.updatedAt);case _:
   return null;
 
 }
@@ -222,7 +227,7 @@ return $default(_that.id,_that.groupId,_that.displayName,_that.startDate,_that.r
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class _Schedule with DiagnosticableTreeMixin implements Schedule {
-  const _Schedule({required this.id, required this.groupId, required this.displayName, required this.startDate, required this.recurrenceRule, this.createdAt, this.updatedAt});
+  const _Schedule({required this.id, required this.groupId, required this.displayName, required this.startDate, required this.recurrenceRule, this.cutoffMinutesBefore, this.timeZone, this.createdAt, this.updatedAt});
   factory _Schedule.fromJson(Map<String, dynamic> json) => _$ScheduleFromJson(json);
 
 @override final  String id;
@@ -230,6 +235,11 @@ class _Schedule with DiagnosticableTreeMixin implements Schedule {
 @override final  String displayName;
 @override final  DateTime startDate;
 @override final  RecurrenceRule recurrenceRule;
+/// Replies close this long before each occurrence (reply_cutoffs).
+@override final  int? cutoffMinutesBefore;
+/// The IANA time zone the occurrences' wall-clock times are in, set
+/// with the cutoff: the server reads them there.
+@override final  String? timeZone;
 @override final  DateTime? createdAt;
 @override final  DateTime? updatedAt;
 
@@ -247,23 +257,23 @@ Map<String, dynamic> toJson() {
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties
     ..add(DiagnosticsProperty('type', 'Schedule'))
-    ..add(DiagnosticsProperty('id', id))..add(DiagnosticsProperty('groupId', groupId))..add(DiagnosticsProperty('displayName', displayName))..add(DiagnosticsProperty('startDate', startDate))..add(DiagnosticsProperty('recurrenceRule', recurrenceRule))..add(DiagnosticsProperty('createdAt', createdAt))..add(DiagnosticsProperty('updatedAt', updatedAt));
+    ..add(DiagnosticsProperty('id', id))..add(DiagnosticsProperty('groupId', groupId))..add(DiagnosticsProperty('displayName', displayName))..add(DiagnosticsProperty('startDate', startDate))..add(DiagnosticsProperty('recurrenceRule', recurrenceRule))..add(DiagnosticsProperty('cutoffMinutesBefore', cutoffMinutesBefore))..add(DiagnosticsProperty('timeZone', timeZone))..add(DiagnosticsProperty('createdAt', createdAt))..add(DiagnosticsProperty('updatedAt', updatedAt));
 }
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Schedule&&(identical(other.id, id) || other.id == id)&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.recurrenceRule, recurrenceRule) || other.recurrenceRule == recurrenceRule)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _Schedule&&(identical(other.id, id) || other.id == id)&&(identical(other.groupId, groupId) || other.groupId == groupId)&&(identical(other.displayName, displayName) || other.displayName == displayName)&&(identical(other.startDate, startDate) || other.startDate == startDate)&&(identical(other.recurrenceRule, recurrenceRule) || other.recurrenceRule == recurrenceRule)&&(identical(other.cutoffMinutesBefore, cutoffMinutesBefore) || other.cutoffMinutesBefore == cutoffMinutesBefore)&&(identical(other.timeZone, timeZone) || other.timeZone == timeZone)&&(identical(other.createdAt, createdAt) || other.createdAt == createdAt)&&(identical(other.updatedAt, updatedAt) || other.updatedAt == updatedAt));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,id,groupId,displayName,startDate,recurrenceRule,createdAt,updatedAt);
+    return Object.hash(runtimeType,id,groupId,displayName,startDate,recurrenceRule,cutoffMinutesBefore,timeZone,createdAt,updatedAt);
 }
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-    return 'Schedule(id: $id, groupId: $groupId, displayName: $displayName, startDate: $startDate, recurrenceRule: $recurrenceRule, createdAt: $createdAt, updatedAt: $updatedAt)';
+    return 'Schedule(id: $id, groupId: $groupId, displayName: $displayName, startDate: $startDate, recurrenceRule: $recurrenceRule, cutoffMinutesBefore: $cutoffMinutesBefore, timeZone: $timeZone, createdAt: $createdAt, updatedAt: $updatedAt)';
 }
 
 
@@ -274,7 +284,7 @@ abstract mixin class _$ScheduleCopyWith<$Res> implements $ScheduleCopyWith<$Res>
   factory _$ScheduleCopyWith(_Schedule value, $Res Function(_Schedule) _then) = __$ScheduleCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String groupId, String displayName, DateTime startDate, RecurrenceRule recurrenceRule, DateTime? createdAt, DateTime? updatedAt
+ String id, String groupId, String displayName, DateTime startDate, RecurrenceRule recurrenceRule, int? cutoffMinutesBefore, String? timeZone, DateTime? createdAt, DateTime? updatedAt
 });
 
 
@@ -291,14 +301,16 @@ class __$ScheduleCopyWithImpl<$Res>
 
 /// Create a copy of Schedule
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? groupId = null,Object? displayName = null,Object? startDate = null,Object? recurrenceRule = null,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? id = null,Object? groupId = null,Object? displayName = null,Object? startDate = null,Object? recurrenceRule = null,Object? cutoffMinutesBefore = freezed,Object? timeZone = freezed,Object? createdAt = freezed,Object? updatedAt = freezed,}) {
   return _then(_Schedule(
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,groupId: null == groupId ? _self.groupId : groupId // ignore: cast_nullable_to_non_nullable
 as String,displayName: null == displayName ? _self.displayName : displayName // ignore: cast_nullable_to_non_nullable
 as String,startDate: null == startDate ? _self.startDate : startDate // ignore: cast_nullable_to_non_nullable
 as DateTime,recurrenceRule: null == recurrenceRule ? _self.recurrenceRule : recurrenceRule // ignore: cast_nullable_to_non_nullable
-as RecurrenceRule,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
+as RecurrenceRule,cutoffMinutesBefore: freezed == cutoffMinutesBefore ? _self.cutoffMinutesBefore : cutoffMinutesBefore // ignore: cast_nullable_to_non_nullable
+as int?,timeZone: freezed == timeZone ? _self.timeZone : timeZone // ignore: cast_nullable_to_non_nullable
+as String?,createdAt: freezed == createdAt ? _self.createdAt : createdAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,updatedAt: freezed == updatedAt ? _self.updatedAt : updatedAt // ignore: cast_nullable_to_non_nullable
 as DateTime?,
   ));

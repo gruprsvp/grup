@@ -1346,6 +1346,60 @@ abstract class AppLocalizations {
   /// **'Changes to this event have closed. Ask an admin.'**
   String get errorReplyLocked;
 
+  /// Setting of an event: how long before it starts members can no longer change their answer.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes close'**
+  String get cutoffLabel;
+
+  /// Answers can change until the event starts: no deadline.
+  ///
+  /// In en, this message translates to:
+  /// **'No deadline'**
+  String get cutoffNone;
+
+  /// How long before the event changes to answers close.
+  ///
+  /// In en, this message translates to:
+  /// **'{hours, plural, =0{When it starts} =1{1 hour before} other{{hours} hours before}}'**
+  String cutoffHours(int hours);
+
+  /// Choose another number of hours for the answer deadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom…'**
+  String get cutoffCustom;
+
+  /// Field for a custom answer deadline, in hours before the event.
+  ///
+  /// In en, this message translates to:
+  /// **'Hours before the start'**
+  String get cutoffCustomTitle;
+
+  /// Members can no longer change their answer to this event.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes closed at {time}'**
+  String changesClosedAt(String time);
+
+  /// Badge on a member who changed their answer after the deadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Late change'**
+  String get lateChange;
+
+  /// How long before the event changes to answers close, when it isn't whole hours.
+  ///
+  /// In en, this message translates to:
+  /// **'{minutes} min before'**
+  String cutoffMinutes(int minutes);
+
+  /// The custom answer deadline must be a whole number of hours up to a week.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter 0 to 168 hours.'**
+  String get cutoffCustomInvalid;
+
   /// Creates an invite code for a member who hasn't joined, so they can join and answer for themselves.
   ///
   /// In en, this message translates to:

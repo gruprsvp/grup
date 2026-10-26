@@ -188,6 +188,27 @@ void main() {
     expect(repository.replies(group.id), isEmpty);
   });
 
+  test('a cutoff needs the feature to turn on, never to turn off', () async {
+    await repository.load(group.id, window);
+
+    final locked = await repository.setCutoff(dinner, 60);
+    expect((locked as Error).error, isA<FeatureLockedException>());
+
+    backend.fundGroup(group.id);
+    final set = await repository.setCutoff(dinner, 60);
+    expect((set as Ok<Schedule>).value.cutoffMinutesBefore, 60);
+    expect(repository.schedule(dinner.id)?.cutoffMinutesBefore, 60);
+    expect(repository.schedule(dinner.id)?.timeZone, 'Europe/Zurich');
+
+    backend.billingMode = BillingMode.prelaunch;
+    final off = await repository.setCutoff(
+      repository.schedule(dinner.id)!,
+      null,
+    );
+    expect(off, isA<Ok<Schedule>>());
+    expect(repository.schedule(dinner.id)?.cutoffMinutesBefore, isNull);
+  });
+
   test('data survives a restart', () async {
     backend.addReply(reply(ReplyOptions.yes));
     await repository.load(group.id, window);

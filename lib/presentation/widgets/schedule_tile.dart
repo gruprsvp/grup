@@ -12,20 +12,28 @@ class ScheduleTile extends StatelessWidget {
   /// Whether this event is open next to the list.
   final bool selected;
 
+  /// When changes to the answers closed, if they have: only admins answer
+  /// then, and nobody clears an answer.
+  final DateTime? closedAt;
+  final bool isAdmin;
+
   const ScheduleTile({
     super.key,
     required this.schedule,
     this.onReplyChanged,
     this.onScheduleTapped,
     this.selected = false,
+    this.closedAt,
+    this.isAdmin = false,
   });
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final textTheme = Theme.of(context).textTheme;
-    final time = DateFormat.jm(Localizations.localeOf(context).toString())
-        .format(schedule.instanceDate);
+    final jm = DateFormat.jm(Localizations.localeOf(context).toString());
+    final time = jm.format(schedule.instanceDate);
+    final closedAt = this.closedAt;
     final confirmed = schedule.confirmedYes;
     final usual = schedule.usualYes;
 
@@ -57,13 +65,20 @@ class ScheduleTile extends StatelessWidget {
                 ),
                 if (usual > 0)
                   TextSpan(text: ' ${keepTogether(l10n.eventUsually(usual))}'),
+                if (closedAt != null)
+                  TextSpan(
+                    text: '\n${l10n.changesClosedAt(jm.format(closedAt))}',
+                  ),
               ],
             ),
           ),
           trailing: ReplyButtons(
             reply: schedule.myReply,
             defaultReply: schedule.myDefaultReply,
-            onReplyChanged: onReplyChanged,
+            onReplyChanged: closedAt != null && !isAdmin
+                ? null
+                : onReplyChanged,
+            canClear: closedAt == null,
           ),
           onTap: () => onScheduleTapped?.call(schedule),
         ),

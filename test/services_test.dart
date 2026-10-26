@@ -1009,5 +1009,66 @@ void main() {
         }
       }),
     );
+
+    test(
+      'a cutoff is saved with its time zone; after it, answers stay',
+      () => runWithTemporaryGroup((supabase, group, _) async {
+        final schedules = SchedulesService(
+          supabase: supabase,
+          timeZone: () async => 'Europe/Zurich',
+        );
+        final replies = RepliesService(supabase: supabase);
+        final me = await MembersService(supabase: supabase)
+            .getOwnMemberByGroupId(group.id);
+        final dinner = await schedules.createSchedule(
+          Schedule(
+            id: '',
+            groupId: group.id,
+            displayName: 'Dinner',
+            startDate: DateTime.utc(2025, 1, 1, 18),
+            recurrenceRule: RecurrenceRule(frequency: Frequency.daily),
+          ),
+        );
+
+        final saved = await schedules.updateCutoff(dinner.id, 120);
+        expect(
+          (saved.cutoffMinutesBefore, saved.timeZone),
+          (120, 'Europe/Zurich'),
+        );
+
+        // A past dinner: the user, an admin, still answers it...
+        final past = DateTime.utc(2025, 1, 2, 18);
+        await replies.createReply(
+          Reply(
+            memberId: me.id,
+            scheduleId: dinner.id,
+            instanceDate: past,
+            selectedOption: ReplyOptions.yes,
+          ),
+        );
+        // ...but nobody clears an answer: it would fall back unseen.
+        Future<void> clear() => replies.deleteReply(
+          memberId: me.id,
+          scheduleId: dinner.id,
+          instanceDate: past,
+        );
+        await expectLater(
+          clear(),
+          throwsA(
+            isA<PostgrestException>().having(
+              (e) => toAppException(e, StackTrace.empty),
+              'as the app reads it',
+              isA<ReplyLockedException>(),
+            ),
+          ),
+        );
+
+        expect(
+          (await schedules.updateCutoff(dinner.id, null)).cutoffMinutesBefore,
+          isNull,
+        );
+        await clear();
+      }),
+    );
   });
 }

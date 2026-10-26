@@ -251,3 +251,33 @@ extension DetailsHeadcount on ScheduleInstanceDetails {
   /// Who is counted as coming only by their usual answer.
   int get usualYes => count(ReplyOptions.yes) - confirmedYes;
 }
+
+/// Who changed their answer to [instance] late: after changes closed and
+/// before it started (reply_cutoffs). An answer is a reply, or the usual
+/// answer it falls back to. The instance's own target member isn't
+/// considered: resolve it without one to cover everyone.
+Set<String> lateMemberIds(
+  Schedule schedule,
+  ScheduleInstanceSummary instance,
+  Iterable<Reply> replies,
+) {
+  final closes = schedule.closesAt(instance.instanceDate);
+  if (closes == null) return const {};
+  final starts = schedule.startsAt(instance.instanceDate);
+  bool late(DateTime? at) =>
+      at != null && !at.isBefore(closes) && at.isBefore(starts);
+  return {
+    for (final reply in replies)
+      if (reply.scheduleId == schedule.id &&
+          reply.memberId != instance.targetMemberId &&
+          reply.instanceDate
+              .copyWith(isUtc: true)
+              .isAtSameMomentAs(instance.instanceDate) &&
+          late(reply.updatedAt))
+        reply.memberId,
+    for (final memberId in instance.memberDefaultReplies.keys)
+      if (!instance.memberReplies.containsKey(memberId) &&
+          late(instance.memberDefaultRules[memberId]?.updatedAt))
+        memberId,
+  };
+}

@@ -36,6 +36,9 @@ class FakeBackend {
   bool isCustomer = false;
   List<CatalogPlan> catalog = const [];
 
+  /// The device time zone written with cutoffs.
+  String timeZone = 'Europe/Zurich';
+
   /// While set, every service call throws it.
   Object? failure;
 
@@ -166,6 +169,9 @@ class FakeBackend {
     return group.copyWith(seats: seats(groupId));
   }
 
+  bool _hasFeature(String groupId, String feature) =>
+      _entitlementsOf(groupId).features.contains(feature);
+
   static const _groupFull = PostgrestException(
     message: 'group_full',
     code: 'P0001',
@@ -180,6 +186,31 @@ class FakeBackend {
         invites.values.any((i) => i.memberId == memberId);
     if (max != null && !holdsSeat && seats(member.groupId) >= max) {
       throw _groupFull;
+    }
+  }
+
+  /// Refuses a reply change after the event's cutoff, as the server does
+  /// (in the device's time zone, like the app).
+  void _checkCutoff(
+    String scheduleId,
+    DateTime instanceDate, {
+    required bool delete,
+  }) {
+    final schedule = schedules[scheduleId];
+    final closes = schedule?.closesAt(instanceDate);
+    if (schedule == null ||
+        closes == null ||
+        DateTime.now().isBefore(closes) ||
+        !_hasFeature(schedule.groupId, FeatureKey.replyCutoffs) ||
+        (!delete && _isMember(schedule.groupId, admin: true))) {
+      return;
+    }
+    throw const PostgrestException(message: 'reply_locked', code: 'P0001');
+  }
+
+  void _checkCutoffGate(String groupId, int? minutes) {
+    if (minutes != null && !_hasFeature(groupId, FeatureKey.replyCutoffs)) {
+      throw const PostgrestException(message: 'feature_locked', code: 'P0001');
     }
   }
 
@@ -481,8 +512,25 @@ class _FakeSchedulesService extends Fake implements SchedulesService {
   @override
   Future<Schedule> createSchedule(Schedule schedule) async {
     await _b._call();
-    final created = schedule.copyWith(id: _b.nextId('schedule'));
+    _b._checkCutoffGate(schedule.groupId, schedule.cutoffMinutesBefore);
+    final created = schedule.copyWith(
+      id: _b.nextId('schedule'),
+      timeZone: schedule.cutoffMinutesBefore == null ? null : _b.timeZone,
+    );
     return _b.schedules[created.id] = created;
+  }
+
+  @override
+  Future<Schedule> updateCutoff(String scheduleId, int? minutes) async {
+    await _b._call();
+    final schedule = _b.schedules[scheduleId] ?? (throw FakeBackend.notFound);
+    if (minutes != schedule.cutoffMinutesBefore) {
+      _b._checkCutoffGate(schedule.groupId, minutes);
+    }
+    return _b.schedules[scheduleId] = schedule.copyWith(
+      cutoffMinutesBefore: minutes,
+      timeZone: minutes == null ? schedule.timeZone : _b.timeZone,
+    );
   }
 
   @override
@@ -546,7 +594,8 @@ class _FakeRepliesService extends Fake implements RepliesService {
   @override
   Future<Reply> createReply(Reply reply) async {
     await _b._call();
-    return _b.addReply(reply);
+    _b._checkCutoff(reply.scheduleId, reply.instanceDate, delete: false);
+    return _b.addReply(reply.copyWith(updatedAt: DateTime.now()));
   }
 
   @override
@@ -556,6 +605,7 @@ class _FakeRepliesService extends Fake implements RepliesService {
     required DateTime instanceDate,
   }) async {
     await _b._call();
+    _b._checkCutoff(scheduleId, instanceDate, delete: true);
     _b.replies.remove((memberId, scheduleId, instanceDate.toUtc())) ??
         (throw FakeBackend.notFound);
   }
