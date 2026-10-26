@@ -252,4 +252,119 @@ void main() {
     expect((vm.setCutoff.result as Error).error, isA<FeatureLockedException>());
     expect(vm.access.show(FeatureKey.replyCutoffs), isFalse);
   });
+
+  group('GroupPlanViewModel', () {
+    test('knows who pays, and offers them the portal', () async {
+      backend.entitlements[club.id] = backend.entitlements[club.id]!.copyWith(
+        sources: const [
+          EntitlementSource(
+            kind: 'subscription',
+            plan: 'community_m',
+            rank: 20,
+            payer: 'me',
+            status: 'active',
+          ),
+        ],
+      );
+      final vm = GroupPlanViewModel(
+        groupId: club.id,
+        groups: repositories.groups,
+        billing: repositories.billing,
+      );
+      addTearDown(vm.dispose);
+      await pumpEventQueue();
+
+      expect(vm.isPayer, isTrue);
+      expect(vm.nameOf('ann'), 'Ann');
+
+      await vm.manage.execute();
+      expect(vm.manage.result, isA<Ok<Uri>>());
+      expect(backend.portals, ['/groups/${club.id}/plan']);
+    });
+
+    test('back from Checkout, it notices when the plan is on', () async {
+      final vm = GroupPlanViewModel(
+        groupId: club.id,
+        groups: repositories.groups,
+        billing: repositories.billing,
+        checkoutSuccess: true,
+      );
+      addTearDown(vm.dispose);
+      await pumpEventQueue();
+      expect((vm.activating, vm.activated), (true, false));
+
+      backend.entitlements[club.id] = backend.entitlements[club.id]!.copyWith(
+        sources: const [
+          EntitlementSource(
+            kind: 'subscription',
+            plan: 'community_s',
+            rank: 10,
+            payer: 'me',
+            status: 'active',
+          ),
+        ],
+      );
+      await repositories.billing.refresh();
+
+      expect((vm.activating, vm.activated), (false, true));
+    });
+
+    test(
+      'a checkout for a funded group is refused and shows the plan',
+      () async {
+        final vm = GroupPlanViewModel(
+          groupId: club.id,
+          groups: repositories.groups,
+          billing: repositories.billing,
+        );
+        addTearDown(vm.dispose);
+        await pumpEventQueue();
+        backend.stripeFailure = const AlreadyFundedException();
+
+        await vm.subscribe.execute((plan: 'community_s', interval: 'month'));
+
+        expect(
+          (vm.subscribe.result as Error).error,
+          isA<AlreadyFundedException>(),
+        );
+        expect(vm.isPayer, isFalse);
+      },
+    );
+  });
+
+  group('SettingsViewModel', () {
+    SettingsViewModel open() => SettingsViewModel(
+      settings: repositories.settings,
+      auth: repositories.auth,
+      profile: repositories.profile,
+      billing: repositories.billing,
+    );
+
+    test('shows billing on the web to those who paid there', () async {
+      debugIsWeb = true;
+      addTearDown(() => debugIsWeb = null);
+      backend.isCustomer = true;
+      final vm = open();
+      addTearDown(vm.dispose);
+      await pumpEventQueue();
+
+      expect(vm.showBilling, isTrue);
+      await vm.manageBilling.execute();
+      expect(backend.portals, ['/settings']);
+    });
+
+    test('not in the apps, nor to who never paid', () async {
+      backend.isCustomer = true;
+      final vm = open();
+      addTearDown(vm.dispose);
+      await pumpEventQueue();
+      expect(vm.showBilling, isFalse);
+
+      debugIsWeb = true;
+      addTearDown(() => debugIsWeb = null);
+      backend.isCustomer = false;
+      await repositories.billing.refresh();
+      expect(vm.showBilling, isFalse);
+    });
+  });
 }

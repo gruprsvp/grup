@@ -123,6 +123,7 @@ void main() {
       settings: repositories.settings,
       auth: repositories.auth,
       profile: repositories.profile,
+      billing: repositories.billing,
     );
 
     test('switches theme and language', () {

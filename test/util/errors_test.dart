@@ -45,5 +45,58 @@ void main() {
         isA<UnexpectedException>(),
       );
     });
+
+    test('Edge Function errors by status and code', () {
+      expect(
+        classify(const FunctionException(status: 0)),
+        isA<NetworkException>(),
+      );
+      expect(
+        classify(const FunctionException(status: 503)),
+        isA<NetworkException>(),
+      );
+      expect(
+        classify(
+          const FunctionException(
+            status: 409,
+            details: {'error': 'already_funded'},
+          ),
+        ),
+        isA<AlreadyFundedException>(),
+      );
+      expect(
+        classify(
+          const FunctionException(
+            status: 401,
+            details: {'error': 'not_authenticated'},
+          ),
+        ),
+        isA<NotSignedInException>(),
+      );
+      expect(
+        classify(
+          const FunctionException(status: 403, details: {'error': 'not_admin'}),
+        ),
+        isA<NotAllowedException>(),
+      );
+      expect(
+        classify(
+          const FunctionException(
+            status: 404,
+            details: {'error': 'billing_disabled'},
+          ),
+        ),
+        isA<NotFoundException>(),
+      );
+      expect(
+        classify(
+          const FunctionException(
+            status: 500,
+            details: {'error': 'price_not_configured'},
+          ),
+        ),
+        isA<UnexpectedException>(),
+      );
+    });
   });
 }

@@ -16,18 +16,28 @@ class GroupMembers extends StatelessWidget {
   final Iterable<(Member, Profile?)>? members;
   final OnInviteCallback? onInvite;
 
-  const GroupMembers({super.key, this.members, this.onInvite});
+  /// Shown first, scrolling with the members: e.g. the group's plan.
+  final Widget? header;
+
+  const GroupMembers({super.key, this.members, this.onInvite, this.header});
 
   @override
   Widget build(BuildContext context) {
     final l10n = AppLocalizations.of(context)!;
     final theme = Theme.of(context);
 
-    final topWidget = members?.isNotEmpty ?? false
+    final header = this.header;
+    final members = this.members ?? const [];
+
+    final topWidget = members.isNotEmpty
         ? ListView.builder(
-            itemCount: members?.length,
+            itemCount: members.length + (header == null ? 0 : 1),
             itemBuilder: (context, index) {
-              final (member, memberProfile) = members!.elementAt(index);
+              // The header scrolls with the members, so it never crowds them.
+              if (header != null && index == 0) return header;
+              final (member, memberProfile) = members.elementAt(
+                header == null ? index : index - 1,
+              );
               final name =
                   member.displayNameOverride ??
                   memberProfile?.displayName ??
@@ -78,6 +88,7 @@ class GroupMembers extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 16.0),
         child: Column(
           children: [
+            if (members.isEmpty) ?header,
             Expanded(child: topWidget),
             FilledButton(
               onPressed: () => _showInviteModal(context),

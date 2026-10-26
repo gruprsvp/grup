@@ -1,6 +1,7 @@
 import 'package:parousia/models/models.dart';
 import 'package:parousia/services/local_cache.dart';
 import 'package:parousia/services/services.dart';
+import 'package:parousia/util/analytics.dart';
 import 'package:parousia/util/errors.dart';
 import 'package:parousia/util/result.dart';
 
@@ -33,6 +34,34 @@ class BillingRepository extends UserData {
       final state = await _billing.getBillingState();
       ifCurrent(generation, () => _state = state);
     });
+  }
+
+  /// Stripe Checkout, for an admin to buy [plan] for [groupId]; the caller
+  /// opens it.
+  Future<Result<Uri>> checkout({
+    required String groupId,
+    required String plan,
+    required String interval,
+  }) => _refreshOnFailure(() async {
+    final url = await _billing.checkout(
+      groupId: groupId,
+      plan: plan,
+      interval: interval,
+    );
+    track('checkout started', {'plan': plan, 'interval': interval});
+    return url;
+  });
+
+  /// Stripe's Customer Portal for the payer, coming back to [returnPath].
+  Future<Result<Uri>> portal(String returnPath) =>
+      _refreshOnFailure(() => _billing.portal(returnPath: returnPath));
+
+  /// A refusal means what the app showed was out of date (the group got a
+  /// plan, billing was turned off): show what's true now.
+  Future<Result<T>> _refreshOnFailure<T>(Future<T> Function() action) async {
+    final result = await guard(action);
+    if (result is Error) await refresh();
+    return result;
   }
 
   @override
