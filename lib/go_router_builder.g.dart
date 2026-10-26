@@ -59,6 +59,11 @@ RouteBase get $homeScreenRoute => GoRouteData.$route(
           factory: $GroupMemberDetailsRoute._fromState,
         ),
         GoRouteData.$route(
+          path: 'plan',
+          hasOverriddenOnExit: false,
+          factory: $GroupPlanRoute._fromState,
+        ),
+        GoRouteData.$route(
           path: 'kitchen',
           hasOverriddenOnExit: false,
           factory: $GroupKitchenRoute._fromState,
@@ -337,6 +342,34 @@ mixin $GroupMemberDetailsRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
     '/groups/${Uri.encodeComponent(_self.groupId)}/members/${Uri.encodeComponent(_self.memberId)}',
+  );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+mixin $GroupPlanRoute on GoRouteData {
+  static GroupPlanRoute _fromState(GoRouterState state) => GroupPlanRoute(
+    groupId: state.pathParameters['groupId']!,
+    checkout: state.uri.queryParameters['checkout'],
+  );
+
+  GroupPlanRoute get _self => this as GroupPlanRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/groups/${Uri.encodeComponent(_self.groupId)}/plan',
+    queryParams: {if (_self.checkout != null) 'checkout': _self.checkout},
   );
 
   @override

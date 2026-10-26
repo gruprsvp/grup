@@ -585,6 +585,357 @@
   "@errorReplyLocked": {
     "description": "A member tried to change an answer after the event's answer deadline."
   },
+  "errorAlreadyFunded": "This group already has a plan.",
+  "@errorAlreadyFunded": {
+    "description": "Another admin already bought a plan for this group."
+  },
+  "planTitle": "Plan",
+  "@planTitle": {
+    "description": "Title of a group's plan page (paid plans), and the button that opens it."
+  },
+  "planFree": "Free",
+  "@planFree": {
+    "description": "Name of the free plan."
+  },
+  "planName": "{plan, select, community_s{Crew} community_m{Club} community_l{Crowd} other{Plan}}",
+  "@planName": {
+    "description": "Name of a paid plan, by its code. Crew, Club and Crowd are product names: keep them in English in every language.",
+    "placeholders": {
+      "plan": {
+        "type": "String",
+        "example": "community_m"
+      }
+    }
+  },
+  "planFounderTrial": "Founder perk: everything a plan includes, free until {date}",
+  "@planFounderTrial": {
+    "description": "Groups created before paid plans were announced get the paid features free until a date.",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "Apr 30, 2027"
+      }
+    }
+  },
+  "planLegacy": "Founding group: no spot limit, ever",
+  "@planLegacy": {
+    "description": "Groups created before paid plans were announced never have a spot limit."
+  },
+  "planEarlyAccess": "Early access to new features until {date}",
+  "@planEarlyAccess": {
+    "description": "A founding group tries a new paid feature for free until a date.",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "Apr 30, 2027"
+      }
+    }
+  },
+  "planExtra": "Extra features from GRUP",
+  "@planExtra": {
+    "description": "Features the GRUP team gave the group for free, with no end."
+  },
+  "planExtraUntil": "Extra features from GRUP until {date}",
+  "@planExtraUntil": {
+    "description": "Features the GRUP team gave the group for free, until a date.",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "Apr 30, 2027"
+      }
+    }
+  },
+  "planFundedBy": "Paid by {payer}",
+  "@planFundedBy": {
+    "description": "Who pays for the group's plan.",
+    "placeholders": {
+      "payer": {
+        "type": "String",
+        "example": "Marta"
+      }
+    }
+  },
+  "planFundedRenews": "Paid by {payer} · renews on {date}",
+  "@planFundedRenews": {
+    "description": "Who pays for the group's plan, and when it renews.",
+    "placeholders": {
+      "payer": {
+        "type": "String",
+        "example": "Marta"
+      },
+      "date": {
+        "type": "String",
+        "example": "Nov 25, 2026"
+      }
+    }
+  },
+  "planFundedEnds": "Paid by {payer} · ends on {date}",
+  "@planFundedEnds": {
+    "description": "Who pays for the group's plan, and when it ends (it was cancelled).",
+    "placeholders": {
+      "payer": {
+        "type": "String",
+        "example": "Marta"
+      },
+      "date": {
+        "type": "String",
+        "example": "Nov 25, 2026"
+      }
+    }
+  },
+  "planYou": "you",
+  "@planYou": {
+    "description": "The payer, when it's the user, inside 'Paid by {payer}'."
+  },
+  "planSomeone": "someone",
+  "@planSomeone": {
+    "description": "The payer, when their name isn't known, inside 'Paid by {payer}'."
+  },
+  "planPaymentIssue": "Payment issue: {payer} needs to update the payment method",
+  "@planPaymentIssue": {
+    "description": "The payer's renewal failed and the store keeps retrying.",
+    "placeholders": {
+      "payer": {
+        "type": "String",
+        "example": "Marta"
+      }
+    }
+  },
+  "planPaymentIssueYou": "Payment issue: update your payment method",
+  "@planPaymentIssueYou": {
+    "description": "The user's renewal failed and the store keeps retrying."
+  },
+  "planSeats": "{seats} of {limit} spots taken",
+  "@planSeats": {
+    "description": "Spots a group uses (members with an account or a pending invite) out of its plan's limit.",
+    "placeholders": {
+      "seats": {
+        "type": "int"
+      },
+      "limit": {
+        "type": "int"
+      }
+    }
+  },
+  "planNoSeatLimit": "No spot limit",
+  "@planNoSeatLimit": {
+    "description": "The group may have any number of members."
+  },
+  "planSeatsFull": "Your group is full. To invite more people, pick a plan or free a spot.",
+  "@planSeatsFull": {
+    "description": "Every spot of the group is taken (on the plan page, where plans are sold)."
+  },
+  "planSpotsTaken": "{count, plural, one{1 spot taken} other{{count} spots taken}}",
+  "@planSpotsTaken": {
+    "description": "Spots a group without a limit uses (members with an account or a pending invite).",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "planSeatsFullPaid": "Your group is full. To invite more people, switch to a bigger size or free a spot.",
+  "@planSeatsFullPaid": {
+    "description": "Every spot of a group with a paid plan is taken; the payer changes the size in Manage billing."
+  },
+  "planPendingInvites": "Pending invites hold a spot too. Guests you answer for are free.",
+  "@planPendingInvites": {
+    "description": "Explains what takes a spot: an invite not yet accepted does; a guest without an account, whose answers an admin gives, doesn't."
+  },
+  "planChoose": "Choose a plan",
+  "@planChoose": {
+    "description": "Heading above the paid plans to choose from."
+  },
+  "planMonthly": "Monthly",
+  "@planMonthly": {
+    "description": "Billing interval toggle: pay every month."
+  },
+  "planYearly": "Yearly",
+  "@planYearly": {
+    "description": "Billing interval toggle: pay every year."
+  },
+  "planUpToSeats": "Up to {count} people",
+  "@planUpToSeats": {
+    "description": "A plan's spot limit, in people.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "planPerMonth": "{price} a month",
+  "@planPerMonth": {
+    "description": "A plan's monthly price.",
+    "placeholders": {
+      "price": {
+        "type": "String",
+        "example": "CHF 9"
+      }
+    }
+  },
+  "planPerYear": "{price} a year",
+  "@planPerYear": {
+    "description": "A plan's yearly price.",
+    "placeholders": {
+      "price": {
+        "type": "String",
+        "example": "CHF 90"
+      }
+    }
+  },
+  "planRecommended": "Fits your group",
+  "@planRecommended": {
+    "description": "Marks the smallest plan with a spot for everyone the group has."
+  },
+  "planContactUs": "More than 80 people? Contact us",
+  "@planContactUs": {
+    "description": "For groups bigger than the largest plan, which are invoiced by hand."
+  },
+  "planFounderDiscount": "Your founder discount takes 30% off at checkout.",
+  "@planFounderDiscount": {
+    "description": "Users who signed up before paid plans were announced get 30% off."
+  },
+  "planBillingStarts": "Nothing to pay until {date}, when your founder perk ends.",
+  "@planBillingStarts": {
+    "description": "A founding group's free period runs until a date; buying now bills from then.",
+    "placeholders": {
+      "date": {
+        "type": "String",
+        "example": "Apr 30, 2027"
+      }
+    }
+  },
+  "planSubscribe": "Continue to payment",
+  "@planSubscribe": {
+    "description": "Button that goes to the payment page for the chosen plan."
+  },
+  "planActivating": "Thanks! Switching on your plan…",
+  "@planActivating": {
+    "description": "Back from paying, while the plan is being switched on."
+  },
+  "planActivationSlow": "Payment received. Activation is taking longer than usual; refresh in a minute.",
+  "@planActivationSlow": {
+    "description": "Back from paying, when switching the plan on takes more than a minute."
+  },
+  "planManageBilling": "Manage billing",
+  "@planManageBilling": {
+    "description": "Opens the payment provider's page to change the plan, the payment method, see invoices or cancel."
+  },
+  "settingsBillingSubtitle": "Invoices, payment method and cancelling",
+  "@settingsBillingSubtitle": {
+    "description": "Subtitle of 'Manage billing' in the settings."
+  },
+  "featureName": "{feature, select, kitchen_view{Kitchen view} reply_cutoffs{Answer deadlines} export_csv{Spreadsheet export} other{Other}}",
+  "@featureName": {
+    "description": "Name of a paid feature, by its key.",
+    "placeholders": {
+      "feature": {
+        "type": "String",
+        "example": "kitchen_view"
+      }
+    }
+  },
+  "seatsFullHint": "Remove members or pending invites to free a spot.",
+  "@seatsFullHint": {
+    "description": "When the group is full, how an admin frees a spot (where plans can't be bought)."
+  },
+  "seePlans": "See plans",
+  "@seePlans": {
+    "description": "Opens the group's plan page, from a full group's notice."
+  },
+  "featurePitch": "{feature, select, kitchen_view{Each day's headcount with names, ready to print for the kitchen.} reply_cutoffs{Answers lock before the event, so your headcount holds.} export_csv{Download everyone's answers as a spreadsheet.} other{}}",
+  "@featurePitch": {
+    "description": "One plain sentence on what a paid feature does, by its key, under its name on the plan page.",
+    "placeholders": {
+      "feature": {
+        "type": "String",
+        "example": "kitchen_view"
+      }
+    }
+  },
+  "planRoomTitle": "Room to grow",
+  "@planRoomTitle": {
+    "description": "On the plan page: paid plans fit more people than Free."
+  },
+  "planPerksEvery": "Every plan includes",
+  "@planPerksEvery": {
+    "description": "Heading above what paid plans add, for a group without one."
+  },
+  "planPerksYours": "Your plan includes",
+  "@planPerksYours": {
+    "description": "Heading above what the group's paid plan includes."
+  },
+  "planFrom": "Plans from {price} a month",
+  "@planFrom": {
+    "description": "Under the button that opens the plans: the cheapest monthly price.",
+    "placeholders": {
+      "price": {
+        "type": "String",
+        "example": "CHF 9"
+      }
+    }
+  },
+  "planSizeTitle": "Pick a size",
+  "@planSizeTitle": {
+    "description": "Title of the first step of buying a plan: how many people it fits."
+  },
+  "planSizeHint": "{count, plural, one{You're using 1 spot now. Every size includes every perk.} other{You're using {count} spots now. Every size includes every perk.}}",
+  "@planSizeHint": {
+    "description": "Under \"Pick a size\": the spots the group uses (members with an account or a pending invite); every size has the same features.",
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "planTooSmall": "Too small for your group",
+  "@planTooSmall": {
+    "description": "A plan with fewer spots than the group already uses."
+  },
+  "planYearlySaving": "2 months free",
+  "@planYearlySaving": {
+    "description": "Paying yearly costs 10 months."
+  },
+  "planYearlyNudge": "Or {price} a year: 2 months free",
+  "@planYearlyNudge": {
+    "description": "Under a monthly price: the same plan paid yearly.",
+    "placeholders": {
+      "price": {
+        "type": "String",
+        "example": "CHF 190"
+      }
+    }
+  },
+  "planFinePrint": "VAT included. You'll see the final price before you pay. Cancel anytime.",
+  "@planFinePrint": {
+    "description": "Under the button that goes to payment. The currency shown is a guess; the checkout page has the final price."
+  },
+  "planManageHint": "Change size or payment method, get invoices, or cancel.",
+  "@planManageHint": {
+    "description": "Under \"Manage billing\" on the plan page, for the payer."
+  },
+  "planCardUpsell": "More spots and perks with Crew, Club or Crowd",
+  "@planCardUpsell": {
+    "description": "On the plan card in Manage, for a group without a paid plan. Crew, Club and Crowd are plan names: keep them in English."
+  },
+  "planCardFull": "Your group is full. Make room with a plan.",
+  "@planCardFull": {
+    "description": "On the plan card in Manage, when every spot is taken."
+  },
+  "planCardSee": "See your plan",
+  "@planCardSee": {
+    "description": "On the plan card in Manage, for a group with a paid plan."
+  },
+  "planWelcome": "Welcome to {plan}! Every perk is on.",
+  "@planWelcome": {
+    "description": "Back from paying, once the plan is on.",
+    "placeholders": {
+      "plan": {
+        "type": "String",
+        "example": "Club"
+      }
+    }
+  },
   "cutoffLabel": "Changes close",
   "@cutoffLabel": {
     "description": "Setting of an event: how long before it starts members can no longer change their answer."

@@ -1346,6 +1346,342 @@ abstract class AppLocalizations {
   /// **'Changes to this event have closed. Ask an admin.'**
   String get errorReplyLocked;
 
+  /// Another admin already bought a plan for this group.
+  ///
+  /// In en, this message translates to:
+  /// **'This group already has a plan.'**
+  String get errorAlreadyFunded;
+
+  /// Title of a group's plan page (paid plans), and the button that opens it.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan'**
+  String get planTitle;
+
+  /// Name of the free plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Free'**
+  String get planFree;
+
+  /// Name of a paid plan, by its code. Crew, Club and Crowd are product names: keep them in English in every language.
+  ///
+  /// In en, this message translates to:
+  /// **'{plan, select, community_s{Crew} community_m{Club} community_l{Crowd} other{Plan}}'**
+  String planName(String plan);
+
+  /// Groups created before paid plans were announced get the paid features free until a date.
+  ///
+  /// In en, this message translates to:
+  /// **'Founder perk: everything a plan includes, free until {date}'**
+  String planFounderTrial(String date);
+
+  /// Groups created before paid plans were announced never have a spot limit.
+  ///
+  /// In en, this message translates to:
+  /// **'Founding group: no spot limit, ever'**
+  String get planLegacy;
+
+  /// A founding group tries a new paid feature for free until a date.
+  ///
+  /// In en, this message translates to:
+  /// **'Early access to new features until {date}'**
+  String planEarlyAccess(String date);
+
+  /// Features the GRUP team gave the group for free, with no end.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra features from GRUP'**
+  String get planExtra;
+
+  /// Features the GRUP team gave the group for free, until a date.
+  ///
+  /// In en, this message translates to:
+  /// **'Extra features from GRUP until {date}'**
+  String planExtraUntil(String date);
+
+  /// Who pays for the group's plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid by {payer}'**
+  String planFundedBy(String payer);
+
+  /// Who pays for the group's plan, and when it renews.
+  ///
+  /// In en, this message translates to:
+  /// **'Paid by {payer} · renews on {date}'**
+  String planFundedRenews(String payer, String date);
+
+  /// Who pays for the group's plan, and when it ends (it was cancelled).
+  ///
+  /// In en, this message translates to:
+  /// **'Paid by {payer} · ends on {date}'**
+  String planFundedEnds(String payer, String date);
+
+  /// The payer, when it's the user, inside 'Paid by {payer}'.
+  ///
+  /// In en, this message translates to:
+  /// **'you'**
+  String get planYou;
+
+  /// The payer, when their name isn't known, inside 'Paid by {payer}'.
+  ///
+  /// In en, this message translates to:
+  /// **'someone'**
+  String get planSomeone;
+
+  /// The payer's renewal failed and the store keeps retrying.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment issue: {payer} needs to update the payment method'**
+  String planPaymentIssue(String payer);
+
+  /// The user's renewal failed and the store keeps retrying.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment issue: update your payment method'**
+  String get planPaymentIssueYou;
+
+  /// Spots a group uses (members with an account or a pending invite) out of its plan's limit.
+  ///
+  /// In en, this message translates to:
+  /// **'{seats} of {limit} spots taken'**
+  String planSeats(int seats, int limit);
+
+  /// The group may have any number of members.
+  ///
+  /// In en, this message translates to:
+  /// **'No spot limit'**
+  String get planNoSeatLimit;
+
+  /// Every spot of the group is taken (on the plan page, where plans are sold).
+  ///
+  /// In en, this message translates to:
+  /// **'Your group is full. To invite more people, pick a plan or free a spot.'**
+  String get planSeatsFull;
+
+  /// Spots a group without a limit uses (members with an account or a pending invite).
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{1 spot taken} other{{count} spots taken}}'**
+  String planSpotsTaken(int count);
+
+  /// Every spot of a group with a paid plan is taken; the payer changes the size in Manage billing.
+  ///
+  /// In en, this message translates to:
+  /// **'Your group is full. To invite more people, switch to a bigger size or free a spot.'**
+  String get planSeatsFullPaid;
+
+  /// Explains what takes a spot: an invite not yet accepted does; a guest without an account, whose answers an admin gives, doesn't.
+  ///
+  /// In en, this message translates to:
+  /// **'Pending invites hold a spot too. Guests you answer for are free.'**
+  String get planPendingInvites;
+
+  /// Heading above the paid plans to choose from.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose a plan'**
+  String get planChoose;
+
+  /// Billing interval toggle: pay every month.
+  ///
+  /// In en, this message translates to:
+  /// **'Monthly'**
+  String get planMonthly;
+
+  /// Billing interval toggle: pay every year.
+  ///
+  /// In en, this message translates to:
+  /// **'Yearly'**
+  String get planYearly;
+
+  /// A plan's spot limit, in people.
+  ///
+  /// In en, this message translates to:
+  /// **'Up to {count} people'**
+  String planUpToSeats(int count);
+
+  /// A plan's monthly price.
+  ///
+  /// In en, this message translates to:
+  /// **'{price} a month'**
+  String planPerMonth(String price);
+
+  /// A plan's yearly price.
+  ///
+  /// In en, this message translates to:
+  /// **'{price} a year'**
+  String planPerYear(String price);
+
+  /// Marks the smallest plan with a spot for everyone the group has.
+  ///
+  /// In en, this message translates to:
+  /// **'Fits your group'**
+  String get planRecommended;
+
+  /// For groups bigger than the largest plan, which are invoiced by hand.
+  ///
+  /// In en, this message translates to:
+  /// **'More than 80 people? Contact us'**
+  String get planContactUs;
+
+  /// Users who signed up before paid plans were announced get 30% off.
+  ///
+  /// In en, this message translates to:
+  /// **'Your founder discount takes 30% off at checkout.'**
+  String get planFounderDiscount;
+
+  /// A founding group's free period runs until a date; buying now bills from then.
+  ///
+  /// In en, this message translates to:
+  /// **'Nothing to pay until {date}, when your founder perk ends.'**
+  String planBillingStarts(String date);
+
+  /// Button that goes to the payment page for the chosen plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Continue to payment'**
+  String get planSubscribe;
+
+  /// Back from paying, while the plan is being switched on.
+  ///
+  /// In en, this message translates to:
+  /// **'Thanks! Switching on your plan…'**
+  String get planActivating;
+
+  /// Back from paying, when switching the plan on takes more than a minute.
+  ///
+  /// In en, this message translates to:
+  /// **'Payment received. Activation is taking longer than usual; refresh in a minute.'**
+  String get planActivationSlow;
+
+  /// Opens the payment provider's page to change the plan, the payment method, see invoices or cancel.
+  ///
+  /// In en, this message translates to:
+  /// **'Manage billing'**
+  String get planManageBilling;
+
+  /// Subtitle of 'Manage billing' in the settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Invoices, payment method and cancelling'**
+  String get settingsBillingSubtitle;
+
+  /// Name of a paid feature, by its key.
+  ///
+  /// In en, this message translates to:
+  /// **'{feature, select, kitchen_view{Kitchen view} reply_cutoffs{Answer deadlines} export_csv{Spreadsheet export} other{Other}}'**
+  String featureName(String feature);
+
+  /// When the group is full, how an admin frees a spot (where plans can't be bought).
+  ///
+  /// In en, this message translates to:
+  /// **'Remove members or pending invites to free a spot.'**
+  String get seatsFullHint;
+
+  /// Opens the group's plan page, from a full group's notice.
+  ///
+  /// In en, this message translates to:
+  /// **'See plans'**
+  String get seePlans;
+
+  /// One plain sentence on what a paid feature does, by its key, under its name on the plan page.
+  ///
+  /// In en, this message translates to:
+  /// **'{feature, select, kitchen_view{Each day\'s headcount with names, ready to print for the kitchen.} reply_cutoffs{Answers lock before the event, so your headcount holds.} export_csv{Download everyone\'s answers as a spreadsheet.} other{}}'**
+  String featurePitch(String feature);
+
+  /// On the plan page: paid plans fit more people than Free.
+  ///
+  /// In en, this message translates to:
+  /// **'Room to grow'**
+  String get planRoomTitle;
+
+  /// Heading above what paid plans add, for a group without one.
+  ///
+  /// In en, this message translates to:
+  /// **'Every plan includes'**
+  String get planPerksEvery;
+
+  /// Heading above what the group's paid plan includes.
+  ///
+  /// In en, this message translates to:
+  /// **'Your plan includes'**
+  String get planPerksYours;
+
+  /// Under the button that opens the plans: the cheapest monthly price.
+  ///
+  /// In en, this message translates to:
+  /// **'Plans from {price} a month'**
+  String planFrom(String price);
+
+  /// Title of the first step of buying a plan: how many people it fits.
+  ///
+  /// In en, this message translates to:
+  /// **'Pick a size'**
+  String get planSizeTitle;
+
+  /// Under "Pick a size": the spots the group uses (members with an account or a pending invite); every size has the same features.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, one{You\'re using 1 spot now. Every size includes every perk.} other{You\'re using {count} spots now. Every size includes every perk.}}'**
+  String planSizeHint(int count);
+
+  /// A plan with fewer spots than the group already uses.
+  ///
+  /// In en, this message translates to:
+  /// **'Too small for your group'**
+  String get planTooSmall;
+
+  /// Paying yearly costs 10 months.
+  ///
+  /// In en, this message translates to:
+  /// **'2 months free'**
+  String get planYearlySaving;
+
+  /// Under a monthly price: the same plan paid yearly.
+  ///
+  /// In en, this message translates to:
+  /// **'Or {price} a year: 2 months free'**
+  String planYearlyNudge(String price);
+
+  /// Under the button that goes to payment. The currency shown is a guess; the checkout page has the final price.
+  ///
+  /// In en, this message translates to:
+  /// **'VAT included. You\'ll see the final price before you pay. Cancel anytime.'**
+  String get planFinePrint;
+
+  /// Under "Manage billing" on the plan page, for the payer.
+  ///
+  /// In en, this message translates to:
+  /// **'Change size or payment method, get invoices, or cancel.'**
+  String get planManageHint;
+
+  /// On the plan card in Manage, for a group without a paid plan. Crew, Club and Crowd are plan names: keep them in English.
+  ///
+  /// In en, this message translates to:
+  /// **'More spots and perks with Crew, Club or Crowd'**
+  String get planCardUpsell;
+
+  /// On the plan card in Manage, when every spot is taken.
+  ///
+  /// In en, this message translates to:
+  /// **'Your group is full. Make room with a plan.'**
+  String get planCardFull;
+
+  /// On the plan card in Manage, for a group with a paid plan.
+  ///
+  /// In en, this message translates to:
+  /// **'See your plan'**
+  String get planCardSee;
+
+  /// Back from paying, once the plan is on.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to {plan}! Every perk is on.'**
+  String planWelcome(String plan);
+
   /// Setting of an event: how long before it starts members can no longer change their answer.
   ///
   /// In en, this message translates to:

@@ -40,11 +40,18 @@ String? redirect(Uri uri, bool isAuthenticated) {
   }
   if (uri.path == auth) {
     final from = uri.queryParameters['from'];
-    // Only paths in this app: an absolute or protocol-relative URL here
-    // would make the sign-in page an open redirect.
-    final isLocal =
-        from != null && from.startsWith('/') && !from.startsWith('//');
-    return isLocal ? from : const HomeScreenRoute().location;
+    return _isLocal(from) ? from : const HomeScreenRoute().location;
+  }
+  // Back from a page outside the app (Stripe): the web host answers only
+  // the root, so the page to return to comes as ?return=.
+  final back = uri.queryParameters['return'];
+  if (uri.path == '/' && back != null) {
+    return _isLocal(back) ? back : const HomeScreenRoute().location;
   }
   return null;
 }
+
+/// Only paths in this app: an absolute or protocol-relative URL would make
+/// the redirect an open one.
+bool _isLocal(String? path) =>
+    path != null && path.startsWith('/') && !path.startsWith('//');

@@ -14,6 +14,7 @@ String errorMessage(AppLocalizations l10n, Exception error) => switch (error) {
   GroupFullException() => l10n.errorGroupFull,
   FeatureLockedException() => l10n.errorFeatureLocked,
   ReplyLockedException() => l10n.errorReplyLocked,
+  AlreadyFundedException() => l10n.errorAlreadyFunded,
   _ => l10n.errorGeneric,
 };
 

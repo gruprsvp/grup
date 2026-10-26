@@ -52,7 +52,25 @@ class GroupManageContainer extends StatelessWidget {
         members: vm.members,
         onInvite: (contacts) async {
           await vm.invite.execute(contacts);
-          if (context.mounted) showFailure(context, vm.invite.result);
+          if (!context.mounted) return;
+          // A full group, where plans are sold: offer them.
+          if (vm.invite.result case Error(error: GroupFullException())
+              when vm.access.purchaseUi) {
+            final l10n = AppLocalizations.of(context)!;
+            ScaffoldMessenger.of(context)
+              ..hideCurrentSnackBar()
+              ..showSnackBar(
+                SnackBar(
+                  content: Text(l10n.errorGroupFull),
+                  action: SnackBarAction(
+                    label: l10n.seePlans,
+                    onPressed: () => _seePlans(context),
+                  ),
+                ),
+              );
+          } else {
+            showFailure(context, vm.invite.result);
+          }
         },
         schedules: vm.schedules,
         onCreateSchedule: (schedule) async {
@@ -68,6 +86,7 @@ class GroupManageContainer extends StatelessWidget {
           if (context.mounted) showFailure(context, vm.update.result);
         },
         access: vm.access,
+        onSeePlans: () => _seePlans(context),
         onSetCutoff: (schedule, minutes) async {
           await vm.setCutoff.execute((schedule: schedule, minutes: minutes));
           if (context.mounted) showFailure(context, vm.setCutoff.result);
@@ -76,6 +95,9 @@ class GroupManageContainer extends StatelessWidget {
       ),
     ),
   );
+
+  void _seePlans(BuildContext context) =>
+      GroupPlanRoute(groupId: groupId).push<void>(context);
 
   /// Asks for up to a year of days, then hands over everyone's answers as
   /// CSV: through the share sheet on a phone, as a download on the web.

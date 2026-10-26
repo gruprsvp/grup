@@ -706,6 +706,255 @@ class AppLocalizationsEn extends AppLocalizations {
       'Changes to this event have closed. Ask an admin.';
 
   @override
+  String get errorAlreadyFunded => 'This group already has a plan.';
+
+  @override
+  String get planTitle => 'Plan';
+
+  @override
+  String get planFree => 'Free';
+
+  @override
+  String planName(String plan) {
+    String _temp0 = intl.Intl.selectLogic(plan, {
+      'community_s': 'Crew',
+      'community_m': 'Club',
+      'community_l': 'Crowd',
+      'other': 'Plan',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String planFounderTrial(String date) {
+    return 'Founder perk: everything a plan includes, free until $date';
+  }
+
+  @override
+  String get planLegacy => 'Founding group: no spot limit, ever';
+
+  @override
+  String planEarlyAccess(String date) {
+    return 'Early access to new features until $date';
+  }
+
+  @override
+  String get planExtra => 'Extra features from GRUP';
+
+  @override
+  String planExtraUntil(String date) {
+    return 'Extra features from GRUP until $date';
+  }
+
+  @override
+  String planFundedBy(String payer) {
+    return 'Paid by $payer';
+  }
+
+  @override
+  String planFundedRenews(String payer, String date) {
+    return 'Paid by $payer · renews on $date';
+  }
+
+  @override
+  String planFundedEnds(String payer, String date) {
+    return 'Paid by $payer · ends on $date';
+  }
+
+  @override
+  String get planYou => 'you';
+
+  @override
+  String get planSomeone => 'someone';
+
+  @override
+  String planPaymentIssue(String payer) {
+    return 'Payment issue: $payer needs to update the payment method';
+  }
+
+  @override
+  String get planPaymentIssueYou => 'Payment issue: update your payment method';
+
+  @override
+  String planSeats(int seats, int limit) {
+    return '$seats of $limit spots taken';
+  }
+
+  @override
+  String get planNoSeatLimit => 'No spot limit';
+
+  @override
+  String get planSeatsFull =>
+      'Your group is full. To invite more people, pick a plan or free a spot.';
+
+  @override
+  String planSpotsTaken(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count spots taken',
+      one: '1 spot taken',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get planSeatsFullPaid =>
+      'Your group is full. To invite more people, switch to a bigger size or free a spot.';
+
+  @override
+  String get planPendingInvites =>
+      'Pending invites hold a spot too. Guests you answer for are free.';
+
+  @override
+  String get planChoose => 'Choose a plan';
+
+  @override
+  String get planMonthly => 'Monthly';
+
+  @override
+  String get planYearly => 'Yearly';
+
+  @override
+  String planUpToSeats(int count) {
+    return 'Up to $count people';
+  }
+
+  @override
+  String planPerMonth(String price) {
+    return '$price a month';
+  }
+
+  @override
+  String planPerYear(String price) {
+    return '$price a year';
+  }
+
+  @override
+  String get planRecommended => 'Fits your group';
+
+  @override
+  String get planContactUs => 'More than 80 people? Contact us';
+
+  @override
+  String get planFounderDiscount =>
+      'Your founder discount takes 30% off at checkout.';
+
+  @override
+  String planBillingStarts(String date) {
+    return 'Nothing to pay until $date, when your founder perk ends.';
+  }
+
+  @override
+  String get planSubscribe => 'Continue to payment';
+
+  @override
+  String get planActivating => 'Thanks! Switching on your plan…';
+
+  @override
+  String get planActivationSlow =>
+      'Payment received. Activation is taking longer than usual; refresh in a minute.';
+
+  @override
+  String get planManageBilling => 'Manage billing';
+
+  @override
+  String get settingsBillingSubtitle =>
+      'Invoices, payment method and cancelling';
+
+  @override
+  String featureName(String feature) {
+    String _temp0 = intl.Intl.selectLogic(feature, {
+      'kitchen_view': 'Kitchen view',
+      'reply_cutoffs': 'Answer deadlines',
+      'export_csv': 'Spreadsheet export',
+      'other': 'Other',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get seatsFullHint =>
+      'Remove members or pending invites to free a spot.';
+
+  @override
+  String get seePlans => 'See plans';
+
+  @override
+  String featurePitch(String feature) {
+    String _temp0 = intl.Intl.selectLogic(feature, {
+      'kitchen_view':
+          'Each day\'s headcount with names, ready to print for the kitchen.',
+      'reply_cutoffs':
+          'Answers lock before the event, so your headcount holds.',
+      'export_csv': 'Download everyone\'s answers as a spreadsheet.',
+      'other': '',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get planRoomTitle => 'Room to grow';
+
+  @override
+  String get planPerksEvery => 'Every plan includes';
+
+  @override
+  String get planPerksYours => 'Your plan includes';
+
+  @override
+  String planFrom(String price) {
+    return 'Plans from $price a month';
+  }
+
+  @override
+  String get planSizeTitle => 'Pick a size';
+
+  @override
+  String planSizeHint(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'You\'re using $count spots now. Every size includes every perk.',
+      one: 'You\'re using 1 spot now. Every size includes every perk.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get planTooSmall => 'Too small for your group';
+
+  @override
+  String get planYearlySaving => '2 months free';
+
+  @override
+  String planYearlyNudge(String price) {
+    return 'Or $price a year: 2 months free';
+  }
+
+  @override
+  String get planFinePrint =>
+      'VAT included. You\'ll see the final price before you pay. Cancel anytime.';
+
+  @override
+  String get planManageHint =>
+      'Change size or payment method, get invoices, or cancel.';
+
+  @override
+  String get planCardUpsell => 'More spots and perks with Crew, Club or Crowd';
+
+  @override
+  String get planCardFull => 'Your group is full. Make room with a plan.';
+
+  @override
+  String get planCardSee => 'See your plan';
+
+  @override
+  String planWelcome(String plan) {
+    return 'Welcome to $plan! Every perk is on.';
+  }
+
+  @override
   String get cutoffLabel => 'Changes close';
 
   @override

@@ -19,6 +19,8 @@ colors:
   day-container-high: "#E7E8EE"
   day-container-highest: "#E2E2E9"
   day-outline: "#74777F"
+  day-outline-variant: "#C4C6D0"
+  day-container-lowest: "#FFFFFF"
   night-surface: "#14140C"
   night-ink: "#E6E3D5"
   night-ink-muted: "#CAC7B6"
@@ -26,6 +28,7 @@ colors:
   night-container-high: "#2B2A22"
   night-container-highest: "#36352C"
   night-outline: "#939181"
+  night-outline-variant: "#48473A"
 typography:
   wordmark:
     fontFamily: "Sniglet, Cabin, sans-serif"
@@ -118,6 +121,32 @@ components:
     backgroundColor: "{colors.day-container}"
     rounded: "{rounded.md}"
     padding: "16dp"
+  plan-mark:
+    textColor: "{colors.harbour-navy}"
+    typography: "{typography.wordmark}"
+  spot-taken:
+    backgroundColor: "{colors.harbour-navy}"
+    rounded: "{rounded.full}"
+    size: "12dp"
+  spot-free:
+    textColor: "{colors.day-outline-variant}"
+    rounded: "{rounded.full}"
+    size: "12dp"
+  plan-card:
+    rounded: "20dp"
+    padding: "16dp"
+  size-option-fits:
+    backgroundColor: "{colors.harbour-navy-container}"
+    rounded: "20dp"
+    padding: "16dp"
+  size-option:
+    backgroundColor: "{colors.day-container-lowest}"
+    rounded: "20dp"
+    padding: "16dp"
+  size-option-too-small:
+    textColor: "{colors.day-ink-muted}"
+    rounded: "20dp"
+    padding: "16dp"
 ---
 
 # Design System: GRUP
@@ -128,14 +157,14 @@ components:
 
 GRUP is the clipboard at the start of practice: names, and a tick or a cross next to each. Every screen exists to answer one question, "who's in?", and the design's job is to put that answer on screen before anything else. Organisers glance at it minutes before the activity starts, often on a phone, so the system values instant legibility over decoration: counts, names and answers lead, and the chrome stays out of the way.
 
-The world is **quiet Material 3 utility with one wink**. Structure, components and motion are stock Material 3 (`package:material_ui`) on Android, iOS and web, themed through two seed colours and the Cabin typeface. The personality lives in exactly one place: the rounded, cheerful **Sniglet** wordmark "GRUP", and the few onboarding and feedback moments that name it. Everything else is a well-made tool.
+The world is **quiet Material 3 utility with one wink**. Structure, components and motion are stock Material 3 (`package:material_ui`) on Android, iOS and web, themed through two seed colours and the Cabin typeface. The personality lives in one typeface, used sparingly: the rounded, cheerful **Sniglet** wordmark "GRUP", the few onboarding and feedback moments that name it, and the names of a group's plan (Free, Crew, Club, Crowd), set as small marks. The only authored motion is the moment a plan switches on. Everything else is a well-made tool.
 
 Day and night are two moods of the same brand, not an inversion. By day it's a harbour: navy and lagoon teal on a cool, near-white surface. At night it becomes a floodlit pitch: lantern olive and deep greens on a warm near-black. Both come from the brand palette in `lib/app.dart`.
 
 **Key Characteristics:**
 - The answer leads: the headcount is the largest text on an event, and yes/no marks are the most saturated things on any screen.
 - Stock Material 3 components, themed, never re-invented; `.adaptive()` controls where the OS has trained users.
-- One typeface for the UI (Cabin), one wink for the brand (Sniglet).
+- One typeface for the UI (Cabin), one wink for the brand (Sniglet): the GRUP name and plan names, nothing else.
 - Separate day (navy/teal) and night (olive/green) identities.
 - Big, friendly group names; small, factual everything else.
 
@@ -144,8 +173,8 @@ Day and night are two moods of the same brand, not an inversion. By day it's a h
 Two seeded Material 3 schemes, built with `ColorScheme.fromSeed`, plus one fixed attendance green. Widgets read colour **roles** (`colorScheme.primary`, `surfaceContainerHigh`, …). The hexes in the frontmatter are what those roles resolve to today. The seeds in `lib/app.dart` are the source; if a seed changes, regenerate these values.
 
 ### Primary
-- **Harbour Navy** (day `primary`, seed #34558B): the brand voice by day. The Sniglet wordmark, brand mentions in onboarding copy, filled buttons, the default profile ring. 6.2:1 on the day surface.
-- **Harbour Navy Container** (day `primaryContainer`): the extended FAB ("Create or join group", "Manage group").
+- **Harbour Navy** (day `primary`, seed #34558B): the brand voice by day. The Sniglet wordmark, brand mentions in onboarding copy, filled buttons, the default profile ring, plan marks and the taken spots of the spots meter. 6.2:1 on the day surface.
+- **Harbour Navy Container** (day `primaryContainer`): the extended FAB ("Create or join group", "Manage group"), and the size that fits the group in the upgrade sheet (Lantern Olive Container at night).
 - **Lantern Olive** (night `primary`, seed #93920B): the same roles at night. A warm, lamplit khaki, 10.9:1 on the night surface.
 
 ### Secondary
@@ -160,6 +189,8 @@ Two seeded Material 3 schemes, built with `ColorScheme.fromSeed`, plus one fixed
 - **Day containers** (`surfaceContainerLow` → `Highest`): the resting surface of lifted cards (groups, events), the flat tonal groups ("You" on an event, settings sections, notices like the analytics and feedback cards), and the fill of text fields.
 - **Night Surface / Night Ink**: a warm near-black with parchment text. Night containers step the same way.
 - **Outlines** (`outline`): the borders of unanswered reply buttons.
+- **Outline variant** (`outlineVariant`): the empty rings of the spots meter and the border of a too-small size in the upgrade sheet. Faint on purpose (about 1.6:1 by day): the words beside them carry the meaning.
+- **Day container lowest** (`surfaceContainerLowest`, white): a raised size card in the upgrade sheet by day, so it stands off the sheet; at night it takes Night Container High instead, a tone above the sheet, where shadows don't show.
 
 ### Attendance
 - **Yes Green** (#2E7D32, `Colors.green.shade800`, `yesColor` in `reply_button.dart`): an active "yes", a usual "yes" (as an outline), and the thumb on the Yes header. White icons on it (`onYesColor`) pass at 5.1:1, and it stays visible as an outline on both surfaces (3.6:1 at night).
@@ -172,16 +203,19 @@ Two seeded Material 3 schemes, built with `ColorScheme.fromSeed`, plus one fixed
 
 **The Night Shift Rule.** Night is its own identity (olive and green on warm black). Don't derive it by darkening the navy, and don't "fix" it towards blue.
 
+**The Payment Red Rule.** On plan surfaces the error red marks one thing: the payment-problem line of a plan in grace. A full group, a plan's end date or a too-small size stay in ink.
+
 ## Typography
 
 **Display Font:** Sniglet (with Cabin fallback), bundled in `assets/google_fonts/`; runtime fetching is off.
 **Body Font:** Cabin, applied app-wide through `ThemeData.fontFamily` and on the Material 3 type scale.
 
-**Character:** Cabin is a humanist sans with slightly soft terminals: friendly but businesslike, and legible at list sizes. Sniglet is round and bubbly, a one-word signature, never a working typeface.
+**Character:** Cabin is a humanist sans with slightly soft terminals: friendly but businesslike, and legible at list sizes. Sniglet is round and bubbly, a signature for names (GRUP's, a plan's), one word at a time, never a working typeface.
 
 ### Hierarchy
 Sizes come from the Material 3 type scale in `sp`, so they follow the system font-size setting.
 - **Wordmark** (Sniglet 400, `headlineLarge` 32sp, in `primary`): "GRUP" in the home app bar. Inline Sniglet spans in `primary` mark the brand name in onboarding and feedback copy, and the feedback card's title is Sniglet at 24.
+- **Plan mark** (Sniglet 400, in `primary`, `PlanMark`): a plan's name, one word. Display small (36sp) at the top of the plan page, headline medium (28sp) in the upgrade sheet's payment step, title large (22sp, the default) on size cards and the Manage plan card. "Free" is translated; Crew, Club and Crowd stay English in every language.
 - **Headline** (Cabin 400, 28sp): at 600 weight, the headcount on an event ("5 coming").
 - **Title** (Cabin 400, 22sp): group names on their home cards (big enough to read as a place, small enough for "Tuesday Five-a-side" on one line at phone width), and app-bar titles: the group's name on the group screen, the event's name on the event screen.
 - **Title small** (Cabin 500, 16sp): list-tile titles. Event names, member names, the Yes / No reply yet / No headers.
@@ -190,7 +224,7 @@ Sizes come from the Material 3 type scale in `sp`, so they follow the system fon
 - **Label** (Cabin 500, 14sp): buttons, the FAB and badges.
 
 ### Named Rules
-**The One Wink Rule.** Sniglet appears only for the GRUP name and the feedback card's title. Never use it for buttons, labels, data, headings or numbers.
+**The One Wink Rule.** Sniglet appears only for names: the GRUP name, the feedback card's title, and plan names (Free, Crew, Club, Crowd) as marks in `primary` through `PlanMark`. Never use it for prices, counts, buttons, labels, data, headings or body text.
 
 **The Scale Rule.** Text maps to a Material 3 role (`theme.textTheme.*`). Don't hand-pick font sizes per screen; the wordmark's base size comes from the scale too.
 
@@ -211,7 +245,7 @@ Single column on every size, built from Material slivers. A pinned or floating `
 
 Depth comes from Material 3 tonal surfaces and stock component elevation, never custom shadows. The things an organiser acts on rest on level 1: each group on home and each event in a group's day is a `Card()` (`surfaceContainerLow`, 20dp corners, 16dp side margins, ripple clipped to the shape). The FAB keeps level 3; sheets and dialogs keep theirs. Groupings that aren't one tappable unit use flat `Card.filled`: the "You" row on an event, settings sections, the analytics card and the first-run example.
 
-Lift is structural (it separates units of action), never decorative glow. The roster's member rows stay flat: only some are tappable, and a dozen cards is noise.
+Lift is structural (it separates units of action), never decorative glow. The roster's member rows stay flat: only some are tappable, and a dozen cards is noise. The same holds on plan surfaces: the Manage plan card and the sizes you can pick are lifted; a size too small for the group is a flat outlined slot.
 
 ### Named Rules
 **The Material Levels Rule.** Elevation uses the Material 3 levels (0, 1, 2, 3, 4, 5) and their tonal surfaces. Never use an arbitrary `BoxShadow`, coloured shadow, or blur.
@@ -271,6 +305,42 @@ The onboarding lives in the empty states and teaches by showing the real thing. 
 - **New group, member:** the illustration over "no events yet". It says that an admin's events will show up here and take one tap to answer.
 - **Name prompt:** on first sign-in the profile page explains, under the name field, that groups see the name next to answers.
 
+### Plan Mark (`widgets/plan_mark.dart`)
+A plan's name in Sniglet, in `primary`, at the size of the text role it is given (title large when none). Used wherever a group's plan is named: the plan page, the upgrade sheet and the Manage plan card. See the Plan mark entry under Typography.
+
+### Spots Meter (`widgets/spots_meter.dart`)
+A group's spots as dots, one per spot, in tens like a tally.
+- **Dots:** taken spots are `primary` discs; free spots are 1.5dp `outlineVariant` rings. Over the limit (after a smaller plan) every dot shows taken.
+- **Tens:** dots sit one gap apart, tens three gaps apart; a row holds 40, 20 or 10 dots, the most that fit.
+- **Sizes:** 12dp dots with 5dp gaps on the plan page, 8dp with 4dp gaps on the Manage plan card.
+- **No limit:** no dots. The plan page shows the count alone ("12 spots taken"), and the Manage card shows only the count text.
+- Hidden from screen readers: the count beside it ("8 of 10 spots taken", Title medium) says the same.
+
+**The Count Leads Rule.** The spots meter pictures the count beside it; it never replaces it. Dots in `primary` are people, `outlineVariant` rings are room, and a group with no limit gets a count instead of dots.
+
+### Plan Card (Manage → Members, web)
+Where plans are sold (`purchaseUi`), the Members tab opens on a lifted `Card` (level 1, 20dp, 16dp padding, 12dp between lines): the plan mark with the count trailing in muted Body medium, the 8dp spots meter, then one Title small line and a chevron. The line reads "More spots and perks with Crew, Club or Crowd", or "Your group is full…" when every spot is taken, "See your plan" for a paid group, and "See plans" for a group with no limit. The whole card opens the plan page: lift means tappable. It scrolls with the roster as the list's first item, so it never crowds the members. On the native apps a flat `ListTile` seat notice (`_SeatNotice`) stands in its place.
+
+### Plan Page (`screens/group_plan.dart`)
+One column (capped at 640dp like every page), under the group's name in the app bar, 16dp gutters:
+- the plan mark at 36sp, then one status line per source of the plan in muted Body large ("Paid by you · renews on Nov 25, 2026", founder trial, founding group), and, back from paying, a spinner row while the plan switches on;
+- 24dp below, the spots: the count in Title medium, the meter, and a caption (muted "Pending invites hold a spot too…", or the full-group line in Body large ink);
+- 32dp below, "Every plan includes" (or "Your plan includes") in Title medium over `ListTile`s, each a `primary` outlined icon, a name and one plain sentence;
+- the action: a full-width filled button "Choose a plan" with muted "Plans from CHF 9 a month" centred below; for the payer instead, a tonal "Manage billing" with a one-line hint. No pricing table on the page.
+
+### Upgrade Sheet (signature)
+A modal bottom sheet (drag handle, 16dp padding) that asks one question at a time.
+- **Step 1, size:** "Pick a size" in Headline small, a muted hint ("You're using 25 spots now…"), then one card per size, 8dp apart, 20dp corners, 16dp padding: the plan mark, "Up to N people", the monthly price in Title medium and a chevron.
+  - *Fits your group:* on `primaryContainer`, with "Fits your group" in Label large `primary` under the name.
+  - *Raised:* lifted, white by day (`surfaceContainerLowest`), Night Container High at night.
+  - *Too small:* `Card.outlined`, flat, `outlineVariant` border, no chevron, not tappable, with "Too small for your group" in muted Label large.
+  - When no size fits, a text button offers to get in touch.
+- **Step 2, payment:** a back button beside the mark at 28sp and "Up to N people"; a Monthly / Yearly `SegmentedButton`; the price in Headline small; "Or CHF 190 a year: 2 months free" (or "2 months free") in Body medium `primary`; founder discount and first-payment date as muted notes; the filled "Continue to payment"; and the fine print (VAT, final price, cancel anytime) centred in muted Body small. A founding group with no limit skips step 1: it opens here, on the smallest size, with no back button.
+- **Step change:** the sheet resizes and crossfades in 200ms (`AnimatedSize` + `AnimatedSwitcher`); instant under Reduce Motion.
+
+### Plan Activation (the one authored motion)
+When a plan switches on after checkout, the plan page welcomes it once, in 900ms: the new mark scales in from its leading edge with an overshoot (ease-out-back, the first half); from about 225ms the spots the plan adds pop in one after another (each ease-out-back, staggered), while the group's people stay put; then "Welcome to Club!" (Title medium) fades in under the mark over the second half. Under Reduce Motion nothing moves: the final state, welcome line included, appears at once. Everything else in the app moves the stock Material way.
+
 ### Empty & Error States
 Empty: centred body copy, above a full-width illustration (`assets/images/*.webp`). In dark mode the illustration's lightness is inverted while its hues are kept (invert + 180° hue rotation), so the line art turns light and the navy stays blue. A day with no events in a group that has them elsewhere shows no illustration: just the fact and a tonal "Next: {event}, {date}" button. Error: `ErrorNotice` with a cloud-off icon and a retry.
 
@@ -284,10 +354,12 @@ Empty: centred body copy, above a full-width illustration (`assets/images/*.webp
 - **Do** keep one extended FAB per screen for its single primary action.
 - **Do** keep touch targets at 48dp minimum, including the reply buttons.
 - **Do** test every change in both the day (navy) and night (olive) themes.
+- **Do** respect Reduce Motion (`MediaQuery.disableAnimationsOf`) in any motion you author: the final state appears at once.
 
 ### Don't:
 - **Don't** use Yes Green or the error red for anything except answers, counts and genuine errors (The Answer Colour Rule).
-- **Don't** set Sniglet on anything but the GRUP name (The One Wink Rule).
+- **Don't** set Sniglet on anything but the GRUP name, the feedback card's title and plan names; never on a price, a count, a button, a heading or body text (The One Wink Rule).
+- **Don't** use red on plan surfaces for anything but a failed payment; a full group is news, not an error.
 - **Don't** use `tertiaryContainer` / `onTertiaryContainer`: they resolve to an off-brand pink until the scheme is fixed.
 - **Don't** put text in Lagoon Teal (2.9:1) or rely on Pitch Green for anything meaningful at night (2.5:1). They are decorative rings only.
 - **Don't** add custom `BoxShadow`s, gradients or glows. Lift uses Material 3 elevation levels.

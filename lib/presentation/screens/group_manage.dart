@@ -25,6 +25,9 @@ class GroupManageScreen extends StatelessWidget {
   /// What the group's plan allows here.
   final GroupAccess? access;
 
+  /// Opens the group's plan page.
+  final VoidCallback? onSeePlans;
+
   /// Exports everyone's answers over a range of days.
   final VoidCallback? onExport;
 
@@ -46,6 +49,7 @@ class GroupManageScreen extends StatelessWidget {
     this.onDeleteSchedule,
     this.onSave,
     this.access,
+    this.onSeePlans,
     this.onExport,
     this.onSetCutoff,
   });
@@ -115,7 +119,17 @@ class GroupManageScreen extends StatelessWidget {
             Expanded(
               child: TabBarView(
                 children: [
-                  GroupMembers(members: members, onInvite: onInvite),
+                  GroupMembers(
+                    members: members,
+                    onInvite: onInvite,
+                    header: switch ((access, onSeePlans)) {
+                      (final access?, final onSeePlans?)
+                          when access.purchaseUi =>
+                        _PlanCard(access: access, onTap: onSeePlans),
+                      (final access?, _) => _SeatNotice(access: access),
+                      _ => null,
+                    },
+                  ),
                   GroupEvents(
                     groupId: groupId,
                     schedules: schedules,
@@ -173,5 +187,101 @@ class GroupManageScreen extends StatelessWidget {
     );
 
     if (doDelete == true) onDelete?.call();
+  }
+}
+
+/// The group's plan, where plans are sold: its mark, its spots and the way
+/// to more of them. Opens the plan page.
+class _PlanCard extends StatelessWidget {
+  const _PlanCard({required this.access, required this.onTap});
+
+  final GroupAccess access;
+  final VoidCallback onTap;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final theme = Theme.of(context);
+    final limit = access.limit(LimitKey.maxSeats);
+    final plan = access.subscription?.plan;
+    return Card(
+      margin: const EdgeInsets.fromLTRB(16, 0, 16, 8),
+      child: Semantics(
+        button: true,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              spacing: 12,
+              children: [
+                Row(
+                  spacing: 8,
+                  children: [
+                    Expanded(
+                      child: PlanMark(
+                        plan == null ? l10n.planFree : l10n.planName(plan),
+                      ),
+                    ),
+                    Text(
+                      limit == null
+                          ? l10n.planSpotsTaken(access.group.seats)
+                          : l10n.planSeats(access.group.seats, limit),
+                      style: theme.textTheme.bodyMedium?.copyWith(
+                        color: theme.colorScheme.onSurfaceVariant,
+                      ),
+                    ),
+                  ],
+                ),
+                if (limit != null)
+                  SpotsMeter(
+                    taken: access.group.seats,
+                    limit: limit,
+                    size: 8,
+                    gap: 4,
+                  ),
+                Row(
+                  spacing: 8,
+                  children: [
+                    Expanded(
+                      child: Text(switch ((plan, limit)) {
+                        (_?, _) => l10n.planCardSee,
+                        (null, null) => l10n.seePlans,
+                        _ when access.seatsFull => l10n.planCardFull,
+                        _ => l10n.planCardUpsell,
+                      }, style: theme.textTheme.titleSmall),
+                    ),
+                    const Icon(Icons.chevron_right),
+                  ],
+                ),
+              ],
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+/// How many of the group's spots are taken, when it has a limit, where
+/// plans aren't sold. Pending invites count.
+class _SeatNotice extends StatelessWidget {
+  const _SeatNotice({required this.access});
+
+  final GroupAccess access;
+
+  @override
+  Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+    final limit = access.limit(LimitKey.maxSeats);
+    if (limit == null) return const SizedBox.shrink();
+    return ListTile(
+      leading: const Icon(Icons.event_seat_outlined),
+      title: Text(l10n.planSeats(access.group.seats, limit)),
+      subtitle: Text(
+        access.seatsFull ? l10n.seatsFullHint : l10n.planPendingInvites,
+      ),
+    );
   }
 }

@@ -28,6 +28,7 @@ part 'go_router_builder.g.dart';
         TypedGoRoute<GroupScheduleCreateRoute>(path: 'schedule-create'),
         TypedGoRoute<GroupScheduleDetailsRoute>(path: 'schedules/:scheduleId'),
         TypedGoRoute<GroupMemberDetailsRoute>(path: 'members/:memberId'),
+        TypedGoRoute<GroupPlanRoute>(path: 'plan'),
         TypedGoRoute<GroupKitchenRoute>(path: 'kitchen'),
       ],
     ),
@@ -249,6 +250,37 @@ class GroupMemberDetailsRoute extends GoRouteData
   @override
   Widget build(BuildContext context, GoRouterState state) => ReadableWidth(
     child: GroupMemberDetailsContainer(groupId: groupId, memberId: memberId),
+  );
+}
+
+/// A group's plan: what it may do and why, and buying or managing one.
+/// Admins only, and on the web only: the apps sell nothing yet.
+@immutable
+class GroupPlanRoute extends GoRouteData with $GroupPlanRoute {
+  const GroupPlanRoute({required this.groupId, this.checkout});
+
+  final String groupId;
+
+  /// `success` when Stripe Checkout sends the admin back after paying.
+  final String? checkout;
+
+  /// Until the group has loaded, let the page open: the server refuses
+  /// non-admins' checkouts anyway.
+  @override
+  String? redirect(BuildContext context, GoRouterState state) {
+    final member = context.read<GroupsRepository>().ownMember(groupId);
+    final isAdmin = member == null || member.role == GroupRoles.admin;
+    return appPlatform == null && isAdmin
+        ? null
+        : GroupDetailsRoute(groupId: groupId).location;
+  }
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) => ReadableWidth(
+    child: GroupPlanContainer(
+      groupId: groupId,
+      checkoutSuccess: checkout == 'success',
+    ),
   );
 }
 

@@ -3,7 +3,9 @@ import 'package:http/http.dart' show ClientException;
 import 'package:parousia/models/models.dart';
 import 'package:parousia/repositories/billing.dart';
 import 'package:parousia/services/local_cache.dart';
+import 'package:parousia/util/errors.dart';
 import 'package:parousia/util/result.dart';
+import 'package:supabase_flutter/supabase_flutter.dart' show FunctionException;
 
 import '../support/fake_backend.dart';
 import '../support/preferences.dart';
@@ -66,5 +68,51 @@ void main() {
 
     restarted.switchUser('someone else');
     expect(restarted.state, const BillingState());
+  });
+
+  test('checkout asks the server for a Stripe page', () async {
+    final result = await repository.checkout(
+      groupId: club.id,
+      plan: 'community_m',
+      interval: 'year',
+    );
+
+    expect(
+      (result as Ok<Uri>).value.toString(),
+      'https://checkout.stripe.test/community_m-year',
+    );
+    expect(backend.checkouts.single, (
+      groupId: club.id,
+      plan: 'community_m',
+      interval: 'year',
+    ));
+  });
+
+  test(
+    'a refused checkout refreshes the state, which was out of date',
+    () async {
+      // Another admin bought a plan meanwhile.
+      backend.fundGroup(club.id);
+      backend.stripeFailure = const FunctionException(
+        status: 409,
+        details: {'error': 'already_funded'},
+      );
+
+      final result = await repository.checkout(
+        groupId: club.id,
+        plan: 'community_s',
+        interval: 'month',
+      );
+
+      expect((result as Error).error, isA<AlreadyFundedException>());
+      expect(repository.access(club.id).can(FeatureKey.kitchenView), isTrue);
+    },
+  );
+
+  test('portal comes back to the page it was opened from', () async {
+    final result = await repository.portal('/groups/${club.id}/plan');
+
+    expect(result, isA<Ok<Uri>>());
+    expect(backend.portals, ['/groups/${club.id}/plan']);
   });
 }

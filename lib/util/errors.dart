@@ -60,6 +60,11 @@ final class ReplyLockedException extends AppException {
   const ReplyLockedException();
 }
 
+/// The group already has a plan: changing it goes through its payer.
+final class AlreadyFundedException extends AppException {
+  const AlreadyFundedException();
+}
+
 /// A bug, or a response the app doesn't understand.
 final class UnexpectedException extends AppException {
   const UnexpectedException(this.error, this.stackTrace);
@@ -93,6 +98,14 @@ AppException toAppException(Object error, StackTrace stackTrace) =>
         const FeatureLockedException(),
       PostgrestException(code: 'P0001', message: 'reply_locked') =>
         const ReplyLockedException(),
+      // Edge Functions: no response at all (status 0), or a gateway's.
+      FunctionException(status: 0 || 502 || 503 || 504) =>
+        const NetworkException(),
+      FunctionException(details: {'error': 'already_funded'}) =>
+        const AlreadyFundedException(),
+      FunctionException(status: 401) => const NotSignedInException(),
+      FunctionException(status: 403) => const NotAllowedException(),
+      FunctionException(status: 404) => const NotFoundException(),
       _ => UnexpectedException(error, stackTrace),
     };
 
