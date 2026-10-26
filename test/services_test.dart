@@ -974,4 +974,40 @@ void main() {
       }),
     );
   });
+
+  // Paid plans (docs/billing-and-entitlements.md). Local Supabase stays in
+  // the mode the migrations leave, unlocked; the other modes, seat caps and
+  // the SQL itself are covered by pgTAP (supabase/tests/billing_test.sql).
+  group('billing', () {
+    test(
+      'billing_state decodes, and names only features the app knows',
+      () => runWithTemporaryGroup((supabase, group, _) async {
+        final state = await BillingService(supabase: supabase)
+            .getBillingState();
+
+        const features = {
+          FeatureKey.kitchenView,
+          FeatureKey.replyCutoffs,
+          FeatureKey.exportCsv,
+        };
+        expect(state.mode, BillingMode.unlocked);
+        expect(state.groups[group.id]?.features.toSet(), features);
+        expect(state.groups[group.id]?.limits, isEmpty);
+        expect(state.groups[group.id]?.seats, 1);
+        expect(state.catalog.map((plan) => plan.plan), [
+          'community_s',
+          'community_m',
+          'community_l',
+        ]);
+        for (final plan in state.catalog) {
+          expect(features, containsAll(plan.features));
+          expect(plan.limits.keys, everyElement(LimitKey.maxSeats));
+          expect(
+            plan.prices.map((price) => (price.provider, price.interval)),
+            unorderedEquals([('stripe', 'month'), ('stripe', 'year')]),
+          );
+        }
+      }),
+    );
+  });
 }

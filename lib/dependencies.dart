@@ -10,6 +10,7 @@ import 'util/analytics.dart';
 /// The services the repositories are built on. Tests swap in fakes.
 typedef Services = ({
   GoTrueClient auth,
+  BillingService billing,
   GroupsService groups,
   MembersService members,
   InvitesService invites,
@@ -22,6 +23,7 @@ typedef Services = ({
 
 Services supabaseServices(SupabaseClient supabase) => (
   auth: supabase.auth,
+  billing: BillingService(supabase: supabase),
   groups: GroupsService(supabase: supabase),
   members: MembersService(supabase: supabase),
   invites: InvitesService(supabase: supabase),
@@ -40,6 +42,7 @@ class Repositories {
     this.groups,
     this.schedules,
     this.profile,
+    this.billing,
   ) {
     _switchUser();
     auth.addListener(_switchUser);
@@ -53,6 +56,7 @@ class Repositories {
       GroupsRepository.cacheKey,
       SchedulesRepository.cacheKey,
       ProfileRepository.cacheKey,
+      BillingRepository.cacheKey,
     });
     return Repositories._(
       AuthRepository(services.auth),
@@ -76,6 +80,7 @@ class Repositories {
         cache: cache,
         authChanges: services.auth.onAuthStateChange,
       ),
+      BillingRepository(billing: services.billing, cache: cache),
     );
   }
 
@@ -84,6 +89,7 @@ class Repositories {
   final GroupsRepository groups;
   final SchedulesRepository schedules;
   final ProfileRepository profile;
+  final BillingRepository billing;
 
   /// For [MultiProvider]: view models read the repositories from here.
   List<SingleChildWidget> get providers => [
@@ -92,11 +98,12 @@ class Repositories {
     ChangeNotifierProvider.value(value: groups),
     ChangeNotifierProvider.value(value: schedules),
     ChangeNotifierProvider.value(value: profile),
+    ChangeNotifierProvider.value(value: billing),
   ];
 
   void _switchUser() {
     identify(auth.userId);
-    for (final repository in [groups, schedules, profile]) {
+    for (final repository in [groups, schedules, profile, billing]) {
       repository.switchUser(auth.userId);
     }
   }

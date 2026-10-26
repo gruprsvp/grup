@@ -189,11 +189,25 @@ class GroupsRepository extends UserData {
       groupId,
       displayName: contact.displayNameOverride,
     );
-    await Future.wait([
-      _invitesService.inviteWithGeneratedCode(member.id),
-      for (final (method, value) in contact.invites)
-        _invitesService.inviteMember(member.id, method, value),
-    ]);
+    // Just a name: a member the admins answer for. Without an invite they
+    // take no seat; an admin can create a code for them later.
+    if (contact.invites.isEmpty) return;
+    try {
+      await Future.wait([
+        _invitesService.inviteWithGeneratedCode(member.id),
+        for (final (method, value) in contact.invites)
+          _invitesService.inviteMember(member.id, method, value),
+      ]);
+    } on PostgrestException catch (e) {
+      // The group is full: the member created to hold the invite would stay
+      // behind as one the admins manage. Best effort, the error is the news.
+      if (e.message == 'group_full') {
+        try {
+          await _membersService.deleteMember(member.id);
+        } on Object catch (_) {}
+      }
+      rethrow;
+    }
   }
 
   /// Fetches [memberId]'s pending invites.
@@ -202,6 +216,32 @@ class GroupsRepository extends UserData {
     return guard(() async {
       final invites = await _invitesService.getInvitesForMember(memberId);
       ifCurrent(generation, () => _invites = {..._invites, memberId: invites});
+    });
+  }
+
+  /// Creates an invite code for [member], to join with. A pending invite
+  /// takes a seat, so this fails in a full group.
+  Future<Result<void>> createInviteCode(Member member) {
+    final generation = this.generation;
+    return guard(() async {
+      final invite = await _invitesService.inviteWithGeneratedCode(member.id);
+      ifCurrent(
+        generation,
+        () => _invites = {
+          ..._invites,
+          member.id: [...?_invites[member.id], invite],
+        },
+      );
+    });
+  }
+
+  /// Withdraws [member]'s pending invites: they stay a member the admins
+  /// answer for, and free their seat.
+  Future<Result<void>> cancelInvites(Member member) {
+    final generation = this.generation;
+    return guard(() async {
+      await _invitesService.deleteInvitesForMember(member.id);
+      ifCurrent(generation, () => _invites = {..._invites, member.id: []});
     });
   }
 

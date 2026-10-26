@@ -11,6 +11,9 @@ String errorMessage(AppLocalizations l10n, Exception error) => switch (error) {
   InvalidInviteCodeException() => l10n.errorInvalidInviteCode,
   AlreadyMemberException() => l10n.errorAlreadyMember,
   NotSignedInException() => l10n.errorNotSignedIn,
+  GroupFullException() => l10n.errorGroupFull,
+  FeatureLockedException() => l10n.errorFeatureLocked,
+  ReplyLockedException() => l10n.errorReplyLocked,
   _ => l10n.errorGeneric,
 };
 

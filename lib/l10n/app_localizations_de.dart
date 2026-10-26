@@ -694,4 +694,29 @@ class AppLocalizationsDe extends AppLocalizations {
   @override
   String get analyticsSettingSubtitle =>
       'Wir zählen Fingertipps, keine Geheimnisse.';
+
+  @override
+  String get errorGroupFull => 'Alle Plätze in dieser Gruppe sind belegt.';
+
+  @override
+  String get errorFeatureLocked => 'Der Plan dieser Gruppe enthält das nicht.';
+
+  @override
+  String get errorReplyLocked =>
+      'Änderungen für dieses Event sind geschlossen. Frag einen Admin.';
+
+  @override
+  String get inviteCreateCode => 'Einladungscode erstellen';
+
+  @override
+  String guestNoInvite(String name) {
+    return '$name hat keine Einladung: Admins antworten stellvertretend.';
+  }
+
+  @override
+  String get inviteCancel => 'Einladungen zurückziehen';
+
+  @override
+  String get inviteCancelHint =>
+      'Bleibt in der Gruppe, Admins antworten stellvertretend, und gibt einen Platz frei.';
 }

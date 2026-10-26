@@ -45,6 +45,21 @@ final class NotSignedInException extends AppException {
   const NotSignedInException();
 }
 
+/// Every seat of the group is taken: no one more can be invited.
+final class GroupFullException extends AppException {
+  const GroupFullException();
+}
+
+/// The group's plan doesn't include the feature the change needs.
+final class FeatureLockedException extends AppException {
+  const FeatureLockedException();
+}
+
+/// Changes to this event's answers have closed (a reply cutoff).
+final class ReplyLockedException extends AppException {
+  const ReplyLockedException();
+}
+
 /// A bug, or a response the app doesn't understand.
 final class UnexpectedException extends AppException {
   const UnexpectedException(this.error, this.stackTrace);
@@ -71,6 +86,13 @@ AppException toAppException(Object error, StackTrace stackTrace) =>
       PostgrestException(code: 'PGRST116') => const NotFoundException(),
       // Postgres: insufficient_privilege, e.g. a row-level security violation.
       PostgrestException(code: '42501') => const NotAllowedException(),
+      // Raised by the billing triggers (docs/billing-and-entitlements.md).
+      PostgrestException(code: 'P0001', message: 'group_full') =>
+        const GroupFullException(),
+      PostgrestException(code: 'P0001', message: 'feature_locked') =>
+        const FeatureLockedException(),
+      PostgrestException(code: 'P0001', message: 'reply_locked') =>
+        const ReplyLockedException(),
       _ => UnexpectedException(error, stackTrace),
     };
 

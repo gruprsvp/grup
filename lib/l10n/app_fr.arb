@@ -203,5 +203,12 @@
   "analyticsYes": "J'en suis",
   "analyticsNo": "Je passe",
   "analyticsSetting": "Aide à améliorer GRUP",
-  "analyticsSettingSubtitle": "On compte les touches, pas les secrets."
+  "analyticsSettingSubtitle": "On compte les touches, pas les secrets.",
+  "errorGroupFull": "Toutes les places de ce groupe sont prises.",
+  "errorFeatureLocked": "L'offre de ce groupe ne comprend pas ça.",
+  "errorReplyLocked": "Les changements pour cet événement sont fermés. Demande à un admin.",
+  "inviteCreateCode": "Créer un code d'invitation",
+  "guestNoInvite": "{name} n'a pas d'invitation: les admins répondent à sa place.",
+  "inviteCancel": "Annuler les invitations",
+  "inviteCancelHint": "Reste dans le groupe, les admins répondent à sa place, et libère une place."
 }

@@ -24,6 +24,10 @@ class GroupMemberDetailsScreen extends StatelessWidget {
   final ValueSetter<GroupRoles>? onSetRole;
   final VoidCallback? onRemove;
 
+  /// Gives a member who hasn't joined an invite code, or withdraws theirs.
+  final VoidCallback? onCreateInvite;
+  final VoidCallback? onCancelInvites;
+
   const GroupMemberDetailsScreen({
     super.key,
     required this.loading,
@@ -37,6 +41,8 @@ class GroupMemberDetailsScreen extends StatelessWidget {
     this.onRetry,
     this.onSetRole,
     this.onRemove,
+    this.onCreateInvite,
+    this.onCancelInvites,
   });
 
   @override
@@ -123,6 +129,22 @@ class GroupMemberDetailsScreen extends StatelessWidget {
                     ),
                   ),
                 },
+              if (invites case final invites? when invites.isEmpty) ...[
+                ListTile(title: Text(l10n.guestNoInvite(displayName))),
+                ListTile(
+                  leading: const Icon(Icons.add_link),
+                  title: Text(l10n.inviteCreateCode),
+                  textColor: theme.colorScheme.primary,
+                  iconColor: theme.colorScheme.primary,
+                  onTap: onCreateInvite,
+                ),
+              ] else if (invites != null)
+                ListTile(
+                  leading: const Icon(Icons.link_off),
+                  title: Text(l10n.inviteCancel),
+                  subtitle: Text(l10n.inviteCancelHint),
+                  onTap: onCancelInvites,
+                ),
             ],
             const Divider(),
             ListTile(

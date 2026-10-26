@@ -1,3 +1,4 @@
+import 'package:parousia/repositories/billing.dart';
 import 'package:parousia/repositories/groups.dart';
 import 'package:parousia/repositories/profile.dart';
 import 'package:parousia/repositories/schedules.dart';
@@ -18,4 +19,5 @@ Future<LocalCache> openCache() => LocalCache.open({
   GroupsRepository.cacheKey,
   SchedulesRepository.cacheKey,
   ProfileRepository.cacheKey,
+  BillingRepository.cacheKey,
 });

@@ -1327,6 +1327,48 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'We count taps, not secrets.'**
   String get analyticsSettingSubtitle;
+
+  /// A group's spots are all taken (members with an account plus pending invites), so no one more can be invited.
+  ///
+  /// In en, this message translates to:
+  /// **'Every spot in this group is taken.'**
+  String get errorGroupFull;
+
+  /// The group's paid plan doesn't include what the user tried to turn on.
+  ///
+  /// In en, this message translates to:
+  /// **'This group\'s plan doesn\'t include this.'**
+  String get errorFeatureLocked;
+
+  /// A member tried to change an answer after the event's answer deadline.
+  ///
+  /// In en, this message translates to:
+  /// **'Changes to this event have closed. Ask an admin.'**
+  String get errorReplyLocked;
+
+  /// Creates an invite code for a member who hasn't joined, so they can join and answer for themselves.
+  ///
+  /// In en, this message translates to:
+  /// **'Create an invite code'**
+  String get inviteCreateCode;
+
+  /// A member without an account or invite: admins answer for them.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} has no invite: admins answer for them.'**
+  String guestNoInvite(String name);
+
+  /// Withdraws a member's pending invites.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel invites'**
+  String get inviteCancel;
+
+  /// What cancelling a member's pending invites does.
+  ///
+  /// In en, this message translates to:
+  /// **'They stay in the group, answered for by admins, and free a spot.'**
+  String get inviteCancelHint;
 }
 
 class _AppLocalizationsDelegate
