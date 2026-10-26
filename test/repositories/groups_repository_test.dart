@@ -195,6 +195,77 @@ void main() {
     },
   );
 
+  test('inviting into a full group fails and leaves no stray member', () async {
+    final group = backend.addGroup('Group');
+    backend.fundGroup(group.id, maxSeats: 2);
+    backend.addMember(group.id, profileId: 'ann');
+    await repository.refresh();
+    final before = repository.members(group.id).length;
+
+    final result = await repository.invite(group.id, const [
+      ContactInvite(
+        displayNameOverride: 'Bob',
+        invites: [(InviteMethods.email, 'bob@example.com')],
+      ),
+    ]);
+
+    expect(errorOf(result), isA<GroupFullException>());
+    expect(repository.members(group.id), hasLength(before));
+    expect(
+      backend.members.values.where((m) => m.groupId == group.id),
+      hasLength(before),
+    );
+  });
+
+  test('a guest (just a name) joins a full group: they take no seat', () async {
+    final group = backend.addGroup('Group');
+    backend.fundGroup(group.id, maxSeats: 1);
+    await repository.refresh();
+
+    final result = await repository.invite(group.id, const [
+      ContactInvite(displayNameOverride: 'Guest', invites: []),
+    ]);
+
+    expect(result, isA<Ok<void>>());
+    final guest = repository
+        .members(group.id)
+        .singleWhere((m) => m.displayNameOverride == 'Guest');
+    expect(
+      backend.invites.values.where((i) => i.memberId == guest.id),
+      isEmpty,
+    );
+    expect(backend.seats(group.id), 1);
+  });
+
+  test(
+    'an invite code for a guest takes a seat; cancelling frees it',
+    () async {
+      final group = backend.addGroup('Group');
+      final guest = backend.addMember(group.id, name: 'Guest');
+      backend.fundGroup(group.id, maxSeats: 2);
+      await repository.refresh();
+
+      expect(await repository.createInviteCode(guest), isA<Ok<void>>());
+      expect(repository.invites(guest.id), hasLength(1));
+      expect(backend.seats(group.id), 2);
+
+      // Full now: another guest can't get a code.
+      final other = backend.addMember(group.id, name: 'Other');
+      expect(
+        errorOf(await repository.createInviteCode(other)),
+        isA<GroupFullException>(),
+      );
+
+      expect(await repository.cancelInvites(guest), isA<Ok<void>>());
+      expect(repository.invites(guest.id), isEmpty);
+      expect(backend.seats(group.id), 1);
+      expect(
+        errorOf(await repository.cancelInvites(guest)),
+        isA<NotFoundException>(),
+      );
+    },
+  );
+
   test('leaving a group forgets it; removing someone else keeps it', () async {
     final group = backend.addGroup('Group');
     final guest = backend.addMember(group.id, name: 'Guest');

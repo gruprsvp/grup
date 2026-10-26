@@ -24,7 +24,12 @@ class GroupMemberDetailsContainer extends StatelessWidget {
     ),
     child: Consumer<MemberDetailsViewModel>(
       builder: (context, vm, _) => GroupMemberDetailsScreen(
-        loading: vm.load.running || vm.setRole.running || vm.remove.running,
+        loading:
+            vm.load.running ||
+            vm.setRole.running ||
+            vm.remove.running ||
+            vm.createInvite.running ||
+            vm.cancelInvites.running,
         isCurrentUser: vm.isCurrentUser,
         isAdmin: vm.isAdmin,
         group: vm.group,
@@ -36,6 +41,14 @@ class GroupMemberDetailsContainer extends StatelessWidget {
           _ => null,
         },
         onRetry: vm.load.execute,
+        onCreateInvite: () async {
+          await vm.createInvite.execute();
+          if (context.mounted) showFailure(context, vm.createInvite.result);
+        },
+        onCancelInvites: () async {
+          await vm.cancelInvites.execute();
+          if (context.mounted) showFailure(context, vm.cancelInvites.result);
+        },
         onSetRole: (role) async {
           await vm.setRole.execute(role);
           if (context.mounted) showFailure(context, vm.setRole.result);

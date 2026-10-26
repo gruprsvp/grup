@@ -16,4 +16,34 @@ void main() {
     const error = PostgrestException(message: 'boom', code: '500');
     expect(toAppException(error, StackTrace.empty), isA<UnexpectedException>());
   });
+
+  group('billing', () {
+    AppException classify(Object error) =>
+        toAppException(error, StackTrace.empty);
+
+    test('the billing triggers\' refusals are explained', () {
+      expect(
+        classify(
+          const PostgrestException(message: 'group_full', code: 'P0001'),
+        ),
+        isA<GroupFullException>(),
+      );
+      expect(
+        classify(
+          const PostgrestException(message: 'feature_locked', code: 'P0001'),
+        ),
+        isA<FeatureLockedException>(),
+      );
+      expect(
+        classify(
+          const PostgrestException(message: 'reply_locked', code: 'P0001'),
+        ),
+        isA<ReplyLockedException>(),
+      );
+      expect(
+        classify(const PostgrestException(message: 'boom', code: 'P0001')),
+        isA<UnexpectedException>(),
+      );
+    });
+  });
 }

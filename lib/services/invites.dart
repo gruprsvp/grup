@@ -64,6 +64,16 @@ class InvitesService extends SupabaseService with Postgrest {
     }
   }
 
+  /// Deletes [memberId]'s pending invites. Fails when there were none (or
+  /// row-level security hides them), as other deletes do.
+  Future<void> deleteInvitesForMember(String memberId) async {
+    final deleted = await table()
+        .delete()
+        .eq('member_id', memberId)
+        .select('id');
+    if (deleted.isEmpty) throw const NotFoundException();
+  }
+
   Future<List<Invite>> getInvitesForMember(String memberId) async {
     return table()
         .select()

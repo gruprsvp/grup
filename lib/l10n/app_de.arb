@@ -203,5 +203,12 @@
   "analyticsYes": "Bin dabei",
   "analyticsNo": "Ich passe",
   "analyticsSetting": "Hilf, GRUP zu verbessern",
-  "analyticsSettingSubtitle": "Wir zählen Fingertipps, keine Geheimnisse."
+  "analyticsSettingSubtitle": "Wir zählen Fingertipps, keine Geheimnisse.",
+  "errorGroupFull": "Alle Plätze in dieser Gruppe sind belegt.",
+  "errorFeatureLocked": "Der Plan dieser Gruppe enthält das nicht.",
+  "errorReplyLocked": "Änderungen für dieses Event sind geschlossen. Frag einen Admin.",
+  "inviteCreateCode": "Einladungscode erstellen",
+  "guestNoInvite": "{name} hat keine Einladung: Admins antworten stellvertretend.",
+  "inviteCancel": "Einladungen zurückziehen",
+  "inviteCancelHint": "Bleibt in der Gruppe, Admins antworten stellvertretend, und gibt einen Platz frei."
 }

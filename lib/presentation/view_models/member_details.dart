@@ -18,7 +18,9 @@ class MemberDetailsViewModel extends ViewModel {
       (role) => _withMember((member) => _groups.setRole(member, role)),
     );
     remove = Command0(() => _withMember(_groups.remove));
-    listenTo([_groups, load, setRole, remove]);
+    createInvite = Command0(() => _withMember(_groups.createInviteCode));
+    cancelInvites = Command0(() => _withMember(_groups.cancelInvites));
+    listenTo([_groups, load, setRole, remove, createInvite, cancelInvites]);
   }
 
   final String groupId;
@@ -28,6 +30,12 @@ class MemberDetailsViewModel extends ViewModel {
   late final Command0<void> load;
   late final Command1<void, GroupRoles> setRole;
   late final Command0<void> remove;
+
+  /// A code for a member who hasn't joined: it takes a seat.
+  late final Command0<void> createInvite;
+
+  /// Withdraws the pending invites: the member stays, answered for by admins.
+  late final Command0<void> cancelInvites;
 
   Group? get group => _groups.group(groupId);
 

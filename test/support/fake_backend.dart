@@ -28,6 +28,14 @@ class FakeBackend {
   final defaultRules = <(String, String), DefaultRule>{};
   final replies = <(String, String, DateTime), Reply>{};
 
+  /// What billing_state answers: the mode, each group's entitlements (its
+  /// seats are counted from the members), and the user's standing.
+  BillingMode billingMode = BillingMode.prelaunch;
+  final entitlements = <String, GroupEntitlements>{};
+  bool isFounder = false;
+  bool isCustomer = false;
+  List<CatalogPlan> catalog = const [];
+
   /// While set, every service call throws it.
   Object? failure;
 
@@ -38,6 +46,7 @@ class FakeBackend {
   String nextId(String prefix) => '$prefix-${++_ids}';
 
   late final auth = FakeAuth(this);
+  late final billingService = _FakeBillingService(this);
   late final groupsService = _FakeGroupsService(this);
   late final membersService = _FakeMembersService(this);
   late final invitesService = _FakeInvitesService(this);
@@ -50,6 +59,7 @@ class FakeBackend {
   /// The fakes, for Repositories.create.
   Services get services => (
     auth: auth,
+    billing: billingService,
     groups: groupsService,
     members: membersService,
     invites: invitesService,
@@ -110,6 +120,68 @@ class FakeBackend {
   }
 
   Reply addReply(Reply reply) => replies[_replyKey(reply)] = reply;
+
+  /// Gives [groupId] the Community features with [maxSeats] seats, as a
+  /// plan would, in live mode.
+  void fundGroup(String groupId, {int? maxSeats = 20}) {
+    billingMode = BillingMode.live;
+    entitlements[groupId] = GroupEntitlements(
+      features: const [
+        FeatureKey.kitchenView,
+        FeatureKey.replyCutoffs,
+        FeatureKey.exportCsv,
+      ],
+      limits: {LimitKey.maxSeats: maxSeats},
+    );
+  }
+
+  /// Members with an account, and members with a pending invite.
+  int seats(String groupId) => members.values
+      .where(
+        (m) =>
+            m.groupId == groupId &&
+            (m.profileId != null ||
+                invites.values.any((i) => i.memberId == m.id)),
+      )
+      .length;
+
+  /// [groupId]'s entitlements as billing_state reports them in each mode.
+  GroupEntitlements _entitlementsOf(String groupId) {
+    final group = switch (billingMode) {
+      BillingMode.unlocked => GroupEntitlements(
+        features: const [
+          FeatureKey.exportCsv,
+          FeatureKey.kitchenView,
+          FeatureKey.replyCutoffs,
+        ],
+        sources: entitlements[groupId]?.sources ?? const [],
+      ),
+      BillingMode.prelaunch => GroupEntitlements(
+        sources: entitlements[groupId]?.sources ?? const [],
+      ),
+      BillingMode.live =>
+        entitlements[groupId] ??
+            const GroupEntitlements(limits: {LimitKey.maxSeats: 10}),
+    };
+    return group.copyWith(seats: seats(groupId));
+  }
+
+  static const _groupFull = PostgrestException(
+    message: 'group_full',
+    code: 'P0001',
+  );
+
+  /// Refuses an invite that would take a seat in a full group.
+  void _takeSeat(String memberId) {
+    final member = members[memberId] ?? (throw notFound);
+    final max = _entitlementsOf(member.groupId).limits[LimitKey.maxSeats];
+    final holdsSeat =
+        member.profileId != null ||
+        invites.values.any((i) => i.memberId == memberId);
+    if (max != null && !holdsSeat && seats(member.groupId) >= max) {
+      throw _groupFull;
+    }
+  }
 
   // -- Row-level security, roughly -------------------------------------------
 
@@ -289,6 +361,7 @@ class _FakeInvitesService extends Fake implements InvitesService {
     String value,
   ) async {
     await _b._call();
+    _b._takeSeat(memberId);
     final invite = Invite(
       id: _b.nextId('invite'),
       memberId: memberId,
@@ -316,6 +389,14 @@ class _FakeInvitesService extends Fake implements InvitesService {
       displayNameOverride: null,
     );
     _b.invites.removeWhere((_, i) => i.memberId == member.id);
+  }
+
+  @override
+  Future<void> deleteInvitesForMember(String memberId) async {
+    await _b._call();
+    final before = _b.invites.length;
+    _b.invites.removeWhere((_, i) => i.memberId == memberId);
+    if (_b.invites.length == before) throw const NotFoundException();
   }
 
   @override
@@ -477,5 +558,25 @@ class _FakeRepliesService extends Fake implements RepliesService {
     await _b._call();
     _b.replies.remove((memberId, scheduleId, instanceDate.toUtc())) ??
         (throw FakeBackend.notFound);
+  }
+}
+
+class _FakeBillingService extends Fake implements BillingService {
+  _FakeBillingService(this._b);
+  final FakeBackend _b;
+
+  @override
+  Future<BillingState> getBillingState() async {
+    await _b._call();
+    return BillingState(
+      mode: _b.billingMode,
+      isFounder: _b.isFounder,
+      isCustomer: _b.isCustomer,
+      catalog: _b.catalog,
+      groups: {
+        for (final group in _b._visibleGroups)
+          group.id: _b._entitlementsOf(group.id),
+      },
+    );
   }
 }

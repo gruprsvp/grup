@@ -203,5 +203,12 @@
   "analyticsYes": "Me apunto",
   "analyticsNo": "Paso",
   "analyticsSetting": "Ayuda a mejorar GRUP",
-  "analyticsSettingSubtitle": "Contamos toques, no secretos."
+  "analyticsSettingSubtitle": "Contamos toques, no secretos.",
+  "errorGroupFull": "Todas las plazas de este grupo están ocupadas.",
+  "errorFeatureLocked": "El plan de este grupo no lo incluye.",
+  "errorReplyLocked": "Los cambios para este evento están cerrados. Pídeselo a un admin.",
+  "inviteCreateCode": "Crear un código de invitación",
+  "guestNoInvite": "{name} no tiene invitación: los admins responden en su lugar.",
+  "inviteCancel": "Cancelar invitaciones",
+  "inviteCancelHint": "Sigue en el grupo, los admins responden en su lugar, y libera una plaza."
 }

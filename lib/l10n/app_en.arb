@@ -572,5 +572,39 @@
   "analyticsSettingSubtitle": "We count taps, not secrets.",
   "@analyticsSettingSubtitle": {
     "description": "Subtitle of the usage analytics switch in settings."
+  },
+  "errorGroupFull": "Every spot in this group is taken.",
+  "@errorGroupFull": {
+    "description": "A group's spots are all taken (members with an account plus pending invites), so no one more can be invited."
+  },
+  "errorFeatureLocked": "This group's plan doesn't include this.",
+  "@errorFeatureLocked": {
+    "description": "The group's paid plan doesn't include what the user tried to turn on."
+  },
+  "errorReplyLocked": "Changes to this event have closed. Ask an admin.",
+  "@errorReplyLocked": {
+    "description": "A member tried to change an answer after the event's answer deadline."
+  },
+  "inviteCreateCode": "Create an invite code",
+  "@inviteCreateCode": {
+    "description": "Creates an invite code for a member who hasn't joined, so they can join and answer for themselves."
+  },
+  "guestNoInvite": "{name} has no invite: admins answer for them.",
+  "@guestNoInvite": {
+    "description": "A member without an account or invite: admins answer for them.",
+    "placeholders": {
+      "name": {
+        "type": "String",
+        "example": "Marta"
+      }
+    }
+  },
+  "inviteCancel": "Cancel invites",
+  "@inviteCancel": {
+    "description": "Withdraws a member's pending invites."
+  },
+  "inviteCancelHint": "They stay in the group, answered for by admins, and free a spot.",
+  "@inviteCancelHint": {
+    "description": "What cancelling a member's pending invites does."
   }
 }

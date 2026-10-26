@@ -694,4 +694,29 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get analyticsSettingSubtitle => 'We count taps, not secrets.';
+
+  @override
+  String get errorGroupFull => 'Every spot in this group is taken.';
+
+  @override
+  String get errorFeatureLocked => 'This group\'s plan doesn\'t include this.';
+
+  @override
+  String get errorReplyLocked =>
+      'Changes to this event have closed. Ask an admin.';
+
+  @override
+  String get inviteCreateCode => 'Create an invite code';
+
+  @override
+  String guestNoInvite(String name) {
+    return '$name has no invite: admins answer for them.';
+  }
+
+  @override
+  String get inviteCancel => 'Cancel invites';
+
+  @override
+  String get inviteCancelHint =>
+      'They stay in the group, answered for by admins, and free a spot.';
 }
