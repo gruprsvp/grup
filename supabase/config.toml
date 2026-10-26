@@ -94,3 +94,7 @@ enabled = false
 port = 54327
 # Configure one of the supported backends: `postgres`, `bigquery`.
 backend = "postgres"
+
+# Stripe authenticates its webhook with a signature, not a Supabase JWT.
+[functions.stripe-webhook]
+verify_jwt = false

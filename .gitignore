@@ -50,6 +50,8 @@ app.*.map.json
 supabase/.temp/
 supabase/.branches/
 supabase/config/localhost.json
+# Local Edge Function secrets (Stripe test keys); `supabase functions serve` reads it
+supabase/functions/.env
 
 # fastlane run artifacts (metadata itself IS committed)
 fastlane/report.xml

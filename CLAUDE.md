@@ -35,6 +35,9 @@ flutter test --plain-name "substring"     # a single test/group by name
 
 flutter run                               # the app (web/Chrome needs no extra setup)
 flutter gen-l10n                           # regenerate localizations from lib/l10n/*.arb
+
+# Edge Function tests and type check (CI's analyze job); without Deno installed:
+docker run --rm -v "$PWD/supabase/functions:/f" -w /f denoland/deno:2.9.7 sh -c 'deno test && deno check */index.ts'
 ```
 
 **iOS / macOS builds use Swift Package Manager only.** Every plugin ships as a Swift
@@ -74,7 +77,7 @@ lists the framework Material delegates, which `material_ui` widgets don't read.
 anything under `lib/` imports it. Keep test-only code (e.g. `test/support/fake_data.dart`,
 which uses `faker`) under `test/`, and check the pubspec diff after running it.
 
-**Live vs hermetic tests.** Most tests are hermetic. The `services_test.dart` suite is tagged `live` and hits a real local Supabase; it **self-skips** when `supabase/config/localhost.json` is absent, so a plain `flutter test` works without Docker. To run the live suite, bring up Supabase first (see below). CI's `verify.yaml` has three jobs: a Docker-free `analyze` job (format + analyze) on every PR, a `test` job that runs `supabase start` → `supabase test db` (pgTAP) → `flutter test --coverage` → `flutter build web`, and an `android` job (debug APK + release R8 minification, no signing) so Android breakage surfaces before the release job.
+**Live vs hermetic tests.** Most tests are hermetic. The `services_test.dart` suite is tagged `live` and hits a real local Supabase; it **self-skips** when `supabase/config/localhost.json` is absent, so a plain `flutter test` works without Docker. To run the live suite, bring up Supabase first (see below). CI's `verify.yaml` has three jobs: a Docker-free `analyze` job (format, analyze, Edge Function tests) on every PR, a `test` job that runs `supabase start` → `supabase test db` (pgTAP) → `flutter test --coverage` → `flutter build web`, and an `android` job (debug APK + release R8 minification, no signing) so Android breakage surfaces before the release job.
 
 ## Code generation
 
@@ -112,7 +115,7 @@ Tests mirror the layers: `test/services_test.dart` (live), `test/repositories/`,
 - `migrations/` — SQL schema, functions, RLS, and storage buckets. Production deploy happens in `.github/workflows/build.yaml` (`supabase db push` on merge to `main`). **New objects get no privileges by default** (`20261023120000_default_privileges.sql`, matching Supabase's 2026-10-30 change): a new table needs `enable row level security` plus explicit `grant select, insert, update, delete … to authenticated, service_role`, or prod answers 42501. A new function is executable by `authenticated` and `service_role` only; revoke that too for trigger functions. `supabase/tests/default_privileges_test.sql` checks every table, and CI runs `supabase db advisors --local --type security --fail-on warn`.
 - `functions/` — Deno edge functions (e.g. `delete_user_account`). The same `build.yaml` step deploys them (`supabase functions deploy`, after `db push`). They read the secret key from `SUPABASE_SECRET_KEYS`; the legacy `SUPABASE_SERVICE_ROLE_KEY` is only a fallback.
 - `tests/` — pgTAP SQL tests for RLS and group logic (`supabase test db`).
-- **Paid plans** (`docs/billing-and-entitlements.md`): Postgres decides what each group may do (`billing.entitlements()`), from the free plan, grants and subscriptions, in the private `billing` schema: not in the Data API, no API role holds a privilege on it (repeat the explicit revokes for every new billing object). The app reads it through `public.billing_state()` only, and checks feature and limit keys (`FeatureKey`, `LimitKey`), never plan names, through `GroupAccess`: `can` for effects, `show` for a feature's screens (never on iOS while billing is live, until in-app purchases ship), `purchaseUi` for prices (web only). Locally and on self-hosted installs the mode is `unlocked`: everything on, no limits, no billing UI.
+- **Paid plans** (`docs/billing-and-entitlements.md`): Postgres decides what each group may do (`billing.entitlements()`), from the free plan, grants and subscriptions, in the private `billing` schema: not in the Data API, no API role holds a privilege on it (repeat the explicit revokes for every new billing object). The app reads it through `public.billing_state()` only, and checks feature and limit keys (`FeatureKey`, `LimitKey`), never plan names, through `GroupAccess`: `can` for effects, `show` for a feature's screens (never on iOS while billing is live, until in-app purchases ship), `purchaseUi` for prices (web only). Locally and on self-hosted installs the mode is `unlocked`: everything on, no limits, no billing UI. The billing Edge Functions connect to Postgres directly (`SUPABASE_DB_URL`); their pure parts live in `_shared/billing_logic.ts` with Deno tests.
 - CI pins the Supabase CLI (`version:` on `supabase/setup-cli` in `verify.yaml` and in `build.yaml`, which also runs the prod `db push`). Dependabot doesn't bump it: update both, and your local CLI, together.
 
 ## Store listings & release notes

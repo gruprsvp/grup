@@ -1,11 +1,12 @@
--- Paid plans: privileges, keys, modes, entitlements, the seat cap and launch
--- (docs/billing-and-entitlements.md 16.1).
+-- Paid plans: privileges, keys, modes, entitlements, the seat cap, launch and
+-- subscription upserts (docs/billing-and-entitlements.md 16.1; reply cutoffs
+-- are in reply_cutoffs_test.sql).
 --
 -- Each section sets the mode it needs. Setup runs as postgres, which bypasses
 -- row-level security but still fires the seat triggers.
 
 begin;
-select plan(51);
+select plan(61);
 
 -- ── Privileges ─────────────────────────────────────────────────────────────
 select ok(not has_schema_privilege('anon', 'billing', 'usage'), 'anon has no usage on schema billing');
@@ -267,6 +268,88 @@ select lives_ok(
   'a legacy group has no seat limit'
 );
 update billing.plans set limits = '{"max_seats": 10}' where code = 'free' and current;
+
+-- ── Subscriptions ──────────────────────────────────────────────────────────
+select is(
+  billing.upsert_subscription('dddddddd-0000-0000-0000-000000000001', 'stripe', 'sub_unknown', 'no_such_price',
+    'bbbbbbbb-0000-0000-0000-000000000006', 'active', now() + interval '1 month', false, true),
+  null,
+  'an unknown price upserts nothing and returns null'
+);
+select isnt(
+  billing.upsert_subscription('dddddddd-0000-0000-0000-000000000001', 'stripe', 'sub_alice', 'community_s_month',
+    'bbbbbbbb-0000-0000-0000-000000000006', 'active', now() + interval '1 month', false, true),
+  null,
+  'a new subscription is upserted'
+);
+select is(
+  (select group_id from billing.subscriptions where provider_ref = 'sub_alice'),
+  'bbbbbbbb-0000-0000-0000-000000000006',
+  'it funds the group its admin bought it for'
+);
+
+-- A new version of Community S replaces the old one for new purchases (4.4).
+insert into billing.plans (code, version, rank, features, limits, current)
+select code, 2, rank, features, '{"max_seats": 18}', false from billing.plans where code = 'community_s';
+update billing.plans set current = false where code = 'community_s' and version = 1;
+update billing.plans set current = true where code = 'community_s' and version = 2;
+update billing.prices set plan_id = (select id from billing.plans where code = 'community_s' and current)
+ where provider_price_id like 'community_s_%';
+
+select billing.upsert_subscription('dddddddd-0000-0000-0000-000000000001', 'stripe', 'sub_alice', 'community_s_month',
+  'bbbbbbbb-0000-0000-0000-000000000007', 'active', now() + interval '2 months', false, true);
+select is(
+  (select p.version from billing.subscriptions s join billing.plans p on p.id = s.plan_id
+    where s.provider_ref = 'sub_alice'),
+  1,
+  'a renewal keeps the plan version that was sold'
+);
+select is(
+  (select group_id from billing.subscriptions where provider_ref = 'sub_alice'),
+  'bbbbbbbb-0000-0000-0000-000000000006',
+  'an entitled subscription keeps its group whatever the provider says'
+);
+
+select billing.upsert_subscription('dddddddd-0000-0000-0000-000000000001', 'stripe', 'sub_alice', 'community_m_month',
+  null, 'active', now() + interval '2 months', false, true);
+select is(
+  (select p.code from billing.subscriptions s join billing.plans p on p.id = s.plan_id
+    where s.provider_ref = 'sub_alice'),
+  'community_m',
+  'a price change moves the subscription to that price''s plan'
+);
+
+select billing.upsert_subscription('dddddddd-0000-0000-0000-000000000001', 'stripe', 'sub_alice', 'community_m_month',
+  null, 'expired', now(), false, true);
+select billing.upsert_subscription('dddddddd-0000-0000-0000-000000000001', 'stripe', 'sub_alice', 'community_m_month',
+  'bbbbbbbb-0000-0000-0000-000000000007', 'active', now() + interval '1 month', false, true);
+select is(
+  (select group_id from billing.subscriptions where provider_ref = 'sub_alice'),
+  'bbbbbbbb-0000-0000-0000-000000000007',
+  'coming back from a non-entitled status, it takes the group it is bought for'
+);
+
+-- Bob is a plain member of 'Funded': his subscription can't fund it.
+select billing.upsert_subscription('dddddddd-0000-0000-0000-000000000002', 'stripe', 'sub_bob', 'community_s_year',
+  'bbbbbbbb-0000-0000-0000-000000000006', 'active', now() + interval '1 year', false, true);
+select is(
+  (select group_id from billing.subscriptions where provider_ref = 'sub_bob'),
+  null,
+  'a subscription funds a group only for one of its admins'
+);
+select ok(
+  exists (select 1 from billing.attention a join billing.subscriptions s on s.id = a.subscription_id
+           where a.issue = 'funds_no_group' and s.provider_ref = 'sub_bob'),
+  'attention lists a paid subscription that funds no group'
+);
+
+select billing.upsert_subscription('dddddddd-0000-0000-0000-000000000001', 'stripe', 'sub_alice_2', 'community_l_month',
+  'bbbbbbbb-0000-0000-0000-000000000007', 'trialing', now() + interval '1 month', false, true);
+select ok(
+  exists (select 1 from billing.attention
+           where issue = 'group_funded_twice' and group_id = 'bbbbbbbb-0000-0000-0000-000000000007'),
+  'attention lists a group funded twice'
+);
 
 -- ── billing_state ──────────────────────────────────────────────────────────
 set local role authenticated;

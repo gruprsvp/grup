@@ -92,6 +92,10 @@ As we try to figure out some way to bring food on the table, we *may* have to in
 
 As you can see, this is open source software, and if you feel like we aren't doing a good job, you may fork and/or self-host.
 
+### I self-host GRUP. Do I need to set up billing?
+
+No. The database migrations leave billing `unlocked`: every feature is on, groups have no seat limit, and the app shows no plans or prices. The billing Edge Functions deploy along with the others but stay unused without Stripe keys, and `billing.launch()` refuses to run outside `prelaunch`, so nothing switches billing on by accident. How the hosted service sells plans is in [docs/billing-and-entitlements.md](docs/billing-and-entitlements.md).
+
 
 ### I have a feature request. How can I submit it?
 
