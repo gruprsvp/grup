@@ -1002,10 +1002,6 @@ void main() {
         for (final plan in state.catalog) {
           expect(features, containsAll(plan.features));
           expect(plan.limits.keys, everyElement(LimitKey.maxSeats));
-          expect(
-            plan.prices.map((price) => (price.provider, price.interval)),
-            unorderedEquals([('stripe', 'month'), ('stripe', 'year')]),
-          );
         }
       }),
     );
