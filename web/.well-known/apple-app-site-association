@@ -4,7 +4,8 @@
     "details": [
       {
         "appIDs": [
-          "D5Q258YWK7.is.giorgio.app.parousia"
+          "D5Q258YWK7.is.giorgio.app.parousia",
+          "V76NAZM6P3.is.giorgio.app.parousia"
         ],
         "paths": [
           "*"
@@ -19,7 +20,8 @@
   },
   "webcredentials": {
     "apps": [
-      "D5Q258YWK7.is.giorgio.app.parousia"
+      "D5Q258YWK7.is.giorgio.app.parousia",
+      "V76NAZM6P3.is.giorgio.app.parousia"
     ]
   }
 }

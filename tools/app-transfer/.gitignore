@@ -1,0 +1,5 @@
+.venv/
+# Migration inputs and outputs hold Apple user IDs, emails and private keys.
+*.p8
+*.csv
+*.sql
