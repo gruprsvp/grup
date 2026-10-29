@@ -136,3 +136,5 @@ Merging to `main` runs `build.yaml`: tests → create/update a draft GitHub rele
 **Moving to another developer account.** `docs/APP_TRANSFER.md` is the runbook (Play follow-ups, App Store
 transfer, Sign in with Apple user migration). Its tooling is the `tools/app-transfer` uv project (one
 `app-transfer` CLI, `uv run --project tools/app-transfer app-transfer --help`; tests: `uv run pytest` there).
+The same CLI renews Supabase's Sign in with Apple client secret (a JWT Apple caps at 6 months; web and
+Android sign-in break without it): `siwa-secret.yaml` runs `siwa secret --supabase-project` monthly.

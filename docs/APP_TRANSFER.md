@@ -228,8 +228,10 @@ gets the new `sub` before Supabase knows about it.
    ```
 
    Paste the output into Supabase → Apple → Secret Key (for OAuth). Leave Client IDs as they are,
-   because the bundle ID and the Services ID keep their identifiers. **The secret expires after
-   6 months** (the command prints the date). Put a reminder in the calendar.
+   because the bundle ID and the Services ID keep their identifiers. The secret expires after
+   6 months; the `siwa-secret.yaml` workflow renews it monthly, so **replace its GitHub secrets
+   with the new team's** (`APPLE_SIWA_KEY` = the `.p8` contents, `APPLE_SIWA_KEY_ID`,
+   `APPLE_TEAM_ID`), or its next run puts back an old-team secret.
 7. **Turn the Apple provider back on.**
 8. **Check it worked.**
    - Sign in with an existing Apple account on iOS (native) and on the web. Each must land in the
