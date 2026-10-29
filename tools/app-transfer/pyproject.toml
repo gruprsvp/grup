@@ -1,0 +1,21 @@
+[project]
+name = "app-transfer"
+version = "0.1.0"
+description = "Helpers for moving an app between App Store / Play developer accounts"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "pyjwt[crypto]",
+    "requests",
+    "typer>=0.27.3",
+]
+
+[project.scripts]
+app-transfer = "app_transfer.cli:main"
+
+[dependency-groups]
+dev = ["pytest"]
+
+[build-system]
+requires = ["uv_build>=0.11,<0.12"]
+build-backend = "uv_build"
