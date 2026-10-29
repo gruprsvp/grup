@@ -28,6 +28,7 @@ The files carry each user's old sub and email: fine when one owner controls both
 """
 import csv
 import json
+import os
 import time
 from pathlib import Path
 from typing import Annotated
@@ -37,6 +38,7 @@ import requests
 import typer
 
 APPLE = "https://appleid.apple.com"
+SUPABASE = "https://api.supabase.com"
 
 
 class Creds:
@@ -174,11 +176,35 @@ def exchange(input: Input, output: Output, team: Team, key_id: KeyId, key: Key, 
 
 
 @app.command()
-def secret(team: Team, key_id: KeyId, key: Key, client_id: Annotated[str, typer.Option(help="Services ID")]):
+def secret(team: Team, key_id: KeyId, key: Key, client_id: Annotated[str, typer.Option(help="Services ID")],
+           supabase_project: Annotated[str | None, typer.Option(
+               help="Project ref: set the secret there instead of printing it. Needs SUPABASE_ACCESS_TOKEN "
+                    "(a token scoped to that project with Auth Config and Project Settings, read-write).")] = None):
     """Supabase's Apple "Secret Key (for OAuth)": a client secret valid for Apple's maximum, 6 months."""
     now = int(time.time())
-    print(jwt.encode(
+    expires = time.strftime('%Y-%m-%d', time.gmtime(now + 15777000))
+    client_secret = jwt.encode(
         {"iss": team, "iat": now, "exp": now + 15777000, "aud": APPLE, "sub": client_id},
         key.read_text(), algorithm="ES256", headers={"kid": key_id},
-    ))
-    print(f"\nExpires {time.strftime('%Y-%m-%d', time.gmtime(now + 15777000))}: generate a new one before then.")
+    )
+    if supabase_project is None:
+        print(client_secret)
+        print(f"\nExpires {expires}: generate a new one before then.")
+        return
+    token = os.environ.get("SUPABASE_ACCESS_TOKEN")
+    if not token:
+        raise SystemExit("SUPABASE_ACCESS_TOKEN is not set.")
+    # A wrong team, key or client ID must not replace a working secret. Only this grant tells them
+    # apart (authorization_code answers invalid_grant either way); other errors don't block.
+    r = requests.post(f"{APPLE}/auth/token", timeout=30, data={
+        "grant_type": "client_credentials", "scope": "user.migration",
+        "client_id": client_id, "client_secret": client_secret,
+    })
+    if r.status_code >= 400 and "invalid_client" in r.text:
+        raise SystemExit("Apple rejected the secret (invalid_client): check the team, key ID, key and Services ID.")
+    r = requests.patch(f"{SUPABASE}/v1/projects/{supabase_project}/config/auth", timeout=30,
+                       headers={"Authorization": f"Bearer {token}"},
+                       json={"external_apple_secret": client_secret})
+    if r.status_code >= 400:
+        raise SystemExit(f"Supabase rejected the secret: {r.status_code} {r.text[:300]}")
+    print(f"Supabase project {supabase_project}: Apple secret replaced, expires {expires}.")

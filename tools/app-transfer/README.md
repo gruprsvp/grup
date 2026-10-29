@@ -7,7 +7,7 @@ runbook for GRUP is [`docs/APP_TRANSFER.md`](../../docs/APP_TRANSFER.md).
 |---|---|
 | `app-transfer asc-cleanup APP_ID [--apply] [--xcode-cloud]` | Lists, and with `--apply` clears, the TestFlight data that blocks App Store Connect's transfer check: builds, beta groups, testers, Test Information, the Xcode Cloud product. |
 | `app-transfer siwa prepare` / `siwa exchange` | Moves Sign in with Apple users in Supabase to the new team's user IDs. `prepare` runs with the old team's key, `exchange` with the new team's key and writes the SQL to run. |
-| `app-transfer siwa secret` | Prints the Apple client secret Supabase needs for web/Android sign-in ("Secret Key (for OAuth)"), valid 6 months. |
+| `app-transfer siwa secret [--supabase-project REF]` | Prints the Apple client secret Supabase needs for web/Android sign-in ("Secret Key (for OAuth)"), valid 6 months. With `--supabase-project` it sets it in that project instead (Management API, `SUPABASE_ACCESS_TOKEN`); `.github/workflows/siwa-secret.yaml` does this monthly. |
 
 `app-transfer <command> --help` prints each command's full instructions.
 
