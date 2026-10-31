@@ -54,6 +54,19 @@ jobs:
           dart run build_runner build --delete-conflicting-outputs
           git diff --exit-code -- lib
 
+      - name: Get Deno
+        uses: denoland/setup-deno@22d081ff2d3a40755e97629de92e3bcbfa7cf2ed # v2.0.5
+        with:
+          deno-version: v2.9.7
+
+      - name: Edge Function tests and type check
+        # Pure modules only: no Supabase, Stripe or network needed beyond the
+        # packages. The type check covers every function's entry point.
+        working-directory: supabase/functions
+        run: |
+          deno test
+          deno check */index.ts
+
       - name: Only allowlisted files use in-framework Material
         # Since Flutter 3.47 the app uses package:material_ui. The in-framework
         # copy (package:flutter/material.dart) defines distinct types, and mixing
