@@ -48,6 +48,7 @@ void main() {
       groupId: club.id,
       groups: repositories.groups,
       schedules: repositories.schedules,
+      billing: repositories.billing,
       date: day,
     );
     await pumpEventQueue();
@@ -61,6 +62,7 @@ void main() {
       instanceDate: dinnerAt,
       groups: repositories.groups,
       schedules: repositories.schedules,
+      billing: repositories.billing,
     );
     await pumpEventQueue();
     return vm;
@@ -152,6 +154,7 @@ void main() {
         groupId: club.id,
         groups: repositories.groups,
         schedules: repositories.schedules,
+        billing: repositories.billing,
       );
       await pumpEventQueue();
 
@@ -166,6 +169,7 @@ void main() {
         groupId: club.id,
         groups: repositories.groups,
         schedules: repositories.schedules,
+        billing: repositories.billing,
       );
       await pumpEventQueue();
 

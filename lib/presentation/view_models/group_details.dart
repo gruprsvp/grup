@@ -13,6 +13,7 @@ class GroupDetailsViewModel extends ViewModel {
     required this.groupId,
     required this._groups,
     required this._schedules,
+    required this._billing,
     DateTime? date,
   }) : _date = date ?? DateTime.now(),
        // Opened without a date: show the next event rather than an empty
@@ -23,13 +24,14 @@ class GroupDetailsViewModel extends ViewModel {
       (schedule) => _schedules.create(schedule.copyWith(groupId: groupId)),
     );
     listenTo([_groups, _schedules], _update);
-    listenTo([load, createSchedule]);
+    listenTo([_billing, load, createSchedule]);
     _update();
   }
 
   final String groupId;
   final GroupsRepository _groups;
   final SchedulesRepository _schedules;
+  final BillingRepository _billing;
 
   DateTime _date;
   bool _findNext;
@@ -48,6 +50,19 @@ class GroupDetailsViewModel extends ViewModel {
   Group? get group => _groups.group(groupId);
 
   bool get isAdmin => _groups.ownMember(groupId)?.role == GroupRoles.admin;
+
+  /// What the group's plan allows here.
+  GroupAccess get access => _billing.access(groupId);
+
+  /// When changes to [instance]'s answers closed, if they have: only admins
+  /// answer then, and nobody clears an answer (reply_cutoffs).
+  DateTime? closedAt(ScheduleInstanceSummary instance) {
+    if (!access.can(FeatureKey.replyCutoffs)) return null;
+    final closes = _schedules
+        .schedule(instance.scheduleId)
+        ?.closesAt(instance.instanceDate);
+    return closes == null || DateTime.now().isBefore(closes) ? null : closes;
+  }
 
   DateTime get date => _date;
 
@@ -105,6 +120,8 @@ class GroupDetailsViewModel extends ViewModel {
   }
 
   Future<Result<void>> _load() async {
+    // What the plan allows only adds to the page: it can't fail it.
+    _billing.refresh().ignore();
     final results = await Future.wait([
       _groups.refreshGroup(groupId),
       _loadSchedules(),

@@ -109,6 +109,22 @@ class SchedulesRepository extends UserData {
     });
   }
 
+  /// Closes changes to [schedule]'s replies [minutes] before each
+  /// occurrence, or never when null (reply_cutoffs).
+  Future<Result<Schedule>> setCutoff(Schedule schedule, int? minutes) {
+    final generation = this.generation;
+    return guard(() async {
+      final updated = await _schedulesService.updateCutoff(
+        schedule.id,
+        minutes,
+      );
+      ifCurrent(generation, () {
+        _schedules = {..._schedules, updated.id: updated};
+      });
+      return updated;
+    });
+  }
+
   /// Deletes [schedule], with its default rules and replies.
   Future<Result<void>> delete(Schedule schedule) {
     final generation = this.generation;

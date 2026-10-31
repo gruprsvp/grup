@@ -706,6 +706,46 @@ class AppLocalizationsDe extends AppLocalizations {
       'Änderungen für dieses Event sind geschlossen. Frag einen Admin.';
 
   @override
+  String get cutoffLabel => 'Änderungsschluss';
+
+  @override
+  String get cutoffNone => 'Keine Frist';
+
+  @override
+  String cutoffHours(int hours) {
+    String _temp0 = intl.Intl.pluralLogic(
+      hours,
+      locale: localeName,
+      other: '$hours Stunden vorher',
+      one: '1 Stunde vorher',
+      zero: 'Bei Beginn',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get cutoffCustom => 'Benutzerdefiniert…';
+
+  @override
+  String get cutoffCustomTitle => 'Stunden vor Beginn';
+
+  @override
+  String changesClosedAt(String time) {
+    return 'Änderungen geschlossen um $time';
+  }
+
+  @override
+  String get lateChange => 'Späte Änderung';
+
+  @override
+  String cutoffMinutes(int minutes) {
+    return '$minutes Min. vorher';
+  }
+
+  @override
+  String get cutoffCustomInvalid => 'Gib 0 bis 168 Stunden ein.';
+
+  @override
   String get inviteCreateCode => 'Einladungscode erstellen';
 
   @override

@@ -36,6 +36,9 @@ class SchedulesList extends StatelessWidget {
   /// The event open next to the list, if any.
   final ScheduleInstanceKey? selected;
 
+  /// When changes to an event's answers closed, if they have.
+  final DateTime? Function(ScheduleInstanceSummary instance)? closedAt;
+
   const SchedulesList({
     super.key,
     this.schedules,
@@ -50,6 +53,7 @@ class SchedulesList extends StatelessWidget {
     this.hasOtherMembers = true,
     this.onCreateSchedule,
     this.selected,
+    this.closedAt,
   });
 
   @override
@@ -83,6 +87,8 @@ class SchedulesList extends StatelessWidget {
                         selected?.scheduleId == schedule.scheduleId &&
                         // The address's time may differ in zone, not moment.
                         selected!.at.isAtSameMomentAs(schedule.instanceDate),
+                    closedAt: closedAt?.call(schedule),
+                    isAdmin: isAdmin,
                     onReplyChanged: onReplyChanged == null
                         ? null
                         : (reply) => onReplyChanged!(schedule, reply),

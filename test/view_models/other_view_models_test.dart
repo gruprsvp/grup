@@ -30,6 +30,7 @@ void main() {
       groupId: club.id,
       groups: repositories.groups,
       schedules: repositories.schedules,
+      billing: repositories.billing,
     );
 
     test('creates and deletes events', () async {

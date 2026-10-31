@@ -15,10 +15,43 @@ sealed class Schedule with _$Schedule {
     required String displayName,
     required DateTime startDate,
     required RecurrenceRule recurrenceRule,
+
+    /// Replies close this long before each occurrence (reply_cutoffs).
+    int? cutoffMinutesBefore,
+
+    /// The IANA time zone the occurrences' wall-clock times are in, set
+    /// with the cutoff: the server reads them there.
+    String? timeZone,
     DateTime? createdAt,
     DateTime? updatedAt,
   }) = _Schedule;
 
   factory Schedule.fromJson(Map<String, dynamic> json) =>
       _$ScheduleFromJson(json);
+}
+
+/// When an occurrence starts and when changes to it close.
+///
+/// shortcut: read in the device's time zone, not [Schedule.timeZone] (the
+/// app has no time zone database). The server, which decides, uses the
+/// schedule's; they agree whenever the device is where the group meets.
+extension ReplyCutoff on Schedule {
+  /// The moment the occurrence at [instanceDate] starts. Occurrences carry
+  /// the wall-clock time in UTC fields.
+  DateTime startsAt(DateTime instanceDate) => DateTime(
+    instanceDate.year,
+    instanceDate.month,
+    instanceDate.day,
+    instanceDate.hour,
+    instanceDate.minute,
+  );
+
+  /// When changes to the occurrence at [instanceDate] close, or `null`
+  /// without a cutoff.
+  DateTime? closesAt(DateTime instanceDate) => switch (cutoffMinutesBefore) {
+    final minutes? => startsAt(
+      instanceDate,
+    ).subtract(Duration(minutes: minutes)),
+    null => null,
+  };
 }

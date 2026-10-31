@@ -21,11 +21,16 @@ class ReplyButtons extends StatelessWidget {
   /// Without it, the answer is shown but can't be changed.
   final ValueChanged<ReplyOptions?>? onReplyChanged;
 
+  /// Whether tapping the answer clears it. Not after an event's deadline:
+  /// clearing would fall back to the usual answer unseen.
+  final bool canClear;
+
   const ReplyButtons({
     super.key,
     this.reply,
     this.defaultReply,
     this.onReplyChanged,
+    this.canClear = true,
   });
 
   @override
@@ -38,11 +43,13 @@ class ReplyButtons extends StatelessWidget {
           reply: reply,
           defaultReply: defaultReply,
           onReplyChanged: onReplyChanged,
+          canClear: canClear,
         ),
         NoButton(
           reply: reply,
           defaultReply: defaultReply,
           onReplyChanged: onReplyChanged,
+          canClear: canClear,
         ),
       ],
     );
@@ -61,6 +68,7 @@ class ReplyButton extends StatelessWidget {
 
   /// The icon's colour on [activeColor].
   final Color onActiveColor;
+  final bool canClear;
 
   const ReplyButton({
     super.key,
@@ -68,6 +76,7 @@ class ReplyButton extends StatelessWidget {
     this.reply,
     this.defaultReply,
     this.onReplyChanged,
+    this.canClear = true,
     required this.activeIcon,
     required this.inactiveIcon,
     required this.tooltip,
@@ -81,7 +90,9 @@ class ReplyButton extends StatelessWidget {
     final isDefault = defaultReply == option && reply == null;
 
     final onReplyChanged = this.onReplyChanged;
-    if (onReplyChanged == null) return _readOnly(isActive, isDefault);
+    if (onReplyChanged == null || (isActive && !canClear)) {
+      return _readOnly(isActive, isDefault);
+    }
 
     if (isActive) {
       return IconButton.filled(
@@ -152,12 +163,14 @@ class YesButton extends StatelessWidget {
   final ReplyOptions? reply;
   final ReplyOptions? defaultReply;
   final ValueChanged<ReplyOptions?>? onReplyChanged;
+  final bool canClear;
 
   const YesButton({
     super.key,
     this.reply,
     this.defaultReply,
     this.onReplyChanged,
+    this.canClear = true,
   });
 
   @override
@@ -169,6 +182,7 @@ class YesButton extends StatelessWidget {
       reply: reply,
       defaultReply: defaultReply,
       onReplyChanged: onReplyChanged,
+      canClear: canClear,
       activeIcon: FontAwesomeIcons.solidThumbsUp,
       inactiveIcon: FontAwesomeIcons.thumbsUp,
       tooltip: l10n.yes,
@@ -182,12 +196,14 @@ class NoButton extends StatelessWidget {
   final ReplyOptions? reply;
   final ReplyOptions? defaultReply;
   final ValueChanged<ReplyOptions?>? onReplyChanged;
+  final bool canClear;
 
   const NoButton({
     super.key,
     this.reply,
     this.defaultReply,
     this.onReplyChanged,
+    this.canClear = true,
   });
 
   @override
@@ -199,6 +215,7 @@ class NoButton extends StatelessWidget {
       reply: reply,
       defaultReply: defaultReply,
       onReplyChanged: onReplyChanged,
+      canClear: canClear,
       activeIcon: FontAwesomeIcons.solidThumbsDown,
       inactiveIcon: FontAwesomeIcons.thumbsDown,
       tooltip: l10n.no,

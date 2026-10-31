@@ -5,7 +5,10 @@ import 'package:parousia/models/models.dart';
 import 'package:parousia/presentation/presentation.dart';
 
 class ScheduleCreateScreen extends StatefulWidget {
-  const ScheduleCreateScreen({super.key});
+  const ScheduleCreateScreen({super.key, this.showCutoff = false});
+
+  /// Whether to offer an answer deadline (the group's plan has cutoffs).
+  final bool showCutoff;
 
   @override
   State<ScheduleCreateScreen> createState() => _ScheduleCreateScreenState();
@@ -26,6 +29,7 @@ class _ScheduleCreateScreenState extends State<ScheduleCreateScreen> {
         child: SingleChildScrollView(
           padding: const EdgeInsets.all(16.0),
           child: ScheduleForm(
+            showCutoff: widget.showCutoff,
             onChanged: (schedule) {
               setState(() {
                 _showSaveButton = true;
