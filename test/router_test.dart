@@ -35,6 +35,22 @@ void main() {
       expect(signedIn('/auth?from=%2F%2Fevil.example'), '/');
     });
 
+    test('a return from an outside page (Stripe) opens its local path', () {
+      const back = '/?return=%2Fgroups%2F1%2Fplan%3Fcheckout%3Dsuccess';
+      expect(signedIn(back), '/groups/1/plan?checkout=success');
+      expect(signedIn('/?return=%2F%2Fevil.example'), '/');
+      expect(signedIn('/?return=https%3A%2F%2Fevil.example'), '/');
+      // Only the root returns: the web host serves nothing else.
+      expect(signedIn('/groups/1?return=%2Fsettings'), isNull);
+
+      // Signed out: through sign-in, then on to the page.
+      final auth = signedOut(back)!;
+      expect(Uri.parse(auth).path, '/auth');
+      final from = signedIn(auth)!;
+      expect(from, '/?return=%2Fgroups%2F1%2Fplan%3Fcheckout%3Dsuccess');
+      expect(signedIn(from), '/groups/1/plan?checkout=success');
+    });
+
     test('opens app links at their path; other schemes go home', () {
       expect(
         signedIn('https://grup.rsvp/join/ABCD-1234?x=1'),

@@ -14,6 +14,7 @@ class _Settings extends StatelessWidget {
       settings: context.read(),
       auth: context.read(),
       profile: context.read(),
+      billing: context.read(),
     ),
     child: Consumer<SettingsViewModel>(
       builder: (context, vm, _) => builder(context, vm),
@@ -37,6 +38,14 @@ class SettingsContainer extends StatelessWidget {
               await vm.signOut.execute();
               if (context.mounted) showFailure(context, vm.signOut.result);
             },
+      onManageBilling: vm.showBilling
+          ? () async {
+              await vm.manageBilling.execute();
+              if (context.mounted) {
+                await openBillingPage(context, vm.manageBilling.result);
+              }
+            }
+          : null,
     ),
   );
 }

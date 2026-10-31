@@ -12,6 +12,7 @@ class SettingsScreen extends StatelessWidget {
     required this.analytics,
     required this.onAnalyticsChanged,
     this.onSignOut,
+    this.onManageBilling,
   });
 
   final ThemeMode themeMode;
@@ -19,6 +20,9 @@ class SettingsScreen extends StatelessWidget {
   final bool analytics;
   final ValueChanged<bool> onAnalyticsChanged;
   final VoidCallback? onSignOut;
+
+  /// Opens the billing portal; null for users who never paid on the web.
+  final VoidCallback? onManageBilling;
 
   @override
   Widget build(BuildContext context) {
@@ -48,6 +52,17 @@ class SettingsScreen extends StatelessWidget {
               ],
             ),
           ),
+          if (onManageBilling != null) ...[
+            const SizedBox(height: 8),
+            Card.filled(
+              child: ListTile(
+                leading: const Icon(Icons.receipt_long_outlined),
+                title: Text(l10n.planManageBilling),
+                subtitle: Text(l10n.settingsBillingSubtitle),
+                onTap: onManageBilling,
+              ),
+            ),
+          ],
           const SizedBox(height: 8),
           Card.filled(
             child: Column(

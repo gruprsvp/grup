@@ -39,6 +39,14 @@ class FakeBackend {
   /// The device time zone written with cutoffs.
   String timeZone = 'Europe/Zurich';
 
+  /// The checkouts and portal sessions asked for.
+  final checkouts = <({String groupId, String plan, String interval})>[];
+  final portals = <String>[];
+
+  /// While set, checkouts and portal sessions throw it (billing_state still
+  /// answers).
+  Object? stripeFailure;
+
   /// While set, every service call throws it.
   Object? failure;
 
@@ -628,5 +636,25 @@ class _FakeBillingService extends Fake implements BillingService {
           group.id: _b._entitlementsOf(group.id),
       },
     );
+  }
+
+  @override
+  Future<Uri> checkout({
+    required String groupId,
+    required String plan,
+    required String interval,
+  }) async {
+    await _b._call();
+    if (_b.stripeFailure case final failure?) throw failure;
+    _b.checkouts.add((groupId: groupId, plan: plan, interval: interval));
+    return Uri.parse('https://checkout.stripe.test/$plan-$interval');
+  }
+
+  @override
+  Future<Uri> portal({required String returnPath}) async {
+    await _b._call();
+    if (_b.stripeFailure case final failure?) throw failure;
+    _b.portals.add(returnPath);
+    return Uri.parse('https://billing.stripe.test/portal');
   }
 }

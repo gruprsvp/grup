@@ -716,6 +716,255 @@ class AppLocalizationsIt extends AppLocalizations {
       'Le modifiche per questo evento sono chiuse. Chiedi a un admin.';
 
   @override
+  String get errorAlreadyFunded => 'Questo gruppo ha già un piano.';
+
+  @override
+  String get planTitle => 'Piano';
+
+  @override
+  String get planFree => 'Gratuito';
+
+  @override
+  String planName(String plan) {
+    String _temp0 = intl.Intl.selectLogic(plan, {
+      'community_s': 'Crew',
+      'community_m': 'Club',
+      'community_l': 'Crowd',
+      'other': 'Piano',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String planFounderTrial(String date) {
+    return 'Vantaggio fondatori: tutto ciò che include un piano, gratis fino al $date';
+  }
+
+  @override
+  String get planLegacy =>
+      'Gruppo fondatore: nessun limite di posti, per sempre';
+
+  @override
+  String planEarlyAccess(String date) {
+    return 'Accesso anticipato alle novità fino al $date';
+  }
+
+  @override
+  String get planExtra => 'Funzioni extra da GRUP';
+
+  @override
+  String planExtraUntil(String date) {
+    return 'Funzioni extra da GRUP fino al $date';
+  }
+
+  @override
+  String planFundedBy(String payer) {
+    return 'Pagato da $payer';
+  }
+
+  @override
+  String planFundedRenews(String payer, String date) {
+    return 'Pagato da $payer · si rinnova il $date';
+  }
+
+  @override
+  String planFundedEnds(String payer, String date) {
+    return 'Pagato da $payer · termina il $date';
+  }
+
+  @override
+  String get planYou => 'te';
+
+  @override
+  String get planSomeone => 'qualcuno';
+
+  @override
+  String planPaymentIssue(String payer) {
+    return 'Problema di pagamento: $payer deve aggiornare il metodo di pagamento';
+  }
+
+  @override
+  String get planPaymentIssueYou =>
+      'Problema di pagamento: aggiorna il tuo metodo di pagamento';
+
+  @override
+  String planSeats(int seats, int limit) {
+    return '$seats posti occupati su $limit';
+  }
+
+  @override
+  String get planNoSeatLimit => 'Nessun limite di posti';
+
+  @override
+  String get planSeatsFull =>
+      'Il tuo gruppo è pieno. Per invitare altre persone, scegli un piano o libera un posto.';
+
+  @override
+  String planSpotsTaken(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count posti occupati',
+      one: '1 posto occupato',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get planSeatsFullPaid =>
+      'Il tuo gruppo è pieno. Per invitare altre persone, passa a una dimensione più grande o libera un posto.';
+
+  @override
+  String get planPendingInvites =>
+      'Anche gli inviti in attesa occupano un posto. Gli ospiti per cui rispondi tu sono gratis.';
+
+  @override
+  String get planChoose => 'Scegli un piano';
+
+  @override
+  String get planMonthly => 'Mensile';
+
+  @override
+  String get planYearly => 'Annuale';
+
+  @override
+  String planUpToSeats(int count) {
+    return 'Fino a $count persone';
+  }
+
+  @override
+  String planPerMonth(String price) {
+    return '$price al mese';
+  }
+
+  @override
+  String planPerYear(String price) {
+    return '$price all\'anno';
+  }
+
+  @override
+  String get planRecommended => 'Adatto al tuo gruppo';
+
+  @override
+  String get planContactUs => 'Più di 80 persone? Scrivici';
+
+  @override
+  String get planFounderDiscount =>
+      'Il tuo sconto fondatori toglie il 30% al pagamento.';
+
+  @override
+  String planBillingStarts(String date) {
+    return 'Non paghi nulla fino al $date, quando finisce il tuo vantaggio fondatori.';
+  }
+
+  @override
+  String get planSubscribe => 'Continua al pagamento';
+
+  @override
+  String get planActivating => 'Grazie! Stiamo attivando il tuo piano…';
+
+  @override
+  String get planActivationSlow =>
+      'Pagamento ricevuto. L\'attivazione richiede più del solito: ricarica tra un minuto.';
+
+  @override
+  String get planManageBilling => 'Gestisci pagamenti';
+
+  @override
+  String get settingsBillingSubtitle =>
+      'Fatture, metodo di pagamento e disdetta';
+
+  @override
+  String featureName(String feature) {
+    String _temp0 = intl.Intl.selectLogic(feature, {
+      'kitchen_view': 'Vista cucina',
+      'reply_cutoffs': 'Scadenze per le risposte',
+      'export_csv': 'Esportazione in foglio di calcolo',
+      'other': 'Altro',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get seatsFullHint =>
+      'Rimuovi membri o inviti in attesa per liberare un posto.';
+
+  @override
+  String get seePlans => 'Vedi i piani';
+
+  @override
+  String featurePitch(String feature) {
+    String _temp0 = intl.Intl.selectLogic(feature, {
+      'kitchen_view': 'Il conteggio di ogni giorno con i nomi, pronto da stampare per la cucina.',
+      'reply_cutoffs': 'Le risposte si bloccano prima dell\'evento, così il conteggio non cambia.',
+      'export_csv': 'Scarica le risposte di tutti in un foglio di calcolo.',
+      'other': '',
+    });
+    return '$_temp0';
+  }
+
+  @override
+  String get planRoomTitle => 'Spazio per crescere';
+
+  @override
+  String get planPerksEvery => 'Ogni piano include';
+
+  @override
+  String get planPerksYours => 'Il tuo piano include';
+
+  @override
+  String planFrom(String price) {
+    return 'Piani da $price al mese';
+  }
+
+  @override
+  String get planSizeTitle => 'Scegli una dimensione';
+
+  @override
+  String planSizeHint(int count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: 'Ora usi $count posti. Ogni dimensione include tutti i vantaggi.',
+      one: 'Ora usi 1 posto. Ogni dimensione include tutti i vantaggi.',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String get planTooSmall => 'Troppo piccolo per il tuo gruppo';
+
+  @override
+  String get planYearlySaving => '2 mesi gratis';
+
+  @override
+  String planYearlyNudge(String price) {
+    return 'Oppure $price all\'anno: 2 mesi gratis';
+  }
+
+  @override
+  String get planFinePrint =>
+      'IVA inclusa. Vedrai il prezzo finale prima di pagare. Disdici quando vuoi.';
+
+  @override
+  String get planManageHint =>
+      'Cambia dimensione o metodo di pagamento, scarica le fatture o disdici.';
+
+  @override
+  String get planCardUpsell => 'Più posti e vantaggi con Crew, Club o Crowd';
+
+  @override
+  String get planCardFull => 'Il tuo gruppo è pieno. Fai spazio con un piano.';
+
+  @override
+  String get planCardSee => 'Vedi il tuo piano';
+
+  @override
+  String planWelcome(String plan) {
+    return 'Benvenuti in $plan! Tutti i vantaggi sono attivi.';
+  }
+
+  @override
   String get cutoffLabel => 'Chiusura modifiche';
 
   @override

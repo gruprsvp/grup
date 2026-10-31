@@ -1,6 +1,6 @@
 {
   "schemaVersion": 2,
-  "generatedAt": "2026-10-24T11:20:05+00:00",
+  "generatedAt": "2026-10-26T07:14:58+00:00",
   "title": "Design System: GRUP",
   "extensions": {
     "colorMeta": {
@@ -363,12 +363,57 @@
           "#C7C5B4",
           "#F1EFDE"
         ]
+      },
+      "day-outline-variant": {
+        "role": "neutral",
+        "displayName": "Day Outline Variant",
+        "canonical": "#C4C6D0",
+        "tonalRamp": [
+          "#0A0C12",
+          "#22252B",
+          "#3E4148",
+          "#5B5E66",
+          "#7B7E86",
+          "#9C9FA8",
+          "#C4C6D0",
+          "#ECEEF8"
+        ]
+      },
+      "day-container-lowest": {
+        "role": "neutral",
+        "displayName": "Day Container Lowest",
+        "canonical": "#FFFFFF",
+        "tonalRamp": [
+          "#0B0B0E",
+          "#242328",
+          "#3F3F44",
+          "#5D5D62",
+          "#7D7D82",
+          "#9E9EA3",
+          "#C3C3C9",
+          "#FFFFFF"
+        ]
+      },
+      "night-outline-variant": {
+        "role": "neutral",
+        "displayName": "Night Outline Variant",
+        "canonical": "#48473A",
+        "tonalRamp": [
+          "#0D0B02",
+          "#262417",
+          "#48473A",
+          "#605E4F",
+          "#807E6E",
+          "#A19F8F",
+          "#C7C5B4",
+          "#F1EFDE"
+        ]
       }
     },
     "typographyMeta": {
       "wordmark": {
         "displayName": "Wordmark",
-        "purpose": "The GRUP name only (app bar, brand spans, feedback title)."
+        "purpose": "Names only: the GRUP name (app bar, brand spans, feedback title) and plan names as marks (36sp plan page, 28sp sheet payment step, 22sp size cards and Manage card)."
       },
       "headline": {
         "displayName": "Headline",
@@ -410,8 +455,18 @@
     "motion": [
       {
         "name": "material-default",
-        "value": "Stock platform route transitions; Hero on group avatar and name",
-        "purpose": "No custom motion tokens exist."
+        "value": "Stock platform route transitions, sheet slide, ripples; Hero on group avatar and name",
+        "purpose": "Everything except the two moments below."
+      },
+      {
+        "name": "plan-activation",
+        "value": "900ms: mark scale 0-450ms ease-out-back; added spots pop from ~225ms, staggered, each ease-out-back; welcome line fades 450-900ms. Reduce Motion: final state at once.",
+        "purpose": "The one authored moment: a plan switching on after checkout."
+      },
+      {
+        "name": "sheet-step",
+        "value": "200ms AnimatedSize + AnimatedSwitcher crossfade; 0ms under Reduce Motion",
+        "purpose": "The upgrade sheet moving between size and payment."
       }
     ],
     "breakpoints": []
@@ -488,15 +543,31 @@
       "description": "Dismissible feedback prompt on home; Sniglet title, tonal container.",
       "html": "<div class=\"ds-fb\" tabindex=\"0\"><div class=\"ds-fb-title\">Enjoying GRUP?</div><div class=\"ds-fb-body\">Tell us what to build next.</div></div>",
       "css": ".ds-fb{font-family: Cabin, system-ui, sans-serif; border-radius:16px;background:#EDEDF4;color:#191C20;padding:16px;min-width:280px;cursor:pointer;transition:background .15s} .ds-fb:hover{background:#DAE2F9;color:#3E4759} .ds-fb:focus-visible{outline:2px solid #415E91;outline-offset:2px} .ds-fb-title{font-family:Sniglet,Cabin,sans-serif;font-size:24px;padding:8px 0} .ds-fb-body{font-size:16px}"
+    },
+    {
+      "name": "Plan Card",
+      "kind": "card",
+      "refersTo": "plan-card",
+      "description": "Manage -> Members on the web: the plan mark, spots taken and the way to more. Lifted because it opens the plan page.",
+      "html": "<div class=\"ds-plan\" tabindex=\"0\" role=\"button\"><div class=\"ds-plan-top\"><span class=\"ds-mark\">Free</span><span class=\"ds-plan-count\">6 of 10 spots taken</span></div><div class=\"ds-dots\" aria-hidden=\"true\"><span class=\"ds-dot\"></span><span class=\"ds-dot\"></span><span class=\"ds-dot\"></span><span class=\"ds-dot\"></span><span class=\"ds-dot\"></span><span class=\"ds-dot\"></span><span class=\"ds-dot ds-free\"></span><span class=\"ds-dot ds-free\"></span><span class=\"ds-dot ds-free\"></span><span class=\"ds-dot ds-free\"></span></div><div class=\"ds-plan-more\"><span>More spots and perks with Crew, Club or Crowd</span><svg width=\"24\" height=\"24\" viewBox=\"0 0 24 24\" fill=\"currentColor\" aria-hidden=\"true\"><path d=\"M10 6 8.6 7.4 13.2 12l-4.6 4.6L10 18l6-6z\"/></svg></div></div>",
+      "css": ".ds-plan{font-family: Cabin, system-ui, sans-serif;display:grid;gap:12px;padding:16px;border-radius:20px;background:#F3F3FA;color:#191C20;min-width:320px;cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.3),0 1px 3px 1px rgba(0,0,0,.15);transition:background .15s} .ds-plan:hover{background:#E9E9F1} .ds-plan:focus-visible{outline:2px solid #415E91;outline-offset:2px} .ds-plan-top{display:flex;align-items:center;gap:8px;justify-content:space-between} .ds-plan-count{font-size:14px;color:#44474E} .ds-plan-more{display:flex;align-items:center;gap:8px;justify-content:space-between;font-size:14px;font-weight:500} .ds-mark{font-family:Sniglet,Cabin,sans-serif;color:#415E91;font-size:22px;line-height:28px} .ds-dots{display:flex;gap:4px} .ds-dot{width:8px;height:8px;border-radius:999px;background:#415E91} .ds-dot.ds-free{background:transparent;box-shadow:inset 0 0 0 1.5px #C4C6D0}"
+    },
+    {
+      "name": "Size Option",
+      "kind": "card",
+      "refersTo": "size-option",
+      "description": "Upgrade sheet step 1: one card per size. The fitting size on primaryContainer, others raised, a too-small size flat and outlined.",
+      "html": "<div class=\"ds-sizes\"><div class=\"ds-size ds-small\"><div><div class=\"ds-mark\">Crew</div><div>Up to 20 people</div><div class=\"ds-size-note\">Too small for your group</div></div><span class=\"ds-price\">CHF 9 a month</span></div><div class=\"ds-size ds-fits\" tabindex=\"0\" role=\"button\"><div><div class=\"ds-mark\">Club</div><div>Up to 40 people</div><div class=\"ds-size-note ds-fit\">Fits your group</div></div><span class=\"ds-price\">CHF 19 a month</span></div><div class=\"ds-size ds-raised\" tabindex=\"0\" role=\"button\"><div><div class=\"ds-mark\">Crowd</div><div>Up to 80 people</div></div><span class=\"ds-price\">CHF 35 a month</span></div></div>",
+      "css": ".ds-sizes{font-family: Cabin, system-ui, sans-serif;display:grid;gap:8px;padding:16px;background:#F3F3FA;min-width:340px;color:#191C20;font-size:16px} .ds-size{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:16px;border-radius:20px} .ds-raised,.ds-fits{cursor:pointer;box-shadow:0 1px 2px rgba(0,0,0,.3),0 1px 3px 1px rgba(0,0,0,.15);transition:filter .15s} .ds-raised{background:#FFFFFF} .ds-fits{background:#D7E3FF} .ds-raised:hover,.ds-fits:hover{filter:brightness(.97)} .ds-raised:focus-visible,.ds-fits:focus-visible{outline:2px solid #415E91;outline-offset:2px} .ds-small{border:1px solid #C4C6D0;background:transparent} .ds-size-note{font-size:14px;font-weight:500;color:#44474E} .ds-fit{color:#415E91} .ds-price{font-size:16px;font-weight:500} .ds-mark{font-family:Sniglet,Cabin,sans-serif;color:#415E91;font-size:22px;line-height:28px}"
     }
   ],
   "narrative": {
     "northStar": "The Roll Call",
-    "overview": "GRUP is the clipboard at the start of practice: names, and a tick or a cross next to each. Every screen exists to answer one question, \"who's in?\", and the design's job is to put that answer on screen before anything else. Organisers glance at it minutes before the activity starts, often on a phone, so the system values instant legibility over decoration: counts, names and answers lead, and the chrome stays out of the way.\n\nThe world is **quiet Material 3 utility with one wink**. Structure, components and motion are stock Material 3 (`package:material_ui`) on Android, iOS and web, themed through two seed colours and the Cabin typeface. The personality lives in exactly one place: the rounded, cheerful **Sniglet** wordmark \"GRUP\", and the few onboarding and feedback moments that name it. Everything else is a well-made tool.\n\nDay and night are two moods of the same brand, not an inversion. By day it's a harbour: navy and lagoon teal on a cool, near-white surface. At night it becomes a floodlit pitch: lantern olive and deep greens on a warm near-black. Both come from the brand palette in `lib/app.dart`.",
+    "overview": "GRUP is the clipboard at the start of practice: names, and a tick or a cross next to each. Every screen exists to answer one question, \"who's in?\", and the design's job is to put that answer on screen before anything else. Organisers glance at it minutes before the activity starts, often on a phone, so the system values instant legibility over decoration: counts, names and answers lead, and the chrome stays out of the way.\n\nThe world is **quiet Material 3 utility with one wink**. Structure, components and motion are stock Material 3 (`package:material_ui`) on Android, iOS and web, themed through two seed colours and the Cabin typeface. The personality lives in one typeface, used sparingly: the rounded, cheerful **Sniglet** wordmark \"GRUP\", the few onboarding and feedback moments that name it, and the names of a group's plan (Free, Crew, Club, Crowd), set as small marks. The only authored motion is the moment a plan switches on. Everything else is a well-made tool.\n\nDay and night are two moods of the same brand, not an inversion. By day it's a harbour: navy and lagoon teal on a cool, near-white surface. At night it becomes a floodlit pitch: lantern olive and deep greens on a warm near-black. Both come from the brand palette in `lib/app.dart`.",
     "keyCharacteristics": [
       "The answer leads: the headcount is the largest text on an event, and yes/no marks are the most saturated things on any screen.",
       "Stock Material 3 components, themed, never re-invented; `.adaptive()` controls where the OS has trained users.",
-      "One typeface for the UI (Cabin), one wink for the brand (Sniglet).",
+      "One typeface for the UI (Cabin), one wink for the brand (Sniglet): the GRUP name and plan names, nothing else.",
       "Separate day (navy/teal) and night (olive/green) identities.",
       "Big, friendly group names; small, factual everything else."
     ],
@@ -517,8 +588,13 @@
         "section": "colors"
       },
       {
+        "name": "The Payment Red Rule",
+        "body": "On plan surfaces the error red marks one thing: the payment-problem line of a plan in grace. A full group, a plan's end date or a too-small size stay in ink.",
+        "section": "colors"
+      },
+      {
         "name": "The One Wink Rule",
-        "body": "Sniglet appears only for the GRUP name and the feedback card's title. Never use it for buttons, labels, data, headings or numbers.",
+        "body": "Sniglet appears only for names: the GRUP name, the feedback card's title, and plan names (Free, Crew, Club, Crowd) as marks in `primary` through `PlanMark`. Never use it for prices, counts, buttons, labels, data, headings or body text.",
         "section": "typography"
       },
       {
@@ -535,6 +611,11 @@
         "name": "The Lift Means Tappable Rule",
         "body": "If it's raised, it's something you act on (an event, a group, a sheet). Section headers, notices and empty states stay flat.",
         "section": "elevation"
+      },
+      {
+        "name": "The Count Leads Rule",
+        "body": "The spots meter pictures the count beside it; it never replaces it. Dots in `primary` are people, `outlineVariant` rings are room, and a group with no limit gets a count instead of dots.",
+        "section": "components"
       }
     ],
     "dos": [
@@ -544,11 +625,13 @@
       "Do read colour from `ColorScheme` roles and text from `theme.textTheme`, so night mode and system font scale work for free.",
       "Do keep one extended FAB per screen for its single primary action.",
       "Do keep touch targets at 48dp minimum, including the reply buttons.",
-      "Do test every change in both the day (navy) and night (olive) themes."
+      "Do test every change in both the day (navy) and night (olive) themes.",
+      "Do respect Reduce Motion (`MediaQuery.disableAnimationsOf`) in any motion you author: the final state appears at once."
     ],
     "donts": [
       "Don't use Yes Green or the error red for anything except answers, counts and genuine errors (The Answer Colour Rule).",
-      "Don't set Sniglet on anything but the GRUP name (The One Wink Rule).",
+      "Don't set Sniglet on anything but the GRUP name, the feedback card's title and plan names; never on a price, a count, a button, a heading or body text (The One Wink Rule).",
+      "Don't use red on plan surfaces for anything but a failed payment; a full group is news, not an error.",
       "Don't use `tertiaryContainer` / `onTertiaryContainer`: they resolve to an off-brand pink until the scheme is fixed.",
       "Don't put text in Lagoon Teal (2.9:1) or rely on Pitch Green for anything meaningful at night (2.5:1). They are decorative rings only.",
       "Don't add custom `BoxShadow`s, gradients or glows. Lift uses Material 3 elevation levels.",
