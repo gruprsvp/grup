@@ -8,16 +8,25 @@ class RepliesService extends SupabaseService with Postgrest {
   const RepliesService({required super.supabase})
     : super(tableName: Tables.replies);
 
+  /// Every reply to [groupId]'s events in [dateRange], however many pages
+  /// that takes (a year's export runs to thousands).
   Future<List<Reply>> getRepliesForDateRange(
     String groupId,
     DateTimeRange dateRange,
   ) async {
-    return table()
-        .select('*,members!inner(*)')
-        .eq('members.group_id', groupId)
-        .gte('instance_date', dateRange.start)
-        .lt('instance_date', dateRange.end)
-        .withConverter((data) => decodeRows(data, Reply.fromJson));
+    final rows = await allPages(
+      (from, to) => table()
+          .select('*,members!inner(*)')
+          .eq('members.group_id', groupId)
+          .gte('instance_date', dateRange.start)
+          .lt('instance_date', dateRange.end)
+          // A total order (the primary key), so pages neither skip nor repeat.
+          .order('instance_date', ascending: true)
+          .order('member_id', ascending: true)
+          .order('schedule_id', ascending: true)
+          .range(from, to),
+    );
+    return decodeRows(rows, Reply.fromJson);
   }
 
   Future<Reply> createReply(Reply reply) async {

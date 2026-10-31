@@ -32,6 +32,7 @@ class GroupManageViewModel extends ViewModel {
       }
       return result;
     });
+    export = Command1(_export);
     listenTo([
       _groups,
       _schedules,
@@ -43,6 +44,7 @@ class GroupManageViewModel extends ViewModel {
       createSchedule,
       deleteSchedule,
       setCutoff,
+      export,
     ]);
   }
 
@@ -62,6 +64,9 @@ class GroupManageViewModel extends ViewModel {
   /// occurrence, or never (reply_cutoffs).
   late final Command1<Schedule, ({Schedule schedule, int? minutes})> setCutoff;
 
+  /// Everyone's answers over a range of days, as CSV (export_csv).
+  late final Command1<String, ({DateTime first, DateTime last})> export;
+
   /// What the group's plan allows here.
   GroupAccess get access => _billing.access(groupId);
 
@@ -74,6 +79,35 @@ class GroupManageViewModel extends ViewModel {
   ];
 
   List<Schedule> get schedules => _schedules.schedules(groupId);
+
+  Future<Result<String>> _export(({DateTime first, DateTime last}) days) async {
+    final result = await _schedules.repliesIn(
+      groupId,
+      DateTimeRange(
+        start: days.first.getDayStart(),
+        end: days.last.getDayEnd(),
+      ),
+    );
+    switch (result) {
+      case Error(:final error):
+        return Result.error(error);
+      case Ok(value: final replies):
+        return Result.ok(
+          answersCsv(
+            first: days.first,
+            last: days.last,
+            schedules: _schedules.schedules(groupId),
+            members: _groups.members(groupId),
+            nameOf: (member) =>
+                member.displayNameOverride ??
+                _groups.profile(member.profileId)?.displayName ??
+                '',
+            defaultRules: _schedules.defaultRules(groupId),
+            replies: replies,
+          ),
+        );
+    }
+  }
 
   Future<Result<void>> _load() async {
     // What the plan allows only adds to the page: it can't fail it.
