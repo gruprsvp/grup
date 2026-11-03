@@ -68,7 +68,9 @@ Each can be added without migrating data: bundles and chip-in replace `subscript
 
 ### 1.4 As built
 
-Phases 0 and 1 are implemented as planned below, with these differences. The code is the reference; the listings in sections 6–10 are the plan it started from.
+Phases 0 and 1 are merged: 0.1 on 2026-10-27 (#287), 1.1–1.4 on 2026-11-03 (#288–#291). Production is in `prelaunch`. What's left before launch is human: B2–B4, the live Stripe configuration (8.1), the secrets (Appendix A) and the runbook (11).
+
+They are implemented as planned below, with these differences. The code is the reference; the listings in sections 6–10 are the plan it started from.
 
 | Where | What |
 |---|---|

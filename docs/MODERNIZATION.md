@@ -2,7 +2,9 @@
 
 _Prepared 2026-06-28. Based on a full audit of the codebase (Flutter app `parousia` v1.7.2+1) across four areas: Supabase/security, state architecture, testing/CI, and web/dependencies/release._
 
-> **2026-10-25 — where things stand.** On 2026-10-24 the 2026-10-23 stack (#253–#259), the version gate, profile edits (#263), the attendance flow (#264), onboarding (#266) and the wide layout with store screenshots (#267–#269) merged and released. The S2/S4/S5 migrations reached prod before 2026-10-30. 2.0 is released (`v2.0.0` at `d4cfb6b`), and 2.0.1 (#271, #272) merged on 2026-10-25. Every open item, in one list: [2026-10-25 status](#2026-10-25--status-and-everything-still-open).
+> **2026-11-03 — where things stand.** 2.0.1 is released; billing Phases 0 and 1 are merged, with prod in `prelaunch`; Play uploads sign in with Workload Identity; the store art is generated. Every open item, in one list: [2026-11-03 status](#2026-11-03--status-and-everything-still-open).
+>
+> **2026-10-25.** On 2026-10-24 the 2026-10-23 stack (#253–#259), the version gate, profile edits (#263), the attendance flow (#264), onboarding (#266) and the wide layout with store screenshots (#267–#269) merged and released. The S2/S4/S5 migrations reached prod before 2026-10-30. 2.0 is released (`v2.0.0` at `d4cfb6b`), and 2.0.1 (#271, #272) merged on 2026-10-25.
 >
 > **2026-10-23 — a stack of seven PRs (#253–#259).** S2, S4 and S5, the `anon` table grants, S8, the multidex removal, dependency updates, and web addresses for pushed pages. See [2026-10-23 stack](#2026-10-23--the-stack-after-s1).
 >
@@ -18,7 +20,7 @@ _Prepared 2026-06-28. Based on a full audit of the codebase (Flutter app `parous
 
 ## TL;DR
 
-_The 2026-06-28 summary, kept as written. Redux, the missing safety net and Phases 0–1.5 are history now: for the current state see [2026-10-25 status](#2026-10-25--status-and-everything-still-open)._
+_The 2026-06-28 summary, kept as written. Redux, the missing safety net and Phases 0–1.5 are history now: for the current state see [2026-11-03 status](#2026-11-03--status-and-everything-still-open)._
 
 The app is a small (~7.5k hand-written LOC), production Flutter + Supabase app with a **sound core** — unidirectional Redux flow, repository-isolated side effects, RLS-backed multi-tenancy — but it has accumulated debt that blocks the stated goals (more features, a pro plan, growth, thorough testing, great web, eventual offline).
 
@@ -33,83 +35,72 @@ Three genuine decisions need your input before Phase 2 — see [Decisions](#deci
 
 ---
 
-## 2026-10-25 — status and everything still open
+## 2026-11-03 — status and everything still open
 
-**Merged and released.** On 2026-10-24, and every release run passed:
-- #253–#259 at 08:33 UTC. Run 40078516614 (`492f994`) pushed `20261023120000_default_privileges.sql` and `20261023130000_revoke_anon_tables.sql`, so prod has S2's revoke before Supabase applies it on 2026-10-30. It also built the first Android upload to Play internal with `tracks:`.
-- The minimum-version gate (`bd9bc4e`).
-- #263 (profile edits stick, a not-found page) and #264 (who's coming leads the attendance flow) at 11:43. Run 40091070440 pushed `20261024120000_profile_edits_stick.sql`.
-- #266 (in-context onboarding) at 13:33.
-- #267–#269 (store screenshots, the wide layout, publishing the screenshots) at 15:40. Run 40108091397 (`d4cfb6b`) built 2.0: the `v2.0.0` tag points at it.
+_Replaces the 2026-10-25 list (see the file's history). Update this section when PRs merge: twice it has fallen a dozen PRs behind._
 
-On 2026-10-25 at 12:37, 2.0.1 (`pubspec` 2.0.1+1, new release notes in all five languages for both stores):
-- #271: storage's delete policy refuses objects a group's picture points at (`20261025120000_keep_group_pictures.sql`, `is_group_picture`), so deleting an account no longer breaks its groups' pictures.
-- #272: the feedback card's buttons keep apart on narrow phones (closes #128).
-- Release run 40193902886 (`d6b641c`) was still running when this was written; it pushes `20261025120000`. Check it passed.
+**Since 2026-10-25:**
+- 2026-10-25: the stack #274 → #279 → #280 → #281 (replaced pictures deleted, one day per wheel gesture and calendar days, "check your email" on sign-up), #283 (a swipe shows the next day), #284 (opt-in PostHog analytics), #285 (cards, avatars, each group's next event on home).
+- 2026-10-27: billing 0.1 (#287). Prod was then set to `prelaunch`, which the user confirmed on 2026-11-03.
+- 2026-10-29: #293 (app transfer runbook and `tools/app-transfer`) and #294 (the Sign in with Apple secret renewed monthly). Both release runs failed at the Play upload, which #297 fixed.
+- 2026-11-03: #297 (Play through Workload Identity Federation), billing 1.1–1.4 (#288–#291: Stripe Edge Functions, reply cutoffs, kitchen view and export, the plan page; nothing shows while prod is in `prelaunch`), and the store art (`3d21779`, straight to `main`).
+- 2.0.1 is released in the stores (the user, 2026-11-03; which build and rollout aren't recorded). The GitHub draft `v2.0.1` isn't published: tags end at `v2.0.0`. Until it is, every merge to `main` updates that draft. The next store build needs `pubspec` 2.0.2 and new release notes, since the App Store refuses builds of a version already released.
 
-**Done:** Phase 0 except item 5 (below, under CI) and branch protection; Phase 1 except item 20's seed colours; Phase 1.5 except item 6 (pagination); D1 (B1, MVVM) and D2 (client-side); M1–M4; Widgetbook removed; invites and the auth user no longer persisted ([A2] PII at rest); S1–S6 and S8 in code; the database residuals (#263: `handle_new_invite` resets `display_name_override`, `profiles_update_self`, the app writes `profiles` directly, and `handle_upsert_user` copies a metadata field only while the profile still holds the previous metadata value, so a provider sign-in no longer overwrites an in-app edit while 1.x/2.0.0 clients and Sign in with Apple's late name still reach the profile); the router's `errorBuilder` (`NotFoundScreen`); group pictures surviving account deletion (#271); the 2.0/2.0.1 release notes.
+**The 2026-11-03 stack:**
+- iOS and macOS sign with the new team `V76NAZM6P3` (`docs/APP_TRANSFER.md` §4), plus Xcode Cloud's workflow manifest. The Apple app-site-association file already lists both teams.
+- On web, a Google or Apple sign-in now comes back to the page it started from, e.g. an invite link: the provider returns to `/?return=…`, which the router opens, as it does after Stripe. `from` comes from the route, not the browser's address, which may still show the invite link while the sign-in page builds. GoTrue should accept the redirect, since it's on the Site URL's host; if it doesn't, it falls back to the Site URL, which is the old behaviour. **Check on prod** with a signed-out browser: open an invite link and sign in with Google.
+- On a wide window, Android's back from an event leaves the group, like the list's back button. It used to land on the group's page, which opened its first event.
+
+**Done:** Phase 0 except item 5 (below, under CI) and branch protection; Phase 1 except item 20's seed colours; Phase 1.5 except item 6 (pagination); D1 (B1, MVVM) and D2 (client-side); M1–M4; S1–S6 and S8 in code; the database residuals of #263; group pictures surviving account deletion (#271); billing Phases 0 and 1 in code (`docs/billing-and-entitlements.md`).
 
 Everything still open, in one place:
 
-**Prod checks**, by deadline, each with its issue (commands and expected output are there). The agent has no prod access, and none of these has a recorded result:
-- #275, before 2026-10-30: `pg_default_acl` on prod against local (query in the 2026-10-23 section below), and `gen_random_uuid_v7`'s owner (query under S5). There's no record of the owner query being run before #253 merged. The `db push` log doesn't settle it either: it shows no notices from the remote, so it can't tell whether the `search_path` change applied or was skipped.
-- Now that #263 is live: `select count(*) from profiles p join auth.users u on u.id = p.id where p.display_name is distinct from u.raw_user_meta_data ->> 'full_name' or p.picture is distinct from u.raw_user_meta_data ->> 'avatar_url'`. Profiles that already differed when the migration ran no longer follow their metadata, so edits from 1.x/2.0.0 clients don't reach them. But since 2.0 every in-app edit differs too, legitimately: inspect the rows, don't backfill blindly (#276).
-- #276: `supabase db advisors --linked`: the prod-only checks, and Confirm #1 (email confirmations on prod). Since `feat/signup-check-email` the app tells a new email user to open the confirmation link, so confirmations can be turned on once that release is live in both stores.
-- #276, S7: `select extname from pg_extension` on prod.
-- #276, S8: prod's exposed schemas; turn off `pg_graphql`.
-- #278, S1, by the end of 2026: deactivate the legacy keys once the dashboard shows nothing uses them. Every 1.x install and the 2.0.0 builds before #257 embed one and stop working then, so 2.0.x has to be live in both stores well before.
+**Prod checks** (the agent has no prod access; none has a recorded result):
+- #275, **overdue** (deadline 2026-10-30): `pg_default_acl` on prod, and `gen_random_uuid_v7`'s owner. Supabase has applied its change by now, so check Sentry for `42501` errors since 2026-10-30, then run both queries.
+- #276: `supabase db advisors --linked`, email confirmations (only once the store builds in use have #281: Android versionCode 232 or later, and an iOS build of `3047ce1` or later; then the two checks in the issue), extensions (S7), exposed schemas and `pg_graphql` (S8), and the profiles that stopped following their metadata (don't backfill blindly).
+- #278, by the end of 2026: deactivate the legacy keys once the dashboard shows nothing uses them.
 
-**Release and stores** (#277):
-- Record which stores 2.0 reached and at what rollout (unverified: the agent can't see the consoles). The App Store had 1.7.1 live before it; neither the versionCode 224 build (legacy key) nor any other build before #257 should go out.
-- Merge #274, #279, #280 and #281 (one stack, in that order) before publishing `v2.0.1`; they join its draft. Published first, the stack needs a bump to 2.0.2 and new release notes.
-- Smoke-test 2.0.1 (the build after the stack merges) on devices against prod:
-  - sign-in with every provider, RSVP, picture upload, deleting a throwaway account that uploaded a group picture (the group keeps it);
-  - edit your name and picture, sign out, sign back in with Google (and Apple), and check the edit survived (pgTAP only simulates what GoTrue does to the metadata);
-  - onboarding, the attendance flow, and an unknown address showing the not-found page;
-  - the wide layout on a real tablet, a browser window and a desktop window. #268 was only tested in widget tests at 1280×800;
-  - replacing a profile and a group picture (#279): the old file is gone, avatars still show after a refresh;
-  - stepping through days with the arrows, swipes and, on web, a trackpad (#280);
-  - an email sign-up still signs in at once while confirmations are off (#281).
-- Then promote 2.0.1 from Play internal, attach the Xcode Cloud build to a 2.0.1 App Store version and submit.
-- Every merge to `main` that should release needs a `pubspec` version bump: `build.yaml`'s draft-release step only updates unreleased drafts. Keep `v2.0.1` a draft until it is live. Delete the stale `v1.7.2` draft, if it exists (unverified: the agent can't list releases; `v1.7.3` is a tag).
+**Release and stores** (#277): record which builds and rollouts carry 2.0.1; publish the `v2.0.1` draft; delete a stale `v1.7.2` draft if it exists. `web/app_version.json` (still 2.0.0) compares version names only, and every build from run 231 to run 240 is 2.0.1: those before #281 (run 232) and before billing 0.1 (run 235, whose older builds give every guest a code invite, so a seat) can't be told apart. Billing's launch needs those blocked before A: release 2.0.2 in both stores, then raise the minimum to 2.0.2.
+
+**Billing:** see `docs/billing-and-entitlements.md` §2 (B2 Stripe Tax, B3 legal texts, B4 dates), §8.1 (live Stripe), Appendix A (secrets) and §11 (launch runbook). Phase 2 (RevenueCat, #26) waits for about 20 paying groups.
+
+**App transfer:** `docs/APP_TRANSFER.md`. The signing team is switched in the 2026-11-03 stack; the rest of §4 (Xcode Cloud, ASC key secrets, TestFlight, private relay email) is in App Store Connect.
 
 **Code:**
-- Wide layout's known limits (#268): the first event tap from a group's page reloads the list once; back from an event on a wide window shows the group's first event; on web the mouse wheel doesn't scroll over the side margins.
+- Wide layout (#268): the first event tap from a group's page shows the list's progress bar once (the event's page builds its own list view model); on web the mouse wheel doesn't scroll over the side margins. Both need the group's routes under one shell route to fix properly.
 - Pagination (Phase 1.5 item 6). No list is near the 1000-row cap.
-- Web OAuth loses `/auth?from=…` (needs a real provider and prod's redirect allowlist to test).
 - Per-invite link-preview cards.
-- Clearing values (Phase 1.5 item 8) is done in the service only: an empty override clears it (`updateMember`), except on a guest, whose override is their only name (check constraint). No screen clears anything: nothing edits a member's override, the profile name is required, and the profile screen can't remove a picture. Add that UI if it's wanted.
-- Profile edits, until every install has the new client: old clients' edits can still be overwritten by a provider sign-in, and once a user edits their profile on web, edits from their old phone build silently stop landing.
-- #186 (`refactor/timezone`; probably the fix for #51, though it doesn't say so). It predates MVVM and needs a rewrite, and any new column or table needs the explicit grants from `CLAUDE.md`.
-- **Legacy island.** `lib/presentation/screens/auth.dart` wraps `supabase_auth_ui` 0.7.2 (still on framework Material, 8 files) in `MaterialUiCompatibilityBridge`, which is `@Deprecated`. When framework Material is formally deprecated, the bridge goes with it. Until then the web build carries both Material copies.
-- **Storage residual:** since `fix/delete-replaced-pictures`, a new profile or group picture deletes the one it replaces, and deleting a group deletes its picture. This is best effort: Storage skips files someone else uploaded (another admin's group picture), and older clients still leave theirs. Since #271 a deleted account's group pictures stay in its folder for good: their `owner_id` names a user that no longer exists, so only the secret key can delete them.
+- Clearing values (Phase 1.5 item 8) is done in the service only; no screen clears a member's override or a profile picture.
+- Profile edits, until every install has the new client: old clients' edits can still be overwritten by a provider sign-in.
+- Reply cutoffs read occurrence times in the device's zone, not the schedule's (`shortcut:` in `models/schedule.dart`); the server, which decides, uses the schedule's.
+- **Legacy island.** `lib/presentation/screens/auth.dart` wraps `supabase_auth_ui` 0.7.2 in the `@Deprecated` `MaterialUiCompatibilityBridge`. When framework Material is formally deprecated, the bridge goes with it.
+- **Storage residual:** replacing a picture deletes the old one best effort (Storage skips other users' files; older clients leave theirs), and a deleted account's group pictures stay in its folder for good.
 - **CI:** no iOS build (Xcode Cloud only) and no staging gate before prod `db push` (Phase 0 item 5; needs the environments work).
 
 **Repo settings (unverified, the agent can't read them):** branch protection requiring `analyze` and `test` on `main` (Phase 0's manual step).
 
-**Design and product:** the light and dark seeds are unrelated colours; iOS could go back to 15; D3 realtime/push, offline, the pro plan (#26, RevenueCat) and environments/flavors.
+**Design and product:** the light and dark seeds are unrelated colours; iOS could go back to 15; D3 realtime/push, offline, and environments/flavors.
 
-**Upstream:** `builtInKotlin`/`newDsl` stay off until `in_app_review` and `posthog_flutter` stop applying KGP. `build_runner` 2.17 waits for `go_router_builder` to allow `build` 5; `peanut` 6.0.2 is held by a constraint.
+**Upstream:** `builtInKotlin`/`newDsl` stay off until `in_app_review` and `posthog_flutter` stop applying KGP. `build_runner` 2.17 resolves now (dependabot #296, green). `peanut` 6.0.2 is held by a constraint.
 
 **Open GitHub issues:**
 
 | Issue | Note |
 |---|---|
-| #26 Integrate RevenueCat | The pro plan's billing (Phase 2). |
-| #51 Reply/schedule timezone mismatch | #186. |
-| #73 Localise recurrence descriptions | Partly done: the app's own rules have localized names (`recurrence_label.dart`); any other rule shows "Custom". The issue asks for a full `RruleL10n`. |
+| #26 Integrate RevenueCat | Billing Phase 2 (`docs/billing-and-entitlements.md` §12), after the 12.1 spike. |
+| #51 Reply/schedule timezone mismatch | The app now stores every occurrence and reply as a wall-clock time in UTC fields, whatever the device's zone, so replies match their occurrence; the mismatch in the issue came from the 2025 data import. What's left is #186's feature (show events in the viewer's zone), which predates MVVM and would now build on `schedules.time_zone` (billing §1.4, 1). Close both, or rewrite #186 on that column. |
+| #73 Localise recurrence descriptions | Partly done: the app's own rules have localized names (`recurrence_label.dart`); any other rule shows "Custom". |
 | #107 Master-detail groups | Partly done by #268: on wide windows a group's day and the open event sit side by side. The groups list itself is still one pane. |
-| #127 Group details scrolls into blank space | #268 rewrote group details for the wide layout. Re-check. |
-| #129 Touchpad swipes on web | `fix/web-trackpad-swipe`: one sideways scroll gesture moves one day, and `overscroll-behavior-x` stops Chrome's swipe-back. Checked with synthetic wheel events in Chrome; a real trackpad's momentum and Safari's swipe-back are unverified. |
+| #127 Group details scrolls into blank space | Not reproducible on current code (2026-10-25 comment); waiting for a recording. |
+| #129 Touchpad swipes on web | Fixed by #280 with synthetic wheel events; a real trackpad's momentum and Safari's swipe-back are unverified. |
 | #92, #125 | Enhancements: guest shortcut, forms refactor. |
-
-Closed on 2026-10-25: #85, #122, #128 (#272).
+| #275–#278 | The prod checks and release above. |
 
 ---
 
 ## 2026-10-23 — the stack after S1
 
-S1, S3 and S6 shipped on 2026-10-23 (release run 39923801096). What could be done without prod access or a product decision is a stack of PRs, each based on the one before. **All seven merged in order on 2026-10-24**; see [2026-10-25 status](#2026-10-25--status-and-everything-still-open) for the release run.
+S1, S3 and S6 shipped on 2026-10-23 (release run 39923801096). What could be done without prod access or a product decision is a stack of PRs, each based on the one before. **All seven merged in order on 2026-10-24** (release run 40078516614, `492f994`).
 
 | PR | Branch | What |
 |---|---|---|
