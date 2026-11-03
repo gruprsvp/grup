@@ -42,7 +42,7 @@ jobs:
           service_account: ${{ vars.PLAY_SERVICE_ACCOUNT }}
 
       - name: Setup Ruby
-        uses: ruby/setup-ruby@e1bd6146574da5e0795075b5319b300edb30c5b0 # v1.333.0
+        uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94 # v1.336.0
         with:
           ruby-version: "3.4"
           bundler-cache: true
@@ -61,7 +61,7 @@ jobs:
         uses: actions/checkout@v7
 
       - name: Setup Ruby
-        uses: ruby/setup-ruby@e1bd6146574da5e0795075b5319b300edb30c5b0 # v1.333.0
+        uses: ruby/setup-ruby@de492cf36cbab201753d720ce4f4e336cd688c94 # v1.336.0
         with:
           ruby-version: "3.4"
           bundler-cache: true
