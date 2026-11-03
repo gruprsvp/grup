@@ -28,6 +28,8 @@ jobs:
     permissions:
       # Pushes gh-pages and creates the draft release.
       contents: write
+      # GitHub's OIDC token, exchanged for the Play service account (keyless).
+      id-token: write
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -161,12 +163,21 @@ jobs:
           done
           ls build/whatsnew
 
+      # Workload Identity Federation: no key is stored; the job's OIDC token
+      # impersonates the Play service account (only main, by the provider's condition).
+      - name: Authenticate to Google Cloud
+        id: gcp
+        uses: google-github-actions/auth@7c6bc770dae815cd3e89ee6cdf493a5fab2cc093 # v3.0.0
+        with:
+          workload_identity_provider: ${{ vars.GCP_WORKLOAD_IDENTITY_PROVIDER }}
+          service_account: ${{ vars.PLAY_SERVICE_ACCOUNT }}
+
       - name: Upload Android app to Play Store
-        # SHA-pinned: this action receives the Play service-account JSON; a
-        # movable tag would let a compromised upstream exfiltrate it.
+        # SHA-pinned: this action receives Play credentials; a movable tag
+        # would let a compromised upstream exfiltrate them.
         uses: r0adkll/upload-google-play@e738b9dd8f2476ea806d921b64aacd24f34515a5 # v1.1.5
         with:
-          serviceAccountJsonPlainText: ${{ secrets.SERVICE_ACCOUNT_JSON }}
+          serviceAccountJson: ${{ steps.gcp.outputs.credentials_file_path }}
           packageName: is.giorgio.app.parousia
           releaseFiles: build/app/outputs/bundle/release/app-release.aab
           tracks: internal

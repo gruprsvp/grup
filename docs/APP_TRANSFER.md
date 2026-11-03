@@ -35,15 +35,22 @@ what that means for GRUP, most important first.
 ### 1. CI's service account (do this first)
 
 Google: *"Permissions and linkage settings for integrated services do not transfer
-automatically."* The service account in the `SERVICE_ACCOUNT_JSON` secret has no access to the
-app in the new account. Two things use it:
+automatically."* CI's Play service account has no access to the app in the new account. Two
+things use it:
 
 - `build.yaml`, which uploads the bundle. The next merge to `main` fails at the Android upload.
 - `store-metadata.yaml`, the `fastlane supply` job.
 
+CI holds no key: Workload Identity Federation lets the job's GitHub OIDC token impersonate the
+service account (`PLAY_SERVICE_ACCOUNT` and `GCP_WORKLOAD_IDENTITY_PROVIDER` repository
+variables, see `fastlane/README.md`). Setup: a service account without keys; pool
+`github-actions` with a GitHub OIDC provider (default audience, condition
+`assertion.repository == 'gruprsvp/grup' && assertion.ref == 'refs/heads/main'`); and
+`roles/iam.workloadIdentityUser` on the service account for
+`principal://…/workloadIdentityPools/github-actions/subject/repo:gruprsvp/grup:ref:refs/heads/main`.
+
 Fix: in the **new** Play Console account, open Users and permissions and click Invite new users.
-Enter the `client_email` from the service-account JSON. Under App permissions, add GRUP and grant
-at least these:
+Enter the service account's email. Under App permissions, add GRUP and grant at least these:
 
 - Release to production, exclude devices, and use Play App Signing
 - Release apps to testing tracks

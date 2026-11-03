@@ -59,7 +59,11 @@ resolution). Don't edit them by hand: they're generated, see
 
 ## Secrets (GitHub Actions)
 
-- `SERVICE_ACCOUNT_JSON` — Play service account (also used for build uploads).
+- Play: no secret. Workload Identity Federation lets the job's GitHub OIDC token
+  impersonate the Play service account (also used for build uploads). Repository
+  variables: `GCP_WORKLOAD_IDENTITY_PROVIDER` (the provider's full resource name)
+  and `PLAY_SERVICE_ACCOUNT` (its email). The provider only accepts runs on `main`
+  of this repo.
 - `ASC_KEY_ID`, `ASC_ISSUER_ID`, `ASC_KEY_CONTENT` — App Store Connect API key
   (team key, App Manager role; `ASC_KEY_CONTENT` is the raw `.p8` contents).
 
