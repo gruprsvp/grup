@@ -63,7 +63,7 @@ class AuthRoute extends GoRouteData with $AuthRoute {
 
   @override
   Widget build(BuildContext context, GoRouterState state) =>
-      const ReadableWidth(child: AuthScreen());
+      ReadableWidth(child: AuthScreen(from: from));
 }
 
 /// An invite link: https://grup.rsvp/join/CODE.
