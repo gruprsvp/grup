@@ -14,7 +14,11 @@ import 'package:parousia/util/config.dart';
 import 'package:supabase_auth_ui/supabase_auth_ui.dart';
 
 class AuthScreen extends StatelessWidget {
-  const AuthScreen({super.key});
+  /// Where the user was going: a web sign-in through a provider comes back
+  /// there.
+  final String? from;
+
+  const AuthScreen({super.key, this.from});
 
   @override
   Widget build(BuildContext context) {
@@ -22,14 +26,16 @@ class AuthScreen extends StatelessWidget {
     // onto a framework Theme and registers the framework localizations. It is
     // deprecated only because it is meant to be temporary.
     // ignore: deprecated_member_use
-    return const modern.MaterialUiCompatibilityBridge(
-      child: ScaffoldMessenger(child: _AuthScaffold()),
+    return modern.MaterialUiCompatibilityBridge(
+      child: ScaffoldMessenger(child: _AuthScaffold(from: from)),
     );
   }
 }
 
 class _AuthScaffold extends StatelessWidget {
-  const _AuthScaffold();
+  final String? from;
+
+  const _AuthScaffold({this.from});
 
   @override
   Widget build(BuildContext context) {
@@ -123,14 +129,24 @@ class _AuthScaffold extends StatelessWidget {
     );
   }
 
-  /// Get the redirect URL from the web browser.
-  /// This is needed to handle different ports
-  /// when launching on localhost.
   String? _getRedirectUrl() {
     if (!kIsWeb) return 'grup://auth-callback';
-
-    // On the web, Uri.base is the page's URL.
-    final uri = Uri.base;
-    return Uri(scheme: uri.scheme, host: uri.host, port: uri.port).toString();
+    // On the web, Uri.base is the page's URL. Not its `from`: the browser's
+    // address may not show the router's redirect to /auth yet.
+    return webAuthRedirect(Uri.base, from);
   }
+}
+
+/// Where a provider (OAuth, or an email link) sends the browser back to: the
+/// origin of [page] (its port matters on localhost). The web host answers
+/// only the root, so [from], the page the user was going to, comes back as
+/// `?return=`, which the router opens.
+@visibleForTesting
+String webAuthRedirect(Uri page, String? from) {
+  return Uri(
+    scheme: page.scheme,
+    host: page.host,
+    port: page.port,
+    queryParameters: from == null ? null : {'return': from},
+  ).toString();
 }

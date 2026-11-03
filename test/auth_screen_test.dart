@@ -7,6 +7,7 @@ import 'package:material_ui/material_ui.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:parousia/app.dart';
 import 'package:parousia/presentation/screens/auth.dart';
+import 'package:parousia/router.dart';
 
 import 'support/fake_supabase.dart';
 
@@ -20,6 +21,26 @@ void main() {
     locale: locale,
     home: child,
   );
+
+  test('a web sign-in comes back to the page it started from', () {
+    final back = webAuthRedirect(
+      Uri.parse('https://grup.rsvp/join/ABCD-1234'),
+      '/join/ABCD-1234',
+    );
+    expect(back, 'https://grup.rsvp?return=%2Fjoin%2FABCD-1234');
+    // The provider adds its code; once signed in, the router opens the page.
+    final arrives = Uri.parse('/?${Uri.parse(back).query}&code=x');
+    expect(redirect(arrives, true), '/join/ABCD-1234');
+
+    expect(
+      webAuthRedirect(Uri.parse('https://grup.rsvp/auth'), null),
+      'https://grup.rsvp',
+    );
+    expect(
+      webAuthRedirect(Uri.parse('http://localhost:5000/auth'), null),
+      'http://localhost:5000',
+    );
+  });
 
   testWidgets('the sign-in screen speaks the user\'s language', (tester) async {
     await tester.pumpWidget(

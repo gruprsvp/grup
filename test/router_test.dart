@@ -119,6 +119,11 @@ void main() {
     testWidgets('an invite link survives signing in', (tester) async {
       final backend = await pumpApp(tester, '/join/CODE-1');
       expect(find.byType(AuthScreen), findsOneWidget);
+      // From the route, not the browser's address, which may lag the redirect.
+      expect(
+        tester.widget<AuthScreen>(find.byType(AuthScreen)).from,
+        '/join/CODE-1',
+      );
 
       // Someone else's group, with an invite code for a new member.
       backend.userId = 'admin';
