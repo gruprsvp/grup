@@ -44,7 +44,7 @@ class GroupDetailsContainer extends StatelessWidget {
             (first == null
                 ? null
                 : (scheduleId: first.scheduleId, at: first.instanceDate));
-        return TwoPane(
+        final panes = TwoPane(
           list: _screen(context, vm, open),
           detail: open == null
               ? null
@@ -56,6 +56,16 @@ class GroupDetailsContainer extends StatelessWidget {
                   instanceDate: open.at,
                   automaticallyImplyLeading: false,
                 ),
+        );
+        if (selected == null) return panes;
+        // System back leaves the group too, like the list's back button:
+        // popping would land on the group's page, which opens its first event.
+        return PopScope(
+          canPop: false,
+          onPopInvokedWithResult: (didPop, _) {
+            if (!didPop) const HomeScreenRoute().go(context);
+          },
+          child: panes,
         );
       },
     ),

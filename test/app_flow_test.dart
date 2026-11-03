@@ -237,6 +237,23 @@ void main() {
       expect(path(), '/');
     });
 
+    testWidgets('system back from an event leaves the group', (tester) async {
+      wide(tester);
+      await pumpTwoEvents(tester);
+
+      await tester.tap(find.text('Club'));
+      await tester.pumpAndSettle();
+      await tester.tap(inList('Drinks'));
+      await tester.pumpAndSettle();
+      expect(inDetail('Drinks'), findsOneWidget);
+
+      // Android's back: not the group's page, which would open Dinner.
+      await tester.binding.handlePopRoute();
+      await tester.pumpAndSettle();
+      expect(path(), '/');
+      expect(find.byType(HomeScreen), findsOneWidget);
+    });
+
     testWidgets("a link to another group's event shows that group", (
       tester,
     ) async {
