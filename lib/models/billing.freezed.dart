@@ -18,7 +18,10 @@ mixin _$BillingState implements DiagnosticableTreeMixin {
 
 @JsonKey(unknownEnumValue: BillingMode.prelaunch) BillingMode get mode;/// The account was created before paid plans were announced.
  bool get isFounder;/// The user has paid on the web, so they have billing to manage.
- bool get isCustomer;/// The entitlements of each of the user's groups, by group id.
+ bool get isCustomer;/// The version of the terms of service in force; `null` on installs
+/// that ask nobody to accept terms (self-hosted).
+ String? get termsVersion;/// Whether the user accepted [termsVersion].
+ bool get termsAccepted;/// The entitlements of each of the user's groups, by group id.
  Map<String, GroupEntitlements> get groups;/// The plans on sale, cheapest first.
  List<CatalogPlan> get catalog;
 /// Create a copy of BillingState
@@ -35,26 +38,26 @@ void debugFillProperties(DiagnosticPropertiesBuilder properties) {
   final _this = this as BillingState;
   properties
     ..add(DiagnosticsProperty('type', 'BillingState'))
-    ..add(DiagnosticsProperty('mode', _this.mode))..add(DiagnosticsProperty('isFounder', _this.isFounder))..add(DiagnosticsProperty('isCustomer', _this.isCustomer))..add(DiagnosticsProperty('groups', _this.groups))..add(DiagnosticsProperty('catalog', _this.catalog));
+    ..add(DiagnosticsProperty('mode', _this.mode))..add(DiagnosticsProperty('isFounder', _this.isFounder))..add(DiagnosticsProperty('isCustomer', _this.isCustomer))..add(DiagnosticsProperty('termsVersion', _this.termsVersion))..add(DiagnosticsProperty('termsAccepted', _this.termsAccepted))..add(DiagnosticsProperty('groups', _this.groups))..add(DiagnosticsProperty('catalog', _this.catalog));
 }
 
 @override
 bool operator ==(Object other) {
   final _this = this as BillingState;
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is BillingState&&(identical(other.mode, _this.mode) || other.mode == _this.mode)&&(identical(other.isFounder, _this.isFounder) || other.isFounder == _this.isFounder)&&(identical(other.isCustomer, _this.isCustomer) || other.isCustomer == _this.isCustomer)&&const DeepCollectionEquality().equals(other.groups, _this.groups)&&const DeepCollectionEquality().equals(other.catalog, _this.catalog));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is BillingState&&(identical(other.mode, _this.mode) || other.mode == _this.mode)&&(identical(other.isFounder, _this.isFounder) || other.isFounder == _this.isFounder)&&(identical(other.isCustomer, _this.isCustomer) || other.isCustomer == _this.isCustomer)&&(identical(other.termsVersion, _this.termsVersion) || other.termsVersion == _this.termsVersion)&&(identical(other.termsAccepted, _this.termsAccepted) || other.termsAccepted == _this.termsAccepted)&&const DeepCollectionEquality().equals(other.groups, _this.groups)&&const DeepCollectionEquality().equals(other.catalog, _this.catalog));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
   final _this = this as BillingState;
-  return Object.hash(runtimeType,_this.mode,_this.isFounder,_this.isCustomer,const DeepCollectionEquality().hash(_this.groups),const DeepCollectionEquality().hash(_this.catalog));
+  return Object.hash(runtimeType,_this.mode,_this.isFounder,_this.isCustomer,_this.termsVersion,_this.termsAccepted,const DeepCollectionEquality().hash(_this.groups),const DeepCollectionEquality().hash(_this.catalog));
 }
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
   final _this = this as BillingState;
-  return 'BillingState(mode: ${_this.mode}, isFounder: ${_this.isFounder}, isCustomer: ${_this.isCustomer}, groups: ${_this.groups}, catalog: ${_this.catalog})';
+  return 'BillingState(mode: ${_this.mode}, isFounder: ${_this.isFounder}, isCustomer: ${_this.isCustomer}, termsVersion: ${_this.termsVersion}, termsAccepted: ${_this.termsAccepted}, groups: ${_this.groups}, catalog: ${_this.catalog})';
 }
 
 
@@ -65,7 +68,7 @@ abstract mixin class $BillingStateCopyWith<$Res>  {
   factory $BillingStateCopyWith(BillingState value, $Res Function(BillingState) _then) = _$BillingStateCopyWithImpl;
 @useResult
 $Res call({
-@JsonKey(unknownEnumValue: BillingMode.prelaunch) BillingMode mode, bool isFounder, bool isCustomer, Map<String, GroupEntitlements> groups, List<CatalogPlan> catalog
+@JsonKey(unknownEnumValue: BillingMode.prelaunch) BillingMode mode, bool isFounder, bool isCustomer, String? termsVersion, bool termsAccepted, Map<String, GroupEntitlements> groups, List<CatalogPlan> catalog
 });
 
 
@@ -82,11 +85,13 @@ class _$BillingStateCopyWithImpl<$Res>
 
 /// Create a copy of BillingState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? mode = null,Object? isFounder = null,Object? isCustomer = null,Object? groups = null,Object? catalog = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? mode = null,Object? isFounder = null,Object? isCustomer = null,Object? termsVersion = freezed,Object? termsAccepted = null,Object? groups = null,Object? catalog = null,}) {
   return _then(BillingState(
 mode: null == mode ? _self.mode : mode // ignore: cast_nullable_to_non_nullable
 as BillingMode,isFounder: null == isFounder ? _self.isFounder : isFounder // ignore: cast_nullable_to_non_nullable
 as bool,isCustomer: null == isCustomer ? _self.isCustomer : isCustomer // ignore: cast_nullable_to_non_nullable
+as bool,termsVersion: freezed == termsVersion ? _self.termsVersion : termsVersion // ignore: cast_nullable_to_non_nullable
+as String?,termsAccepted: null == termsAccepted ? _self.termsAccepted : termsAccepted // ignore: cast_nullable_to_non_nullable
 as bool,groups: null == groups ? _self.groups : groups // ignore: cast_nullable_to_non_nullable
 as Map<String, GroupEntitlements>,catalog: null == catalog ? _self.catalog : catalog // ignore: cast_nullable_to_non_nullable
 as List<CatalogPlan>,
@@ -171,10 +176,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(unknownEnumValue: BillingMode.prelaunch)  BillingMode mode,  bool isFounder,  bool isCustomer,  Map<String, GroupEntitlements> groups,  List<CatalogPlan> catalog)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function(@JsonKey(unknownEnumValue: BillingMode.prelaunch)  BillingMode mode,  bool isFounder,  bool isCustomer,  String? termsVersion,  bool termsAccepted,  Map<String, GroupEntitlements> groups,  List<CatalogPlan> catalog)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _BillingState() when $default != null:
-return $default(_that.mode,_that.isFounder,_that.isCustomer,_that.groups,_that.catalog);case _:
+return $default(_that.mode,_that.isFounder,_that.isCustomer,_that.termsVersion,_that.termsAccepted,_that.groups,_that.catalog);case _:
   return orElse();
 
 }
@@ -192,10 +197,10 @@ return $default(_that.mode,_that.isFounder,_that.isCustomer,_that.groups,_that.c
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(unknownEnumValue: BillingMode.prelaunch)  BillingMode mode,  bool isFounder,  bool isCustomer,  Map<String, GroupEntitlements> groups,  List<CatalogPlan> catalog)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function(@JsonKey(unknownEnumValue: BillingMode.prelaunch)  BillingMode mode,  bool isFounder,  bool isCustomer,  String? termsVersion,  bool termsAccepted,  Map<String, GroupEntitlements> groups,  List<CatalogPlan> catalog)  $default,) {final _that = this;
 switch (_that) {
 case _BillingState():
-return $default(_that.mode,_that.isFounder,_that.isCustomer,_that.groups,_that.catalog);}
+return $default(_that.mode,_that.isFounder,_that.isCustomer,_that.termsVersion,_that.termsAccepted,_that.groups,_that.catalog);}
 }
 /// A variant of `when` that fallback to returning `null`
 ///
@@ -209,10 +214,10 @@ return $default(_that.mode,_that.isFounder,_that.isCustomer,_that.groups,_that.c
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(unknownEnumValue: BillingMode.prelaunch)  BillingMode mode,  bool isFounder,  bool isCustomer,  Map<String, GroupEntitlements> groups,  List<CatalogPlan> catalog)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function(@JsonKey(unknownEnumValue: BillingMode.prelaunch)  BillingMode mode,  bool isFounder,  bool isCustomer,  String? termsVersion,  bool termsAccepted,  Map<String, GroupEntitlements> groups,  List<CatalogPlan> catalog)?  $default,) {final _that = this;
 switch (_that) {
 case _BillingState() when $default != null:
-return $default(_that.mode,_that.isFounder,_that.isCustomer,_that.groups,_that.catalog);case _:
+return $default(_that.mode,_that.isFounder,_that.isCustomer,_that.termsVersion,_that.termsAccepted,_that.groups,_that.catalog);case _:
   return null;
 
 }
@@ -223,8 +228,8 @@ return $default(_that.mode,_that.isFounder,_that.isCustomer,_that.groups,_that.c
 /// @nodoc
 
 @JsonSerializable(fieldRename: FieldRename.snake)
-class _BillingState with DiagnosticableTreeMixin implements BillingState {
-  const _BillingState({@JsonKey(unknownEnumValue: BillingMode.prelaunch) this.mode = BillingMode.prelaunch, this.isFounder = false, this.isCustomer = false,  Map<String, GroupEntitlements> groups = const {},  List<CatalogPlan> catalog = const []}): _groups = groups,_catalog = catalog;
+class _BillingState extends BillingState with DiagnosticableTreeMixin {
+  const _BillingState({@JsonKey(unknownEnumValue: BillingMode.prelaunch) this.mode = BillingMode.prelaunch, this.isFounder = false, this.isCustomer = false, this.termsVersion, this.termsAccepted = false,  Map<String, GroupEntitlements> groups = const {},  List<CatalogPlan> catalog = const []}): _groups = groups,_catalog = catalog,super._();
   factory _BillingState.fromJson(Map<String, dynamic> json) => _$BillingStateFromJson(json);
 
 @override@JsonKey(unknownEnumValue: BillingMode.prelaunch) final  BillingMode mode;
@@ -232,6 +237,11 @@ class _BillingState with DiagnosticableTreeMixin implements BillingState {
 @override@JsonKey() final  bool isFounder;
 /// The user has paid on the web, so they have billing to manage.
 @override@JsonKey() final  bool isCustomer;
+/// The version of the terms of service in force; `null` on installs
+/// that ask nobody to accept terms (self-hosted).
+@override final  String? termsVersion;
+/// Whether the user accepted [termsVersion].
+@override@JsonKey() final  bool termsAccepted;
 /// The entitlements of each of the user's groups, by group id.
  final  Map<String, GroupEntitlements> _groups;
 /// The entitlements of each of the user's groups, by group id.
@@ -265,23 +275,23 @@ Map<String, dynamic> toJson() {
 void debugFillProperties(DiagnosticPropertiesBuilder properties) {
     properties
     ..add(DiagnosticsProperty('type', 'BillingState'))
-    ..add(DiagnosticsProperty('mode', mode))..add(DiagnosticsProperty('isFounder', isFounder))..add(DiagnosticsProperty('isCustomer', isCustomer))..add(DiagnosticsProperty('groups', groups))..add(DiagnosticsProperty('catalog', catalog));
+    ..add(DiagnosticsProperty('mode', mode))..add(DiagnosticsProperty('isFounder', isFounder))..add(DiagnosticsProperty('isCustomer', isCustomer))..add(DiagnosticsProperty('termsVersion', termsVersion))..add(DiagnosticsProperty('termsAccepted', termsAccepted))..add(DiagnosticsProperty('groups', groups))..add(DiagnosticsProperty('catalog', catalog));
 }
 
 @override
 bool operator ==(Object other) {
-    return identical(this, other) || (other.runtimeType == runtimeType&&other is _BillingState&&(identical(other.mode, mode) || other.mode == mode)&&(identical(other.isFounder, isFounder) || other.isFounder == isFounder)&&(identical(other.isCustomer, isCustomer) || other.isCustomer == isCustomer)&&const DeepCollectionEquality().equals(other.groups, _groups)&&const DeepCollectionEquality().equals(other.catalog, _catalog));
+    return identical(this, other) || (other.runtimeType == runtimeType&&other is _BillingState&&(identical(other.mode, mode) || other.mode == mode)&&(identical(other.isFounder, isFounder) || other.isFounder == isFounder)&&(identical(other.isCustomer, isCustomer) || other.isCustomer == isCustomer)&&(identical(other.termsVersion, termsVersion) || other.termsVersion == termsVersion)&&(identical(other.termsAccepted, termsAccepted) || other.termsAccepted == termsAccepted)&&const DeepCollectionEquality().equals(other.groups, _groups)&&const DeepCollectionEquality().equals(other.catalog, _catalog));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
 int get hashCode {
-    return Object.hash(runtimeType,mode,isFounder,isCustomer,const DeepCollectionEquality().hash(_groups),const DeepCollectionEquality().hash(_catalog));
+    return Object.hash(runtimeType,mode,isFounder,isCustomer,termsVersion,termsAccepted,const DeepCollectionEquality().hash(_groups),const DeepCollectionEquality().hash(_catalog));
 }
 
 @override
 String toString({ DiagnosticLevel minLevel = DiagnosticLevel.info }) {
-    return 'BillingState(mode: $mode, isFounder: $isFounder, isCustomer: $isCustomer, groups: $groups, catalog: $catalog)';
+    return 'BillingState(mode: $mode, isFounder: $isFounder, isCustomer: $isCustomer, termsVersion: $termsVersion, termsAccepted: $termsAccepted, groups: $groups, catalog: $catalog)';
 }
 
 
@@ -292,7 +302,7 @@ abstract mixin class _$BillingStateCopyWith<$Res> implements $BillingStateCopyWi
   factory _$BillingStateCopyWith(_BillingState value, $Res Function(_BillingState) _then) = __$BillingStateCopyWithImpl;
 @override @useResult
 $Res call({
-@JsonKey(unknownEnumValue: BillingMode.prelaunch) BillingMode mode, bool isFounder, bool isCustomer, Map<String, GroupEntitlements> groups, List<CatalogPlan> catalog
+@JsonKey(unknownEnumValue: BillingMode.prelaunch) BillingMode mode, bool isFounder, bool isCustomer, String? termsVersion, bool termsAccepted, Map<String, GroupEntitlements> groups, List<CatalogPlan> catalog
 });
 
 
@@ -309,11 +319,13 @@ class __$BillingStateCopyWithImpl<$Res>
 
 /// Create a copy of BillingState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? mode = null,Object? isFounder = null,Object? isCustomer = null,Object? groups = null,Object? catalog = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? mode = null,Object? isFounder = null,Object? isCustomer = null,Object? termsVersion = freezed,Object? termsAccepted = null,Object? groups = null,Object? catalog = null,}) {
   return _then(_BillingState(
 mode: null == mode ? _self.mode : mode // ignore: cast_nullable_to_non_nullable
 as BillingMode,isFounder: null == isFounder ? _self.isFounder : isFounder // ignore: cast_nullable_to_non_nullable
 as bool,isCustomer: null == isCustomer ? _self.isCustomer : isCustomer // ignore: cast_nullable_to_non_nullable
+as bool,termsVersion: freezed == termsVersion ? _self.termsVersion : termsVersion // ignore: cast_nullable_to_non_nullable
+as String?,termsAccepted: null == termsAccepted ? _self.termsAccepted : termsAccepted // ignore: cast_nullable_to_non_nullable
 as bool,groups: null == groups ? _self._groups : groups // ignore: cast_nullable_to_non_nullable
 as Map<String, GroupEntitlements>,catalog: null == catalog ? _self._catalog : catalog // ignore: cast_nullable_to_non_nullable
 as List<CatalogPlan>,

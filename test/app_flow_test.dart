@@ -37,7 +37,7 @@ void main() {
           },
     );
     backend = fake;
-    router = createRouter(repositories.auth);
+    router = createRouter(repositories.auth, repositories.billing);
     addTearDown(router.dispose);
     await tester.pumpWidget(
       MultiProvider(
@@ -75,6 +75,31 @@ void main() {
         find.byWidgetPredicate((w) => w is FaIcon && w.icon == data.data);
     expect(icon(FontAwesomeIcons.solidThumbsUp), findsOneWidget);
     expect(icon(FontAwesomeIcons.solidThumbsDown), findsNothing);
+  });
+
+  testWidgets('a user accepts the terms in force before anything else', (
+    tester,
+  ) async {
+    await pumpApp(
+      tester,
+      seed: (backend) {
+        backend.addProfile('me', name: 'Me');
+        backend.addGroup('Club');
+        backend.termsVersion = '2026-11-15';
+      },
+    );
+
+    expect(find.byType(TermsScreen), findsOneWidget);
+    expect(find.text('Club'), findsNothing);
+    router.go('/settings');
+    await tester.pumpAndSettle();
+    expect(find.byType(TermsScreen), findsOneWidget);
+
+    await tester.tap(find.text('Accept'));
+    await tester.pumpAndSettle();
+    expect(backend.termsAccepted, {'2026-11-15'});
+    expect(find.byType(SettingsScreen), findsOneWidget);
+    expect(router.state.uri.toString(), '/settings');
   });
 
   testWidgets('an admin answering for someone else can undo it', (

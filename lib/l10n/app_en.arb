@@ -1055,5 +1055,25 @@
   "inviteCancelHint": "They stay in the group, answered for by admins, and free a spot.",
   "@inviteCancelHint": {
     "description": "What cancelling a member's pending invites does."
+  },
+  "termsTitle": "Our terms",
+  "@termsTitle": {
+    "description": "Title of the page that asks the user to accept the terms of service before using the app."
+  },
+  "termsBody": "To keep using GRUP, please read and accept our Terms of Service. Our Privacy Policy explains how we handle your data.",
+  "@termsBody": {
+    "description": "Why the page appears; it links to the terms and the privacy policy on the website."
+  },
+  "termsOfService": "Terms of Service",
+  "@termsOfService": {
+    "description": "Link to the Terms of Service on the website."
+  },
+  "privacyPolicy": "Privacy Policy",
+  "@privacyPolicy": {
+    "description": "Link to the Privacy Policy on the website."
+  },
+  "termsAccept": "Accept",
+  "@termsAccept": {
+    "description": "Button: the user accepts the terms of service."
   }
 }

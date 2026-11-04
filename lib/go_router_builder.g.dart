@@ -6,7 +6,7 @@ part of 'go_router_builder.dart';
 // GoRouterGenerator
 // **************************************************************************
 
-List<RouteBase> get $appRoutes => [$homeScreenRoute, $authRoute];
+List<RouteBase> get $appRoutes => [$homeScreenRoute, $authRoute, $termsRoute];
 
 RouteBase get $homeScreenRoute => GoRouteData.$route(
   path: '/',
@@ -530,6 +530,38 @@ mixin $AuthRoute on GoRouteData {
   @override
   String get location => GoRouteData.$location(
     '/auth',
+    queryParams: {if (_self.from != null) 'from': _self.from},
+  );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $termsRoute => GoRouteData.$route(
+  path: '/terms',
+  hasOverriddenOnExit: false,
+  factory: $TermsRoute._fromState,
+);
+
+mixin $TermsRoute on GoRouteData {
+  static TermsRoute _fromState(GoRouterState state) =>
+      TermsRoute(from: state.uri.queryParameters['from']);
+
+  TermsRoute get _self => this as TermsRoute;
+
+  @override
+  String get location => GoRouteData.$location(
+    '/terms',
     queryParams: {if (_self.from != null) 'from': _self.from},
   );
 

@@ -1064,4 +1064,20 @@ class AppLocalizationsEs extends AppLocalizations {
   @override
   String get inviteCancelHint =>
       'Sigue en el grupo, los admins responden en su lugar, y libera una plaza.';
+
+  @override
+  String get termsTitle => 'Nuestras condiciones';
+
+  @override
+  String get termsBody =>
+      'Para seguir usando GRUP, lee y acepta nuestras Condiciones del servicio. Nuestra Política de privacidad explica cómo tratamos tus datos.';
+
+  @override
+  String get termsOfService => 'Condiciones del servicio';
+
+  @override
+  String get privacyPolicy => 'Política de privacidad';
+
+  @override
+  String get termsAccept => 'Aceptar';
 }

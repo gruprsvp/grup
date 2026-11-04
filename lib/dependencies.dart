@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
@@ -106,5 +108,7 @@ class Repositories {
     for (final repository in [groups, schedules, profile, billing]) {
       repository.switchUser(auth.userId);
     }
+    // Right away, not when a page loads groups: it holds the terms to accept.
+    if (auth.userId != null) unawaited(billing.refresh());
   }
 }

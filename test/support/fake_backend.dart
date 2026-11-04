@@ -36,6 +36,10 @@ class FakeBackend {
   bool isCustomer = false;
   List<CatalogPlan> catalog = const [];
 
+  /// The terms in force, and the versions the user accepted.
+  String? termsVersion;
+  final termsAccepted = <String>{};
+
   /// The device time zone written with cutoffs.
   String timeZone = 'Europe/Zurich';
 
@@ -630,6 +634,8 @@ class _FakeBillingService extends Fake implements BillingService {
       mode: _b.billingMode,
       isFounder: _b.isFounder,
       isCustomer: _b.isCustomer,
+      termsVersion: _b.termsVersion,
+      termsAccepted: _b.termsAccepted.contains(_b.termsVersion),
       catalog: _b.catalog,
       groups: {
         for (final group in _b._visibleGroups)
@@ -648,6 +654,12 @@ class _FakeBillingService extends Fake implements BillingService {
     if (_b.stripeFailure case final failure?) throw failure;
     _b.checkouts.add((groupId: groupId, plan: plan, interval: interval));
     return Uri.parse('https://checkout.stripe.test/$plan-$interval');
+  }
+
+  @override
+  Future<void> acceptTerms(String version) async {
+    await _b._call();
+    _b.termsAccepted.add(version);
   }
 
   @override

@@ -103,7 +103,8 @@ void main() {
         seed?.call(backend);
       },
     );
-    router = createRouter(repositories.auth)..go(location);
+    router = createRouter(repositories.auth, repositories.billing)
+      ..go(location);
     addTearDown(router.dispose);
     await tester.pumpWidget(
       MultiProvider(

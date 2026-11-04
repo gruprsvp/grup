@@ -284,5 +284,10 @@
   "inviteCreateCode": "Einladungscode erstellen",
   "guestNoInvite": "{name} hat keine Einladung: Admins antworten stellvertretend.",
   "inviteCancel": "Einladungen zurückziehen",
-  "inviteCancelHint": "Bleibt in der Gruppe, Admins antworten stellvertretend, und gibt einen Platz frei."
+  "inviteCancelHint": "Bleibt in der Gruppe, Admins antworten stellvertretend, und gibt einen Platz frei.",
+  "termsTitle": "Unsere Bedingungen",
+  "termsBody": "Damit du GRUP weiter nutzen kannst, lies bitte unsere Nutzungsbedingungen und akzeptiere sie. Unsere Datenschutzerklärung erklärt, wie wir mit deinen Daten umgehen.",
+  "termsOfService": "Nutzungsbedingungen",
+  "privacyPolicy": "Datenschutzerklärung",
+  "termsAccept": "Akzeptieren"
 }

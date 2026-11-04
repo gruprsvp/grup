@@ -9,3 +9,4 @@ export 'profile.dart';
 export 'schedule_details.dart';
 export 'settings.dart';
 export 'view_model.dart';
+export 'terms.dart';

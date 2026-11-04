@@ -1,5 +1,6 @@
 import 'package:parousia/models/models.dart';
 
+import 'const.dart';
 import 'supabase.dart';
 
 /// Paid plans: the user's billing state, and Stripe's pages for the web.
@@ -22,6 +23,12 @@ class BillingService extends SupabaseService {
     'plan': plan,
     'interval': interval,
   });
+
+  /// Records that the user accepted [version] of the terms; the server sets
+  /// who and when. Accepting again changes nothing.
+  Future<void> acceptTerms(String version) => supabase
+      .from(Tables.termsAcceptances.table)
+      .upsert({'version': version}, ignoreDuplicates: true);
 
   /// Stripe's Customer Portal, which comes back to [returnPath] in the app.
   Future<Uri> portal({required String returnPath}) =>

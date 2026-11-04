@@ -8,3 +8,4 @@ export 'home.dart';
 export 'join_group.dart';
 export 'profile.dart';
 export 'settings.dart';
+export 'terms.dart';

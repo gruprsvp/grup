@@ -47,6 +47,13 @@ sealed class BillingState with _$BillingState {
     /// The user has paid on the web, so they have billing to manage.
     @Default(false) bool isCustomer,
 
+    /// The version of the terms of service in force; `null` on installs
+    /// that ask nobody to accept terms (self-hosted).
+    String? termsVersion,
+
+    /// Whether the user accepted [termsVersion].
+    @Default(false) bool termsAccepted,
+
     /// The entitlements of each of the user's groups, by group id.
     @Default({}) Map<String, GroupEntitlements> groups,
 
@@ -54,8 +61,13 @@ sealed class BillingState with _$BillingState {
     @Default([]) List<CatalogPlan> catalog,
   }) = _BillingState;
 
+  const BillingState._();
+
   factory BillingState.fromJson(Map<String, dynamic> json) =>
       _$BillingStateFromJson(json);
+
+  /// The user must accept the terms before using the app.
+  bool get termsPending => termsVersion != null && !termsAccepted;
 }
 
 /// What a group may do, and why.
