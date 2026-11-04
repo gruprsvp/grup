@@ -66,6 +66,21 @@ class AuthRoute extends GoRouteData with $AuthRoute {
       ReadableWidth(child: AuthScreen(from: from));
 }
 
+// Top level, like /auth: while the user hasn't accepted the terms in force,
+// the redirect in router.dart shows only this page.
+@TypedGoRoute<TermsRoute>(path: '/terms')
+@immutable
+class TermsRoute extends GoRouteData with $TermsRoute {
+  const TermsRoute({this.from});
+
+  /// Where to go once accepted.
+  final String? from;
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const ReadableWidth(child: TermsContainer());
+}
+
 /// An invite link: https://grup.rsvp/join/CODE.
 @immutable
 class JoinRoute extends GoRouteData with $JoinRoute {

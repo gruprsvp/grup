@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:go_router/go_router.dart';
 import 'package:parousia/presentation/presentation.dart';
 import 'package:parousia/repositories/repositories.dart';
@@ -5,18 +6,25 @@ import 'package:parousia/util/analytics.dart';
 
 import 'go_router_builder.dart';
 
-/// The app's routes. Re-runs [redirect] whenever the signed-in user changes.
-GoRouter createRouter(AuthRepository auth) => GoRouter(
-  routes: $appRoutes,
-  observers: analyticsObservers,
-  refreshListenable: auth,
-  redirect: (context, state) => redirect(state.uri, auth.isAuthenticated),
-  errorBuilder: (context, state) =>
-      NotFoundScreen(onHome: () => const HomeScreenRoute().go(context)),
-);
+/// The app's routes. Re-runs [redirect] whenever the signed-in user changes,
+/// and when billing's state (which holds the terms) does.
+GoRouter createRouter(AuthRepository auth, BillingRepository billing) =>
+    GoRouter(
+      routes: $appRoutes,
+      observers: analyticsObservers,
+      refreshListenable: Listenable.merge([auth, billing]),
+      redirect: (context, state) => redirect(
+        state.uri,
+        auth.isAuthenticated,
+        termsPending: billing.state.termsPending,
+      ),
+      errorBuilder: (context, state) =>
+          NotFoundScreen(onHome: () => const HomeScreenRoute().go(context)),
+    );
 
 /// Where to send a user who asked for [uri], or `null` to let them in.
-String? redirect(Uri uri, bool isAuthenticated) {
+/// While [termsPending], a signed-in user sees only the terms.
+String? redirect(Uri uri, bool isAuthenticated, {bool termsPending = false}) {
   // A link that opened the app (Flutter's deep linking) arrives with its
   // scheme and host. Open https://grup.rsvp/... links at their path; any
   // other scheme (grup://auth-callback, whose sign-in code Supabase
@@ -47,6 +55,15 @@ String? redirect(Uri uri, bool isAuthenticated) {
   final back = uri.queryParameters['return'];
   if (uri.path == '/' && back != null) {
     return _isLocal(back) ? back : const HomeScreenRoute().location;
+  }
+  final terms = const TermsRoute().location;
+  if (termsPending && uri.path != terms) {
+    final from = uri.toString();
+    return TermsRoute(from: from == '/' ? null : from).location;
+  }
+  if (!termsPending && uri.path == terms) {
+    final from = uri.queryParameters['from'];
+    return _isLocal(from) ? from : const HomeScreenRoute().location;
   }
   return null;
 }

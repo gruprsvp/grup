@@ -6,7 +6,8 @@ enum Tables {
   invites('invites'),
   schedules('schedules'),
   defaultRules('default_rules'),
-  replies('replies');
+  replies('replies'),
+  termsAcceptances('terms_acceptances');
 
   const Tables(this.table);
 

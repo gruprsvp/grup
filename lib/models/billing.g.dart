@@ -17,6 +17,8 @@ _BillingState _$BillingStateFromJson(Map<String, dynamic> json) =>
           BillingMode.prelaunch,
       isFounder: json['is_founder'] as bool? ?? false,
       isCustomer: json['is_customer'] as bool? ?? false,
+      termsVersion: json['terms_version'] as String?,
+      termsAccepted: json['terms_accepted'] as bool? ?? false,
       groups:
           (json['groups'] as Map<String, dynamic>?)?.map(
             (k, e) => MapEntry(
@@ -37,6 +39,8 @@ Map<String, dynamic> _$BillingStateToJson(_BillingState instance) =>
       'mode': _$BillingModeEnumMap[instance.mode]!,
       'is_founder': instance.isFounder,
       'is_customer': instance.isCustomer,
+      'terms_version': instance.termsVersion,
+      'terms_accepted': instance.termsAccepted,
       'groups': instance.groups,
       'catalog': instance.catalog,
     };

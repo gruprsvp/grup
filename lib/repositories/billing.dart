@@ -52,6 +52,20 @@ class BillingRepository extends UserData {
     return url;
   });
 
+  /// Records that the user accepted the terms in force.
+  Future<Result<void>> acceptTerms() {
+    final generation = this.generation;
+    final version = _state.termsVersion;
+    return guard(() async {
+      if (version == null) return;
+      await _billing.acceptTerms(version);
+      ifCurrent(
+        generation,
+        () => _state = _state.copyWith(termsAccepted: true),
+      );
+    });
+  }
+
   /// Stripe's Customer Portal for the payer, coming back to [returnPath].
   Future<Result<Uri>> portal(String returnPath) =>
       _refreshOnFailure(() => _billing.portal(returnPath: returnPath));

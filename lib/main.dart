@@ -88,7 +88,7 @@ Future<void> main() async {
   final app = MultiProvider(
     providers: repositories.providers,
     child: ParApp(
-      router: createRouter(repositories.auth),
+      router: createRouter(repositories.auth, repositories.billing),
       settings: repositories.settings,
       updateRequired: updateRequired,
     ),

@@ -284,5 +284,10 @@
   "inviteCreateCode": "Crea un codice d'invito",
   "guestNoInvite": "{name} non ha un invito: rispondono gli admin.",
   "inviteCancel": "Annulla gli inviti",
-  "inviteCancelHint": "Resta nel gruppo, rispondono gli admin, e libera un posto."
+  "inviteCancelHint": "Resta nel gruppo, rispondono gli admin, e libera un posto.",
+  "termsTitle": "I nostri termini",
+  "termsBody": "Per continuare a usare GRUP, leggi e accetta i nostri Termini di servizio. La nostra Informativa sulla privacy spiega come trattiamo i tuoi dati.",
+  "termsOfService": "Termini di servizio",
+  "privacyPolicy": "Informativa sulla privacy",
+  "termsAccept": "Accetta"
 }

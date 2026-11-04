@@ -1813,6 +1813,36 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'They stay in the group, answered for by admins, and free a spot.'**
   String get inviteCancelHint;
+
+  /// Title of the page that asks the user to accept the terms of service before using the app.
+  ///
+  /// In en, this message translates to:
+  /// **'Our terms'**
+  String get termsTitle;
+
+  /// Why the page appears; it links to the terms and the privacy policy on the website.
+  ///
+  /// In en, this message translates to:
+  /// **'To keep using GRUP, please read and accept our Terms of Service. Our Privacy Policy explains how we handle your data.'**
+  String get termsBody;
+
+  /// Link to the Terms of Service on the website.
+  ///
+  /// In en, this message translates to:
+  /// **'Terms of Service'**
+  String get termsOfService;
+
+  /// Link to the Privacy Policy on the website.
+  ///
+  /// In en, this message translates to:
+  /// **'Privacy Policy'**
+  String get privacyPolicy;
+
+  /// Button: the user accepts the terms of service.
+  ///
+  /// In en, this message translates to:
+  /// **'Accept'**
+  String get termsAccept;
 }
 
 class _AppLocalizationsDelegate

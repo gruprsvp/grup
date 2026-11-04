@@ -1011,6 +1011,26 @@ void main() {
     );
 
     test(
+      'accepting the terms is recorded once, however often it is sent',
+      () => runWithTemporaryGroup((supabase, _, _) async {
+        final billing = BillingService(supabase: supabase);
+        await billing.acceptTerms('test-version');
+        await billing.acceptTerms('test-version');
+
+        final rows = await supabase
+            .from('terms_acceptances')
+            .select('version, user_id');
+        expect(rows, [
+          {'version': 'test-version', 'user_id': supabase.auth.currentUser!.id},
+        ]);
+        // Locally no version is in force (self-hosted): nothing to accept.
+        final state = await billing.getBillingState();
+        expect(state.termsVersion, isNull);
+        expect(state.termsPending, isFalse);
+      }),
+    );
+
+    test(
       'a cutoff is saved with its time zone; after it, answers stay',
       () => runWithTemporaryGroup((supabase, group, _) async {
         final schedules = SchedulesService(

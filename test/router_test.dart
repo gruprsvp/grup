@@ -51,6 +51,24 @@ void main() {
       expect(signedIn(from), '/groups/1/plan?checkout=success');
     });
 
+    test('shows only the terms until they are accepted', () {
+      String? pending(String location) =>
+          redirect(Uri.parse(location), true, termsPending: true);
+      expect(pending('/'), '/terms');
+      expect(pending('/groups/1'), '/terms?from=%2Fgroups%2F1');
+      expect(pending('/terms?from=%2Fgroups%2F1'), isNull);
+      // Signed out, sign-in comes first.
+      expect(
+        redirect(Uri.parse('/groups/1'), false, termsPending: true),
+        '/auth?from=%2Fgroups%2F1',
+      );
+
+      // Accepted: on to the page asked for, in the app only.
+      expect(signedIn('/terms?from=%2Fgroups%2F1'), '/groups/1');
+      expect(signedIn('/terms'), '/');
+      expect(signedIn('/terms?from=%2F%2Fevil.example'), '/');
+    });
+
     test('opens app links at their path; other schemes go home', () {
       expect(
         signedIn('https://grup.rsvp/join/ABCD-1234?x=1'),
@@ -70,7 +88,8 @@ void main() {
       ValueNotifier<bool>? updateRequired,
     }) async {
       final (backend, repositories) = await fakeApp(userId: null);
-      final router = createRouter(repositories.auth)..go(location);
+      final router = createRouter(repositories.auth, repositories.billing)
+        ..go(location);
       addTearDown(router.dispose);
       await tester.pumpWidget(
         MultiProvider(
