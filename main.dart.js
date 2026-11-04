@@ -51342,7 +51342,7 @@ if(r!=null)r._overrideSDKInfo("posthog-flutter","5.56.2")}catch(q){s=A.a0(q)
 A.i(s)}},
 bZx(a){var s=t.N
 s=A.o(s,s)
-s.k(0,"$app_version","2.0.1")
+s.k(0,"$app_version","2.0.2")
 s.k(0,"$app_build","1")
 s.b0(0,new A.bQh(a))},
 bZS(){var s,r,q
@@ -53249,9 +53249,9 @@ for(;;)switch(s){case 0:n=a.a
 a.sacG(n==null?null:n)
 if(a.dy==null){q=a.rx.bnU(a.R8)
 a.dy=q}n=a.dx
-a.dx=n==null?"is.giorgio.app.parousia@2.0.1+241":n
+a.dx=n==null?"is.giorgio.app.parousia@2.0.2+244":n
 n=a.ok
-a.ok=n==null?"241":n
+a.ok=n==null?"244":n
 if(a.a8)a.Q.push(new A.akv())
 n=a.Q
 n.push(new A.aox())
