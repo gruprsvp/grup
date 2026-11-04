@@ -1,4 +1,2 @@
-GRUP 2.0.1 behebt drei Fehler.
-• Das Bild einer Gruppe bleibt jetzt erhalten, wenn das Mitglied, das es hinzugefügt hat, sein Konto löscht.
-• Die Schaltflächen unter „Wie machen wir uns?“ kleben auf kleinen Bildschirmen nicht mehr aneinander.
-• Der Wechsel zum nächsten oder vorherigen Tag klappt jetzt auch rund um die Zeitumstellung.
+GRUP 2.0.2 behebt einen Fehler.
+• Auf einem Tablet oder einem anderen breiten Bildschirm bringt dich „Zurück“ von einem Event jetzt zu deinen Gruppen, nicht zum ersten Event der Gruppe.

@@ -1,4 +1,2 @@
-GRUP 2.0.1 corrige tres problemas.
-• La imagen de un grupo ahora se mantiene cuando quien la añadió elimina su cuenta.
-• Los botones bajo «¿Cómo lo estamos haciendo?» ya no quedan pegados en pantallas pequeñas.
-• Pasar al día siguiente o al anterior ahora también funciona en torno al cambio de hora.
+GRUP 2.0.2 corrige un problema.
+• En una tableta u otra pantalla ancha, «Atrás» desde un evento ahora te lleva a tus grupos, no al primer evento del grupo.
