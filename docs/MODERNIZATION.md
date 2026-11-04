@@ -55,9 +55,9 @@ _Replaces the 2026-10-25 list (see the file's history). Update this section when
 
 Everything still open, in one place:
 
-**Prod checks** (the agent has no prod access; none has a recorded result):
-- #275, **overdue** (deadline 2026-10-30): `pg_default_acl` on prod, and `gen_random_uuid_v7`'s owner. Supabase has applied its change by now, so check Sentry for `42501` errors since 2026-10-30, then run both queries.
-- #276: `supabase db advisors --linked`, email confirmations (only once the store builds in use have #281: Android versionCode 232 or later, and an iOS build of `3047ce1` or later; then the two checks in the issue), extensions (S7), exposed schemas and `pg_graphql` (S8), and the profiles that stopped following their metadata (don't backfill blindly).
+**Prod checks:**
+- #275: **done** (2026-11-04). Prod's default privileges match local, and `gen_random_uuid_v7` is owned by `postgres` (a pg_tle member) with `search_path=""`.
+- #276: **done** (2026-11-04), except leaked-password protection, which needs the Pro plan. Email confirmations were already on, so before #281 an email sign-up waited on the sign-in screen with no message. Prod now runs Postgres 17, and so does local (`major_version = 17`). Advisor lint 0029 (`SECURITY DEFINER` RPCs callable by `authenticated`) is deliberate for the app's RPCs and its RLS helpers. CI's local linter doesn't report it yet.
 - #278, by the end of 2026: deactivate the legacy keys once the dashboard shows nothing uses them.
 
 **Release and stores** (#277): record which builds and rollouts carry 2.0.1; publish the `v2.0.1` draft; delete a stale `v1.7.2` draft if it exists. `web/app_version.json` (still 2.0.0) compares version names only, and every build from run 231 to run 240 is 2.0.1: those before #281 (run 232) and before billing 0.1 (run 235, whose older builds give every guest a code invite, so a seat) can't be told apart. Billing's launch needs those blocked before A: release 2.0.2 in both stores, then raise the minimum to 2.0.2.
@@ -80,6 +80,8 @@ Everything still open, in one place:
 **Repo settings (unverified, the agent can't read them):** branch protection requiring `analyze` and `test` on `main` (Phase 0's manual step).
 
 **Design and product:** the light and dark seeds are unrelated colours; iOS could go back to 15; D3 realtime/push, offline, and environments/flavors.
+
+**Supabase CLI:** CI pins 3.0.0 (`build.yaml`, `verify.yaml`; your local CLI should match). In v3 `db push` targets the local stack unless given `--remote`, and hosted changes need `--yes`. Prod queries take `--remote --read-only`; `--linked` still works until v4. `auth.email`/`auth.sms` use `enabled` in place of `enable_signup`.
 
 **Upstream:** `builtInKotlin`/`newDsl` stay off until `in_app_review` and `posthog_flutter` stop applying KGP. `build_runner` 2.17 resolves now (dependabot #296, green). `peanut` 6.0.2 is held by a constraint.
 

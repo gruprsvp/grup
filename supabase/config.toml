@@ -19,7 +19,7 @@ max_rows = 1000
 port = 54322
 # The database major version to use. This has to be the same as your remote database's. Run `SHOW
 # server_version;` on the remote database to check.
-major_version = 15
+major_version = 17
 
 [studio]
 # Port to use for Supabase Studio.
@@ -52,7 +52,7 @@ enable_signup = true
 
 [auth.email]
 # Allow/disallow new user signups via email to your project.
-enable_signup = true
+enabled = true
 # If enabled, a user will be required to confirm any email change on both the old, and new email
 # addresses. If disabled, only the new email is required to confirm.
 double_confirm_changes = true
@@ -65,7 +65,7 @@ enable_confirmations = false
 # No SMS is ever sent locally: confirmations are off, so signUp(phone:, password:)
 # auto-confirms. The Twilio block below is a dummy — the CLI refuses to enable
 # phone signup without *some* provider configured, but it is never called.
-enable_signup = true
+enabled = true
 enable_confirmations = false
 
 [auth.sms.twilio]
