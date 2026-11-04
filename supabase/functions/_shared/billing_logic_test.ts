@@ -90,6 +90,7 @@ Deno.test("the webhook rejects an invalid signature with 400", async () => {
   const handler = stripeWebhook(
     () => Promise.reject(new Error("No signatures found")),
     (id) => Promise.resolve(void synced.push(id)),
+    () => Promise.resolve(),
   );
   const response = await handler(post());
   assertEquals(response.status, 400);
@@ -113,6 +114,7 @@ Deno.test("the webhook syncs the subscription an event is about", async () => {
     const handler = stripeWebhook(
       () => event(type, object),
       (id) => Promise.resolve(void synced.push(id)),
+      () => Promise.resolve(),
     );
     const response = await handler(post());
     assertEquals(response.status, 200, type);
@@ -124,6 +126,7 @@ Deno.test("the webhook answers 500 when the sync fails, so Stripe retries", asyn
   const handler = stripeWebhook(
     () => event("customer.subscription.updated", { id: "sub_1" }),
     () => Promise.reject(new Error("database down")),
+    () => Promise.resolve(),
   );
   const error = console.error;
   console.error = () => {};
@@ -131,5 +134,23 @@ Deno.test("the webhook answers 500 when the sync fails, so Stripe retries", asyn
     assertEquals((await handler(post())).status, 500);
   } finally {
     console.error = error;
+  }
+});
+
+Deno.test("the webhook records fully refunded payments only", async () => {
+  const cases: [Record<string, unknown>, string[]][] = [
+    [{ refunded: true, payment_intent: "pi_1" }, ["pi_1"]],
+    [{ refunded: false, payment_intent: "pi_2" }, []], // partial
+    [{ refunded: true, payment_intent: null }, []],
+  ];
+  for (const [object, expected] of cases) {
+    const refunded: string[] = [];
+    const handler = stripeWebhook(
+      () => event("charge.refunded", object),
+      () => Promise.resolve(),
+      (id) => Promise.resolve(void refunded.push(id)),
+    );
+    assertEquals((await handler(post())).status, 200);
+    assertEquals(refunded, expected, JSON.stringify(object));
   }
 });

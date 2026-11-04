@@ -105,6 +105,29 @@ export async function syncStripeSubscription(id: string) {
 }
 
 /**
+ * Records that the payment [paymentIntentId] was refunded in full, on the
+ * subscription it paid for; billing.attention then lists the subscription
+ * if it still renews. A refund doesn't cancel anything in Stripe.
+ */
+export async function markRefunded(paymentIntentId: string) {
+  // Since API 2025-03-31.basil a charge has no invoice: find it through the
+  // invoice payment, and the subscription through the invoice's parent.
+  const { data: [payment] } = await stripe().invoicePayments.list({
+    payment: { type: "payment_intent", payment_intent: paymentIntentId },
+    limit: 1,
+  });
+  if (!payment) return; // not a subscription payment
+  const invoice = await stripe().invoices.retrieve(payment.invoice as string);
+  const sub = invoice.parent?.subscription_details?.subscription;
+  if (!sub) return;
+  await sql()`
+    update billing.subscriptions set refunded_at = now()
+     where provider = 'stripe' and provider_ref = ${
+    typeof sub === "string" ? sub : sub.id
+  }`;
+}
+
+/**
  * Sets the user's entitled Stripe subscriptions to cancel at the end of their
  * period (10): once the account is gone they can't do it themselves. Their
  * groups stay funded until then.

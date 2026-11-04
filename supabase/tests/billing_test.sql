@@ -6,7 +6,7 @@
 -- row-level security but still fires the seat triggers.
 
 begin;
-select plan(61);
+select plan(63);
 
 -- ── Privileges ─────────────────────────────────────────────────────────────
 select ok(not has_schema_privilege('anon', 'billing', 'usage'), 'anon has no usage on schema billing');
@@ -350,6 +350,20 @@ select ok(
            where issue = 'group_funded_twice' and group_id = 'bbbbbbbb-0000-0000-0000-000000000007'),
   'attention lists a group funded twice'
 );
+
+update billing.subscriptions set refunded_at = now() where provider_ref = 'sub_alice';
+select ok(
+  exists (select 1 from billing.attention a join billing.subscriptions s on s.id = a.subscription_id
+           where a.issue = 'refunded_still_active' and s.provider_ref = 'sub_alice'),
+  'attention lists a refunded subscription that still renews'
+);
+update billing.subscriptions set cancel_at_period_end = true where provider_ref = 'sub_alice';
+select ok(
+  not exists (select 1 from billing.attention a join billing.subscriptions s on s.id = a.subscription_id
+               where a.issue = 'refunded_still_active' and s.provider_ref = 'sub_alice'),
+  'a refunded subscription set to end needs nothing more'
+);
+update billing.subscriptions set cancel_at_period_end = false, refunded_at = null where provider_ref = 'sub_alice';
 
 -- ── billing_state ──────────────────────────────────────────────────────────
 set local role authenticated;

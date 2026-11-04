@@ -61,11 +61,13 @@ Deno.serve(handle(async (req) => {
     mode: "subscription",
     customer: customer.stripe_customer_id,
     line_items: [{ price: price.id, quantity: 1 }],
-    automatic_tax: { enabled: true }, // Stripe Tax path (B2)
+    // Link, LLC sells the plan as merchant of record (B2): it handles tax,
+    // invoices and receipts, so automatic_tax, tax_id_collection and
+    // customer_update aren't allowed. Checkout writes the name and billing
+    // address it collects to `customer`.
+    managed_payments: { enabled: true },
     billing_address_collection: "required",
-    tax_id_collection: { enabled: true },
-    customer_update: { address: "auto", name: "auto" },
-    consent_collection: { terms_of_service: "required" }, // wording per B3
+    consent_collection: { terms_of_service: "required" }, // the terms only (B3)
     discounts: ctx.founder ? [{ coupon: "founder-30" }] : undefined,
     subscription_data: {
       metadata: { group_id: groupId },
