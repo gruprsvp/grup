@@ -76,10 +76,12 @@ type StripeEvent = { id: string; type: string; data: { object: unknown } };
 /**
  * The stripe-webhook handler. Events are only triggers: [sync] fetches the
  * subscription's current state, so duplicates and ordering don't matter.
+ * [refunded] records a fully refunded payment, which can be repeated too.
  */
 export const stripeWebhook = (
   verify: (body: string, signature: string) => Promise<StripeEvent>,
   sync: (subscriptionId: string) => Promise<void>,
+  refunded: (paymentIntentId: string) => Promise<void>,
 ) =>
 async (req: Request): Promise<Response> => {
   let event: StripeEvent;
@@ -92,8 +94,10 @@ async (req: Request): Promise<Response> => {
     return new Response("invalid signature", { status: 400 });
   }
   const subscriptionId = subscriptionOf(event);
+  const paymentIntentId = refundOf(event);
   try {
     if (subscriptionId) await sync(subscriptionId);
+    if (paymentIntentId) await refunded(paymentIntentId);
     return new Response("ok");
   } catch (e) {
     console.error(event.id, e);
@@ -112,5 +116,17 @@ export function subscriptionOf(event: StripeEvent): string | null {
   return event.type.startsWith("customer.subscription.") &&
       typeof o.id === "string"
     ? o.id
+    : null;
+}
+
+/**
+ * The payment intent of a fully refunded charge. Partial refunds are left
+ * out: operations makes them for yearly plans it keeps running (15.2).
+ */
+export function refundOf(event: StripeEvent): string | null {
+  const o = event.data.object as Record<string, unknown>;
+  return event.type === "charge.refunded" && o.refunded === true &&
+      typeof o.payment_intent === "string"
+    ? o.payment_intent
     : null;
 }
