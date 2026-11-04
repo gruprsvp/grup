@@ -1,4 +1,2 @@
-GRUP 2.0.1 fixes three things.
-• A group's picture now stays when the member who added it deletes their account.
-• The buttons under “How are we doing?” no longer touch on small screens.
-• Moving to the next or previous day now also works around the days the clocks change.
+GRUP 2.0.2 fixes one thing.
+• On a tablet or another wide screen, Back from an event now takes you to your groups, not to the group's first event.
