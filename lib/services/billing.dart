@@ -34,6 +34,27 @@ class BillingService extends SupabaseService {
   Future<Uri> portal({required String returnPath}) =>
       _url('billing-portal', {'return_path': returnPath});
 
+  /// Asks the public cancellation page's function to [action] (`cancel` or
+  /// `withdraw`) the plans paid for by the account with [email]: all of
+  /// them, or [groupId]'s. It answers the same whether or not the account or
+  /// plans exist, and emails the account a confirmation in [language].
+  Future<void> requestCancellation({
+    required String action,
+    required String email,
+    String? groupId,
+    String? name,
+    required String language,
+  }) => supabase.functions.invoke(
+    'billing-cancel',
+    body: {
+      'action': action,
+      'email': email,
+      'group_id': ?groupId,
+      'name': ?name,
+      'locale': language,
+    },
+  );
+
   Future<Uri> _url(String function, Map<String, Object> body) async {
     final response = await supabase.functions.invoke(function, body: body);
     return Uri.parse((response.data as Map)['url'] as String);

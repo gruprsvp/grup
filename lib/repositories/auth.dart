@@ -29,6 +29,9 @@ class AuthRepository extends ChangeNotifier {
 
   bool get isAuthenticated => _userId != null;
 
+  /// The signed-in user's email address, if they have one.
+  String? get email => _auth.currentUser?.email;
+
   /// Signs out on this device only.
   Future<Result<void>> signOut() => guard(_auth.signOut);
 

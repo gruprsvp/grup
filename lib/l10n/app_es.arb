@@ -289,5 +289,22 @@
   "termsBody": "Para seguir usando GRUP, lee y acepta nuestras Condiciones del servicio. Nuestra Política de privacidad explica cómo tratamos tus datos.",
   "termsOfService": "Condiciones del servicio",
   "privacyPolicy": "Política de privacidad",
-  "termsAccept": "Aceptar"
+  "termsAccept": "Aceptar",
+  "cancelPageTitle": "Cancelar o desistir",
+  "cancelPageIntro": "Cancela un plan de GRUP, o desiste de él dentro de los 14 días siguientes a tu primer pago. No hace falta iniciar sesión.",
+  "cancelEntry": "Cancelar contratos aquí",
+  "withdrawEntry": "Desistir del contrato aquí",
+  "cancelConfirm": "Cancelar ahora",
+  "withdrawConfirm": "Confirmar desistimiento",
+  "cancelEmailLabel": "Correo electrónico de la cuenta de GRUP que paga",
+  "cancelEmailInvalid": "Introduce un correo electrónico válido.",
+  "cancelPlanLabel": "Plan",
+  "cancelAllPlans": "Todos mis planes",
+  "withdrawNameLabel": "Tu nombre completo",
+  "withdrawNameMissing": "Introduce tu nombre.",
+  "cancelEffect": "Tus planes terminan al final del periodo ya pagado y no se renuevan.",
+  "withdrawEffect": "Dentro de los 14 días siguientes a tu primer pago de un plan, te devolvemos ese pago íntegro, y el plan termina con el reembolso.",
+  "cancelSent": "Solicitud recibida. Si esta dirección pertenece a una cuenta de GRUP, le hemos enviado una confirmación.",
+  "cancelLink": "Cancelar o desistir",
+  "errorTooManyRequests": "Demasiadas solicitudes. Vuelve a intentarlo en una hora."
 }

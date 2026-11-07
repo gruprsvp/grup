@@ -289,5 +289,22 @@
   "termsBody": "Damit du GRUP weiter nutzen kannst, lies bitte unsere Nutzungsbedingungen und akzeptiere sie. Unsere Datenschutzerklärung erklärt, wie wir mit deinen Daten umgehen.",
   "termsOfService": "Nutzungsbedingungen",
   "privacyPolicy": "Datenschutzerklärung",
-  "termsAccept": "Akzeptieren"
+  "termsAccept": "Akzeptieren",
+  "cancelPageTitle": "Kündigen oder widerrufen",
+  "cancelPageIntro": "Kündige einen GRUP-Plan oder widerrufe ihn innerhalb von 14 Tagen nach deiner ersten Zahlung. Du musst dich dafür nicht anmelden.",
+  "cancelEntry": "Verträge hier kündigen",
+  "withdrawEntry": "Vertrag widerrufen",
+  "cancelConfirm": "Jetzt kündigen",
+  "withdrawConfirm": "Widerruf bestätigen",
+  "cancelEmailLabel": "E-Mail-Adresse des zahlenden GRUP-Kontos",
+  "cancelEmailInvalid": "Gib eine gültige E-Mail-Adresse ein.",
+  "cancelPlanLabel": "Plan",
+  "cancelAllPlans": "Alle meine Pläne",
+  "withdrawNameLabel": "Dein vollständiger Name",
+  "withdrawNameMissing": "Gib deinen Namen ein.",
+  "cancelEffect": "Deine Pläne enden zum Ende des bereits bezahlten Zeitraums und verlängern sich nicht.",
+  "withdrawEffect": "Innerhalb von 14 Tagen nach deiner ersten Zahlung für einen Plan erhältst du diese Zahlung vollständig zurück; der Plan endet mit der Erstattung.",
+  "cancelSent": "Anfrage erhalten. Gehört diese Adresse zu einem GRUP-Konto, haben wir ihr eine Bestätigung geschickt.",
+  "cancelLink": "Kündigen oder widerrufen",
+  "errorTooManyRequests": "Zu viele Anfragen. Versuch es in einer Stunde noch einmal."
 }

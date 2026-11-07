@@ -55,11 +55,20 @@ class SettingsScreen extends StatelessWidget {
           if (onManageBilling != null) ...[
             const SizedBox(height: 8),
             Card.filled(
-              child: ListTile(
-                leading: const Icon(Icons.receipt_long_outlined),
-                title: Text(l10n.planManageBilling),
-                subtitle: Text(l10n.settingsBillingSubtitle),
-                onTap: onManageBilling,
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: const Icon(Icons.receipt_long_outlined),
+                    title: Text(l10n.planManageBilling),
+                    subtitle: Text(l10n.settingsBillingSubtitle),
+                    onTap: onManageBilling,
+                  ),
+                  ListTile(
+                    leading: const Icon(Icons.cancel_outlined),
+                    title: Text(l10n.cancelLink),
+                    onTap: () => const CancelRoute().push<void>(context),
+                  ),
+                ],
               ),
             ),
           ],

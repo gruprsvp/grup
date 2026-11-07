@@ -66,6 +66,24 @@ class BillingRepository extends UserData {
     });
   }
 
+  /// The public cancellation page's request: signed in or not. See
+  /// [BillingService.requestCancellation].
+  Future<Result<void>> requestCancellation({
+    required String action,
+    required String email,
+    String? groupId,
+    String? name,
+    required String language,
+  }) => guard(
+    () => _billing.requestCancellation(
+      action: action,
+      email: email,
+      groupId: groupId,
+      name: name,
+      language: language,
+    ),
+  );
+
   /// Stripe's Customer Portal for the payer, coming back to [returnPath].
   Future<Result<Uri>> portal(String returnPath) =>
       _refreshOnFailure(() => _billing.portal(returnPath: returnPath));

@@ -6,7 +6,12 @@ part of 'go_router_builder.dart';
 // GoRouterGenerator
 // **************************************************************************
 
-List<RouteBase> get $appRoutes => [$homeScreenRoute, $authRoute, $termsRoute];
+List<RouteBase> get $appRoutes => [
+  $homeScreenRoute,
+  $authRoute,
+  $termsRoute,
+  $cancelRoute,
+];
 
 RouteBase get $homeScreenRoute => GoRouteData.$route(
   path: '/',
@@ -564,6 +569,32 @@ mixin $TermsRoute on GoRouteData {
     '/terms',
     queryParams: {if (_self.from != null) 'from': _self.from},
   );
+
+  @override
+  void go(BuildContext context) => context.go(location);
+
+  @override
+  Future<T?> push<T>(BuildContext context) => context.push<T>(location);
+
+  @override
+  void pushReplacement(BuildContext context) =>
+      context.pushReplacement(location);
+
+  @override
+  void replace(BuildContext context) => context.replace(location);
+}
+
+RouteBase get $cancelRoute => GoRouteData.$route(
+  path: '/cancel',
+  hasOverriddenOnExit: false,
+  factory: $CancelRoute._fromState,
+);
+
+mixin $CancelRoute on GoRouteData {
+  static CancelRoute _fromState(GoRouterState state) => const CancelRoute();
+
+  @override
+  String get location => GoRouteData.$location('/cancel');
 
   @override
   void go(BuildContext context) => context.go(location);

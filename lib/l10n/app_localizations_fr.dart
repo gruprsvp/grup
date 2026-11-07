@@ -1082,4 +1082,60 @@ class AppLocalizationsFr extends AppLocalizations {
 
   @override
   String get termsAccept => 'Accepter';
+
+  @override
+  String get cancelPageTitle => 'Résilier ou se rétracter';
+
+  @override
+  String get cancelPageIntro =>
+      'Résilie un forfait GRUP, ou rétracte-toi dans les 14 jours suivant ton premier paiement. Pas besoin de te connecter.';
+
+  @override
+  String get cancelEntry => 'Résilier les contrats ici';
+
+  @override
+  String get withdrawEntry => 'Se rétracter du contrat ici';
+
+  @override
+  String get cancelConfirm => 'Résilier maintenant';
+
+  @override
+  String get withdrawConfirm => 'Confirmer la rétractation';
+
+  @override
+  String get cancelEmailLabel => 'Adresse e-mail du compte GRUP qui paie';
+
+  @override
+  String get cancelEmailInvalid => 'Saisis une adresse e-mail valide.';
+
+  @override
+  String get cancelPlanLabel => 'Forfait';
+
+  @override
+  String get cancelAllPlans => 'Tous mes forfaits';
+
+  @override
+  String get withdrawNameLabel => 'Ton nom complet';
+
+  @override
+  String get withdrawNameMissing => 'Saisis ton nom.';
+
+  @override
+  String get cancelEffect =>
+      'Tes forfaits prennent fin à la fin de la période déjà payée et ne sont pas renouvelés.';
+
+  @override
+  String get withdrawEffect =>
+      'Dans les 14 jours suivant ton premier paiement pour un forfait, ce paiement t’est remboursé en entier, et le forfait prend fin au remboursement.';
+
+  @override
+  String get cancelSent =>
+      'Demande reçue. Si cette adresse correspond à un compte GRUP, nous lui avons envoyé une confirmation.';
+
+  @override
+  String get cancelLink => 'Résilier ou se rétracter';
+
+  @override
+  String get errorTooManyRequests =>
+      'Trop de demandes. Réessaie dans une heure.';
 }

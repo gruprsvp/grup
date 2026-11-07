@@ -7,7 +7,7 @@ import 'package:provider/provider.dart';
 
 part 'go_router_builder.g.dart';
 
-// Every route but /auth needs a signed-in user; the redirect in router.dart
+// Every route but /auth and /cancel needs a signed-in user; the redirect in router.dart
 // enforces that for all of them.
 //
 // Open a page with `go` when its parent route is the page on screen: the
@@ -79,6 +79,18 @@ class TermsRoute extends GoRouteData with $TermsRoute {
   @override
   Widget build(BuildContext context, GoRouterState state) =>
       const ReadableWidth(child: TermsContainer());
+}
+
+// Top level and public: cancelling or withdrawing from a plan works signed
+// out (https://grup.rsvp/cancel, linked from the website and the terms).
+@TypedGoRoute<CancelRoute>(path: '/cancel')
+@immutable
+class CancelRoute extends GoRouteData with $CancelRoute {
+  const CancelRoute();
+
+  @override
+  Widget build(BuildContext context, GoRouterState state) =>
+      const ReadableWidth(child: CancelContainer());
 }
 
 /// An invite link: https://grup.rsvp/join/CODE.

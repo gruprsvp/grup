@@ -36,6 +36,18 @@ class FakeBackend {
   bool isCustomer = false;
   List<CatalogPlan> catalog = const [];
 
+  /// The cancellation page's requests.
+  final cancellations =
+      <
+        ({
+          String action,
+          String email,
+          String? groupId,
+          String? name,
+          String language,
+        })
+      >[];
+
   /// The terms in force, and the versions the user accepted.
   String? termsVersion;
   final termsAccepted = <String>{};
@@ -279,6 +291,7 @@ class FakeAuth extends Fake implements GoTrueClient {
       appMetadata: const {},
       userMetadata: const {},
       aud: 'authenticated',
+      email: '$id@example.com',
       createdAt: '2024-01-01T00:00:00Z',
     ),
     null => null,
@@ -654,6 +667,24 @@ class _FakeBillingService extends Fake implements BillingService {
     if (_b.stripeFailure case final failure?) throw failure;
     _b.checkouts.add((groupId: groupId, plan: plan, interval: interval));
     return Uri.parse('https://checkout.stripe.test/$plan-$interval');
+  }
+
+  @override
+  Future<void> requestCancellation({
+    required String action,
+    required String email,
+    String? groupId,
+    String? name,
+    required String language,
+  }) async {
+    await _b._call();
+    _b.cancellations.add((
+      action: action,
+      email: email,
+      groupId: groupId,
+      name: name,
+      language: language,
+    ));
   }
 
   @override

@@ -1843,6 +1843,108 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Accept'**
   String get termsAccept;
+
+  /// Title of the public page to cancel or withdraw from paid plans.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel or withdraw'**
+  String get cancelPageTitle;
+
+  /// Intro of the cancellation page; works without signing in.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel a GRUP plan, or withdraw from it within 14 days of your first payment. You don\'t need to sign in.'**
+  String get cancelPageIntro;
+
+  /// Button that starts a cancellation. Statutory wording in German (§ 312k BGB: 'Verträge hier kündigen'); keep the meaning exact.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel contracts here'**
+  String get cancelEntry;
+
+  /// Button that starts a withdrawal. Statutory wording (EU Directive 2011/83 Art. 11a: 'withdraw from contract here'; § 356a BGB: 'Vertrag widerrufen').
+  ///
+  /// In en, this message translates to:
+  /// **'Withdraw from contract here'**
+  String get withdrawEntry;
+
+  /// Button that sends the cancellation. Statutory wording in German (§ 312k BGB: 'jetzt kündigen').
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel now'**
+  String get cancelConfirm;
+
+  /// Button that sends the withdrawal. Statutory wording (Art. 11a: 'confirm withdrawal'; § 356a BGB: 'Widerruf bestätigen').
+  ///
+  /// In en, this message translates to:
+  /// **'Confirm withdrawal'**
+  String get withdrawConfirm;
+
+  /// Field: the email address of the GRUP account that pays for the plan.
+  ///
+  /// In en, this message translates to:
+  /// **'Email address of the paying GRUP account'**
+  String get cancelEmailLabel;
+
+  /// Validation error for the email field.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid email address.'**
+  String get cancelEmailInvalid;
+
+  /// Field: which group's plan to cancel or withdraw from.
+  ///
+  /// In en, this message translates to:
+  /// **'Plan'**
+  String get cancelPlanLabel;
+
+  /// Choice in the plan field: every plan the user pays for.
+  ///
+  /// In en, this message translates to:
+  /// **'All my plans'**
+  String get cancelAllPlans;
+
+  /// Field: the name of the person withdrawing.
+  ///
+  /// In en, this message translates to:
+  /// **'Your full name'**
+  String get withdrawNameLabel;
+
+  /// Validation error when the name is empty.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter your name.'**
+  String get withdrawNameMissing;
+
+  /// When a cancellation takes effect, shown before confirming.
+  ///
+  /// In en, this message translates to:
+  /// **'Your plans end at the end of the period already paid for, and don\'t renew.'**
+  String get cancelEffect;
+
+  /// What a withdrawal does, shown before confirming.
+  ///
+  /// In en, this message translates to:
+  /// **'Within 14 days of your first payment for a plan, you get that payment back in full, and the plan ends when it\'s refunded.'**
+  String get withdrawEffect;
+
+  /// Shown after sending; it never says whether the address has an account.
+  ///
+  /// In en, this message translates to:
+  /// **'Request received. If this address belongs to a GRUP account, we\'ve emailed it a confirmation.'**
+  String get cancelSent;
+
+  /// Link to the cancellation page from the plan page and Settings.
+  ///
+  /// In en, this message translates to:
+  /// **'Cancel or withdraw'**
+  String get cancelLink;
+
+  /// Error: the cancellation page got too many requests for this address.
+  ///
+  /// In en, this message translates to:
+  /// **'Too many requests. Try again in an hour.'**
+  String get errorTooManyRequests;
 }
 
 class _AppLocalizationsDelegate

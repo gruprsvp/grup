@@ -1075,5 +1075,73 @@
   "termsAccept": "Accept",
   "@termsAccept": {
     "description": "Button: the user accepts the terms of service."
+  },
+  "cancelPageTitle": "Cancel or withdraw",
+  "@cancelPageTitle": {
+    "description": "Title of the public page to cancel or withdraw from paid plans."
+  },
+  "cancelPageIntro": "Cancel a GRUP plan, or withdraw from it within 14 days of your first payment. You don't need to sign in.",
+  "@cancelPageIntro": {
+    "description": "Intro of the cancellation page; works without signing in."
+  },
+  "cancelEntry": "Cancel contracts here",
+  "@cancelEntry": {
+    "description": "Button that starts a cancellation. Statutory wording in German (§ 312k BGB: 'Verträge hier kündigen'); keep the meaning exact."
+  },
+  "withdrawEntry": "Withdraw from contract here",
+  "@withdrawEntry": {
+    "description": "Button that starts a withdrawal. Statutory wording (EU Directive 2011/83 Art. 11a: 'withdraw from contract here'; § 356a BGB: 'Vertrag widerrufen')."
+  },
+  "cancelConfirm": "Cancel now",
+  "@cancelConfirm": {
+    "description": "Button that sends the cancellation. Statutory wording in German (§ 312k BGB: 'jetzt kündigen')."
+  },
+  "withdrawConfirm": "Confirm withdrawal",
+  "@withdrawConfirm": {
+    "description": "Button that sends the withdrawal. Statutory wording (Art. 11a: 'confirm withdrawal'; § 356a BGB: 'Widerruf bestätigen')."
+  },
+  "cancelEmailLabel": "Email address of the paying GRUP account",
+  "@cancelEmailLabel": {
+    "description": "Field: the email address of the GRUP account that pays for the plan."
+  },
+  "cancelEmailInvalid": "Enter a valid email address.",
+  "@cancelEmailInvalid": {
+    "description": "Validation error for the email field."
+  },
+  "cancelPlanLabel": "Plan",
+  "@cancelPlanLabel": {
+    "description": "Field: which group's plan to cancel or withdraw from."
+  },
+  "cancelAllPlans": "All my plans",
+  "@cancelAllPlans": {
+    "description": "Choice in the plan field: every plan the user pays for."
+  },
+  "withdrawNameLabel": "Your full name",
+  "@withdrawNameLabel": {
+    "description": "Field: the name of the person withdrawing."
+  },
+  "withdrawNameMissing": "Enter your name.",
+  "@withdrawNameMissing": {
+    "description": "Validation error when the name is empty."
+  },
+  "cancelEffect": "Your plans end at the end of the period already paid for, and don't renew.",
+  "@cancelEffect": {
+    "description": "When a cancellation takes effect, shown before confirming."
+  },
+  "withdrawEffect": "Within 14 days of your first payment for a plan, you get that payment back in full, and the plan ends when it's refunded.",
+  "@withdrawEffect": {
+    "description": "What a withdrawal does, shown before confirming."
+  },
+  "cancelSent": "Request received. If this address belongs to a GRUP account, we've emailed it a confirmation.",
+  "@cancelSent": {
+    "description": "Shown after sending; it never says whether the address has an account."
+  },
+  "cancelLink": "Cancel or withdraw",
+  "@cancelLink": {
+    "description": "Link to the cancellation page from the plan page and Settings."
+  },
+  "errorTooManyRequests": "Too many requests. Try again in an hour.",
+  "@errorTooManyRequests": {
+    "description": "Error: the cancellation page got too many requests for this address."
   }
 }

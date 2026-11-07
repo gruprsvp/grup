@@ -120,6 +120,109 @@ void main() {
   Finder inCard(String title, Finder finder) =>
       find.descendant(of: find.widgetWithText(Card, title), matching: finder);
 
+  group('the cancellation page', () {
+    testWidgets('signed out, anyone cancels the plans an address pays for', (
+      tester,
+    ) async {
+      debugIsWeb = true;
+      await pumpApp(tester, '/cancel', userId: null);
+      expect(find.byType(CancelScreen), findsOneWidget);
+
+      await tester.tap(find.text('Cancel contracts here'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Cancel now'));
+      await tester.pumpAndSettle();
+      expect(find.text('Enter a valid email address.'), findsOneWidget);
+      expect(backend.cancellations, isEmpty);
+
+      await tester.enterText(find.byType(TextFormField), ' ann@example.com ');
+      await tester.tap(find.text('Cancel now'));
+      await tester.pumpAndSettle();
+      expect(backend.cancellations, [
+        (
+          action: 'cancel',
+          email: 'ann@example.com',
+          groupId: null,
+          name: null,
+          language: 'en',
+        ),
+      ]);
+      expect(find.textContaining('Request received'), findsOneWidget);
+      expect(path(), '/cancel');
+    });
+
+    testWidgets('a withdrawal needs the person\'s name', (tester) async {
+      await pumpApp(tester, '/cancel', userId: null);
+
+      await tester.tap(find.text('Withdraw from contract here'));
+      await tester.pumpAndSettle();
+      await tester.enterText(
+        find.widgetWithText(
+          TextFormField,
+          'Email address of the paying GRUP account',
+        ),
+        'ann@example.com',
+      );
+      await tester.tap(find.text('Confirm withdrawal'));
+      await tester.pumpAndSettle();
+      expect(find.text('Enter your name.'), findsOneWidget);
+      expect(backend.cancellations, isEmpty);
+
+      await tester.enterText(
+        find.widgetWithText(TextFormField, 'Your full name'),
+        'Ann Smith',
+      );
+      await tester.tap(find.text('Confirm withdrawal'));
+      await tester.pumpAndSettle();
+      expect(backend.cancellations.single.action, 'withdraw');
+      expect(backend.cancellations.single.name, 'Ann Smith');
+    });
+
+    testWidgets('the payer opens it from the plan page, with their address '
+        'and their plans filled in', (tester) async {
+      debugIsWeb = true;
+      await pumpApp(
+        tester,
+        '/',
+        seed: (backend) => backend.entitlements[club.id] = GroupEntitlements(
+          features: const [FeatureKey.kitchenView],
+          limits: const {LimitKey.maxSeats: 40},
+          sources: [
+            EntitlementSource(
+              kind: 'subscription',
+              plan: 'community_m',
+              rank: 20,
+              provider: 'stripe',
+              status: 'active',
+              payer: 'me',
+              until: DateTime.utc(2026, 11, 25, 12),
+              renews: true,
+            ),
+          ],
+        ),
+      );
+      router.go('/groups/${club.id}/plan');
+      await tester.pumpAndSettle();
+      await tester.ensureVisible(find.text('Cancel or withdraw'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Cancel or withdraw'));
+      await tester.pumpAndSettle();
+      expect(find.byType(CancelScreen), findsOneWidget);
+
+      await tester.tap(find.text('Cancel contracts here'));
+      await tester.pumpAndSettle();
+      expect(find.text('me@example.com'), findsOneWidget);
+      await tester.tap(find.text('All my plans'));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Club').last);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Cancel now'));
+      await tester.pumpAndSettle();
+      expect(backend.cancellations.single.groupId, club.id);
+      expect(backend.cancellations.single.email, 'me@example.com');
+    });
+  });
+
   group('the plan page, on the web', () {
     setUp(() => debugIsWeb = true);
 
