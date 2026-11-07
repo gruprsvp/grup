@@ -68,16 +68,16 @@ Each can be added without migrating data: bundles and chip-in replace `subscript
 
 ### 1.4 As built
 
-Phases 0 and 1 are merged: 0.1 on 2026-10-27 (#287), 1.1–1.4 on 2026-11-03 (#288–#291). Production is in `prelaunch`. What's left before launch is human: B2–B4, the live Stripe configuration (8.1), the secrets (Appendix A) and the runbook (11).
+Phases 0 and 1 are merged: 0.1 on 2026-10-27 (#287), 1.1–1.4 on 2026-11-03 (#288–#291). Production is in `prelaunch`. On 2026-11-04 the app side of the legal texts (B3) followed: Stripe Managed Payments (B2), refunds in `billing.attention`, the terms gate (8.6) and the public cancellation page (8.5). What's left before launch is human: B3 and B4, the live Stripe configuration (8.1), the secrets (Appendix A) and the runbook (11).
 
 They are implemented as planned below, with these differences. The code is the reference; the listings in sections 6–10 are the plan it started from.
 
 | Where | What |
 |---|---|
-| Migrations | `20261025140000_billing.sql` (6.1–6.3), `20261025140100_billing_stripe.sql` (8.2), `20261025140200_reply_cutoffs.sql` (9.2) |
-| pgTAP | `supabase/tests/billing_test.sql`, `supabase/tests/reply_cutoffs_test.sql` |
-| Edge Functions | `billing-checkout`, `billing-portal`, `stripe-webhook`; shared code in `_shared/billing.ts`, its pure parts (status mapping, request checks, the webhook handler) in `_shared/billing_logic.ts`, tested by `_shared/billing_logic_test.ts` (`deno test` in CI) |
-| App | `models/billing.dart` (`BillingState`, `GroupAccess`, keys), `models/export.dart`, `services/billing.dart`, `repositories/billing.dart`; plan page (`GroupPlanRoute`), kitchen view (`GroupKitchenRoute`), cutoffs in the event editor and on reply controls, export in Manage, Settings → Billing |
+| Migrations | `20261025140000_billing.sql` (6.1–6.3), `20261025140100_billing_stripe.sql` (8.2), `20261025140200_reply_cutoffs.sql` (9.2), `20261104120000_billing_refunds.sql` (15.4), `20261104130000_terms_acceptance.sql` (8.6), `20261104140000_billing_cancel.sql` (8.5) |
+| pgTAP | `supabase/tests/billing_test.sql`, `supabase/tests/reply_cutoffs_test.sql`, `supabase/tests/terms_test.sql` |
+| Edge Functions | `billing-checkout`, `billing-portal`, `stripe-webhook`, `billing-cancel`; shared code in `_shared/billing.ts`, its pure parts (status mapping, request checks, the webhook handler) in `_shared/billing_logic.ts`, the cancellation page's in `_shared/cancel_logic.ts`, email in `_shared/email.ts`; tested by `_shared/*_test.ts` (`deno test` in CI) |
+| App | `models/billing.dart` (`BillingState`, `GroupAccess`, keys), `models/export.dart`, `services/billing.dart`, `repositories/billing.dart`; plan page (`GroupPlanRoute`), kitchen view (`GroupKitchenRoute`), cutoffs in the event editor and on reply controls, export in Manage, Settings → Billing, the terms gate (`TermsRoute`), the cancellation page (`CancelRoute`) |
 
 Differences from the plan:
 
@@ -93,6 +93,15 @@ Differences from the plan:
 10. **Print** (9.3) is built: `pdf` and `printing` render the day as an A4 PDF in the app's font.
 11. **The `reply_locked` message has no time** ("Changes to this event have closed. Ask an admin."): the server's error doesn't carry it, and the reply controls already show "Changes closed at {time}".
 12. **The plans are shown as Free, Crew, Club and Crowd**, in English in every language, with "spots" for seats. The codes and lookup keys stay `community_{s,m,l}`; only display names changed, so the Stripe products are renamed by hand in the dashboard (8.1, 3). The copy quoted in 8.5 is superseded by the ARB files. The plan page states the plan and its spots, and lists what every plan includes. "Choose a plan" opens a sheet that asks for the size (the smallest that fits is marked; a founding group, having no limit, goes straight to Crew), then monthly or yearly, then "Continue to payment". Manage → Members opens with the plan card, in place of the crown icon.
+13. **Managed Payments (B2).** Link, LLC, part of Stripe, sells web plans as merchant of record: it charges, invoices, handles VAT and sales tax, sends receipts, and offers cancellation on link.com. Checkout sets `managed_payments: { enabled: true }` and drops `automatic_tax`, `tax_id_collection` and `customer_update`, which Managed Payments lists as unsupported (the sandbox still accepts them when creating a session). Checkout collects the name and billing address with the card and writes them to `customer`. Under Managed Payments, the founder coupon, `trial_end` and `metadata.group_id` are accepted at creation, and the hosted page shows the trial and the 30% coupon.
+14. **Refunds leave the subscription running.** A refund, ours or one Link makes on its own (up to 60 days after a payment), doesn't cancel anything in Stripe, but the terms (3.9) end a refunded plan. `stripe-webhook` records full refunds (`charge.refunded`, mapped to the subscription through the invoice payment), and `billing.attention` lists `refunded_still_active` until operations cancels the plan or clears the flag (15.4).
+15. **`billing_state()` also returns `terms_version` and `terms_accepted`** (8.6): the terms gate reads the configuration it already loads, and the app now loads it on sign-in.
+
+Verified on 2026-11-04, against local Supabase and the Stripe sandbox (`stripe listen`, API `2026-08-26.dahlia`):
+
+- A full refund of a subscription's payment reaches `stripe-webhook`, which lists the subscription as `refunded_still_active`; cancelling it clears the item. The refund alone leaves the subscription `active`.
+- `billing-cancel`, called without a JWT, sets `cancel_at_period_end` on the payer's plan (the webhook then syncs `canceled_pending`), records a withdrawal (`withdrawal_pending`), logs the confirmation email (no Cloudflare secrets locally), and refuses a sixth request in an hour for the same address with 429.
+- A Managed Payments Checkout session for a founder shows "19 days free", the 30% coupon and VAT, and the footer "By subscribing, you agree to Link's Terms (https://link.com/terms#sold-through-link-terms) and Privacy Policy (https://link.com/privacy) and authorize Link to charge you for the described subscription until you cancel." Completing it headlessly failed (the session stayed open), so the 16.3 matrix under Managed Payments is still to run by hand.
 
 Verified on 2026-10-26, against local Supabase and the Stripe sandbox (test clocks, `stripe listen`):
 
@@ -107,8 +116,8 @@ Verified on 2026-10-26, against local Supabase and the Stripe sandbox (test cloc
 | ID | Input | Blocks | Owner |
 |---|---|---|---|
 | B1 | **Capability audit.** List what Grup does today. Confirm that no part of `kitchen_view`, `reply_cutoffs` or `export_csv` exists, and that groups have no size limit. The home screen already shows who is coming to each event, so that stays free (F6); only the day view, the printable sheet and the late flags are new. | PR 0.1 | Product |
-| B2 | **Tax mode.** Stripe Tax with Sealambda's own registrations (Swiss VAT, EU non-Union OSS), or Stripe Managed Payments if it is available to a Swiss account. Confirm with the fiduciary. Only Checkout parameters and Stripe settings differ. | PR 1.1 | Sealambda |
-| B3 | **Legal texts.** Terms of Service section on subscriptions, renewal and cancellation; privacy policy listing Stripe and RevenueCat as processors; wording for the EU withdrawal right at checkout. Stripe Checkout and the App Store paywall need public URLs for these. | PR 1.1, PR 2.3 | Sealambda + counsel |
+| B2 | **Tax mode.** Done: Stripe Managed Payments. Link, LLC is the merchant of record for web purchases; prices stay in USD, CHF and EUR, tax inclusive (1.4, 13). Groups above 80 seats are invoiced by Sealambda (15.3), under its own VAT position. | PR 1.1 | Sealambda |
+| B3 | **Legal texts.** Drafts in the landing repo (`src/content/pages/draft-terms.md`, `draft-privacy-payments.md`, `draft-pricing.md`), waiting for counsel. They link Link's buyer terms (https://link.com/terms#sold-through-link-terms) and privacy policy (https://link.com/privacy). The app side is built: the terms gate (8.6) and the cancellation page (8.5). Publishing needs a Terms of Service URL in Stripe (`consent_collection`), then `terms_version` set (8.6). | PR 1.1, PR 2.3 | Sealambda + counsel |
 | B4 | **Dates.** The announcement date A, which is the cutoff for founders and legacy groups, and the launch date D, at least 14 days after A. | Launch | Product |
 
 ---
@@ -544,9 +553,9 @@ The server already folds the mode into `features` and `limits` (`unlocked` gives
 
 Configure the test account (staging) and the live account (production) the same way, and record the ids in the PR.
 
-1. **Business settings:** public details, and the Terms of Service URL (B3), which `consent_collection` needs.
-2. **Tax (B2).** Stripe Tax: origin Switzerland, registrations for Switzerland and EU non-Union OSS, a SaaS tax code for consumer use. Managed Payments: follow Stripe's onboarding instead and adjust the Checkout parameters in 8.3.
-3. **Products and prices:** three products (Grup Community S/M/L) and six recurring prices. Each uses USD as the default currency with `currency_options` for CHF and EUR, `tax_behavior = inclusive` on every currency (immutable), and these lookup keys:
+1. **Business settings:** public details, the support email (Link escalates customer cases to it, and may refund on its own after 48 hours without an answer), and the Terms of Service URL (B3), which `consent_collection` needs. The sandbox has none yet, so its checkout answers 500.
+2. **Managed Payments (B2).** Finish the onboarding in Settings → Managed Payments. Link handles tax: no Stripe Tax registrations. Each product needs a tax code eligible for Managed Payments: `txcd_10103000` (SaaS, personal use), already on the sandbox products; confirm it is marked "Eligible for Managed Payments" in the live dashboard.
+3. **Products and prices:** three products (Crew, Club and Crowd; created as Grup Community S/M/L) and six recurring prices. Each uses USD as the default currency with `currency_options` for CHF and EUR, `tax_behavior = inclusive` on every currency (immutable), and these lookup keys:
 
    | Lookup key | Interval | Amount (USD, CHF, EUR) |
    |---|---|---|
@@ -560,9 +569,11 @@ Configure the test account (staging) and the live account (production) the same 
 4. **Coupon** `founder-30`: 30% off, duration `forever`, for the three products.
 5. **Customer Portal:** allow updating the payment method, invoice history, cancelling at period end and switching between the six prices. No quantity changes. Upgrades prorate and invoice immediately; downgrades apply at the end of the period (or prorate immediately if the portal can't schedule them).
 6. **Revenue recovery:** Smart Retries on; when all retries fail, **cancel the subscription**; failed-payment emails on.
+   **Renewal reminders (terms 3.5):** in Billing → Subscriptions and emails, turn on emails for upcoming renewals and set the yearly ("anniversary") reminder to 30 days before renewal. Link sends it; its default is 15 days, the minimum 7. Check whether the setting also sends a reminder before every monthly renewal, and record what it does. If 30 days can't be set, the reminder has to be our own job (task 5 of the legal-texts prompt).
+   **Trial-end reminder (terms 3.12):** Link always sends it for trials longer than 7 days; nothing to set.
 7. **Payment methods:** cards, with Apple Pay and Google Pay. Leave out methods that can't recur.
-8. **Webhook endpoint** `https://<project-ref>.supabase.co/functions/v1/stripe-webhook`, events `checkout.session.completed` and `customer.subscription.created`/`updated`/`deleted`, pinned to the SDK's API version. Make sure the account owner gets Stripe's emails about failing endpoints; they are the alert for missed webhooks (15.4).
-9. **API key:** a restricted key for Customers, Checkout Sessions, Subscriptions, Prices (read) and Billing Portal, stored as `STRIPE_SECRET_KEY`.
+8. **Webhook endpoint** `https://<project-ref>.supabase.co/functions/v1/stripe-webhook`, events `checkout.session.completed`, `customer.subscription.created`/`updated`/`deleted` and `charge.refunded`, pinned to the SDK's API version. Make sure the account owner gets Stripe's emails about failing endpoints; they are the alert for missed webhooks (15.4).
+9. **API key:** a restricted key for Customers, Checkout Sessions, Subscriptions, Prices (read), Invoices (read), Invoice Payments (read) and Billing Portal, stored as `STRIPE_SECRET_KEY`. Refunds are made in the dashboard (15.2), not with this key.
 
 ### 8.2 Migration `<ts>_billing_stripe.sql`
 
@@ -767,11 +778,9 @@ Deno.serve(handle(async (req) => {
     mode: "subscription",
     customer: customer.stripe_customer_id,
     line_items: [{ price: price.id, quantity: 1 }],
-    automatic_tax: { enabled: true },                       // Stripe Tax path (B2)
-    billing_address_collection: "required",
-    tax_id_collection: { enabled: true },
-    customer_update: { address: "auto", name: "auto" },
-    consent_collection: { terms_of_service: "required" },   // wording per B3
+    managed_payments: { enabled: true },                    // Link sells it (B2); no automatic_tax,
+    billing_address_collection: "required",                 // tax_id_collection or customer_update
+    consent_collection: { terms_of_service: "required" },   // the terms only (B3)
     discounts: ctx.founder ? [{ coupon: "founder-30" }] : undefined,
     subscription_data: {
       metadata: { group_id },
@@ -841,6 +850,20 @@ Deno.serve(async (req) => {
 });
 ```
 
+`charge.refunded` with `refunded: true` (a full refund) goes to `markRefunded`, which finds the subscription through `invoicePayments.list({ payment: { type: "payment_intent", … } })` and the invoice's `parent.subscription_details`, and sets `billing.subscriptions.refunded_at` (15.4).
+
+#### `billing-cancel`
+
+The public cancellation page's function (8.5); `verify_jwt = false`, since it is called signed out. Request `{ action: "cancel" | "withdraw", email, group_id?, name?, locale? }`; a withdrawal needs `name`. A valid request always gets `200 { ok: true }`, before anything is looked up, so neither the answer nor its time tells whether the address has an account; `429 rate_limited` after five requests for the same address in an hour (counted in `billing.cancel_requests` by a SHA-256 of the address, kept a day). The work runs in `EdgeRuntime.waitUntil`:
+
+- find the account by email; none: stop, and send nothing;
+- take the payer's running Stripe plans (`trialing`, `active`, `grace`, `canceled_pending`), all or the one group's;
+- **cancel:** set `cancel_at_period_end` on those not already ending (the payer can undo it in the portal); the webhook syncs the rows;
+- **withdraw:** insert a `billing.withdrawals` row per plan (user, subscription, name, time), listed in `billing.attention` as `withdrawal_pending`. Nothing is refunded automatically: anyone can type an email. Requests after the 14 days are recorded too, and operations decides (15.2);
+- email the account the confirmation that § 312k (4) and § 356a (4) BGB require: what was asked, when (UTC), which plans, and for a cancellation the date each ends; in the page's language (en, de, fr, it, es).
+
+Email goes through Cloudflare Email Service's REST API (`_shared/email.ts`), the provider production Supabase Auth uses for its SMTP (`smtp.mx.cloudflare.net`, from `grup@notifications.grup.rsvp`). Without its secrets (Appendix A) the email is only logged: local runs and self-hosted installs. A failed send is logged, not retried.
+
 There is no event log and no reconcile job: every delivery fetches current state, so duplicates and ordering don't matter. A webhook still failing after Stripe's 3 days of retries shows in the dashboard and in Stripe's failing-endpoint emails, and operations resend it from there. The 7-day stale guard in `billing.entitlements` stops a subscription whose cancellation was missed from being honoured indefinitely. If missed webhooks turn out to happen in practice, add a daily job that re-syncs every non-expired subscription.
 
 ### 8.4 Returning from Stripe
@@ -863,7 +886,27 @@ Shown only where `access.purchaseUi` is true, which in Phase 1 means the web.
 5. **Return** (`?checkout=success`): "Activating your plan…", refreshing `billing_state` every 3 seconds until a `subscription` source appears. After 60 seconds: "Payment received. Activation is taking longer than usual; refresh in a minute."
 6. **Funded by the current user:** "Manage billing" invokes `billing-portal` with `return_path` set to this page. Funded by someone else: read-only.
 
-**Settings → Billing** (web, shown when the user has ever paid): "Manage billing", which opens the portal. This is how a payer whose group was deleted cancels.
+**Settings → Billing** (web, shown when the user has ever paid): "Manage billing", which opens the portal. This is how a payer whose group was deleted cancels. Below it, "Cancel or withdraw" opens the cancellation page; the plan page has the same link under "Manage billing", for its payer.
+
+**Cancellation page** (`CancelRoute`, `/cancel`, terms 3.6 and 3.10): cancelling and withdrawing without signing in (§ 312k BGB, § 356a BGB, EU Directive 2011/83 Art. 11a as amended by 2023/2673). Public, and outside the terms gate (8.6). It offers two buttons, then a form:
+
+| | English | German (statutory) |
+|---|---|---|
+| Entry | Cancel contracts here | Verträge hier kündigen (§ 312k (2)) |
+| Confirm | Cancel now | Jetzt kündigen (§ 312k (2): "jetzt kündigen") |
+| Entry | Withdraw from contract here | Vertrag widerrufen (§ 356a (1)) |
+| Confirm | Confirm withdrawal | Widerruf bestätigen (§ 356a (3)) |
+
+French, Italian and Spanish carry the same meaning; the ARB descriptions name the statutes. The form asks for the email of the paying account (filled in when signed in), the plan when the signed-in user pays for any (default: all), and for a withdrawal the person's name; it states when a cancellation takes effect (the end of the period paid for). It then says only that a confirmation was emailed if the address has an account. The website's footer links to `https://grup.rsvp/cancel` (11).
+
+### 8.6 Accepting the terms
+
+Everyone accepts each version of the terms once, at sign-up or the next sign-in (terms 2.7).
+
+- `billing.config.terms_version` holds the version in force, e.g. its effective date. Null, the default, asks nobody: self-hosted installs, and the hosted service until the terms are published. `billing_state()` returns it with `terms_accepted`.
+- `public.terms_acceptances (user_id, version, accepted_at)`: users insert and read only their own rows (RLS); the insert policy requires `accepted_at = now()`, so nobody backdates one; there is no update or delete policy. Rows go with the user (`on delete cascade`).
+- The app loads the billing state on sign-in. While `termsPending` (a version is set and not accepted), the router shows only `/terms` (`TermsRoute`): links to `https://www.grup.rsvp/terms/` and `/privacy-policy/` on the website, **Accept**, and **Sign out**. `/cancel` stays reachable.
+- Publishing a new version: publish the text, then `update billing.config set terms_version = '<effective date>';` in production. Everyone is asked again at their next start.
 
 **Analytics:** `track('checkout started', {plan, interval})` before redirecting, and `track('plan activated')` when the return flow sees the subscription.
 
@@ -972,7 +1015,7 @@ Before `delete_user_account` deletes the auth user, it sets `cancel_at_period_en
 
 | When | Step |
 |---|---|
-| Before A | Phases 0 and 1 deployed. Production in `prelaunch`. App builds with pro screens released, screens hidden. Stripe live configuration complete. B3 texts published. The 16.3 matrix green in test mode. |
+| Before A | Phases 0 and 1 deployed. Production in `prelaunch`. App builds with pro screens released, screens hidden. Stripe live configuration complete. Edge Function secrets set (Appendix A), including the email ones, before the PR that adds `/cancel` merges: without them its confirmations aren't sent. B3 texts published, with the website footer's "Cancel a plan" link to `https://grup.rsvp/cancel` going live at the same time; then `terms_version` set (8.6). The 16.3 matrix green in test mode. |
 | A | Announce: email to all users, web banner, pricing and FAQ page stating G1–G6, A and D. Record A to the second. |
 | D | `select billing.launch('<A>');` in production. Irreversible: a second person confirms first. |
 | D | Check that `legacy` grants equal the groups created before A, that `billing_state()` returns `live`, and that a legacy group shows Community features. |
@@ -1156,7 +1199,12 @@ from billing.plans p where p.code = 'community_m' and p.current;
 
 ### 15.2 Refunds
 
-- **Web:** refund in the Stripe dashboard **and** cancel the subscription immediately; the webhook expires it.
+The terms (3.9, 3.10) promise these. All in the Stripe dashboard, on the subscription's payment. Link sends the refund receipt. A refund includes the tax; in some places Link keeps the tax it already remitted, so the payout shrinks by that much.
+
+- **Within 14 days of the first payment for a plan, for anyone, and every `withdrawal_pending`:** refund the first payment in full, then cancel the subscription **immediately** (not at period end). The webhook expires the row and the group returns to Free. For a withdrawal, then mark it handled: `update billing.withdrawals set handled_at = now(), note = 'refunded <date>' where id = '<id>';`. Do it within 14 days of the request (§ 357 BGB). A founder plan still in its trial has no payment yet: cancel it, which costs nothing.
+- **A withdrawal after the 14 days:** reply by email that the period has passed and how cancelling works, set `handled_at` with a note, and refund only if you decide to.
+- **A yearly plan cancelled after a renewal:** refund (price paid ÷ 12) × the full months after the current one, as a partial refund of the renewal payment. Set the subscription's `cancel_at` to the end of the current month (Stripe dashboard: Update subscription → Cancel → on a custom date), so the plan stays active until then. Months count from the renewal date.
+- **A consumer asks within 14 days of an upgrade:** refund the upgrade's prorated charge (the invoice the portal created for it). The plan stays on the bigger band unless they ask to go back; then change it back in the dashboard without proration.
 - **Stores:** Apple and Google decide; RevenueCat reports the refund and the row expires.
 
 ### 15.3 Invoiced customers and groups above 80 seats
@@ -1180,6 +1228,8 @@ Extend after payment with `update billing.subscriptions set current_period_end =
 
 - `funds_no_group`: the group was deleted, or the payer stopped being an admin before the first webhook. Ask the payer: move the subscription (`update billing.subscriptions set group_id = …`) or cancel and refund.
 - `group_funded_twice`: two admins paid at once. Refund and cancel the newer one.
+- `refunded_still_active`: a payment was refunded in full (by us, or by Link on its own) and the plan still renews. Cancel it immediately, as the terms (3.9) say. If the refund was a goodwill one and the plan should go on, clear it: `update billing.subscriptions set refunded_at = null where id = '<id>';`. Partial refunds aren't listed.
+- `withdrawal_pending`: someone used the cancellation page to withdraw. `select * from billing.withdrawals where handled_at is null;` gives the name and time; check the first payment's date in Stripe, then follow 15.2 within 14 days.
 - Failed webhook deliveries: fix the cause, then resend them from Stripe or RevenueCat.
 
 ### 15.5 Kill switch
@@ -1214,7 +1264,8 @@ Each test sets the mode it needs inside its transaction.
 ### 16.2 Edge Functions (Deno tests)
 
 - `mapStripeStatus` and `mapRevenueCatStatus`, table-driven, with the fixtures recorded in the spike.
-- Webhooks: an invalid signature or auth gets 400/401; a sync failure gets 500.
+- Webhooks: an invalid signature or auth gets 400/401; a sync failure gets 500; only full refunds are recorded.
+- `billing-cancel` (`_shared/cancel_logic_test.ts`): request parsing, matching the payer's running web plans, the same answer whatever the lookup does, the rate limit per address, and the confirmation email.
 
 ### 16.3 Stripe test mode (staging, with test clocks)
 
@@ -1226,6 +1277,7 @@ Each test sets the mode it needs inside its transaction.
 6. Checkout for a funded group gets 409; two simultaneous checkouts appear in `attention`.
 7. Deleting a webhook delivery, then resending it, repairs the state.
 8. Tax and currency: a Swiss consumer pays CHF with VAT included; a German consumer EUR with German VAT; an EU business with a VAT id gets reverse charge; a US customer pays USD.
+9. Managed Payments: every row above with Checkout completed by hand (a subscription created through the API is not a Managed Payments one), plus: the founder trial sends Link's trial-end reminder before the first charge; a refund through the API lists `refunded_still_active`; the cancellation page cancels and records a withdrawal; Link's renewal reminder arrives 30 days before a yearly renewal (test clock).
 
 ### 16.4 In-app sandbox (iOS StoreKit + sandbox, Android license testers)
 
@@ -1235,7 +1287,9 @@ Purchase funds the group through the attribute; accelerated renewal; upgrade (im
 
 - Unit tests for `GroupAccess` across mode × platform (web, Android, iOS) × `kIapSupported`. In particular, iOS in Phase 1 never shows pro screens or prices.
 - Widget tests with `FakeBackend` for the plan page, seat-full invite handling, cutoff-locked reply controls, the kitchen view and export.
-- `test/app_flow_test.dart`: `/?return=/groups/<id>/plan?checkout=success` lands on the plan page; `?return=//evil` goes home.
+- `test/app_flow_test.dart`: `/?return=/groups/<id>/plan?checkout=success` lands on the plan page; `?return=//evil` goes home; a pending terms version shows only the terms until accepted.
+- `test/billing_screens_test.dart`: the cancellation page signed out, a withdrawal needing a name, and the payer's way in from the plan page.
+- pgTAP `terms_test.sql`: acceptances are the user's own, can't be backdated, changed or deleted.
 - Before each iOS release, check every screen for prices, upgrade prompts and links to the web.
 
 ---
@@ -1292,7 +1346,7 @@ Supabase migrations are forward-only. Undoing a migration means writing a new on
 
 ## Appendix A — Configuration
 
-**`billing.config`:** `mode` (default `unlocked`), `cutoff_at` (A, set by `launch()`), and `iap_enabled` from Phase 2. The other durations are written where they are used: the 7-day stale guard (`billing.entitlements`), 6 months of founder trial (`launch()`), 60 days of early access (15.6).
+**`billing.config`:** `mode` (default `unlocked`), `cutoff_at` (A, set by `launch()`), `terms_version` (8.6; default null), and `iap_enabled` from Phase 2. The other durations are written where they are used: the 7-day stale guard (`billing.entitlements`), 6 months of founder trial (`launch()`), 60 days of early access (15.6).
 
 **Edge Function secrets** (`supabase secrets set`):
 
@@ -1302,6 +1356,8 @@ Supabase migrations are forward-only. Undoing a migration means writing a new on
 | `STRIPE_WEBHOOK_SECRET` | stripe-webhook |
 | `STRIPE_API_VERSION` | all Stripe calls; matches the webhook endpoint |
 | `WEB_APP_URL` | return URLs |
+| `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_EMAIL_TOKEN` | billing-cancel's confirmation emails (Cloudflare Email Service; a token allowed to send email, possibly the one Auth's SMTP uses) |
+| `EMAIL_FROM` | optional sender; default `grup@notifications.grup.rsvp` |
 | `RC_SECRET_API_KEY`, `RC_WEBHOOK_AUTH` | revenuecat-webhook (Phase 2) |
 | `SUPABASE_URL`, `SUPABASE_SECRET_KEYS`, `SUPABASE_DB_URL` | provided by Supabase |
 
@@ -1309,6 +1365,9 @@ Supabase migrations are forward-only. Undoing a migration means writing a new on
 
 ```toml
 [functions.stripe-webhook]
+verify_jwt = false
+
+[functions.billing-cancel]
 verify_jwt = false
 
 [functions.revenuecat-webhook]
@@ -1335,3 +1394,5 @@ Raised as the `message` of SQLSTATE `P0001` by SQL, or as `{ "error": code }` by
 | `invalid_plan` | Checkout | Programming error; report it |
 | `no_customer` | Portal | Hide "Manage billing" |
 | `price_not_configured` | Checkout | Ops alert: the Stripe catalogue is out of sync |
+| `invalid_request` | Cancellation (400) | The page validates first: a programming error |
+| `rate_limited` | Cancellation (429) | "Too many requests. Try again in an hour." |
