@@ -98,3 +98,7 @@ backend = "postgres"
 # Stripe authenticates its webhook with a signature, not a Supabase JWT.
 [functions.stripe-webhook]
 verify_jwt = false
+
+# The public cancellation page calls it signed out too (§ 312k BGB).
+[functions.billing-cancel]
+verify_jwt = false

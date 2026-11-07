@@ -289,5 +289,22 @@
   "termsBody": "Per continuare a usare GRUP, leggi e accetta i nostri Termini di servizio. La nostra Informativa sulla privacy spiega come trattiamo i tuoi dati.",
   "termsOfService": "Termini di servizio",
   "privacyPolicy": "Informativa sulla privacy",
-  "termsAccept": "Accetta"
+  "termsAccept": "Accetta",
+  "cancelPageTitle": "Disdici o recedi",
+  "cancelPageIntro": "Disdici un piano GRUP, o recedi entro 14 giorni dal tuo primo pagamento. Non serve accedere.",
+  "cancelEntry": "Disdici i contratti qui",
+  "withdrawEntry": "Recedi dal contratto qui",
+  "cancelConfirm": "Disdici ora",
+  "withdrawConfirm": "Conferma il recesso",
+  "cancelEmailLabel": "Indirizzo e-mail dell’account GRUP che paga",
+  "cancelEmailInvalid": "Inserisci un indirizzo e-mail valido.",
+  "cancelPlanLabel": "Piano",
+  "cancelAllPlans": "Tutti i miei piani",
+  "withdrawNameLabel": "Il tuo nome completo",
+  "withdrawNameMissing": "Inserisci il tuo nome.",
+  "cancelEffect": "I tuoi piani terminano alla fine del periodo già pagato e non si rinnovano.",
+  "withdrawEffect": "Entro 14 giorni dal tuo primo pagamento per un piano, ti rimborsiamo quel pagamento per intero, e il piano termina con il rimborso.",
+  "cancelSent": "Richiesta ricevuta. Se questo indirizzo appartiene a un account GRUP, gli abbiamo inviato una conferma.",
+  "cancelLink": "Disdici o recedi",
+  "errorTooManyRequests": "Troppe richieste. Riprova tra un’ora."
 }

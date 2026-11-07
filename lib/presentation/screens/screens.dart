@@ -17,3 +17,4 @@ export 'settings_more.dart';
 export 'join_group.dart';
 export 'update_required.dart';
 export 'terms.dart';
+export 'cancel.dart';

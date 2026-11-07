@@ -1077,4 +1077,59 @@ class AppLocalizationsIt extends AppLocalizations {
 
   @override
   String get termsAccept => 'Accetta';
+
+  @override
+  String get cancelPageTitle => 'Disdici o recedi';
+
+  @override
+  String get cancelPageIntro =>
+      'Disdici un piano GRUP, o recedi entro 14 giorni dal tuo primo pagamento. Non serve accedere.';
+
+  @override
+  String get cancelEntry => 'Disdici i contratti qui';
+
+  @override
+  String get withdrawEntry => 'Recedi dal contratto qui';
+
+  @override
+  String get cancelConfirm => 'Disdici ora';
+
+  @override
+  String get withdrawConfirm => 'Conferma il recesso';
+
+  @override
+  String get cancelEmailLabel => 'Indirizzo e-mail dell’account GRUP che paga';
+
+  @override
+  String get cancelEmailInvalid => 'Inserisci un indirizzo e-mail valido.';
+
+  @override
+  String get cancelPlanLabel => 'Piano';
+
+  @override
+  String get cancelAllPlans => 'Tutti i miei piani';
+
+  @override
+  String get withdrawNameLabel => 'Il tuo nome completo';
+
+  @override
+  String get withdrawNameMissing => 'Inserisci il tuo nome.';
+
+  @override
+  String get cancelEffect =>
+      'I tuoi piani terminano alla fine del periodo già pagato e non si rinnovano.';
+
+  @override
+  String get withdrawEffect =>
+      'Entro 14 giorni dal tuo primo pagamento per un piano, ti rimborsiamo quel pagamento per intero, e il piano termina con il rimborso.';
+
+  @override
+  String get cancelSent =>
+      'Richiesta ricevuta. Se questo indirizzo appartiene a un account GRUP, gli abbiamo inviato una conferma.';
+
+  @override
+  String get cancelLink => 'Disdici o recedi';
+
+  @override
+  String get errorTooManyRequests => 'Troppe richieste. Riprova tra un’ora.';
 }

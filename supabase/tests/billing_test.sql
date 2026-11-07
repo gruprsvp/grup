@@ -6,7 +6,7 @@
 -- row-level security but still fires the seat triggers.
 
 begin;
-select plan(63);
+select plan(65);
 
 -- ── Privileges ─────────────────────────────────────────────────────────────
 select ok(not has_schema_privilege('anon', 'billing', 'usage'), 'anon has no usage on schema billing');
@@ -364,6 +364,19 @@ select ok(
   'a refunded subscription set to end needs nothing more'
 );
 update billing.subscriptions set cancel_at_period_end = false, refunded_at = null where provider_ref = 'sub_alice';
+
+insert into billing.withdrawals (subscription_id, user_id, name)
+select id, 'aaaaaaaa-0000-0000-0000-000000000001', 'Alice' from billing.subscriptions where provider_ref = 'sub_alice';
+select ok(
+  exists (select 1 from billing.attention a join billing.subscriptions s on s.id = a.subscription_id
+           where a.issue = 'withdrawal_pending' and s.provider_ref = 'sub_alice'),
+  'attention lists a withdrawal to process'
+);
+update billing.withdrawals set handled_at = now();
+select ok(
+  not exists (select 1 from billing.attention where issue = 'withdrawal_pending'),
+  'a handled withdrawal needs nothing more'
+);
 
 -- ── billing_state ──────────────────────────────────────────────────────────
 set local role authenticated;

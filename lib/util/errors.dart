@@ -65,6 +65,11 @@ final class AlreadyFundedException extends AppException {
   const AlreadyFundedException();
 }
 
+/// Too many requests in a short time (the cancellation page's rate limit).
+final class TooManyRequestsException extends AppException {
+  const TooManyRequestsException();
+}
+
 /// A bug, or a response the app doesn't understand.
 final class UnexpectedException extends AppException {
   const UnexpectedException(this.error, this.stackTrace);
@@ -106,6 +111,7 @@ AppException toAppException(Object error, StackTrace stackTrace) =>
       FunctionException(status: 401) => const NotSignedInException(),
       FunctionException(status: 403) => const NotAllowedException(),
       FunctionException(status: 404) => const NotFoundException(),
+      FunctionException(status: 429) => const TooManyRequestsException(),
       _ => UnexpectedException(error, stackTrace),
     };
 

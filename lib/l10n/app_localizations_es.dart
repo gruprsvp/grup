@@ -1080,4 +1080,61 @@ class AppLocalizationsEs extends AppLocalizations {
 
   @override
   String get termsAccept => 'Aceptar';
+
+  @override
+  String get cancelPageTitle => 'Cancelar o desistir';
+
+  @override
+  String get cancelPageIntro =>
+      'Cancela un plan de GRUP, o desiste de él dentro de los 14 días siguientes a tu primer pago. No hace falta iniciar sesión.';
+
+  @override
+  String get cancelEntry => 'Cancelar contratos aquí';
+
+  @override
+  String get withdrawEntry => 'Desistir del contrato aquí';
+
+  @override
+  String get cancelConfirm => 'Cancelar ahora';
+
+  @override
+  String get withdrawConfirm => 'Confirmar desistimiento';
+
+  @override
+  String get cancelEmailLabel =>
+      'Correo electrónico de la cuenta de GRUP que paga';
+
+  @override
+  String get cancelEmailInvalid => 'Introduce un correo electrónico válido.';
+
+  @override
+  String get cancelPlanLabel => 'Plan';
+
+  @override
+  String get cancelAllPlans => 'Todos mis planes';
+
+  @override
+  String get withdrawNameLabel => 'Tu nombre completo';
+
+  @override
+  String get withdrawNameMissing => 'Introduce tu nombre.';
+
+  @override
+  String get cancelEffect =>
+      'Tus planes terminan al final del periodo ya pagado y no se renuevan.';
+
+  @override
+  String get withdrawEffect =>
+      'Dentro de los 14 días siguientes a tu primer pago de un plan, te devolvemos ese pago íntegro, y el plan termina con el reembolso.';
+
+  @override
+  String get cancelSent =>
+      'Solicitud recibida. Si esta dirección pertenece a una cuenta de GRUP, le hemos enviado una confirmación.';
+
+  @override
+  String get cancelLink => 'Cancelar o desistir';
+
+  @override
+  String get errorTooManyRequests =>
+      'Demasiadas solicitudes. Vuelve a intentarlo en una hora.';
 }

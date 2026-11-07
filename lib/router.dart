@@ -39,6 +39,10 @@ String? redirect(Uri uri, bool isAuthenticated, {bool termsPending = false}) {
     ).toString();
   }
 
+  // Cancelling and withdrawing need no account and come before the terms
+  // (§ 312k and § 356a BGB): never redirected.
+  if (uri.path == const CancelRoute().location) return null;
+
   final auth = const AuthRoute().location;
   if (!isAuthenticated) {
     if (uri.path == auth) return null;

@@ -289,5 +289,22 @@
   "termsBody": "Pour continuer à utiliser GRUP, lis et accepte nos conditions d’utilisation. Notre politique de confidentialité explique comment nous traitons tes données.",
   "termsOfService": "Conditions d’utilisation",
   "privacyPolicy": "Politique de confidentialité",
-  "termsAccept": "Accepter"
+  "termsAccept": "Accepter",
+  "cancelPageTitle": "Résilier ou se rétracter",
+  "cancelPageIntro": "Résilie un forfait GRUP, ou rétracte-toi dans les 14 jours suivant ton premier paiement. Pas besoin de te connecter.",
+  "cancelEntry": "Résilier les contrats ici",
+  "withdrawEntry": "Se rétracter du contrat ici",
+  "cancelConfirm": "Résilier maintenant",
+  "withdrawConfirm": "Confirmer la rétractation",
+  "cancelEmailLabel": "Adresse e-mail du compte GRUP qui paie",
+  "cancelEmailInvalid": "Saisis une adresse e-mail valide.",
+  "cancelPlanLabel": "Forfait",
+  "cancelAllPlans": "Tous mes forfaits",
+  "withdrawNameLabel": "Ton nom complet",
+  "withdrawNameMissing": "Saisis ton nom.",
+  "cancelEffect": "Tes forfaits prennent fin à la fin de la période déjà payée et ne sont pas renouvelés.",
+  "withdrawEffect": "Dans les 14 jours suivant ton premier paiement pour un forfait, ce paiement t’est remboursé en entier, et le forfait prend fin au remboursement.",
+  "cancelSent": "Demande reçue. Si cette adresse correspond à un compte GRUP, nous lui avons envoyé une confirmation.",
+  "cancelLink": "Résilier ou se rétracter",
+  "errorTooManyRequests": "Trop de demandes. Réessaie dans une heure."
 }

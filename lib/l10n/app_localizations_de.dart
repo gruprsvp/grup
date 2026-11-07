@@ -1069,4 +1069,60 @@ class AppLocalizationsDe extends AppLocalizations {
 
   @override
   String get termsAccept => 'Akzeptieren';
+
+  @override
+  String get cancelPageTitle => 'Kündigen oder widerrufen';
+
+  @override
+  String get cancelPageIntro =>
+      'Kündige einen GRUP-Plan oder widerrufe ihn innerhalb von 14 Tagen nach deiner ersten Zahlung. Du musst dich dafür nicht anmelden.';
+
+  @override
+  String get cancelEntry => 'Verträge hier kündigen';
+
+  @override
+  String get withdrawEntry => 'Vertrag widerrufen';
+
+  @override
+  String get cancelConfirm => 'Jetzt kündigen';
+
+  @override
+  String get withdrawConfirm => 'Widerruf bestätigen';
+
+  @override
+  String get cancelEmailLabel => 'E-Mail-Adresse des zahlenden GRUP-Kontos';
+
+  @override
+  String get cancelEmailInvalid => 'Gib eine gültige E-Mail-Adresse ein.';
+
+  @override
+  String get cancelPlanLabel => 'Plan';
+
+  @override
+  String get cancelAllPlans => 'Alle meine Pläne';
+
+  @override
+  String get withdrawNameLabel => 'Dein vollständiger Name';
+
+  @override
+  String get withdrawNameMissing => 'Gib deinen Namen ein.';
+
+  @override
+  String get cancelEffect =>
+      'Deine Pläne enden zum Ende des bereits bezahlten Zeitraums und verlängern sich nicht.';
+
+  @override
+  String get withdrawEffect =>
+      'Innerhalb von 14 Tagen nach deiner ersten Zahlung für einen Plan erhältst du diese Zahlung vollständig zurück; der Plan endet mit der Erstattung.';
+
+  @override
+  String get cancelSent =>
+      'Anfrage erhalten. Gehört diese Adresse zu einem GRUP-Konto, haben wir ihr eine Bestätigung geschickt.';
+
+  @override
+  String get cancelLink => 'Kündigen oder widerrufen';
+
+  @override
+  String get errorTooManyRequests =>
+      'Zu viele Anfragen. Versuch es in einer Stunde noch einmal.';
 }

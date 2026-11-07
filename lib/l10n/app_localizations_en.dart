@@ -1067,4 +1067,59 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get termsAccept => 'Accept';
+
+  @override
+  String get cancelPageTitle => 'Cancel or withdraw';
+
+  @override
+  String get cancelPageIntro =>
+      'Cancel a GRUP plan, or withdraw from it within 14 days of your first payment. You don\'t need to sign in.';
+
+  @override
+  String get cancelEntry => 'Cancel contracts here';
+
+  @override
+  String get withdrawEntry => 'Withdraw from contract here';
+
+  @override
+  String get cancelConfirm => 'Cancel now';
+
+  @override
+  String get withdrawConfirm => 'Confirm withdrawal';
+
+  @override
+  String get cancelEmailLabel => 'Email address of the paying GRUP account';
+
+  @override
+  String get cancelEmailInvalid => 'Enter a valid email address.';
+
+  @override
+  String get cancelPlanLabel => 'Plan';
+
+  @override
+  String get cancelAllPlans => 'All my plans';
+
+  @override
+  String get withdrawNameLabel => 'Your full name';
+
+  @override
+  String get withdrawNameMissing => 'Enter your name.';
+
+  @override
+  String get cancelEffect =>
+      'Your plans end at the end of the period already paid for, and don\'t renew.';
+
+  @override
+  String get withdrawEffect =>
+      'Within 14 days of your first payment for a plan, you get that payment back in full, and the plan ends when it\'s refunded.';
+
+  @override
+  String get cancelSent =>
+      'Request received. If this address belongs to a GRUP account, we\'ve emailed it a confirmation.';
+
+  @override
+  String get cancelLink => 'Cancel or withdraw';
+
+  @override
+  String get errorTooManyRequests => 'Too many requests. Try again in an hour.';
 }

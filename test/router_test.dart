@@ -69,6 +69,12 @@ void main() {
       expect(signedIn('/terms?from=%2F%2Fevil.example'), '/');
     });
 
+    test('the cancellation page needs neither an account nor the terms', () {
+      expect(signedOut('/cancel'), isNull);
+      expect(signedIn('/cancel'), isNull);
+      expect(redirect(Uri.parse('/cancel'), true, termsPending: true), isNull);
+    });
+
     test('opens app links at their path; other schemes go home', () {
       expect(
         signedIn('https://grup.rsvp/join/ABCD-1234?x=1'),
